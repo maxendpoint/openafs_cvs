@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.9 2002/10/15 04:45:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.10 2002/10/15 04:46:49 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
@@ -1075,7 +1075,7 @@ void afs_nfs3_mknod(char *args, char *xp, char *exp, char *rp, char *crp) {
     if (call>1) afs_nfs3_noaccess((struct afs_nfs3_resp *)xp); 
     else { (*afs_rfs3_disp_tbl[NFSPROC3_MKNOD].orig_proc)(args, xp, exp, rp, crp); 
     if (afs_NFSRootOnly && call) {
-        MKNOD3res *resp = ( MKDIR3res *)xp;
+        MKNOD3res *resp = ( MKNOD3res *)xp;
         afs_nfs3_smallfidder( &resp->resok.obj.handle , resp->status); } }
     curthread->t_cred = svcred; 
     return; 
