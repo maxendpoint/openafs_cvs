@@ -7,31 +7,9 @@
 
 # This is a pthread safe library containing rx, rxkad and des.
 
-DEST=@DEST@
-TOP_INCDIR=@TOP_INCDIR@
-TOP_LIBDIR=@TOP_LIBDIR@
-TOP_OBJDIR=@TOP_OBJDIR@
 srcdir=@srcdir@
-VPATH=${srcdir}
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-bindir=@bindir@
-sbindir=@sbindir@
-libexecdir=@libexecdir@
-libdir=@libdir@
-includedir=@includedir@
-mandir=@mandir@
-afssrvbindir=@afssrvbindir@
-afssrvsbindir=@afssrvsbindir@
-afssrvlibexecdir=@afssrvlibexecdir@
-COMPILE_ET=${TOP_OBJDIR}/src/comerr/compile_et
-RXGEN=${TOP_OBJDIR}/src/rxgen/rxgen
-TOP_SRCDIR=@TOP_SRCDIR@
-SYS_NAME=@AFS_SYSNAME@
+include @TOP_OBJDIR@/src/config/Makefile.config
 
-SHELL = /bin/sh
-
-include ../config/Makefile.${SYS_NAME}
 
 CC=${MT_CC}
 INCLUDES=-I. -I${srcdir} -I${TOP_INCDIR} -I.. -I${srcdir}/../rx -I${srcdir}../des -I../des \
@@ -260,7 +238,7 @@ xdr_afsuuid.o: ${RX}/xdr_afsuuid.c
 #
 #   $ what /opt/langtools/bin/pxdb32
 #   /opt/langtools/bin/pxdb32:
-#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.7 $
+#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.8 $
 #
 # The problem occurs when -g and -O are both used when compiling des.c.
 # The simplest way to work around the problem is to leave out either -g or -O.
