@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.7 2002/10/14 21:31:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.8 2002/10/15 04:41:01 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
@@ -175,7 +175,7 @@ nfs2_to_afs_call(int which, caddr_t *args, fhandle_t **fhpp, fhandle_t **fh2pp)
 	    *fh2pp = fhp2;
 	return 1;
     }
-    if (is_afs_fh(fhp2)) {
+    if (fhp2 && is_afs_fh(fhp2)) {
 	*fhpp = fhp1;
 	*fh2pp = fhp2;
 	return 1;
