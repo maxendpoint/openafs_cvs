@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.79 2004/06/02 06:57:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.80 2004/06/02 08:22:30 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7225,21 +7225,17 @@ init_sys_error_to_et(void)
     sys2et[EMEDIUMTYPE] = UAEMEDIUMTYPE;
 }
 
-SRXAFS_CallBackRxConnAddr (tcon, addr)
-    struct rx_connection *tcon;		/* Rx connection handle */
-    afs_int32 *addr;
+afs_int32
+SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
 {
     Error errorCode = 0;
-    struct rx_call *tcall;                  /* the call we're a part of */
     struct host *thost;
     struct client *tclient;
     static struct rx_securityClass *sc = 0;
     int i,j;
     struct rx_connection* conn;
     
-    /* CallPreamble changes tcon from a call to a conn */
-    tcall = (struct rx_call *) tcon;
-    if (errorCode = CallPreamble((struct rx_call **) &tcon, ACTIVECALL))
+    if (errorCode = CallPreamble(acall, ACTIVECALL, &tcon))
 	    goto Bad_CallBackRxConnAddr1;
     
 #ifndef __EXPERIMENTAL_CALLBACK_CONN_MOVING
