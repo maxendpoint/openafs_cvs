@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.9 2003/12/07 22:49:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.10 2004/12/01 23:07:25 shadow Exp $");
 
 #include <stdio.h>
 
@@ -718,7 +718,7 @@ GetPrincipalLockStatus(const kas_server_p kaserver, const kas_identity_p who,
 	tst =
 	    ubik_CallIter(KAM_LockStatus, kaserver->servers, UPUBIKONLY,
 			  &count, who->principal, who->instance, &locked, 0,
-			  0, 0, 0);
+			  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	if (tst == 0) {
 	    if (locked) {
 		if ((locked < *lockedUntil) || !once) {

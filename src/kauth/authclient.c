@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.16 2004/08/19 01:07:47 kolya Exp $");
+    ("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.17 2004/12/01 23:07:22 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -476,7 +476,7 @@ kawrap_ubik_Call(aproc, aclient, aflags, p1, p2, p3, p4, p5, p6, p7, p8)
 	    lcode = code;
 	    code =
 		ubik_CallIter(aproc, aclient, aflags, &count, p1, p2, p3, p4,
-			      p5, p6, p7, p8);
+			      p5, p6, p7, p8, 0, 0, 0, 0, 0, 0, 0, 0);
 	} while ((code == UNOQUORUM) || (code == UNOTSYNC)
 		 || (code == KALOCKED) || (code == -1));
 
