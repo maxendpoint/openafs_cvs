@@ -25,7 +25,7 @@ all: ${TOP_LIBDIR}/$(LIBUAFS) linktest
 
 webinstall: all \
 	${TOP_LIBDIR}/$(LIBAFSWEB) \
-	${TOP_LIBDIR}/$(LIBAFSWEBKRB) \
+	${TOP_LIBDIR}/$(LIBAFSWEBKRB) 
 
 linktest: UAFS/$(LIBUAFS) des/libdes.a
 	$(CC) $(TEST_CFLAGS) $(TEST_LDFLAGS) -o linktest linktest.c -I${TOP_SRCDIR}/config -I${TOP_INCDIR} -I${TOP_INCDIR}/rx -I. UAFS/$(LIBUAFS) des/libdes.a $(TEST_LIBS) $(XLIBS)
