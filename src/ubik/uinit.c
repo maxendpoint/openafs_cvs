@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.5 2004/10/10 01:53:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.6 2004/10/13 01:07:37 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef AFS_NT40_ENV
@@ -36,13 +36,12 @@ RCSID
 #endif
 #endif
 
+#include <afs/dirpath.h>
 #include <errno.h>
 #include <lock.h>
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <rx/rx_globals.h>
-#include <afs/nfs.h>
-#include <afs/vlserver.h>
 #include <afs/auth.h>
 #include <afs/cellconfig.h>
 #include <afs/keys.h>
