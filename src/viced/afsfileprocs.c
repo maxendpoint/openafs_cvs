@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.76 2004/02/03 05:43:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.77 2004/03/11 07:15:52 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6676,9 +6676,12 @@ FetchData_RXStyle(Volume * volptr, Vnode * targetptr,
     tlen = FDH_SIZE(fdP);
     ViceLog(25,
 	    ("FetchData_RXStyle: file size %llu\n", (afs_uintmax_t) tlen));
-    if ((tlen < 0) || (Pos > tlen)) {
+    if (tlen < 0) {
 	FDH_CLOSE(fdP);
 	return EIO;
+    }
+    if (Pos > tlen) {
+	Len = 0;
     }
 
     if (Pos + Len > tlen)
