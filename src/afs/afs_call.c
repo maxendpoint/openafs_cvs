@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.37 2002/09/11 06:44:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.38 2002/09/11 06:56:24 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -171,7 +171,6 @@ static int afsd_thread(void *rock) {
 	AFS_Running = 1;
 	while (afs_initState < AFSOP_START_AFS) 
 	    afs_osi_Sleep(&afs_initState);
-	DInit(AFS_MINBUFFERS);          
 	afs_initState = AFSOP_START_BKG;
 	afs_osi_Wakeup(&afs_initState);
 	sprintf(current->comm, "afsd");
