@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.4 2001/07/12 19:59:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.5 2001/10/05 21:31:47 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -448,7 +448,7 @@ StreamHandle_t *stream_fdopen(FD_t fd)
 }
 
 /* Open a file for buffered I/O */
-StreamHandle_t *stream_open(char *filename, char *mode)
+StreamHandle_t *stream_open(const char *filename, const char *mode)
 {
     FD_t fd;
 
