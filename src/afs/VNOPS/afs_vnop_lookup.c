@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.56 2004/12/24 06:08:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.57 2004/12/24 06:31:35 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1084,7 +1084,7 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct pathname 
 #elif defined(UKERNEL)
 afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED *acred, int flags)
 #else
-afs_lookup(OSI_VC_DECL(adp), aname, struct vcache **avcp, struct AFS_UCRED *acred)
+afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED *acred)
 #endif
 {
     struct vrequest treq;

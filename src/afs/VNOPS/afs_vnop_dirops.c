@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.18 2004/12/24 06:08:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.19 2004/12/24 06:31:35 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -36,12 +36,8 @@ extern afs_rwlock_t afs_xcbhash;
 /* don't set CDirty in here because RPC is called synchronously */
 
 int
-afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
-     OSI_VC_DECL(adp);
-     register struct vcache **avcp;
-     char *aname;
-     struct vattr *attrs;
-     struct AFS_UCRED *acred;
+afs_mkdir(OSI_VC_DECL(adp), char *aname, struct vattr *attrs, 
+     register struct vcache **avcp, struct AFS_UCRED *acred)
 {
     struct vrequest treq;
     register afs_int32 code;
@@ -168,10 +164,10 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
 int
 /* don't set CDirty in here because RPC is called synchronously */
 #if	defined(AFS_SUN5_ENV) || defined(AFS_SGI_ENV)
-afs_rmdir(OSI_VC_ARG(adp), aname, cdirp, acred)
-     struct vnode *cdirp;
+afs_rmdir(OSI_VC_DECL(adp), char *aname, struct vnode *cdirp, 
+	  struct AFS_UCRED *acred)
 #else
-afs_rmdir(adp, aname, acred)
+afs_rmdir(OSI_VC_DECL(adp), char *aname, struct AFS_UCRED *acred)
 #endif
      OSI_VC_DECL(adp);
      char *aname;
