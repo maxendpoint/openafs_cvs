@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.11 2001/10/05 20:44:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.12 2001/11/01 05:16:27 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -1023,7 +1023,7 @@ void rxk_Listener(void)
     rxk_ListenerPid = current->pid;
 #endif
 #ifdef AFS_SUN5_ENV
-    rxk_ListenerPid = ttoproc(curthread)->p_pidp->pid_id;
+    rxk_ListenerPid = curproc->p_pid;
 #endif /* AFS_SUN5_ENV */
 #if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
     rxk_ListenerPid = current_proc()->p_pid;
@@ -1046,9 +1046,6 @@ void rxk_Listener(void)
 	    rxp = rxi_ReceivePacket(rxp, rx_socket, host, port);
 	    AFS_RXGUNLOCK();
 	}
-	if (afs_termState == AFSOP_STOP_RXK_LISTENER)
-	    break;
-
     }
 
 #ifdef RX_ENABLE_LOCKS
