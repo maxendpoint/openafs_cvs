@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.16 2003/03/14 20:46:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.17 2003/03/19 03:01:17 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -2713,7 +2713,7 @@ afs_int32 SAFSVolConvertROtoRWvolume(acid, partId, volumeId)
     afs_int32 partId;
     afs_int32 volumeId;
 {
-#ifdef AFS_NAMEI_ENV
+#if defined(AFS_NAMEI_ENV) && !defined(AFS_NT40_ENV)
     DIR *dirp;
     char pname[16];
     char volname[20];
