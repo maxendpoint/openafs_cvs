@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.80 2004/07/19 15:22:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81 2004/07/21 22:23:38 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -941,7 +941,7 @@ afs_dentry_iput(struct dentry *dp, struct inode *ip)
 	afs_Trace3(afs_iclSetp, CM_TRACE_DENTRYIPUT, ICL_TYPE_POINTER, ip,
 		   ICL_TYPE_STRING, dp->d_parent->d_name.name,
 		   ICL_TYPE_STRING, dp->d_name.name);
-	is (!isglock) AFS_GUNLOCK();
+	if (!isglock) AFS_GUNLOCK();
     }
 
     osi_iput(ip);
