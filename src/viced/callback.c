@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.56 2004/10/11 05:16:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.57 2004/10/11 15:27:50 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -776,8 +776,7 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
 	if (!thishost || (thishost->hostFlags & HOSTDELETED)) {
 	    continue;
 	}
-	/* Should this instead get/drop a reference on the connection? */
-	h_Lock_r(thishost);
+	thishost->callback_rxcon->refCount++;
 	conns[j++] = thishost->callback_rxcon;
 
 #ifdef	ADAPT_MTU
@@ -856,7 +855,7 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
 	struct host *hp;
 	hp = cba[i].hp;
 	if (hp && xhost != hp) {
-	    h_Unlock_r(hp);
+	    thishost->callback_rxcon->refCount--;
 	    h_Release_r(hp);
 	}
     }
