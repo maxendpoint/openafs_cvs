@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.15 2003/07/15 23:14:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.16 2004/01/23 16:53:35 rees Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -149,7 +149,7 @@ DInit(int abuffers)
     return;
 }
 
-char *
+void *
 DRead(register afs_inode_t * fid, register int page)
 {
     /* Read a page from the disk. */
@@ -484,7 +484,7 @@ DFlush(void)
     MReleaseReadLock(&afs_bufferLock);
 }
 
-char *
+void *
 DNew(register afs_inode_t * fid, register int page)
 {
     /* Same as read, only do *not* even try to read the page, since it probably doesn't exist. */

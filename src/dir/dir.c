@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.19 2004/01/01 07:58:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.20 2004/01/23 16:53:35 rees Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -82,8 +82,10 @@ RCSID
 #include "netinet/in.h"
 #endif
 
-/* Irix needs this */
-struct DirEntry *DRead();
+/* afs_buffer.c */
+/* These are needed because afs_prototypes.h is not included here */
+extern void *DRead();
+extern void *DNew();
 
 #else /* !defined(UKERNEL) */
 #include "afs/stds.h"
