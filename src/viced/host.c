@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.14 2002/04/15 21:36:00 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.15 2002/04/22 17:16:16 kolya Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -640,7 +640,7 @@ struct host *h_Alloc_r(r_con)
 /* Lookup a host given an IP address and UDP port number. */
 struct host *h_Lookup(hostaddr, hport, heldp)
     afs_uint32 hostaddr, hport;     /* network byte order */
-    int heldp;
+    int *heldp;
 {
     struct host *retVal;
     H_LOCK
