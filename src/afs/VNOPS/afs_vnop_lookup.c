@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.13 2001/08/08 00:03:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.14 2001/08/27 03:35:06 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -133,7 +133,7 @@ EvalMountPoint(avc, advc, avolpp, areq)
        volnamep = &avc->linkData[1];
        tcell = afs_GetCell(avc->fid.Cell, READ_LOCK);
     }
-    if (!tcell) return ENOENT;
+    if (!tcell) return ENODEV;
 
     mtptCell = tcell->cell;               /* The cell for the mountpoint */
     if (tcell->lcellp) {
