@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.17 2004/06/02 07:04:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.18 2004/06/23 14:27:48 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -613,7 +613,7 @@ HandleVolume(struct DiskPartition *dp, char *name)
     }
 }
 
-
+int
 main(int argc, char **argv)
 {
     register struct cmd_syndesc *ts;

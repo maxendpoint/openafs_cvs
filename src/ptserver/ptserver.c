@@ -112,7 +112,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.20 2004/06/23 13:45:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.21 2004/06/23 14:27:42 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -195,8 +195,7 @@ prp_access_mask(s)
 
 /* check whether caller is authorized to manage RX statistics */
 int
-pr_rxstat_userok(call)
-     struct rx_call *call;
+pr_rxstat_userok(struct rx_call *call)
 {
     return afsconf_SuperUser(prdir, call, NULL);
 }
