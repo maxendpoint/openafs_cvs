@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.66 2003/06/23 21:48:49 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.67 2003/06/23 22:14:06 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -805,9 +805,7 @@ afs_syscall_pioctl(path, com, cmarg, follow)
     int	follow;
 {
     struct afs_ioctl data;
-#ifdef AFS_NEED_CLIENTCONTEXT
     struct AFS_UCRED *tmpcred, *foreigncreds = NULL;
-#endif
     register afs_int32 code = 0;
     struct vnode *vp;
 #ifdef AFS_DEC_ENV
@@ -884,7 +882,7 @@ afs_syscall_pioctl(path, com, cmarg, follow)
     if ((com & 0xff) == 15) {
 	/* special case prefetch so entire pathname eval occurs in helper process.
 	   otherwise, the pioctl call is essentially useless */
-#if	defined(AFS_SUN5_ENV) || defined(AFS_AIX41_ENV) || defined(AFS_LINUX22_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if	defined(AFS_SUN5_ENV) || defined(AFS_AIX41_ENV) || defined(AFS_LINUX22_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 	code =  Prefetch(path, &data, follow,
 			 foreigncreds ? foreigncreds : credp);
 #else

@@ -21,7 +21,7 @@
 #include <sys/sysproto.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_groups.c,v 1.6 2003/04/16 22:28:53 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_groups.c,v 1.7 2003/06/23 22:14:06 rees Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -128,12 +128,8 @@ Afs_xsetgroups(p, args, retval)
 
 
 int
-setpag(proc, cred, pagvalue, newpag, change_parent)
-    struct proc *proc;
-    struct ucred **cred;
-    afs_uint32 pagvalue;
-    afs_uint32 *newpag;
-    afs_uint32 change_parent;
+setpag(struct proc *proc, struct ucred **cred, afs_uint32 pagvalue,
+       afs_uint32 *newpag, int change_parent)
 {
     gid_t gidset[NGROUPS];
     int ngroups, code;
