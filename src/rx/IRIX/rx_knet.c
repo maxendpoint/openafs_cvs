@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.8 2001/10/11 21:14:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.9 2001/10/11 21:41:45 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 #include "../h/tcp-param.h"
@@ -314,7 +314,7 @@ static int rxi_MatchIfnet(struct hashbucket *h, caddr_t key, caddr_t arg1,
 	}
     }
     *(int*)arg1 = match_value;
-    return (match_value ? 1 : 0);
+    return 0;
 }
 
     
@@ -332,10 +332,8 @@ struct ifnet * rxi_FindIfnet(addr, pifad)
   *pifad = (struct in_ifaddr*)&hashinfo_inaddr;
 
   (void) hash_enum(&hashinfo_inaddr, rxi_MatchIfnet, HTF_INET,
-                     (caddr_t)&ppaddr, (caddr_t)&match_value, (caddr_t)pifad);
+		   (caddr_t)&ppaddr, (caddr_t)&match_value, (caddr_t)pifad);
    
-  if (slop)
-      return ((struct in_ifaddr*)slop)->ia_ifp;
   if (match_value)
       return (*pifad)->ia_ifp;
   else
