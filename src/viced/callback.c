@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.31 2003/02/08 07:30:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.32 2003/02/13 22:28:38 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1396,7 +1396,7 @@ restart:
 		    }
 		    TDel(cb);
 		    HDel(cb);
-		    FreeCB(cb);
+		    CDel(cb, 0); /* Don't let CDel clean up the fe */
 		    /* leave hold for MultiBreakVolumeCallBack to clear */
 		}
 		/* relink chain */
