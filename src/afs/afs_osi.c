@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.46 2004/07/29 03:13:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.47 2004/07/29 03:32:56 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -308,6 +308,26 @@ afs_osi_MaskSignals(void)
 void
 afs_osi_UnmaskRxkSignals(void)
 {
+}
+
+/* Two hacks to try and fix afsdb */
+void 
+afs_osi_MaskUserLoop()
+{
+#ifdef AFS_DARWIN_ENV
+    afs_osi_Invisible();
+    afs_osi_fullSigMask();
+#else
+    afs_osi_MaskSignals();
+#endif
+}
+
+void 
+afs_osi_UnmaskUserLoop()
+{
+#ifdef AFS_DARWIN_ENV
+    afs_osi_fullSigRestore();
+#endif
 }
 
 /* register rxk listener proc info */
