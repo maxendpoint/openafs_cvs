@@ -30,9 +30,11 @@ $(EXEDIR)\AdminGroup.exe: $(OUT)\AdminGroup.obj
 
 prebuild:
 !IF ("$(AFSDEV_BUILDTYPE)" == "FREE")
-!IF ("$(AFSVER_CL)"=="1310")
+!IF ("$(AFSVER_CL)"=="1400")
+   $(COPY) %SystemRoot%\System32\Msvcr80.dll $(EXEDIR)
+   $(COPY) %SystemRoot%\System32\MFC80.DLL $(EXEDIR)
+!ELSE IF ("$(AFSVER_CL)"=="1310")
    $(COPY) %SystemRoot%\System32\Msvcr71.dll $(EXEDIR)
-   $(COPY) %SystemRoot%\System32\MSVCRT.DLL $(EXEDIR)
    $(COPY) %SystemRoot%\System32\MFC71.DLL $(EXEDIR)
 !ELSE IF ("$(AFSVER_CL)"=="1300")
    $(COPY) %SystemRoot%\System32\Msvcp70.dll $(EXEDIR)
@@ -45,6 +47,11 @@ prebuild:
 !ERROR Unknown Compiler Version
 !ENDIF
 !ELSE # NOT FREE - CHECKED
+!IF ("$(AFSVER_CL)"=="1400")
+   $(COPY) %SystemRoot%\System32\Msvcr80d.dll $(EXEDIR)
+   $(COPY) %SystemRoot%\System32\Msvcr80d.pdb $(EXEDIR)
+   $(COPY) %SystemRoot%\System32\MFC80D.DLL $(EXEDIR)
+   $(COPY) %SystemRoot%\System32\MFC80D.pdb $(EXEDIR)
 !IF ("$(AFSVER_CL)"=="1310")
    $(COPY) %SystemRoot%\System32\Msvcr71d.dll $(EXEDIR)
    $(COPY) %SystemRoot%\System32\Msvcr71d.pdb $(EXEDIR)
