@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.66 2004/04/12 16:04:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.67 2004/06/02 07:08:46 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -708,7 +708,6 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
 	afs_int32 *mtubuffer =
 	    afs_osi_Alloc(sizeof(afs_int32) * AFS_MAX_INTERFACE_ADDR);
 	int i;
-	int code;
 
 	if (count > AFS_MAX_INTERFACE_ADDR) {
 	    code = ENOMEM;
