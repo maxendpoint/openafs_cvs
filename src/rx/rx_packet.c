@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.4 2005/01/31 04:18:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.5 2005/01/31 04:18:50 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -193,6 +193,7 @@ rx_SlowReadPacket(struct rx_packet * packet, unsigned int offset, int resid,
 	resid -= j;
         out += j;
   	l += packet->wirevec[i].iov_len;
+	offset = l;
 	i++;
     }
 
@@ -234,6 +235,7 @@ rx_SlowWritePacket(struct rx_packet * packet, int offset, int resid, char *in)
 	resid -= j;
         in += j;
 	l += packet->wirevec[i].iov_len;
+	offset = l;
 	i++;
     }
 
