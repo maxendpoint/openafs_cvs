@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.19 2001/10/10 00:10:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.20 2001/10/24 15:25:22 shadow Exp $");
 
 #define VFS 1
 
@@ -1996,7 +1996,7 @@ long param1, param2, param3, param4, param5, param6, param7;
 #endif
 
     error = syscall(AFS_SYSCALL, AFSCALL_CALL, param1, param2, param3, param4, param5, param6, param7);
-    if (afsd_verbose) printf("SScall(%d, %d)=%d ", AFS_SYSCALL, AFSCALL_CALL, error);
+    if (afsd_verbose) printf("SScall(%d, %d, %d)=%d ", AFS_SYSCALL, AFSCALL_CALL, param1, error);
     return (error);
 }
 #else	/* AFS_AIX32_ENV */
