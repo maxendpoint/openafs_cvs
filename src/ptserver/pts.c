@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.7 2001/10/05 21:40:50 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.8 2001/11/01 05:11:25 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -72,7 +72,7 @@ int GetGlobals (as)
 	code = pr_Initialize(sec, AFSDIR_CLIENT_ETC_DIRPATH, cell);
     }
     if (code) {
-	com_err (whoami, code, "Couldn't initialize");
+	com_err (whoami, code, "while initializing");
 	return code;
     }
     if (as->parms[19].items)
