@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.17 2003/07/15 23:14:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.18 2003/08/15 23:50:27 kolya Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -45,7 +45,7 @@ osi_UFSOpen(afs_int32 ainode)
 	crhold(&afs_osi_cred);	/* don't let it evaporate, since it is static */
 	afs_osicred_initialized = 1;
     }
-    afile = (struct osi_file *)osi_AllocSmallSpace(sizeof(struct osi_file));
+    afile = (struct osi_file *)osi_AllocLargeSpace(sizeof(struct osi_file));
     AFS_GUNLOCK();
     if (!afile) {
 	osi_Panic("osi_UFSOpen: Failed to allocate %d bytes for osi_file.\n",
@@ -105,7 +105,7 @@ osi_UFSClose(register struct osi_file *afile)
 	}
     }
 
-    osi_FreeSmallSpace(afile);
+    osi_FreeLargeSpace(afile);
     return 0;
 }
 
