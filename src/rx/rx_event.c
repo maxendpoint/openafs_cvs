@@ -18,7 +18,7 @@
 #include <sys/time_impl.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.12 2002/11/19 18:28:04 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.13 2003/02/13 06:46:07 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -80,7 +80,7 @@ static int rxepoch_allocUnit = 10;   /* Allocation unit (number of epoch records
 int rxevent_nFree;		   /* Number of free event records */
 int rxevent_nPosted;	   /* Current number of posted events */
 int rxepoch_nFree;		   /* Number of free epoch records */
-static int (*rxevent_ScheduledEarlierEvent)(void); /* Proc to call when an event is scheduled that is earlier than all other events */
+static void (*rxevent_ScheduledEarlierEvent)(void); /* Proc to call when an event is scheduled that is earlier than all other events */
 struct xfreelist { 
     void *mem;
     int size;
