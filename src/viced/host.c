@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.29 2003/02/11 23:06:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.30 2003/02/13 06:44:28 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -698,6 +698,7 @@ int h_TossStuff_r(register struct host *host)
 
     /* if somebody still has this host locked */
     if (h_NBLock_r(host) != 0) {
+	char hoststr[16];
 	ViceLog(0, ("Warning:  h_TossStuff_r failed; Host %s:%d was locked.\n",
 		    afs_inet_ntoa_r(host->host, hoststr), host->port)); 
 	return;
