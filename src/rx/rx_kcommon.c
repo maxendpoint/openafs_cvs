@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.8 2001/08/08 00:03:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.9 2001/08/08 04:42:42 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -794,7 +794,7 @@ struct osi_socket *rxk_NewSocket(short aport)
 #ifdef  AFS_OSF_ENV
     myaddr.sin_len = nam->m_len;
 #endif  /* AFS_OSF_ENV */
-    memcpy(mtod(nam, &myaddr, caddr_t), sizeof(myaddr));
+    memcpy(mtod(nam, caddr_t), &myaddr, sizeof(myaddr));
 #ifdef AFS_SGI65_ENV
     BHV_PDATA(&bhv) = (void*)newSocket;
     code = sobind(&bhv, nam);
