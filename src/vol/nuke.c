@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/nuke.c,v 1.15 2004/09/28 04:44:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/nuke.c,v 1.16 2004/10/02 15:54:28 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -113,7 +113,7 @@ nuke(char *aname, afs_int32 avolid)
 {
     /* first process the partition containing this junk */
     struct afs_stat tstat;
-    struct ilist *ti, *ni *li=NULL;
+    struct ilist *ti, *ni, *li=NULL;
     register afs_int32 code;
     int i, forceSal;
     char devName[64], wpath[100];
