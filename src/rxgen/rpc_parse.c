@@ -36,7 +36,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.17 2003/07/15 23:16:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.18 2004/05/05 03:24:57 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -902,7 +902,8 @@ analyze_ProcParams(definition * defp, token * tokp)
 	Proc_listp = &Proc_list->next;
 	decls = ALLOC(decl_list);
 	memset((char *)decls, 0, sizeof(decl_list));
-	decls->decl = dec;
+    if (tokp->kind != TOK_RPAREN)
+        decls->decl = dec;
 	*tailp = decls;
 	tailp = &decls->next;
     } while (tokp->kind != TOK_RPAREN);
