@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/test/test.c,v 1.4 2001/07/12 19:58:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/test/test.c,v 1.5 2003/05/29 18:23:16 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/time.h>
@@ -38,8 +38,8 @@ int argc; char *argv[];
     
     count = atoi(argv[1]);
 
-    assert(LWP_InitializeProcessSupport(0, &pid) == LWP_SUCCESS);
-    assert(LWP_CreateProcess(OtherProcess,4096,0, 0, c, &otherpid) == LWP_SUCCESS);
+    assert(LWP_InitializeProcessSupport(0, (PROCESS *) &pid) == LWP_SUCCESS);
+    assert(LWP_CreateProcess(OtherProcess,4096,0, 0, c, (PROCESS *) &otherpid) == LWP_SUCCESS);
 
     waitarray[0] = &semaphore;
     waitarray[1] = 0;

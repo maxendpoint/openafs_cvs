@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.22 2003/03/14 20:46:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.23 2003/05/29 18:23:17 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -1463,8 +1463,7 @@ static volOnline(as)
  *	As advertised.
  *------------------------------------------------------------------------
  */
-static volOffline(as)
-    register struct cmd_syndesc *as;
+static int volOffline(register struct cmd_syndesc *as)
 {
     afs_int32 server, partition, volid;
     afs_int32 code, err=0;
@@ -1506,8 +1505,7 @@ static volOffline(as)
     return 0;
 }
 
-static CreateVolume(as)
-register struct cmd_syndesc *as;
+static int CreateVolume(register struct cmd_syndesc *as)
 {
     afs_int32 pname;
     char part[10];
