@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.34 2003/02/19 03:29:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.35 2003/02/19 03:50:47 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1345,7 +1345,6 @@ int BreakLaterCallBacks(void)
     struct CallBack *cb;
     struct FileEntry *fe = NULL;
     struct FileEntry *myfe = NULL;
-    struct FileEntry **fepp;
     struct host *host;
     struct VCBParams henumParms;
     unsigned short tthead = 0;  /* zero is illegal value */
@@ -1378,48 +1377,46 @@ int BreakLaterCallBacks(void)
 	return 0;
     }
 
-    /* loop over myfe and free/break */
+    /* loop over FEs from myfe and free/break */
     FSYNC_UNLOCK
-    while (myfe) {
-	tthead = 0;
-	for (fepp = &myfe; fe = *fepp; ) {
-	    register struct CallBack *cbnext;
-	    for (cb = itocb(fe->firstcb); cb; cb = cbnext) {
-		host = h_itoh(cb->hhead);
-		h_Hold_r(host);
-		cbnext = itocb(cb->cnext);
-		if (!tthead || (TNorm(tthead) < TNorm(cb->thead))) {
-		    tthead = cb->thead;
-		}
-		TDel(cb);
-		HDel(cb);
-		CDel(cb, 0); /* Don't let CDel clean up the fe */
-		/* leave hold for MultiBreakVolumeCallBack to clear */
+    tthead = 0;
+    for (fe = myfe; fe; ) {
+	register struct CallBack *cbnext;
+	for (cb = itocb(fe->firstcb); cb; cb = cbnext) {
+	    host = h_itoh(cb->hhead);
+	    h_Hold_r(host);
+	    cbnext = itocb(cb->cnext);
+	    if (!tthead || (TNorm(tthead) < TNorm(cb->thead))) {
+		tthead = cb->thead;
 	    }
-	    /* relink chain */
-	    (struct object *) *fepp = ((struct object *)fe)->next;
-	    FreeFE(fe);
+	    TDel(cb);
+	    HDel(cb);
+	    CDel(cb, 0); /* Don't let CDel clean up the fe */
+	    /* leave hold for MultiBreakVolumeCallBack to clear */
 	}
-
-	if (tthead) {
-	    ViceLog(125, ("Breaking volume %d\n", fid.Volume));
-	    henumParms.ncbas = 0;
-	    henumParms.fid = &fid;
-	    henumParms.thead = tthead;
-	    H_UNLOCK
-	    h_Enumerate(MultiBreakVolumeLaterCallBack, (char *) &henumParms);
-	    H_LOCK
-
-	    if (henumParms.ncbas) {    /* do left-overs */
-		struct AFSCBFids tf;
-		tf.AFSCBFids_len = 1;
-		tf.AFSCBFids_val = &fid;
-		
-		MultiBreakCallBack_r(henumParms.cba, henumParms.ncbas, &tf, 0 );
-		henumParms.ncbas = 0;
-	    }
-	}  
+	myfe = fe;
+	(struct object *)fe = ((struct object *)fe)->next;
+	FreeFE(myfe);
     }
+
+    if (tthead) {
+	ViceLog(125, ("Breaking volume %d\n", fid.Volume));
+	henumParms.ncbas = 0;
+	henumParms.fid = &fid;
+	henumParms.thead = tthead;
+	H_UNLOCK
+	h_Enumerate(MultiBreakVolumeLaterCallBack, (char *) &henumParms);
+	H_LOCK
+	    
+	if (henumParms.ncbas) {    /* do left-overs */
+	    struct AFSCBFids tf;
+	    tf.AFSCBFids_len = 1;
+	    tf.AFSCBFids_val = &fid;
+	    
+	    MultiBreakCallBack_r(henumParms.cba, henumParms.ncbas, &tf, 0 );
+	    henumParms.ncbas = 0;
+	}
+    }  
     FSYNC_LOCK
     H_UNLOCK
 
