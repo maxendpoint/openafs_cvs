@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.14 2002/03/25 17:11:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.15 2002/03/25 17:26:51 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -544,6 +544,7 @@ struct brequest *afs_BQueue(aopcode, avc, dontwait, ause, acred, asparm0, asparm
 		avc->vrefCount++;
 #else
 		VN_HOLD(AFSTOV(avc));
+#endif
 	    }
 	    tb->refCount = ause+1;
 	    tb->size_parm[0] = asparm0;
