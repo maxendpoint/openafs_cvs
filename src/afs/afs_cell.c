@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.22 2002/08/22 23:26:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.23 2002/10/02 21:48:49 rees Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -155,7 +155,6 @@ void afs_LookupAFSDB(char *acellName)
 #ifdef AFS_AFSDB_ENV
     afs_int32 cellHosts[MAXCELLHOSTS];
     char *realName = NULL;
-    struct cell *tc;
     int code, timeout;
     
     code = afs_GetCellHostsAFSDB(acellName, cellHosts, &timeout, &realName);
@@ -321,7 +320,7 @@ int afs_cellname_write()
 {
     struct osi_file *tfile;
     struct cell_name *cn;
-    int code, off;
+    int off;
 
     if (!afs_cellname_dirty || !afs_cellname_inode_set)
 	return 0;

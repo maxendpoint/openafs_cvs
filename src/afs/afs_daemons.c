@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.18 2002/09/26 07:01:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.19 2002/10/02 21:48:49 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -49,7 +49,7 @@ afs_int32 PROBE_INTERVAL=180;	/* default to 3 min */
 #define PROBE_WAIT() (1000 * (PROBE_INTERVAL - ((afs_random() & 0x7fffffff) \
 		      % (PROBE_INTERVAL/2))))
 
-int afs_CheckServerDaemon(void)
+void afs_CheckServerDaemon(void)
 {
     afs_int32 now, delay, lastCheck, last10MinCheck;
 

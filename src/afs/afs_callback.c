@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.17 2002/08/22 22:44:53 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.18 2002/10/02 21:48:49 rees Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -932,7 +932,6 @@ int SRXAFSCB_WhoAreYou(struct rx_call *a_call, struct interfaceAddr *addr)
 {
     int i;
     int code = 0;
-    XSTATS_DECLS;
 
     RX_AFS_GLOCK();
 
