@@ -4,7 +4,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.18 2003/08/24 17:17:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.19 2003/09/23 21:44:16 zacheiss Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
@@ -447,7 +447,7 @@ afs_vsnprintf(char *p, size_t avail, const char *fmt, va_list ap)
 	case 'n':		/* report count so far */
 	    if (lflag > 1) {
 		llcountp = va_arg(ap, afs_intmax_t *);
-		*llcountp = (long long)count;
+		*llcountp = (afs_intmax_t)count;
 	    } else if (lflag) {
 		lcountp = va_arg(ap, long *);
 		*lcountp = (long)count;
