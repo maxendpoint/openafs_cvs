@@ -50,6 +50,7 @@ LIBOBJS = \
 	$(OUT)\serverLog.obj \
     $(OUT)\snprintf.obj \
 	$(OUT)\uuid.obj \
+	$(OUT)\uinit.obj \
 	$(OUT)\volparse.obj \
 	$(OUT)\winsock_nt.obj \
 	$(OUT)\errmap_nt.obj \

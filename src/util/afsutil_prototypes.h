@@ -168,6 +168,16 @@ extern size_t strlcat(char *dst, const char *src, size_t siz);
 /* sys.c */
 
 
+/* uinit.c */
+
+extern afs_int32 gen_ClientInit(int noAuthFlag, char *confDir, char *cellName,
+				afs_int32 sauth, struct ubik_client **uclientp,
+				int (*secproc) (), char *funcName, 
+				rxkad_level gen_rxkad_level, 
+				afs_int32 maxservers, afs_int32 serviceid, 
+				afs_int32 deadtime,
+				afs_uint32 server, afs_uint32 port);
+
 /* uuid.c */
 extern afs_int32 afs_uuid_equal(afsUUID * u1, afsUUID * u2);
 extern afs_int32 afs_uuid_is_nil(afsUUID * u1);
