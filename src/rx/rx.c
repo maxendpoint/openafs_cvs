@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.50 2003/03/14 19:47:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.51 2003/06/05 21:42:07 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -1466,6 +1466,13 @@ struct rx_call *rx_GetCall(int tno, struct rx_service *cur_service, osi_socket *
 	    MUTEX_EXIT(&rx_serverPool_lock);
 	    MUTEX_ENTER(&call->lock);
 
+	    if (call->flags & RX_CALL_WAIT_PROC) {
+		call->flags &= ~RX_CALL_WAIT_PROC;
+		MUTEX_ENTER(&rx_stats_mutex);
+		rx_nWaiting--;
+		MUTEX_EXIT(&rx_stats_mutex);
+	    }
+
 	    if (call->state != RX_STATE_PRECALL || call->error) {
 		MUTEX_EXIT(&call->lock);
 		MUTEX_ENTER(&rx_serverPool_lock);
@@ -1479,10 +1486,6 @@ struct rx_call *rx_GetCall(int tno, struct rx_service *cur_service, osi_socket *
 		rxi_SendAck(call, 0, 0, RX_ACK_DELAY, 0);
 
 	    CLEAR_CALL_QUEUE_LOCK(call);
-	    call->flags &= ~RX_CALL_WAIT_PROC;
-	    MUTEX_ENTER(&rx_stats_mutex);
-	    rx_nWaiting--;
-	    MUTEX_EXIT(&rx_stats_mutex);
 	    break;
 	}
 	else {
