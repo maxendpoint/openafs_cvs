@@ -30,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: hash.h,v 1.1 2004/04/09 05:54:22 jaltman Exp $ */
+/* $Id: hash.h,v 1.2 2004/05/10 03:52:18 shadow Exp $ */
 
 /* stuff in common between md4, md5, and sha1 */
 
@@ -55,6 +55,10 @@
 #define CRAYFIX(X) ((X) & 0xffffffff)
 #else
 #define CRAYFIX(X) (X)
+#endif
+
+#if !defined(inline) && !defined(__GNUC__)
+#define inline
 #endif
 
 static inline afs_uint32
