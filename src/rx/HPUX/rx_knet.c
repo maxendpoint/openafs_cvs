@@ -8,6 +8,11 @@
 #include "../rx/rx_kcommon.h"
 #include "../h/user.h"
 
+/* Define this here, used externally */
+#ifdef RX_ENABLE_LOCKS
+lock_t *rx_sleepLock;
+#endif
+
 /* rx_kern.c */
 /*
  * XXX The following is needed since the include file that contains them (<net/cko.h>)
@@ -36,13 +41,13 @@ static int rxk_fasttimo (void)
 {
     int code;
     int (*tproc)();
-    int s;
     struct clock temp;
 
-    s = splnet(); /* XXX is this how we spinlock on hpux? */
+    SPLVAR;
+    NETPRI;
     /* do rx fasttimo processing here */
     rxevent_RaiseEvents(&temp);
-    splx(s);
+    USERPRI; /* should this be after the call to tproc? */
     if (tproc = parent_proto.pr_fasttimo) code = (*tproc)();
     else code = 0;
     return code;
@@ -90,9 +95,12 @@ static struct mbuf *rxk_input (register struct mbuf *am, struct ifnet *aif)
     short port;
     int data_len, comp_sum;
 
+    SPLVAR;
+    NETPRI;
     /* make sure we have base ip and udp headers in first mbuf */
     if (am->m_off > MMAXOFF || am->m_len < 28) {
 	am = m_pullup(am, 28);
+	USERPRI;
 	if (!am) return (struct mbuf *)0;
     }
     hdr = (mtod(am, struct ip *))->ip_hl;
@@ -100,6 +108,7 @@ static struct mbuf *rxk_input (register struct mbuf *am, struct ifnet *aif)
 	/* pull up more, the IP hdr is bigger than usual */
 	if (am->m_len < (8 + (hdr<<2))) {
 	    am = m_pullup(am, 8+(hdr<<2));
+	    USERPRI;
 	    if (!am) return (struct mbuf *)0;
 	}
 	ti = mtod(am, struct ip *); /* recompute, since m_pullup allocates new mbuf */
@@ -152,6 +161,7 @@ static struct mbuf *rxk_input (register struct mbuf *am, struct ifnet *aif)
 			/* checksum, including cksum field, doesn't come out 0, so
 			   this packet is bad */
 			m_freem(am);
+			USERPRI;
 			return((struct mbuf *)0);
 		    }
 		}
@@ -174,13 +184,19 @@ static struct mbuf *rxk_input (register struct mbuf *am, struct ifnet *aif)
 						 portRocks[i], data_len);
 		}
 		else m_freem(am);
+		USERPRI;
 		return((struct mbuf *)0);
 	    }
 	}
     }
 
     /* if we get here, try to deliver packet to udp */
-    if (tproc = parent_proto.pr_input) return ((*tproc)(am,aif));
+    if (tproc = parent_proto.pr_input) {
+      code = (*tproc)(am,aif);
+      USERPRI;
+      return code;
+    }
+    USERPRI;
     return((struct mbuf *)0);
 }
 #endif /* ! RXK_LISTENER_ENV */
