@@ -1,5 +1,5 @@
 #/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
-# $Header: /cvs/openafs/src/libafs/Attic/MakefileProto.DARWIN,v 1.1 2001/03/27 07:33:39 shadow Exp $
+# $Header: /cvs/openafs/src/libafs/Attic/MakefileProto.DARWIN,v 1.2 2001/06/05 15:05:30 shadow Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
@@ -36,7 +36,7 @@ OPTF2=${OPT2}
 KOPTS=-traditional-cpp -static -fno-common -finline -fno-keep-inline-functions -force_cpusubtype_ALL -msoft-float -mlong-branch 
 #CFLAGS=-Werror-implicit-function-declaration -I. -I.. ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG}
 #CFLAGS=-framework Kernel -I. -I.. ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG}
-CFLAGS=-I. -I.. ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG}
+CFLAGS=-I. -I.. -I${TOP_SRCDIR}/config ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG}
 
 
 # Name of directory to hold object files and libraries.
