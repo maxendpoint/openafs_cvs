@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.16 2004/07/28 03:54:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.17 2004/08/03 17:27:59 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -163,9 +163,11 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
 		    FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
 		    FILE_FLAG_WRITE_THROUGH, NULL);
     fflush(stdout);
-    if (fh == INVALID_HANDLE_VALUE)
-	return -1;
-
+	if (fh == INVALID_HANDLE_VALUE) {
+		if (GetLastError() == ERROR_DOWNGRADE_DETECTED)
+			fprintf(stderr, "Unable to open \"%s\": Authentication Downgrade Detected\n", tbuffer);
+		return -1;
+	}
     /* return fh and success code */
     *handlep = fh;
     return 0;
