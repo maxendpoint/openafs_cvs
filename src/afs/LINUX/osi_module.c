@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.32 2003/05/16 17:42:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.33 2003/05/20 03:49:37 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -27,10 +27,9 @@ RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.32 2003/05/16 17:42:
 #include <linux/init.h>
 #include <linux/sched.h>
 #endif
-#ifndef EXPORTED_SYS_CALL_TABLE
+#if !defined(EXPORTED_SYS_CALL_TABLE) && defined(HAVE_KERNEL_LINUX_SYSCALL_H)
 #include <linux/syscall.h>
 #endif
-
 
 
 #ifdef AFS_SPARC64_LINUX24_ENV
