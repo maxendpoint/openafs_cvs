@@ -14,13 +14,15 @@
  * Its value should be as large as the maximum file descriptor limit we
  * are likely to run into on any platform.  Right now, that is 65536
  * which is the default hard fd limit on Solaris 9 */
+#ifndef _WIN32
 #define FD_SETSIZE 65536
+#endif
 
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.16 2004/07/08 05:16:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.17 2004/07/19 14:39:42 jaltman Exp $");
 
 # include <sys/types.h>		/* fd_set on older platforms */
 # include <errno.h>

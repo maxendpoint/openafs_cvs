@@ -14,7 +14,9 @@
  * Its value should be as large as the maximum file descriptor limit we
  * are likely to run into on any platform.  Right now, that is 65536
  * which is the default hard fd limit on Solaris 9 */
+#ifndef _WIN32
 #define FD_SETSIZE 65536
+#endif
 
 #include <afsconfig.h>
 #ifdef KERNEL
@@ -24,7 +26,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.7 2004/07/08 05:16:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.8 2004/07/19 14:39:42 jaltman Exp $");
 
 /* Enable data initialization when the header file is included */
 #define INIT(stuff) = stuff

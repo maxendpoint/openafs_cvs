@@ -42,13 +42,15 @@ static int newVLDB = 1;
  * Its value should be as large as the maximum file descriptor limit we
  * are likely to run into on any platform.  Right now, that is 65536
  * which is the default hard fd limit on Solaris 9 */
+#ifndef _WIN32
 #define FD_SETSIZE 65536
+#endif
 
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.24 2004/07/08 05:16:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.25 2004/07/19 14:39:38 jaltman Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
