@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.7 2002/03/10 19:07:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.8 2002/08/22 20:57:24 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -127,7 +127,8 @@ afs_int32 STC_LabelTape(acid, label, taskId)
     code = pthread_create(&pid, &tattr, Labeller, ptr);
     AFS_SIGSET_RESTORE();
 #else
-    code = LWP_CreateProcess(Labeller, 32768, 1, ptr ,"labeller process", &pid);
+    code = LWP_CreateProcess(Labeller, 32768, 1, (void *) ptr,
+			     "labeller process", &pid);
 #endif
 
 error_exit:
@@ -221,7 +222,8 @@ afs_int32 STC_PerformDump(rxCallId, tcdiPtr, tc_dumpArrayPtr, taskId)
     code = pthread_create(&pid, &tattr, Dumper, newNode);
     AFS_SIGSET_RESTORE();
 #else
-    code = LWP_CreateProcess(Dumper, 32768, 1, newNode, "dumper process", &pid);
+    code = LWP_CreateProcess(Dumper, 32768, 1, (void *) newNode, 
+			     "dumper process", &pid);
 #endif
     if (code) ERROR_EXIT(code);
 
@@ -298,7 +300,8 @@ afs_int32 STC_PerformRestore(acid, dumpSetName, arestores, taskID)
     code = pthread_create(&pid, &tattr, Restorer, newNode);
     AFS_SIGSET_RESTORE();
 #else
-    code = LWP_CreateProcess(Restorer, 65368, 1,newNode ,"restorer process", &pid);
+    code = LWP_CreateProcess(Restorer, 65368, 1, (void *) newNode, 
+			     "restorer process", &pid);
 #endif
 
 error_exit:
@@ -384,7 +387,8 @@ afs_int32 STC_RestoreDb(rxCall, taskId)
     code = pthread_create(&pid, &tattr, restoreDbFromTape, (void *)*taskId);
     AFS_SIGSET_RESTORE();
 #else
-    code = LWP_CreateProcess(restoreDbFromTape, 32768, 1, *taskId, "Db restore", &pid);
+    code = LWP_CreateProcess(restoreDbFromTape, 32768, 1, 
+			     (void *)*taskId, "Db restore", &pid);
 #endif
 
 error_exit:
