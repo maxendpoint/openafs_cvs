@@ -25,7 +25,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.10 2003/11/23 04:53:42 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.11 2003/11/29 21:38:04 jaltman Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -970,7 +970,7 @@ WorkerBee(as, arock)
 	    readentry(record[i].addr, &vlentry, &type);
 
 	    if (InvalidVolname(vlentry.name))
-		printf("Volume '%s' at addr has an invalid name\n",
+		printf("Volume '%s' at addr %u has an invalid name\n",
 		       vlentry.name, record[i].addr);
 
 	    if (!(record[i].type & NH))

@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.11 2003/11/29 20:31:49 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.12 2003/11/29 21:37:56 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -294,10 +294,10 @@ char *
 TypeName(index)
      int index;
 {
-    static char error[16];
+    static char error[36];
 
     if ((index < 0) || (index >= NBLOCKTYPES)) {
-	sprintf(error, "UNKNOWN_TYPE", index);
+	sprintf(error, "UNKNOWN_TYPE %d", index);
 	return (error);
     }
     return (typeName[index]);
@@ -1044,7 +1044,7 @@ verifyFreeLists()
 
 	    /* check block type */
 	    if (blockMap[blockIndex]->header.type != i) {
-		Log("verifyFreeLists: Found %s type in %s free chain\n",
+		Log("verifyFreeLists: Found %s type in %s free chain (addr 0x%x)\n",
 		    TypeName(blockMap[blockIndex]->header.type), TypeName(i),
 		    addr);
 		if (BumpErrors())

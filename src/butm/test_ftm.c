@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.9 2003/11/23 04:53:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.10 2003/11/29 21:37:57 jaltman Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -388,7 +388,7 @@ PerformDumpTest(TestInfo * tip)
 	    if ((tlen == 0) && (flen == 0))
 		break;		/* correct termination */
 	    if (flen != tlen) {
-		printf("File length mismatch for %dth file (%d)\n", i,
+		printf("File length mismatch for %dth file (%s)\n", i,
 		       tip->files[i]);
 		ERROR_EXIT(6);
 	    }

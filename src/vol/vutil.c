@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vutil.c,v 1.14 2003/11/15 04:59:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vutil.c,v 1.15 2003/11/29 21:38:05 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -252,21 +252,21 @@ VCreateVolume_r(Error * ec, char *partname, VolId volumeId, VolId parentId)
     IH_INIT(handle, device, vol.parentId, tempHeader.volumeInfo);
     fdP = IH_OPEN(handle);
     if (fdP == NULL) {
-	Log("VCreateVolume:  Problem iopen inode %llu (err=%d)\n",
-	    (afs_uintmax_t) tempHeader.volumeInfo, errno);
+	Log("VCreateVolume:  Problem iopen inode %s (err=%d)\n",
+	    PrintInode(NULL, tempHeader.volumeInfo), errno);
 	unlink(volumePath);
 	goto bad;
     }
     if (FDH_SEEK(fdP, 0, SEEK_SET) < 0) {
-	Log("VCreateVolume:  Problem lseek inode %llu (err=%d)\n",
-	    (afs_uintmax_t) tempHeader.volumeInfo, errno);
+	Log("VCreateVolume:  Problem lseek inode %s (err=%d)\n",
+	    PrintInode(NULL, tempHeader.volumeInfo), errno);
 	FDH_REALLYCLOSE(fdP);
 	unlink(volumePath);
 	goto bad;
     }
     if (FDH_WRITE(fdP, (char *)&vol, sizeof(vol)) != sizeof(vol)) {
-	Log("VCreateVolume:  Problem writing to  inode %llu (err=%d)\n",
-	    (afs_uintmax_t) tempHeader.volumeInfo, errno);
+	Log("VCreateVolume:  Problem writing to  inode %s (err=%d)\n",
+	    PrintInode(NULL, tempHeader.volumeInfo), errno);
 	FDH_REALLYCLOSE(fdP);
 	unlink(volumePath);
 	goto bad;

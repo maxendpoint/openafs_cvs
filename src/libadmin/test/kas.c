@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/kas.c,v 1.6 2003/08/08 21:54:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/kas.c,v 1.7 2003/11/29 21:38:01 jaltman Exp $");
 
 #include "kas.h"
 #include <time.h>
@@ -589,7 +589,7 @@ Print_kas_serverDebugInfo_p(kas_serverDebugInfo_p debug, const char *prefix)
     printf("%sCurrent time %s\n", prefix, ctime(&time));
     printf("%sNo auth %d\n", prefix, debug->noAuth);
     time = debug->lastTransaction;
-    printf("%sLast transaction %d\n", prefix, ctime(&time));
+    printf("%sLast transaction %s\n", prefix, ctime(&time));
     printf("%sLast operation %s\n", prefix, debug->lastOperation);
     printf("%sLast principal auth %s\n", prefix, debug->lastPrincipalAuth);
     printf("%sLast principal UDP auth %s\n", prefix,

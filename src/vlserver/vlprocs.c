@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.12 2003/11/12 14:23:30 rees Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.13 2003/11/29 21:38:04 jaltman Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -1898,7 +1898,7 @@ SVL_GetStats(rxcall, stats, vital_header)
 #endif
     if (errorcode = Init_VLdbase(&trans, LOCKREAD, this_op))
 	return errorcode;
-    VLog(5, ("GetStats %\n", rxinfo(rxcall)));
+    VLog(5, ("GetStats %s\n", rxinfo(rxcall)));
     memcpy((char *)vital_header, (char *)&cheader.vital_header,
 	   sizeof(vital_vlheader));
     memcpy((char *)stats, (char *)&dynamic_statistics, sizeof(vldstats));

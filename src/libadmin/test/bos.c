@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/bos.c,v 1.8 2003/08/08 21:54:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/bos.c,v 1.9 2003/11/29 21:38:01 jaltman Exp $");
 
 #include "bos.h"
 
@@ -1093,8 +1093,8 @@ Print_bos_KeyInfo_p(bos_KeyInfo_p key, const char *prefix)
     printf("%sVersion number: %d\n", prefix, key->keyVersionNumber);
     printf("%sLast modification date %d\n", prefix,
 	   key->keyStatus.lastModificationDate);
-    printf("%sLast modification micro seconds %d\n",
-	   key->keyStatus.lastModificationMicroSeconds, prefix);
+    printf("%sLast modification micro seconds %d\n", prefix,
+	   key->keyStatus.lastModificationMicroSeconds);
     printf("%sChecksum %u\n", prefix, key->keyStatus.checkSum);
 
     printf("%sKey: \n", prefix);

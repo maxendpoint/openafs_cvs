@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.26 2003/11/23 04:53:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.27 2003/11/29 21:38:06 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -3458,7 +3458,7 @@ UV_ReleaseVolume(afs_int32 afromvol, afs_int32 afromserver,
 	    replicas[i].trans = 0;
 	    if (code) {
 		fprintf(STDERR,
-			"Failed to end transaction on ro volume %u at server 0x%x\n",
+			"Failed to end transaction on ro volume %u at server %s\n",
 			entry.volumeId[ROVOL],
 			hostutil_GetNameByINet(htonl
 					       (replicas[i].server.

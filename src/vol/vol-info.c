@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.15 2003/08/08 20:40:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.16 2003/11/29 21:38:05 jaltman Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -841,8 +841,8 @@ PrintVnodes(Volume * vp, VnodeClass class)
 		FDH_REALLYCLOSE(fdP1);
 		IH_RELEASE(ih1);
 		close(ofd);
-		printf("... Copied inode %llu to file %s (%d bytes)\n",
-		       (afs_uintmax_t) ino, nfile, total);
+		printf("... Copied inode %s to file %s (%d bytes)\n",
+		       PrintInode(NULL, ino), nfile, total);
 	    }
 	} else {
 #if defined(AFS_NAMEI_ENV)

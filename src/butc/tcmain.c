@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.13 2003/11/24 22:09:19 rees Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.14 2003/11/29 21:37:56 jaltman Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -210,7 +210,7 @@ atocl(numstring, crunit, number)
     }
 
     count =
-	sscanf(numstring, "%f%c%s", (unsigned char *)&total, &cunit, rest);
+	sscanf(numstring, "%f%c%s", &total, &cunit, rest);
     if ((count > 2) || (count <= 0))
 	return -1;
     if (count == 1)
