@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.23 2002/11/14 23:53:36 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.24 2002/11/20 23:00:33 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -162,6 +162,9 @@ void afs_Daemon(void)
 	    DFlush();			/* write out dir buffers */
 	    afs_WriteThroughDSlots();	/* write through cacheinfo entries */
 	    afs_FlushActiveVcaches(1);/* keep flocks held & flush nfs writes */
+#ifdef AFS_DISCON_ENV
+	    afs_StoreDirtyVcaches();
+#endif
 	    afs_CheckRXEpoch();
 	    last1MinCheck = now;
 	}

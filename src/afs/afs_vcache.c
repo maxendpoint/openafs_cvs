@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.44 2002/11/20 03:13:23 zacheiss Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.45 2002/11/20 23:00:33 rees Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -1737,6 +1737,11 @@ loop:
 	  return tvc;
       }
 #endif /* AFS_OSF_ENV */
+#ifdef AFS_OBSD_ENV
+    VOP_LOCK(AFSTOV(tvc), LK_EXCLUSIVE | LK_RETRY, curproc);
+    uvm_vnp_uncache(AFSTOV(tvc));
+    VOP_UNLOCK(AFSTOV(tvc), 0, curproc);
+#endif
 
     ObtainWriteLock(&afs_xcbhash, 464);
     tvc->states &= ~CUnique;

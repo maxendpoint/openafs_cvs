@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.5 2002/11/19 18:28:02 rees Exp $
+ * $Id: osi_vnodeops.c,v 1.6 2002/11/20 23:00:33 rees Exp $
  */
 
 /*
@@ -98,7 +98,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.5 2002/11/19 18:28:02 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.6 2002/11/20 23:00:33 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -392,7 +392,7 @@ afs_nbsd_close(ap)
     int code;
 
     AFS_GLOCK();
-    code = afs_close(VTOAFS(ap->a_vp), ap->a_fflag, ap->a_cred);
+    code = afs_close(VTOAFS(ap->a_vp), ap->a_fflag, ap->a_cred, ap->a_p);
     AFS_GUNLOCK();
     return code;
 }
