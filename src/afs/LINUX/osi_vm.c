@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vm.c,v 1.10 2002/01/22 05:51:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vm.c,v 1.11 2002/01/29 16:07:27 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -89,12 +89,14 @@ void osi_VM_FSyncInval(struct vcache *avc)
  */
 void osi_VM_StoreAllSegments(struct vcache *avc)
 {
-#ifdef AFS_LINUX24_ENV
     struct inode *ip = (struct inode *) avc;
-   
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,5)
+    /* filemap_fdatasync() only exported in 2.4.5 and above */
     ReleaseWriteLock(&avc->lock);
     AFS_GUNLOCK();
-    write_inode_now(ip, 1);
+    filemap_fdatasync(ip->i_mapping);
+    filemap_fdatawait(ip->i_mapping);
     AFS_GLOCK();
     ObtainWriteLock(&avc->lock, 121);
 #endif
