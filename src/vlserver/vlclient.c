@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.14 2004/10/10 00:41:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.15 2004/10/10 01:39:15 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -164,10 +164,10 @@ GetVolume(vol, entry)
 afs_int32
 vl_Initialize(int auth, char *confDir, int server, char *cellp)
 {
-    return gen_ClientInit(auth?0:1, confDir, cellp, 0,
+    return ugen_ClientInit(auth?0:1, confDir, cellp, 0,
 			  &cstruct, NULL, "vl_Initialize", rxkad_clear, 
 			  MAXSERVERS, AFSCONF_VLDBSERVICE, 50, server,
-			  htons(AFSCONF_VLDBPORT));
+			  htons(AFSCONF_VLDBPORT), USER_SERVICE_ID);
 }
 
 /* return host address in network byte order */

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.3 2004/10/10 00:38:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.4 2004/10/10 01:38:54 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef AFS_NT40_ENV
@@ -55,11 +55,11 @@ RCSID
   Get the appropriate type of ubik client structure out from the system.
 */
 afs_int32
-gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
+ugen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	       struct ubik_client **uclientp, int (*secproc) (),
 	       char *funcName, afs_int32 gen_rxkad_level, 
 	       afs_int32 maxservers, afs_int32 serviceid, afs_int32 deadtime,
-	       afs_uint32 server, afs_uint32 port)
+	       afs_uint32 server, afs_uint32 port, afs_uint32 usrvid)
 {
     afs_int32 code, scIndex, i;
     struct afsconf_cell info;
@@ -145,7 +145,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 		scIndex = 0;
 	    } else {		/* got a ticket */
 		scIndex = 2;
-		if (((ttoken.kvno < 0) || (ttoken.kvno > 255)) && ttoken.kvno != 217) {
+		if ((ttoken.kvno < 0) || (ttoken.kvno > 256)) {
 		    fprintf(stderr,
 			    "%s: funny kvno (%d) in ticket, proceeding\n",
 			    funcName, ttoken.kvno);
@@ -177,7 +177,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	(*secproc) (sc, scIndex);
     if (server) {
 	serverconns[0] = rx_NewConnection(server, port,
-					  USER_SERVICE_ID, sc, scIndex);
+					  usrvid, sc, scIndex);
     } else {
 	if (info.numServers > maxservers) {
 	    fprintf(stderr,
@@ -188,15 +188,18 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	for (i = 0; i < info.numServers; i++) {
 	    serverconns[i] =
 		rx_NewConnection(info.hostAddr[i].sin_addr.s_addr,
-				 info.hostAddr[i].sin_port, USER_SERVICE_ID,
+				 info.hostAddr[i].sin_port, usrvid,
 				 sc, scIndex);
 	}
     }
-    *uclientp = 0;
-    code = ubik_ClientInit(serverconns, uclientp);
-    if (code) {
-	fprintf(stderr, "%s: ubik client init failed.\n", funcName);
-	return code;
+    /* Are we just setting up connections, or is this really ubik stuff? */
+    if (uclientp) {
+	*uclientp = 0;
+	code = ubik_ClientInit(serverconns, uclientp);
+	if (code) {
+	    fprintf(stderr, "%s: ubik client init failed.\n", funcName);
+	    return code;
+	}
     }
     return 0;
 }

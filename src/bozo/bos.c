@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.21 2004/08/11 15:45:36 rees Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.22 2004/10/10 01:38:50 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -239,7 +239,7 @@ GetConn(as, aencrypt)
 	    code = ktc_GetToken(&sname, &ttoken, sizeof(ttoken), NULL);
 	    if (code == 0) {
 		/* have tickets, will travel */
-		if (ttoken.kvno >= 0 && ttoken.kvno <= 255);
+		if (ttoken.kvno >= 0 && ttoken.kvno <= 256);
 		else {
 		    fprintf(stderr,
 			    "bos: funny kvno (%d) in ticket, proceeding\n",

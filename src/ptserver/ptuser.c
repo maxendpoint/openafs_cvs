@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.17 2004/10/06 17:35:19 rees Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.18 2004/10/10 01:38:52 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -168,7 +168,7 @@ pr_Initialize(IN afs_int32 secLevel, IN char *confDir, IN char *cell)
 	if (code)
 	    scIndex = 0;
 	else {
-	    if (ttoken.kvno >= 0 && ttoken.kvno <= 255)
+	    if (ttoken.kvno >= 0 && ttoken.kvno <= 256)
 		/* this is a kerberos ticket, set scIndex accordingly */
 		scIndex = 2;
 	    else {
