@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.71 2005/04/03 18:09:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.72 2005/04/03 18:13:32 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -2194,30 +2194,13 @@ rxi_Alloc(register size_t size)
 {
     register char *p;
 
-#if defined(AFS_AIX41_ENV) && defined(KERNEL)
-    /* Grab the AFS filesystem lock. See afs/osi.h for the lock
-     * implementation.
-     */
-    int glockOwner = ISAFS_GLOCK();
-    if (!glockOwner)
-	AFS_GLOCK();
-#endif
     MUTEX_ENTER(&rx_stats_mutex);
     rxi_Alloccnt++;
     rxi_Allocsize += size;
     MUTEX_EXIT(&rx_stats_mutex);
-#if	(defined(AFS_AIX32_ENV) || defined(AFS_HPUX_ENV)) && !defined(AFS_HPUX100_ENV) && defined(KERNEL)
-    if (size > AFS_SMALLOCSIZ) {
-	p = (char *)osi_AllocMediumSpace(size);
-    } else
-	p = (char *)osi_AllocSmall(size, 1);
-#if defined(AFS_AIX41_ENV) && defined(KERNEL)
-    if (!glockOwner)
-	AFS_GUNLOCK();
-#endif
-#else
+
     p = (char *)osi_Alloc(size);
-#endif
+
     if (!p)
 	osi_Panic("rxi_Alloc error");
     memset(p, 0, size);
@@ -2227,30 +2210,12 @@ rxi_Alloc(register size_t size)
 void
 rxi_Free(void *addr, register size_t size)
 {
-#if defined(AFS_AIX41_ENV) && defined(KERNEL)
-    /* Grab the AFS filesystem lock. See afs/osi.h for the lock
-     * implementation.
-     */
-    int glockOwner = ISAFS_GLOCK();
-    if (!glockOwner)
-	AFS_GLOCK();
-#endif
     MUTEX_ENTER(&rx_stats_mutex);
     rxi_Alloccnt--;
     rxi_Allocsize -= size;
     MUTEX_EXIT(&rx_stats_mutex);
-#if	(defined(AFS_AIX32_ENV) || defined(AFS_HPUX_ENV)) && !defined(AFS_HPUX100_ENV) && defined(KERNEL)
-    if (size > AFS_SMALLOCSIZ)
-	osi_FreeMediumSpace(addr);
-    else
-	osi_FreeSmall(addr);
-#if defined(AFS_AIX41_ENV) && defined(KERNEL)
-    if (!glockOwner)
-	AFS_GUNLOCK();
-#endif
-#else
+
     osi_Free(addr, size);
-#endif
 }
 
 /* Find the peer process represented by the supplied (host,port)
