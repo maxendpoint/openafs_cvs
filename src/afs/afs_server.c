@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.29 2004/05/08 04:23:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.30 2004/05/19 20:31:18 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -714,7 +714,7 @@ afs_CheckServers(int adown, struct cell *acellp)
 
 /* find a server structure given the host address */
 struct server *
-afs_FindServer(afs_int32 aserver, ushort aport, afsUUID * uuidp,
+afs_FindServer(afs_int32 aserver, afs_uint16 aport, afsUUID * uuidp,
 	       afs_int32 locktype)
 {
     struct server *ts;
