@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.42 2004/07/28 22:33:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.43 2004/07/30 19:12:58 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -761,7 +761,7 @@ rxi_FindIfnet(afs_uint32 addr, afs_uint32 * maskp)
  * in network byte order.
  */
 struct osi_socket *
-rxk_NewSocket(short aport)
+rxk_NewSocketHost(afs_uint32 ahost, short aport)
 {
     register afs_int32 code;
     struct socket *newSocket;
@@ -821,7 +821,7 @@ rxk_NewSocket(short aport)
     memset(&myaddr, 0, sizeof myaddr);
     myaddr.sin_family = AF_INET;
     myaddr.sin_port = aport;
-    myaddr.sin_addr.s_addr = 0;
+    myaddr.sin_addr.s_addr = ahost;
 #ifdef STRUCT_SOCKADDR_HAS_SA_LEN
     myaddr.sin_len = sizeof(myaddr);
 #endif
@@ -913,6 +913,11 @@ rxk_NewSocket(short aport)
     return (struct osi_socket *)0;
 }
 
+struct osi_socket *
+rxk_NewSocket(short aport)
+{
+    return rxk_NewSocketHost(0, aport);
+}
 
 /* free socket allocated by rxk_NewSocket */
 int
