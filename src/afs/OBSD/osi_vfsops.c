@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.9 2002/12/05 16:17:26 rees Exp $
+ * $Id: osi_vfsops.c,v 1.10 2003/01/30 22:03:37 kolya Exp $
  */
 
 /*
@@ -93,7 +93,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.9 2002/12/05 16:17:26 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.10 2003/01/30 22:03:37 kolya Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -482,7 +482,7 @@ afs_vfs_load(struct lkm_table *lkmtp,
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.9 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.10 $) lkm loaded\n");
     return 0;
 }
 
@@ -527,4 +527,10 @@ afsmodload(struct lkm_table *lkmtp, int cmd, int ver)
 	}
     }
     DISPATCH(lkmtp,cmd,ver,afs_vfs_load,afs_vfs_unload,lkm_nofunc);
+}
+
+int
+libafs_lkmentry(struct lkm_table *lkmtp, int cmd, int ver)
+{
+    return afsmodload(lkmtp, cmd, ver);
 }
