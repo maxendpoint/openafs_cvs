@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.19 2004/08/19 00:22:38 kolya Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.20 2005/03/11 02:54:49 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -587,7 +587,7 @@ HandleVolume(struct DiskPartition *dp, char *name)
 	vp = AttachVolume(dp, name, &header);
 	if (!vp) {
 	    printf("Volinfo: Error attaching volume header %s\n", name);
-	    exit(1);
+	    return;
 	}
     }
     PrintHeader(vp);
