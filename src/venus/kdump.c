@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.19 2001/11/05 19:39:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.20 2001/11/05 19:43:47 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>	/* for malloc() */
@@ -260,6 +260,10 @@ typedef struct timeval {
 #define _LINUX_BYTEORDER_BIG_ENDIAN_H
 #else
 #define _LINUX_BYTEORDER_LITTLE_ENDIAN_H
+#endif
+/* Avoid problems with timer_t redefinition */
+#ifndef timer_t
+#define timer_t ktimer_t
 #endif
 #include <linux/version.h>
 #include <linux/fs.h>
