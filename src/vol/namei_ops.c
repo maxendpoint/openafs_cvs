@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.9 2001/07/12 19:59:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.10 2001/09/24 10:49:48 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -203,6 +203,10 @@ int namei_ViceREADME(char *partition)
 {
    char filename[32];
    int fd;
+
+   /* Create the inode directory if we're starting for the first time */
+   sprintf(filename, "%s/%s", partition, INODEDIR);
+   mkdir(filename, 0700);
 
    sprintf(filename, "%s/%s/README", partition, INODEDIR);
    fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0444);
