@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18 2004/06/23 18:34:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.1 2005/03/26 02:09:00 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -352,7 +352,8 @@ afs_vop_close(ap)
 				 * } */ *ap;
 {
     int code;
-    struct vcache *avc = ap->a_vp;
+    struct vnode *vp = ap->a_vp;
+    struct vcache *avc = VTOAFS(vp);
     AFS_GLOCK();
     if (ap->a_cred)
 	code = afs_close(avc, ap->a_fflag, ap->a_cred, ap->a_p);
