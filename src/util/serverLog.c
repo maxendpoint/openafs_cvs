@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.17 2003/03/10 02:03:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.18 2003/05/15 16:27:59 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -74,6 +74,7 @@ static int serverLogFD = -1;
 #ifndef AFS_NT40_ENV
 int serverLogSyslog = 0;
 int serverLogSyslogFacility = LOG_DAEMON;
+char *serverLogSyslogTag = 0;
 #endif
 
 #include <stdarg.h>
@@ -208,7 +209,7 @@ int OpenLog(const char *fileName)
 
 #ifndef AFS_NT40_ENV
     if ( serverLogSyslog ) {
-	openlog(NULL, LOG_PID, serverLogSyslogFacility);
+	openlog(serverLogSyslogTag, LOG_PID, serverLogSyslogFacility);
 	return(0);
     }
 #endif

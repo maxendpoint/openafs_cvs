@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.42 2003/04/24 13:37:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.43 2003/05/15 16:28:02 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1418,6 +1418,7 @@ main(int argc, char * argv[])
     NewParms(1);
 
     /* Open FileLog on stdout, stderr, fd 1 and fd2 (for perror), sigh. */
+    serverLogSyslogTag = "fileserver";
     OpenLog(AFSDIR_SERVER_FILELOG_FILEPATH);
     SetupLogSignals(); 
 

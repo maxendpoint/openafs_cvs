@@ -91,7 +91,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.28 2003/05/15 16:23:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.29 2003/05/15 16:28:04 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -1066,7 +1066,7 @@ void SalvageFileSysParallel(struct DiskPartition *partP)
 	     open("/", 0); dup2(0, 1); dup2(0, 2);
 #ifndef AFS_NT40_ENV
 		 if ( useSyslog ) {
-		 	openlog(NULL, LOG_PID, useSyslogFacility);
+		 	openlog("salvager", LOG_PID, useSyslogFacility);
 		 } else
 #endif
 		 {

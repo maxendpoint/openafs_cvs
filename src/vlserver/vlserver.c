@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.14 2002/08/21 18:14:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.15 2003/05/15 16:28:03 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -213,6 +213,7 @@ char	**argv;
     } 
     vl_dbaseName = AFSDIR_SERVER_VLDB_FILEPATH;
 
+    serverLogSyslogTag = "vlserver";
     OpenLog(AFSDIR_SERVER_VLOG_FILEPATH);   /* set up logging */
     SetupLogSignals(); 
 
