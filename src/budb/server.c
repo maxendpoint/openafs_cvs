@@ -10,7 +10,7 @@
 #include <afs/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/server.c,v 1.3 2001/07/05 15:20:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/server.c,v 1.4 2001/07/05 15:42:55 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -306,14 +306,12 @@ main(argc, argv)
     struct rx_service *tservice;
     struct rx_securityClass *sca[3];
     
-    extern int afsconf_ClientAuth();
     extern int afsconf_ServerAuth();
     extern int afsconf_CheckAuth();
 
     extern int rx_stackSize;
     extern struct rx_securityClass *rxnull_NewServerSecurityObject();
     extern int BUDB_ExecuteRequest();
-    extern afsconf_GetKey();
     
 #ifdef AFS_NT40_ENV
     /* initialize winsock */
