@@ -10,7 +10,7 @@
 #include <afs/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kaprocs.c,v 1.5 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kaprocs.c,v 1.6 2001/07/11 18:04:39 shadow Exp $");
 
 #include <afs/stds.h>
 #include <errno.h>
@@ -772,9 +772,7 @@ set_password (tt, name, instance, password, kvno, caller)
     
 
     if (special_name (name, instance)) { /* set key over rides key_version */
-#if SPECIAL
 	tentry.flags = htonl (ntohl(tentry.flags) | KAFSPECIAL);
-#endif
 	if (code = ka_NewKey (tt, to, &tentry, password)) return(code);
     }
     else {
