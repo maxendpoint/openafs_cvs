@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.9 2005/01/31 04:20:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.10 2005/02/21 01:12:53 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -952,6 +952,9 @@ restart:
 #endif
 	ip->i_sb = afs_globalVFS;
 	put_inode_on_dummy_list(ip);
+#ifdef STRUCT_INODE_HAS_I_SB_LIST
+	list_add(&ip->i_sb_list, &ip->i_sb->s_inodes);
+#endif
     }
 #endif
 
