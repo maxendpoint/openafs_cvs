@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.18 2001/10/10 00:10:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.19 2001/10/11 07:41:22 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -858,11 +858,15 @@ tagain:
 	afs_PutVolume(volp, READ_LOCK);
     
     /* If we did the InlineBulk RPC pull out the return code */
-    if (inlinebulk && (&statsp[0])->errorCode) {
-	afs_Analyze(tcp, (&statsp[0])->errorCode, &adp->fid, areqp, 
-		    AFS_STATS_FS_RPCIDX_BULKSTATUS, SHARED_LOCK, 
-		    (struct cell *)0);
-	code = (&statsp[0])->errorCode;
+    if (inlinebulk) {
+	if ((&statsp[0])->errorCode) {
+	    afs_Analyze(tcp, (&statsp[0])->errorCode, &adp->fid, areqp, 
+			AFS_STATS_FS_RPCIDX_BULKSTATUS, SHARED_LOCK, 
+			(struct cell *)0);
+	    code = (&statsp[0])->errorCode;
+	}
+    } else {
+	code = 0;
     }
     osi_FreeLargeSpace(statMemp);
     osi_FreeLargeSpace(cbfMemp);
