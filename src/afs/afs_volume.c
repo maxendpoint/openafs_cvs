@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.23 2003/07/15 23:14:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.24 2003/08/08 19:55:03 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -688,7 +688,15 @@ afs_NewVolumeByName(char *aname, afs_int32 acell, int agood,
     else
 	ve = (char *)tve;
     tv = afs_SetupVolume(0, aname, ve, tcell, agood, type, areq);
-    if ((agood == 2) && tv->roVol) {
+    if ((agood == 3) && tv->backVol) {
+	/*
+	 * This means that very soon we'll ask for the BK volume so
+	 * we'll prefetch it (well we did already.)
+	 */
+	tv1 = afs_SetupVolume(tv->backVol, (char *)0, ve, tcell, 0, type, areq);
+	tv1->refCount--;
+    }
+    if ((agood >= 2) && tv->roVol) {
 	/*
 	 * This means that very soon we'll ask for the RO volume so
 	 * we'll prefetch it (well we did already.)

@@ -1,7 +1,7 @@
 /*
  * osi_sysctl.c: Linux sysctl interface to OpenAFS
  *
- * $Id: osi_sysctl.c,v 1.6 2003/07/15 23:14:24 shadow Exp $
+ * $Id: osi_sysctl.c,v 1.7 2003/08/08 19:55:05 shadow Exp $
  *
  * Written Jan 30, 2002 by Kris Van Hees (Sine Nomine Associates)
  */
@@ -43,6 +43,10 @@ static ctl_table afs_sysctl_table[] = {
     ,
     {5, "rx_deadtime",
      &afs_rx_deadtime, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {6, "bkVolPref",
+     &afs_bkvolpref, sizeof(afs_int32), 0644, NULL,
      &proc_dointvec}
     ,
     {0}

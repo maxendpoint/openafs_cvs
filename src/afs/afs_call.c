@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.60 2003/07/15 23:14:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.61 2003/08/08 19:55:03 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -871,8 +871,12 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
     } else if (parm == AFSOP_SET_FAKESTAT) {
 	afs_fakestat_enable = parm2;
 	code = 0;
-    } else
-	code = EINVAL;
+    }
+    else if (parm == AFSOP_SET_BACKUPTREE) {
+	afs_bkvolpref = parm2;
+    }
+    else
+      code = EINVAL;
 
   out:
     AFS_GUNLOCK();
