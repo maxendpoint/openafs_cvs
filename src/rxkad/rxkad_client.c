@@ -18,7 +18,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.7 2001/08/08 00:04:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.8 2001/10/05 21:18:36 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/stds.h"
@@ -41,6 +41,13 @@ RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.7 2001/08/08 00:04:05 
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <time.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else
@@ -119,7 +126,8 @@ rxkad_AllocCID(aobj, aconn)
 	clock_GetTime(&tgen.time);	/* changes time1 and time2 */
 	tgen.time.sec = htonl(tgen.time.sec);
 	tgen.time.usec = htonl(tgen.time.usec);
-	tgen.counter = htonl(counter++);
+	tgen.counter = htonl(counter);
+	counter++;
 #ifdef KERNEL
 	tgen.random1 = afs_random() & 0x7fffffff;	/* was "80000" */
 	tgen.random2 = afs_random() & 0x7fffffff;	/* was "htonl(100)" */

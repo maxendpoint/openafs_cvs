@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.8 2001/08/23 17:26:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.9 2001/10/05 21:18:36 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -51,6 +51,13 @@ RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.8 2001/08/23 17:26:46 
 #endif
 #include <rx/rx.h>
 #include <rx/xdr.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 
 #endif /* KERNEL */
 
