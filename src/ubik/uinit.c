@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.2 2004/10/10 00:37:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.3 2004/10/10 00:38:07 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef AFS_NT40_ENV
@@ -73,7 +73,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 
     code = rx_Init(0);
     if (code) {
-	fprintf(STDERR, "%s: could not initialize rx.\n", funcName);
+	fprintf(stderr, "%s: could not initialize rx.\n", funcName);
 	return code;
     }
     rx_SetRxDeadTime(deadtime);
@@ -81,14 +81,14 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
     if (sauth) {		/* -localauth */
 	tdir = afsconf_Open(AFSDIR_SERVER_ETC_DIRPATH);
 	if (!tdir) {
-	    fprintf(STDERR,
+	    fprintf(stderr,
 		    "%s: Could not process files in configuration directory (%s).\n",
 		    funcName, AFSDIR_SERVER_ETC_DIRPATH);
 	    return -1;
 	}
 	code = afsconf_ClientAuth(tdir, &sc, &scIndex);	/* sets sc,scIndex */
 	if (code) {
-	    fprintf(STDERR,
+	    fprintf(stderr,
 		    "%s: Could not get security object for -localAuth\n",
 		    funcName);
 	    return -1;
@@ -97,7 +97,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	    afsconf_GetCellInfo(tdir, tdir->cellName, serviceid,
 				&info);
 	if (code) {
-	    fprintf(STDERR,
+	    fprintf(stderr,
 		    "%s: can't find cell %s's hosts in %s/%s\n",
 		    funcName, cellName, AFSDIR_SERVER_ETC_DIRPATH,
 		    AFSDIR_CELLSERVDB_FILE);
@@ -106,7 +106,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
     } else {			/* not -localauth */
 	tdir = afsconf_Open(confDir);
 	if (!tdir) {
-	    fprintf(STDERR,
+	    fprintf(stderr,
 		    "%s: Could not process files in configuration directory (%s).\n",
 		    funcName, confDir);
 	    return -1;
@@ -115,7 +115,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	if (!cellName) {
 	    code = afsconf_GetLocalCell(tdir, cellstr, sizeof(cellstr));
 	    if (code) {
-		fprintf(STDERR,
+		fprintf(stderr,
 			"%s: can't get local cellname, check %s/%s\n",
 			funcName, confDir, AFSDIR_THISCELL_FILE);
 		exit(1);
@@ -126,7 +126,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	code =
 	    afsconf_GetCellInfo(tdir, cellName, serviceid, &info);
 	if (code) {
-	    fprintf(STDERR,
+	    fprintf(stderr,
 		    "%s: can't find cell %s's hosts in %s/%s\n",
 		    funcName, cellName, confDir, AFSDIR_CELLSERVDB_FILE);
 	    exit(1);
@@ -139,14 +139,14 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	    strcpy(sname.name, "afs");
 	    code = ktc_GetToken(&sname, &ttoken, sizeof(ttoken), NULL);
 	    if (code) {		/* did not get ticket */
-		fprintf(STDERR,
+		fprintf(stderr,
 			"%s: Could not get afs tokens, running unauthenticated.\n",
 			funcName);
 		scIndex = 0;
 	    } else {		/* got a ticket */
 		scIndex = 2;
 		if (((ttoken.kvno < 0) || (ttoken.kvno > 255)) && ttoken.kvno != 217) {
-		    fprintf(STDERR,
+		    fprintf(stderr,
 			    "%s: funny kvno (%d) in ticket, proceeding\n",
 			    funcName, ttoken.kvno);
 		}
@@ -164,7 +164,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 					       ttoken.ticket);
 	    break;
 	default:
-	    fprintf(STDERR, "%s: unsupported security index %d\n",
+	    fprintf(stderr, "%s: unsupported security index %d\n",
 		    funcName, scIndex);
 	    exit(1);
 	    break;
@@ -180,7 +180,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 					  USER_SERVICE_ID, sc, scIndex);
     } else {
 	if (info.numServers > maxservers) {
-	    fprintf(STDERR,
+	    fprintf(stderr,
 		    "%s: info.numServers=%d (> maxservers=%d)\n",
 		    funcName, info.numServers, maxservers);
 	    exit(1);
@@ -195,7 +195,7 @@ gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
     *uclientp = 0;
     code = ubik_ClientInit(serverconns, uclientp);
     if (code) {
-	fprintf(STDERR, "%s: ubik client init failed.\n", funcName);
+	fprintf(stderr, "%s: ubik client init failed.\n", funcName);
 	return code;
     }
     return 0;

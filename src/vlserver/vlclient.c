@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.13 2004/10/09 23:23:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.14 2004/10/10 00:41:31 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -162,29 +162,17 @@ GetVolume(vol, entry)
 
 /* Almost identical's to pr_Initialize in vlserver/pruser.c */
 afs_int32
-vl_Initialize(auth, confDir, server, cellp)
-     int auth, server;
-     char *confDir, *cellp;
+vl_Initialize(int auth, char *confDir, int server, char *cellp)
 {
-    afs_int32 code;
-    struct afsconf_dir *tdir;
-    struct ktc_principal sname;
-    struct ktc_token ttoken;
-    afs_int32 scIndex = 0;
-    struct rx_securityClass *sc;
-    struct afsconf_cell info;
-    afs_int32 i;
-
     return gen_ClientInit(auth?0:1, confDir, cellp, 0,
 			  &cstruct, NULL, "vl_Initialize", rxkad_clear, 
 			  MAXSERVERS, AFSCONF_VLDBSERVICE, 50, server,
-			  htons(AFSCONF_VLDBPORT))
+			  htons(AFSCONF_VLDBPORT));
 }
 
 /* return host address in network byte order */
 afs_int32
-GetServer(aname)
-     char *aname;
+GetServer(char *aname)
 {
     register struct hostent *th;
     afs_int32 addr;
