@@ -65,7 +65,14 @@ util: procmgmt_headers afsreg_headers
 	$(NTMAKE)
 	$(CD) ..\..
 
-comerr: util
+afs: util
+      echo ***** $@
+      $(DOCD) $(SRC)\afs
+      $(CD) $(SRC)\afs
+      $(NTMAKE)
+      $(CD) ..\..
+
+comerr: afs
      echo ***** $@
 	$(DOCD) $(SRC)\$@
 	$(CD) $(SRC)\$@
@@ -557,7 +564,7 @@ InstallShield5:
 	$(NTMAKE)
 	$(CD) ..\..\..\..
 
-media: InstallShield5
+media: InstallShield5 NSIS
 
 # Clean target for obj tree
 clean:
@@ -579,4 +586,11 @@ mkdir:
     -mkdir $(DESTDIR)\checked\bin
 	-mkdir $(DESTDIR)\free\bin
 	-@copy $(SRC)\config\NTLANG.BAT .
+
+NSIS:
+   echo ***** Making NSIS Installer
+   $(DOCD) $(SRC)\WINNT\install\NSIS
+   $(CD) $(SRC)\WINNT\install\NSIS
+   $(NTMAKE)
+   $(CD) ..\..\..\..
 
