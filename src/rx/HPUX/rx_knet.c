@@ -7,6 +7,7 @@
 #include "../h/param.h"
 #include "../rx/rx_kcommon.h"
 #include "../h/user.h"
+#include "../h/tihdr.h"
 
 /* Define this here, used externally */
 #ifdef RX_ENABLE_LOCKS
