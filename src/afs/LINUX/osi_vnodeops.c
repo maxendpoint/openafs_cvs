@@ -987,7 +987,7 @@ int afs_linux_rmdir(struct inode *dip, struct dentry *dp)
      * EEXIST to ENOTEMPTY on linux.
      */
     if (code == EEXIST) {
-	code = ENOTEMPTYR;
+	code = ENOTEMPTY;
     }
     
     if (!code) {
