@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vfsck/setup.c,v 1.7 2003/03/28 21:26:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vfsck/setup.c,v 1.8 2003/06/19 17:03:02 shadow Exp $");
 
 #include <stdio.h>
 #define VICE
@@ -285,7 +285,7 @@ restat:
 	setup_all_block_seek();
 #endif
 #ifdef	AFS_SUN5_ENV
-	else if (debug)
+	if (!preen && debug)
 		printf(" pid %d\n", getpid());
 	if (debug && (hotroot || mountedfs)) {
 		printf("** %s", sname);
