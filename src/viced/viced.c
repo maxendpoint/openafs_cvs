@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.57 2004/03/24 17:23:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58 2004/03/24 17:36:57 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -935,12 +935,13 @@ ParseArgs(int argc, char *argv[])
 		return -1; 
 	    }
 	    abort_threshold = atoi(argv[++i]);
-	} else if (!strcmp(argv[i], "-k"))
+	} else if (!strcmp(argv[i], "-k")) {
             if ((i + 1) >= argc) {
 		fprintf(stderr, "missing argument for -k\n"); 
 		return -1; 
 	    }
 	    stack = atoi(argv[++i]);
+	}
 #if defined(AFS_SGI_ENV)
 	else if (!strcmp(argv[i], "-lock")) {
 	    SawLock = 1;
@@ -961,13 +962,13 @@ ParseArgs(int argc, char *argv[])
 	    PctSpare = atoi(argv[++i]);
 	    BlocksSpare = 0;	/* has non-zero default */
 	    SawPctSpare = 1;
-	} else if (!strcmp(argv[i], "-w"))
+	} else if (!strcmp(argv[i], "-w")) {
             if ((i + 1) >= argc) {
 		fprintf(stderr, "missing argument for -w\n"); 
 		return -1; 
 	    }
 	    fiveminutes = atoi(argv[++i]);
-	else if (!strcmp(argv[i], "-hr")) {
+	} else if (!strcmp(argv[i], "-hr")) {
 	    int hr;
             if ((i + 1) >= argc) {
 		fprintf(stderr, "missing argument for -hr\n"); 
