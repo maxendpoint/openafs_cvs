@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.24 2002/09/26 07:01:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.25 2002/09/30 19:13:36 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -427,6 +427,8 @@ int afs_UFSWrite(register struct vcache *avc, struct uio *auio,
     avc->states |= CDirty;
     tvec = (struct iovec *) osi_AllocSmallSpace(sizeof(struct iovec));
     while (totalLength > 0) {
+#if 0 /* Can't call without tdc. Can't call later since GetDCache can be 
+	 called with !tdc. Leaving it out for now. */
         /* 
          *  The following lines are necessary because afs_GetDCache with
 	 *  flag == 4 expects the length field to be filled. It decides
@@ -441,6 +443,7 @@ int afs_UFSWrite(register struct vcache *avc, struct uio *auio,
 		as will fit */
 	    len = max - offset;
 	}
+#endif
 	/* read the cached info */
 	if (noLock) {
 	    tdc = afs_FindDCache(avc, filePos);
