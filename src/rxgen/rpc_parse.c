@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.14 2002/08/21 18:14:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.15 2003/01/15 04:27:16 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -714,6 +714,9 @@ static void check_proc(definition *defp, token *tokp, int noname)
     token tok;
     int proc_split = 0;
     int proc_multi = 0;
+
+    if (PackageIndex < 0)
+	error("Procedure must be in a package!\n");
 
     tokp->kind = TOK_PROC;
     defp->def_kind = DEF_PROC;
