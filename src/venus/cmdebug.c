@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.7 2002/03/16 22:17:29 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.8 2002/03/19 22:03:30 kolya Exp $");
 
 
 #include <sys/types.h>
@@ -25,9 +25,7 @@ RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.7 2002/03/16 22:17:29 kolya
 #include <afs/cmd.h>
 #include <rx/rx.h>
 #include <lock.h>
-
-/* XXX is this kosher? */
-#include <afs_args.h>
+#include <afs/afs_args.h>
 
 extern struct rx_securityClass *rxnull_NewServerSecurityObject();
 extern struct hostent *hostutil_GetHostByName();
