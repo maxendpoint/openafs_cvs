@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/input.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/input.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
 
 #ifdef AFS_HPUX_ENV
 #include <sys/types.h>
@@ -85,7 +85,7 @@ int astartInput; {
     oi_params.i_gwparams = &wi_params;
 
     code = gator_objects_init(&oi_params);
-    if (code) return (struct gwin *) 0;
+    if (code) return NULL;
     
     /* if we start input thread */
     IOMGR_Initialize();	/* input thread uses it */

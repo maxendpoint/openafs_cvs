@@ -10,7 +10,7 @@
 #include <sys/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/test.c,v 1.4 2001/08/08 00:03:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/test.c,v 1.5 2002/08/21 18:13:43 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -96,7 +96,7 @@ test2(v)
 	struct timeval tp;
 	struct l_fixedpt time_lm;
 
-	(void)gettimeofday(&tp, (struct timezone *) 0);
+	(void)gettimeofday(&tp, NULL);
 	tstamp(&time_lm, &tp);
 
 	if (v) {

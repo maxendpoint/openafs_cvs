@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/utst_client.c,v 1.5 2001/10/05 21:05:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/utst_client.c,v 1.6 2002/08/21 18:14:19 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -70,7 +70,7 @@ main(argc, argv)
 	exit(1);
     }
     rx_Init(0);
-    sc = (struct rx_securityClass *) rxnull_NewClientSecurityObject();
+    sc = rxnull_NewClientSecurityObject();
     for (i=0; i<MAXSERVERS; i++) {
 	if (serverList[i]){
 	    serverconns[i] = rx_NewConnection(serverList[i], htons(3000),

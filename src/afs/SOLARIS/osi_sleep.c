@@ -10,15 +10,13 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_sleep.c,v 1.5 2002/02/01 20:30:10 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_sleep.c,v 1.6 2002/08/21 18:12:43 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
 #include "../afs/afs_stats.h"   /* afs statistics */
 
 static int osi_TimedSleep(char *event, afs_int32 ams, int aintok);
-void afs_osi_Wakeup(char *event);
-void afs_osi_Sleep(char *event);
 
 static char waitV;
 
@@ -122,7 +120,7 @@ static afs_event_t *afs_getevent(char *event)
 #define relevent(evp) ((evp)->refcount--)
 
 
-void afs_osi_Sleep(char *event)
+void afs_osi_Sleep(void *event)
 {
     struct afs_event *evp;
     int seq;
@@ -136,7 +134,7 @@ void afs_osi_Sleep(char *event)
     relevent(evp);
 }
 
-int afs_osi_SleepSig(char *event)
+int afs_osi_SleepSig(void *event)
 {
     struct afs_event *evp;
     int seq, code = 0;
@@ -187,7 +185,7 @@ static int osi_TimedSleep(char *event, afs_int32 ams, int aintok)
 }
 
 
-void afs_osi_Wakeup(char *event)
+void afs_osi_Wakeup(void *event)
 {
     struct afs_event *evp;
 

@@ -10,7 +10,7 @@
 /* Get CM initialization parameters. */
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/test/getinitparams.c,v 1.3 2001/07/05 15:21:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/test/getinitparams.c,v 1.4 2002/08/21 18:14:27 shadow Exp $");
 
 #include <afs/param.h>
 #include <stdio.h>
@@ -113,7 +113,7 @@ char **av;
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
 
-    ts = cmd_CreateSyntax((char *)0, GetInitParamsCmd, (char *)0,
+    ts = cmd_CreateSyntax(NULL, GetInitParamsCmd, NULL,
 			  "Get CM initialization parameters");
     
     cmd_AddParm(ts, "-file", CMD_SINGLE, CMD_OPTIONAL, "filename in AFS");

@@ -26,7 +26,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/fasttime.c,v 1.4 2001/07/12 19:58:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/fasttime.c,v 1.5 2002/08/21 18:13:42 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -100,9 +100,7 @@ int FT_GetTimeOfDay(struct timeval *tv, struct timezone *tz)
 
 
 /* For compatibility.  Should go away. */
-TM_GetTimeOfDay (tv, tz)
-    struct timeval *tv;
-    struct timezone *tz;
+int TM_GetTimeOfDay (struct timeval *tv, struct timezone *tz)
 {
     return FT_GetTimeOfDay(tv, tz);
 }

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.7 2001/08/06 23:50:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.8 2002/08/21 18:14:21 shadow Exp $");
 
 #include <afs/stds.h>
 #include <rx/rxkad.h>
@@ -55,7 +55,7 @@ struct filestr **ah; {
 	free(tf->name);
 	free(tf);
     }
-    *ah = (struct filestr *) 0;
+    *ah = NULL;
     return 0;
 }
 

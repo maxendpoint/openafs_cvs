@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/update/client.c,v 1.9 2001/10/05 21:13:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/client.c,v 1.10 2002/08/21 18:14:21 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -160,9 +160,9 @@ int main(argc,argv)
 	exit(2);
     }
     retrytime = 60;
-    dirname = (struct filestr *) 0;
-    ModFiles =  (struct filestr *) 0;
-    okhostfiles = (struct filestr *) 0;
+    dirname = NULL;
+    ModFiles =  NULL;
+    okhostfiles = NULL;
 
     verbose = 0;
     interval = TIMEOUT;

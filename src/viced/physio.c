@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/physio.c,v 1.6 2002/02/13 04:00:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/physio.c,v 1.7 2002/08/21 18:14:29 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -26,6 +26,13 @@ RCSID("$Header: /cvs/openafs/src/viced/physio.c,v 1.6 2002/02/13 04:00:57 shadow
 #include <sys/file.h>
 #include <sys/time.h>
 #include <unistd.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <afs/nfs.h>
 #include <afs/assert.h>

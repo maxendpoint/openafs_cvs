@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/klog.c,v 1.6 2001/10/05 21:17:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/klog.c,v 1.7 2002/08/21 18:13:22 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -107,7 +107,7 @@ int main (
     zero_argc = argc;
     zero_argv = argv;
 
-    ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "obtain Kerberos authentication");
+    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "obtain Kerberos authentication");
 
 #define aXFLAG 0
 #define aPRINCIPAL 1

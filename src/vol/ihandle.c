@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.7 2002/04/29 23:40:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.8 2002/08/21 18:14:33 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -28,6 +28,13 @@ RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.7 2002/04/29 23:40:22 shadow 
 #if defined(AFS_SUN5_ENV) || defined(AFS_NBSD_ENV)
 #include <sys/fcntl.h>
 #include <sys/resource.h>
+#endif
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #include <rx/xdr.h>

@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.6 2002/08/21 18:12:56 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -190,7 +190,7 @@ bc_Restorer(aindex)
     struct rx_connection *aconn = (struct rx_connection *)0;
     statusP statusPtr, newStatusPtr;
 
-    struct dumpinfo *dumpinfolist = (struct dumpinfo *)0;
+    struct dumpinfo *dumpinfolist = NULL;
     struct dumpinfo *pdi, *ndi, *di, dlevels[BC_MAXLEVELS];
     struct volinfo  *pvi, *nvi, *vi;
     afs_int32           lvl, lv;

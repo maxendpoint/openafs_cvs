@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/comerr/error_msg.c,v 1.3 2001/07/12 19:58:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/comerr/error_msg.c,v 1.4 2002/08/21 18:13:02 shadow Exp $");
 
 #include "internal.h"
 #include <stdio.h>
@@ -18,6 +18,7 @@ RCSID("$Header: /cvs/openafs/src/comerr/error_msg.c,v 1.3 2001/07/12 19:58:32 sh
 #include "mit-sipb-cr.h"
 #include <afs/errors.h>
 #include <string.h>
+#include "com_err.h"
 
 static const char copyright[] =
     "Copyright 1986, 1987, 1988 by the Student Information Processing Board\nand the department of Information Systems\nof the Massachusetts Institute of Technology";
@@ -72,8 +73,8 @@ static char *vmsgs[] = {
     (char *) 0
 };
 
-static char *negative_message(code)
-int code; {
+static char *negative_message(int code)
+{
     if (code == -1)
 	return "server or network not responding";
     else if (code == -2)
@@ -92,16 +93,15 @@ int code; {
     }
 }
 
-static char *volume_message(code)
-int code; {
+static char *volume_message(int code)
+{
       if (code >= 101 && code <= 111)
 	  return vmsgs[code-101];
       else
 	  return "unknown volume error";
 }
 
-const char * error_message (code)
-  int code;
+const char *error_message (afs_int32 code)
 {
     int offset;
     struct et_list *et;

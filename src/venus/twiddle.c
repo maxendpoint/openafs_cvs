@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/twiddle.c,v 1.4 2001/07/12 19:59:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/twiddle.c,v 1.5 2002/08/21 18:14:26 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <sys/ioctl.h>
@@ -149,7 +149,7 @@ char **argv; {
     /* try to find volume location information */
     
 
-    ts = cmd_CreateSyntax((char *)0, Twiddle, 0, "adjust rx parms");
+    ts = cmd_CreateSyntax(NULL, Twiddle, 0, "adjust rx parms");
     cmd_AddParm(ts, "-initReceiveWindow ", CMD_SINGLE, CMD_OPTIONAL, "16");
     cmd_AddParm(ts, "-maxReceiveWindow ", CMD_SINGLE, CMD_OPTIONAL, "16");
     cmd_AddParm(ts, "-initSendWindow ", CMD_SINGLE, CMD_OPTIONAL, "8");

@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_open.c,v 1.6 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_open.c,v 1.7 2002/08/21 18:12:45 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -49,7 +49,7 @@ afs_open(avcp, aflags, acred)
     struct afs_fakestat_state fakestate;
     
     AFS_STATCNT(afs_open);
-    if (code = afs_InitReq(&treq, acred)) return code;
+    if ((code = afs_InitReq(&treq, acred))) return code;
 #ifdef AFS_SGI64_ENV
     /* avcpp can be, but is not necesarily, bhp's vnode. */
     tvc = VTOAFS(BHV_TO_VNODE(bhv));
@@ -110,7 +110,7 @@ afs_open(avcp, aflags, acred)
 	        crhold(acred);
 	        if (tvc->credp) {
 	            struct ucred *crp = tvc->credp;
-	            tvc->credp = (struct ucred *)0;
+	            tvc->credp = NULL;
 	            crfree(crp);
 	        }
 	        tvc->credp = acred;

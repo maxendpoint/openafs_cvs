@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/log/tokens.c,v 1.4 2001/07/12 19:58:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/log/tokens.c,v 1.5 2002/08/21 18:13:39 shadow Exp $");
 
 #include <stdio.h>
 #ifdef	AFS_AIX32_ENV
@@ -23,6 +23,15 @@ RCSID("$Header: /cvs/openafs/src/log/tokens.c,v 1.4 2001/07/12 19:58:47 shadow E
 #include <afs/auth.h>
 #include <time.h>		/*time(), ctime()*/
 #include <pwd.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 
 #define VIRTUE
 #define VICE

@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/bulktest/bulk_client.c,v 1.5 2001/08/08 00:04:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/bulktest/bulk_client.c,v 1.6 2002/08/21 18:14:05 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -176,7 +176,7 @@ char **argv;
     int store = 0;
     int count = 1;
     int verbose = 0;
-    char *hostname = (char *) 0;
+    char *hostname = NULL;
     u_long host;
     struct rx_securityClass *null_securityObject;
     struct rx_connection *conn = (struct rx_connection *) 0;

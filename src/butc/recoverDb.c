@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.5 2001/08/08 00:03:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.6 2002/08/21 18:12:58 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -351,7 +351,7 @@ scanVolData(taskId, curTapePtr, tapeVersion, volumeHeader, volumeTrailer, bytesR
      afs_uint32              *bytesRead;
 {
     afs_int32 headBytes, tailBytes;
-    char  *block = (char *) 0;
+    char  *block = NULL;
     char  *buffer[2];
     int   hasdata[2], curr, prev;
     afs_uint32 chunkSize = 0;

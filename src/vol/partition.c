@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.19 2002/06/24 19:09:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.20 2002/08/21 18:14:33 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -99,6 +99,15 @@ RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.19 2002/06/24 19:09:59 shad
 #include <sys/file.h>
 #include <mntent.h>
 #endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -353,7 +362,7 @@ void VAttachPartitions2() {
     char pname[32];
 
     dirp = opendir("/");
-    while (de = readdir(dirp)) {
+    while ((de = readdir(dirp))) {
 	strcpy(pname, "/");
 	strncat(pname, de->d_name, 20);
 	pname[sizeof(pname)-1] = '\0';
@@ -727,7 +736,7 @@ int VAttachPartitions(void)
 	    exit(-1);
 	}
     }
-    while (mntent = getmntent(mfd)) {
+    while ((mntent = getmntent(mfd))) {
 	/* If we're going to always attach this partition, do it later. */
 	if (VIsAlwaysAttach(mntent->mnt_dir))
 	    continue;

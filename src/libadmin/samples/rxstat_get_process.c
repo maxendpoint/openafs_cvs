@@ -14,12 +14,21 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/samples/rxstat_get_process.c,v 1.4 2001/07/12 19:58:45 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/samples/rxstat_get_process.c,v 1.5 2002/08/21 18:13:32 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #include <pthread.h>
 #endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <afs/afs_Admin.h>
 #include <afs/afs_AdminErrors.h>
 #include <afs/afs_clientAdmin.h>

@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/physio.c,v 1.5 2001/08/08 00:04:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/physio.c,v 1.6 2002/08/21 18:14:33 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -27,6 +27,13 @@ RCSID("$Header: /cvs/openafs/src/vol/physio.c,v 1.5 2001/08/08 00:04:23 shadow E
 #else
 #include <sys/file.h>
 #include <unistd.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #ifdef	AFS_SUN5_ENV
 #include <sys/fcntl.h>
 #endif

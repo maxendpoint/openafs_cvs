@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/rmtsysd.c,v 1.4 2001/07/12 19:59:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/rmtsysd.c,v 1.5 2002/08/21 18:14:16 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -39,7 +39,8 @@ extern RMTSYS_ExecuteRequest();
 
 #include "AFS_component_version_number.c"
 
-main() {
+int main(int argc, char *argv[])
+{
     struct rx_securityClass *(securityObjects[N_SECURITY_OBJECTS]);
     struct rx_service *service;
 

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/main.c,v 1.7 2001/09/18 04:26:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/main.c,v 1.8 2002/08/21 18:12:56 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -88,8 +88,6 @@ extern PrintError();
  * Global configuration information for the Backup Coordinator.
  */
 struct bc_config *bc_globalConfig;		/*Ptr to global BC configuration info*/
-
-extern struct rx_securityClass *rxnull_NewServerSecurityObject();
 
 struct ubik_client *cstruct;		/* Ptr to Ubik client structure*/
 struct ktc_token   ttoken;              /* The token */
@@ -386,7 +384,7 @@ afs_int32 doDispatch(targc, targv, dispatchCount)
 
   lock_Dispatch();
 
-  loadFile = (char *) 0;
+  loadFile = NULL;
   code = cmd_Dispatch(targc, targv);
   internalLoadFile = loadFile;
 
@@ -502,7 +500,7 @@ main(argc, argv)
     /* Get early warning if the command is interacive mode or not */
     interact = ( ((argc < 2) || (argv[1][0] == '-')) ? 1 : 0 );
 
-    cmd_SetBeforeProc(MyBeforeProc, (char *)0);
+    cmd_SetBeforeProc(MyBeforeProc, NULL);
 
     ts = cmd_CreateSyntax("dump", bc_DumpCmd, 0, "start dump");
     cmd_AddParm(ts, "-volumeset", CMD_SINGLE, CMD_OPTIONAL, "volume set name");

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.8 2001/08/06 23:50:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.9 2002/08/21 18:14:21 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -68,7 +68,7 @@ static int Quit();
 int update_rxstat_userok(call)
     struct rx_call *call;
 {
-    return afsconf_SuperUser(cdir, call, (char *)0);
+    return afsconf_SuperUser(cdir, call, NULL);
 }
 
 /*
@@ -138,7 +138,7 @@ int AuthOkay (call, name)
     int matches;
 
     /* Must be in 'UserList' to use */
-    if (!afsconf_SuperUser (cdir, call, (char *)0)) return 0;
+    if (!afsconf_SuperUser (cdir, call, NULL)) return 0;
 
     if (rx_SecurityClassOf (rx_ConnectionOf(call)) == 2) {
 	code = rxkad_GetServerInfo (call->conn, &level, 0,0,0,0,0);
@@ -175,7 +175,6 @@ int main (argc, argv)
 {
     struct rx_securityClass *securityObjects[3];
     struct rx_service *service;
-    extern struct rx_securityClass *rxnull_NewServerSecurityObject();
 
     int a = 0;
     rxkad_level level;

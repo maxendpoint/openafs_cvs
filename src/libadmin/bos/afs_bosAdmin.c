@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/bos/afs_bosAdmin.c,v 1.8 2002/02/22 09:00:40 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/bos/afs_bosAdmin.c,v 1.9 2002/08/21 18:13:25 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/stds.h>
@@ -31,6 +31,15 @@ RCSID("$Header: /cvs/openafs/src/libadmin/bos/afs_bosAdmin.c,v 1.8 2002/02/22 09
 #else
 #include <unistd.h>
 #endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 
 
 /*

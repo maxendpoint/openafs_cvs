@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.7 2001/08/08 00:04:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.8 2002/08/21 18:14:33 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -596,7 +596,7 @@ char **argv;
     register struct cmd_syndesc *ts;
     afs_int32 code;
 
-    ts = cmd_CreateSyntax((char *)0, handleit, 0, "Dump volume's internal state");
+    ts = cmd_CreateSyntax(NULL, handleit, 0, "Dump volume's internal state");
     cmd_AddParm(ts, "-online", CMD_FLAG, CMD_OPTIONAL, "Get info from running fileserver");
     cmd_AddParm(ts, "-vnode", CMD_FLAG, CMD_OPTIONAL, "Dump vnode info");
     cmd_AddParm(ts, "-date", CMD_FLAG, CMD_OPTIONAL, "Also dump vnode's mod date");

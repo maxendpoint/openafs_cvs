@@ -14,7 +14,7 @@
 #include "afs/param.h"
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_afsuuid.c,v 1.4 2001/08/08 00:03:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_afsuuid.c,v 1.5 2002/08/21 18:13:51 shadow Exp $");
 
 #if defined(KERNEL) && !defined(UKERNEL)
 #ifdef AFS_LINUX20_ENV
@@ -36,10 +36,7 @@ RCSID("$Header: /cvs/openafs/src/rx/xdr_afsuuid.c,v 1.4 2001/08/08 00:03:57 shad
 #endif
 #endif
 
-int
-xdr_afsUUID(xdrs, objp)
-	XDR *xdrs;
-	afsUUID *objp;
+int xdr_afsUUID(XDR *xdrs, afsUUID *objp)
 {
 	if (!xdr_afs_uint32(xdrs, &objp->time_low)) {
 		return (FALSE);

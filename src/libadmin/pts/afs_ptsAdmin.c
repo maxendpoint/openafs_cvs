@@ -10,9 +10,18 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.5 2002/04/22 15:42:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.6 2002/08/21 18:13:31 shadow Exp $");
 
 #include <stdio.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <afs/stds.h>
 #include "afs_ptsAdmin.h"
 #include "../adminutil/afs_AdminInternal.h"

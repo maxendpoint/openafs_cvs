@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/textobject.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/textobject.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
 
 #include "gtxtextobj.h"		/*Interface for this module*/
 #include "gtxwindows.h"		/*Gator window interface*/
@@ -24,6 +24,15 @@ RCSID("$Header: /cvs/openafs/src/gtx/textobject.c,v 1.4 2001/07/12 19:58:39 shad
 #include "gtxX11win.h"		/*Gator X11 window interface*/
 #include <stdio.h>                      /*Standard I/O stuff*/
 #include <errno.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+#include <stdlib.h>
 
 /*Externally-advertised array of text onode operations*/
 struct onodeops gator_text_ops = {

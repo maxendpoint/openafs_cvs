@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxkad/test/stress_c.c,v 1.6 2001/08/08 00:04:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/test/stress_c.c,v 1.7 2002/08/21 18:14:12 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -1153,7 +1153,7 @@ long rxkst_StartClient (parms)
 	scIndex = 2;			/* kerberos security index */
     } else {
 	/* unauthenticated connection */
-	sc = (struct rx_securityClass *) rxnull_NewClientSecurityObject ();
+	sc = rxnull_NewClientSecurityObject();
 	assert (sc);
 	scIndex = 0;			/* null security index */
     }

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_exporter.c,v 1.5 2001/08/08 00:03:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_exporter.c,v 1.6 2002/08/21 18:12:36 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -22,10 +22,9 @@ afs_lock_t		afs_xexp;
 
 /* Add a new "afs exporter" entry to the table of exporters. The default initial values of the entry are passed in as parameters. */
 static afs_int32 init_xexported = 0;
-struct afs_exporter *exporter_add(size, ops, state, type, data)
-afs_int32 size, state, type;
-struct exporterops *ops;
-char *data;
+
+struct afs_exporter *exporter_add(afs_int32 size, struct exporterops *ops, afs_int32 state, 
+	afs_int32 type, char *data)
 {
     struct afs_exporter *ex, *op;
     afs_int32 length;
@@ -58,8 +57,7 @@ char *data;
 
 
 /* Returns the "afs exporter" structure of type, "type". NULL is returned if not found */
-struct afs_exporter *exporter_find(type)
-int type;
+struct afs_exporter *exporter_find(int type)
 {
     struct afs_exporter *op;
 
@@ -76,7 +74,7 @@ int type;
 }
 
 
-shutdown_exporter() 
+void shutdown_exporter(void) 
 {
     struct afs_exporter *ex, *op;
 

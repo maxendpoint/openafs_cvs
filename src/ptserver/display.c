@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/display.c,v 1.5 2001/09/17 19:42:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/display.c,v 1.6 2002/08/21 18:13:46 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -18,6 +18,13 @@ RCSID("$Header: /cvs/openafs/src/ptserver/display.c,v 1.5 2001/09/17 19:42:56 sh
 #include <winsock2.h>
 #else
 #include <netinet/in.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <stdio.h>
 #include "ptserver.h"

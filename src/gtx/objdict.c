@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/objdict.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/objdict.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
 
 #include "gtxobjdict.h"			/*Interface for this module*/
 #include <stdio.h>			/*Standard I/O package*/
@@ -174,6 +174,6 @@ struct onode *gator_objdict_lookup(nametofind)
     /*
      * Finally, return the good news.
      */
-    return((struct onode *)0);
+    return(NULL);
 
 } /*gator_objdict_lookup*/

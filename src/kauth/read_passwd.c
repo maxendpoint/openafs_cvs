@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/read_passwd.c,v 1.4 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/read_passwd.c,v 1.5 2002/08/21 18:13:22 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <des.h>
@@ -32,9 +32,16 @@ int      strcmp();
 #include <signal.h>
 #endif
 #if defined(AFS_SGI_ENV)
-#include <strings.h>
 #include <signal.h>
 #endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 
 #if	defined	(AFS_AIX_ENV) || defined(AFS_SGI_ENV)
 /* Just temp till we figure out the aix stuff */

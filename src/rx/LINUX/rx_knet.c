@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.10 2002/05/15 20:04:18 zacheiss Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.11 2002/08/21 18:14:00 shadow Exp $");
 
 #ifdef AFS_LINUX22_ENV
 #include "../rx/rx_kcommon.h"
@@ -58,8 +58,7 @@ struct osi_socket *rxk_NewSocket(short aport)
 
 
 /* free socket allocated by osi_NetSocket */
-int rxk_FreeSocket(asocket)
-    register struct socket *asocket;
+int rxk_FreeSocket(register struct socket *asocket)
 {
     AFS_STATCNT(osi_FreeSocket);
     return 0;

@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/waitkey.c,v 1.9 2001/09/13 23:19:20 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/waitkey.c,v 1.10 2002/08/21 18:13:42 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -33,6 +33,13 @@ RCSID("$Header: /cvs/openafs/src/lwp/waitkey.c,v 1.9 2001/09/13 23:19:20 rees Ex
 #else
 #include <sys/time.h>
 #include <unistd.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include "lwp.h"
 

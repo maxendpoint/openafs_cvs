@@ -71,13 +71,21 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dauth/Attic/dlog.c,v 1.7 2001/09/18 04:27:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dauth/Attic/dlog.c,v 1.8 2002/08/21 18:13:07 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <rx/xdr.h>
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 
 #include <ubik.h>
@@ -160,7 +168,7 @@ int store_afs_token(unix_id, realm_p, tkt_type, ticket_p, ticket_len,
     token.kvno = tkt_type;
     token.ticketLen = ticket_len;
     if (ticket_len > MAXKTCTICKETLEN) {
-	fprintf(stderr, "dlog: DCE ticket is too long (length %d). Maximum length accepted by AFS cache manager is %d\n", MAXKTCTICKETLEN);
+	fprintf(stderr, "dlog: DCE ticket is too long (length %d). Maximum length accepted by AFS cache manager is %d\n", ticket_len, MAXKTCTICKETLEN);
 	exit(1);
     }
     memcpy((char *) token.ticket, (char *) ticket_p, ticket_len);
@@ -182,7 +190,7 @@ char *make_string(s_p, length)
     int length;
 {
     char *new_p = (char *) malloc(length + 1);
-    if (new_p == (char *) 0) {
+    if (new_p == NULL) {
 	fprintf(stderr, "dlog: out of memory\n");
 	exit(1);
     }
@@ -404,7 +412,7 @@ main (argc, argv)
     initialize_KTC_error_table();
     initialize_ACFG_error_table();
 
-    ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "obtain Kerberos authentication");
+    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "obtain Kerberos authentication");
 
 #define aPRINCIPAL 0
 #define aCELL 1

@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/threadname.c,v 1.7 2001/08/06 23:50:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/threadname.c,v 1.8 2002/08/21 18:13:42 shadow Exp $");
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -47,7 +47,7 @@ PROCESS   ThreadId[MAX_THREADS];
 #endif /* defined(AFS_PTHREAD_ENV) */
 char      ThreadName[MAX_THREADS][MAXTHREADNAMELENGTH];
 
-char * threadname ()
+char *threadname(void)
 {
     int i;
     static char MainThread[] = "main";
@@ -75,13 +75,13 @@ char * threadname ()
     return p;
 }
 
-int registerthread(id, name)
+int registerthread(
 #ifdef AFS_PTHREAD_ENV
-    pthread_t id;
+    pthread_t id,
 #else /* AFS_PTHREAD_ENV */
-    PROCESS id;
+    PROCESS id,
 #endif /* AFS_PTHREAD_ENV */
-    char *name;
+    char *name)
 {
     int i;
 
@@ -100,14 +100,14 @@ int registerthread(id, name)
     return 0;
 }
 
-int swapthreadname(id, new, old)
+int swapthreadname(
 #ifdef AFS_PTHREAD_ENV
-    pthread_t id;
+    pthread_t id,
 #else /* AFS_PTHREAD_ENV */
-    PROCESS id;
+    PROCESS id,
 #endif /* AFS_PTHREAD_ENV */
-    char *new;
-    char *old;
+    char *new,
+    char *old)
 {
     int i;
 

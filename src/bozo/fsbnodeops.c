@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.8 2001/09/17 19:42:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.9 2002/08/21 18:12:54 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -24,6 +24,16 @@ RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.8 2001/09/17 19:42:52 sha
 #include <fcntl.h>
 #else
 #include <sys/file.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+#include <stdlib.h>
+
 #endif /* AFS_NT40_ENV */
 #include <sys/stat.h>
 #include <afs/procmgmt.h>  /* signal(), kill(), wait(), etc. */
@@ -338,7 +348,7 @@ char *ascancmd; {
 
     if (bailout) {
 	free(fileCmdpath); free(volCmdpath); free(salCmdpath);
-	return (struct bnode *)0;
+	return NULL;
     }
 
     te = (struct fsbnode *) malloc(sizeof(struct fsbnode));
@@ -349,7 +359,7 @@ char *ascancmd; {
     if (ascancmd && strlen(ascancmd))
        te->scancmd = scanCmdpath;
     else 
-       te->scancmd = (char *)0;
+       te->scancmd = NULL;
     bnode_InitBnode(te, &fsbnode_ops, ainstance);
     bnode_SetTimeout(te, POLLTIME);	/* ask for timeout activations every 10 seconds */
     RestoreSalFlag(te);		/* restore needsSalvage flag based on file's existence */

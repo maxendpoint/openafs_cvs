@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/db_dump.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/db_dump.c,v 1.6 2002/08/21 18:12:57 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -27,6 +27,14 @@ RCSID("$Header: /cvs/openafs/src/budb/db_dump.c,v 1.5 2001/08/08 00:03:39 shadow
 #include <sys/types.h>
 #include <ubik.h>
 #include <lock.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 
 #include "database.h"
 #include "budb.h"

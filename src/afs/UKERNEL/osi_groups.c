@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_groups.c,v 1.4 2001/07/12 19:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_groups.c,v 1.5 2002/08/21 18:12:44 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -98,7 +98,7 @@ int usr_setpag(
     }
     *newpag = (pagvalue == -1 ? genpag(): pagvalue);
     afs_get_groups_from_pag(*newpag, &gidset[0], &gidset[1]);
-    if (code = afs_setgroups(cred, ngroups, gidset, change_parent)) {
+    if ((code = afs_setgroups(cred, ngroups, gidset, change_parent))) {
 	osi_FreeSmallSpace((char *)gidset);
 	return (code);
     }

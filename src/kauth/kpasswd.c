@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.9 2001/10/05 21:40:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.10 2002/08/21 18:13:22 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -118,7 +118,7 @@ main (argc, argv, envp)
     zero_argv = argv;
 
     init_child(*argv);
-    ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "change user's password");
+    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "change user's password");
 
 #define aXFLAG 0
 #define aPRINCIPAL 1

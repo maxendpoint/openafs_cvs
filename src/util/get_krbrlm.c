@@ -6,7 +6,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.3 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.4 2002/08/21 18:14:25 shadow Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"
@@ -25,9 +25,7 @@ RCSID("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.3 2001/07/12 19:59:23 sha
 #define	KSUCCESS	0
 #define	KFAILURE	-1
 
-afs_krb_get_lrealm(r,n)
-    char *r;
-    int n;
+int afs_krb_get_lrealm(char *r, int n)
 {
     FILE *cnffile, *fopen();
 

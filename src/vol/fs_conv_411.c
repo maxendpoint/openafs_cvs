@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/Attic/fs_conv_411.c,v 1.5 2001/08/08 00:04:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fs_conv_411.c,v 1.6 2002/08/21 18:14:33 shadow Exp $");
 
 #if	defined(AFS_DUX40_ENV) || (defined(AFS_SUN_ENV) && !defined(AFS_SUN5_ENV)) || defined(AFS_SUN54_ENV)
 #if defined AFS_DUX40_ENV
@@ -927,7 +927,7 @@ char *vol_DevName(adev)
 	    }
     }
     closedir(dirp);
-    return (char *) 0;	/* failed */
+    return NULL;	/* failed */
 }
   
 char *unrawname(name)

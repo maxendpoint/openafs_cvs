@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.12 2002/02/28 06:10:50 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.13 2002/08/21 18:13:22 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -75,7 +75,7 @@ static int debugOutput;
 int KA_rxstat_userok(call)
     struct rx_call *call;
 {
-    return afsconf_SuperUser(KA_conf, call, (char *)0);
+    return afsconf_SuperUser(KA_conf, call, NULL);
 }
 
 afs_int32 es_Report(char *fmt, ...)
@@ -169,7 +169,6 @@ main (argc, argv)
     extern int afsconf_CheckAuth();
 
     extern int rx_stackSize;
-    extern struct rx_securityClass *rxnull_NewServerSecurityObject();
     extern int KAA_ExecuteRequest();
     extern int KAT_ExecuteRequest();
     extern int KAM_ExecuteRequest();

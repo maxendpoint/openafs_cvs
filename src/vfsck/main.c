@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vfsck/main.c,v 1.6 2001/11/07 00:15:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vfsck/main.c,v 1.7 2002/08/21 18:14:28 shadow Exp $");
 
 #define VICE	/* allow us to put our changes in at will */
 #include <stdio.h>
@@ -404,7 +404,7 @@ main(argc, argv)
 				argv++;
 			} else
 #endif
-			checkfilesys(*argv++, (char *)0);
+			checkfilesys(*argv++, NULL);
 		}
 #ifdef	AFS_HPUX_ENV
                 if (ge_danger)
@@ -860,8 +860,8 @@ checkfilesys(filesys, parname)
 	    if (debug)
 		printf("\n");
 	}
-	zlnhead = (struct zlncnt *)0;
-	duplist = (struct dups *)0;
+	zlnhead = NULL;
+	duplist = NULL;
 
 	free(blockmap);
 	free(statemap);
@@ -982,8 +982,8 @@ n	printf("(%d frags, %d blocks, %.1f%% fragmentation)\n",
 	    }
 	}
 #endif
-	zlnhead = (struct zlncnt *)0;
-	duplist = (struct dups *)0;
+	zlnhead = NULL;
+	duplist = NULL;
 
 #if	defined(AFS_SUN_ENV) && !defined(AFS_SUN3_ENV)		/* WAS AFS_SUN5_ENV */
 #ifdef	notdef
@@ -1150,7 +1150,7 @@ n	printf("(%d frags, %d blocks, %.1f%% fragmentation)\n",
 #endif
 #else 
 #ifdef AFS_DEC_ENV
-	    if (mount(devname, pname, 0, GT_ULTRIX, (char *) 0)) {
+	    if (mount(devname, pname, 0, GT_ULTRIX, NULL)) {
 #else 
 	    if (mount(devname, pname, 0) < 0) {
 #endif
@@ -1468,5 +1468,5 @@ rawname(bldev)
            return(rawdev);
      }
   }
-  return (char *)0;
+  return NULL;
 }

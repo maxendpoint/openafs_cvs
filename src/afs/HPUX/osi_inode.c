@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_inode.c,v 1.4 2001/07/12 19:58:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_inode.c,v 1.5 2002/08/21 18:12:39 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -34,7 +34,7 @@ getinode(struct vfs *vfsp, dev_t dev, ino_t inode, int *perror)
     
    if (!mp && !(mp = getmp(dev))) {
       u.u_error = ENXIO;
-      return((struct inode *)0);
+      return(NULL);
    }
    pip=iget(dev,mp,inode);
    if(!pip)
@@ -123,7 +123,7 @@ int dev, inode, usrmod;
 {
 	struct file *fp;
 	struct inode *ip;
-	struct vnode *vp = (struct vnode *)0;
+	struct vnode *vp = NULL;
 	int dummy;
 	extern struct fileops vnodefops;
 	register int code;

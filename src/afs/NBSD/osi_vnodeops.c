@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_vnodeops.c,v 1.2 2002/03/25 17:11:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_vnodeops.c,v 1.3 2002/08/21 18:12:42 shadow Exp $");
 
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -1086,9 +1086,9 @@ lookupname(namep, seg, follow, dvpp, cvpp)
     ndp->ni_segflg = seg;
     ndp->ni_dirp = namep;
     error = namei(ndp);
-    if (dvpp != (struct vnode **)0)
+    if (dvpp != NULL)
 	*dvpp = ndp->ni_dvp;
-    if (cvpp != (struct vnode **)0)
+    if (cvpp != NULL)
 	*cvpp = ndp->ni_vp;
     return(error);
 }

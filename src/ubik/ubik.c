@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.10 2002/06/24 16:30:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.11 2002/08/21 18:14:19 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -218,7 +218,6 @@ int ubik_ServerInitCommon(myHost, myPort, info, clones, serverList, pathName, db
     struct rx_securityClass *secClass;
 
     struct rx_service *tservice;
-    extern struct rx_securityClass *rxnull_NewServerSecurityObject();
     extern int VOTE_ExecuteRequest(), DISK_ExecuteRequest();
     extern void rx_ServerProc();
     extern int rx_stackSize;

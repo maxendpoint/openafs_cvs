@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.5 2001/08/08 00:03:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.6 2002/08/21 18:12:57 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -50,7 +50,7 @@ afs_int32 threadEntryDir(anEntry, size, type)
      afs_int32 size, type;
 {
     dlqlinkP entryPtr;
-    char     *entry = (char *)0;
+    char     *entry = NULL;
     int      tried;
 
     for (tried=0; tried<5; tried++) {
@@ -93,7 +93,7 @@ threadEntry(anEntry, size, type)
      afs_int32 size, type;
 {
     dlqlinkP entryPtr;
-    char     *entry = (char *)0;
+    char     *entry = NULL;
     int      tried;
 
     for (tried=0; tried<5; tried++) {

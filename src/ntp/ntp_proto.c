@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp_proto.c,v 1.5 2001/07/12 19:58:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp_proto.c,v 1.6 2002/08/21 18:13:43 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -101,7 +101,7 @@ transmit(peer)
 	pkt->reftime = sys.reftime;
 	pkt->org = peer->org;
 	pkt->rec = peer->rec;
-	(void) gettimeofday(&txtv, (struct timezone *) 0);
+	(void) gettimeofday(&txtv, NULL);
 #if	0
 	if (peer->flags & PEER_FL_AUTHENABLE) {
 		/* add encryption time into the timestamp */

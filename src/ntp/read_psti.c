@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/read_psti.c,v 1.5 2001/08/08 00:03:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/read_psti.c,v 1.6 2002/08/21 18:13:43 shadow Exp $");
 
 #if	defined(REFCLOCK) && defined(PSTI)
 #define	ERR_RATE	60	/* Repeat errors once an hour */
@@ -211,7 +211,7 @@ struct timeval **tvpp, **otvpp;
 		return(1);
 	}
 
-	(void) gettimeofday(&mytime, (struct timezone *)0);
+	(void) gettimeofday(&mytime, NULL);
 	/* END OF TIME CRITICAL CODE SECTION!!!! */
 
 	if (clockdata[i-1] != '\n') {

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.5 2002/08/21 18:12:58 shadow Exp $");
 
 #include <afs/cmd.h>
 #include <lock.h>
@@ -509,7 +509,7 @@ main(argc, argv)
 
   setlinebuf(stdout);
 
-  ts=cmd_CreateSyntax((char *)0, WorkerBee, (char *) 0, "Restore volumes from backup tape");
+  ts=cmd_CreateSyntax(NULL, WorkerBee, NULL, "Restore volumes from backup tape");
   cmd_AddParm(ts, "-tape",    CMD_SINGLE, CMD_REQUIRED, "tape device");
   cmd_AddParm(ts, "-restore", CMD_SINGLE, CMD_OPTIONAL, "# volumes to restore");
   cmd_AddParm(ts, "-skip",    CMD_SINGLE, CMD_OPTIONAL, "# volumes to skip");

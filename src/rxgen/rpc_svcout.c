@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_svcout.c,v 1.7 2001/08/08 00:04:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_svcout.c,v 1.8 2002/08/21 18:14:08 shadow Exp $");
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -45,6 +45,7 @@ RCSID("$Header: /cvs/openafs/src/rxgen/rpc_svcout.c,v 1.7 2001/08/08 00:04:05 sh
 #include <strings.h>
 #endif
 #endif
+#include "rpc_scan.h"
 #include "rpc_parse.h"
 #include "rpc_util.h"
 
@@ -54,15 +55,16 @@ static char ARG[] = "argument";
 static char RESULT[] = "result";
 static char ROUTINE[] = "local";
 
-static write_program();
-static printerr();
-static printif();
+/* static prototypes */
+static void write_program(definition *def, char *storage);
+static void printerr(char *err, char *transp);
+static void printif(char *proc, char *transp, char *prefix, char *arg);
+
 
 /*
  * write most of the service, that is, everything but the registrations. 
  */
-void
-write_most()
+void write_most(void)
 {
 	list *l;
 	definition *def;
@@ -98,9 +100,7 @@ write_most()
 /*
  * write a registration for the given transport 
  */
-void
-write_register(transp)
-	char *transp;
+void write_register(char *transp)
 {
 	list *l;
 	definition *def;
@@ -142,8 +142,7 @@ write_register(transp)
 /*
  * write the rest of the service 
  */
-void
-write_rest()
+void write_rest(void)
 {
 	f_print(fout, "\tsvc_run();\n");
 	f_print(fout, "\tfprintf(stderr, \"svc_run returned\\n\");\n");
@@ -151,9 +150,7 @@ write_rest()
 	f_print(fout, "}\n");
 }
 
-void
-write_programs(storage)
-	char *storage;
+void write_programs(char *storage)
 {
 	list *l;
 	definition *def;
@@ -167,10 +164,7 @@ write_programs(storage)
 }
 
 
-static
-write_program(def, storage)
-	definition *def;
-	char *storage;
+static void write_program(definition *def, char *storage)
 {
 	version_list *vp;
 	proc_list *proc;
@@ -254,28 +248,19 @@ write_program(def, storage)
 	}
 }
 
-static
-printerr(err, transp)
-	char *err;
-	char *transp;
+static void printerr(char *err, char *transp)
 {
 	f_print(fout, "\t\tsvcerr_%s(%s);\n", err, transp);
 }
 
-static
-printif(proc, transp, prefix, arg)
-	char *proc;
-	char *transp;
-	char *prefix;
-	char *arg;
+static void printif(char *proc, char *transp, char *prefix, char *arg)
 {
 	f_print(fout, "\tif (!svc_%s(%s, xdr_%s, %s%s)) {\n",
 		proc, transp, arg, prefix, arg);
 }
 
 
-nullproc(proc)
-	proc_list *proc;
+int nullproc(proc_list *proc)
 {
 	for (; proc != NULL; proc = proc->next) {
 		if (streq(proc->proc_num, "0")) {

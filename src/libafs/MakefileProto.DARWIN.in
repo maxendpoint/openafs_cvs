@@ -1,5 +1,5 @@
 #/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
-# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.15 2002/06/14 17:22:37 shadow Exp $
+# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.16 2002/08/21 18:13:36 shadow Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
@@ -17,6 +17,7 @@ AFS_OS_OBJS = \
 	osi_vm.o \
 	osi_vnodeops.o \
 	osi_module.o
+
 
 #AFS_OS_NFSOBJS = osi_vfsops_nfs.o
 

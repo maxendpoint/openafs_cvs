@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.18 2002/08/12 21:32:48 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.19 2002/08/21 18:12:42 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -130,8 +130,7 @@ static int afs_root(struct super_block *afsp)
 
 	if (!(code = afs_InitReq(&treq, credp)) &&
 	    !(code = afs_CheckInit())) {
-	    tvp = afs_GetVCache(&afs_rootFid, &treq, (afs_int32 *)0,
-				(struct vcache*)0, WRITE_LOCK);
+	    tvp = afs_GetVCache(&afs_rootFid, &treq, NULL, NULL);
 	    if (tvp) {
 		extern struct inode_operations afs_dir_iops;
 #if defined(AFS_LINUX24_ENV)

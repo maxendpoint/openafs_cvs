@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.13 2001/09/13 23:19:24 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.14 2002/08/21 18:14:33 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -1794,7 +1794,7 @@ register Volume *vp;
         hd->next = hd->prev = 0;
 	/* if not in LRU chain, next test won't be true */
 	if (hd == volumeLRU)	/* last header item, turn into empty list */
-	    volumeLRU = (struct volHeader *) 0;
+	    volumeLRU = NULL;
     }
     return old;
 }

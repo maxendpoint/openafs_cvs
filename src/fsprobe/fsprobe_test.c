@@ -16,7 +16,15 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe_test.c,v 1.5 2001/08/08 00:03:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe_test.c,v 1.6 2002/08/21 18:13:16 shadow Exp $");
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 
 #include <fsprobe.h>		/*Interface for fsprobe module*/
 
@@ -154,7 +162,7 @@ main(argc, argv)
     FSSktArray[0].sin_family = htons(AF_INET);	/*Internet family*/
     FSSktArray[0].sin_port   = htons(7000);	/*FileServer port*/
     he = hostutil_GetHostByName("servername1");
-    if (he == (struct hostent *)0) {
+    if (he == NULL) {
       fprintf(stderr, "[%s] Can't get host info for servername1\n", rn);
       exit(-1);
     }
@@ -163,7 +171,7 @@ main(argc, argv)
     FSSktArray[1].sin_family = htons(AF_INET);	/*Internet address family*/
     FSSktArray[1].sin_port   = htons(7000);	/*FileServer port*/
     he = hostutil_GetHostByName("servername2");
-    if (he == (struct hostent *)0) {
+    if (he == NULL) {
       fprintf(stderr, "[%s] Can't get host info for servername2\n", rn);
       exit(-1);
     }
@@ -172,7 +180,7 @@ main(argc, argv)
     FSSktArray[2].sin_family = htons(AF_INET);	/*Internet address family*/
     FSSktArray[2].sin_port   = htons(7000);	/*FileServer port*/
     he = hostutil_GetHostByName("servername3");
-    if (he == (struct hostent *)0) {
+    if (he == NULL) {
       fprintf(stderr, "[%s] Can't get host info for servername3\n", rn);
       exit(-1);
     }

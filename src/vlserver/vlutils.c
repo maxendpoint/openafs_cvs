@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vlserver/vlutils.c,v 1.6 2001/09/17 19:43:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vlserver/vlutils.c,v 1.7 2002/08/21 18:14:32 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -18,6 +18,15 @@ RCSID("$Header: /cvs/openafs/src/vlserver/vlutils.c,v 1.6 2001/09/17 19:43:02 sh
 #else
 #include <netinet/in.h>
 #endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <lock.h>
 #include <rx/xdr.h>
 #include <ubik.h>
@@ -416,7 +425,7 @@ afs_int32 FindExtentBlock(trans, uuidp, createit, hostslot, expp, basep)
     struct extentaddr *exp;    
     register afs_int32 i, j, code, base, index, error=0;	
 
-    *expp = (struct extentaddr *)0;
+    *expp = NULL;
     *basep = 0;
 
     /* Create the first extension block if it does not exist */

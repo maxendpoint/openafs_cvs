@@ -18,13 +18,20 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dauth/Attic/dpass.c,v 1.4 2001/07/12 19:58:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dauth/Attic/dpass.c,v 1.5 2002/08/21 18:13:07 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <rx/xdr.h>
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 
 #include <ubik.h>
@@ -143,7 +150,7 @@ main (argc, argv)
     nsa.sa_flags = SA_FULLDUMP;
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
-    ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "show new DCE passord");
+    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "show new DCE passord");
     cmd_AddParm(ts, "-cell", CMD_SINGLE, CMD_OPTIONAL,"original AFS cell name");
     code = cmd_Dispatch(argc, argv);
     exit(code);

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/client/afs_clientAdmin.c,v 1.7 2001/08/08 00:03:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/client/afs_clientAdmin.c,v 1.8 2002/08/21 18:13:28 shadow Exp $");
 
 #include <afs/stds.h>
 #include "afs_clientAdmin.h"
@@ -350,7 +350,7 @@ static int GetKASToken(
     }
     have_server_conn = 1;
 
-    tst = ka_ParseLoginName((char *)principal, name, inst, (char *) 0);
+    tst = ka_ParseLoginName((char *)principal, name, inst, NULL);
     if (tst != 0) {
 	goto fail_GetKASToken;
     }
@@ -434,7 +434,7 @@ static int GetAFSToken(
     }
 
     tst = ka_ParseLoginName((char *)principal, tokenHandle->client.name,
-			    tokenHandle->client.instance, (char *) 0);
+			    tokenHandle->client.instance, NULL);
     if (tst) {
 	goto fail_GetAFSToken;
     }

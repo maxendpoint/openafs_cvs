@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.6 2001/09/18 04:27:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.7 2002/08/21 18:13:12 shadow Exp $");
 
 #include <afs/com_err.h>
 #include <rx/rxkad.h>
@@ -32,10 +32,7 @@ RCSID("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.6 2001/09/18 04:27:12
 
 #include "AFS_component_version_number.c"
 
-int
-main (argc, argv)
-  int   argc;
-  char *argv[];
+int main (int argc, char *argv[])
 {
     int  i;
     afs_int32 code;

@@ -14,8 +14,15 @@
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 
-RCSID("$Header: /cvs/openafs/src/util/assert.c,v 1.8 2002/02/16 18:24:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/assert.c,v 1.9 2002/08/21 18:14:25 shadow Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"

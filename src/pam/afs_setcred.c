@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_setcred.c,v 1.10 2002/07/26 05:56:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_setcred.c,v 1.11 2002/08/21 18:13:44 shadow Exp $");
 
 #include <sys/param.h>
 #include <afs/kautils.h>
@@ -284,7 +284,7 @@ pam_sm_setcred(
             if ( ka_VerifyUserPassword(
                            KA_USERAUTH_VERSION,
                            user, /* kerberos name */
-                           (char *)0, /* instance */
+                           NULL, /* instance */
                            cell_ptr, /* realm */
                             password, /* password */
                             0, /* spare 2 */
@@ -303,7 +303,7 @@ pam_sm_setcred(
 	    if ( ka_UserAuthenticateGeneral(
                            KA_USERAUTH_VERSION,
                            user, /* kerberos name */
-                           (char *)0, /* instance */
+                           NULL, /* instance */
                            cell_ptr, /* realm */
                             password, /* password */
                             0, /* default lifetime */

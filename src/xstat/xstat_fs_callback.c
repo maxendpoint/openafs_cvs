@@ -25,10 +25,19 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_callback.c,v 1.8 2002/03/10 19:08:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_callback.c,v 1.9 2002/08/21 18:14:35 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>			/*Standard I/O stuff*/
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <afs/afscbint.h>		/*Callback interface defs*/
 
 int afs_cb_inited = 0;

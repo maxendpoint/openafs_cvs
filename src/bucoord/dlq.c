@@ -9,8 +9,11 @@
 
 #include <afsconfig.h>
 #include <afs/param.h>
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
 
-RCSID("$Header: /cvs/openafs/src/bucoord/dlq.c,v 1.4 2001/07/12 19:58:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/dlq.c,v 1.5 2002/08/21 18:12:56 shadow Exp $");
 
 #include <afs/bubasics.h>
 
@@ -44,7 +47,7 @@ dlqInit(headptr)
     headptr->dlq_next = headptr;
     headptr->dlq_prev = headptr;
     headptr->dlq_type = DLQ_HEAD;
-    headptr->dlq_structPtr = (char *)0;
+    headptr->dlq_structPtr = NULL;
     return(0);
 }
 

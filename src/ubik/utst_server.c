@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/utst_server.c,v 1.6 2002/02/25 09:31:16 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/utst_server.c,v 1.7 2002/08/21 18:14:19 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -275,8 +275,6 @@ main(argc, argv)
     afs_int32 myHost;
     struct rx_service	    *tservice;
     struct rx_securityClass *sc[2];
-    extern struct rx_securityClass *rxnull_NewServerSecurityObject();
-    extern struct rx_securityClass *rxvab_NewServerSecurityObject();
     extern int		    SAMPLE_ExecuteRequest();
     char dbfileName[128];
 

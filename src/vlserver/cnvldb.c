@@ -10,13 +10,22 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.5 2001/08/08 00:04:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.6 2002/08/21 18:14:32 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <errno.h>
 #include <stdio.h>
 #include <sys/file.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include "cnvldb.h"  /* CHANGEME! */
 #include <netinet/in.h>
 #include <afs/venus.h>

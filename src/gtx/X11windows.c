@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/X11windows.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/X11windows.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
 
 #include "gtxX11win.h"			/*Interface definition*/
 #include <stdio.h>			/*Standard I/O package*/
@@ -132,7 +132,7 @@ struct gwin *gator_X11gwin_create(params)
     if (X11_debug)
 	fprintf(stderr, "[%s:%s] Called\n", mn, rn);
 
-    return((struct gwin *)0);
+    return(NULL);
 
 } /*gator_X11gwin_create*/
 

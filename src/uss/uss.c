@@ -18,11 +18,20 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/uss.c,v 1.5 2001/09/18 04:27:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/uss.c,v 1.6 2002/08/21 18:14:24 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include "uss_common.h"	/*Common uss definitions, globals*/
 #include "uss_procs.h"	/*Main uss operations*/
 #include "uss_kauth.h"	/*AuthServer routines*/
@@ -43,8 +52,8 @@ RCSID("$Header: /cvs/openafs/src/uss/uss.c,v 1.5 2001/09/18 04:27:26 shadow Exp 
 /*
  * ---------------------- Exported variables ----------------------
  */
-char *uss_fs_InBuff  = (char *)0; /*Cache Manager input  buff*/
-char *uss_fs_OutBuff = (char *)0; /*Cache Manager output buff*/
+char *uss_fs_InBuff  = NULL; /*Cache Manager input  buff*/
+char *uss_fs_OutBuff = NULL; /*Cache Manager output buff*/
 
 /*
  * Set up convenient tags for the command line parameter indicies.
@@ -2010,7 +2019,7 @@ main(argc,argv)
      */
     InitETTables();
     uss_common_Init();
-    cmd_SetBeforeProc(GetCommon, (char *)0);
+    cmd_SetBeforeProc(GetCommon, NULL);
 
     /*
      * Execute the parsed command.

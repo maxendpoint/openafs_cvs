@@ -17,13 +17,20 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.5 2001/09/17 19:43:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.6 2002/08/21 18:14:34 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else
 #include <netinet/in.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <afs/voldefs.h>
 #include <rx/xdr.h>
@@ -142,7 +149,7 @@ Lp_QInit(ahead)
      struct qHead *ahead;
 {
    ahead->count = 0;
-   ahead->next  = (struct aqueue *)0;
+   ahead->next  = NULL;
 }
 
 /*add <elem> in front of queue <ahead> */
@@ -155,7 +162,7 @@ Lp_QAdd(ahead,elem)
     if(ahead->count == 0) {
 	ahead->count += 1;
 	ahead->next = elem;
-	elem->next = (struct aqueue *)0;
+	elem->next = NULL;
     }
     else {
 	temp = ahead->next;
@@ -173,7 +180,7 @@ Lp_QScan(ahead,id,success, elem)
 {   struct aqueue *cptr;
 
     cptr = ahead->next;
-    while(cptr != (struct aqueue *)0) {
+    while(cptr != NULL) {
 	if(cptr->ids[RWVOL] == id) {
 	    *success = 1;
 	    *elem = cptr;
@@ -205,7 +212,7 @@ Lp_QEnumerate(ahead,success, elem)
 	    elem->copyDate[i] = temp->copyDate[i];
 	    elem->isValid[i] = temp->isValid[i];
 	}
-	elem->next = (struct aqueue *)0;
+	elem->next = NULL;
 	*success = 1;
 	free(temp);
     }

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_vm.c,v 1.5 2002/03/25 17:11:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_vm.c,v 1.6 2002/08/21 18:12:39 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -30,10 +30,7 @@ RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_vm.c,v 1.5 2002/03/25 17:11:53 sha
  * is not dropped and re-acquired for any platform.  It may be that *slept is
  * therefore obsolescent.
  */
-int
-osi_VM_FlushVCache(avc, slept)
-    struct vcache *avc;
-    int *slept;
+int osi_VM_FlushVCache(struct vcache *avc, int *slept)
 {
     if (avc->vrefCount > 1)
 	return EBUSY;
@@ -49,9 +46,7 @@ osi_VM_FlushVCache(avc, slept)
  * Locking:  the vcache entry's lock is held.  It will usually be dropped and
  * re-obtained.
  */
-void
-osi_VM_StoreAllSegments(avc)
-    struct vcache *avc;
+void osi_VM_StoreAllSegments(struct vcache *avc)
 {
     ;	/* Nothing here yet */
 }
@@ -62,11 +57,7 @@ osi_VM_StoreAllSegments(avc)
  * Locking:  the vcache entry's lock is held.  It may be dropped and 
  * re-obtained.
  */
-void
-osi_VM_TryToSmush(avc, acred, sync)
-    struct vcache *avc;
-    struct AFS_UCRED *acred;
-    int sync;
+void osi_VM_TryToSmush(struct vcache *avc, struct AFS_UCRED *acred, int sync)
 {
     struct vnode *vp = AFSTOV(avc);
 
@@ -87,10 +78,7 @@ osi_VM_TryToSmush(avc, acred, sync)
  *
  * Locking:  No lock is held, not even the global lock.
  */
-void
-osi_VM_FlushPages(avc, credp)
-    struct vcache *avc;
-    struct AFS_UCRED *credp;
+void osi_VM_FlushPages(struct vcache *avc, struct AFS_UCRED *credp)
 {
     ;	/* Nothing here yet */
 }
@@ -101,11 +89,7 @@ osi_VM_FlushPages(avc, credp)
  * activeV is raised.  This is supposed to block pageins, but at present
  * it only works on Solaris.
  */
-void
-osi_VM_Truncate(avc, alen, acred)
-    struct vcache *avc;
-    int alen;
-    struct AFS_UCRED *acred;
+void osi_VM_Truncate(struct vcache *avc, int alen, struct AFS_UCRED *acred)
 {
     ;	/* Nothing here yet */
 }

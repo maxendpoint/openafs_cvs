@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.7 2001/09/17 19:43:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.8 2002/08/21 18:14:34 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -24,6 +24,13 @@ RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.7 2001/09/17 19:43:05 sh
 #include <sys/uio.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <sys/stat.h>
 #include <afs/assert.h>

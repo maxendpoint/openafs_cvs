@@ -25,7 +25,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.9 2001/08/08 00:03:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.10 2002/08/21 18:13:08 shadow Exp $");
 
 #include <des.h>
 #include "des_internal.h"
@@ -37,21 +37,10 @@ RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.9 2001/08/08 00:03:41 sh
 #endif
 #endif
 
-extern int des_debug;
-extern int des_debug_print();
-extern void des_fixup_key_parity();
-extern afs_uint32 des_cbc_cksum();
-
-/* prototypes */
-int des_key_sched(register des_cblock *k, des_key_schedule schedule);
-
 /*
  * convert an arbitrary length string to a DES key
  */
-void
-des_string_to_key(str,key)
-    char *str;
-    register des_cblock *key;
+void des_string_to_key(char *str, register des_cblock *key)
 {
     register char *in_str;
     register unsigned temp,i,j;

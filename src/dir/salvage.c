@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/salvage.c,v 1.6 2001/09/17 19:42:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/salvage.c,v 1.7 2002/08/21 18:13:09 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -20,6 +20,14 @@ RCSID("$Header: /cvs/openafs/src/dir/salvage.c,v 1.6 2001/09/17 19:42:53 shadow 
 #include <winsock2.h>
 #else
 #include <netinet/in.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 
 #include "dir.h"

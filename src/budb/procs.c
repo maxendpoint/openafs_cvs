@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/procs.c,v 1.8 2002/03/10 19:07:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/procs.c,v 1.9 2002/08/21 18:12:57 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -26,8 +26,16 @@ RCSID("$Header: /cvs/openafs/src/budb/procs.c,v 1.8 2002/03/10 19:07:58 shadow E
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
 #include <strings.h>
 #endif
+#endif
+
 #include <sys/types.h>
 #include <afs/stds.h>
 #include <afs/bubasics.h>
@@ -152,7 +160,7 @@ callPermitted(call)
     acdir = afsconf_Open(AFSDIR_SERVER_ETC_DIRPATH);
     if (!acdir) return 0;
 
-     if ( afsconf_SuperUser(acdir, call, (char *)0) )
+     if ( afsconf_SuperUser(acdir, call, NULL) )
 	 permitted = 1;
 
   exit:

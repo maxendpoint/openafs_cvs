@@ -2,7 +2,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/comerr/error_table.y,v 1.5 2001/09/18 04:27:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/comerr/error_table.y,v 1.6 2002/08/21 18:13:02 shadow Exp $");
 
 /*
  *
@@ -46,6 +46,8 @@ RCSID("$Header: /cvs/openafs/src/comerr/error_table.y,v 1.5 2001/09/18 04:27:07 
 
 #include "internal.h"
 
+int char_to_num(char c);
+char *gensym(const char *x);
 char *current_token = (char *)NULL;
 extern char *table_name;
 

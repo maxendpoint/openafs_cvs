@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/screen_test.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/screen_test.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
 
 #include "gtxwindows.h"	    /*Generalized window interface*/
 #include "gtxcurseswin.h"    /*Curses window interface*/
@@ -131,7 +131,7 @@ static int test_this_package(pkg)
     c_crparams.box_vertchar  = '|';
     c_crparams.box_horizchar = '-';
     newwin = WOP_CREATE(&c_crparams);
-    if (newwin == (struct gwin *)0) {
+    if (newwin == NULL) {
 	fprintf(stderr, "[%s:%s] Can't create a new window\n", pn, rn);
     }
     else

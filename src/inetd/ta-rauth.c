@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/inetd/Attic/ta-rauth.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/inetd/Attic/ta-rauth.c,v 1.6 2002/08/21 18:13:20 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -96,7 +96,7 @@ int ta_rauth(s, svc_name, raddr)
     strcpy(tserver.cell, localName);
     strcpy(tserver.name, "afs");
 
-    code = ktc_GetToken(&tserver, &token, sizeof(token), (char *)0);
+    code = ktc_GetToken(&tserver, &token, sizeof(token), NULL);
     if(code) {
 	syslog(LOG_WARNING, "ta_rauth: no tokens available");
 	return 0; /* try port without authentication */

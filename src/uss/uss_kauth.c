@@ -18,12 +18,21 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/uss_kauth.c,v 1.6 2002/03/10 19:08:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/uss_kauth.c,v 1.7 2002/08/21 18:14:24 shadow Exp $");
 
 #include "uss_kauth.h"		/*Module interface*/
 #include "uss_common.h"		/*Common defs & operations*/
 #include <errno.h>
 #include <pwd.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <afs/com_err.h>
 #include <afs/kautils.h>	/*MAXKTCREALMLEN*/
 #include <afs/kaport.h>         /* pack_long */

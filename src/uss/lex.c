@@ -11,7 +11,16 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/Attic/lex.c,v 1.5 2001/08/08 00:04:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/Attic/lex.c,v 1.6 2002/08/21 18:14:24 shadow Exp $");
+
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 
 #include "y.tab.h"
 #include "uss_common.h"
@@ -185,7 +194,7 @@ Replace(in, out)
     
     if (isQuotedString) {
 	nullP = strchr(out, '"');
-	if (nullP == (char *)0)
+	if (nullP == NULL)
 	    nullP = out_cp;
     }
     else

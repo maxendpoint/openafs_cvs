@@ -10,17 +10,14 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/NBSD/rx_knet.c,v 1.1 2002/01/01 19:32:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/NBSD/rx_knet.c,v 1.2 2002/08/21 18:14:01 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 
-int osi_NetReceive(asocket, addr, dvec, nvecs, alength)
-    struct socket *asocket;
-    struct sockaddr_in *addr;
-    struct iovec *dvec;
-    int nvecs;
-    int *alength;
-{
+int osi_NetReceive(osi_socket so, struct sockaddr_in *addr, struct iovec *dvec,
+        int nvecs, int *alength)
+{  
+    struct socket *asocket = (struct socket *)so;
     struct uio u;
     int i;
     struct iovec iov[RX_MAXIOVECS];

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.5 2001/08/08 00:04:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.6 2002/08/21 18:14:33 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -196,7 +196,7 @@ afs_int32 avolid; {
 	    free(ti);
 	}
 	code = 0;	/* we really don't care about it except for debugging */
-	allInodes = (struct ilist *) 0;
+	allInodes = NULL;
 
 	/* at this point, we should try to remove the volume header file itself.
 	 * the volume header file is the file named VNNNNN.vol in the UFS file
@@ -218,7 +218,7 @@ afs_int32 avolid; {
 	    ni = ti->next;
 	    free(ti);
 	}
-	allInodes = (struct ilist *) 0;
+	allInodes = NULL;
     }
     ReleaseWriteLock(&localLock);
     return code;

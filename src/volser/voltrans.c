@@ -17,13 +17,22 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.5 2001/08/08 00:04:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.6 2002/08/21 18:14:34 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
 #else
 #include <sys/time.h>
 #endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <rx/rx.h>
 #include "volser.h"
 
@@ -93,7 +102,7 @@ register struct volser_trans *atrans; {
 	if (tt == atrans) {
 	    if (tt->volume)
 		VDetachVolume(&error, tt->volume);
-	    tt->volume = (struct Volume *) 0;
+	    tt->volume = NULL;
 	    *lt = tt->next;
 	    free(tt);
 	    return 0;

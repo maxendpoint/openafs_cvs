@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/dumbwindows.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/dumbwindows.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
 
 #include "gtxdumbwin.h"			/*Interface definition*/
 #include <stdio.h>			/*Standard I/O package*/
@@ -133,7 +133,7 @@ struct gwin *gator_dumbgwin_create(params)
     /*
       * Return failure here, fill this routine in at some point.
       */
-    return((struct gwin *)0);
+    return(NULL);
 
 } /*gator_dumbgwin_create*/
 

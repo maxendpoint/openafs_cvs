@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/test/test_badtix.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/test/test_badtix.c,v 1.6 2002/08/21 18:13:23 shadow Exp $");
 
 #include <sys/types.h>
 #include <des.h>
@@ -374,7 +374,7 @@ int main (argc, argv)
 	struct rx_securityClass *sc;
 	int			 si;	/* security class index */
 
-	sc = (struct rx_securityClass *) rxnull_NewClientSecurityObject();
+	sc = rxnull_NewClientSecurityObject();
 	si = RX_SCINDEX_NULL;
 	conns[0] = rx_NewConnection (htonl(INADDR_LOOPBACK), htons(AFSCONF_KAUTHPORT),
 				     KA_MAINTENANCE_SERVICE, sc, si);

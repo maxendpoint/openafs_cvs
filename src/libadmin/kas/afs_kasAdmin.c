@@ -10,9 +10,18 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.6 2001/07/12 19:58:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.7 2002/08/21 18:13:30 shadow Exp $");
 
 #include <stdio.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <afs/stds.h>
 #include "afs_kasAdmin.h"
 #include "../adminutil/afs_AdminInternal.h"

@@ -36,9 +36,11 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.7 2001/08/08 00:03:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.8 2002/08/21 18:13:08 shadow Exp $");
 
+#ifndef KERNEL
 #include <stdio.h>
+#endif
 #ifdef AFS_PTHREAD_ENV
 #include <pthread.h>
 #endif /* AFS_PTHREAD_ENV */
@@ -50,6 +52,8 @@ RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.7 2001/08/08 00:03:41 shadow Exp 
 #endif
 #include "stats.h"
 
+#include "des_prototypes.h"
+
 #define XPRT_DES
 
 #ifdef DEBUG
@@ -60,23 +64,15 @@ RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.7 2001/08/08 00:03:41 shadow Exp 
 #define DBG_PRINT(s)
 #endif
 
-extern int des_debug;
-extern int des_cblock_print_file ();
-extern int des_debug_print ();
-extern int swap_long_bytes_bit_number(int);
-
 #ifdef AFS_PTHREAD_ENV
 pthread_mutex_t rxkad_stats_mutex;
 #endif /* AFS_PTHREAD_ENV */
     
-afs_int32
-des_ecb_encrypt(clear, cipher, schedule, encrypt)
-    afs_uint32 *clear;
-    afs_uint32 *cipher;
-    int encrypt;		/* 0 ==> decrypt, else encrypt */
-    register des_key_schedule schedule; /* r11 */
-{
+/* encrypt == 0  ==> decrypt, else encrypt */
 
+afs_int32 des_ecb_encrypt(afs_uint32 *clear, afs_uint32 *cipher, 
+	register des_key_schedule schedule, int encrypt)
+{
     /* better pass 8 bytes, length not checked here */
 
     register afs_uint32 R1, L1; /* R1 = r10, L1 = r9 */

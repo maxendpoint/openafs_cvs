@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_inode.c,v 1.9 2001/07/12 19:58:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_inode.c,v 1.10 2002/08/21 18:12:38 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -251,7 +251,7 @@ afs_syscall_iopen(dev, inode, usrmod, retval)
 {
     struct file *fp;
     struct inode *ip;
-    struct vnode *vp = (struct vnode *)0;
+    struct vnode *vp = NULL;
     int dummy;
     int fd;
     extern struct fileops vnops;

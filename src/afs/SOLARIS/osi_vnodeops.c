@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.15 2002/07/22 18:32:34 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.16 2002/08/21 18:12:43 shadow Exp $");
 
 #if	defined(AFS_SUN_ENV) || defined(AFS_SUN5_ENV)
 /*
@@ -572,7 +572,7 @@ retry:
     } /* while (1) ... */
 
     AFS_GLOCK();
-    pl[slot] = (struct page *) 0;
+    pl[slot] = NULL;
     ReleaseReadLock(&tdc->lock);
 
     /* Prefetch next chunk if we're at a chunk boundary */

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/userok.c,v 1.8 2001/09/17 19:42:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/userok.c,v 1.9 2002/08/21 18:12:52 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -52,7 +52,7 @@ int afsconf_CheckAuth(adir, acall)
 register struct rx_call *acall;
 register struct afsconf_dir *adir; {
     LOCK_GLOBAL_MUTEX
-    return ((afsconf_SuperUser(adir, acall, (char *)0) == 0)? 10029 : 0);
+    return ((afsconf_SuperUser(adir, acall, NULL) == 0)? 10029 : 0);
     UNLOCK_GLOBAL_MUTEX
 }
 #endif /* !defined(UKERNEL) */
@@ -156,7 +156,7 @@ register char *auser; {
     while (1) {
 	/* check for our user id */
 	tp = fgets(nbuffer, sizeof(nbuffer), tf);
-	if (tp == (char *)0) break;
+	if (tp == NULL) break;
 	code = sscanf(nbuffer, "%64s", tname);
 	if (code == 1 && strcmp(tname, auser) == 0) {
 	    /* found the guy, don't copy to output file */
@@ -211,7 +211,7 @@ afs_int32 abufferLen; {
     while (1) {
 	/* check for our user id */
 	tp = fgets(tbuffer, sizeof(tbuffer), tf);
-	if (tp == (char *)0) break;
+	if (tp == NULL) break;
 	code = sscanf(tbuffer, "%64s", tname);
 	if (code == 1 && an-- == 0) {
 	    flag = 0;
@@ -373,8 +373,8 @@ char *namep; {
 	
 	/* get auth details from server connection */
 	code = rxkad_GetServerInfo
-	    (acall->conn, (afs_int32 *) 0, &exp, 
-		tname, tinst, tcell, (afs_int32 *) 0);
+	    (acall->conn, NULL, &exp, 
+		tname, tinst, tcell, NULL);
 	if (code) {
 	    UNLOCK_GLOBAL_MUTEX
 	    return 0; /* bogus connection/other error */

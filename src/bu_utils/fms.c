@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bu_utils/fms.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bu_utils/fms.c,v 1.6 2002/08/21 18:12:55 shadow Exp $");
 
 #undef	IN
 #include <stdio.h>
@@ -63,7 +63,7 @@ main(argc, argv)
 
     sigaction(SIGINT, &intaction, &oldaction);
 
-    cptr = cmd_CreateSyntax((char *) 0, tt_fileMarkSize, 0, 
+    cptr = cmd_CreateSyntax(NULL, tt_fileMarkSize, 0, 
 			    "write a tape full of file marks");
     cmd_AddParm(cptr, "-tape", CMD_SINGLE, CMD_REQUIRED, "tape special file");
 

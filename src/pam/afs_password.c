@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_password.c,v 1.7 2001/09/07 04:36:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_password.c,v 1.8 2002/08/21 18:13:44 shadow Exp $");
 
 #include <sys/param.h>
 #include <afs/kautils.h>
@@ -205,8 +205,8 @@ pam_sm_chauthtok(
 
     if ( (code = ka_VerifyUserPassword(KA_USERAUTH_VERSION + KA_USERAUTH_DOSETPAG,
 				    user, /* kerberos name */
-				    (char *)0, /* instance */
-				    (char *)0, /* realm */
+				    NULL, /* instance */
+				    NULL, /* realm */
 				    password, /* password */
 				    0, /* spare 2 */
 				    &reason /* error string */ )) !=0 ) {

@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/main.c,v 1.2 2001/10/05 21:19:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/main.c,v 1.3 2002/08/21 18:13:08 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <stdio.h>
@@ -27,19 +27,17 @@ RCSID("$Header: /cvs/openafs/src/des/main.c,v 1.2 2001/10/05 21:19:20 shadow Exp
 #endif
 #endif
 
+#include <des.h>
 #include "des_internal.h"
+#include "des_prototypes.h"
 
-extern void gen PROTOTYPE((FILE * stream));
-extern int des_debug;
 char const *whoami;
 
 #ifndef DONT_INCL_MAIN
 
 #include "AFS_component_version_number.c"
 
-int main(argc, argv)
-    int argc;
-    char *argv[];
+int main(int argc, char *argv[])
 {
     char *filename;
     char *arg;

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/audit/audit.c,v 1.6 2001/08/08 00:03:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/audit/audit.c,v 1.7 2002/08/21 18:12:51 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -344,8 +344,8 @@ int osi_auditU (struct rx_call *call,
       }
       else if (secClass == 2)                           /* authenticated */
       {
-	code = rxkad_GetServerInfo(conn, (char *)0, (char *)0, afsName, 
-				   (char *)0, (char *)0, (char *)0);
+	code = rxkad_GetServerInfo(conn, NULL, NULL, afsName, 
+				   NULL, NULL, NULL);
 	if (code)
 	{
 	  osi_audit ("AFS_Aud_NoAFSId", (-1), AUD_STR, audEvent, AUD_END);

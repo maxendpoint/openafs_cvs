@@ -29,7 +29,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.4 2001/08/08 00:03:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.5 2002/08/21 18:13:51 shadow Exp $");
 
 #ifndef	NeXT
 
@@ -45,10 +45,6 @@ RCSID("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.4 2001/08/08 00:03:57 sha
 #include "xdr.h"
 #include <stdio.h>
 #define LASTUNSIGNED	((u_int)0-1)
-
-#ifndef osi_alloc
-char *osi_alloc();
-#endif
 
 /*
  * XDR an indirect pointer

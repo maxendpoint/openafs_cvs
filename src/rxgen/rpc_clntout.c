@@ -35,20 +35,22 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_clntout.c,v 1.5 2001/08/08 00:04:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_clntout.c,v 1.6 2002/08/21 18:14:07 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
+#include "rpc_scan.h"
 #include "rpc_parse.h"
 #include "rpc_util.h"
 
 #define DEFAULT_TIMEOUT 25	/* in seconds */
 
-static write_program();
-static printbody();
+/* static prototypes */
+static void write_program(definition *def);
+static char *ampr(char *type);
+static void printbody(proc_list *proc);
 
-void
-write_stubs()
+void write_stubs(void)
 {
 	list *l;
 	definition *def;
@@ -64,9 +66,7 @@ write_stubs()
 }
 
 
-static
-write_program(def)
-	definition *def;
+static void write_program(definition *def)
 {
 	version_list *vp;
 	proc_list *proc;
@@ -89,9 +89,7 @@ write_program(def)
 	}
 }
 
-static char *
-ampr(type)
-	char *type;
+static char *ampr(char *type)
 {
 	if (isvectordef(type, REL_ALIAS)) {
 		return ("");
@@ -100,9 +98,7 @@ ampr(type)
 	}
 }
 
-static
-printbody(proc)
-	proc_list *proc;
+static void printbody(proc_list *proc)
 {
 	f_print(fout, "\tstatic ");
 	if (streq(proc->res_type, "void")) {

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.7 2001/10/05 21:23:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.8 2002/08/21 18:12:52 shadow Exp $");
 
 #include <afs/pthread_glock.h>
 #include <afs/afsutil.h>
@@ -92,7 +92,7 @@ struct afsconf_cell *acellInfo;
 {
     afs_int32 code;
 
-    code = afsconf_SetExtendedCellInfo(adir, apath, acellInfo, (char *)0);
+    code = afsconf_SetExtendedCellInfo(adir, apath, acellInfo, NULL);
     return code;
 }
    

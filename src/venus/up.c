@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/up.c,v 1.11 2002/01/01 18:57:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/up.c,v 1.12 2002/08/21 18:14:26 shadow Exp $");
 
 /* missing type from C language */
 #define Boolean short
@@ -43,6 +43,15 @@ RCSID("$Header: /cvs/openafs/src/venus/up.c,v 1.11 2002/01/01 18:57:32 shadow Ex
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
 #endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include <afs/venus.h>
 
 /* ************************************************************* */

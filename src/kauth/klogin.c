@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/klogin.c,v 1.8 2001/09/13 23:19:20 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/klogin.c,v 1.9 2002/08/21 18:13:22 shadow Exp $");
 
 #if !defined(AFS_SUN_ENV) && !defined(AFS_AIX_ENV) && !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_SUN5_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_XBSD_ENV)
 #include <sys/param.h>
@@ -319,7 +319,7 @@ int main(
 					syslog(LOG_CRIT,
 					    "REPEATED LOGIN FAILURES ON %s, %.*s",
 						tty, NMAX, utmp.ut_name);
-				ioctl(0, TIOCHPCL, (struct sgttyb *) 0);
+				ioctl(0, TIOCHPCL, NULL);
 				close(0), close(1), close(2);
 				sleep(10);
 				exit(1);
@@ -640,7 +640,7 @@ static gid_t tty_gid(int default_gid)
 	gid_t gid = default_gid;
 
 	gr = getgrnam(TTYGRPNAME);
-	if (gr != (struct group *) 0)
+	if (gr != NULL)
 		gid = gr->gr_gid;
 
 	endgrent();

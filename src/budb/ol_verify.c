@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.6 2002/02/26 22:54:01 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.7 2002/08/21 18:12:57 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -20,6 +20,13 @@ RCSID("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.6 2002/02/26 22:54:01 koly
 #else
 #include <netinet/in.h>
 #include <netdb.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -139,10 +146,10 @@ int blockEntries[NBLOCKTYPES] =
 int blockEntrySize[NBLOCKTYPES] = 
 {
     0					 /* free */,
-    sizeof(((struct vfBlock *)0)->a[0]),
-    sizeof(((struct viBlock *)0)->a[0]),
-    sizeof(((struct tBlock *)0)->a[0]),
-    sizeof(((struct dBlock *)0)->a[0]),
+    sizeof(((struct vfBlock *)NULL)->a[0]),
+    sizeof(((struct viBlock *)NULL)->a[0]),
+    sizeof(((struct tBlock *)NULL)->a[0]),
+    sizeof(((struct dBlock *)NULL)->a[0]),
     0};
 
 char *typeName[NBLOCKTYPES] = 

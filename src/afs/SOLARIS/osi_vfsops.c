@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.13 2002/08/12 21:32:50 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.14 2002/08/21 18:12:43 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -118,8 +118,7 @@ int afs_root (struct vfs *afsp, struct vnode **avpp)
 
 	if (!(code = afs_InitReq(&treq, proc->p_cred)) &&
 	    !(code = afs_CheckInit())) {
-	    tvp = afs_GetVCache(&afs_rootFid, &treq, (afs_int32 *)0,
-				(struct vcache*)0, WRITE_LOCK);
+	    tvp = afs_GetVCache(&afs_rootFid, &treq, NULL, NULL);
 	    /* we really want this to stay around */
 	    if (tvp) {
 		afs_globalVp = tvp;

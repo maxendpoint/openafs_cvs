@@ -15,13 +15,15 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.4 2001/07/12 19:58:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.5 2002/08/21 18:13:38 shadow Exp $");
 
 #include <sys/types.h>
 #include <rx/rx.h>
 #include <afs/afs_usrops.h>
 
-main(int argc, char **argv)
+void uafs_Shutdown(void);
+
+int main(int argc, char **argv)
 {
     int port = 0;
     char *afsMount = 0;

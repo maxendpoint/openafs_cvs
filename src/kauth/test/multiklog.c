@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/test/multiklog.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/test/multiklog.c,v 1.6 2002/08/21 18:13:23 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -73,7 +73,7 @@ main (argc, argv)
     zero_argc = argc;
     zero_argv = argv;
 
-    ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "obtain Kerberos authentication");
+    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "obtain Kerberos authentication");
 
 #define aXFLAG 0
 #define aPRINCIPAL 1

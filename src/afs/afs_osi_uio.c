@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_uio.c,v 1.5 2001/08/08 00:03:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_uio.c,v 1.6 2002/08/21 18:12:36 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -25,9 +25,9 @@ RCSID("$Header: /cvs/openafs/src/afs/afs_osi_uio.c,v 1.5 2001/08/08 00:03:28 sha
  */
 
 /* routine to make copy of uio structure in ainuio, using aoutvec for space */
-afsio_copy(ainuio, aoutuio, aoutvec)
-struct uio *ainuio, *aoutuio;
-register struct iovec *aoutvec; {
+int afsio_copy(struct uio *ainuio, struct uio *aoutuio, 
+	register struct iovec *aoutvec)
+{
     register int i;
     register struct iovec *tvec;
 
@@ -45,9 +45,8 @@ register struct iovec *aoutvec; {
 }
 
 /* trim the uio structure to the specified size */
-afsio_trim(auio, asize)
-register struct uio *auio;
-register afs_int32 asize; {
+int afsio_trim(register struct uio *auio, register afs_int32 asize)
+{
     register int i;
     register struct iovec *tv;
 
@@ -75,9 +74,8 @@ register afs_int32 asize; {
 }
 
 /* skip asize bytes in the current uio structure */
-afsio_skip(auio, asize)
-register struct uio *auio;
-register afs_int32 asize; {
+int afsio_skip(register struct uio *auio, register afs_int32 asize)
+{
     register struct iovec *tv;	/* pointer to current iovec */
     register int cnt;
 

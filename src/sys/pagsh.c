@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.7 2001/11/13 04:52:29 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.8 2002/08/21 18:14:15 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -34,9 +34,7 @@ RCSID("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.7 2001/11/13 04:52:29 shadow Ex
 
 extern afs_int32 setpag();
 
-int main(argc, argv)
-int argc;
-char **argv;
+int main(int argc, char *argv[])
 {
 	struct passwd *pwe;
 	int uid, gid;
@@ -83,7 +81,7 @@ char **argv;
 #ifdef AFS_KERBEROS_ENV
 /* stolen from auth/ktc.c */
 
-static afs_uint32 curpag()
+static afs_uint32 curpag(void)
 {
     afs_uint32 groups[NGROUPS_MAX];
     afs_uint32 g0, g1;
@@ -109,7 +107,7 @@ static afs_uint32 curpag()
     return -1;
 }
 
-ktc_newpag()
+int ktc_newpag(void)
 {
     extern char **environ;
 

@@ -29,18 +29,22 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/log/unlog.c,v 1.4 2001/07/12 19:58:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/log/unlog.c,v 1.5 2002/08/21 18:13:39 shadow Exp $");
 
 #include <stdio.h>
 #include <potpourri.h>
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
-#ifdef	AFS_SUN5_ENV
+
+#ifdef HAVE_STRING_H
 #include <string.h>
 #else
+#ifdef HAVE_STRINGS_H
 #include <strings.h>
 #endif
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -52,12 +56,6 @@ RCSID("$Header: /cvs/openafs/src/log/unlog.c,v 1.4 2001/07/12 19:58:47 shadow Ex
 #include <afs/cellconfig.h>
 #include <afs/afsutil.h>
 #include <afs/cmd.h>
-
-#ifdef	AFS_OSF_ENV
-void *malloc();
-#else
-char *malloc();
-#endif
 
 #undef VIRTUE
 #undef VICE
@@ -124,7 +122,7 @@ main(argc, argv)
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
 
-    ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "Release Kerberos authentication");
+    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "Release Kerberos authentication");
     cmd_AddParm(ts, "-cell", CMD_LIST, CMD_OPTIONAL, "cell name");
 
     code = cmd_Dispatch(argc, argv);

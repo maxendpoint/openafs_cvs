@@ -30,7 +30,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/key_sched.c,v 1.4 2001/07/12 19:58:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/key_sched.c,v 1.5 2002/08/21 18:13:08 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include "des_internal.h"
@@ -39,25 +39,19 @@ RCSID("$Header: /cvs/openafs/src/des/key_sched.c,v 1.4 2001/07/12 19:58:34 shado
 #include "des.h"
 #include "key_perm.h"
 #include "stats.h"
-
-extern int des_debug;
-extern int rev_swap_bit_pos_0();
-extern int des_check_key_parity(des_cblock);
-extern int des_is_weak_key(des_cblock);
+#include "des_prototypes.h"
 
 typedef char key[64];
+
 /* the following are really void but cc86 doesnt allow it */
 static int make_key_sched();
 
-
 #ifdef AFS_DUX40_ENV
 #pragma weak des_key_sched = afs_des_key_sched
-int afs_des_key_sched(k,schedule)
+int afs_des_key_sched(register des_cblock k, des_key_schedule schedule)
 #else
-int des_key_sched(k,schedule)
+int des_key_sched(register des_cblock k, des_key_schedule schedule)
 #endif
-    register des_cblock k;	/* r11 */
-    des_key_schedule schedule;
 {
     /* better pass 8 bytes, length not checked here */
 
@@ -132,10 +126,7 @@ int des_key_sched(k,schedule)
     return 0;
 }
 
-static int
-make_key_sched(Key,Schedule)
-    register key Key;		/* r11 */
-    des_key_schedule Schedule;
+static int make_key_sched(register key Key, des_key_schedule Schedule)
 {
     /*
      * The key has been converted to an array to make this run faster;

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.6 2001/09/17 19:43:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.7 2002/08/21 18:14:33 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -36,6 +36,13 @@ RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.6 2001/09/17 19:43:03 shadow Ex
 #else
 #include <sys/file.h>
 #include <sys/time.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <errno.h>
 #include <sys/stat.h>

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sgistuff/sgi_auth.c,v 1.4 2001/07/12 19:59:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sgistuff/sgi_auth.c,v 1.5 2002/08/21 18:14:14 shadow Exp $");
 
 #if defined(AFS_SGI_ENV)
 
@@ -52,8 +52,8 @@ afs_verify(
 	if (ka_UserAuthenticateGeneral(
 			KA_USERAUTH_VERSION + KA_USERAUTH_DOSETPAG,
 			uname, /* kerberos name */
-			(char *)0, /* instance */
-			(char *)0, /* realm */
+			NULL, /* instance */
+			NULL, /* realm */
 			pword, /* password */
 			0, /* default lifetime */
 			exp, /* spare 1/expiration */

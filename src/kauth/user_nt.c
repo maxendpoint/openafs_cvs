@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/user_nt.c,v 1.8 2001/11/21 06:44:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/user_nt.c,v 1.9 2002/08/21 18:13:22 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -478,7 +478,7 @@ static int krb_get_in_tkt_ext(user, instance, realm, service, sinstance, life,
     pkt->length += 1 + strlen(realm);
 
 #ifndef WIN32
-    (void) gettimeofday(&t_local,(struct timezone *) 0);
+    (void) gettimeofday(&t_local,NULL);
 #else /* WIN32 */
     t_local = time((void *) 0);
 #endif /* WIN32 */

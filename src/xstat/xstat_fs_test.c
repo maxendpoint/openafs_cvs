@@ -16,11 +16,18 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.5 2001/08/08 00:04:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.6 2002/08/21 18:14:35 shadow Exp $");
 
 #include "xstat_fs.h"		/*Interface for xstat_fs module*/
 #include <cmd.h>		/*Command line interpreter*/
 #include <time.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 
 /*
  * External routines that don't have explicit include file definitions.
@@ -703,7 +710,7 @@ int RunTheTest(a_s)
 	FSSktArray[currFS].sin_family = htons(AF_INET); /*Internet family*/
 	FSSktArray[currFS].sin_port   = htons(7000);	/*FileServer port*/
 	he = hostutil_GetHostByName(curr_item->data);
-	if (he == (struct hostent *)0) {
+	if (he == NULL) {
 	    fprintf(stderr,
 		    "[%s] Can't get host info for '%s'\n",
 		    rn, curr_item->data);

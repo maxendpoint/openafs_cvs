@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.7 2002/02/26 22:54:01 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.8 2002/08/21 18:12:57 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -20,6 +20,13 @@ RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.7 2002/02/26 22:54:01 kolya 
 #include <netinet/in.h>
 #include <sys/file.h>
 #include <sys/param.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <sys/types.h>
 #include <ubik.h>
@@ -133,7 +140,7 @@ afs_int32 GetText (call, lockHandle, textType, maxLength, offset,
     /* allocate the transfer storage */
     if (transferSize <= 0) {
       charListPtr->charListT_len = 0L;
-      charListPtr->charListT_val = (char *)0;
+      charListPtr->charListT_val = NULL;
     }
     else {
       charListPtr->charListT_len = transferSize;

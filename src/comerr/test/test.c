@@ -1,7 +1,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/comerr/test/test.c,v 1.4 2001/09/18 04:27:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/comerr/test/test.c,v 1.5 2002/08/21 18:13:03 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -50,7 +50,7 @@ main()
 	printf("\n\nCOM_ERR tests:\n");
 	com_err("whoami", FOO_ERR, (char *)NULL);
 	com_err("whoami", FOO_ERR, " -- message goes %s", "here");
-	com_err("whoami", 0, (char *)0);
+	com_err("whoami", 0, NULL);
 	com_err("whoami", 0, "error number %d\n", 0);
 
 	return 0;

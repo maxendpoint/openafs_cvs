@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/test/afscp.c,v 1.4 2001/07/12 19:58:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/test/afscp.c,v 1.5 2002/08/21 18:13:33 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -185,8 +185,8 @@ int main(int argc, char *argv[])
 
     /* initialize command syntax and globals */
 
-    cmd_SetBeforeProc(MyBeforeProc, (char *) 0);
-    cmd_SetAfterProc(MyAfterProc, (char *) 0);
+    cmd_SetBeforeProc(MyBeforeProc, NULL);
+    cmd_SetAfterProc(MyAfterProc, NULL);
     SetupBosAdminCmd();
     SetupClientAdminCmd();
     SetupKasAdminCmd();

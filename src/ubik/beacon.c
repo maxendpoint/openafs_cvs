@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.14 2002/06/24 16:30:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.15 2002/08/21 18:14:19 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -52,7 +52,6 @@ static nServers;		    /* total number of servers */
 static char amIMagic=0;		    /* is this host the magic host */
 char amIClone=0;                    /* is this a clone which doesn't vote */
 static char ubik_singleServer = 0;
-extern struct rx_securityClass *rxnull_NewClientSecurityObject();
 int (*ubik_CRXSecurityProc)();
 char *ubik_CRXSecurityRock;
 afs_int32 ubikSecIndex;

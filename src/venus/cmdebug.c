@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.9 2002/05/21 06:37:53 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.10 2002/08/21 18:14:26 shadow Exp $");
 
 
 #include <sys/types.h>
@@ -18,6 +18,13 @@ RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.9 2002/05/21 06:37:53 kolya
 #include <sys/socket.h>
 #include <netdb.h>
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
@@ -27,7 +34,6 @@ RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.9 2002/05/21 06:37:53 kolya
 #include <lock.h>
 #include <afs/afs_args.h>
 
-extern struct rx_securityClass *rxnull_NewServerSecurityObject();
 extern struct hostent *hostutil_GetHostByName();
 
 static PrintCacheConfig(aconn)
@@ -280,7 +286,7 @@ char **argv; {
 #endif
     rx_Init(0);
 
-    ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "probe unik server");
+    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "probe unik server");
     cmd_AddParm(ts, "-servers", CMD_SINGLE, CMD_REQUIRED, "server machine");
     cmd_AddParm(ts, "-port", CMD_SINGLE, CMD_OPTIONAL, "IP port");
     cmd_AddParm(ts, "-long", CMD_FLAG, CMD_OPTIONAL, "print all info");

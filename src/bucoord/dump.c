@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.6 2002/08/21 18:12:56 shadow Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -505,7 +505,7 @@ bc_GetConn (aconfig, aport, tconn)
 
     /* use non-secure connections to butc */
     if (!rxsc)
-	rxsc = (struct rx_securityClass *) rxnull_NewClientSecurityObject();
+	rxsc = rxnull_NewClientSecurityObject();
     if (!rxsc || !aconfig) return(-1);
 
     for (te = aconfig->tapeHosts; te; te = te->next)

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.6 2001/08/08 02:41:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.7 2002/08/21 18:13:52 shadow Exp $");
 
 #ifdef AFS_AIX41_ENV
 #include "../rx/rx_kcommon.h"
@@ -266,7 +266,7 @@ void shutdown_rxkernel(void)
 	    if (rxk_ports[i]) {
 		rxk_ports[i] = 0;
 		soclose((struct socket *)rxk_portRocks[i]);
-		rxk_portRocks[i] = (char *)0;
+		rxk_portRocks[i] = NULL;
 	    }
 	}
     }
@@ -353,7 +353,7 @@ int istack;
         if (!top) {
            m->m_flags |= M_PKTHDR; /* XXX - temp */
            m->m_pkthdr.len = 0;
-           m->m_pkthdr.rcvif = (struct ifnet *)0;
+           m->m_pkthdr.rcvif = NULL;
         }
 
 	    /*
@@ -407,7 +407,7 @@ int istack;
         }
 	tm = top;
 
-	tm->m_act = (struct mbuf *) 0;
+	tm->m_act = NULL;
 
 	/* setup mbuf corresponding to destination address */
 	MGETHDR(um, M_DONTWAIT, MT_SONAME);

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kdb.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kdb.c,v 1.6 2002/08/21 18:13:22 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/types.h>
@@ -87,7 +87,7 @@ int main(
 
     sprintf(dbmfile_help, "dbmfile to use (default %s)",  AFSDIR_SERVER_KALOGDB_FILEPATH);
     dbmfile = AFSDIR_SERVER_KALOGDB_FILEPATH;
-    ts = cmd_CreateSyntax((char *) 0, cmdproc, 0, "Dump contents of dbm database");
+    ts = cmd_CreateSyntax(NULL, cmdproc, 0, "Dump contents of dbm database");
     cmd_AddParm(ts, "-dbmfile", CMD_SINGLE, CMD_OPTIONAL, dbmfile_help);
     cmd_AddParm(ts, "-key", CMD_SINGLE, CMD_OPTIONAL, "extract entries that match specified key");
     code = cmd_Dispatch(argc, argv);

@@ -11,27 +11,22 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/make_ip.c,v 1.5 2001/10/05 21:19:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/make_ip.c,v 1.6 2002/08/21 18:13:08 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <des.h>
 #include "des_internal.h"
 
 #define WANT_IP_TABLE
 #include "tables.h"
 
-extern afs_int32 swap_bit_pos_0();
-extern afs_int32 rev_swap_bit_pos_0();
-extern void test_set PROTOTYPE((FILE *, char const *, int,
-                char const *, int));
-extern int swap_long_bytes_bit_number(int);
-extern int swap_bit_pos_0_to_ansi(int);
+#include "des_prototypes.h"
 
 #define SWAP(x) swap_long_bytes_bit_number(swap_bit_pos_0_to_ansi(x))
 
-void gen(stream)
-    FILE *stream;
+void gen(FILE *stream)
 {
     register int i;
 

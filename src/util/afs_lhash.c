@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/afs_lhash.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/afs_lhash.c,v 1.5 2002/08/21 18:14:25 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/afs_atomlist.h"
@@ -275,7 +275,7 @@ afs_lhash_create(
 	lh->ndata = 0;
 
 	lh->ntable = 0;
-	lh->table = (struct bucket **)0;
+	lh->table = NULL;
 
 	if (afs_lhash_accomodate(lh, lh->ltable-1) < 0) {
 		lh->deallocate(lh, sizeof *lh);

@@ -20,7 +20,15 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmon-output.c,v 1.7 2001/07/12 19:58:24 shadow Exp $");
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+ 
+RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmon-output.c,v 1.8 2002/08/21 18:12:49 shadow Exp $");
 
 #include <afs/xstat_fs.h>  
 #include <afs/xstat_cm.h>

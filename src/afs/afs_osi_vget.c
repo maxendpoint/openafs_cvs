@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_vget.c,v 1.6 2001/11/01 05:24:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_vget.c,v 1.7 2002/08/21 18:12:36 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -73,14 +73,14 @@ int afs_osi_vget(struct vcache **avcpp, struct fid *afidp,
      * afs_GetVCache.
      */
 
-    ret = afs_NFSFindVCache(avcpp, &vfid, 1);
+    ret = afs_NFSFindVCache(avcpp, &vfid);
     if (ret > 1) {
 	/* More than one entry matches. */
 	code = ENOENT;
     }
     else if (ret == 0) {
 	/* didn't find an entry. */
-	*avcpp = afs_GetVCache(&vfid, &treq, (afs_int32 *)0, (struct vcache*)0, 0);
+	*avcpp = afs_GetVCache(&vfid, &treq, NULL, NULL);
     }
     if (! *avcpp) {
 	code = ENOENT;

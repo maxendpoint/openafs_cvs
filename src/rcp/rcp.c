@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rcp/Attic/rcp.c,v 1.6 2001/08/08 00:03:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rcp/Attic/rcp.c,v 1.7 2002/08/21 18:13:48 shadow Exp $");
 
 #include <sys/param.h>
 #include <sys/file.h>
@@ -360,9 +360,9 @@ susystem(s)
 	if ((pid = vfork()) == 0) {
 		(void) setuid(userid);
 #ifdef	AFS_OSF_ENV
-		execl(_PATH_BSHELL, "sh", "-c", s, (char *)0);
+		execl(_PATH_BSHELL, "sh", "-c", s, NULL);
 #else
-		execl("/bin/sh", "sh", "-c", s, (char *)0);
+		execl("/bin/sh", "sh", "-c", s, NULL);
 #endif
 		_exit(127);
 	}
@@ -760,7 +760,7 @@ allocbuf(bp, fd, blksize)
 
 	if (fstat(fd, &stb) < 0) {
 		error("rcp: fstat: %s\n", sys_errlist[errno]);
-		return ((struct buffer *)0);
+		return (NULL);
 	}
 #if defined(AIX) || defined(AFS_SUN5_ENV)
 	size = blksize;
@@ -775,7 +775,7 @@ allocbuf(bp, fd, blksize)
 		bp->buf = (char *)malloc((unsigned) size);
 		if (bp->buf == 0) {
 			error("rcp: malloc: out of memory\n");
-			return ((struct buffer *)0);
+			return (NULL);
 		}
 	}
 	bp->cnt = size;

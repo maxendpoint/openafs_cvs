@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.16 2002/08/01 16:11:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.17 2002/08/21 18:12:42 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -350,7 +350,7 @@ void osi_linux_free(void *addr)
     
     lmem.chunk = addr;
     /* remove this chunk from our hash table */
-    if ( lmp = (struct osi_linux_mem *)afs_lhash_remove(lh_mem_htab, hash_chunk(addr), &lmem)) {
+    if ((lmp = (struct osi_linux_mem *)afs_lhash_remove(lh_mem_htab, hash_chunk(addr), &lmem))) {
         linux_free(lmp->chunk); /* this contains the piggybacked type info*/
         afs_atomlist_put(al_mem_pool, lmp); /* return osi_linux_mem struct to pool*/
         afs_linux_cur_allocs--;

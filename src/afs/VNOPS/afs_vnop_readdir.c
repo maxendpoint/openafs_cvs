@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.14 2002/04/09 19:21:59 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.15 2002/08/21 18:12:45 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -241,15 +241,15 @@ struct vcache *		avc;
      if ((avc->states & CForeign) == 0 &&
          (ntohl(ade->fid.vnode) & 1)) {
           return DT_DIR;
-     } else if ((tvc=afs_FindVCache(&tfid,0,0,0,0))) {
+     } else if ((tvc=afs_FindVCache(&tfid,0,0))) {
            if (tvc->mvstat) {
-               afs_PutVCache(tvc, WRITE_LOCK);
+               afs_PutVCache(tvc);
                return DT_DIR;
           } else if (((tvc->states) & (CStatd|CTruth))) {
                /* CTruth will be set if the object has
                 *ever* been statd */
                vtype=vType(tvc);
-               afs_PutVCache(tvc, WRITE_LOCK);
+               afs_PutVCache(tvc);
                if (vtype == VDIR)
                     return DT_DIR;
                else if (vtype == VREG)
@@ -259,7 +259,7 @@ struct vcache *		avc;
                   type=DT_LNK; */
                /* what other types does AFS support? */
           } else
-               afs_PutVCache(tvc, WRITE_LOCK);
+               afs_PutVCache(tvc);
     }
     return DT_UNKNOWN;
 }
@@ -529,7 +529,7 @@ afs_readdir(OSI_VC_ARG(avc), auio, acred)
         || AfsLargeFileSize(auio->uio_offset, auio->uio_resid) )
 	return EFBIG;
 
-    if (code = afs_InitReq(&treq, acred)) {
+    if ((code = afs_InitReq(&treq, acred))) {
 #ifdef	AFS_HPUX_ENV
 	osi_FreeSmallSpace((char *)sdirEntry);
 #endif
@@ -795,7 +795,7 @@ afs1_readdir(avc, auio, acred, eofp)
 #else
 afs1_readdir(avc, auio, acred)
 #endif
-    register struct vcache *avc;
+    struct vcache *avc;
     struct uio *auio;
     struct AFS_UCRED *acred; {
     struct vrequest treq;
