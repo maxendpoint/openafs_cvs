@@ -16,8 +16,9 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 #include <sys/wait.h>
+#include <limits.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.7 2001/11/10 22:36:45 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.8 2001/11/13 14:40:54 shadow Exp $");
 
 #include "afs_util.h"
 
