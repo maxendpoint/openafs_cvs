@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.15 2002/10/09 02:26:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.16 2002/10/09 02:34:08 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -495,7 +495,7 @@ static afs_uint32 *FindCBPtr(struct FileEntry *fe, struct host *host)
 static int FDel(register struct FileEntry *fe)
 {
     register int fei = fetoi(fe);
-    register unsigned short *p = &HashTable[VHash(fe->volid, fe->unique)];
+    register afs_uint32 *p = &HashTable[VHash(fe->volid, fe->unique)];
 
     while (*p && *p != fei)
 	p = &itofe(*p)->fnext;
