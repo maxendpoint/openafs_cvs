@@ -85,7 +85,7 @@ depend: ${SRCS}
 
 system: install
 
-install: ${DESTDIR}${afssrvdir}/vfsck
+install: ${DESTDIR}${afssrvlibexecdir}/vfsck
 
 ${DEST}/root.server/etc/vfsck: vfsck
 	${INSTALL} $? $@
