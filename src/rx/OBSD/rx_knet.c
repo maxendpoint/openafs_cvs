@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/OBSD/rx_knet.c,v 1.3 2002/11/07 22:55:27 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/OBSD/rx_knet.c,v 1.4 2003/01/23 20:34:58 rees Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -27,10 +27,8 @@ int osi_NetReceive(osi_socket asocket, struct sockaddr_in *addr, struct iovec *d
     if (nvecs > RX_MAXIOVECS)
         osi_Panic("osi_NetReceive: %d: too many iovecs\n", nvecs);
 
-    for (i = 0 ; i < nvecs ; i++) {
-        iov[i].iov_base = dvec[i].iov_base;
-        iov[i].iov_len = dvec[i].iov_len;
-    }
+    for (i = 0 ; i < nvecs ; i++)
+        iov[i] = dvec[i];
 
     u.uio_iov = &iov[0];
     u.uio_iovcnt = nvecs;
@@ -46,8 +44,12 @@ int osi_NetReceive(osi_socket asocket, struct sockaddr_in *addr, struct iovec *d
     if (haveGlock)
         AFS_GLOCK();
 
-    if (code && afs_termState != AFSOP_STOP_RXK_LISTENER) {
-	afs_osi_Sleep(&afs_termState);
+    if (code) {
+#ifdef RXKNET_DEBUG
+	printf("rx code %d termState %d\n", code, afs_termState);
+#endif
+	while (afs_termState == AFSOP_STOP_RXEVENT)
+	    afs_osi_Sleep(&afs_termState);
 	return code;
     }
 
@@ -101,10 +103,8 @@ int osi_NetSend(osi_socket asocket, struct sockaddr_in *addr,
     if (nvecs > RX_MAXIOVECS)
         osi_Panic("osi_NetSend: %d: Too many iovecs.\n", nvecs);
 
-    for (i = 0; i < nvecs; i++) {
-        iov[i].iov_base = dvec[i].iov_base;
-        iov[i].iov_len = dvec[i].iov_len;
-    }
+    for (i = 0; i < nvecs; i++)
+        iov[i] = dvec[i];
 
     u.uio_iov = &iov[0];
     u.uio_iovcnt = nvecs;
