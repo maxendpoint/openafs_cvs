@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.14 2002/06/24 22:18:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.15 2002/07/31 21:54:41 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -203,7 +203,13 @@ int afs_osi_SleepSig(char *event)
     return retval;
 }
 
-/* afs_osi_Sleep -- waits for an event to be notified, ignoring signals. */
+/* afs_osi_Sleep -- waits for an event to be notified, ignoring signals.
+ * - NOTE: that on Linux, there are circumstances in which TASK_INTERRUPTIBLE
+ *   can wake up, even if all signals are blocked
+ * - TODO: handle signals correctly by passing an indication back to the
+ *   caller that the wait has been interrupted and the stack should be cleaned
+ *   up preparatory to signal delivery
+ */
 void afs_osi_Sleep(char *event)
 {
     sigset_t saved_set;
