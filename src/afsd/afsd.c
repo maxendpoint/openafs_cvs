@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.34 2003/06/02 15:28:45 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.35 2003/06/19 17:25:17 shadow Exp $");
 
 #define VFS 1
 
@@ -1032,10 +1032,11 @@ char *CheckCacheBaseDir(char *dir)
 
 		res = statfs(dir, &statfsbuf);
 		if ( res != 0 )
+		{
 			return "unable to statfs cache base directory";
 		}
 
-		if (sysfs(GETFSTYP, statfsbuf.f_fsid, name) != 0 
+		if (sysfs(GETFSTYP, statfsbuf.f_fsid, name) != 0 )
 		{
 			return "unable to determine filesystem type for cache base dir";
 		}
