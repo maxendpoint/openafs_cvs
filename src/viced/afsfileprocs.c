@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.18 2001/11/19 16:53:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.19 2001/11/19 16:59:53 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6468,6 +6468,7 @@ void GetStatus(targetptr, status, rights, anyrights, parentptr)
     else
 	status->FileType = Invalid;			/*invalid type field */
     status->LinkCount = targetptr->disk.linkCount;
+    status->Length_hi = 0;
     status->Length = targetptr->disk.length;
     status->DataVersion = targetptr->disk.dataVersion;
     status->Author = targetptr->disk.author;
