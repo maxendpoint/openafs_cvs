@@ -37,7 +37,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.3 2002/10/31 00:10:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.4 2002/10/31 00:19:55 shadow Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
@@ -259,9 +259,9 @@ static const afs_uint32 sbox3[256] = {
  */
 
 #define F_ENCRYPT(R, L, sched) { \
- union lc4 { afs_uint32 l; unsigned char c[4]; } u; \
- u.l = sched ^ R; \
- L ^= sbox0[u.c[0]] ^ sbox1[u.c[1]] ^ sbox2[u.c[2]] ^ sbox3[u.c[3]]; }
+ union lc4 { afs_uint32 l; unsigned char c[4]; } un; \
+ un.l = sched ^ R; \
+ L ^= sbox0[un.c[0]] ^ sbox1[un.c[1]] ^ sbox2[un.c[2]] ^ sbox3[un.c[3]]; }
 
 #ifndef WORDS_BIGENDIAN
 /* BEWARE: this code is endian dependent.
@@ -270,9 +270,9 @@ static const afs_uint32 sbox3[256] = {
 #undef F_ENCRYPT
 #define FF(y, shiftN) (((y) >> shiftN) & 0xFF)
 #define F_ENCRYPT(R, L, sched) { \
- afs_uint32 u; \
- u = sched ^ R; \
- L ^= sbox0[FF(u, 0)] ^ sbox1[FF(u, 8)] ^ sbox2[FF(u, 16)] ^ sbox3[FF(u, 24)];}
+ afs_uint32 un; \
+ un = sched ^ R; \
+ L ^= sbox0[FF(un, 0)] ^ sbox1[FF(un, 8)] ^ sbox2[FF(un, 16)] ^ sbox3[FF(un, 24)];}
 #endif
 
 static inline
