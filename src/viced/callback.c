@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.7 2001/10/01 17:38:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.8 2001/10/01 17:51:41 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -362,7 +362,7 @@ static TAdd(cb, thead)
 	  if (thp->tprev) 
 	    thp->tprev = (itocb(thp->tprev)->tnext = cbtoi(cb));
 	  else 
-	    thp->tprev = cbtoi(cb));
+	    thp->tprev = cbtoi(cb);
 	}
     }
     cb->thead = ttoi(thead);
