@@ -10,22 +10,25 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_auth.c,v 1.10 2002/08/21 18:13:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_auth.c,v 1.11 2003/02/13 06:58:31 shadow Exp $");
 
-#include <security/pam_appl.h>
-#include <security/pam_modules.h>
 #include <syslog.h>
 #include <stdlib.h>
 #include <string.h>
 #include <pwd.h>
 #include <unistd.h>
 #include <sys/param.h>
+#include <sys/wait.h>
 #include <afs/kautils.h>
+#include <signal.h>
+#include <errno.h>
+
+#include <security/pam_appl.h>
+#include <security/pam_modules.h>
+
 #include "afs_message.h"
 #include "afs_util.h"
-#include <signal.h>
-#include <sys/wait.h>
-#include <errno.h>
+
 
 #define RET(x) { retcode = (x); goto out; }
 

@@ -7,8 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <security/pam_appl.h>
-#include <security/pam_modules.h>
 #include <syslog.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +15,10 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_password.c,v 1.8 2002/08/21 18:13:44 shadow Exp $");
+#include <security/pam_appl.h>
+#include <security/pam_modules.h>
+
+RCSID("$Header: /cvs/openafs/src/pam/afs_password.c,v 1.9 2003/02/13 06:58:31 shadow Exp $");
 
 #include <sys/param.h>
 #include <afs/kautils.h>
