@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.46 2003/07/29 18:58:20 kolya Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.47 2003/08/08 20:22:11 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -109,6 +109,7 @@ static void CheckSignal(void);
 extern int GetKeysFromToken();
 extern int RXAFS_ExecuteRequest();
 extern int RXSTATS_ExecuteRequest();
+afs_int32 Do_VLRegisterRPC();
 
 int eventlog = 0, rxlog = 0;
 FILE *debugFile;
