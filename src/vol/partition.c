@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.14 2001/09/24 10:49:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.15 2001/09/25 15:42:14 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -356,7 +356,10 @@ void VAttachPartitions2() {
 	strncat(pname, de->d_name, 20);
 	pname[sizeof(pname)-1] = '\0';
 
-	if (VIsAlwaysAttach(pname))
+	/* Only keep track of "/vicepx" partitions since automounter
+	   may hose us */
+	if (!strncmp(pname, VICE_PARTITION_PREFIX, VICE_PREFIX_SIZE) && 
+	    VIsAlwaysAttach(pname))
 	    VCheckPartition(pname, "");
     }
     closedir(dirp);
@@ -383,7 +386,10 @@ int VAttachPartitions(void)
 	    continue; 
 
 	/* If we're going to always attach this partition, do it later. */
-	if (VIsAlwaysAttach(mnt.mnt_mountp))
+	/* Only keep track of "/vicepx" partitions since automounter
+	   may hose us */
+	if (!strncmp(mnt.mnt_mountp, VICE_PARTITION_PREFIX, VICE_PREFIX_SIZE) && 
+	    VIsAlwaysAttach(mnt.mnt_mountp))
 	    continue;
 
 	if (VCheckPartition(mnt.mnt_mountp, mnt.mnt_special) < 0 )
