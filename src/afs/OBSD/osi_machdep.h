@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.6 2002/11/15 17:19:40 rees Exp $ */
+/* $Id: osi_machdep.h,v 1.7 2002/11/19 18:28:02 rees Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -104,24 +104,42 @@ extern int afs_vget();
 
 #ifdef KERNEL
 extern int (**afs_vnodeop_p)();
-extern struct simplelock afs_global_lock;
 
-#ifndef AFS_GLOBAL_SUNLOCK
-#define AFS_ASSERT_GLOCK()
-#endif
+#ifdef AFS_GLOBAL_SUNLOCK
+extern struct proc * afs_global_owner;
+extern struct lock afs_global_lock;
+#define AFS_GLOCK() \
+    do { \
+        osi_Assert(curproc); \
+ 	lockmgr(&afs_global_lock, LK_EXCLUSIVE, 0, curproc); \
+        osi_Assert(afs_global_owner == NULL); \
+   	afs_global_owner = curproc; \
+    } while (0)
+#define AFS_GUNLOCK() \
+    do { \
+        osi_Assert(curproc); \
+ 	osi_Assert(afs_global_owner == curproc); \
+        afs_global_owner = NULL; \
+        lockmgr(&afs_global_lock, LK_RELEASE, 0, curproc); \
+    } while(0)
+#define ISAFS_GLOCK() (afs_global_owner == curproc && curproc)
+#else
+extern struct simplelock afs_global_lock;
 #define AFS_GLOCK()
 #define AFS_GUNLOCK()
+#define AFS_ASSERT_GLOCK()
+#define ISAFS_GLOCK() 1
+#endif
 #define AFS_RXGLOCK()
 #define AFS_RXGUNLOCK()
 #define ISAFS_RXGLOCK() 1
-#define ISAFS_GLOCK() 1
 
 #undef SPLVAR
-#define SPLVAR
+#define SPLVAR int splvar
 #undef NETPRI
-#define NETPRI
+#define NETPRI splvar=splnet()
 #undef USERPRI
-#define USERPRI
+#define USERPRI splx(splvar)
 #endif /* KERNEL */
 
 #endif /* _OSI_MACHDEP_H_ */

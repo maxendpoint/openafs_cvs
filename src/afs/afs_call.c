@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.43 2002/10/18 17:09:28 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.44 2002/11/19 18:28:01 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -63,7 +63,7 @@ simple_lock_data_t afs_global_lock;
 struct lock__bsd__ afs_global_lock;
 #endif
 
-#if defined(AFS_FBSD_ENV)
+#if defined(AFS_XBSD_ENV)
 struct lock afs_global_lock;
 struct proc *afs_global_owner;
 #endif
@@ -1458,7 +1458,7 @@ void afs_shutdown(void)
 #endif
 #if	defined(AFS_SUN5_ENV) || defined(RXK_LISTENER_ENV)
     afs_warn("RxEvent... ");
-    /* cancel rx event deamon */
+    /* cancel rx event daemon */
     while (afs_termState == AFSOP_STOP_RXEVENT) 
 	afs_osi_Sleep(&afs_termState);
 #if defined(RXK_LISTENER_ENV)

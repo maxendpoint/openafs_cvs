@@ -18,7 +18,7 @@
 #include <sys/time_impl.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.11 2002/10/16 03:58:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.12 2002/11/19 18:28:04 rees Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -44,6 +44,9 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.11 2002/10/16 03:58:49 shadow
 #include "h/user.h"
 #endif
 extern void *osi_Alloc();
+#endif
+#if defined(AFS_OBSD_ENV)
+#include "h/proc.h"
 #endif
 #else /* KERNEL */
 #include <stdio.h>

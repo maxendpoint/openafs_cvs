@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.7 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.8 2002/11/19 18:28:01 rees Exp $");
 
 
 
@@ -32,7 +32,7 @@ afs_lock_t osi_fsplock;
 
 static struct osi_packet {
     struct osi_packet *next;
-} *freePacketList = 0, *freeSmallList, *freeMediumList;
+} *freePacketList = NULL, *freeSmallList;
 afs_lock_t osi_flplock;
 
 
@@ -103,6 +103,8 @@ void osi_FreeSmallSpace(void *adata)
 }
 
 #if	defined(AFS_AIX32_ENV) || defined(AFS_HPUX_ENV)
+static struct osi_packet *freeMediumList;
+
 osi_AllocMoreMSpace(register afs_int32 preallocs)
 {
     register int i;

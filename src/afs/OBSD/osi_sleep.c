@@ -1,5 +1,5 @@
 /*
- * $Id: osi_sleep.c,v 1.3 2002/11/12 23:57:38 rees Exp $
+ * $Id: osi_sleep.c,v 1.4 2002/11/19 18:28:02 rees Exp $
  */
 
 /*
@@ -44,7 +44,7 @@ such damages.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.3 2002/11/12 23:57:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.4 2002/11/19 18:28:02 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -86,6 +86,8 @@ int afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
     endTime = osi_Time() + (ams / 1000);
     if (ahandle)
 	ahandle->proc = (caddr_t) curproc;
+    AFS_ASSERT_GLOCK();
+    AFS_GUNLOCK();
     do {
 	if (aintok) {
 	    code = tsleep(&waitV, PCATCH | (PZERO+8), "afs_osi_Wait", timo);
@@ -100,17 +102,24 @@ int afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
 	    break;
 	}
     } while (osi_Time() < endTime);
+    AFS_GLOCK();
     return code;
 }
 
 void afs_osi_Sleep(void *event)
 {
+    AFS_ASSERT_GLOCK();
+    AFS_GUNLOCK();
     tsleep(event, PVFS, "afs", 0);
+    AFS_GLOCK();
 }
 
 int afs_osi_SleepSig(void *event)
 {
+    AFS_ASSERT_GLOCK();
+    AFS_GUNLOCK();
     tsleep(event, PVFS, "afs", 0);
+    AFS_GLOCK();
     return 0;
 }
 

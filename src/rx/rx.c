@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.41 2002/11/12 20:09:25 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.42 2002/11/19 18:28:04 rees Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -432,7 +432,7 @@ int rx_Init(u_int port)
       rx_sleepLock = alloc_spinlock(LAST_HELD_ORDER-10, "rx_sleepLock");
 #endif /* KERNEL && AFS_HPUX110_ENV */
 #else /* RX_ENABLE_LOCKS */
-#if defined(KERNEL) && defined(AFS_GLOBAL_SUNLOCK) && !defined(AFS_HPUX_ENV)
+#if defined(KERNEL) && defined(AFS_GLOBAL_SUNLOCK) && !defined(AFS_HPUX_ENV) && !defined(AFS_OBSD_ENV)
     mutex_init(&afs_rxglobal_lock, "afs_rxglobal_lock", MUTEX_DEFAULT, NULL);
 #endif /* AFS_GLOBAL_SUNLOCK */
 #endif /* RX_ENABLE_LOCKS */
@@ -6322,8 +6322,10 @@ void shutdown_rx(void)
 {
     struct rx_serverQueueEntry *np;
     register int i, j;
+#ifndef KERNEL
     register struct rx_call *call;
     register struct rx_serverQueueEntry *sq;
+#endif /* KERNEL */
 
     LOCK_RX_INIT
     if (rxinit_status == 1) {

@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.10 2002/10/18 17:09:27 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.11 2002/11/19 18:28:03 rees Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -45,13 +45,12 @@ RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.10 2002/10/18 17:09:27 rees 
 # include "afsint.h"
 #endif /* KERNEL */
 
-#define MAXBS	2048		/* try to avoid horrible allocs */
-static afs_int32 bslosers = 0;
-
 #ifdef KERNEL
 #define	NVALLOC(a)	osi_Alloc(a)
 #define	NVFREE(a,b)	osi_Free(a,b)
 #else /* KERNEL */
+#define MAXBS	2048		/* try to avoid horrible allocs */
+static afs_int32 bslosers = 0;
 #define	NVALLOC(a)	malloc(a)
 #define	NVFREE(a,b)	free(a)
 #endif /* KERNEL */
