@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vm.c,v 1.12 2002/03/25 17:11:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vm.c,v 1.13 2002/03/25 18:09:25 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -41,7 +41,7 @@ RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vm.c,v 1.12 2002/03/25 17:11:54 s
  */
 int osi_VM_FlushVCache(struct vcache *avc, int *slept)
 {
-    struct inode *ip = AFSTOV(avc);
+    struct inode *ip = AFSTOI(avc);
 
     if (VREFCOUNT(avc) != 0)
 	return EBUSY;
@@ -70,7 +70,7 @@ int osi_VM_FlushVCache(struct vcache *avc, int *slept)
  */
 void osi_VM_TryToSmush(struct vcache *avc, struct AFS_UCRED *acred, int sync)
 {
-    invalidate_inode_pages(AFSTOV(avc));
+    invalidate_inode_pages(AFSTOI(avc));
 }
 
 /* Flush and invalidate pages, for fsync() with INVAL flag
@@ -89,7 +89,7 @@ void osi_VM_FSyncInval(struct vcache *avc)
  */
 void osi_VM_StoreAllSegments(struct vcache *avc)
 {
-    struct inode *ip = AFSTOV(avc);
+    struct inode *ip = AFSTOI(avc);
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,5)
     /* filemap_fdatasync() only exported in 2.4.5 and above */
@@ -109,15 +109,15 @@ void osi_VM_StoreAllSegments(struct vcache *avc)
 void osi_VM_FlushPages(struct vcache *avc, struct AFS_UCRED *credp)
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
-    struct inode *ip = AFSTOV(avc);
+    struct inode *ip = AFSTOI(avc);
 
     truncate_inode_pages(&ip->i_data, 0);
 #elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,2,15)
-    struct inode *ip = AFSTOV(avc);
+    struct inode *ip = AFSTOI(avc);
 
     truncate_inode_pages(ip, 0);
 #else
-    invalidate_inode_pages(AFSTOV(avc));
+    invalidate_inode_pages(AFSTOI(avc));
 #endif
 }
 
@@ -130,14 +130,14 @@ void osi_VM_FlushPages(struct vcache *avc, struct AFS_UCRED *credp)
 void osi_VM_Truncate(struct vcache *avc, int alen, struct AFS_UCRED *acred)
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
-    struct inode *ip = AFSTOV(avc);
+    struct inode *ip = AFSTOI(avc);
 
     truncate_inode_pages(&ip->i_data, alen);
 #elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,2,15)
-    struct inode *ip = AFSTOV(avc);
+    struct inode *ip = AFSTOI(avc);
 
     truncate_inode_pages(ip, alen);
 #else
-    invalidate_inode_pages(AFSTOV(avc));
+    invalidate_inode_pages(AFSTOI(avc));
 #endif
 }

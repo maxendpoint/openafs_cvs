@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.23 2002/03/25 17:11:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.24 2002/03/25 18:09:22 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -578,7 +578,7 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp,
 		continue;
 	    
 	    if ( VREFCOUNT(tvc) && tvc->opens == 0 ) {
-		struct inode *ip = AFSTOV(tvc);
+		struct inode *ip = AFSTOI(tvc);
 		if (list_empty(&ip->i_dentry)) {
 		    vn --;
 		}
@@ -952,7 +952,7 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp,
 #endif /* AFS_SGI_ENV */
 #if defined(AFS_LINUX22_ENV)
     {
-	struct inode *ip = AFSTOV(tvc);
+	struct inode *ip = AFSTOI(tvc);
 	sema_init(&ip->i_sem, 1);
 #if defined(AFS_LINUX24_ENV)
 	sema_init(&ip->i_zombie, 1);
