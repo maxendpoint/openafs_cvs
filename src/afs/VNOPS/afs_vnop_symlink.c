@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.20 2004/08/19 02:19:18 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.21 2004/10/13 00:51:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -184,10 +184,10 @@ int afs_symlink
     /* otherwise, we should see if we can make the change to the dir locally */
     if (afs_LocalHero(adp, tdc, &OutDirStatus, 1)) {
 	/* we can do it locally */
-	code = afs_dir_Create(&tdc->f.inode, aname, &newFid.Fid);
+	code = afs_dir_Create(&tdc->f, aname, &newFid.Fid);
 	if (code) {
 	    ZapDCE(tdc);	/* surprise error -- use invalid value */
-	    DZap(&tdc->f.inode);
+	    DZap(&tdc->f);
 	}
     }
     if (tdc) {
