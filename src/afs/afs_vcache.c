@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.32 2002/07/22 03:47:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.33 2002/07/25 20:45:10 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -481,10 +481,9 @@ static void afs_TryFlushDcacheChildren(struct vcache *tvc)
     struct list_head *head = &ip->i_dentry;
     struct dentry *dentry;
     
-#if 1
     afs_Trace1(afs_iclSetp, CM_TRACE_TRYFLUSHDCACHECHILDREN,
 	       ICL_TYPE_POINTER, ip);
-
+#if 0
     VN_HOLD(tvc);
     AFS_GUNLOCK();
     d_prune_aliases(ip);
@@ -507,8 +506,8 @@ restart:
 		
 		next = tmp->next;
 		if (!DCOUNT(dchld) && !dchld->d_inode) {
-		    DGET(dchld);
 		    AFS_GUNLOCK();
+		    DGET(dchld);
 		    DUNLOCK();
 		    d_drop(dchld);
 		    dput(dchld);
