@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.11 2002/03/25 17:11:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.12 2002/04/02 05:09:56 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -72,6 +72,7 @@ afs_symlink
     struct AFSCallBack CallBack;
     struct AFSVolSync tsync;
     struct volume*    volp=0;
+    struct afs_fakestat_state fakestate;
     XSTATS_DECLS
     OSI_VC_CONVERT(adp)
     
@@ -79,23 +80,28 @@ afs_symlink
     afs_Trace2(afs_iclSetp, CM_TRACE_SYMLINK, ICL_TYPE_POINTER, adp,
                 ICL_TYPE_STRING, aname);
 
+    if (code = afs_InitReq(&treq, acred))
+	goto done2;
+
+    afs_InitFakeStat(&fakestate);
+    code = afs_EvalFakeStat(&adp, &fakestate, &treq);
+    if (code)
+	goto done;
+
     if (strlen(aname) > AFSNAMEMAX || strlen(atargetName) > AFSPATHMAX) {
 	code = ENAMETOOLONG;
-	goto done2;
+	goto done;
     }
 
     if (afs_IsDynroot(adp)) {
 	code = afs_DynrootVOPSymlink(adp, acred, aname, atargetName);
-	goto done2;
+	goto done;
     }
-
-    if (code = afs_InitReq(&treq, acred))
-	goto done2;
 
     code = afs_VerifyVCache(adp, &treq);
     if (code) { 
-      code = afs_CheckCode(code, &treq, 30);
-      goto done2;
+	code = afs_CheckCode(code, &treq, 30);
+	goto done;
     }
 
     /** If the volume is read-only, return error without making an RPC to the
@@ -103,7 +109,7 @@ afs_symlink
       */
     if ( adp->states & CRO ) {
         code = EROFS;
-	goto done2;
+	goto done;
     }
 
     InStatus.Mask = AFS_SETMODTIME | AFS_SETMODE;
@@ -223,6 +229,7 @@ afs_symlink
     afs_PutVCache(tvc, WRITE_LOCK);
     code = 0;
 done:
+    afs_PutFakeStat(&fakestate);
     if ( volp ) 
 	afs_PutVolume(volp, READ_LOCK);
     code = afs_CheckCode(code, &treq, 31);
@@ -342,11 +349,15 @@ afs_readlink(OSI_VC_ARG(avc), auio, acred)
     register afs_int32 code;
     struct vrequest treq;
     register char *tp;
+    struct afs_fakestat_state fakestat;
     OSI_VC_CONVERT(avc)
 
     AFS_STATCNT(afs_readlink);
     afs_Trace1(afs_iclSetp, CM_TRACE_READLINK, ICL_TYPE_POINTER, avc);
     if (code = afs_InitReq(&treq, acred)) return code;
+    afs_InitFakeStat(&fakestat);
+    code = afs_EvalFakeStat(&avc, &fakestat, &treq);
+    if (code) goto done;
     code = afs_VerifyVCache(avc, &treq);
     if (code) goto done;
     if (vType(avc) != VLNK) {
@@ -365,6 +376,7 @@ afs_readlink(OSI_VC_ARG(avc), auio, acred)
     }
     ReleaseWriteLock(&avc->lock);
 done:
+    afs_PutFakeStat(&fakestat);
     code = afs_CheckCode(code, &treq, 32);
     return code;
 }

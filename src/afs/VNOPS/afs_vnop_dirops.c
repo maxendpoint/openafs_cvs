@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.9 2002/03/25 17:11:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.10 2002/04/02 05:09:56 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -62,6 +62,7 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
     struct AFSCallBack CallBack;
     struct AFSVolSync tsync;
     afs_int32 now;
+    struct afs_fakestat_state fakestate;
     XSTATS_DECLS
     OSI_VC_CONVERT(adp)
 
@@ -71,6 +72,7 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
 
     if (code = afs_InitReq(&treq, acred)) 
 	goto done2;
+    afs_InitFakeStat(&fakestate);
 
     if (strlen(aname) > AFSNAMEMAX) {
 	code = ENAMETOOLONG;
@@ -81,6 +83,8 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
 	code = EINVAL;
 	goto done;
     }
+    code = afs_EvalFakeStat(&adp, &fakestate, &treq);
+    if (code) goto done;
     code = afs_VerifyVCache(adp, &treq);
     if (code) goto done;
 
@@ -159,6 +163,7 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
     }
     else code = ENOENT;
 done:
+    afs_PutFakeStat(&fakestate);
     code = afs_CheckCode(code, &treq, 26);
 done2:
 #ifdef	AFS_OSF_ENV
@@ -194,6 +199,7 @@ afs_rmdir(adp, aname, acred)
     afs_size_t offset, len;
     struct AFSFetchStatus OutDirStatus;
     struct AFSVolSync tsync;
+    struct afs_fakestat_state fakestate;
     XSTATS_DECLS
     OSI_VC_CONVERT(adp)
 
@@ -202,13 +208,18 @@ afs_rmdir(adp, aname, acred)
     afs_Trace2(afs_iclSetp, CM_TRACE_RMDIR, ICL_TYPE_POINTER, adp, 
 	       ICL_TYPE_STRING, aname);
 
-    if (code = afs_InitReq(&treq, acred)) 
+    if (code = afs_InitReq(&treq, acred))
 	goto done2;
+    afs_InitFakeStat(&fakestate);
 
     if (strlen(aname) > AFSNAMEMAX) {
 	code = ENAMETOOLONG;
 	goto done;
     }
+
+    code = afs_EvalFakeStat(&adp, &fakestate, &treq);
+    if (code)
+	goto done;
 
     code = afs_VerifyVCache(adp, &treq);
     if (code) goto done;
@@ -314,6 +325,7 @@ afs_rmdir(adp, aname, acred)
     code = 0;
 
 done:
+    afs_PutFakeStat(&fakestate);
     code = afs_CheckCode(code, &treq, 27); 
 done2:
 #ifdef	AFS_OSF_ENV

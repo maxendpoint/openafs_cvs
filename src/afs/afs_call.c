@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.25 2002/02/16 18:23:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.26 2002/04/02 05:09:52 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -661,6 +661,10 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 #endif
     else if (parm == AFSOP_SET_DYNROOT) {
 	code = afs_SetDynrootEnable(parm2);
+    }
+    else if (parm == AFSOP_SET_FAKESTAT) {
+	afs_fakestat_enable = parm2;
+	code = 0;
     }
     else
       code = EINVAL;

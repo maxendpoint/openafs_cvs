@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.14 2002/03/25 17:11:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.15 2002/04/02 05:09:56 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -230,6 +230,7 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
     afs_size_t offset, len;
     struct AFSFetchStatus OutDirStatus;
     struct AFSVolSync tsync;
+    struct afs_fakestat_state fakestate;
     XSTATS_DECLS
     OSI_VC_CONVERT(adp)
 
@@ -241,23 +242,37 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
     tvc = (struct vcache *)ndp->ni_vp;  /* should never be null */
 #endif
 
-    /* Check if this is dynroot */
-    if (afs_IsDynroot(adp)) {
-#ifdef  AFS_OSF_ENV
-        afs_PutVCache(adp, 0);
-        afs_PutVCache(tvc, 0);
-#endif
-	return afs_DynrootVOPRemove(adp, acred, aname);
-    }
-
     if (code = afs_InitReq(&treq, acred)) {
 #ifdef  AFS_OSF_ENV
-        afs_PutVCache(adp, 0);
-        afs_PutVCache(tvc, 0);
+	afs_PutVCache(adp, 0);
+	afs_PutVCache(tvc, 0);
 #endif
-      return code;
+	return code;
+    }
+
+    afs_InitFakeStat(&fakestate);
+    code = afs_EvalFakeStat(&adp, &fakestate, &treq);
+    if (code) {
+	afs_PutFakeStat(&fakestate);
+#ifdef  AFS_OSF_ENV
+	afs_PutVCache(adp, 0);
+	afs_PutVCache(tvc, 0);
+#endif
+	return code;
+    }
+
+    /* Check if this is dynroot */
+    if (afs_IsDynroot(adp)) {
+	code = afs_DynrootVOPRemove(adp, acred, aname);
+	afs_PutFakeStat(&fakestate);
+#ifdef  AFS_OSF_ENV
+	afs_PutVCache(adp, 0);
+	afs_PutVCache(tvc, 0);
+#endif
+	return code;
     }
     if (strlen(aname) > AFSNAMEMAX) {
+	afs_PutFakeStat(&fakestate);
 #ifdef  AFS_OSF_ENV
 	afs_PutVCache(adp, 0);
 	afs_PutVCache(tvc, 0);
@@ -271,13 +286,15 @@ tagain:
     if (code) {
 	afs_PutVCache(adp, 0);
 	afs_PutVCache(tvc, 0);
+	afs_PutFakeStat(&fakestate);
 	return afs_CheckCode(code, &treq, 22);
     }
 #else	/* AFS_OSF_ENV */
     tvc = (struct vcache *) 0;
     if (code) {
-      code = afs_CheckCode(code, &treq, 23);
-      return code;
+	code = afs_CheckCode(code, &treq, 23);
+	afs_PutFakeStat(&fakestate);
+	return code;
     }
 #endif
 
@@ -290,6 +307,7 @@ tagain:
         afs_PutVCache(tvc, 0);
 #endif
         code = EROFS;
+	afs_PutFakeStat(&fakestate);
 	return code;
     }
 
@@ -386,6 +404,7 @@ tagain:
 #ifdef	AFS_OSF_ENV
     afs_PutVCache(adp, WRITE_LOCK);
 #endif	/* AFS_OSF_ENV */
+    afs_PutFakeStat(&fakestate);
     return code;
 }
 

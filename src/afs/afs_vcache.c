@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.25 2002/03/28 20:43:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.26 2002/04/02 05:09:52 kolya Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -1542,9 +1542,16 @@ afs_ProcessFS(avc, astat, areq)
 	avc->m.Mode |= S_IFDIR;
     }
     else if (astat->FileType == SymbolicLink) {
-	vSetType(avc, VLNK);
-	avc->m.Mode |= S_IFLNK;
-	if ((avc->m.Mode & 0111) == 0) avc->mvstat = 1;
+	if (afs_fakestat_enable && (avc->m.Mode & 0111) == 0) {
+	    vSetType(avc, VDIR);
+	    avc->m.Mode |= S_IFDIR;
+	} else {
+	    vSetType(avc, VLNK);
+	    avc->m.Mode |= S_IFLNK;
+	}
+	if ((avc->m.Mode & 0111) == 0) {
+	    avc->mvstat = 1;
+	}
     }
     avc->anyAccess = astat->AnonymousAccess;
 #ifdef badidea
