@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.43 2004/07/30 19:12:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.44 2004/08/08 19:17:05 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -30,6 +30,7 @@ int (*rxk_PacketArrivalProc) (register struct rx_packet * ahandle, register stru
 int (*rxk_GetPacketProc) (char **ahandle, int asize);
 #endif
 
+struct osi_socket *rxk_NewSocketHost(afs_uint32 ahost, short aport);
 extern struct interfaceAddr afs_cb_interface;
 
 rxk_ports_t rxk_ports;
