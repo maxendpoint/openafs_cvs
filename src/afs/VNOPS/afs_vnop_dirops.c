@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.7 2002/03/20 18:38:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.8 2002/03/24 19:21:35 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -71,6 +71,11 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
 
     if (code = afs_InitReq(&treq, acred)) 
 	goto done2;
+
+    if (strlen(aname) > AFSNAMEMAX) {
+	code = ENAMETOOLONG;
+	goto done;
+    }
 
     if (!afs_ENameOK(aname)) {
 	code = EINVAL;
@@ -199,6 +204,11 @@ afs_rmdir(adp, aname, acred)
 
     if (code = afs_InitReq(&treq, acred)) 
 	goto done2;
+
+    if (strlen(aname) > AFSNAMEMAX) {
+	code = ENAMETOOLONG;
+	goto done;
+    }
 
     code = afs_VerifyVCache(adp, &treq);
     if (code) goto done;

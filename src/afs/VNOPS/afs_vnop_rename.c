@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.7 2001/11/21 16:01:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.8 2002/03/24 19:21:35 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -54,6 +54,11 @@ afsrename(aodp, aname1, andp, aname2, acred)
 	       ICL_TYPE_STRING, aname2);
 
     if (code = afs_InitReq(&treq, acred)) return code;
+
+    if (strlen(aname1) > AFSNAMEMAX || strlen(aname2) > AFSNAMEMAX) {
+	code = ENAMETOOLONG;
+	goto done;
+    }
 
     /* verify the latest versions of the stat cache entries */
 tagain:
