@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.52 2002/08/13 23:15:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.53 2002/08/19 21:52:52 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -890,14 +890,14 @@ done:
     if (sysState.allocked)
         osi_FreeLargeSpace(name);
 
+    AFS_GUNLOCK();
+    crfree(credp);
+
     if (bad_dentry) {
         shrink_dcache_parent(dp);
         d_drop(dp);
     }
-
     unlock_kernel();
-    AFS_GUNLOCK();
-    crfree(credp);
 
     return !bad_dentry;
 }
