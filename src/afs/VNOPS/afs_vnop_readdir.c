@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.21 2003/07/15 23:14:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.22 2003/08/29 22:00:04 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -288,6 +288,8 @@ afs_readdir_type(avc, ade)
 #define AFS_MOVE_UNLOCK()
 #endif
 char bufofzeros[64];		/* gotta fill with something */
+
+int
 afs_readdir_move(de, vc, auio, slen, rlen, off)
      struct DirEntry *de;
      struct vcache *vc;
@@ -491,6 +493,7 @@ afs_bulkstat_send(avc, req)
  * It has to do with 'offset' (seek locations).
 */
 
+int
 #if	defined(AFS_SUN5_ENV) || defined(AFS_SGI_ENV) || defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 afs_readdir(OSI_VC_ARG(avc), auio, acred, eofp)
      int *eofp;

@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.17 2003/07/15 23:14:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.18 2003/08/29 22:00:04 rees Exp $");
 
 #if !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV)
 
@@ -202,6 +202,8 @@ afs_ustrategy(abp)
 	AFS_GLOCK();
     }
 #endif
+#elif defined(AFS_FBSD50_ENV)
+    biodone(&abp->b_io);
 #else /* AFS_DUX40_ENV */
     iodone(abp);
 #endif /* AFS_DUX40_ENV */

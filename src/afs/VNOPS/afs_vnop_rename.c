@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.15 2003/07/15 23:14:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.16 2003/08/29 22:00:04 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -357,6 +357,7 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
     return code;
 }
 
+int
 #ifdef	AFS_OSF_ENV
 afs_rename(fndp, tndp)
      struct nameidata *fndp, *tndp;

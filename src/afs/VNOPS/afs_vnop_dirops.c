@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.13 2003/07/15 23:14:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.14 2003/08/29 22:00:04 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -35,6 +35,7 @@ extern afs_rwlock_t afs_xcbhash;
 
 /* don't set CDirty in here because RPC is called synchronously */
 
+int
 #ifdef	AFS_OSF_ENV
 afs_mkdir(ndp, attrs)
      struct nameidata *ndp;
@@ -177,6 +178,7 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
 }
 
 
+int
 #ifdef	AFS_OSF_ENV
 afs_rmdir(ndp)
      struct nameidata *ndp;
