@@ -21,14 +21,19 @@
  */
 
 #include <mit-cpyright.h>
-#include <stdio.h>
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.10 2002/08/21 18:13:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.11 2002/08/21 18:35:00 shadow Exp $");
+
+#ifndef KERNEL
+#include <stdio.h>
+#endif
 
 #include <des.h>
 #include "des_internal.h"
+#include "des_prototypes.h"
+
 #ifdef HAVE_STRING_H
 #include <string.h>
 #else
