@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.18 2002/02/07 00:06:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.19 2002/04/23 03:03:35 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -154,7 +154,11 @@ asmlinkage int (*sys_setgroups32p)(int gidsetsize, __kernel_gid32_t *grouplist);
 #define SYSCALL2POINTER (void *)(long)
 #else
 #define POINTER2SYSCALL (void *)
+#ifdef AFS_IA64_LINUX20_ENV
+#define SYSCALL2POINTER (long)
+#else
 #define SYSCALL2POINTER (void *)
+#endif
 #endif
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
