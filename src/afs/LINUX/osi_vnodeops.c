@@ -628,6 +628,13 @@ static int afs_linux_revalidate(struct dentry *dp)
 	return 0;
     }
 
+    /* Drop the dentry if the callback is broken */
+    if (!(vcp->states & CStatd)) {
+        d_drop(dp); 
+        AFS_GUNLOCK();
+        return 0;
+    }
+
     /* Make this a fast path (no crref), since it's called so often. */
     if (vcp->states & CStatd) {
         if (*dp->d_name.name != '/' && vcp->mvstat == 2) /* root vnode */
