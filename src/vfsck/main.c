@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vfsck/main.c,v 1.5 2001/08/08 00:04:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vfsck/main.c,v 1.6 2001/11/07 00:15:27 shadow Exp $");
 
 #define VICE	/* allow us to put our changes in at will */
 #include <stdio.h>
@@ -1074,7 +1074,11 @@ n	printf("(%d frags, %d blocks, %.1f%% fragmentation)\n",
                         exit(-1);
                 else
 #endif
+#ifdef  AFS_SUN5_ENV
+		    exit(exitstat);
+#else
 		exit(4);
+#endif
 	}
 #endif
 #ifdef VICE
