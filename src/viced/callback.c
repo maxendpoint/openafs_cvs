@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.28 2003/01/14 18:13:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.29 2003/01/15 00:28:46 kolya Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1337,7 +1337,7 @@ int BreakLaterCallBacks(void)
     struct CallBack *cb;
     struct FileEntry *fe = NULL;
     struct FileEntry *myfe = NULL;
-    struct FileEntry *fepp;
+    struct FileEntry **fepp;
     struct host *host;
     struct VCBParams henumParms;
     unsigned short tthead = 0;  /* zero is illegal value */
