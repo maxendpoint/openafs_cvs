@@ -525,6 +525,10 @@ case $AFS_SYSNAME in *_linux* | *_umlinux*)
 		esac
 
 		if test "x$enable_kernel_module" = "xyes"; then
+		 AFS_SYSKVERS=`echo $LINUX_VERSION | awk -F\. '{print $[]1 $[]2}'`
+		 if test "x${AFS_SYSKVERS}" = "x"; then
+		  AC_MSG_ERROR(Couldn't guess your Linux version [2])
+		 fi
 		 if test "x$enable_debug_kernel" = "xno"; then
 			LINUX_GCC_KOPTS="$LINUX_GCC_KOPTS -fomit-frame-pointer"
 		 fi
@@ -562,7 +566,7 @@ case $AFS_SYSNAME in *_linux* | *_umlinux*)
 		 LINUX_SCHED_STRUCT_TASK_STRUCT_HAS_SIGHAND
 		 LINUX_SCHED_STRUCT_TASK_STRUCT_HAS_SIGMASK_LOCK
 		 LINUX_WHICH_MODULES
-                 if test "x$ac_cv_linux_config_modversions" = "xno"; then
+                 if test "x$ac_cv_linux_config_modversions" = "xno" -o $AFS_SYSKVERS -ge 26; then
                    AC_MSG_WARN([Cannot determine sys_call_table status. assuming it isn't exported])
                    ac_cv_linux_exports_sys_call_table=no
 		   if test -f "$LINUX_KERNEL_PATH/include/asm/ia32_unistd.h"; then
