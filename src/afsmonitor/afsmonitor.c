@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.8 2001/08/08 00:03:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.9 2001/08/08 02:05:55 shadow Exp $");
 
 #include <stdio.h>
 #include <math.h>
@@ -1721,11 +1721,7 @@ int a_newProbeCycle;	/* start of a new probe cycle ? */
    }
 
    /* copy connection information */
-#if defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
    memcpy(&(tmp_fsPR->connP->skt), &(xstat_fs_Results.connP->skt), sizeof(struct sockaddr_in));
-#else
-   memcpy(tmp_fsPR->connP->skt, xstat_fs_Results.connP->skt, sizeof(struct sockaddr_in));
-#endif
 
    memcpy(tmp_fsPR->connP->hostName, xstat_fs_Results.connP->hostName, sizeof(xstat_fs_Results.connP->hostName));
    tmp_fsPR->collectionNumber = xstat_fs_Results.collectionNumber;
@@ -2444,11 +2440,7 @@ int a_newProbeCycle;	/* start of new probe cycle ? */
 
 
    /* copy connection information */
-#if defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
    memcpy(&(tmp_cmPR->connP->skt), &(xstat_cm_Results.connP->skt), sizeof(struct sockaddr_in));
-#else
-   memcpy(tmp_cmPR->connP->skt, xstat_cm_Results.connP->skt, sizeof(struct sockaddr_in));
-#endif
 
    /**** NEED TO COPY rx_connection INFORMATION HERE ******/
 
