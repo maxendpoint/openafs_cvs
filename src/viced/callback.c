@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.57 2004/10/11 15:27:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.58 2004/10/11 15:32:34 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -833,14 +833,14 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
 			}
 
 			H_LOCK;
-			/* h_Lock_r(hp); */
+			h_Lock_r(hp); 
 			hp->hostFlags |= VENUSDOWN;
 		/**
 		  * We always go into AddCallBack1_r with the host locked
 		  */
 			AddCallBack1_r(hp, afidp->AFSCBFids_val, itot(idx),
 				       CB_DELAYED, 1);
-			/* h_Unlock_r(hp); */
+			h_Unlock_r(hp); 
 			H_UNLOCK;
 		    }
 		}
