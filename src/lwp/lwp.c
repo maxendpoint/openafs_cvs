@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.31 2005/03/26 07:00:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.32 2005/03/27 20:19:45 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -837,9 +837,6 @@ Dump_One_Process(PROCESS pid)
 	       pid->stacksize, pid->stack);
 	printf("***LWP: HWM stack usage: ");
 	printf("%d\n", Stack_Used(pid->stack, pid->stacksize));
-#ifndef AFS_AIX32_ENV
-	free(pid->stack);
-#endif
     }
     printf("***LWP: Current Stack Pointer: 0x%x\n", pid->context.topstack);
     if (pid->eventcnt > 0) {
