@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vfsops.c,v 1.10 2002/08/22 22:44:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vfsops.c,v 1.11 2002/08/23 03:13:23 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -545,7 +545,7 @@ afs_vget(OSI_VFS_DECL(afsp), vnode_t **avcp, struct fid *fidp)
 	    code = ENOENT;
 	    goto out;
 	}
-	vfid.Cell = tcell->cell;
+	vfid.Cell = tcell->cellNum;
 	afs_PutCell(tcell, READ_LOCK);
 	vfid.Fid.Volume = afid2->af_volid;
 	vfid.Fid.Vnode = afid2->af_vno;
