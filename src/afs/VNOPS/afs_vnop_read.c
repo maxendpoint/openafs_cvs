@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.7 2001/11/02 21:05:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.8 2001/11/13 14:47:15 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -186,6 +186,11 @@ tagain:
 	     * data is now streaming in, then wait for some interesting stuff. */
 	    while ((tdc->flags & DFFetching) && tdc->validPos <= filePos) {
 		/* too early: wait for DFFetching flag to vanish, or data to appear */
+		afs_Trace4(afs_iclSetp, CM_TRACE_DCACHEWAIT,
+				ICL_TYPE_STRING, __FILE__,
+				ICL_TYPE_INT32, __LINE__,
+				ICL_TYPE_POINTER, tdc,
+				ICL_TYPE_INT32, tdc->flags);
 		tdc->flags |= DFWaiting;
 		ReleaseReadLock(&avc->lock);
 		afs_osi_Sleep(&tdc->validPos);
@@ -634,6 +639,11 @@ tagain:
 	     * data is now streaming in, then wait for some interesting stuff. */
 	    while ((tdc->flags & DFFetching) && tdc->validPos <= filePos) {
 		/* too early: wait for DFFetching flag to vanish, or data to appear */
+		afs_Trace4(afs_iclSetp, CM_TRACE_DCACHEWAIT,
+				ICL_TYPE_STRING, __FILE__,
+				ICL_TYPE_INT32, __LINE__,
+				ICL_TYPE_POINTER, tdc,
+				ICL_TYPE_INT32, tdc->flags);
 		tdc->flags |= DFWaiting;
 		ReleaseReadLock(&avc->lock);
 		afs_osi_Sleep(&tdc->validPos);
@@ -664,7 +674,11 @@ tagain:
 		ObtainReadLock(&avc->lock);
 	    }
 	}
-
+	
+	afs_Trace3(afs_iclSetp, CM_TRACE_VNODEREAD,
+			ICL_TYPE_POINTER, tdc,
+			ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(offset),
+			ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(len));
 	if (!tdc) {
 	    error = EIO;
 	    break;

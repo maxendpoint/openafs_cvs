@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.23 2001/11/01 04:02:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.24 2001/11/13 14:47:15 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -455,6 +455,11 @@ tagain:
     while ((adp->states & CStatd)
 	   && (dcp->flags & DFFetching)
 	   && hsame(adp->m.DataVersion, dcp->f.versionNo)) {
+	afs_Trace4(afs_iclSetp, CM_TRACE_DCACHEWAIT,
+			ICL_TYPE_STRING, __FILE__,
+			ICL_TYPE_INT32, __LINE__,
+			ICL_TYPE_POINTER, dcp,
+			ICL_TYPE_INT32, dcp->flags);
 	dcp->flags |= DFWaiting;
 	ReleaseReadLock(&adp->lock);
 	afs_osi_Sleep(&dcp->validPos);
