@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.26 2003/01/08 05:40:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.27 2003/01/14 07:46:25 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1261,7 +1261,7 @@ int BreakVolumeCallBacks(afs_uint32 volume)
     henumParms.fid = &fid;
     henumParms.thead = tthead;
     H_UNLOCK
-    h_Enumerate(MultiBreakVolumeLaterCallBack, (char *) &henumParms);
+    h_Enumerate(MultiBreakVolumeCallBack, (char *) &henumParms);
     H_LOCK
 	
     if (henumParms.ncbas) {    /* do left-overs */
@@ -1408,7 +1408,7 @@ restart:
 	    henumParms.fid = &fid;
 	    henumParms.thead = tthead;
 	    H_UNLOCK
-	    h_Enumerate(MultiBreakVolumeCallBack, (char *) &henumParms);
+	    h_Enumerate(MultiBreakVolumeLaterCallBack, (char *) &henumParms);
 	    H_LOCK
 
 	    if (henumParms.ncbas) {    /* do left-overs */
