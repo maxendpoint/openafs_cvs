@@ -97,7 +97,6 @@ install_dirs: force
 	mkdir -p ${DESTDIR}${includedir}/afs
 	mkdir -p ${DESTDIR}${includedir}/rx
 	mkdir -p ${DESTDIR}${afskerneldir}
-	mkdir -p ${DESTDIR}${afssrvdir}
 	mkdir -p ${DESTDIR}${afssrvbindir}
 	mkdir -p ${DESTDIR}${afssrvsbindir}
 	mkdir -p ${DESTDIR}${afssrvlibexecdir}
