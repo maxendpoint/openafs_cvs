@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.52 2003/11/17 23:21:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.53 2003/11/21 08:01:34 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1434,7 +1434,7 @@ BreakLaterCallBacks(void)
     FSYNC_UNLOCK;
 
     if (!myfe) {
-	H_UNLOCK
+	H_UNLOCK;
 	return 0;
     }
 
