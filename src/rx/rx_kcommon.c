@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.22 2002/08/21 20:50:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.23 2002/08/22 00:15:16 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -24,7 +24,11 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.22 2002/08/21 20:50:51 shad
 #endif
 #include "../afsint/afsint.h"
 
+#ifdef AFS_DARWIN60_ENV
+struct ifnet *rxi_FindIfnet(afs_uint32 addr, struct ifaddr **pifad);
+#else
 struct ifnet *rxi_FindIfnet(afs_uint32 addr, struct in_ifaddr **pifad);
+#endif
 
 #ifndef RXK_LISTENER_ENV
 int (*rxk_PacketArrivalProc)(register struct rx_packet *ahandle,
