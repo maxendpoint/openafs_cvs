@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.34 2003/11/22 02:43:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.35 2004/04/18 06:13:54 kolya Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -788,6 +788,7 @@ attach2(Error * ec, char *path, register struct VolumeHeader * header,
 	    vp->specialStatus = 0;
 	Log("VAttachVolume: volume salvage flag is ON for %s; volume needs salvage\n", path);
 	*ec = VSALVAGE;
+	FreeVolume(vp);
 	return NULL;
     }
     if (programType == fileServer) {

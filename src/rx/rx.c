@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.53 2003/07/15 23:16:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.54 2004/04/18 06:13:51 kolya Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -1699,6 +1699,7 @@ rx_GetCall(int tno, struct rx_service *cur_service, osi_socket * socketp)
 	    if (afs_termState == AFSOP_STOP_RXCALLBACK) {
 		AFS_RXGUNLOCK();
 		USERPRI;
+		rxi_Free(sq, sizeof(struct rx_serverQueueEntry));
 		return (struct rx_call *)0;
 	    }
 #endif

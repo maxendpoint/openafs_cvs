@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.12 2003/07/15 23:15:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.13 2004/04/18 06:13:49 kolya Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -276,8 +276,10 @@ acl_Internalize(elist, acl)
     nextc++;			/* now at the beginning of the entry list */
     for (i = 0; i < (*acl)->positive; i++) {
 	int k;
-	if (sscanf(nextc, "%s\t%d\n", lnames.namelist_val[i], &k) != 2)
+	if (sscanf(nextc, "%s\t%d\n", lnames.namelist_val[i], &k) != 2) {
+	    free(lnames.namelist_val);
 	    return (-1);
+	}
 	(*acl)->entries[i].rights = k;
 	nextc = strchr(nextc, '\n');
 	nextc++;		/* 1 + index can cast ptr to integer */
@@ -287,8 +289,10 @@ acl_Internalize(elist, acl)
 	 i--, j++) {
 	if (sscanf
 	    (nextc, "%s\t%d\n", lnames.namelist_val[j],
-	     &((*acl)->entries[j].rights)) != 2)
+	     &((*acl)->entries[j].rights)) != 2) {
+	    free(lnames.namelist_val);
 	    return (-1);
+	}
 	nextc = strchr(nextc, '\n');
 	nextc++;
     }

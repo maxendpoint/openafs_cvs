@@ -19,7 +19,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.16 2003/12/07 22:49:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.17 2004/04/18 06:13:53 kolya Exp $");
 
 #ifdef KERNEL
 #include "afs/stds.h"
@@ -189,13 +189,17 @@ rxkad_NewClientSecurityObject(rxkad_level level,
     tcp->type |= rxkad_client;
     tcp->level = level;
     code = fc_keysched(sessionkey, tcp->keysched);
-    if (code)
+    if (code) {
+	rxi_Free(tsc, size);
 	return 0;		/* bad key */
+    }
     memcpy((void *)tcp->ivec, (void *)sessionkey, sizeof(tcp->ivec));
     tcp->kvno = kvno;		/* key version number */
     tcp->ticketLen = ticketLen;	/* length of ticket */
-    if (tcp->ticketLen > MAXKTCTICKETLEN)
+    if (tcp->ticketLen > MAXKTCTICKETLEN) {
+	rxi_Free(tsc, size);
 	return 0;		/* bad key */
+    }
     memcpy(tcp->ticket, ticket, ticketLen);
 
     LOCK_RXKAD_STATS rxkad_stats_clientObjects++;

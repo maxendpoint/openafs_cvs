@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.14 2003/12/08 01:45:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.15 2004/04/18 06:13:50 kolya Exp $");
 
 /*
  *                      (3) Define a structure, idused, instead of an
@@ -1447,6 +1447,7 @@ CheckPrDatabase(misc)
 	       misc->nforeigns, misc->ngroups);
     }
 
+    free(map);
     return code;
 }
 

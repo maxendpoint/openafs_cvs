@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/readgroup.c,v 1.8 2003/07/15 23:16:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/readgroup.c,v 1.9 2004/04/18 06:13:50 kolya Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -100,6 +100,7 @@ main(argc, argv)
 	}
     }
     code = pr_Initialize(2, AFSDIR_CLIENT_ETC_DIRPATH, cellname);
+    free(cellname);
     if (code) {
 	fprintf(stderr, "pr_Initialize failed .. exiting.\n");
 	fprintf(stderr, "%s (%d).\n", pr_ErrorMsg(code), code);

@@ -24,7 +24,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.14 2003/07/15 23:16:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.15 2004/04/18 06:13:50 kolya Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -457,6 +457,7 @@ CreateEntry(at, aname, aid, idflag, flag, oid, creator)
 	strcpy(cellGroup, AUTHUSER_GROUP);
 	strcat(cellGroup, atsign);
 	pos = FindByName(at, cellGroup, &centry);
+	free(cellGroup);
 	if (!pos)
 	    return PRBADNAM;
 	code = pr_Read(at, 0, pos, &centry, sizeof(centry));
