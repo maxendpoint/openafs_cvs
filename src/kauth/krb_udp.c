@@ -15,12 +15,14 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.18 2002/07/31 22:35:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.19 2002/08/01 02:45:06 zacheiss Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
+#include <errno.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
+#include <afs/errmap_nt.h>
 #define snprintf _snprintf
 #else
 #include <sys/socket.h>
