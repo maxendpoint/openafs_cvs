@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.7 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.8 2003/01/17 06:43:51 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -237,8 +237,13 @@ afs_int32 DoCloneIndex(rwvp, clvp, class, reclone)
 	 if (clinode && (clinode == rwinode)) {
 	    clinode = 0; /* already cloned - don't delete later */
 	 } else if (rwinode) {
-	    assert(IH_INC(V_linkHandle(rwvp), rwinode, V_parentId(rwvp)) != -1);
-	    inodeinced = 1;
+	     code = IH_INC(V_linkHandle(rwvp), rwinode, V_parentId(rwvp));
+	     if (code == -1) {
+		 Log("IH_INC failed: %x, %s, %d\n", V_linkHandle(rwvp),
+		     PrintInode(NULL, rwinode), V_parentId(rwvp));
+		 assert(0);
+	     }
+	     inodeinced = 1;
 	 }
 
 	 /* If a directory, mark vnode in old volume as cloned */
