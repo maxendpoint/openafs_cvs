@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.2 2005/02/24 05:16:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.3 2005/02/24 15:23:41 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,6 +88,7 @@ RCSID
 #include "host.h"
 #ifdef AFS_PTHREAD_ENV
 #include "softsig.h"
+char *(*threadNameProgram) ();
 #endif
 #if defined(AFS_SGI_ENV)
 #include "sys/schedctl.h"
@@ -315,7 +316,7 @@ ResetCheckDescriptors(void)
 #endif
 }
 
-+#if defined(AFS_PTHREAD_ENV)
+#if defined(AFS_PTHREAD_ENV)
 char *
 threadName(void)
 {
@@ -392,7 +393,6 @@ CheckAdminName()
 	close(fd);		/* close fd if it was opened */
 
 }				/*CheckAdminName */
-
 
 static void
 setThreadId(char *s)
