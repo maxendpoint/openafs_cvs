@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.86 2004/10/13 01:56:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.87 2004/10/13 14:07:53 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1480,9 +1480,11 @@ afs_linux_writepage(struct page *pp)
     unsigned offset = PAGE_CACHE_SIZE;
     long status;
 
+#ifdef PageLaunder
     if (PageLaunder(pp)) {
 	return(fail_writepage(pp));
     }
+#endif
 
     inode = (struct inode *)mapping->host;
     end_index = inode->i_size >> PAGE_CACHE_SHIFT;
