@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/inetd/Attic/inetd.c,v 1.6 2002/08/21 18:13:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/inetd/Attic/inetd.c,v 1.7 2003/03/10 01:59:32 shadow Exp $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -1100,7 +1100,12 @@ print_service(action, sep)
 	    sep->se_wait, sep->se_user, (int)sep->se_bi, sep->se_server);
 }
 /*
- * (C) Copyright 1989 Transarc Corporation.  All Rights Reserved.
+ * Copyright 2000, International Business Machines Corporation and others.
+ * All Rights Reserved.
+ * 
+ * This software has been released under the terms of the IBM Public
+ * License.  For details, see the LICENSE file in the top-level source
+ * directory or online at http://www.openafs.org/dl/license10.html
  */
 
 /*

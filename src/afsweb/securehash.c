@@ -8,15 +8,8 @@
  */
 
 /*
- * All Rights Reserved
- * Licensed Materials - Property of Transarc
- *
- * For copyright information, see IPL which you accepted in order to
- * download this software.
  *
  * COMPONENT_NAME: nsafs
- *
- * ORIGINS: Transarc Corp.
  *
  */
 
@@ -28,7 +21,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afsweb/securehash.c,v 1.5 2002/10/16 03:58:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsweb/securehash.c,v 1.6 2003/03/10 01:59:28 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include <net/if.h>

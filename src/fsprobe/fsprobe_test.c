@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe_test.c,v 1.6 2002/08/21 18:13:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe_test.c,v 1.7 2003/03/10 01:59:32 shadow Exp $");
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -148,8 +148,8 @@ main(argc, argv)
 { /*Main routine*/
 
     static char rn[] = "fsprobe_test";	/*Routine name*/
-    register afs_int32 code;			/*Return code*/
-    struct sockaddr_in FSSktArray[3];	/*Transarc socket array*/
+    register afs_int32 code;		/*Return code*/
+    struct sockaddr_in FSSktArray[3];	/*socket array*/
     struct hostent *he;			/*Host entry*/
     struct timeval tv;			/*Time structure*/
     int sleep_secs;			/*Number of seconds to sleep*/

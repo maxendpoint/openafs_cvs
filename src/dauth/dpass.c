@@ -11,14 +11,14 @@
  * dpass
  *
  * This program allows a user to discover the password generated for him
- * by the transarc migration toolkit when migrating his password information
+ * by the migration toolkit when migrating his password information
  * to the DCE.
  */
 
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dauth/Attic/dpass.c,v 1.5 2002/08/21 18:13:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dauth/Attic/dpass.c,v 1.6 2003/03/10 01:59:30 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

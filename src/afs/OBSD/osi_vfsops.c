@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.11 2003/02/04 16:39:55 rees Exp $
+ * $Id: osi_vfsops.c,v 1.12 2003/03/10 01:59:27 shadow Exp $
  */
 
 /*
@@ -43,7 +43,7 @@ Reserved.
 You are hereby granted a worldwide, irrevocable, paid-up, right and
 license to use, execute, display, modify, copy and distribute MIT's
 Modifications, provided that (i) you abide by the terms and conditions
-of your Transarc AFS License Agreement, and (ii) you do not use the name
+of the OpenAFS License Agreement, and (ii) you do not use the name
 of MIT in any advertising or publicity without the prior written consent
 of MIT.  MIT disclaims all liability for your use of MIT's
 Modifications.  MIT's Modifications are provided "AS IS" WITHOUT
@@ -93,7 +93,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.11 2003/02/04 16:39:55 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.12 2003/03/10 01:59:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -482,7 +482,7 @@ afs_vfs_load(struct lkm_table *lkmtp,
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.11 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.12 $) lkm loaded\n");
     return 0;
 }
 

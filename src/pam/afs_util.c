@@ -26,13 +26,13 @@
 #endif
 #include <stdlib.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.10 2002/08/21 18:13:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.11 2003/03/10 01:59:41 shadow Exp $");
 
 #include "afs_util.h"
 
 
 char	*pam_afs_ident		= "pam_afs";
-char	*pam_afs_lh		= "TRANSARC_PAM_AFS_AUTH_login_handle";
+char	*pam_afs_lh		= "OPENAFS_PAM_AFS_AUTH_login_handle";
 
 
 void lc_cleanup(

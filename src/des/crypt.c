@@ -37,7 +37,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.8 2002/06/07 23:55:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.9 2003/03/10 01:59:31 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <windows.h>
@@ -120,7 +120,6 @@ STATIC void init_des();
 STATIC void permute();
 STATIC void init_perm();
 
-/* Hide these functions for Transarc use; only export crypt() */
 STATIC int des_setkey(const char *key);
 STATIC int des_cipher(const char *in, char *out, long salt, int num_iter);
 

@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/comerr/error_table_nt.c,v 1.4 2001/09/18 04:27:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/comerr/error_table_nt.c,v 1.5 2003/03/10 01:59:29 shadow Exp $");
 
 
 /*
@@ -962,8 +962,13 @@ yyerrhandle:
 #include "mit-sipb-cr.h"
 #include <stdio.h>
 
-/* Copyright (C)  1998  Transarc Corporation.  All rights reserved.
- *
+/* 
+ * Copyright 2000, International Business Machines Corporation and others.
+ * All Rights Reserved.
+ * 
+ * This software has been released under the terms of the IBM Public
+ * License.  For details, see the LICENSE file in the top-level source
+ * directory or online at http://www.openafs.org/dl/license10.html
  */
 
 extern FILE *hfile, *cfile, *msfile;
