@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.10 2001/12/25 18:19:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.11 2001/12/30 00:07:02 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -103,7 +103,11 @@ static void *linux_alloc(unsigned int asize)
             if (--max_wait <=0) {
 		break;
             }
+#ifdef set_current_state
 	    set_current_state(TASK_INTERRUPTIBLE);
+#else
+	    current->state = TASK_INTERRUPTIBLE;
+#endif
 	    schedule_timeout(HZ);
         }
 	if (new) /* piggy back alloc type */
