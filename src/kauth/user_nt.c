@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/user_nt.c,v 1.5 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/user_nt.c,v 1.6 2001/08/23 17:46:32 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -49,6 +49,8 @@ static char *ka_MapKerberosError(int code)
 			return "server and client clocks are badly skewed";
 		case SKDC_RETRY:
 			return "Authentication Server was unavailable";
+		case RD_AP_TIME:
+			return "server and client clocks are badly skewed";
 		default:
 			sprintf(bogusReason, "unknown authentication error %d",
 				code);
