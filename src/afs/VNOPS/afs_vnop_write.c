@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.19 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.20 2002/04/02 17:35:03 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -721,7 +721,7 @@ struct vrequest *areq; {
 afs_closex(afd)
     register struct file *afd; {
     struct vrequest treq;
-    register struct vcache *tvc;
+    struct vcache *tvc;
     afs_int32 flags;
     int closeDone;
     afs_int32 code = 0;
