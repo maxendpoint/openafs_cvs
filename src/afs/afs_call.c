@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.69 2004/06/24 17:38:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.70 2004/07/13 05:45:14 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -775,7 +775,7 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
 #endif /* AFS_SGI53_ENV */
     else if (parm == AFSOP_SHUTDOWN) {
 	afs_cold_shutdown = 0;
-	if (parm == 1)
+	if (parm2 == 1)
 	    afs_cold_shutdown = 1;
 #ifndef AFS_DARWIN_ENV
 	if (afs_globalVFS != 0) {
