@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.22 2003/07/15 23:14:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.23 2003/08/28 15:19:17 rees Exp $");
 
 
 #ifdef	UKERNEL
@@ -115,7 +115,7 @@ char V = 'V';
 long V = 'V';
 #endif /* AFS_USR_OSF_ENV */
 
-struct usr_ucred afs_osi_cred;
+struct usr_ucred afs_osi_cred, *afs_osi_credp;
 usr_mutex_t afs_global_lock;
 usr_thread_t afs_global_owner;
 usr_mutex_t rx_global_lock;
@@ -1127,6 +1127,7 @@ osi_Init(void)
      * Initialize the AFS OSI credentials
      */
     afs_osi_cred = *afs_global_ucredp;
+    afs_osi_credp = &afs_osi_cred;
 }
 
 /* ParseArgs is now obsolete, being handled by cmd */
