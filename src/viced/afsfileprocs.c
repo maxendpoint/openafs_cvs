@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.34 2002/10/29 00:06:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.35 2002/10/29 23:03:13 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6595,9 +6595,9 @@ GetRights (client, ACL, rights, anyrights)
 
         /* wait if somebody else is already doing the getCPS call */
     H_LOCK
-    while ( client->host->hostFlags & HPCS_INPROGRESS )
+    while ( client->host->hostFlags & HCPS_INPROGRESS )
     {
-	client->host->hostFlags |= HPCS_WAITING;  /* I am waiting */
+	client->host->hostFlags |= HCPS_WAITING;  /* I am waiting */
 #ifdef AFS_PTHREAD_ENV
 	pthread_cond_wait(&client->host->cond, &host_glock_mutex);
 #else /* AFS_PTHREAD_ENV */
