@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.6 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.7 2003/03/01 01:22:08 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -204,11 +204,11 @@ afs_int32 avolid; {
 	 * volume's ID in its inode, and has to be removed explicitly.
 	 */
 	/* reuse devName buffer now */
-#ifdef AFS_NAMEI_ENV
+#ifdef AFS_NT40_ENV
 	sprintf(devName, "%c:\\%s", *lastDevComp , VolumeExternalName(avolid));
 #else
 	sprintf(devName, "%s/%s", aname, VolumeExternalName(avolid));
-#endif /* AFS_NAMEI_ENV */
+#endif /* AFS_NT40_ENV */
 	code = unlink(devName);
 	if (code) code = errno;
     }
