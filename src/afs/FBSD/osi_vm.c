@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vm.c,v 1.5 2002/03/25 17:11:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vm.c,v 1.6 2002/06/30 06:48:49 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -181,11 +181,9 @@ osi_VM_FlushPages(avc, credp)
 {
     struct vnode *vp;
     struct vm_object *obj;
-    printf("|");
     vp=avc;
     simple_lock(&vp->v_interlock);
     if (VOP_GETVOBJECT(vp, &obj) == 0) {
-       printf("X|");
        vm_object_page_remove(obj, 0, 0, FALSE);
     }
     simple_unlock(&vp->v_interlock);
