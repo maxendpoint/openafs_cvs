@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.6 2001/11/01 04:02:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.7 2002/02/18 21:09:47 shadow Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -140,7 +140,7 @@ afs_int32 *vfid; {
     int blobs, firstelt;
     register int i;
     register struct DirEntry *ep;
-    unsigned short *pp;
+    unsigned short *pp = NULL;
     register struct DirHeader *dhp;
 
     /* check name quality */
