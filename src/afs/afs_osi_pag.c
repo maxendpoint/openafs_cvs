@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.12 2002/10/03 21:44:47 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.13 2002/10/08 17:48:42 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -151,8 +151,10 @@ afs_setpag (void)
 #endif /* defined(AFS_SGI53_ENV) && defined(MP) */    
 
     AFS_STATCNT(afs_setpag);
-#ifdef AFS_SUN5_ENV
+#if	defined(AFS_SUN5_ENV)
     if (!afs_suser(*credpp))
+#elif  defined(AFS_OBSD_ENV)
+    if (!afs_osi_suser(p->p_cred->pc_ucred))
 #else
     if (!afs_suser())
 #endif
