@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/test/dtest.c,v 1.5 2001/08/08 00:03:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/test/dtest.c,v 1.6 2002/11/11 21:23:15 rees Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
@@ -238,10 +238,22 @@ FidZap(dir)
     dir->fd = -1;
 }
 
+int FidZero(afid)
+    long *afid;
+{
+    *afid = 0;
+}
+
 FidEq(dir1, dir2)
     dirhandle *dir1, *dir2;
 {
     return (dir1->uniq == dir2->uniq);
+}
+
+int FidVolEq(afid, bfid)
+    long *afid, *bfid;
+{
+    return 1;
 }
 
 FidCpy(todir, fromdir)
