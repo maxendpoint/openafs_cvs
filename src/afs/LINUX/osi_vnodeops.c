@@ -24,7 +24,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.66 2003/07/15 23:14:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.67 2003/08/26 02:43:21 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -350,7 +350,17 @@ afs_linux_readdir(struct file *fp, void *dirbuf, filldir_t filldir)
 
 	ino = (avc->fid.Fid.Volume << 16) + ntohl(de->fid.vnode);
 	ino &= 0x7fffffff;	/* Assumes 32 bit ino_t ..... */
-	len = strlen(de->name);
+	if (de->name)
+	    len = strlen(de->name);
+	else {
+	    printf("afs_linux_readdir: afs_dir_GetBlob failed, null name (inode %x, dirpos %d)\n", 
+		   &tdc->f.inode, dirpos);
+	    DRelease(de, 0);
+	    afs_PutDCache(tdc);
+	    ReleaseReadLock(&avc->lock);
+	    afs_PutFakeStat(&fakestat);
+	    return -ENOENT;
+	}
 
 	/* filldir returns -EINVAL when the buffer is full. */
 #if (defined(AFS_LINUX24_ENV) || defined(pgoff2loff)) && defined(DECLARE_FSTYPE)
