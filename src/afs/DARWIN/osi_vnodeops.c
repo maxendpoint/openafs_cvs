@@ -1,7 +1,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.6 2002/03/25 17:11:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.7 2002/04/01 19:18:50 kolya Exp $");
 
 #include <afs/sysincludes.h>            /* Standard vendor system headers */
 #include <afs/afsincludes.h>            /* Afs-based standard headers */
@@ -239,7 +239,7 @@ afs_vop_create(ap)
 	*ap->a_vpp = AFSTOV(vcp);
 	vn_lock(*ap->a_vpp, LK_EXCLUSIVE| LK_RETRY, p);
         if (UBCINFOMISSING(*ap->a_vpp) ||
-            UBCINFORECLAIMED(*ap->a_vpp)
+            UBCINFORECLAIMED(*ap->a_vpp))
                 ubc_info_init(*ap->a_vpp);
     }
     else *ap->a_vpp = 0;
