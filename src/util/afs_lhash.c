@@ -10,18 +10,15 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/afs_lhash.c,v 1.6 2002/10/16 03:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/afs_lhash.c,v 1.7 2002/10/28 02:38:58 shadow Exp $");
 
-#ifdef KERNEL
 #include "afs_atomlist.h"
 #include "afs_lhash.h"
-#else /* KERNEL */
-#include "afs_atomlist.h"
-#include "afs_lhash.h"
+#ifndef KERNEL
 /* for now, only turn on assertions in user-space code */
 #include <assert.h>
 #define CHECK_INVARIANTS
-#endif /* KERNEL */
+#endif /* !KERNEL */
 
 /* max hash table load factor */
 enum { LOAD_FACTOR = 5 };
