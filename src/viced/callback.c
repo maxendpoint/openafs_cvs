@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.25 2003/01/07 23:52:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.26 2003/01/08 05:40:06 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -994,7 +994,7 @@ int DeleteAllCallBacks_r(struct host *host, int deletefe)
 	cb = itocb(cbi);
 	cbi = cb->hnext;
 	TDel(cb);
-	CDel(cb, deletefe, 1);
+	CDel(cb, deletefe);
     } while (cbi != first);
     host->cblist = 0;
     return 0;
