@@ -1,4 +1,4 @@
-@ BOTTOM @
+@BOTTOM@
 #undef PACKAGE
 #undef VERSION
 #define RCSID(msg) \
