@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.11 2001/07/12 19:59:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.12 2001/09/13 23:19:23 rees Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -32,7 +32,7 @@ RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.11 2001/07/12 19:59:33 shad
 #if AFS_HAVE_STATVFS
 #include <sys/statvfs.h>
 #endif /* AFS_HAVE_STATVFS */
-#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #include <sys/mount.h>
 #endif
 
@@ -46,7 +46,7 @@ RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.11 2001/07/12 19:59:33 shad
 #ifdef	AFS_SUN5_ENV
 #include <sys/fs/ufs_fs.h>
 #else
-#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #include <ufs/ufs/dinode.h>
 #include <ufs/ffs/fs.h>
 #else
@@ -54,7 +54,7 @@ RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.11 2001/07/12 19:59:33 shad
 #endif
 #endif
 #else /* AFS_VFSINCL_ENV */
-#if !defined(AFS_AIX_ENV) && !defined(AFS_LINUX22_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if !defined(AFS_AIX_ENV) && !defined(AFS_LINUX22_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_XBSD_ENV)
 #include <sys/fs.h>
 #endif
 #endif /* AFS_VFSINCL_ENV */
@@ -456,7 +456,7 @@ int VAttachPartitions(void)
 
 }
 #endif
-#if defined(AFS_DUX40_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_DUX40_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 int VAttachPartitions(void)
 {
     int errors = 0;

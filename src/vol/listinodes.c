@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.8 2001/07/12 19:59:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.9 2001/09/13 23:19:23 rees Exp $");
 
 #ifndef AFS_NAMEI_ENV
 #ifdef AFS_LINUX20_ENV
@@ -52,7 +52,7 @@ int *forcep, forceR;
 #ifdef	  AFS_SUN5_ENV
 #include <sys/fs/ufs_fs.h>
 #else
-#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #include <ufs/ufs/dinode.h>
 #include <ufs/ffs/fs.h>
 #define itod ino_to_fsba
@@ -1254,7 +1254,7 @@ int ListViceInodes(devname, mountedOn, resultFile, judgeInode, judgeParam, force
    if (
       (super.fs.fs_magic != FS_MAGIC)
    || (super.fs.fs_ncg < 1)
-#if	defined(AFS_SUN_ENV) || defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if	defined(AFS_SUN_ENV) || defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
    || (super.fs.fs_cpg < 1)
 #else
    || (super.fs.fs_cpg < 1 || super.fs.fs_cpg > MAXCPG)

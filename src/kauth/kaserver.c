@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.9 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.10 2001/09/13 23:19:20 rees Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -55,7 +55,7 @@ int MinHours = 0;
 int npwSums = KA_NPWSUMS;               /* needs to be variable sometime */
 
 #include <stdarg.h>
-#if !defined(AFS_NT40_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if !defined(AFS_NT40_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_XBSD_ENV)
 #undef vfprintf
 #define vfprintf(stream,fmt,args) _doprnt(fmt,args,stream)
 #endif

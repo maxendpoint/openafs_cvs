@@ -14,11 +14,11 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.12 2001/08/08 00:03:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.13 2001/09/13 23:19:21 rees Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
-#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #include "../afs/sysincludes.h"
 #else
 #include "../h/types.h"

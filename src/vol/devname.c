@@ -10,7 +10,7 @@
 #include <sys/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/devname.c,v 1.7 2001/08/08 00:04:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/devname.c,v 1.8 2001/09/13 23:19:23 rees Exp $");
 
 #include <afs/param.h>
 #include <rx/xdr.h>
@@ -25,7 +25,7 @@ RCSID("$Header: /cvs/openafs/src/vol/devname.c,v 1.7 2001/08/08 00:04:23 shadow 
 #ifdef	AFS_SUN5_ENV
 #include <sys/fs/ufs_fs.h>
 #else
-#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #include <ufs/ufs/dinode.h>
 #include <ufs/ffs/fs.h>
 #else
@@ -33,7 +33,7 @@ RCSID("$Header: /cvs/openafs/src/vol/devname.c,v 1.7 2001/08/08 00:04:23 shadow 
 #endif
 #endif
 #else /* AFS_VFSINCL_ENV */
-#if !defined(AFS_AIX_ENV) && !defined(AFS_LINUX22_ENV) && !defined(AFS_FBSD_ENV)
+#if !defined(AFS_AIX_ENV) && !defined(AFS_LINUX22_ENV) && !defined(AFS_XBSD_ENV)
 #include <sys/fs.h>
 #endif
 #endif /* AFS_VFSINCL_ENV */
