@@ -17,7 +17,7 @@
 #include <afs/param.h>
 #include <sys/wait.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.6 2001/10/01 17:19:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.7 2001/11/10 22:36:45 shadow Exp $");
 
 #include "afs_util.h"
 
@@ -166,7 +166,7 @@ out:
 /* get the current AFS pag for the calling process */
 static afs_int32 curpag()
 {
-   gid_t groups[30];
+   gid_t groups[NGROUPS_MAX];
    afs_uint32 g0, g1;
    afs_uint32 h, l, ret;
       
