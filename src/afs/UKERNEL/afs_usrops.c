@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.15 2002/08/22 17:01:53 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.16 2002/10/09 01:02:50 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -477,7 +477,7 @@ int afs_osi_SleepSig(void *x)
     return 0;
 }
 
-void afs_osi_Wakeup(void *x)
+int afs_osi_Wakeup(void *x)
 {
     int index;
     osi_wait_t *waitp;

@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.18 2002/09/26 07:01:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.19 2002/10/09 01:02:51 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -471,7 +471,7 @@ int afs_UFSReadFast(register struct vcache *avc, struct uio *auio,
 	}
 
 	if ((tdc->stamp == avc->quick.stamp)                /* hint matches */
-	    && ((offDiff = (auio->afsio_offset - avc->quick.minLoc)) >= 0)
+	    && ((offDiff = (afs_size_t)(auio->afsio_offset - avc->quick.minLoc)) >= 0)
 	    && (tdc->f.chunkBytes >= auio->afsio_resid + offDiff)
 	    && !(tdc->dflags & DFFetching)) { /* fits in chunk */
 

@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.19 2002/08/21 18:12:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.20 2002/10/09 01:02:51 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -459,7 +459,7 @@ int afs_remunlink(register struct vcache *avc, register int doit)
 	    adp = afs_GetVCache(&dirFid, &treq, NULL, NULL);
 	    
 	    if (adp) {
-		tdc = afs_FindDCache(adp, 0);
+		tdc = afs_FindDCache(adp, (afs_size_t)0);
 		ObtainWriteLock(&adp->lock, 159);
 		if (tdc) ObtainSharedLock(&tdc->lock, 639);
 
