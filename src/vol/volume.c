@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.24 2003/05/14 14:54:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.25 2003/05/15 16:41:25 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -569,7 +569,9 @@ VAttachVolumeByName_r(Error *ec, char *partition, char *name, int mode)
     strcat(path, name);
     VOL_UNLOCK
     if ((fd = open(path, O_RDONLY)) == -1 || fstat(fd,&status) == -1) {
-	close(fd);
+	Log("VAttachVolume: Failed to open %s (errno %d)\n", path, errno);
+	if (fd > -1)
+	    close(fd);
 	VOL_LOCK
 	*ec = VNOVOL;
 	goto done;
