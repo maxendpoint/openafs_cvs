@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.9 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.10 2002/08/22 19:43:30 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #ifndef AFS_LINUX22_ENV
@@ -242,18 +242,18 @@ int afs_MemWritevBlk(register struct memCacheEntry *mceP, int offset, struct iov
 	  afs_osi_Free(oldData,mceP->dataSize);
 	  mceP->dataSize = size+offset;
       }
+      AFS_GUNLOCK();
       if (mceP->size < offset)
 	  memset(mceP->data+mceP->size, 0, offset-mceP->size);
       for (bytesWritten = 0, i = 0 ; i < nio && size > 0 ; i++) {
 	  bytesToWrite = (size < iov[i].iov_len) ? size : iov[i].iov_len;
-	  AFS_GUNLOCK();
 	  memcpy(mceP->data + offset, iov[i].iov_base, bytesToWrite);
-	  AFS_GLOCK();
  	  offset += bytesToWrite;
  	  bytesWritten += bytesToWrite;
  	  size -= bytesToWrite;
       }
       mceP->size = (offset < mceP->size) ? mceP->size : offset;
+      AFS_GLOCK();
 
       MReleaseWriteLock(&mceP->afs_memLock);
       return bytesWritten;
