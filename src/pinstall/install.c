@@ -49,7 +49,7 @@ Generic install command.  Options are:
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.15 2002/08/21 19:19:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.16 2002/08/21 20:50:50 shadow Exp $");
 
 #include <stdio.h>
 #include <pwd.h>
@@ -91,7 +91,9 @@ static struct stat istat, ostat;
 static int stripcalled = 0;
 
 extern int errno;
+#if !defined(AFS_DARWIN60_ENV)
 extern int sys_nerr;
+#endif
 #if !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_XBSD_ENV)
 extern char *sys_errlist[];
 #endif

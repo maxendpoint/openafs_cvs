@@ -36,7 +36,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.16 2002/08/21 18:14:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.17 2002/08/21 20:50:52 shadow Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -98,7 +98,7 @@ int debug = 0;
 static char *cmdname;
 #ifdef	AFS_SUN5_ENV
 static char CPP[] = "/usr/ccs/lib/cpp";
-#elif defined(AFS_XBSD_ENV)
+#elif defined(AFS_XBSD_ENV) || defined(AFS_DARWIN60_ENV)
 static char CPP[] = "/usr/bin/cpp";
 #elif defined(AFS_NT40_ENV)
 static char CPP[MAXCMDLINE];

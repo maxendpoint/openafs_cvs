@@ -1,5 +1,5 @@
 #/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
-# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.16 2002/08/21 18:13:36 shadow Exp $
+# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.17 2002/08/21 20:50:49 shadow Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
@@ -28,7 +28,11 @@ AFS_OS_NONFSOBJS = osi_vfsops.o
 KDEFS=
 DBUG = 
 DEFINES= -D_KERNEL -DKERNEL -DKERNEL_PRIVATE -DDIAGNOSTIC -DUSE_SELECT -DMACH_USER_API -DMACH_KERNEL
+<ppc_darwin_60>
+KOPTS=-no-cpp-precomp -static -fno-common -finline -fno-keep-inline-functions -force_cpusubtype_ALL -msoft-float -mlong-branch 
+<ppc_darwin_14 ppc_darwin_13 ppc_darwin_12>
 KOPTS=-no-precomp -static -fno-common -finline -fno-keep-inline-functions -force_cpusubtype_ALL -msoft-float -mlong-branch 
+<all>
 CFLAGS=-I. -I.. -I${TOP_OBJDIR}/src/config ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG} ${OPTMZ}
 KINCLUDES=-I${KROOT}/System/Library/Frameworks/Kernel.Framework/Headers
 

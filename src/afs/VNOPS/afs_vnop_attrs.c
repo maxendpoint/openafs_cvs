@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.14 2002/08/21 18:12:45 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.15 2002/08/21 20:50:45 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -220,6 +220,12 @@ int afs_getattr(OSI_VC_DECL(avc), struct vattr *attrs, struct AFS_UCRED *acred)
 
 #if defined(AFS_SUN5_ENV)
     if (flags & ATTR_HINT) {
+       code = afs_CopyOutAttrs(avc, attrs);
+       return code;
+    }
+#endif
+#if defined(AFS_DARWIN_ENV)
+    if (avc->states & CUBCinit) {
        code = afs_CopyOutAttrs(avc, attrs);
        return code;
     }
