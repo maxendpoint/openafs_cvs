@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.27 2004/04/21 02:20:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.28 2004/07/23 22:06:22 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -374,6 +374,8 @@ afs_statfs(struct super_block *sbp, struct statfs *__statp, int size)
 
     memset(&stat, 0, size);
     statp = &stat;
+#else
+    memset(statp, 0, sizeof(*statp));
 #endif
 
     AFS_STATCNT(afs_statfs);
