@@ -36,7 +36,7 @@ test: utst_server utst_client udebug
 
 clean:
 	rm -f *.o utst_server utst_client udebug *.a *.cs.c *.ss.c *.xdr.c
-	rm -f utst_int.h ubik_int.h uerrors.c ubik.h core AFS_component_version_number.c
+	rm -f utst_int.h ubik_int.h uerrors.c ubik.h core AFS_component_version_number.c Kubik_int.h
 
 system: install
 

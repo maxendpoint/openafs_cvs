@@ -73,77 +73,64 @@ CFLAGS = $(CCFLAGS) $(DEFINES) $(INCLUDES)
 KOBJ = MODLOAD
 MPS = MP SP
 
-# To pick up anything we might have missed
-include Makefile.extradefs
-
 # COMPDIRS is called in Makefile.common to do the actual builds.
 COMPDIRS=linux_compdirs
 
-
 include Makefile.common
 
+LINUX_VERS=${LINUX_VERSION}
 setup:
 	-rm -f h net netinet sys rpc
 	-ln -s rx rpc
-	for v in ${LINUX_VERS} ; do \
-		for m in ${MPS} ; do \
-			KDIR=$(KOBJ)-$$v-$$m; \
-			mkdir -p $${KDIR}; \
-			ln -fs ../Makefile $${KDIR}/Makefile ; \
-			ln -fs ../Makefile.common $${KDIR}/Makefile.common; \
-<i386_linux22 i386_linux24 s390_linux24>
-			sh ./redhat.sh ${LINUX_SRCDIR}$$v $${KDIR}/Makefile.extradefs; \
-<all>
-		done \
-	done
+	for m in ${MPS} ; do \
+		KDIR=$(KOBJ)-${LINUX_VERS}-$$m; \
+		mkdir -p $${KDIR}; \
+		ln -fs ../Makefile $${KDIR}/Makefile ; \
+		ln -fs ../Makefile.common $${KDIR}/Makefile.common; \
+	done 
 	
 # Compile SP and MP clients as requested
 
-LINUX_INCDIR=include/linux
-
 ${COMPDIRS}:
-	for v in ${LINUX_VERS} ; do \
-		IDIR=${LINUX_SRCDIR}$$v/${LINUX_INCDIR}; \
-		rm -f h; \
-		ln -s $${IDIR} h; \
-		rm -f linux; \
-		ln -s $${IDIR} linux; \
-		rm -f net; \
-		ln -s $${IDIR} net; \
-		rm -f netinet; \
-		ln -s $${IDIR} netinet; \
-		rm -f sys; \
-		ln -s $${IDIR} sys; \
-		rm -f asm-generic; \
-		ln -s ${LINUX_SRCDIR}$$v/include/asm-generic asm-generic; \
-		rm -f asm; \
+	rm -f h 
+	ln -s ${LINUX_KERNEL_PATH}/include/linux h 
+	rm -f linux 
+	ln -s ${LINUX_KERNEL_PATH}/include/linux linux 
+	rm -f net 
+	ln -s ${LINUX_KERNEL_PATH}/include/linux net 
+	rm -f netinet 
+	ln -s ${LINUX_KERNEL_PATH}/include/linux netinet 
+	rm -f sys
+	ln -s ${LINUX_KERNEL_PATH}/include/linux sys
+	rm -f asm-generic
+	ln -s ${LINUX_KERNEL_PATH}/include/asm-generic asm-generic
+	rm -f asm
 <alpha_linux_22 alpha_linux_24>
-		ln -s ${LINUX_SRCDIR}$$v/include/asm-alpha asm ; \
+	ln -s ${LINUX_KERNEL_PATH}/include/asm-alpha asm
 <i386_linux22 i386_linux24>
-		ln -s ${LINUX_SRCDIR}$$v/include/asm-i386 asm ; \
+	ln -s ${LINUX_KERNEL_PATH}/include/asm-i386 asm
 <s390_linux22 s390_linux24>
-		ln -s ${LINUX_SRCDIR}$$v/include/asm-s390 asm ; \
+	ln -s ${LINUX_KERNEL_PATH}/include/asm-s390 asm
 <ppc_linux22 ppc_linux24>
-		ln -s ${LINUX_SRCDIR}$$v/include/asm-ppc asm ; \
+	ln -s ${LINUX_KERNEL_PATH}/include/asm-ppc asm 
 <sparc_linux22 sparc_linux24>
-		ln -s ${LINUX_SRCDIR}$$v/include/asm-sparc asm ; \
+	ln -s ${LINUX_KERNEL_PATH}/include/asm-sparc asm
 <sparc64_linux22 sparc64_linux24>
-		ln -s ${LINUX_SRCDIR}$$v/include/asm-sparc64 asm ; \
+	ln -s ${LINUX_KERNEL_PATH}/include/asm-sparc64 asm
 <all>
-		for m in ${MPS} ; do \
-			KDIR=${KOBJ}-$$v-$$m ; \
-			echo Building in directory: $${KDIR} ; \
-			if [ "$$m" = "MP" ] ; then \
-				SMP_DEF="-DAFS_SMP -D__BOOT_KERNEL_SMP=1 -D__BOOT_KERNEL_UP=0 -D__SMP__" ; \
-				TARG="libafs.mp" ; \
-			else  \
-				SMP_DEF="-D__BOOT_KERNEL_SMP=0 -D__BOOT_KERNEL_UP=1 -U__SMP__" ; \
-				TARG=libafs ; \
-			fi ; \
-			cd $${KDIR} ; \
-			$(MAKE) DESTDIR=${DESTDIR} SMP_DEF="$${SMP_DEF}" $${TARG} CLIENT=$$v || exit $$?; \
-			cd ../ ; \
-		done \
+	for m in ${MPS} ; do \
+		KDIR=${KOBJ}-${LINUX_VERS}-$$m ; \
+		echo Building in directory: $${KDIR} ; \
+		if [ "$$m" = "MP" ] ; then \
+			SMP_DEF="-DAFS_SMP -D__BOOT_KERNEL_SMP=1 -D__BOOT_KERNEL_UP=0 -D__SMP__" ; \
+			TARG="libafs.mp" ; \
+		else  \
+			SMP_DEF="-D__BOOT_KERNEL_SMP=0 -D__BOOT_KERNEL_UP=1 -U__SMP__" ; \
+			TARG=libafs ; \
+		fi ; \
+		cd $${KDIR} ; \
+		$(MAKE) DESTDIR=${DESTDIR} SMP_DEF="$${SMP_DEF}" $${TARG} CLIENT=${LINUX_VERS} || exit $$?; \
+		cd ../ ; \
 	done
 
 
