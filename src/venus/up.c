@@ -41,7 +41,7 @@
 #include <netdb.h>      
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
-endif
+#endif
 #include <afs/venus.h>
 
 /* ************************************************************* */
