@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.10 2001/11/13 14:47:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.11 2001/11/21 16:01:31 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -508,6 +508,7 @@ tagain:
 	goto done;
     }
     ObtainReadLock(&avc->lock);
+    ObtainReadLock(&tdc->lock);
 
     /*
      * Make sure that the data in the cache is current. There are two
@@ -516,20 +517,22 @@ tagain:
      * 2. The cache data is no longer valid
      */
     while ((avc->states & CStatd)
-	   && (tdc->flags & DFFetching)
+	   && (tdc->dflags & DFFetching)
 	   && hsame(avc->m.DataVersion, tdc->f.versionNo)) {
 	afs_Trace4(afs_iclSetp, CM_TRACE_DCACHEWAIT,
 			ICL_TYPE_STRING, __FILE__,
 			ICL_TYPE_INT32, __LINE__,
 			ICL_TYPE_POINTER, tdc,
-			ICL_TYPE_INT32, tdc->flags);
-	tdc->flags |= DFWaiting;
+			ICL_TYPE_INT32, tdc->dflags);
+	ReleaseReadLock(&tdc->lock);
 	ReleaseReadLock(&avc->lock);
 	afs_osi_Sleep(&tdc->validPos);
 	ObtainReadLock(&avc->lock);
+	ObtainReadLock(&tdc->lock);
     }
     if (!(avc->states & CStatd)
 	|| !hsame(avc->m.DataVersion, tdc->f.versionNo)) {
+	ReleaseReadLock(&tdc->lock);
 	ReleaseReadLock(&avc->lock);
 	afs_PutDCache(tdc);
 	goto tagain;
@@ -730,6 +733,7 @@ tagain:
     if (ode) DRelease(ode, 0);
 
 dirend:
+    ReleaseReadLock(&tdc->lock);
     afs_PutDCache(tdc);
     ReleaseReadLock(&avc->lock);
 
@@ -789,6 +793,7 @@ tagain:
 	goto done;
     }
     ObtainReadLock(&avc->lock);
+    ObtainReadLock(&tdc->lock);
 
     /*
      * Make sure that the data in the cache is current. There are two
@@ -797,20 +802,22 @@ tagain:
      * 2. The cache data is no longer valid
      */
     while ((avc->states & CStatd)
-	   && (tdc->flags & DFFetching)
+	   && (tdc->dflags & DFFetching)
 	   && hsame(avc->m.DataVersion, tdc->f.versionNo)) {
 	afs_Trace4(afs_iclSetp, CM_TRACE_DCACHEWAIT,
 			ICL_TYPE_STRING, __FILE__,
 			ICL_TYPE_INT32, __LINE__,
 			ICL_TYPE_POINTER, tdc,
-			ICL_TYPE_INT32, tdc->flags);
-	tdc->flags |= DFWaiting;
+			ICL_TYPE_INT32, tdc->dflags);
+	ReleaseReadLock(&tdc->lock);
 	ReleaseReadLock(&avc->lock);
 	afs_osi_Sleep(&tdc->validPos);
 	ObtainReadLock(&avc->lock);
+	ObtainReadLock(&tdc->lock);
     }
     if (!(avc->states & CStatd)
 	|| !hsame(avc->m.DataVersion, tdc->f.versionNo)) {
+	ReleaseReadLock(&tdc->lock);
 	ReleaseReadLock(&avc->lock);
 	afs_PutDCache(tdc);
 	goto tagain;
@@ -961,6 +968,7 @@ tagain:
     if (ode) DRelease(ode, 0);
 
 dirend:
+    ReleaseReadLock(&tdc->lock);
     afs_PutDCache(tdc);
     ReleaseReadLock(&avc->lock);
 

@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.5 2001/11/01 04:02:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.6 2001/11/21 16:01:31 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -128,6 +128,7 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
 	goto done;
     }
     /* otherwise, we should see if we can make the change to the dir locally */
+    if (tdc) ObtainWriteLock(&tdc->lock, 632);
     if (afs_LocalHero(adp, tdc, &OutDirStatus, 1)) {
         /* we can do it locally */
         code = afs_dir_Create(&tdc->f.inode, aname, &newFid.Fid);
@@ -137,6 +138,7 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
 	}
     }
     if (tdc) {
+	ReleaseWriteLock(&tdc->lock);
 	afs_PutDCache(tdc);
     }
     adp->m.LinkCount = OutDirStatus.LinkCount;
@@ -207,6 +209,7 @@ afs_rmdir(adp, aname, acred)
 
     tdc	= afs_GetDCache(adp, (afs_size_t) 0,	&treq, &offset,	&len, 1);	/* test for error below */
     ObtainWriteLock(&adp->lock,154);
+    if (tdc) ObtainSharedLock(&tdc->lock, 633);
     if (tdc && (adp->states & CForeign)) {
 	struct VenusFid unlinkFid;
 
@@ -249,7 +252,10 @@ afs_rmdir(adp, aname, acred)
 		   AFS_STATS_FS_RPCIDX_REMOVEDIR, SHARED_LOCK, (struct cell *)0));
 
     if (code) {
-	if (tdc) afs_PutDCache(tdc);
+	if (tdc) {
+	    ReleaseSharedLock(&tdc->lock);
+	    afs_PutDCache(tdc);
+	}
 	if (code < 0) {
 	  ObtainWriteLock(&afs_xcbhash, 491);
 	  afs_DequeueCallback(adp);
@@ -262,6 +268,7 @@ afs_rmdir(adp, aname, acred)
     }
     /* here if rpc worked; update the in-core link count */
     adp->m.LinkCount = OutDirStatus.LinkCount;
+    if (tdc) UpgradeSToWLock(&tdc->lock, 634);
     if (afs_LocalHero(adp, tdc, &OutDirStatus, 1)) {
 	/* we can do it locally */
 	code = afs_dir_Delete(&tdc->f.inode, aname);
@@ -271,6 +278,7 @@ afs_rmdir(adp, aname, acred)
 	}
     }
     if (tdc) {
+	ReleaseWriteLock(&tdc->lock);
 	afs_PutDCache(tdc);	/* drop ref count */
     }
 

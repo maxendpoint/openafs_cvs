@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.3 2001/07/12 19:58:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.4 2001/11/21 16:01:25 shadow Exp $");
 
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -626,7 +626,7 @@ mp_afs_ubcrdwr(avc, uio, ioflag, cred)
 	    && (counter == 0 || AFS_CHUNKOFFSET(fileBase) == 0)) {
 	    tdc = afs_FindDCache(avc, fileBase);
 	    if (tdc) {
-		if (!(tdc->flags & DFNextStarted))
+		if (!(tdc->mflags & DFNextStarted))
 		    afs_PrefetchChunk(avc, tdc, cred, &treq);
 		afs_PutDCache(tdc);
 	    }

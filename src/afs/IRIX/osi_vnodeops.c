@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.8 2001/11/02 21:05:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.9 2001/11/21 16:01:26 shadow Exp $");
 
 #ifdef	AFS_SGI62_ENV
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -549,7 +549,7 @@ static int afsrwvp(register struct vcache *avc,
 		ObtainWriteLock(&avc->lock,562);
 		tdc = afs_FindDCache(avc, off);
 	        if (tdc) {	
-                    if (!(tdc->flags & DFNextStarted)) 
+                    if (!(tdc->mflags & DFNextStarted)) 
 		        afs_PrefetchChunk(avc, tdc, cr, &treq);
 		    afs_PutDCache(tdc);
                 }
@@ -1142,7 +1142,7 @@ afs_xinactive(OSI_VC_ARG(avc), acred)
 			    avc->fid.Fid.Vnode, avc->fid.Fid.Unique,
 			    code);
 		}
-		afs_InvalidateAllSegments(avc, 1);
+		afs_InvalidateAllSegments(avc);
 	    }
 	    s = VN_LOCK(vp);
 	    vp->v_count --;

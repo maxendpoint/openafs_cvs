@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.12 2001/11/01 04:01:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.13 2001/11/21 16:01:19 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -867,8 +867,10 @@ void shutdown_AFS()
       RWLOCK_INIT(&afs_xconn, "afs_xconn");
       memset((char *)&afs_rootFid, 0, sizeof(struct VenusFid));
       RWLOCK_INIT(&afs_xuser, "afs_xuser");
-      RWLOCK_INIT(&afs_xvolume, "afs_xvolume"), RWLOCK_INIT(&afs_xcell, "afs_xcell");
-      RWLOCK_INIT(&afs_xserver, "afs_xserver"), LOCK_INIT(&afs_puttofileLock, "afs_puttofileLock");
+      RWLOCK_INIT(&afs_xvolume, "afs_xvolume");
+      RWLOCK_INIT(&afs_xcell, "afs_xcell");
+      RWLOCK_INIT(&afs_xserver, "afs_xserver");
+      LOCK_INIT(&afs_puttofileLock, "afs_puttofileLock");
     }
     
 } /*shutdown_AFS*/

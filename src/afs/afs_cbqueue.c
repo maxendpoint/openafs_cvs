@@ -74,7 +74,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.5 2001/08/08 00:03:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.6 2001/11/21 16:01:19 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -289,10 +289,12 @@ unsigned int secs;
    {
    struct dcache * adc;
 
+   ObtainReadLock(&afs_xdcache);
    if ((adc = tvc->quick.dc) && (adc->stamp == tvc->quick.stamp)
    && (afs_indexTimes[adc->index] > afs_indexCounter - 20)) {
    queue up the stat request
    }
+   ReleaseReadLock(&afs_xdcache);
    }
    */
 

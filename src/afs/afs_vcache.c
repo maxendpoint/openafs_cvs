@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.14 2001/11/01 04:01:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.15 2001/11/21 16:01:19 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -251,7 +251,7 @@ void afs_InactiveVCache(struct vcache *avc, struct AFS_UCRED *acred)
     AFS_STATCNT(afs_inactive);
     if (avc->states & CDirty) {
       /* we can't keep trying to push back dirty data forever.  Give up. */
-      afs_InvalidateAllSegments(avc, 1/*set lock*/);  /* turns off dirty bit */
+      afs_InvalidateAllSegments(avc);  /* turns off dirty bit */
     }
     avc->states	&= ~CMAPPED;	/* mainly used by SunOS 4.0.x */
     avc->states	&= ~CDirty;	/* Turn it off */

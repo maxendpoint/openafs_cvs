@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.6 2001/11/01 04:01:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.7 2001/11/21 16:01:19 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #ifndef AFS_LINUX22_ENV
@@ -532,10 +532,7 @@ afs_MemCacheFetchProc(acall, mceP, abase, adc, avc, abytesToXferP, abytesXferred
 	      abase += tlen;
 	      length -= tlen;
 	      adc->validPos = abase;
-	      if (adc->flags & DFWaiting) {
-		  adc->flags &= ~DFWaiting;
-		  afs_osi_Wakeup(&adc->validPos);
-	      }
+	      afs_osi_Wakeup(&adc->validPos);
 	  }
       } while (moredata);
       /* max of two sizes */

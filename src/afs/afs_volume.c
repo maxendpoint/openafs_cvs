@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.9 2001/11/20 20:04:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.10 2001/11/21 16:01:19 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -317,6 +317,7 @@ void afs_CheckVolumeNames(flags)
 		    ReleaseReadLock(&afs_xvcache);
 
 		    ObtainWriteLock(&afs_xcbhash, 485);
+		    /* LOCKXXX: We aren't holding tvc write lock? */
 		    afs_DequeueCallback(tvc);
 		    tvc->states &= ~CStatd;
 		    ReleaseWriteLock(&afs_xcbhash);

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.12 2001/11/10 23:00:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.13 2001/11/21 16:01:19 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -433,16 +433,17 @@ void BPrefetch(ab)
      * be waiting for our wakeup anyway.
      */
     tdc = (struct dcache *) (ab->ptr_parm[0]);
-    tdc->flags &= ~DFFetchReq;
+    ObtainSharedLock(&tdc->lock, 640);
+    if (tdc->mflags & DFFetchReq) {
+	UpgradeSToWLock(&tdc->lock, 641);
+	tdc->mflags &= ~DFFetchReq;
+	ReleaseWriteLock(&tdc->lock);
+    } else {
+	ReleaseSharedLock(&tdc->lock);
+    }
     afs_osi_Wakeup(&tdc->validPos);
     if (ab->size_parm[1]) {
-#ifdef	AFS_SUN5_ENVX
-	mutex_enter(&tdc->lock);
-	tdc->refCount--;
-	mutex_exit(&tdc->lock);
-#else
 	afs_PutDCache(tdc);	/* put this one back, too */
-#endif
     }
 }
 
@@ -1348,7 +1349,7 @@ afs_sgidaemon(void)
 			afs_sgibklist = NULL;
 			SPUNLOCK(afs_sgibklock, s);
 			AFS_GLOCK();
-			tdc->flags &= ~DFEntryMod;
+			tdc->dflags &= ~DFEntryMod;
 			afs_WriteDCache(tdc, 1);
 			AFS_GUNLOCK();
 			s = SPLOCK(afs_sgibklock);
