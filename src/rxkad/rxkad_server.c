@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.13 2003/07/15 23:16:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.14 2003/11/29 20:23:35 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -59,6 +59,9 @@ static struct rx_securityOps rxkad_server_ops = {
     rxkad_CheckPacket,		/* check data packet */
     rxkad_DestroyConnection,
     rxkad_GetStats,
+	0, /* spare 1 */
+	0, /* spare 2 */
+	0, /* spare 3 */
 };
 extern afs_uint32 rx_MyMaxSendSize;
 

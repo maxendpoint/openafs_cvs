@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.36 2003/11/23 04:53:43 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.37 2003/11/29 20:23:35 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -397,7 +397,7 @@ typedef struct {
 } childJob_t;
 
 /* Child job this process is running. */
-childJob_t myjob = { SALVAGER_MAGIC, NOT_CHILD };
+childJob_t myjob = { SALVAGER_MAGIC, NOT_CHILD, "" };
 
 int nt_SalvagePartition(char *partName, int jobn);
 int nt_SetupPartitionSalvage(void *datap, int len);

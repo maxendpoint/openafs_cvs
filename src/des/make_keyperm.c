@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/make_keyperm.c,v 1.6 2003/07/15 23:15:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/make_keyperm.c,v 1.7 2003/11/29 20:23:34 jaltman Exp $");
 
 #include <mit-cpyright.h>
 #include <stdio.h>
@@ -48,7 +48,7 @@ static int const shift[16 + 1] = { 0,
     1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1,
 };
 
-static int const pc_1[64 + 1] = { 0,
+static int const pc_1[56 + 1] = { 0,
 
     57, 49, 41, 33, 25, 17, 9,
     1, 58, 50, 42, 34, 26, 18,
