@@ -18,7 +18,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.12 2002/10/16 03:59:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.13 2002/11/12 23:57:40 rees Exp $");
 
 #ifdef KERNEL
 #include "afs/stds.h"
@@ -28,7 +28,9 @@ RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.12 2002/10/16 03:59:07
 #ifdef AFS_LINUX20_ENV
 #include "h/socket.h"
 #endif
+#ifndef AFS_OBSD_ENV
 #include "netinet/in.h"
+#endif
 #else /* !UKERNEL */
 #include "afs/sysincludes.h"
 #endif /* !UKERNEL */

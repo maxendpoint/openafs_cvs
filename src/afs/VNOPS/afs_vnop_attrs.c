@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.18 2002/10/16 03:58:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.19 2002/11/12 23:57:39 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -39,7 +39,6 @@ int afs_CopyOutAttrs(register struct vcache *avc, register struct vattr *attrs)
 {
     register struct volume *tvp;
     register struct cell *tcell;
-    register afs_int32 i;
     int fakedir = 0;
 
     AFS_STATCNT(afs_CopyOutAttrs);

@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.15 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.16 2002/11/12 23:57:38 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -361,8 +361,10 @@ int afs_InitReq(register struct vrequest *av, struct AFS_UCRED *acred)
          * programs (without setpag) to work properly.
          */
 #if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
-        av->uid = acred->cr_uid;    /* default when no pag is set */
-                                    /* bsd creds don't have ruid */
+	if (acred == NOCRED)
+	    av->uid = -2; /* XXX nobody... ?*/
+	else
+	    av->uid = acred->cr_uid; /* bsd creds don't have ruid */
 #else
 	av->uid	= acred->cr_ruid;    /* default when no pag is set */
 #endif
