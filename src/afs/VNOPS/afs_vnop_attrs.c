@@ -24,7 +24,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.27.2.5 2005/04/03 18:15:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.27.2.6 2005/04/04 04:01:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -93,9 +93,10 @@ afs_CopyOutAttrs(register struct vcache *avc, register struct vattr *attrs)
     attrs->va_fsid = avc->v.v_vfsp->vfs_fsid.val[0];
 #elif defined(AFS_OSF_ENV)
     attrs->va_fsid = avc->v.v_mount->m_stat.f_fsid.val[0];
-#elif defined(AFS_DARWIN70_ENV)
-    attrs->va_fsid = avc->v.v_mount->mnt_stat.f_fsid.val[0];
-#else 
+#else
+#ifdef AFS_DARWIN70_ENV
+    attrs->va_fsid = avc->v->v_mount->mnt_stat.f_fsid.val[0];
+#else /* ! AFS_DARWIN70_ENV */
     attrs->va_fsid = 1;
 #endif 
     if (avc->mvstat == 2) {
