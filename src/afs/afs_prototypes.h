@@ -509,7 +509,7 @@ extern int nvnode;                      /* number of total system vnodes */
 extern int numvnodes;                   /* number vnodes in use now */ 
 #endif 
 #ifdef AFS_DUX40_ENV
-extern int numvnodes;                   /* number vnodes in use now */ 
+extern struct vfs_ubcops afs_ubcops;
 #endif
 #endif
 
