@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/fs.c,v 1.9 2001/07/12 19:59:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/fs.c,v 1.10 2001/07/20 18:09:11 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -2127,7 +2127,7 @@ static SysNameCmd(as)
     }
     printf("Current sysname%s is:", setp>1 ? " list" : "");
     for(;setp>0;--setp) {
-      printf(" %s", input);
+      printf(" \'%s\'", input);
       input += strlen(input) + 1;
     }
     printf("\n");
