@@ -1294,14 +1294,18 @@ int smb_FindShare(smb_vc_t *vcp, smb_user_t *uidp, char *shareName,
 	}
 
 #ifndef DJGPP
-	code = RegOpenKeyEx(HKEY_LOCAL_MACHINE, AFSConfigKeyName,
+	code = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\OpenAFS\\Client\\Submounts",
 						0, KEY_QUERY_VALUE, &parmKey);
 	if (code == ERROR_SUCCESS) {
-        len = sizeof(sbmtpath);
+        len = sizeof(pathName);
         code = RegQueryValueEx(parmKey, shareName, NULL, NULL,
-                                (BYTE *) sbmtpath, &len);
+                                (BYTE *) pathName, &len);
+		if (code != ERROR_SUCCESS)
+			len = 0;
         RegCloseKey (parmKey);
-	}
+	} else {
+        len = 0;
+    }   
 #else /* DJGPP */
     strcpy(sbmtpath, cm_confDir);
     strcat(sbmtpath, "/afsdsbmt.ini");
