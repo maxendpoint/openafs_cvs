@@ -1,11 +1,11 @@
 #/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
-# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.1 2001/06/28 05:03:56 shadow Exp $
+# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.2 2001/06/28 05:22:09 shadow Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
 
 DESTDIR=DEST/
-include $(DESTDIR)../src/config/Makefile.${SYS_NAME}
+include ../config/Makefile.${SYS_NAME}
 
 
 # OS specific object files:

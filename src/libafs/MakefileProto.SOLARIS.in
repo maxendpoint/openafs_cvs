@@ -7,9 +7,7 @@
 
 # MakefileProto for Solaris systems
 #
-
-include $(DESTDIR)../src/config/Makefile.${SYS_NAME}
-
+include ../config/Makefile.${SYS_NAME}
 
 # OS specific object files:
 AFS_OS_OBJS = \
