@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.5 2001/07/12 19:59:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.6 2001/07/20 22:12:02 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -2377,7 +2377,7 @@ static SyncVldb(as)
   afs_int32 pname, code;	/* part name */
   char part[10];
   int flags = 0;
-  char *volname;
+  char *volname = 0;
 
   tserver = 0;
   if (as->parms[0].items) {
