@@ -91,7 +91,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.26 2003/03/28 09:35:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.27 2003/04/07 17:56:28 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2717,6 +2717,7 @@ void JudgeEntry(struct DirSummary *dir, char *name, VnodeId vnodeNumber,
     }
  
 #ifdef AFS_AIX_ENV
+#ifndef AFS_NAMEI_ENV
     /* On AIX machines, don't allow entries to point to inode 0. That is a special 
      * mount inode for the partition. If this inode were deleted, it would crash
      * the machine.
@@ -2732,6 +2733,7 @@ void JudgeEntry(struct DirSummary *dir, char *name, VnodeId vnodeNumber,
        }
        return;
     }
+#endif
 #endif
 
     if (!(vnodeNumber & 1) && !Showmode &&
