@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.10 2003/11/29 20:23:33 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.11 2003/11/29 20:31:49 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -147,8 +147,8 @@ int blockEntrySize[NBLOCKTYPES] = {
     sizeof(((struct viBlock *) NULL)->a[0]),
     sizeof(((struct tBlock *) NULL)->a[0]),
     sizeof(((struct dBlock *) NULL)->a[0]),
-    0
-    /* FIXME: possible missing initializer here */
+    0,
+    0,
 };
 
 char *typeName[NBLOCKTYPES] = {
@@ -157,8 +157,8 @@ char *typeName[NBLOCKTYPES] = {
     "volInfo",
     "tape",
     "dump",
-    "hashTable"
-    /* FIXME: possible missing initializer here */
+    "hashTable",
+    "text"
 };
 
 int hashBlockType[HT_MAX_FUNCTION + 1] = {
@@ -167,7 +167,6 @@ int hashBlockType[HT_MAX_FUNCTION + 1] = {
     dump_BLOCK,
     tape_BLOCK,
     volInfo_BLOCK
-    /* FIXME: possible missing initializer here */
 };
 
 /* Compatibility table for the bits in the blockMap. */
