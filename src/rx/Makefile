@@ -106,8 +106,9 @@ ${DESTDIR}etc/rxdebug: rxdebug
 rxdebug: rxdebug.o ${DESTDIR}lib/afs/util.a ${DESTDIR}lib/afs/libsys.a
 	${LINK}
 
-install.noversion noversion install all system: librx.a includes kinstall ukinstall
+install.noversion noversion install all system: librx.a includes rxdebug kinstall ukinstall
 	${INSTALL} librx.a ${DESTDIR}lib
+	${INSTALL} rxdebug ${DESTDIR}etc/rxdebug
 
 includes: rx.h rx_user.h rx_event.h rx_queue.h rx_clock.h xdr.h rx_null.h rx_globals.h
 	set ${DESTDIR}include/rx; $(MKDIR_IF_NEEDED)
