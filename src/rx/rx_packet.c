@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.36 2004/08/19 00:41:54 kolya Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.37 2004/09/17 13:35:51 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -1160,6 +1160,7 @@ rxi_ReceiveDebugPacket(register struct rx_packet *ap, osi_socket asocket,
 	    tstat.packetReclaims = htonl(rx_packetReclaims);
 	    tstat.usedFDs = CountFDs(64);
 	    tstat.nWaiting = htonl(rx_nWaiting);
+	    tstat.nWaited = htonl(rx_nWaited);
 	    queue_Count(&rx_idleServerQueue, np, nqe, rx_serverQueueEntry,
 			tstat.idleThreads);
 	    MUTEX_EXIT(&rx_serverPool_lock);
