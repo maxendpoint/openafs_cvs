@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_file.c,v 1.3 2002/11/13 16:25:56 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_file.c,v 1.4 2003/01/22 21:25:15 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -120,7 +120,7 @@ int osi_UFSTruncate(struct osi_file *afile, afs_int32 asize)
 void osi_DisableAtimes(struct vnode *avp)
 {
 #if 0
-    VTOI(avp)->i_flag &= ~IACC;
+    VTOI(avp)->i_flag &= ~IN_ACCESS;
 #endif
 }
 

@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.36 2002/12/28 05:17:08 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.37 2003/01/22 21:25:15 rees Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -484,7 +484,7 @@ static void afs_GetDownD(int anumber, int *aneedSpace)
 	     */
 	    if (tdc && tdc->refCount == 1) {
 		unsigned char chunkFlags;
-		afs_size_t tchunkoffset;
+		afs_size_t tchunkoffset = 0;
                 afid = &tdc->f.fid;
 		/* xdcache is lower than the xvcache lock */
 		MReleaseWriteLock(&afs_xdcache);
@@ -2843,7 +2843,7 @@ int afs_wakeup(register struct vcache *avc)
     AFS_STATCNT(afs_wakeup);
     for (i = 0; i < NBRS; i++, tb++) {
 	/* if request is valid and for this file, we've found it */
-	if (tb->refCount > 0 && avc == tb->vnode) {
+	if (tb->refCount > 0 && avc == tb->vc) {
 
 	    /*
 	     * If CSafeStore is on, then we don't awaken the guy
@@ -2935,7 +2935,7 @@ int afs_InitCacheFile(char *afile, ino_t ainode)
 #ifdef AFS_DEC_ENV
 	grele(filevp);
 #else
-	AFS_RELE((struct vnode *)filevp);
+	AFS_RELE(filevp);
 #endif
 #endif /* AFS_LINUX22_ENV */
     }

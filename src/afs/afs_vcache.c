@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.46 2003/01/17 22:24:16 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.47 2003/01/22 21:25:15 rees Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -2019,9 +2019,9 @@ struct vcache *afs_GetRootVCache(struct VenusFid *afid,
 	/* Mount point no longer stat'd or unknown. FID may have changed. */
 #ifdef AFS_OSF_ENV
 	if (tvc)
-	    AFS_RELE(tvc);
+	    AFS_RELE(AFSTOV(tvc));
 #endif
-	tvc = (struct vcache*)0;
+	tvc = NULL;
 	getNewFid = 1;
 	ReleaseSharedLock(&afs_xvcache);
 	goto newmtpt;

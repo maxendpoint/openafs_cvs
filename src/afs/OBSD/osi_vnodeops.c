@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.6 2002/11/20 23:00:33 rees Exp $
+ * $Id: osi_vnodeops.c,v 1.7 2003/01/22 21:25:15 rees Exp $
  */
 
 /*
@@ -98,7 +98,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.6 2002/11/20 23:00:33 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.7 2003/01/22 21:25:15 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -460,7 +460,7 @@ afs_nbsd_read(ap)
     int code;
 
     AFS_GLOCK();
-    code = afs_read(VTOAFS(ap->a_vp), ap->a_uio, ap->a_cred, 0, 0, 0);
+    code = afs_read(VTOAFS(ap->a_vp), ap->a_uio, ap->a_cred, (daddr_t)0, NULL, 0);
     AFS_GUNLOCK();
     return code;
 }
@@ -1009,7 +1009,7 @@ afs_nbsd_print(ap)
     struct vnode *vp = ap->a_vp;
     struct vcache *vc = VTOAFS(ap->a_vp);
 
-    printf("tag %d, fid: %ld.%x.%x.%x, ", vp->v_tag, vc->fid.Cell,
+    printf("tag %d, fid: %d.%x.%x.%x, ", vp->v_tag, vc->fid.Cell,
 	   (int) vc->fid.Fid.Volume, (int) vc->fid.Fid.Vnode, (int) vc->fid.Fid.Unique);
     lockmgr_printinfo(&vc->rwlock);
     printf("\n");
