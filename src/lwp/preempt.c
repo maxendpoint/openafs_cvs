@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.14 2002/08/21 19:19:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.15 2002/08/22 16:13:45 shadow Exp $");
 
 
 #include "lwp.h"
@@ -40,6 +40,9 @@ int PRE_EndPreempt()
 #else
 #include <sys/time.h>
 #include <signal.h>
+#ifdef HAVE_UCONTEXT_H
+#include <ucontext.h>
+#endif
 
 #if defined(AFS_OSF_ENV) || defined(AFS_S390_LINUX20_ENV)
 int PRE_Block = 0;		/* used in lwp.c and process.s */
