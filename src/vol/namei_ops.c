@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.20 2003/11/14 23:35:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21 2003/11/24 03:51:24 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -696,9 +696,12 @@ namei_dec(IHandle_t * ih, Inode ino, int p1)
 	if (count == 0) {
 	    IHandle_t *th;
 	    IH_INIT(th, ih->ih_dev, ih->ih_vid, ino);
+#if 0 
+	    /* This triggers in the fileserver on the volume index vnodes */
             if (th->ih_refcnt > 1) 
                 Log("Warning: Leaked ref on ihandle dev %d vid %d ino %lld\n",
 		    th->ih_dev, th->ih_vid, (int64_t) th->ih_ino);
+#endif
             namei_HandleToName(&name, th);
             IH_RELEASE(th);
 	    code = unlink(name.n_path);
