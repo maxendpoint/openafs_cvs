@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.19.2.1 2004/08/25 07:09:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.19.2.2 2004/08/25 07:11:03 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -570,7 +570,7 @@ verifyInterfaceAddress(ame, info, aservers)
 	for (i = 0; i < totalServers; i++) {
 	    if (info)
 		tmpAddr =
-		    ntohl((afs_uint32) info->hostAddr[i].sin_addr.s_addr);
+		    (afs_uint32) info->hostAddr[i].sin_addr.s_addr;
 	    else
 		tmpAddr = aservers[i];
 	    if (myAddr[j] == tmpAddr) {
