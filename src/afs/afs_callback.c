@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.23 2003/03/04 16:19:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.24 2003/03/06 17:11:23 shadow Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -1464,8 +1464,9 @@ int SRXAFSCB_TellMeAboutYourself(struct rx_call *a_call,
     
     RX_AFS_GUNLOCK();
     
+    dataBytes = 1 * sizeof(afs_int32);
     dataBuffP = (afs_int32 *)afs_osi_Alloc(dataBytes);
-    memcpy((char *)dataBuffP, "1", dataBytes);
+    dataBuffP[0] = CAPABILITY_ERRORTRANS;
     capabilities->Capabilities_len = dataBytes/sizeof(afs_int32);
     capabilities->Capabilities_val = dataBuffP;
 

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.40 2003/03/06 15:43:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.41 2003/03/06 17:11:39 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -964,7 +964,7 @@ retry:
 	H_UNLOCK
 	code = RXAFSCB_TellMeAboutYourself(host->callback_rxcon, &interf,
 					   &caps);
-	if ( code == RXGEN_OPCODE )
+	if ( code == RXGEN_OPCODE ) 
 	    code = RXAFSCB_WhoAreYou(host->callback_rxcon, &interf);
 	H_LOCK
 	if ( code == RXGEN_OPCODE ) {
@@ -1073,7 +1073,7 @@ retry:
 		H_UNLOCK
 		code = RXAFSCB_TellMeAboutYourself(host->callback_rxcon, 
 						   &interf, &caps);
-		if ( code == RXGEN_OPCODE )
+		if ( code == RXGEN_OPCODE ) 
 		    code = RXAFSCB_WhoAreYou(host->callback_rxcon, &interf);
 		H_LOCK
 		if ( code == RXGEN_OPCODE ) {
