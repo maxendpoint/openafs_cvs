@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.7 2002/11/19 18:28:02 rees Exp $ */
+/* $Id: osi_machdep.h,v 1.8 2002/12/03 23:34:31 rees Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -82,6 +82,9 @@ extern struct timeval time;
 
 /* other */
 #define afs_bufferpages bufpages
+#ifndef iodone
+#define iodone biodone
+#endif
 #define PAGESIZE	8192
 #define printk		printf	/* for RX version of xdr_* */
 #define setgroups	sys_setgroups
