@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vfsops.c,v 1.6 2002/03/25 17:11:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vfsops.c,v 1.7 2002/08/12 21:32:52 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -78,6 +78,11 @@ afs_root (OSI_VFS_ARG(afsp), avpp)
     if (afs_globalVp && (afs_globalVp->states & CStatd)) {
 	tvp = afs_globalVp;
     } else {
+	if (afs_globalVp) {
+	    afs_PutVCache(afs_globalVp);
+	    afs_globalVp = NULL;
+	}
+
 	if (!(code = afs_InitReq(&treq, u.u_cred)) &&
 	    !(code = afs_CheckInit())) {
 	    tvp = afs_GetVCache(&afs_rootFid, &treq, (afs_int32 *)0,

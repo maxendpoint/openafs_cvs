@@ -1,7 +1,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.6 2002/03/25 17:11:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.7 2002/08/12 21:32:44 kolya Exp $");
 
 #include <afs/sysincludes.h>            /* Standard vendor system headers */
 #include <afs/afsincludes.h>            /* Afs-based standard headers */
@@ -122,7 +122,11 @@ afs_root(struct mount *mp,
 	tvp = afs_globalVp;
         error=0;
     } else {
-	
+	if (afs_globalVp) {
+	    afs_PutVCache(afs_globalVp);
+	    afs_globalVp = NULL;
+	}
+
 	if (!(error = afs_InitReq(&treq, &cr)) &&
 	    !(error = afs_CheckInit())) {
 	    tvp = afs_GetVCache(&afs_rootFid, &treq, (afs_int32 *)0,
