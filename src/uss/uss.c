@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.7 2003/07/15 23:17:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.8 2004/03/15 18:51:03 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -1416,7 +1416,7 @@ HandleBulk(a_as, a_rock)
 	 */
 	uss_common_Reset();
 
-	sprintf(tbuf, "%s", buf);
+	strncpy(tbuf, buf, USS_BULK_BUF_CHARS-1);
 
 	/*
 	 * First line of file = line 1.
