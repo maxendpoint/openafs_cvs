@@ -34,6 +34,10 @@ libsys.a: ${OBJECTS} ${RMTOBJS} AFS_component_version_number.o
 	$(AR) crv $@ ${OBJECTS} ${RMTOBJS} \
 		AFS_component_version_number.o ${LIBSYS_AIX_EXP}
 	$(RANLIB) $@
+	case "${SYS_NAME}" in                   	\
+		rs_aix*) 			        \
+			$(AR) crv $@ afsl.exp;;         \
+	esac
 
 tests:	pagsh pagsh.krb fixit iinc idec icreate iopen istat rmtsysd
 
