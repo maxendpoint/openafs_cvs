@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.11 2001/11/21 16:01:29 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.12 2002/01/01 18:34:05 shadow Exp $");
 
 #if	defined(AFS_SUN_ENV) || defined(AFS_SUN5_ENV)
 /*
@@ -496,17 +496,17 @@ retry:
 	    buf->b_blkno = btodb(toffset);
 	    bp_mapin(buf);		/* map it in to our address space */
 
-	    /* afs_ustrategy will want to lock the dcache entry */
-	    ReleaseReadLock(&tdc->lock);
-#ifndef	AFS_SUN5_ENV    
-	    ReleaseReadLock(&avc->lock);
-#endif
 #if	defined(AFS_SUN5_ENV)
 	    AFS_GLOCK();
+	    /* afs_ustrategy will want to lock the dcache entry */
+	    ReleaseReadLock(&tdc->lock);
 	    code = afs_ustrategy(buf, acred);	/* do the I/O */
+	    ObtainReadLock(&tdc->lock);
 	    AFS_GUNLOCK();
 #else
-	    code = afs_ustrategy(buf);	/* do the I/O */
+	    ReleaseReadLock(&tdc->lock);
+	    ReleaseReadLock(&avc->lock);
+	    code = afs_ustrategy(buf, acred);	/* do the I/O */
 #endif
 #ifndef	AFS_SUN5_ENV    
 	    ObtainReadLock(&avc->lock);
