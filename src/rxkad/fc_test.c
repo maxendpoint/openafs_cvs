@@ -190,5 +190,7 @@ main(void)
 
     }
 
+    /* work around darwin linker global symbol (rxkad_stats) stupidity */
+    rxkad_SetLevel(&conn, 0);
     exit(fail);
 }

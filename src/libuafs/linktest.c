@@ -16,14 +16,14 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.7 2003/07/15 23:15:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.8 2004/03/10 07:38:21 shadow Exp $");
 
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <rx/rx.h>
 #include <afs/sysincludes.h>
+#include <rx/rx.h>
 #include <afs_usrops.h>
 
 void uafs_Shutdown(void);

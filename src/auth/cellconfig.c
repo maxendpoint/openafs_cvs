@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.35 2003/11/29 22:08:08 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.36 2004/03/10 07:38:17 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -36,6 +36,9 @@ RCSID
 #include <sys/time.h>
 #ifdef AFS_AFSDB_ENV
 #include <arpa/nameser.h>
+#ifdef HAVE_ARPA_NAMESER_COMPAT_H
+#include <arpa/nameser_compat.h>
+#endif
 #include <resolv.h>
 #endif /* AFS_AFSDB_ENV */
 #endif /* AFS_NT40_ENV */
