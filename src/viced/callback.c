@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.22 2002/11/23 01:51:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.23 2002/12/03 02:03:42 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -114,6 +114,7 @@ RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.22 2002/11/23 01:51:43 sha
 #include <afs/ihandle.h>
 #include <afs/vnode.h>
 #include <afs/volume.h>
+#include "viced_prototypes.h"
 #include "viced.h"
 
 #include <afs/ptclient.h>  /* need definition of prlist for host.h */

@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/physio.c,v 1.7 2002/08/21 18:14:29 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/physio.c,v 1.8 2002/12/03 02:03:42 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -43,6 +43,7 @@ RCSID("$Header: /cvs/openafs/src/viced/physio.c,v 1.7 2002/08/21 18:14:29 shadow
 #include <afs/ihandle.h>
 #include <afs/vnode.h>
 #include <afs/volume.h>
+#include "viced_prototypes.h"
 #include "viced.h"
 #ifdef PAGESIZE
 #undef PAGESIZE

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.21 2002/10/30 09:10:16 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.22 2002/12/03 02:03:42 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -54,6 +54,7 @@ RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.21 2002/10/30 09:10:16 kolya E
 #include <rx/rx.h>
 #include <afs/cellconfig.h>
 #include <stdlib.h>
+#include "viced_prototypes.h"
 #include "viced.h"
 #include "host.h"
 
