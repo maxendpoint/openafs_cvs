@@ -44,7 +44,7 @@ include ../config/Makefile.version
 all: ${TOP_LIBDIR}/libsys.a rmtsysd ${TOP_INCDIR}/afs/afssyscalls.h pagsh pagsh.krb kinstall ukinstall
 	case "${SYS_NAME}" in \
 	rs_aix*)			\
-		${INSTALL} afs.exp ${TOP_LIBDIR}/afs;;	\
+		${INSTALL} afs.exp ${TOP_LIBDIR};;	\
 	sgi_6? ) \
 		${INSTALL} xfsattrs.h ${TOP_INCDIR}/afs;; \
 	esac
