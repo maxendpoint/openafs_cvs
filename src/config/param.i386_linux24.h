@@ -74,7 +74,6 @@
 #endif /* KERNEL */
 
 #ifndef KERNEL
-#define __USE_FILE_OFFSET64 1
 #define __USE_LARGEFILE64 1
 #if !defined off64_t
 #define off64_t __off64_t
