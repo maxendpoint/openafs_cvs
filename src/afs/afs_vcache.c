@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.61 2004/05/04 09:36:01 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.62 2004/05/08 04:20:39 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2902,12 +2902,6 @@ shutdown_vcache(void)
      * free vcache entries and all the vcache entries are active ones then we allocate
      * an additional one - admittedly we almost never had that occur.
      */
-#if	!defined(AFS_OSF_ENV)
-    afs_osi_Free(Initial_freeVCList, afs_cacheStats * sizeof(struct vcache));
-#endif
-#ifdef  KERNEL_HAVE_PIN
-    unpin(Initial_freeVCList, afs_cacheStats * sizeof(struct vcache));
-#endif
 
     {
 	register struct afs_q *tq, *uq;
@@ -2979,6 +2973,12 @@ shutdown_vcache(void)
     }
     afs_cbrSpace = 0;
 
+#if	!defined(AFS_OSF_ENV)
+    afs_osi_Free(Initial_freeVCList, afs_cacheStats * sizeof(struct vcache));
+#endif
+#ifdef  KERNEL_HAVE_PIN
+    unpin(Initial_freeVCList, afs_cacheStats * sizeof(struct vcache));
+#endif
 #if	!defined(AFS_OSF_ENV)
     freeVCList = Initial_freeVCList = 0;
 #endif
