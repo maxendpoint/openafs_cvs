@@ -32,7 +32,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.20 2002/08/22 22:44:53 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.21 2002/10/02 15:58:18 rees Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -242,7 +242,6 @@ void afs_MarkServerUpOrDown(struct srvAddr *sa, int a_isDown)
 void afs_ServerDown(struct srvAddr *sa)
 {
     register struct server *aserver = sa->server;
-    register struct srvAddr *sap;
 
     AFS_STATCNT(ServerDown);
     if (aserver->flags & SRVR_ISDOWN || sa->sa_flags & SRVADDR_ISDOWN)
@@ -1283,6 +1282,13 @@ static int afs_SetServerPrefs(struct srvAddr *sa)
             afsi_SetServerIPRank(sa, ifa);
         }
     }
+#elif defined(AFS_OBSD_ENV)
+    {
+	extern struct in_ifaddrhead in_ifaddr;
+	struct in_ifaddr *ifa;
+	for (ifa = in_ifaddr.tqh_first; ifa; ifa = ifa->ia_list.tqe_next)
+	    afsi_SetServerIPRank(sa, ifa);
+    }
 #else
     {
 	struct in_ifaddr *ifa;
@@ -1400,7 +1406,7 @@ struct server *afs_GetServer(afs_uint32 *aserverp, afs_int32 nservers,
 			     afs_int32 addr_uniquifier)
 {
     struct server  *oldts=0, *ts, *newts, *orphts=0;
-    struct srvAddr *oldsa, *sa, *newsa, *nextsa, *orphsa;
+    struct srvAddr *oldsa, *newsa, *nextsa, *orphsa;
     u_short fsport;
     afs_int32 iphash, k, srvcount=0;
     unsigned int srvhash;

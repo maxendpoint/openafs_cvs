@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.19 2002/09/26 07:01:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.20 2002/10/02 15:58:18 rees Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -80,7 +80,6 @@ int afs_CacheInit(afs_int32 astatSize, afs_int32 afiles, afs_int32
 {
     register afs_int32 i, preallocs;
     register struct volume *tv;
-    long code;
 
     AFS_STATCNT(afs_CacheInit);
     /*
@@ -266,7 +265,6 @@ int afs_InitVolumeInfo(char *afile)
 {
     int code;
     struct osi_file *tfile;
-    struct vnode *filevp;
 
     AFS_STATCNT(afs_InitVolumeInfo);
     code = LookupInodeByPath(afile, &volumeInode);
@@ -370,7 +368,7 @@ int afs_InitCacheInfo(register char *afile)
 #if defined(AFS_DARWIN_ENV)
         if (!VFS_STATFS(filevp->v_mount, &st, current_proc()))
 #else 
-#if defined(AFS_FBSD_ENV)
+#if defined(AFS_XBSD_ENV)
         if (!VFS_STATFS(filevp->v_mount, &st, curproc))
 #else 
 	if (!VFS_STATFS(filevp->v_vfsp, &st))  
@@ -613,9 +611,6 @@ static void afs_procsize_init(void)
  */
 void shutdown_cache(void)
 {
-    register struct afs_cbr *tsp, *nsp;
-    int i;
-
   AFS_STATCNT(shutdown_cache);
   afs_WriteThroughDSlots();
   if (afs_cold_shutdown) {
@@ -726,7 +721,6 @@ void shutdown_AFS(void)
 	struct server *ts, *nts;
 	struct conn *tc, *ntc;
 	register struct afs_cbr *tcbrp, *tbrp;
-	struct afs_cbr **lcbrpp;
 
 	for (i=0; i < NSERVERS; i++) {
 	    for (ts = afs_servers[i]; ts; ts = nts) {
