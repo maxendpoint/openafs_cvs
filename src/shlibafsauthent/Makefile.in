@@ -103,7 +103,7 @@ ${DEST}/lib/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
 ${DEST}/lib/libafsauthent.${SHLIB_SUFFIX}: ${DEST}/lib/${LIBAFSAUTHENT}
 	-ln -f -s ${LIBAFSAUTHENT} ${DEST}/lib/libafsauthent.${SHLIB_SUFFIX}
 
-all: ${TOP_LIBDIR}/${LIBAFSAUTHENT}
+all: ${TOP_LIBDIR}/${LIBAFSAUTHENT} ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}
 
 install: ${DESTDIR}${libdir}/${LIBAFSAUTHENT} ${DESTDIR}${libdir}/libafsauthent.${SHLIB_SUFFIX}
 
