@@ -37,7 +37,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.2 2002/10/30 22:58:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.3 2002/10/31 00:10:09 shadow Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
@@ -72,6 +72,7 @@ RCSID("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.2 2002/10/30 22:58:30 sha
 #include "fcrypt.h"
 #include "rxkad.h"
 #include "fcrypt.h"
+#include "private_data.h"
 
 #undef WORDS_BIGENDIAN
 #ifdef AFSBIG_ENDIAN
