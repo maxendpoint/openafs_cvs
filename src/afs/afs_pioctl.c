@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.73 2004/03/17 06:43:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.74 2004/04/09 05:57:39 jaltman Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1382,10 +1382,8 @@ DECL_PIOCTL(PSetTokens)
     memcpy((char *)&i, ain, sizeof(afs_int32));
     ain += sizeof(afs_int32);
     stp = ain;			/* remember where the ticket is */
-    if (i < 0 || i > 2000)
+    if (i < 0 || i > MAXKTCTICKETLEN)
 	return EINVAL;		/* malloc may fail */
-    if (i > MAXKTCTICKETLEN)
-	return EINVAL;
     stLen = i;
     ain += i;			/* skip over ticket */
     memcpy((char *)&i, ain, sizeof(afs_int32));
