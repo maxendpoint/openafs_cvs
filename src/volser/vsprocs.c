@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.31 2004/06/02 03:05:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.32 2004/06/02 08:39:34 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -3215,7 +3215,7 @@ UV_ReleaseVolume(afs_int32 afromvol, afs_int32 afromserver,
 
     /* Will we be completing a previously unfinished release. -force overrides */
     for (s = 0, m = 0, fullrelease=0, i=0; (i<entry.nServers); i++) {
-	if (entry.serverFlags[i]; & ITSROVOL) {
+	if (entry.serverFlags[i] & ITSROVOL) {
 	    m++;
 	    if (entry.serverFlags[i] & NEW_REPSITE) s++;
 	}
