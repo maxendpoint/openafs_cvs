@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.7 2003/07/29 22:31:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.8 2003/07/29 22:34:33 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -1605,7 +1605,9 @@ file_Seek(info, position)
      afs_int32 position;
 {
     afs_int32 code = 0;
-    afs_int32 posit, w;
+    afs_int32 w;
+    osi_lloff_t posit;
+    afs_uint32 c, d;
     struct progress *p;
     afs_hyper_t startOff, stopOff;	/* for normal file(non-tape)  seeks  */
 
