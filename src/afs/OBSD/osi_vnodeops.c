@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.13 2003/07/15 23:14:25 shadow Exp $
+ * $Id: osi_vnodeops.c,v 1.14 2003/09/26 16:57:45 rees Exp $
  */
 
 /*
@@ -99,7 +99,7 @@ NONINFRINGEMENT.
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.13 2003/07/15 23:14:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.14 2003/09/26 16:57:45 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -213,23 +213,6 @@ int afs_debug;
 #define vrele afs_nbsd_rele
 #undef VREF
 #define VREF afs_nbsd_ref
-
-#if 0
-extern int afs_lookup();
-extern int afs_open();
-extern int afs_close();
-extern int HandleIoctl(struct vcache *avc, afs_int32 acom,
-		       struct afs_ioctl *adata);
-extern int afs_fsync();
-extern int afs_remove();
-extern int afs_link();
-extern int afs_rename();
-extern int afs_mkdir();
-extern int afs_rmdir();
-extern int afs_symlink();
-extern int afs_readdir();
-extern int afs_readlink();
-#endif
 
 int
 afs_nbsd_lookup(ap)
