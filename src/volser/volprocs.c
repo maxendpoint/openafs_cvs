@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.26 2003/07/15 23:17:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.27 2003/11/14 23:36:16 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1446,6 +1446,9 @@ VolRestore(acid, atrans, aflags, cookie)
     }
     strcpy(tt->lastProcName, "Restore");
     tt->rxCallPtr = acid;
+
+    DFlushVolume(V_parentId(tt->volume)); /* Ensure dir buffers get dropped */
+
     code = RestoreVolume(acid, tt->volume, (aflags & 1), cookie);	/* last is incrementalp */
     FSYNC_askfs(tt->volid, NULL, FSYNC_RESTOREVOLUME, 0l);	/*break call backs on the
 								 * restored volume */
