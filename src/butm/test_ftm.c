@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.10 2003/11/29 21:37:57 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.11 2004/09/08 21:35:52 jaltman Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -324,8 +324,8 @@ PerformDumpTest(TestInfo * tip)
     }
     past = time(0) - label.creationTime;
     if ((past < 0) || (past > 5 * 60)) {
-	printf("label creation time is long ago: %s\n",
-	       ctime(&label.creationTime));
+        time_t t = label.creationTime;
+	printf("label creation time is long ago: %s\n", ctime(&t));
 	ERROR_EXIT(5);
     }
     if (strcmp(label.AFSName, tip->tapeName) != 0) {

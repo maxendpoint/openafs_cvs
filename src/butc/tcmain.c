@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.15 2004/08/19 01:07:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.16 2004/09/08 21:35:51 jaltman Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -856,6 +856,7 @@ WorkerBee(as, arock)
 #else
     PROCESS dbWatcherPid;
 #endif
+    time_t t;
 
     debugLevel = 0;
 
@@ -1131,7 +1132,8 @@ WorkerBee(as, arock)
 
     TLog(0, "Starting Tape Coordinator: Port offset %u   Debug level %u\n",
 	 portOffset, debugLevel);
-    TLog(0, "Token expires: %s\n", cTIME(&ttoken.endTime));
+    t = ttoken.endTime;
+    TLog(0, "Token expires: %s\n", cTIME(&t));
 
     rx_StartServer(1);		/* Donate this process to the server process pool */
     TLog(0, "Error: StartServer returned");

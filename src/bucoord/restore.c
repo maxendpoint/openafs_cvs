@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.8 2003/12/07 22:49:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.9 2004/09/08 21:35:51 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -195,7 +195,7 @@ bc_Restorer(aindex)
     afs_int32 partitionAll;	/* Likewise for partition */
     struct hostent *hostPtr;
     long haddr;
-    u_long did;
+    time_t did;
     int foundtape, c;
 
     extern statusP createStatusNode();
