@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.7 2001/08/08 00:04:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.8 2001/10/05 21:24:41 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/sysincludes.h"
@@ -37,6 +37,17 @@ RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.7 2001/08/08 00:04:17 shadow Ex
 #include <sys/time.h>
 #endif /* ITIMER_REAL */
 #include <net/if.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#include <stdlib.h>
 #endif
 #include <sys/stat.h>
 #include <fcntl.h>

@@ -10,8 +10,9 @@
 /* ReallyAbort:  called from assert. May/85 */
 #include <afsconfig.h>
 #include <afs/param.h>
+#include <stdlib.h>
 
-RCSID("$Header: /cvs/openafs/src/util/assert.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/assert.c,v 1.5 2001/10/05 21:24:41 shadow Exp $");
 
 #include <stdio.h>
 
