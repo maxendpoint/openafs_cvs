@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.47 2003/04/22 05:27:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.48 2003/05/05 15:40:25 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1226,7 +1226,7 @@ static int MapName_r(char *aname, char *acell, afs_int32 *aval)
 		return 0;
 	    }		    
 	    foreign = 1;  /* attempt cross-cell authentication */
-	    tname = (char *) malloc(anamelen+cnamelen+2);
+	    tname = (char *) malloc(PR_MAXNAMELEN);
 	    if (!tname) {
 		ViceLog(0, ("Failed malloc in MapName_r\n"));
 		assert(0);
