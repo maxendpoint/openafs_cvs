@@ -77,6 +77,20 @@ struct u_Int64 {
 typedef struct u_Int64 afs_uint64;
 #define ZeroInt64(a) (a).high = (a).low = 0
 #define AssignInt64(a, b) (b)->high = (a).high; (b)->low = (a).low
+#define CompareInt64(a,b) (((afs_int32)(a).high - (afs_int32)(b).high) || \ 
+			     (((a).high == (b).high) && ((a).low - (b).low))) 
+#define AddInt64(a, b, c) { \ 
+    afs_int64 _a, _b; \ 
+    _a = a; _b = b; \ 
+    (c)->low = _a.low + _b.low; \ 
+    (c)->high = _a.high + _b.high + ((c)->low < _b.low); \ 
+} 
+#define SubtractInt64(a, b, c) { \ 
+    afs_int64 _a, _b; \ 
+    _a = a; _b = b; \ 
+    (c)->low = _a.low - _b.low; \ 
+    (c)->high = _a.high - _b.high - (_a.low < _b.low); \ 
+} 
 #define NonZeroInt64(a)   (a).low || (a).high
 #define Int64ToInt32(a)    (a).low
 #define FillInt64(t,h,l) (t).high = (h); (t).low = (l);
