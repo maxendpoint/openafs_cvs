@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.33 2003/02/15 05:39:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.34 2003/02/15 06:03:25 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -495,8 +495,8 @@ h_gethostcps_r(register struct host *host, register afs_int32 now)
     }
 }
 
-void h_flushhostcps(hostaddr, hport)
-    register afs_uint32  hostaddr, hport;  /* net byte order */
+/* args in net byte order */
+void h_flushhostcps(register afs_uint32 hostaddr, register afs_uint32 hport)
 {
     register struct host *host;
     int held;
@@ -510,7 +510,7 @@ void h_flushhostcps(hostaddr, hport)
       h_Release_r(host);
     H_UNLOCK
 
-return;
+    return;
 }
 
 
@@ -1369,6 +1369,7 @@ ticket name length != 64
        if (!client) {
 	  client = GetCE();
 	  ObtainWriteLock(&client->lock);
+	  client->refCount = 1;
 	  client->host = host;
 	  client->next = host->FirstClient;
 	  host->FirstClient = client;
@@ -1382,7 +1383,6 @@ ticket name length != 64
 	  client->VenusEpoch = rxr_GetEpoch(tcon);
 	  client->CPS.prlist_val = 0;
 	  client->CPS.prlist_len = 0;
-	  client->refCount = 1;
 	  CurrentConnections++;	/* increment number of connections */
        }
     }
