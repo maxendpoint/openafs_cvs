@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.7 2001/09/18 04:27:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.8 2001/10/05 21:07:17 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -39,6 +39,13 @@ RCSID("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.7 2001/09/18 04:27:19 sha
 #include <netinet/in.h>
 #endif
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #include <rx/rx.h>
 #include <rx/xdr.h>
 #include <rx/rxkad.h>
