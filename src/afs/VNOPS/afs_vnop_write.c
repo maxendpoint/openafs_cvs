@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.16 2002/02/16 18:23:50 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.17 2002/03/21 18:44:19 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -260,9 +260,12 @@ afs_MemWrite(avc, auio, aio, acred, noLock)
 
 	code = afs_MemWriteUIO(tdc->f.inode, &tuio);
 	if (code) {
+	    void *mep; /* XXX in prototype world is struct memCacheEntry * */
 	    error = code;
 	    ZapDCE(tdc);		/* bad data */
-	    afs_MemCacheTruncate(tdc->f.inode, 0);
+	    mep = afs_MemCacheOpen(tdc->f.inode);
+	    afs_MemCacheTruncate(mep, 0);
+	    afs_MemCacheClose(mep);
 	    afs_stats_cmperf.cacheCurrDirtyChunks--;
 	    afs_indexFlags[tdc->index] &= ~IFDataMod;    /* so it does disappear */
 	    ReleaseWriteLock(&tdc->lock);
