@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.12 2002/01/24 10:09:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.13 2002/01/24 10:42:34 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -283,13 +283,24 @@ afs_gfs_FlushText(vp)
 /* mask signals in afsds */
 void afs_osi_MaskSignals(){
 #ifdef AFS_LINUX22_ENV
-    spin_lock_irq(&current->sigmask_lock);
-    sigfillset(&current->blocked);
-    recalc_sigpending(current);
-    spin_unlock_irq(&current->sigmask_lock);
+    osi_linux_mask();
 #endif
 }
     
+/* unmask signals in rxk listener */
+void afs_osi_UnmaskRxkSignals(){
+#ifdef AFS_LINUX22_ENV
+    osi_linux_unmask();
+#endif
+}
+    
+/* register rxk listener proc info */
+void afs_osi_RxkRegister(){
+#ifdef AFS_LINUX22_ENV
+    osi_linux_rxkreg();
+#endif
+}
+
 /* procedure for making our processes as invisible as we can */
 void afs_osi_Invisible() {
 #ifdef AFS_LINUX22_ENV
