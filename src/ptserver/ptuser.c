@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.11 2003/01/15 04:30:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.12 2003/02/13 18:14:40 rees Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -176,7 +176,7 @@ afs_int32 pr_Initialize (secLevel, confDir, cell)
 		scIndex = 2;
 	    }
 	    sc[2] = rxkad_NewClientSecurityObject
-		(rxkad_clear, &ttoken.sessionKey, ttoken.kvno,
+		(secLevel, &ttoken.sessionKey, ttoken.kvno,
 		 ttoken.ticketLen, ttoken.ticket);
 	}
     }
