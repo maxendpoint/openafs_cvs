@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_clock_nt.c,v 1.8 2003/12/07 22:49:36 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_clock_nt.c,v 1.9 2004/02/26 19:23:02 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <stdio.h>
@@ -22,6 +22,8 @@ RCSID
 #include <windef.h>
 #include <winbase.h>
 #include "rx_clock.h"
+
+void clock_UpdateTime(void);    /* forward reference */
 
 struct clock clock_now;		/* The last elapsed time ready by clock_GetTimer */
 
