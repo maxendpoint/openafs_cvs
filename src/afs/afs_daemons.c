@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.27 2003/07/15 23:14:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.28 2004/03/11 19:14:46 rees Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -576,11 +576,7 @@ afs_BQueue(register short aopcode, register struct vcache *avc,
 #ifdef	AFS_DEC_ENV
 		avc->vrefCount++;
 #else
-#if defined(AFS_NETBSD_ENV) || defined(AFS_OBSD_ENV)
-		AFS_HOLD(AFSTOV(avc));
-#else
 		VN_HOLD(AFSTOV(avc));
-#endif
 #endif
 	    }
 	    tb->refCount = ause + 1;

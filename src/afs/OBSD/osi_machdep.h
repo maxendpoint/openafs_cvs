@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.13 2003/07/15 23:14:25 shadow Exp $ */
+/* $Id: osi_machdep.h,v 1.14 2004/03/11 19:14:47 rees Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -42,9 +42,8 @@ extern struct simplelock afs_rxglobal_lock;
 /* vnode */
 #define SetAfsVnode(vn)		/* nothing; done in getnewvnode() */
 #define	IsAfsVnode(vn)	((vn)->v_op == afs_vnodeop_p)
-#define AFS_HOLD(vp)	afs_nbsd_ref(vp)
-#define AFS_RELE(vp)	afs_nbsd_rele(vp)
-#define VN_HOLD(vp)	afs_vget((vp), 0)
+#define VN_HOLD(vp)	VREF(vp)
+#define VN_RELE(vp)	vrele(vp)
 #define osi_vnhold(avc, r) afs_vget(AFSTOV(avc), 0)
 #define va_nodeid	va_fileid
 #define vnode_t		struct vnode
@@ -106,8 +105,6 @@ extern int afs_nbsd_lookupname(char *fnamep, enum uio_seg segflg,
 			       int followlink, struct vnode **dirvpp,
 			       struct vnode **compvpp);
 extern void afs_nbsd_getnewvnode(struct vcache *tvc);
-extern void afs_nbsd_ref(struct vnode *);
-extern void afs_nbsd_rele(struct vnode *);
 extern void *afs_nbsd_Alloc(size_t asize);
 extern void afs_nbsd_Free(void *p, size_t asize);
 extern int afs_vget();

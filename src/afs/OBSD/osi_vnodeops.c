@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.15 2003/10/07 20:48:51 rees Exp $
+ * $Id: osi_vnodeops.c,v 1.16 2004/03/11 19:14:47 rees Exp $
  */
 
 /*
@@ -99,7 +99,7 @@ NONINFRINGEMENT.
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.15 2003/10/07 20:48:51 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.16 2004/03/11 19:14:47 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -211,11 +211,6 @@ struct vnodeopv_desc afs_vnodeop_opv_desc =
 #define DROPNAME() FREE(name, M_TEMP)
 
 int afs_debug;
-
-#undef vrele
-#define vrele afs_nbsd_rele
-#undef VREF
-#define VREF afs_nbsd_ref
 
 int
 afs_nbsd_lookup(ap)

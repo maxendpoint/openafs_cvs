@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.15 2004/03/10 23:01:52 rees Exp $
+ * $Id: osi_vfsops.c,v 1.16 2004/03/11 19:14:47 rees Exp $
  */
 
 /*
@@ -94,7 +94,7 @@ NONINFRINGEMENT.
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.15 2004/03/10 23:01:52 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.16 2004/03/11 19:14:47 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -346,7 +346,7 @@ afs_root(struct mount *mp, struct vnode **vpp)
 		    AFS_RELE(AFSTOV(afs_globalVp));
 #endif
 		afs_globalVp = tvp;
-		AFS_HOLD(AFSTOV(afs_globalVp));
+		VREF(AFSTOV(afs_globalVp));
 	    }
 	    AFSTOV(tvp)->v_flag |= VROOT;
 	    afs_globalVFS = mp;
@@ -389,28 +389,6 @@ afs_sync(struct osi_vfs *afsp)
     store_dirty_vcaches();
 #endif
     return 0;
-}
-
-void
-afs_nbsd_ref(struct vnode *vp)
-{
-    if (vp->v_usecount == 0) {
-	vprint("holding unheld node", vp);
-	panic("afs_ref");
-    }
-    VREF(vp);
-}
-
-void
-afs_nbsd_rele(struct vnode *vp)
-{
-    AFS_GUNLOCK();
-    if (vp->v_usecount <= 0) {
-	vprint("rele'ing unheld node", vp);
-	panic("afs_rele");
-    }
-    vrele(vp);
-    AFS_GLOCK();
 }
 
 int
@@ -481,7 +459,7 @@ afs_vfs_load(struct lkm_table *lkmtp, int cmd)
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.15 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.16 $) lkm loaded\n");
     return 0;
 }
 
