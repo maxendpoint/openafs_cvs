@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.10 2002/08/21 18:13:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.11 2002/08/22 22:14:11 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 #include "../h/tcp-param.h"
@@ -104,7 +104,7 @@ int osi_NetReceive(osi_socket so, struct sockaddr_in *addr, struct iovec *dvec,
     else {
 	*alength = *alength - tuio.uio_resid;
 	if (maddr) {
-	    memcpy((char*)from, (char*)mtod(maddr, struct sockaddr_in *),
+	    memcpy((char*)addr, (char*)mtod(maddr, struct sockaddr_in *),
 		  sizeof(struct sockaddr_in));
 	    m_freem(maddr);
 	}
