@@ -71,8 +71,6 @@ void osi_VM_TryToSmush(struct vcache *avc, struct AFS_UCRED *acred, int sync)
 
     truncate_inode_pages(&ip->i_data, 0);
 #elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,2,15)
-    struct inode *ip = (struct inode*)avc;
-
     truncate_inode_pages(ip, 0);
 #else
     invalidate_inode_pages((struct inode *)avc);
@@ -109,8 +107,6 @@ void osi_VM_FlushPages(struct vcache *avc, struct AFS_UCRED *credp)
 
     truncate_inode_pages(&ip->i_data, 0);
 #elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,2,15)
-    struct inode *ip = (struct inode*)avc;
-
     truncate_inode_pages(ip, 0);
 #else
     invalidate_inode_pages((struct inode*)avc);
@@ -130,8 +126,6 @@ void osi_VM_Truncate(struct vcache *avc, int alen, struct AFS_UCRED *acred)
 
     truncate_inode_pages(&ip->i_data, alen);
 #elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,2,15)
-    struct inode *ip = (struct inode*)avc;
-
     truncate_inode_pages(ip, alen);
 #else
     invalidate_inode_pages((struct inode*)avc);
