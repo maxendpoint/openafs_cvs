@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.20 2001/11/05 19:43:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.21 2001/11/08 08:12:59 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>	/* for malloc() */
@@ -264,10 +264,15 @@ typedef struct timeval {
 /* Avoid problems with timer_t redefinition */
 #ifndef timer_t
 #define timer_t ktimer_t
+#define timer_t_redefined
 #endif
 #include <linux/version.h>
 #include <linux/fs.h>
 #include <osi_vfs.h>
+#ifdef timer_t_redefined
+#undef timer_t
+#undef timer_t_redefined
+#endif
 #else /* AFS_LINUX20_ENV */
 #ifdef AFS_HPUX110_ENV
 #define  KERNEL
