@@ -7,10 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef AFS_PARAM_H
-#define AFS_PARAM_H
-#endif
-
 #ifndef	AFS_PARAM_H
 #define	AFS_PARAM_H
 
