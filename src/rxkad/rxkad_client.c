@@ -18,7 +18,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.8 2001/10/05 21:18:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.9 2002/06/08 04:43:40 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/stds.h"
@@ -34,7 +34,7 @@ RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.8 2001/10/05 21:18:36 
 #endif /* !UKERNEL */
 #ifndef AFS_LINUX22_ENV
 #include "../rpc/types.h"
-#include "../rpc/xdr.h"
+#include "../rx/xdr.h"
 #endif
 #include "../rx/rx.h"
 #else /* ! KERNEL */

@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.6 2002/02/16 18:23:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.7 2002/06/08 04:43:37 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -28,7 +28,7 @@ RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.6 2002/02/16 18:23:55 shadow
 #else
 #include "../h/types.h"
 #include "../rpc/types.h"
-#include "../rpc/xdr.h"
+#include "../rx/xdr.h"
 #endif
 #if !defined(AFS_ALPHA_ENV)
 #ifndef	XDR_GETINT32
@@ -37,9 +37,6 @@ RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.6 2002/02/16 18:23:55 shadow
 #ifndef	XDR_PUTINT32
 #define	XDR_PUTINT32	XDR_PUTLONG
 #endif
-#endif
-#ifndef AFS_LINUX22_ENV
-#include "../rpc/auth.h"
 #endif
 #endif /* defined(UKERNEL) */
 #include "../afsint/afsint.h"

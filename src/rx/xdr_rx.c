@@ -18,7 +18,7 @@
 #endif
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_rx.c,v 1.4 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_rx.c,v 1.5 2002/06/08 04:43:38 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -45,7 +45,7 @@ RCSID("$Header: /cvs/openafs/src/rx/xdr_rx.c,v 1.4 2001/07/05 15:20:44 shadow Ex
 #define u_quad_t __u_quad_t
 #endif
 #endif
-#include "../rpc/xdr.h"
+#include "../rx/xdr.h"
 #include "../netinet/in.h"
 #else /* !UKERNEL */
 #include "../afs/sysincludes.h"
