@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.8 2002/03/19 22:03:30 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.9 2002/05/21 06:37:53 kolya Exp $");
 
 
 #include <sys/types.h>
@@ -38,6 +38,7 @@ static PrintCacheConfig(aconn)
     int code;
 
     c.cacheConfig_len = 0;
+    c.cacheConfig_val = NULL;
     code = RXAFSCB_GetCacheConfig(aconn, 1, &srv_ver, &conflen, &c);
     if (code) {
 	printf("cmdebug: error checking cache config: %s\n",
