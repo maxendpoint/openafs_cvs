@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.18 2003/12/09 19:58:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.19 2004/08/19 00:22:38 kolya Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -297,7 +297,7 @@ ih_open(IHandle_t * ihP)
 	    DLL_DELETE(fdP, fdLruHead, fdLruTail, fd_next, fd_prev);
 	    ihP->ih_refcnt++;
 	    IH_UNLOCK;
-	    (void) FDH_SEEK(fdP, 0, SEEK_SET);
+	    (void)FDH_SEEK(fdP, 0, SEEK_SET);
 	    return fdP;
 	}
     }
