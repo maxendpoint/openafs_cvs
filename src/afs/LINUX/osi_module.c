@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.46 2004/05/08 04:12:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.47 2004/05/10 04:39:21 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -237,7 +237,7 @@ init_module(void)
 #if defined(AFS_IA64_LINUX20_ENV)
     unsigned long kernel_gp = 0;
     static struct fptr sys_setgroups;
-#endif
+#endif /* defined(AFS_IA64_LINUX20_ENV) */
     extern int afs_syscall();
     extern long afs_xsetgroups();
 #if defined(__NR_setgroups32)
@@ -247,11 +247,11 @@ init_module(void)
     extern int afs32_xsetgroups();
 #if (defined(__NR_setgroups32) && defined(AFS_SPARC64_LINUX20_ENV))
     extern int afs32_xsetgroups32();
-#endif
+#endif /* defined(__NR_setgroups32) && defined(AFS_SPARC64_LINUX20_ENV) */
 #if (defined(__NR_ia32_setgroups32) && defined(AFS_AMD64_LINUX20_ENV))
     extern int afs32_xsetgroups32();
-#endif
-#endif /* AFS_SPARC64_LINUX20_ENV || AFS_AMD64_LINUX20_ENV */
+#endif /* (defined(__NR_ia32_setgroups32) && defined(AFS_AMD64_LINUX20_ENV) */
+#endif /* AFS_SPARC64_LINUX20_ENV || AFS_AMD64_LINUX20_ENV || AFS_PPC64_LINUX20_ENV */
 
 #if !defined(EXPORTED_SYS_CALL_TABLE) || (defined(AFS_AMD64_LINUX20_ENV) && !defined(EXPORTED_IA32_SYS_CALL_TABLE))
     unsigned long *ptr;
@@ -282,8 +282,9 @@ init_module(void)
 	printf("afs: Unable to obtain PAGE_OFFSET. Exiting..");
 	return -EIO;
     }
-#endif
-#endif
+#endif /* AFS_S390_LINUX22_ENV */
+#endif /* !defined(AFS_LINUX24_ENV) */
+
 #ifndef EXPORTED_SYS_CALL_TABLE
     sys_call_table = 0;
 
@@ -303,8 +304,7 @@ init_module(void)
     if (ret && sym_start) {
 	sys_call_table = sym_start;
     }
-#else
-#ifdef EXPORTED_KALLSYMS_ADDRESS
+#elif defined(EXPORTED_KALLSYMS_ADDRESS)
     ret =
 	kallsyms_address_to_symbol((unsigned long)&init_mm, &mod_name,
 				   &mod_start, &mod_end, &sec_name,
@@ -312,19 +312,15 @@ init_module(void)
 				   &sym_start, &sym_end);
     ptr = (unsigned long *)sec_start;
     datalen = (sec_end - sec_start) / sizeof(unsigned long);
-#else
-#if defined(AFS_IA64_LINUX20_ENV)
+#elif defined(AFS_IA64_LINUX20_ENV)
     ptr = (unsigned long *)(&sys_close - 0x180000);
     datalen = 0x180000 / sizeof(ptr);
-#else
-#if defined(AFS_AMD64_LINUX20_ENV)
+#elif defined(AFS_AMD64_LINUX20_ENV)
     ptr = (unsigned long *)&init_mm;
     datalen = 0x360000 / sizeof(ptr);
 #else
     ptr = (unsigned long *)&init_mm;
     datalen = 16384;
-#endif
-#endif
 #endif
     for (offset = 0; offset < datalen; ptr++, offset++) {
 #if defined(AFS_IA64_LINUX20_ENV)
@@ -339,33 +335,27 @@ init_module(void)
 	    sys_call_table = (void *)&(ptr[-1 * (__NR_close - 1024)]);
 	    break;
 	}
-#else
-#if defined(EXPORTED_SYS_WAIT4) && defined(EXPORTED_SYS_CLOSE)
+#elif defined(EXPORTED_SYS_WAIT4) && defined(EXPORTED_SYS_CLOSE)
 	if (ptr[0] == (unsigned long)&sys_close
 	    && ptr[__NR_wait4 - __NR_close] == (unsigned long)&sys_wait4) {
 	    sys_call_table = ptr - __NR_close;
 	    break;
 	}
-#else
-#if defined(EXPORTED_SYS_CHDIR) && defined(EXPORTED_SYS_CLOSE)
+#elif defined(EXPORTED_SYS_CHDIR) && defined(EXPORTED_SYS_CLOSE)
 	if (ptr[0] == (unsigned long)&sys_close
 	    && ptr[__NR_chdir - __NR_close] == (unsigned long)&sys_chdir) {
 	    sys_call_table = ptr - __NR_close;
 	    break;
 	}
-#else
-#ifdef EXPORTED_SYS_OPEN
+#elif defined(EXPORTED_SYS_OPEN)
 	if (ptr[0] == (unsigned long)&sys_exit
 	    && ptr[__NR_open - __NR_exit] == (unsigned long)&sys_open) {
 	    sys_call_table = ptr - __NR_exit;
 	    break;
 	}
-#else
+#else /* EXPORTED_SYS_OPEN */
 	break;
-#endif
-#endif
-#endif
-#endif
+#endif /* EXPORTED_KALLSYMS_ADDRESS */
     }
 #ifdef EXPORTED_KALLSYMS_ADDRESS
     ret =
@@ -375,119 +365,118 @@ init_module(void)
 				   &sym_start, &sym_end);
     if (ret && strcmp(sym_name, "sys_call_table"))
 	sys_call_table = 0;
-#endif
-#endif
+#endif /* EXPORTED_KALLSYMS_ADDRESS */
     if (!sys_call_table) {
 	printf("Failed to find address of sys_call_table\n");
 	sys_settimeofdayp = 0;
     } else {
-    printf("Found sys_call_table at %x\n", sys_call_table);
-# ifdef AFS_SPARC64_LINUX20_ENV
-    error cant support this yet.
-#endif
-#endif				/* EXPORTED_SYS_CALL_TABLE */
+	printf("Found sys_call_table at %x\n", sys_call_table);
+#ifdef AFS_SPARC64_LINUX20_ENV
+	error cant support this yet.;
+#endif /* AFS_SPARC64_LINUX20_ENV */
+#endif /* EXPORTED_SYS_CALL_TABLE */
+
 #ifdef AFS_AMD64_LINUX20_ENV
 #ifndef EXPORTED_IA32_SYS_CALL_TABLE
-      ia32_sys_call_table = 0;
+	ia32_sys_call_table = 0;
 #ifdef EXPORTED_KALLSYMS_SYMBOL
-    ret = 1;
-    token = 0;
-    while (ret) {
-	sym_start = 0;
-	ret =
-	    kallsyms_symbol_to_address("ia32_sys_call_table", &token,
-				       &mod_name, &mod_start, &mod_end,
-				       &sec_name, &sec_start, &sec_end,
-				       &sym_name, &sym_start, &sym_end);
-	if (ret && !strcmp(mod_name, "kernel"))
-	    break;
-    }
-    if (ret && sym_start) {
-	ia32_sys_call_table = sym_start;
-    }
+	ret = 1;
+	token = 0;
+	while (ret) {
+	    sym_start = 0;
+	    ret = kallsyms_symbol_to_address("ia32_sys_call_table", &token,
+					     &mod_name, &mod_start, &mod_end,
+					     &sec_name, &sec_start, &sec_end,
+					     &sym_name, &sym_start, &sym_end);
+	    if (ret && !strcmp(mod_name, "kernel"))
+		break;
+	}
+	if (ret && sym_start) {
+	    ia32_sys_call_table = sym_start;
+	}
 #else /* EXPORTED_KALLSYMS_SYMBOL */
 #ifdef EXPORTED_KALLSYMS_ADDRESS
-    ret =
-	kallsyms_address_to_symbol((unsigned long)&interruptible_sleep_on,
-				       &mod_name, &mod_start, &mod_end,
-				       &sec_name, &sec_start, &sec_end,
-				       &sym_name, &sym_start, &sym_end);
-    ptr = (unsigned long *)sec_start;
-    datalen = (sec_end - sec_start) / sizeof(unsigned long);
+	ret = kallsyms_address_to_symbol((unsigned long)
+					 &interruptible_sleep_on,
+					 &mod_name, &mod_start, &mod_end,
+					 &sec_name, &sec_start, &sec_end,
+					 &sym_name, &sym_start, &sym_end);
+	ptr = (unsigned long *)sec_start;
+	datalen = (sec_end - sec_start) / sizeof(unsigned long);
 #else /* EXPORTED_KALLSYMS_ADDRESS */
 #if defined(AFS_AMD64_LINUX20_ENV)
-    ptr = (unsigned long *)&interruptible_sleep_on;
-    datalen = 0x180000 / sizeof(ptr);
+	ptr = (unsigned long *)&interruptible_sleep_on;
+	datalen = 0x180000 / sizeof(ptr);
 #else /* AFS_AMD64_LINUX20_ENV */
-    ptr = (unsigned long *)&interruptible_sleep_on;
-    datalen = 16384;
+	ptr = (unsigned long *)&interruptible_sleep_on;
+	datalen = 16384;
 #endif /* AFS_AMD64_LINUX20_ENV */
 #endif /* EXPORTED_KALLSYMS_ADDRESS */
-    for (offset = 0; offset < datalen; ptr++, offset++) {
-	if (ptr[0] == (unsigned long)&sys_exit
-	    && ptr[__NR_ia32_open - __NR_ia32_exit] ==
-	    (unsigned long)&sys_open) {
-	    ia32_sys_call_table = ptr - __NR_ia32_exit;
-	    break;
+	for (offset = 0; offset < datalen; ptr++, offset++) {
+	    if (ptr[0] == (unsigned long)&sys_exit
+		&& ptr[__NR_ia32_open - __NR_ia32_exit] ==
+		(unsigned long)&sys_open) {
+		    ia32_sys_call_table = ptr - __NR_ia32_exit;
+		    break;
+	    }
 	}
-    }
 #ifdef EXPORTED_KALLSYMS_ADDRESS
-    ret =
-	kallsyms_address_to_symbol((unsigned long)ia32_sys_call_table,
-				       &mod_name, &mod_start, &mod_end,
-				       &sec_name, &sec_start, &sec_end,
-				       &sym_name, &sym_start, &sym_end);
-    if (ret && strcmp(sym_name, "ia32_sys_call_table"))
-	ia32_sys_call_table = 0;
+	ret = kallsyms_address_to_symbol((unsigned long)ia32_sys_call_table,
+					 &mod_name, &mod_start, &mod_end,
+					 &sec_name, &sec_start, &sec_end,
+					 &sym_name, &sym_start, &sym_end);
+	if (ret && strcmp(sym_name, "ia32_sys_call_table"))
+	    ia32_sys_call_table = 0;
 #endif /* EXPORTED_KALLSYMS_ADDRESS */
 #endif /* EXPORTED_KALLSYMS_SYMBOL */
-    if (!ia32_sys_call_table) {
-	    printf
-		("Warning: Failed to find address of ia32_sys_call_table\n");
-    } else {
-	printf("Found ia32_sys_call_table at %x\n", ia32_sys_call_table);
-    }
+	if (!ia32_sys_call_table) {
+	    printf("Warning: Failed to find address of ia32_sys_call_table\n");
+	} else {
+	    printf("Found ia32_sys_call_table at %x\n", ia32_sys_call_table);
+	}
 #else
-    printf("Found ia32_sys_call_table at %x\n", ia32_sys_call_table);
+	printf("Found ia32_sys_call_table at %x\n", ia32_sys_call_table);
 #endif /* IA32_SYS_CALL_TABLE */
 #endif
 
-    /* Initialize pointers to kernel syscalls. */
+	/* Initialize pointers to kernel syscalls. */
 #if !defined(AFS_LINUX24_ENV)
-    sys_settimeofdayp = SYSCALL2POINTER sys_call_table[__NR_settimeofday];
+	sys_settimeofdayp = SYSCALL2POINTER sys_call_table[__NR_settimeofday];
 #endif /* AFS_IA64_LINUX20_ENV */
 
-    /* setup AFS entry point. */
-    if (
+	/* setup AFS entry point. */
+	if (
 #if defined(AFS_IA64_LINUX20_ENV)
-	   SYSCALL2POINTER sys_call_table[__NR_afs_syscall - 1024]
+		SYSCALL2POINTER sys_call_table[__NR_afs_syscall - 1024]
 #else
-	   SYSCALL2POINTER sys_call_table[__NR_afs_syscall]
+		SYSCALL2POINTER sys_call_table[__NR_afs_syscall]
 #endif
-	   == afs_syscall) {
-	printf("AFS syscall entry point already in use!\n");
-	return -EBUSY;
-    }
+		== afs_syscall) {
+	    printf("AFS syscall entry point already in use!\n");
+	    return -EBUSY;
+	}
 #if defined(AFS_IA64_LINUX20_ENV)
-    afs_ni_syscall = sys_call_table[__NR_afs_syscall - 1024];
-    sys_call_table[__NR_afs_syscall - 1024] =
-	POINTER2SYSCALL((struct fptr *)afs_syscall_stub)->ip;
+	afs_ni_syscall = sys_call_table[__NR_afs_syscall - 1024];
+	sys_call_table[__NR_afs_syscall - 1024] =
+		POINTER2SYSCALL((struct fptr *)afs_syscall_stub)->ip;
 #else /* AFS_IA64_LINUX20_ENV */
-    afs_ni_syscall = sys_call_table[__NR_afs_syscall];
-    sys_call_table[__NR_afs_syscall] = POINTER2SYSCALL afs_syscall;
-# ifdef AFS_SPARC64_LINUX20_ENV
-    afs_ni_syscall32 = sys_call_table32[__NR_afs_syscall];
-    sys_call_table32[__NR_afs_syscall] = POINTER2SYSCALL afs_syscall32;
-# endif
+	afs_ni_syscall = sys_call_table[__NR_afs_syscall];
+	sys_call_table[__NR_afs_syscall] = POINTER2SYSCALL afs_syscall;
+#ifdef AFS_SPARC64_LINUX20_ENV
+	afs_ni_syscall32 = sys_call_table32[__NR_afs_syscall];
+	sys_call_table32[__NR_afs_syscall] = POINTER2SYSCALL afs_syscall32;
+#endif
 #endif /* AFS_IA64_LINUX20_ENV */
 #ifdef AFS_AMD64_LINUX20_ENV
-    if (ia32_sys_call_table) {
-	ia32_ni_syscall = ia32_sys_call_table[__NR_ia32_afs_syscall];
-	ia32_sys_call_table[__NR_ia32_afs_syscall] =
-	    POINTER2SYSCALL afs_syscall;
-    }
+	if (ia32_sys_call_table) {
+	    ia32_ni_syscall = ia32_sys_call_table[__NR_ia32_afs_syscall];
+	    ia32_sys_call_table[__NR_ia32_afs_syscall] =
+		    POINTER2SYSCALL afs_syscall;
+	}
 #endif /* AFS_S390_LINUX22_ENV */
+#ifndef EXPORTED_SYS_CALL_TABLE
     }
+#endif /* EXPORTED_SYS_CALL_TABLE */
     osi_Init();
     register_filesystem(&afs_fs_type);
 
