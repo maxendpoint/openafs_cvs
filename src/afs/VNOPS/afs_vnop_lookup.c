@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.48 2003/08/14 03:55:55 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.49 2003/11/27 01:17:40 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -476,10 +476,15 @@ Next_AtSys(register struct vcache *avc, struct vrequest *areq,
 #if (defined(AFS_SGI62_ENV) || defined(AFS_SUN57_64BIT_ENV))
 extern int BlobScan(ino64_t * afile, afs_int32 ablob);
 #else
+#if defined(AFS_HPUX1123_ENV)
+/* DEE should use the new afs_inode_t  for all */
+extern int BlobScan(ino_t *afile, afs_int32 ablob);
+#else
 #if defined AFS_LINUX_64BIT_KERNEL
 extern int BlobScan(long *afile, afs_int32 ablob);
 #else
 extern int BlobScan(afs_int32 * afile, afs_int32 ablob);
+#endif
 #endif
 #endif
 

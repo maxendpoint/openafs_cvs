@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.38 2003/08/27 21:43:16 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.39 2003/11/27 01:17:39 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -324,7 +324,7 @@ afs_osi_Invisible(void)
     u.u_procp->p_type |= SSYS;
 #elif defined(AFS_SUN5_ENV)
     curproc->p_flag |= SSYS;
-#elif defined(AFS_HPUX101_ENV)
+#elif defined(AFS_HPUX101_ENV) && !defined(AFS_HPUX1123_ENV)
     set_system_proc(u.u_procp);
 #elif defined(AFS_DARWIN_ENV)
     /* maybe call init_process instead? */
