@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.42 2004/03/19 07:58:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.43 2004/04/12 16:04:31 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1058,8 +1058,20 @@ afs_osi_proc2cred(AFS_PROC * pr)
 	|| (pr->state == TASK_STOPPED)) {
 	cr.cr_ref = 1;
 	cr.cr_uid = pr->uid;
+#if defined(AFS_LINUX26_ENV)
+{
+	int i;
+
+	memset(cr.cr_groups, 0, NGROUPS * sizeof(gid_t));
+
+	cr.cr_ngroups = pr->group_info->ngroups;
+	for(i = 0; i < pr->group_info->ngroups; ++i)
+		cr.cr_groups[i] = GROUP_AT(pr->group_info, i);
+}
+#else
 	cr.cr_ngroups = pr->ngroups;
 	memcpy(cr.cr_groups, pr->groups, NGROUPS * sizeof(gid_t));
+#endif
 	rv = &cr;
     }
 

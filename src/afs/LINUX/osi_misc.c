@@ -15,13 +15,16 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.27 2004/04/05 22:39:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.28 2004/04/12 16:04:32 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
 #include "afs/afs_stats.h"
 #if defined(AFS_LINUX24_ENV)
 #include "h/smp_lock.h"
+#endif
+#if defined(AFS_LINUX26_ENV)
+#include "h/namei.h"
 #endif
 
 #if defined(AFS_LINUX24_ENV)
@@ -40,8 +43,12 @@ osi_lookupname(char *aname, uio_seg_t seg, int followlink,
 	    followlink ? user_path_walk(aname,
 					nd) : user_path_walk_link(aname, nd);
     } else {
+#if defined(AFS_LINUX26_ENV)
+	code = path_lookup(aname, followlink ? LOOKUP_FOLLOW : 0, nd);
+#else
 	if (path_init(aname, followlink ? LOOKUP_FOLLOW : 0, nd))
 	    code = path_walk(aname, nd);
+#endif
     }
 
     if (!code) {

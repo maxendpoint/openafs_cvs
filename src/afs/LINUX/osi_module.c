@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.43 2004/02/03 06:23:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.44 2004/04/12 16:04:32 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -34,6 +34,14 @@ RCSID
 #endif
 #if !defined(EXPORTED_SYS_CALL_TABLE) && defined(HAVE_KERNEL_LINUX_SYSCALL_H)
 #include <linux/syscall.h>
+#endif
+
+#if defined(AFS_LINUX26_ENV)
+#include <linux/vermagic.h>
+#include <linux/compiler.h>
+
+MODULE_INFO(vermagic, VERMAGIC_STRING);
+
 #endif
 
 #ifdef AFS_SPARC64_LINUX24_ENV
@@ -57,7 +65,7 @@ static unsigned int *sys_call_table;	/* changed to uint because SPARC64 has sysc
 static void **sys_call_table;	/* safer for other linuces */
 #endif
 #endif
-extern struct file_system_type afs_file_system;
+extern struct file_system_type afs_fs_type;
 
 static long get_page_offset(void);
 
@@ -67,7 +75,9 @@ DECLARE_MUTEX(afs_global_lock);
 struct semaphore afs_global_lock = MUTEX;
 #endif
 int afs_global_owner = 0;
+#if !defined(AFS_LINUX24_ENV)
 unsigned long afs_linux_page_offset = 0;	/* contains the PAGE_OFFSET value */
+#endif
 
 /* Since sys_ni_syscall is not exported, I need to cache it in order to restore
  * it.
@@ -214,6 +224,7 @@ init_module(void)
 
     RWLOCK_INIT(&afs_xosi, "afs_xosi");
 
+#if !defined(AFS_LINUX24_ENV)
     /* obtain PAGE_OFFSET value */
     afs_linux_page_offset = get_page_offset();
 
@@ -223,6 +234,7 @@ init_module(void)
 	printf("afs: Unable to obtain PAGE_OFFSET. Exiting..");
 	return -EIO;
     }
+#endif
 #endif
 #ifndef EXPORTED_SYS_CALL_TABLE
     sys_call_table = 0;
@@ -433,7 +445,7 @@ init_module(void)
 #endif /* AFS_S390_LINUX22_ENV */
 
     osi_Init();
-    register_filesystem(&afs_file_system);
+    register_filesystem(&afs_fs_type);
 
     /* Intercept setgroups calls */
 #if defined(AFS_IA64_LINUX20_ENV)
@@ -534,7 +546,7 @@ cleanup_module(void)
     set_afs_xsetgroups_syscall(sys_setgroupsp);
     set_afs_xsetgroups_syscall32(sys32_setgroupsp);
 #endif
-    unregister_filesystem(&afs_file_system);
+    unregister_filesystem(&afs_fs_type);
 
     osi_linux_free_inode_pages();	/* Invalidate all pages using AFS inodes. */
     osi_linux_free_afs_memory();
@@ -548,6 +560,7 @@ module_exit(afs_cleanup);
 #endif
 
 
+#if !defined(AFS_LINUX24_ENV)
 static long
 get_page_offset(void)
 {
@@ -580,3 +593,4 @@ get_page_offset(void)
     return 0;
 #endif
 }
+#endif /* !AFS_LINUX24_ENV */
