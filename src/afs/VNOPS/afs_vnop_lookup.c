@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.19 2001/10/11 07:41:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.20 2001/10/13 05:28:07 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -608,15 +608,19 @@ tagain:
 #ifdef RX_ENABLE_LOCKS
 	    AFS_GUNLOCK();
 #endif /* RX_ENABLE_LOCKS */
+#ifdef notdef
 	    code = RXAFS_InlineBulkStatus(tcp->id, &fidParm, &statParm,
 					  &cbParm, &volSync);
 	    if (code == RXGEN_OPCODE) {
+#endif
 		code = RXAFS_BulkStatus(tcp->id, &fidParm, &statParm, &cbParm,
 					&volSync);
 		inlinebulk=0;
+#ifdef notdef
 	    } else {
 		inlinebulk=1;
 	    }
+#endif
 
 #ifdef RX_ENABLE_LOCKS
 	    AFS_GLOCK();
