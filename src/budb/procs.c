@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/procs.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/procs.c,v 1.6 2001/08/09 00:20:22 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -2040,7 +2040,7 @@ afs_int32 FindLatestDump (call, vsname, dumpPath, dumpentry)
         /* Construct a database dump name */
 	strcpy(dumpName, DUMP_TAPE_NAME);
     }
-    else if (index(dumpPath,'/') == 0) {
+    else if (strchr(dumpPath,'/') == 0) {
         int                    level, old, length, hash;
 	struct dump            hostDump, diskDump;
 	struct memoryHashTable *mht;
