@@ -24,7 +24,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.67 2003/08/26 02:43:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.68 2003/09/24 18:33:36 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -926,8 +926,11 @@ afs_linux_dentry_revalidate(struct dentry *dp)
 	goto done;
     }
 
-    /* A DNLC lookup failure cannot be trusted. Try a real lookup */
-    code = afs_lookup(parentvcp, name, &lookupvcp, credp);
+    /* A DNLC lookup failure cannot be trusted. Try a real lookup. 
+       Make sure to try the real name and not the @sys expansion; 
+       afs_lookup will expand @sys itself. */
+  
+    code = afs_lookup(parentvcp, dp->d_name.name, &lookupvcp, credp);
 
     /* Verify that the dentry does not point to an old inode */
     if (vcp != lookupvcp)
