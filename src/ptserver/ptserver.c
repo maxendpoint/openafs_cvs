@@ -111,7 +111,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.14 2003/01/15 04:30:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.15 2003/05/29 18:03:14 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -327,6 +327,7 @@ void main (argc, argv)
 #endif
     }
 
+    serverLogSyslogTag = "ptserver";
     OpenLog(AFSDIR_SERVER_PTLOG_FILEPATH);     /* set up logging */
     SetupLogSignals();
  
