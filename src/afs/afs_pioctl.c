@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.38 2002/07/31 22:15:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.39 2002/08/14 21:18:34 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -1106,8 +1106,8 @@ afs_HandlePioctl(avc, acom, ablob, afollow, acred)
       if (outSize > ablob->out_size) outSize = ablob->out_size;
       if (outSize >= PIGGYSIZE) code = E2BIG;
       else if	(outSize) {
-	AFS_COPYOUT(outData, ablob->out, outSize, code);
 	outData[outSize]='\0';
+	AFS_COPYOUT(outData, ablob->out, outSize, code);
       }
     }
     osi_FreeLargeSpace(outData);
