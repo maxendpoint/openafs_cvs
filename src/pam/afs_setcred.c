@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_setcred.c,v 1.7 2001/09/07 04:36:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_setcred.c,v 1.8 2001/11/01 05:45:12 shadow Exp $");
 
 #include <sys/param.h>
 #include <afs/kautils.h>
@@ -45,7 +45,7 @@ pam_sm_setcred(
     int origmask;
     int logmask = LOG_UPTO(LOG_INFO);
     int nowarn = 0;
-    int use_first_pass = 0; /* use the password passed in by auth */
+    int use_first_pass = 1; /* use the password passed in by auth */
     int try_first_pass = 0;
     int got_authtok = 0;
     int ignore_uid  = 0;
