@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.22 2001/11/01 05:24:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.23 2001/11/07 00:01:54 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -718,6 +718,11 @@ afsconf_GetAfsdbInfo(acellName, aservice, acellInfo)
 
     if (server_num == 0)		/* No AFSDB records */
 	return AFSCONF_NOTFOUND;
+
+    /* Convert the real cell name to lowercase */
+    for (p = (unsigned char *) realCellName; *p; p++)
+	*p = tolower(*p);
+
     strncpy(acellInfo->name, realCellName, sizeof(acellInfo->name));
     acellInfo->numServers = server_num;
 
