@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.32 2002/08/22 22:44:53 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.33 2002/08/27 21:42:25 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -153,7 +153,7 @@ long parm, parm2, parm3, parm4, parm5, parm6;
     if (!afs_suser() && (parm != AFSOP_GETMTU)
 	&& (parm != AFSOP_GETMASK)) {
       /* only root can run this code */
-#if !defined(AFS_SGI_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if defined(KERNEL_HAVE_SETUERROR)
 	setuerror(EACCES);
 	return(EACCES);
 #else
@@ -381,13 +381,11 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 
 	AFS_COPYIN((char *)parm2, (caddr_t) &cparms, sizeof(cparms), code);
 	if (code) {
-#if	defined(AFS_SUN5_ENV) || defined(AFS_OSF_ENV) || defined (AFS_SGI64_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
-	    goto out;
-#else
+#if defined(KERNEL_HAVE_SETUERROR)
 	    setuerror(code);
 	    code = -1;
-	    goto out;
 #endif
+	    goto out;
 	}
 	afs_CacheInit_Done = 1;
     {
@@ -572,10 +570,10 @@ long parm, parm2, parm3, parm4, parm5, parm6;
       afs_vfs_mount(parm2, parm3, parm4, parm5);
 #endif /* AFS_HPUX100_ENV */
 #else /* defined(AFS_HPUX_ENV) */
-#if defined(AFS_SGI_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_OSF_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
-      code = EINVAL;
-#else
+#if defined(KERNEL_HAVE_SETUERROR)
       setuerror(EINVAL);
+#else
+      code = EINVAL;
 #endif
 #endif /* defined(AFS_HPUX_ENV) */
     }
@@ -1150,7 +1148,7 @@ Afs_syscall ()
 
 	code = copyin_iparam((char *)uap->parm3, &iparams);
 	if (code) {
-#if !defined(AFS_SUN5_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if defined(KERNEL_HAVE_SETUERROR)
 	    setuerror(code);
 #endif
 	} else
@@ -1198,17 +1196,17 @@ Afs_syscall ()
 	}
 #else
         if (code) {
-#if !defined(AFS_SUN5_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if defined(KERNEL_HAVE_SETUERROR)
 	    setuerror(code);
 #endif
         }
 #endif /* !AFS_LINUX20_ENV */
     } else {
-#if defined(AFS_SUN5_ENV) || defined(AFS_OSF_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
-	code = EINVAL;
-#else
+#if defined(KERNEL_HAVE_SETUERROR)
         setuerror(EINVAL);
-#endif	/* AFS_SUN5_ENV */
+#else
+	code = EINVAL;
+#endif
     }
 out:
 #ifdef AFS_LINUX20_ENV
@@ -1426,7 +1424,7 @@ Afscall_icl(long opcode, long p1, long p2, long p3, long p4, long *retval)
     }
 #else
     if (!afs_suser()) {	/* only root can run this code */
-#if !defined(AFS_SGI_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if defined(KERNEL_HAVE_SETUERROR)
 	setuerror(EACCES);
 	return EACCES;
 #else

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_groups.c,v 1.5 2001/08/08 00:03:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_groups.c,v 1.6 2002/08/27 21:42:27 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -283,10 +283,10 @@ setpag(cred, pagvalue, newpag, change_parent)
     if (afs_get_pag_from_groups(gidset[0], gidset[1]) == NOPAG) {
 	/* We will have to shift grouplist to make room for pag */
 	if (ngroups + 2 > NGROUPS) {
-#ifdef AFS_SGI64_ENV
-	    return (E2BIG);
-#else
+#if defined(KERNEL_HAVE_SETUERROR)
 	    return (setuerror(E2BIG), E2BIG);
+#else
+	    return (E2BIG);
 #endif
 	}
 	for (j = ngroups -1; j >= 0; j--) {
@@ -297,10 +297,10 @@ setpag(cred, pagvalue, newpag, change_parent)
     *newpag = (pagvalue == -1 ? genpag(): pagvalue);
     afs_get_groups_from_pag(*newpag, &gidset[0], &gidset[1]);
     if (code = afs_setgroups(cred, ngroups, gidset, change_parent)) {
-#ifdef AFS_SGI64_ENV
-        return code;
-#else
+#if defined(KERNEL_HAVE_SETUERROR)
 	return (setuerror(code), code);
+#else
+        return code;
 #endif
     }
     return code;

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.6 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.7 2002/08/27 21:42:25 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #ifndef	AFS_DEC_ENV
@@ -212,7 +212,7 @@ afs_int32 *pagparam;
 #endif
 	    if (au) afs_PutUser(au, READ_LOCK);
 /*	    ReleaseWriteLock(&afs_xnfsreq);		*/
-#if	!defined(AFS_SUN5_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_SGI64_ENV)
+#if defined(KERNEL_HAVE_SETUERROR)
 	    setuerror(code);
 #endif
 	    return (code);
@@ -228,7 +228,7 @@ afs_int32 *pagparam;
 #endif
 		afs_PutNfsClientPag(np);
 /*		ReleaseWriteLock(&afs_xnfsreq);	*/
-#if	!defined(AFS_SUN5_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_SGI64_ENV)
+#if defined(KERNEL_HAVE_SETUERROR)
 		setuerror(code);
 #endif
 		return (code);
@@ -245,7 +245,7 @@ afs_int32 *pagparam;
 		    afs_PutNfsClientPag(np);
 		    afs_PutUser(au, READ_LOCK);
 		    /*	    ReleaseWriteLock(&afs_xnfsreq);	*/
-#if	!defined(AFS_SUN5_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_SGI64_ENV)
+#if defined(KERNEL_HAVE_SETUERROR)
 		    setuerror(code);
 #endif
 		    return (code);
