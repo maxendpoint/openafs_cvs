@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.22 2002/09/26 07:01:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.23 2002/10/03 21:44:47 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -476,8 +476,6 @@ void *afs_osi_Alloc_NoSleep(size_t x)
 
 void afs_osi_Free(void *x, size_t asize)
 {
-    register struct osimem *tm, **lm, *um;
-
     AFS_STATCNT(osi_Free);
     if (x == &memZero) return;	/* check for putting memZero back */
 
