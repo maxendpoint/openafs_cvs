@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.13 2003/03/04 13:23:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.14 2003/03/04 13:26:01 shadow Exp $");
 
 
 #include <sys/types.h>
@@ -206,18 +206,6 @@ static char *GetCellName(struct rx_connection *aconn, afs_int32 cellnum)
     return cellname;
 }
 
-static int PrintCacheEntries(struct rx_connection *aconn, int aint32)
-{
-    register afs_int32 code;
-    struct AFSDBCacheEntry64 centry64;
-    
-    code = RXAFSCB_GetCE64(aconn, 0, &centry64);
-    if (code != RXGEN_OPCODE) 
-	return PrintCacheEntries64(aconn, aint32);
-    else
-	return PrintCacheEntries32(aconn, aint32);
-}
-
 static int PrintCacheEntries32(struct rx_connection *aconn, int aint32)
 {
     register int i;
@@ -349,6 +337,18 @@ static int PrintCacheEntries64(struct rx_connection *aconn, int aint32)
 	printf("\n");
     }
     return 0;
+}
+
+static int PrintCacheEntries(struct rx_connection *aconn, int aint32)
+{
+    register afs_int32 code;
+    struct AFSDBCacheEntry64 centry64;
+    
+    code = RXAFSCB_GetCE64(aconn, 0, &centry64);
+    if (code != RXGEN_OPCODE) 
+	return PrintCacheEntries64(aconn, aint32);
+    else
+	return PrintCacheEntries32(aconn, aint32);
 }
 
 static CommandProc(as)
