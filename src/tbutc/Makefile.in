@@ -106,46 +106,46 @@ libbutm.a: ${BUTMOBJS} AFS_component_version_number.o
 	${RANLIB} libbutm.a
 
 dbentries.o: ${BUTC}/dbentries.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/dbentries.c
 
 tcprocs.o: ${BUTC}/tcprocs.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/tcprocs.c
 
 lwps.o: ${BUTC}/lwps.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/lwps.c
 
 tcmain.o: ${BUTC}/tcmain.c ${BUTCINCLS} AFS_component_version_number.c
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/tcmain.c
 
 list.o: ${BUTC}/list.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/list.c
 
 recoverDb.o: ${BUTC}/recoverDb.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/recoverDb.c
 
 tcudbprocs.o: ${BUTC}/tcudbprocs.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/tcudbprocs.c
 
 dump.o: ${BUTC}/dump.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/dump.c
 
 tcstatus.o: ${BUTC}/tcstatus.c ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/tcstatus.c
 
 butc_xbsa.o: ${BUTC}/butc_xbsa.c ${BUTC}/butc_xbsa.h ${BUTCINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTC}/butc_xbsa.c
 
 ubik_db_if.o: ${BUCOORD}/ubik_db_if.c
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUCOORD}/ubik_db_if.c
 
 vsprocs.o: ${VOLSER}/vsprocs.c
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${VOLSER}/vsprocs.c
 
 lock.o: ${LWP}/lock.c
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${LWP}/lock.c
 
 file_tm.o: ${BUTM}/file_tm.c ${BUTMINCLS}
-	${CC} ${CFLAGS} -c $<
+	${CC} ${CFLAGS} -c ${BUTM}/file_tm.c
 
 #
 # Install targets
