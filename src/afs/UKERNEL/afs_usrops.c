@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.17 2002/10/16 03:58:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.18 2002/10/28 02:16:08 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -211,9 +211,9 @@ int afs_suser(void *credp)
  * These are no-ops in user space
  */
 
-int afs_osi_SetTime(osi_timeval_t *atv)
+void afs_osi_SetTime(osi_timeval_t *atv)
 {
-    return 0;
+    return;
 }
 
 /*
