@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.30 2004/05/19 20:31:18 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.31 2004/06/07 19:52:51 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -259,7 +259,7 @@ afs_ServerDown(struct srvAddr *sa)
 
 
 /* return true if we have any callback promises from this server */
-static int
+int
 HaveCallBacksFrom(struct server *aserver)
 {
     register afs_int32 now;
