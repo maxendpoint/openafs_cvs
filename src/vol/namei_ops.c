@@ -1232,7 +1232,7 @@ static int namei_ListAFSSubDirs(IHandle_t *dirIH,
     
     dirp1 = opendir(path1);
     if (dirp1) {
-	while (dp1 = readdir(dirp1)) {
+	while ((dp1 = readdir(dirp1))) {
 	    if (*dp1->d_name == '.') continue;
 	    if (!strcmp(dp1->d_name, NAMEI_SPECDIR))
 		continue;
