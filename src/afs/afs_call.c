@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.45 2003/01/13 20:25:54 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.46 2003/01/31 21:20:45 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -759,10 +759,8 @@ long parm, parm2, parm3, parm4, parm5, parm6;
       mtu = ((i == -1) ? htonl(1500) : afs_cb_interface.mtu[i]);
 #else /* AFS_USERSPACE_IP_ADDR */
       struct ifnet *tifnp;
-      struct in_ifaddr *tifadp = (struct in_ifaddr *) 0;
-      extern struct ifnet *rxi_FindIfnet();
- 
-      tifnp = rxi_FindIfnet(parm2, &tifadp);  /*  make iterative */
+
+      tifnp = rxi_FindIfnet(parm2, NULL);  /*  make iterative */
       mtu = (tifnp ? tifnp->if_mtu : htonl(1500));
 #endif /* else AFS_USERSPACE_IP_ADDR */
 #endif /* !AFS_SUN5_ENV */
@@ -798,22 +796,10 @@ long parm, parm2, parm3, parm4, parm5, parm6;
       }
 #else /* AFS_USERSPACE_IP_ADDR */
       struct ifnet *tifnp;
-#ifdef AFS_DARWIN60_ENV
-      struct ifaddr *tifadp = (struct ifaddr *) 0;
-#else
-      struct in_ifaddr *tifadp = (struct in_ifaddr *) 0;
-#endif
-      extern struct ifnet *rxi_FindIfnet();
-      tifnp = rxi_FindIfnet(parm2, &tifadp);  /* make iterative */
-      if (tifnp && tifadp) {
-#ifdef AFS_DARWIN60_ENV
-	 mask = ((struct sockaddr_in *)tifadp->ifa_netmask)->sin_addr.s_addr;
-#else
-	 mask = tifadp->ia_subnetmask;
-#endif
-      } else {
+
+      tifnp = rxi_FindIfnet(parm2, &mask);  /* make iterative */
+      if (!tifnp)
 	 code = -1;
-      }
 #endif /* else AFS_USERSPACE_IP_ADDR */
 #endif /* !AFS_SUN5_ENV */
       if (!code) 
