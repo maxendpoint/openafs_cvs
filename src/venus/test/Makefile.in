@@ -31,7 +31,7 @@ include ../../config/Makefile.${SYS_NAME}
 OPTIMIZE=-O
 
 INCDIRS= -I${TOP_SRCDIR}/config -I${TOP_INCDIR} -I..
-LDIRS= -L${TOP_LIBDIR} -L${DESTDIR} -L..
+LDIRS= -L${TOP_LIBDIR} -L..
 LIBS= -lsys -lubik -lvldb -lauth -lrxkad -ldes -lcom_err -lcmd -lrx -llwp -lafsutil
 
 CFLAGS = ${OPTIMIZE} ${INCDIRS} ${XCFLAGS}
