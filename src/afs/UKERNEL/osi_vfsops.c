@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vfsops.c,v 1.5 2001/07/12 19:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vfsops.c,v 1.6 2002/03/25 17:11:56 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -90,11 +90,11 @@ afs_root (OSI_VFS_ARG(afsp), avpp)
 	}
     }
     if (tvp) {
-	VN_HOLD((struct vnode *)tvp);
+	VN_HOLD(AFSTOV(tvp));
 
-	tvp->v.v_flag |= VROOT;	    /* No-op on Ultrix 2.2 */
+	AFSTOV(tvp)->v_flag |= VROOT;	    /* No-op on Ultrix 2.2 */
 	afs_globalVFS = afsp;
-	*avpp = (struct vnode *) tvp;
+	*avpp = AFSTOV(tvp);
     }
 
     afs_Trace3(afs_iclSetp, CM_TRACE_GOPEN, ICL_TYPE_POINTER, *avpp,

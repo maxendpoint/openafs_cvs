@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.10 2002/03/24 19:21:35 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.11 2002/03/25 17:11:57 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -46,7 +46,7 @@ afs_symlink
     struct nameidata *ndp;
     struct vattr *attrs;
     register char *atargetName; {
-    register struct vcache *adp = (struct vcache *)ndp->ni_dvp;
+    register struct vcache *adp = VTOAFS(ndp->ni_dvp);
     char *aname = ndp->ni_dent.d_name;
     struct ucred *acred = ndp->ni_cred;
 #else	/* AFS_OSF_ENV */

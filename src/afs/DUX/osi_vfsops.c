@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.7 2001/08/08 00:03:29 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.8 2002/03/25 17:11:52 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -148,15 +148,16 @@ int mp_afs_root (struct mount *afsp, struct vnode **avpp)
 	}
     }
     if (tvp) {
+	struct vnode *vp = AFSTOV(tvp);
 	AFS_GUNLOCK();
-	VN_HOLD((struct vnode *)tvp);
-	VN_LOCK((struct vnode *)tvp);
-	tvp->v.v_flag |= VROOT;	    /* No-op on Ultrix 2.2 */
-	VN_UNLOCK((struct vnode *)tvp);
+	VN_HOLD(vp);
+	VN_LOCK(vp);
+	vp->v_flag |= VROOT;	    /* No-op on Ultrix 2.2 */
+	VN_UNLOCK(vp);
 	AFS_GLOCK();
 
 	afs_globalVFS = afsp;
-	*avpp = (struct vnode *) tvp;
+	*avpp = vp;
     }
 
     afs_Trace2(afs_iclSetp, CM_TRACE_VFSROOT, ICL_TYPE_POINTER, *avpp,
@@ -273,7 +274,7 @@ int mp_afs_vptofh(struct vnode *avn, struct fid *fidp)
     long addr[2];
     register struct cell *tcell;
     int rootvp = 0;
-    struct vcache *avc = (struct vcache *)avn;
+    struct vcache *avc = VTOAFS(avn);
 
     AFS_GLOCK();
     AFS_STATCNT(afs_fid);
@@ -299,7 +300,7 @@ int mp_afs_vptofh(struct vnode *avn, struct fid *fidp)
 	fidp->fid_reserved = AFS_XLATOR_MAGIC;
 	addr[0] = (long)avc;
 	AFS_GUNLOCK();
-	VN_HOLD((struct vnode *)avc);
+	VN_HOLD(AFSTOV(avc));
 	AFS_GLOCK();
     }
 

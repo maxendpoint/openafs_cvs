@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_vfsops.c,v 1.1 2002/01/01 19:32:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_vfsops.c,v 1.2 2002/03/25 17:11:55 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -265,7 +265,7 @@ int mp_afs_vptofh(struct vnode *avn, struct fid *fidp)
     long addr[2];
     register struct cell *tcell;
     int rootvp = 0;
-    struct vcache *avc = (struct vcache *)avn;
+    struct vcache *avc = VTOAFS(avn);
 
     AFS_GLOCK();
     AFS_STATCNT(afs_fid);

@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.10 2002/02/01 20:30:11 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.11 2002/03/25 17:11:56 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -4281,7 +4281,7 @@ int uafs_statmountpoint_r(char *path)
      return -1;
     }
 
-    avc = (struct vcache *) vp;
+    avc = VTOAFS(vp);
 
     r = avc->mvstat;
     VN_RELE(vp);

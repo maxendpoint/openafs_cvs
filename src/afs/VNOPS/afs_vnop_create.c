@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.10 2002/03/24 19:21:35 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.11 2002/03/25 17:11:56 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -36,7 +36,7 @@ extern afs_rwlock_t afs_xcbhash;
 afs_create(ndp, attrs)
     struct nameidata *ndp;
     struct vattr *attrs; {
-    register struct vcache *adp = (struct vcache *)ndp->ni_dvp;
+    register struct vcache *adp = VTOAFS(ndp->ni_dvp);
     char *aname = ndp->ni_dent.d_name;
     enum vcexcl aexcl = NONEXCL; /* XXX - create called properly */
     int amode = 0; /* XXX - checked in higher level */
@@ -89,7 +89,7 @@ afs_create(OSI_VC_ARG(adp), aname, attrs, aexcl, amode, avcp, acred)
      * the reference count on it.
      */
     if (*avcp) {
-	AFS_RELE((struct vnode*)(*avcp));
+	AFS_RELE(AFSTOV(*avcp));
 	*avcp = NULL;
     }
 #endif

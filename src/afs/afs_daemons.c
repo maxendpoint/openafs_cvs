@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.13 2001/11/21 16:01:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.14 2002/03/25 17:11:48 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -339,7 +339,7 @@ afs_CheckRootVolume () {
 	    mp = (struct mount *) afs_globalVFS->vfs_data ;
 	    mp->m_rootgp = gget(mp, 0, 0, (char *)rootgp);
 	    afs_unlock(mp->m_rootgp);	/* unlock basic gnode */
-	    afs_vrele((struct vcache *) rootgp);  /* zap afs_root's vnode hold */
+	    afs_vrele(VTOAFS(rootgp));  /* zap afs_root's vnode hold */
 	}
     }
 #endif
@@ -390,9 +390,9 @@ void BPath(ab)
 	return;
     }
 #ifdef AFS_DEC_ENV
-    tvc = (struct vcache *) afs_gntovn(tvn);
+    tvc = VTOAFS(afs_gntovn(tvn));
 #else
-    tvc = (struct vcache *) tvn;
+    tvc = VTOAFS(tvn);
 #endif
     /* here we know its an afs vnode, so we can get the data for the chunk */
     tdc = afs_GetDCache(tvc, ab->size_parm[0], &treq, &offset, &len, 1);
@@ -543,8 +543,7 @@ struct brequest *afs_BQueue(aopcode, avc, dontwait, ause, acred, asparm0, asparm
 #ifdef	AFS_DEC_ENV
 		avc->vrefCount++;
 #else
-		VN_HOLD((struct vnode *)avc);
-#endif
+		VN_HOLD(AFSTOV(avc));
 	    }
 	    tb->refCount = ause+1;
 	    tb->size_parm[0] = asparm0;
@@ -775,7 +774,7 @@ afs_BioDaemon (nbiods)
 	    AFS_GLOCK();
 	    continue;
 	}
-	vcp = (struct vcache *)bp->b_vp;
+	vcp = VTOAFS(bp->b_vp);
 	if (bp->b_flags & B_PFSTORE) {	/* XXXX */
 	    ObtainWriteLock(&vcp->lock,404);	    
 	    if (vcp->v.v_gnode->gn_mwrcnt) {
@@ -1124,7 +1123,7 @@ afs_BioDaemon (nbiods)
 	    splx(s);
 	    continue;
 	}
-	vcp = (struct vcache *)bp->b_vp;
+	vcp = VTOAFS(bp->b_vp);
 	if (bp->b_flags & B_PFSTORE) {
 	    ObtainWriteLock(&vcp->lock,210);	    
 	    if (vcp->v.v_gnode->gn_mwrcnt) {

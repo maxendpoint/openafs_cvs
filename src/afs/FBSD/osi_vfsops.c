@@ -1,7 +1,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.5 2002/02/16 18:23:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.6 2002/03/25 17:11:52 shadow Exp $");
 
 #include <afs/sysincludes.h>            /* Standard vendor system headers */
 #include <afs/afsincludes.h>            /* Afs-based standard headers */
@@ -137,10 +137,10 @@ afs_root(struct mount *mp,
     if (tvp) {
         osi_vnhold(tvp,0);
     AFS_GUNLOCK();
-        vn_lock((struct vnode *)tvp, LK_EXCLUSIVE | LK_RETRY, p);
+        vn_lock(AFSTOV(tvp), LK_EXCLUSIVE | LK_RETRY, p);
     AFS_GLOCK();
 	afs_globalVFS = mp;
-	*vpp = (struct vnode *) tvp;
+	*vpp = AFSTOV(tvp);
         tvp->v.v_flag |= VROOT;
     }
 
