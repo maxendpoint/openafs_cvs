@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/update/client.c,v 1.8 2001/08/08 00:04:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/client.c,v 1.9 2001/10/05 21:13:33 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -314,8 +314,11 @@ again:
 						  mode, atime, time);
 		    if (errcode == 1) /* this file failed, but keep trying */
 		      goto fail_dirbuf;  
-		    if (errcode == -1) /* time to quit */
+		    if (errcode == -1) /* time to quit */ {
+		      fclose(stream);
+		      unlink(dirbuf);
 		      return -1;
+		    }
 		}
 
 	    }
