@@ -91,7 +91,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.16 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.17 2002/08/21 19:19:38 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -110,7 +110,7 @@ RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.16 2002/08/21 18:14:33 sh
 #include <sys/time.h>
 #endif /* ITIMER_REAL */
 #endif
-#if	defined(AFS_AIX_ENV)
+#if	defined(AFS_AIX_ENV) || defined(AFS_SUN4_ENV)
 #define WCOREDUMP(x)	(x & 0200)
 #endif
 #include <rx/xdr.h>
@@ -166,9 +166,6 @@ RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.16 2002/08/21 18:14:33 sh
 #endif
 #endif
 #include <fcntl.h>
-#ifndef AFS_NT40_ENV
-#include <afs/osi_inode.h>
-#endif
 #include <afs/cmd.h>
 #include <afs/afsutil.h>
 #include <afs/fileutil.h>

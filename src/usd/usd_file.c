@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/usd/usd_file.c,v 1.11 2002/08/21 18:14:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/usd/usd_file.c,v 1.12 2002/08/21 19:19:36 shadow Exp $");
 
 #include <errno.h>
 #include <fcntl.h>
@@ -24,11 +24,11 @@ RCSID("$Header: /cvs/openafs/src/usd/usd_file.c,v 1.11 2002/08/21 18:14:23 shado
 #ifdef AFS_DARWIN_ENV
 #include <sys/ioccom.h>
 #endif
-#include <sys/mtio.h>
-#endif /* AFS_AIX_ENV */
 #if defined(AFS_DUX40_ENV) || defined(AFS_OBSD_ENV) || defined(AFS_NBSD_ENV)
 #include <sys/ioctl.h>
 #endif
+#include <sys/mtio.h>
+#endif /* AFS_AIX_ENV */
 
 #ifdef HAVE_STRING_H
 #include <string.h>

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.20 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.21 2002/08/21 19:19:38 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -75,6 +75,9 @@ RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.20 2002/08/21 18:14:33 shad
 #else
 #if	defined(AFS_SUN_ENV)
 #include <sys/vfs.h>
+#ifndef AFS_SUN5_ENV
+#include <mntent.h>
+#endif
 #endif
 #ifdef AFS_SUN5_ENV
 #include <unistd.h>

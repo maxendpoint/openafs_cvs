@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.14 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.15 2002/08/21 19:19:39 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -130,9 +130,6 @@ RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.14 2002/08/21 18:14:33 shadow 
 #endif /* AFS_PTHREAD_ENV */
 #include "vutils.h"
 #include "fssync.h"
-#if !defined(AFS_NT40_ENV) && !defined(AFS_NAMEI_ENV)
-#include <afs/osi_inode.h>
-#endif
 #ifndef AFS_NT40_ENV
 #include <unistd.h>
 #endif

@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.15 2002/08/21 18:14:29 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.16 2002/08/21 19:19:38 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +36,6 @@ RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.15 2002/08/21 18:14:29 shadow
 #include <sys/file.h>
 #include <netinet/in.h>
 #include <netdb.h>
-#include <sys/resource.h>
 #include <unistd.h>	/* sysconf() */
 
 #ifdef HAVE_STRING_H
@@ -50,6 +49,7 @@ RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.15 2002/08/21 18:14:29 shadow
 #ifndef ITIMER_REAL
 #include <sys/time.h>
 #endif /* ITIMER_REAL */
+#include <sys/resource.h>
 #endif /* AFS_NT40_ENV */
 #include <afs/stds.h>
 #undef SHARED

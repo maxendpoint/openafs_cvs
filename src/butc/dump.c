@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/dump.c,v 1.9 2002/08/21 18:12:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/dump.c,v 1.10 2002/08/21 19:19:33 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -101,7 +101,7 @@ afs_int32 tapeblocks;      /* Number of 16K tape datablocks in buffer (!CONF_XBS
    else \
      sprintf(dumpname, "%s (DumpId %u)", name, dbDumpId);
 
-#if defined(AFS_NT40_ENV) || defined(AFS_DARWIN_ENV)
+#if defined(AFS_NT40_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_SUN4_ENV)
 localtime_r(t, tm)
    time_t *t;
    struct tm *tm;

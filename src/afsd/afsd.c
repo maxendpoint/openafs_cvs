@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.26 2002/08/21 18:12:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.27 2002/08/21 19:19:31 shadow Exp $");
 
 #define VFS 1
 
@@ -154,8 +154,12 @@ void set_staticaddrs(void);
 #if AFS_HAVE_STATVFS
 #include <sys/statvfs.h>
 #else
+#if defined(AFS_SUN_ENV)
+#include <sys/vfs.h>
+#else
 #if !defined(AFS_OSF_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_XBSD_ENV)
 #include <sys/statfs.h>
+#endif
 #endif
 #endif
 

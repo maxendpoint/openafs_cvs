@@ -20,10 +20,10 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.9 2001/09/13 23:19:23 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.10 2002/08/21 19:19:38 shadow Exp $");
 
 #ifndef AFS_NAMEI_ENV
-#ifdef AFS_LINUX20_ENV
+#if defined(AFS_LINUX20_ENV) || defined(AFS_SUN4_ENV)
 /* ListViceInodes
  *
  * Return codes:
@@ -36,7 +36,7 @@ char *devname, *mountedOn, *resultFile, *wpath;
 int (*judgeInode)(); 
 int *forcep, forceR;
 {
-    Log("ListViceInodes not implemented for Linux\n");
+    Log("ListViceInodes not implemented for this platform!\n");
     return -1;
 }
 #else
