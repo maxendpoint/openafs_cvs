@@ -125,7 +125,7 @@ bozo_ReBozo() {
 #ifndef AFS_NT40_ENV
     /* if syslog logging is on, pass "-syslog" to new bosserver */
     if (DoSyslog) {
-	static char arg[40];
+	char *arg=(char *)malloc(40); /* enough for -syslog=# */
 	if ( DoSyslogFacility != LOG_DAEMON ) {
 	    snprintf(arg, 40, "-syslog=%d", DoSyslogFacility);
 	} else {
