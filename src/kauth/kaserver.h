@@ -179,7 +179,7 @@ extern int kaux_islocked(
   u_int   locktime
 );
 
-extern int krb4_cross;
+extern afs_int32 krb4_cross;
 
 #define LOCKPW
 
