@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.18 2002/10/09 15:39:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.19 2002/10/09 15:54:48 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -160,6 +160,7 @@ struct CallBack {
     afs_uint32	    hhead;		/* Head of host table chain */
     afs_uint32	    tprev, tnext;	/* Timeout chain */
     afs_uint32	    hprev, hnext;	/* Chain from host table */
+    unsigned short  spare;              /* make it a multiple of 32 bits. */
 } *CB;	/* Don't use CB[0] */
 
 /* status bits for status field of CallBack structure */
