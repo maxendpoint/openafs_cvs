@@ -50,7 +50,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.15 2003/01/15 04:30:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.16 2003/03/10 02:06:34 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -102,7 +102,7 @@ static stolower();
 extern int IDCmp();
 
 /* When abort, reset initd so that the header is read in on next call.
- * Abort the transarction and return the code.
+ * Abort the transaction and return the code.
  */
 #define ABORT_WITH(tt,code) return(initd=0,ubik_AbortTrans(tt),code)
 
