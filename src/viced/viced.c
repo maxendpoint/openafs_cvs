@@ -603,8 +603,7 @@ main(argc, argv)
 	bcopy(he->h_addr, &FS_HostAddr_NBO, 4);
 	afs_inet_ntoa_r(FS_HostAddr_NBO, hoststr);
 	FS_HostAddr_HBO = ntohl(FS_HostAddr_NBO);
-	ViceLog(0,("FileServer %s has address %s (0x%x or 0x%x in host byte
-order)\n",
+	ViceLog(0,("FileServer %s has address %s (0x%x or 0x%x in host byte order)\n",
 		   FS_HostName, hoststr, FS_HostAddr_NBO, FS_HostAddr_HBO));
     }
 
