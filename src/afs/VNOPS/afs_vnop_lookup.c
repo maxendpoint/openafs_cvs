@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.36 2002/09/10 04:00:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.37 2002/10/06 23:00:18 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -260,11 +260,9 @@ void afs_InitFakeStat(struct afs_fakestat_state *state)
  *
  * The actual implementation of afs_EvalFakeStat and afs_TryEvalFakeStat,
  * which is called by those wrapper functions.
- *
- * Only issues RPCs if canblock is non-zero.
  */
-int afs_EvalFakeStat_int(struct vcache **avcp, struct afs_fakestat_state *state,
-	struct vrequest *areq, int canblock)
+static int afs_EvalFakeStat_int(struct vcache **avcp,
+	struct afs_fakestat_state *state, struct vrequest *areq, int canblock)
 {
     struct vcache *tvc, *root_vp;
     struct volume *tvolp = NULL;
@@ -281,10 +279,29 @@ int afs_EvalFakeStat_int(struct vcache **avcp, struct afs_fakestat_state *state,
     if (tvc->mvstat != 1)
 	return 0;
 
-    /* Is the call to VerifyVCache really necessary? */
     code = afs_VerifyVCache(tvc, areq);
     if (code)
 	goto done;
+
+    if (afs_fakestat_enable == 2 && !canblock) {
+	ObtainSharedLock(&tvc->lock, 680);
+	if (!tvc->linkData) {
+	    UpgradeSToWLock(&tvc->lock, 681);
+	    code = afs_HandleLink(tvc, areq);
+	    if (code) {
+		ReleaseWriteLock(&tvc->lock);
+		goto done;
+	    }
+	    ConvertWToRLock(&tvc->lock);
+	} else {
+	    ConvertSToRLock(&tvc->lock);
+	}
+
+	if (!afs_strchr(tvc->linkData, ':'))
+	    canblock = 1;
+	ReleaseReadLock(&tvc->lock);
+    }
+
     if (canblock) {
 	ObtainWriteLock(&tvc->lock, 599);
 	code = EvalMountPoint(tvc, NULL, &tvolp, areq);

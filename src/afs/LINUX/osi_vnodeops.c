@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.55 2002/09/26 07:01:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.56 2002/10/06 23:00:16 kolya Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -776,14 +776,19 @@ static int afs_linux_revalidate(struct dentry *dp)
     struct vrequest treq;
     struct vcache *vcp = ITOAFS(dp->d_inode);
     struct vcache *rootvp = NULL;
+    struct afs_fakestat_state fakestat;
 
     AFS_GLOCK();
 
-    if (afs_fakestat_enable && vcp->mvstat == 1 && vcp->mvid &&
-	(vcp->states & CMValid) && (vcp->states & CStatd)) {
-	ObtainSharedLock(&afs_xvcache, 680);
-	rootvp = afs_FindVCache(vcp->mvid, 0, 0);
-	ReleaseSharedLock(&afs_xvcache);
+    afs_InitFakeStat(&fakestat);
+    if (vcp->mvstat == 1) {
+	afs_InitReq(&treq, credp);
+	rootvp = vcp;
+	code = afs_TryEvalFakeStat(&rootvp, &fakestat, &treq);
+	if (code) {
+	    AFS_GUNLOCK();
+	    return -code;
+	}
     }
 
 #ifdef AFS_LINUX24_ENV
@@ -794,14 +799,14 @@ static int afs_linux_revalidate(struct dentry *dp)
     if (vcp->states & CStatd) {
 	if (*dp->d_name.name != '/' && vcp->mvstat == 2) /* root vnode */
 	    check_bad_parent(dp); /* check and correct mvid */
-	if (rootvp)
+	if (rootvp && rootvp != vcp)
 	    vcache2fakeinode(rootvp, vcp);
 	else
 	    vcache2inode(vcp);
 #ifdef AFS_LINUX24_ENV
 	unlock_kernel();
 #endif
-	if (rootvp) afs_PutVCache(rootvp);
+	afs_PutFakeStat(&fakestat);
 	AFS_GUNLOCK();
 	return 0;
     }
@@ -814,6 +819,7 @@ static int afs_linux_revalidate(struct dentry *dp)
 #ifdef AFS_LINUX24_ENV
     unlock_kernel();
 #endif
+    afs_PutFakeStat(&fakestat);
     AFS_GUNLOCK();
     crfree(credp);
 

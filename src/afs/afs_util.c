@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.9 2002/08/22 17:01:51 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.10 2002/10/06 23:00:14 kolya Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -83,6 +83,16 @@ int afs_strcasecmp(char *s1, char *s2)
     }
 
     return *s1 - *s2;
+}
+
+char *afs_strchr(char *s, int c)
+{
+    char *p;
+
+    for (p = s; *p; p++)
+	if (*p == c)
+	    return p;
+    return NULL;
 }
 
 char *afs_strdup(char *s)

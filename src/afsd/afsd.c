@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.28 2002/08/22 22:45:00 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.29 2002/10/06 23:00:21 kolya Exp $");
 
 #define VFS 1
 
@@ -1337,6 +1337,10 @@ mainproc(as, arock)
     }
     if (as->parms[27].items) {
 	/* -fakestat */
+	enable_fakestat = 2;
+    }
+    if (as->parms[28].items) {
+	/* -fakestat-all */
 	enable_fakestat = 1;
     }
 
@@ -1659,7 +1663,7 @@ mainproc(as, arock)
     if (enable_fakestat) {
 	if (afsd_verbose)
 	    printf("%s: Enabling fakestat support in kernel.\n", rn);
-	code = call_syscall(AFSOP_SET_FAKESTAT, 1);
+	code = call_syscall(AFSOP_SET_FAKESTAT, enable_fakestat);
 	if (code)
 	    printf("%s: Error enabling fakestat support.\n", rn);
     }
@@ -1950,7 +1954,8 @@ char **argv; {
 		), "Enable AFSDB support");
     cmd_AddParm(ts, "-files_per_subdir", CMD_SINGLE, CMD_OPTIONAL, "log(2) of the number of cache files per cache subdirectory");
     cmd_AddParm(ts, "-dynroot", CMD_FLAG, CMD_OPTIONAL, "Enable dynroot support");
-    cmd_AddParm(ts, "-fakestat", CMD_FLAG, CMD_OPTIONAL, "Enable fakestat support");
+    cmd_AddParm(ts, "-fakestat", CMD_FLAG, CMD_OPTIONAL, "Enable fakestat support for cross-cell mounts");
+    cmd_AddParm(ts, "-fakestat-all", CMD_FLAG, CMD_OPTIONAL, "Enable fakestat support for all mounts");
     return (cmd_Dispatch(argc, argv));
 }
 
