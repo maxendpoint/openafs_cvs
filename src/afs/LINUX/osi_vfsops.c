@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.16 2002/03/25 18:09:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.17 2002/07/20 08:12:23 kolya Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -462,4 +462,14 @@ void vcache2inode(struct vcache *avc)
 
     VATTR_NULL(&vattr);
     afs_CopyOutAttrs(avc, &vattr); /* calls vattr2inode */
+}
+
+/* Yet another one for fakestat'ed mountpoints */
+void vcache2fakeinode(struct vcache *rootvp, struct vcache *mpvp)
+{
+    struct vattr vattr;
+
+    VATTR_NULL(&vattr);
+    afs_CopyOutAttrs(rootvp, &vattr);
+    vattr2inode(AFSTOV(mpvp), &vattr);
 }
