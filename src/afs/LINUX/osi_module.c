@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.48 2004/05/11 20:36:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.49 2004/05/15 06:43:12 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -369,7 +369,6 @@ init_module(void)
 #endif /* EXPORTED_KALLSYMS_ADDRESS */
     if (!sys_call_table) {
 	printf("Failed to find address of sys_call_table\n");
-	sys_settimeofdayp = 0;
     } else {
 	printf("Found sys_call_table at %x\n", sys_call_table);
 #ifdef AFS_SPARC64_LINUX20_ENV
