@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.21 2003/02/27 17:27:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.22 2003/03/10 20:02:37 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -33,7 +33,7 @@ RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.21 2003/02/27 17
 extern afs_rwlock_t afs_xcbhash;
 struct afs_exporter *afs_nfsexporter;
 extern struct vcache *afs_globalVp;
-#if defined(AFS_HPUX1122_ENV)
+#if defined(AFS_HPUX110_ENV)
 extern struct vfs *afs_globalVFS;
 #endif
 
@@ -139,7 +139,7 @@ int afs_CopyOutAttrs(register struct vcache *avc, register struct vattr *attrs)
 #else 
     attrs->va_rdev = 1;
 #endif
-#if defined(AFS_HPUX1122_ENV)
+#if defined(AFS_HPUX110_ENV)
 	if (afs_globalVFS) attrs->va_fstype = afs_globalVFS->vfs_mtype;
 #endif
 

@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.37 2003/03/10 16:11:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.38 2003/03/10 20:02:44 rees Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1395,7 +1395,7 @@ int BreakLaterCallBacks(void)
 	    /* leave hold for MultiBreakVolumeCallBack to clear */
 	}
 	myfe = fe;
-	(struct object *)fe = ((struct object *)fe)->next;
+	fe = (struct FileEntry *)((struct object *)fe)->next;
 	FreeFE(myfe);
     }
 
