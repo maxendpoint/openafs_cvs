@@ -32,7 +32,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.15 2002/02/28 06:08:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.16 2002/02/28 06:34:15 kolya Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -300,7 +300,7 @@ static void CheckVLServer(sa, areq)
     RX_AFS_GUNLOCK();
     code = VL_ProbeServer(tc->id);
     RX_AFS_GLOCK();
-    rx_SetConnDeadTime(tc->id, 50);
+    rx_SetConnDeadTime(tc->id, AFS_RXDEADTIME);
     afs_PutConn(tc, SHARED_LOCK);
     /*
      * If probe worked, or probe call not yet defined (for compatibility
@@ -631,7 +631,7 @@ void afs_CheckServers(adown, acellp)
 		afs_setTimeHost = tc->srvr->server;
 	    }
 	    if (setTimer)
-		rx_SetConnDeadTime(tc->id, 50);
+		rx_SetConnDeadTime(tc->id, AFS_RXDEADTIME);
 	    if (code >= 0 && (sa->sa_flags & SRVADDR_ISDOWN) && (tc->srvr == sa)) {
 		/* server back up */
 		print_internet_address("afs: file server ", sa, " is back up", 2);
