@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.77 2004/06/07 19:48:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.78 2004/06/24 17:28:03 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1142,7 +1142,7 @@ afs_linux_unlink(struct inode *dip, struct dentry *dp)
     if (!code)
 	d_drop(dp);
 #if defined(AFS_LINUX26_ENV)
-    lock_kernel();
+    unlock_kernel();
 #endif
     AFS_GUNLOCK();
     crfree(credp);
