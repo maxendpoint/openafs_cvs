@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.10 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.12 2003/01/17 18:17:42 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -130,6 +130,9 @@ void rxi_StartServerProc(void (*proc)(void), int stacksize)
 	printf("Unable to Create Rx server thread\n");
 	exit(1);
     }
+    MUTEX_ENTER(&rx_stats_mutex);
+    ++rxi_pthread_hinum;
+    MUTEX_EXIT(&rx_stats_mutex);
     AFS_SIGSET_RESTORE();
 }
 
@@ -326,6 +329,9 @@ void rxi_StartListener(void)
 	printf("Unable to create Rx event handling thread\n");
 	exit(1);
     }
+    MUTEX_ENTER(&rx_stats_mutex);
+    ++rxi_pthread_hinum;
+    MUTEX_EXIT(&rx_stats_mutex);
     AFS_SIGSET_RESTORE();
 
     assert(pthread_mutex_lock(&listener_mutex)==0);
@@ -366,6 +372,7 @@ int rxi_Listen(osi_socket sock)
 	printf("Unable to create socket listener thread\n");
 	exit(1);
     }
+    ++rxi_pthread_hinum;
     AFS_SIGSET_RESTORE();
     return 0;
 }
