@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.36 2003/02/16 00:22:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.37 2003/02/18 08:03:09 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1033,11 +1033,6 @@ retry:
 	      && !afs_uuid_equal(&identP->uuid, &host->interface->uuid) ) ) ) 
 	{
 	    char uuid1[128], uuid2[128];
-	    /* The host in the cache is not the host for this connection */
-	    host->hostFlags |= HOSTDELETED;
-	    h_Unlock_r(host);
-	    if (!held) h_Release_r(host);
-
 	    if (identP->valid)
 		afsUUID_to_string(identP->uuid, uuid1, 127);
 	    if (host->interface)
@@ -1047,6 +1042,11 @@ retry:
 		     afs_inet_ntoa_r(host->host, hoststr), host->port, 
 		     identP->valid, host->interface, identP->valid ? uuid1 : 
 		     "", host->interface ? uuid2 : ""));
+
+	    /* The host in the cache is not the host for this connection */
+	    host->hostFlags |= HOSTDELETED;
+	    h_Unlock_r(host);
+	    if (!held) h_Release_r(host);
 	    goto retry;
 	}
     } else {
