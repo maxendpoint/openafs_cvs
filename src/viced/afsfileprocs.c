@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.77 2004/03/11 07:15:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.78 2004/04/13 20:41:11 kenh Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6690,7 +6690,7 @@ FetchData_RXStyle(Volume * volptr, Vnode * targetptr,
     {
 	afs_int32 high, low;
 	SplitOffsetOrSize(Len, high, low);
-	assert(Int64Mode || high == 0);
+	assert(Int64Mode || (Len >= 0 && high == 0) || Len < 0);
 	if (Int64Mode) {
 	    high = htonl(high);
 	    rx_Write(Call, (char *)&high, sizeof(afs_int32));	/* High order bits */
