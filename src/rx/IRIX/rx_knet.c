@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.5 2001/08/08 00:03:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.6 2001/08/08 06:29:03 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 #include "../h/tcp-param.h"
@@ -103,7 +103,7 @@ int osi_NetReceive(osi_socket so, struct sockaddr_in *from,
     else {
 	*lengthp = *lengthp - tuio.uio_resid;
 	if (maddr) {
-	    memcpy(struct sockaddr_in *), (char*)mtod(maddr, (char*)from,
+	    memcpy((char*)from, (char*)mtod(maddr, struct sockaddr_in *),
 		  sizeof(struct sockaddr_in));
 	    m_freem(maddr);
 	}
@@ -441,7 +441,7 @@ osi_NetSend(asocket, addr, dvec, nvec, asize, istack)
 
     to = m_get(M_WAIT, MT_SONAME);
     to->m_len = sizeof(struct sockaddr_in);
-    memcpy(mtod(to, (char*)addr, caddr_t), to->m_len);
+    memcpy(mtod(to, caddr_t), (char*)addr, to->m_len);
 
     BHV_PDATA(&bhv) = (void*)asocket;
     code = sosend(&bhv, to, &tuio, 0, NULL);
@@ -559,7 +559,7 @@ osi_NetSend(asocket, addr, dvec, nvec, asize, istack)
 	AFS_SBUNLOCK(&asocket->so_snd, NETEVENT_SODOWN, asocket, s1);
 	return 1;
     }
-    memcpy(mtod(um, addr, caddr_t), sizeof(*addr));
+    memcpy(mtod(um, caddr_t), addr, sizeof(*addr));
     um->m_len = sizeof(*addr);
     /* note that udp_usrreq frees funny mbuf.  We hold onto data, but mbuf
      * around it is gone.  we free address ourselves.  */

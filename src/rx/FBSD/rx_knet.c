@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.4 2001/08/08 00:03:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.5 2001/08/08 06:29:02 shadow Exp $");
 
 #ifdef AFS_FBSD40_ENV
 #include "../rx/rx_kcommon.h"
@@ -339,7 +339,7 @@ nopages:
 	splx(s);
 	return 1;
     }
-    memcpy(mtod(um, addr, caddr_t), sizeof(*addr));
+    memcpy(mtod(um, caddr_t), addr, sizeof(*addr));
     um->m_len = sizeof(*addr);
     /* note that udp_usrreq frees funny mbuf.  We hold onto data, but mbuf
      * around it is gone.  we free address ourselves.  */
