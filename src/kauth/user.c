@@ -18,7 +18,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/user.c,v 1.11 2003/07/15 23:15:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/user.c,v 1.12 2004/08/19 01:07:47 kolya Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -68,7 +68,7 @@ RCSID
 
 afs_int32
 GetTickets(char *name, char *instance, char *realm,
-	   struct ktc_encryptionKey *key, Date lifetime,
+	   struct ktc_encryptionKey * key, Date lifetime,
 	   afs_int32 * pwexpires, afs_int32 flags)
 {
     afs_int32 code;
