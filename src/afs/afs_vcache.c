@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.10 2001/10/08 22:15:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.11 2001/10/09 00:07:41 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -567,6 +567,10 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp,
 	 int i; char *panicstr;
 	 int vmax = 2 * afs_cacheStats;
 	 int vn = VCACHE_FREE;
+
+         AFS_GUNLOCK();
+	 shrink_dcache_sb(afs_globalVFS);
+	 AFS_GLOCK();
 
 	 i = 0;
 	 for(tq = VLRU.prev; tq != &VLRU && vn > 0; tq = uq) {
