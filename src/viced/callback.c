@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.16 2002/10/09 02:34:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.17 2002/10/09 02:58:46 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -748,7 +748,7 @@ static void MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
   multi_Rx(conns, j) {
     multi_RXAFSCB_CallBack(afidp, &tc);
     if (multi_error) {
-      unsigned short idx ;
+      afs_uint32 idx ;
       struct host *hp;
       char hoststr[16];
 
@@ -1211,7 +1211,7 @@ int BreakVolumeCallBacks(afs_uint32 volume)
     struct FileEntry *fe;
     struct host *host;
     struct VCBParams henumParms;
-    unsigned short tthead = 0;  /* zero is illegal value */
+    afs_uint32 tthead = 0;  /* zero is illegal value */
 
     H_LOCK
     fid.Volume = volume, fid.Vnode = fid.Unique = 0;
