@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_syscall.c,v 1.2 2005/02/16 22:47:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_syscall.c,v 1.3 2005/03/03 16:56:48 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -255,7 +255,7 @@ int osi_syscall_init(void)
 	    SYSCALL2POINTER afs_sys_call_table[_S(__NR_setgroups)];
 	((struct fptr *)sys_setgroupsp)->gp = kernel_gp;
 
-	afs_sys_call_table[_S(_NR_setgroups)] =
+	afs_sys_call_table[_S(__NR_setgroups)] =
 	    POINTER2SYSCALL((struct fptr *)afs_xsetgroups_stub)->ip;
     }
 
