@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.55 2003/11/23 04:53:42 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.56 2004/02/03 04:53:43 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -482,8 +482,8 @@ FsyncCheckLWP()
     assert(pthread_mutex_init(&fsync_glock_mutex, NULL) == 0);
 #endif
 
-    FSYNC_LOCK;
     while (1) {
+	FSYNC_LOCK;
 #ifdef AFS_PTHREAD_ENV
 	/* rounding is fine */
 	fsync_next.tv_nsec = 0;
