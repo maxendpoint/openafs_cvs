@@ -23,7 +23,7 @@
 #define INCLUDE_RXKAD_PRIVATE_DECLS
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.18 2003/12/07 22:49:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.19 2004/03/10 07:46:34 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -81,7 +81,9 @@ RCSID
 #ifndef KERNEL
 #define osi_Time() time(0)
 #endif
-struct rxkad_stats rxkad_stats;
+/* variable initialization for the benefit of darwin compiler; if it causes
+   problems elsewhere, conditionalize for darwin or fc_test compile breaks */
+struct rxkad_stats rxkad_stats = {0};
 
 /* static prototypes */
 static afs_int32 ComputeSum(struct rx_packet *apacket,
