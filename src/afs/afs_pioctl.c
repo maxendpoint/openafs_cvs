@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.22 2001/08/08 00:03:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.23 2001/10/08 22:15:24 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -2560,13 +2560,13 @@ struct AFS_UCRED *acred;
     for(i = 0; i < VCSIZE; i++) {
 	for(tvc = afs_vhashT[i]; tvc; tvc=tvc->hnext) {
 	    if (tvc->fid.Fid.Volume == volume && tvc->fid.Cell == cell) {
-#if	defined(AFS_SGI_ENV) || defined(AFS_ALPHA_ENV)  || defined(AFS_SUN5_ENV)  || defined(AFS_HPUX_ENV)
+#if	defined(AFS_SGI_ENV) || defined(AFS_ALPHA_ENV)  || defined(AFS_SUN5_ENV)  || defined(AFS_HPUX_ENV) || defined(AFS_LINUX20_ENV)
 		VN_HOLD((struct vnode *)tvc);
 #else
 #if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
 		osi_vnhold(tvc, 0);
 #else
-		tvc->vrefCount++;
+		VREFCOUNT_INC(tvc);
 #endif
 #endif
 		ReleaseReadLock(&afs_xvcache);

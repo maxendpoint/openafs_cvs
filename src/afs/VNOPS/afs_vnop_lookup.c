@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.16 2001/09/27 17:37:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.17 2001/10/08 22:15:28 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -969,7 +969,7 @@ afs_lookup(adp, aname, avcp, acred)
 	*avcp = tvc;
 	code = (tvc ? 0 : ENOENT);
 	hit = 1;
-	if (tvc && !tvc->vrefCount) {
+	if (tvc && !VREFCOUNT(tvc)) {
 	    osi_Panic("TT1");
 	}
 	if (code) {
@@ -1005,7 +1005,7 @@ afs_lookup(adp, aname, avcp, acred)
 	code = 0;
 	*avcp = tvc = adp;
 	hit = 1;
-	if (adp && !adp->vrefCount) {
+	if (adp && !VREFCOUNT(adp)) {
 	    osi_Panic("TT2");
 	}
 	goto done;
@@ -1251,7 +1251,7 @@ afs_lookup(adp, aname, avcp, acred)
 	    }
 	}
 	*avcp = tvc;
-	if (tvc && !tvc->vrefCount) {
+	if (tvc && !VREFCOUNT(tvc)) {
 	    osi_Panic("TT3");
 	}
 	code = 0;
