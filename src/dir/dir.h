@@ -101,7 +101,6 @@ extern int DirHash(register char *string);
 extern int DStat(int *abuffers, int *acalls, int *aios);
 extern void DRelease(register struct buffer *bp, int flag);
 extern int DVOffset(register void *ap);
-extern void DZap(register afs_int32 *fid);
 extern int DFlushVolume(register afs_int32 vid);
 extern int DFlushEntry(register afs_int32 *fid);
 
@@ -112,6 +111,7 @@ extern int DInit(int abuffers);
 extern void *DRead(register afs_int32 *fid, register int page);
 extern int DFlush();
 extern void *DNew(register afs_int32 *fid, register int page);
+extern void DZap(register afs_int32 *fid);
 #endif
 
 #ifdef KERNEL
