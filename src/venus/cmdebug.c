@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.11 2002/08/22 22:45:02 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.12 2002/10/07 09:29:45 kolya Exp $");
 
 
 #include <sys/types.h>
@@ -92,9 +92,9 @@ static PrintInterfaces(aconn)
 
     printf("Host interfaces:\n");
     for (i=0; i<addr.numberOfInterfaces; i++) {
-	printf("%s", inet_ntoa(&addr.addr_in[i]));
+	printf("%s", afs_inet_ntoa(htonl(addr.addr_in[i])));
 	if (addr.subnetmask[i])
-	    printf(", netmask %s", inet_ntoa(&addr.subnetmask[i]));
+	    printf(", netmask %s", afs_inet_ntoa(htonl(addr.subnetmask[i])));
 	if (addr.mtu[i])
 	    printf(", MTU %d", addr.mtu[i]);
 	printf("\n");
