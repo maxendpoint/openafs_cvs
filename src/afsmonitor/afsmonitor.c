@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.15 2003/10/24 06:26:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.16 2004/07/29 04:09:18 shadow Exp $");
 
 #include <stdio.h>
 #include <math.h>
@@ -898,7 +898,7 @@ parse_threshEntry(a_line)
 	    fprintf(stderr, "[ %s ] Programming error 2\n", rn);
 	    return (-1);
 	}
-    } else if ((strcasecmp(arg1, "cm")) != 0 && (strcasecmp(arg1, "cm")) != 0) {
+    } else {
 	fprintf(stderr,
 		"[ %s ] Syntax error. Second argument should be \"fs\" or \"cm\" \n",
 		rn);
