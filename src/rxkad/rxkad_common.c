@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.9 2001/10/05 21:18:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.10 2002/04/25 21:18:23 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -73,7 +73,7 @@ char *rxi_Alloc();
 #ifndef KERNEL
 #define osi_Time() time(0)
 #endif
-struct rxkad_stats rxkad_stats;
+struct rxkad_stats rxkad_stats = {0};
 
 /* this call sets up an endpoint structure, leaving it in *network* byte
  * order so that it can be used quickly for encryption.
