@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.21 2002/10/30 08:36:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.22 2002/10/30 08:38:59 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,8 +99,6 @@ extern afs_int32	BlocksSpare, PctSpare;
 void            ShutDown();
 static void	ClearXStatValues(), NewParms(), PrintCounters();
 static void     ResetCheckDescriptors(void), ResetCheckSignal(void);
-static int	CheckSignal();
-static int	FiveMinuteCheckLWP(), HostCheckLWP();
 extern	int     GetKeysFromToken();
 extern int RXAFS_ExecuteRequest();
 extern int RXSTATS_ExecuteRequest();
@@ -182,7 +180,6 @@ afs_uint32 FS_HostAddrs[ADDRSPERSITE], FS_HostAddr_cnt = 0, FS_registered=0;
 /* All addresses in FS_HostAddrs are in NBO */
 afsUUID FS_HostUUID;
 
-static void ParseArgs();
 static void FlagMsg();
 
 /*
@@ -287,6 +284,9 @@ int viced_syscall(afs_uint32 a3, afs_uint32 a4, void * a5)
 #include "AFS_component_version_number.c"
 #endif /* !AFS_NT40_ENV */
 
+#define MAXADMINNAME 64
+char adminName[MAXADMINNAME];
+
 static void
 CheckAdminName()
 {
@@ -363,9 +363,6 @@ static void HostCheckLWP()
     }
 } /*HostCheckLWP*/
 
-
-#define MAXADMINNAME 64
-char adminName[MAXADMINNAME];
 
 /*------------------------------------------------------------------------
  * PRIVATE ClearXStatValues
@@ -964,7 +961,7 @@ void Die (char *msg)
 } /*Die*/
 
 
-void InitPR()
+afs_int32 InitPR()
 {
     register code;
 
