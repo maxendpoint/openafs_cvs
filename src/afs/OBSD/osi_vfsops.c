@@ -19,7 +19,7 @@ NONINFRINGEMENT.
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.2 2002/11/04 23:35:37 rees Exp $
+ * $Id: osi_vfsops.c,v 1.3 2002/11/05 22:37:53 rees Exp $
  */
 
 /*
@@ -63,7 +63,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.2 2002/11/04 23:35:37 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.3 2002/11/05 22:37:53 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -313,11 +313,13 @@ afs_root(struct mount *mp,
 	!(code = afs_CheckInit())) {
 	tvp = afs_GetVCache(&afs_rootFid, &treq, NULL, NULL);
 	if (tvp) {
+printf("tvp %x %d\n", tvp, AFSTOV(tvp)->v_usecount);
 	    /* There is really no reason to over-hold this bugger--it's held
 	       by the root filesystem reference. */
 	    if (afs_globalVp != tvp) {
 		if (afs_globalVp)
-		    AFS_RELE(AFSTOV(afs_globalVp));
+printf("afs_globalVp %x %d\n", afs_globalVp, AFSTOV(afs_globalVp)->v_usecount);
+/*		    AFS_RELE(AFSTOV(afs_globalVp));*/
 		afs_globalVp = tvp;
 		AFS_HOLD(AFSTOV(afs_globalVp));
 	    }
@@ -453,7 +455,7 @@ afs_vfs_load(struct lkm_table *lkmtp,
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.2 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.3 $) lkm loaded\n");
     return 0;
 }
 
