@@ -82,7 +82,7 @@ void WriteLogBuffer(buf,len)
 {
     LOCK_SERVERLOG();
     if (serverLogFD > 0)
-      write(serverLogFD, tbuffer, len);
+      write(serverLogFD, buf, len);
     UNLOCK_SERVERLOG();
 }
 
