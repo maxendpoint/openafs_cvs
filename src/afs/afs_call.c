@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.17 2001/10/10 00:05:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.18 2001/10/10 00:10:32 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -625,6 +625,9 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 	afs_osi_Free(cellname, cellLen);
     }
 #endif
+    else if (parm == AFSOP_SET_DYNROOT) {
+	code = afs_SetDynrootEnable(parm2);
+    }
     else
       code = EINVAL;
 

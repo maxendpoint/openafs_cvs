@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.11 2001/10/09 00:07:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.12 2001/10/10 00:10:32 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -1687,8 +1687,15 @@ loop:
     /* stat the file */
     afs_RemoveVCB(afid);
     {
-    struct AFSFetchStatus OutStatus;
-    code = afs_FetchStatus(tvc, afid, areq, &OutStatus);
+	struct AFSFetchStatus OutStatus;
+
+	if (afs_DynrootNewVnode(tvc, &OutStatus)) {
+	    afs_ProcessFS(tvc, &OutStatus, areq);
+	    tvc->states |= CStatd | CUnique;
+	    code = 0;
+	} else {
+	    code = afs_FetchStatus(tvc, afid, areq, &OutStatus);
+	}
     }
 
     if (code) {
