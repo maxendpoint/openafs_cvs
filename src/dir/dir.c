@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.15 2003/07/15 23:15:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.16 2003/09/09 21:14:35 rees Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -36,6 +36,7 @@ RCSID
 #include "afs/sysincludes.h"
 #endif
 #if defined(AFS_FBSD_ENV)
+#include "h/libkern.h"
 #include "h/lock.h"
 #include "vm/vm.h"
 #include "vm/vm_extern.h"

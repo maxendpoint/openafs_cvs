@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_file.c,v 1.11 2003/08/27 21:43:17 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_file.c,v 1.12 2003/09/09 21:14:34 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -33,23 +33,28 @@ osi_UFSOpen(afs_int32 ainode)
     extern int cacheDiskType;
     afs_int32 code = 0;
     int dummy;
+
     AFS_STATCNT(osi_UFSOpen);
     if (cacheDiskType != AFS_FCACHE_TYPE_UFS)
 	osi_Panic("UFSOpen called for non-UFS cache\n");
     afile = (struct osi_file *)osi_AllocSmallSpace(sizeof(struct osi_file));
     AFS_GUNLOCK();
+#if defined(AFS_FBSD50_ENV)
+    code = VFS_VGET(afs_cacheVfsp, (ino_t) ainode, LK_EXCLUSIVE, &afile->vnode);
+#else
     code =
 	igetinode(afs_cacheVfsp, (dev_t) cacheDev.dev, (ino_t) ainode, &ip,
 		  &dummy);
+#endif
     AFS_GLOCK();
     if (code) {
 	osi_FreeSmallSpace(afile);
 	osi_Panic("UFSOpen: igetinode failed");
     }
-    afile->vnode = ITOV(ip);
 #if defined(AFS_FBSD50_ENV)
     VOP_UNLOCK(afile->vnode, 0, curthread);
 #else
+    afile->vnode = ITOV(ip);
     VOP_UNLOCK(afile->vnode, 0, curproc);
 #endif
     afile->size = VTOI(afile->vnode)->i_size;
