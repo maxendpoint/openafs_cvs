@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.38 2003/05/22 04:07:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.39 2003/06/04 16:11:55 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -225,7 +225,7 @@ int init_module(void)
 #endif
 #endif /* AFS_SPARC64_LINUX20_ENV || AFS_AMD64_LINUX20_ENV */
 
-#ifndef EXPORTED_SYS_CALL_TABLE
+#if !defined(EXPORTED_SYS_CALL_TABLE) || (defined(AFS_AMD64_LINUX20_ENV) && !defined(EXPORTED_IA32_SYS_CALL_TABLE))
     unsigned long *ptr;
     unsigned long offset;
     unsigned long datalen;
