@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.13 2002/08/21 21:12:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.14 2002/09/11 07:19:57 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -360,7 +360,7 @@ struct prdebugentry *aentry;
     code = pr_ReadEntry(tt, 0, apos, aentry);
     if (code) ABORT_WITH(tt,code);
 
-    if (!AccessOK (tt, cid, aentry, PRP_STATUS_MEM, PRP_STATUS_ANY))
+    if (!AccessOK (tt, cid, 0, PRP_STATUS_MEM, 0))
         ABORT_WITH(tt,PRPERM);
 
     /* Since prdebugentry is in the form of a prentry not a coentry, we will
