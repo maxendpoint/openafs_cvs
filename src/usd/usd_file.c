@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/usd/usd_file.c,v 1.9 2002/01/01 18:57:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/usd/usd_file.c,v 1.10 2002/01/18 18:51:29 shadow Exp $");
 
 #include <errno.h>
 #include <fcntl.h>
@@ -349,7 +349,7 @@ static int usd_FileOpen(
 	oflags |= O_CREAT;
 
 #ifdef O_LARGEFILE
-    fd = open64(path, oflags, mode);
+    fd = open64(path, oflags | O_LARGEFILE, mode);
 #else /* O_LARGEFILE */
     fd = open(path, oflags, mode);
 #endif /* O_LARGEFILE */
