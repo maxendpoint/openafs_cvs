@@ -36,7 +36,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.9 2003/05/15 17:10:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.10 2003/06/19 17:08:09 shadow Exp $");
 
 #ifndef KERNEL
 #include <stdio.h>
@@ -89,7 +89,7 @@ afs_int32 des_ecb_encrypt(afs_uint32 *clear, afs_uint32 *cipher,
 #endif
 #ifndef BITS32
 #ifndef BITS16
-    dunno how to do this machine type, you lose;
+#error dunno how to do this machine type, you lose;
 #endif
 #endif
     afs_uint32 P_temp;
