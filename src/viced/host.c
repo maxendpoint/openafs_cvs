@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.46 2003/04/07 20:11:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.47 2003/04/22 05:27:17 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1050,9 +1050,9 @@ retry:
 	{
 	    char uuid1[128], uuid2[128];
 	    if (identP->valid)
-		afsUUID_to_string(identP->uuid, uuid1, 127);
+		afsUUID_to_string(&identP->uuid, uuid1, 127);
 	    if (host->interface)
-		afsUUID_to_string(host->interface->uuid, uuid2, 127);
+		afsUUID_to_string(&host->interface->uuid, uuid2, 127);
 	    ViceLog(0, 
 		    ("CB: new identity for host %s:%d, deleting(%x %x %s %s)\n", 
 		     afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port), 
