@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.11 2003/07/15 23:14:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.12 2004/06/13 18:25:06 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -177,6 +177,12 @@ osi_VM_TryReclaim(struct vcache *avc, int *slept)
 	simple_unlock(&vp->v_interlock);
 	AFS_RELE(vp);
 	return;
+    }
+    if (ISSET(vp->v_flag, VUINACTIVE)) {
+	simple_unlock(&vp->v_interlock);
+        AFS_RELE(vp);
+        printf("vnode %x still inactive!", vp);
+        return;
     }
 #ifdef AFS_DARWIN14_ENV
     if (vp->v_ubcinfo->ui_refcount > 1 || vp->v_ubcinfo->ui_mapped) {
