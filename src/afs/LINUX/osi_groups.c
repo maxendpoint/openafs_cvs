@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.9 2001/07/12 19:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.10 2001/08/07 00:04:59 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -100,8 +100,8 @@ int setpag(cred_t **cr, afs_uint32 pagvalue, afs_uint32 *newpag, int change_pare
 
 
 /* Intercept the standard system call. */
-extern int (*sys_setgroupsp)(int gidsetsize, gid_t *grouplist);
-asmlinkage int afs_xsetgroups(int gidsetsize, gid_t *grouplist)
+extern long (*sys_setgroupsp)(int gidsetsize, gid_t *grouplist);
+asmlinkage long afs_xsetgroups(int gidsetsize, gid_t *grouplist)
 {
     int code;
     cred_t *cr = crref();
