@@ -1,4 +1,4 @@
-# rcsid : $Id: NTMakefile,v 1.1 2004/06/23 07:37:57 jaltman Exp $
+# rcsid : $Id: NTMakefile,v 1.2 2004/06/23 08:12:07 jaltman Exp $
 
 RELDIR=WINNT\install\loopback
 !INCLUDE ..\..\..\config\NTMakefile.$(SYS_NAME)
@@ -16,7 +16,8 @@ DLLEXPORTS=\
 	-EXPORT:InstallLoopBack \
 	-EXPORT:doLoopBackEntryW \
 	-EXPORT:uninstallLoopBackEntryW \
-	-EXPORT:installLoopbackMSI
+	-EXPORT:installLoopbackMSI \
+	-EXPORT:uninstallLoopbackMSI
 
 DLLLIBFILES=\
 	setupapi.lib msi.lib uuid.lib Shell32.lib ole32.lib advapi32.lib wbemuuid.lib
