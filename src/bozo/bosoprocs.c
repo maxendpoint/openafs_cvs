@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.7 2001/09/17 19:42:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.8 2001/10/17 20:46:18 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -411,7 +411,7 @@ char **aname; {
 
 BOZO_GetCellHost(acall, awhich, aname)
 struct rx_call *acall;
-afs_int32 awhich;
+afs_uint32 awhich;
 char **aname; {
     register afs_int32 code;
     struct afsconf_cell tcell;
