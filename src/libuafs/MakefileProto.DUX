@@ -9,7 +9,7 @@
 #
 DBUG=-O
 
-include $(DESTDIR)/../obj/config/Makefile.${SYS_NAME}
+include ../config/Makefile.${SYS_NAME}
 
 MKDIR_IF_NEEDED=[ -d $$1 ] || mkdir -p $$1
 
