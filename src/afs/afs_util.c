@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.15 2003/05/20 03:57:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.16 2003/06/23 20:27:39 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -103,6 +103,18 @@ char *afs_strcat(char *s1, char *s2)
     while ((*s1++ = *s2++))
 	;
     return (os1);
+}
+#endif
+
+#ifdef AFS_OBSD34_ENV
+char *afs_strcpy(char *s1, char *s2)
+{
+    char *os1;
+
+    os1 = s1;
+    while ((*s1++ = *s2++) != '\0')
+	;
+    return os1;
 }
 #endif
 
