@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.7 2001/10/17 21:07:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.8 2001/11/02 21:05:21 shadow Exp $");
 
 #ifdef	AFS_SGI62_ENV
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -967,8 +967,8 @@ static int afs_delmap(OSI_VC_ARG(avc), off, prp, addr, len, prot, maxprot,
 	    AFS_RWUNLOCK(vp, VRWLOCK_WRITE);
 	    /* at least one daemon is idle, so ask it to do the store.
 	     * Also, note that  we don't lock it any more... */
-	    tb = afs_BQueue(BOP_STORE, avc, 0, 1, acred, (long)acred->cr_uid,
-			    0L, 0L, 0L);
+	    tb = afs_BQueue(BOP_STORE, avc, 0, 1, acred,
+			    (afs_size_t) acred->cr_uid, 0L, (void *) 0);
 	    /* sleep waiting for the store to start, then retrieve error code */
 	    while ((tb->flags & BUVALID) == 0) {
 		tb->flags |= BUWAIT;

@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.6 2001/11/01 04:02:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.7 2001/11/02 21:05:23 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -165,8 +165,8 @@ tagain:
 			/* start the daemon (may already be running, however) */
 			tdc->flags |= DFFetchReq;
 			bp = afs_BQueue(BOP_FETCH, avc, B_DONTWAIT, 0, acred,
-					(afs_size_t)filePos, (afs_size_t) tdc,
-					(afs_size_t) 0, (afs_size_t) 0);
+					(afs_size_t)filePos, (afs_size_t) 0,
+					tdc);
 			if (!bp) {
 			    tdc->flags &= ~DFFetchReq;
 			    trybusy = 0;	/* Avoid bkg daemon since they're too busy */
@@ -318,8 +318,7 @@ void afs_PrefetchChunk(struct vcache *avc, struct dcache *adc,
 	    mutex_exit(&tdc->lock);
 #endif
 	     bp = afs_BQueue(BOP_FETCH, avc, B_DONTWAIT, 0, acred,
-				(afs_size_t) offset, (afs_size_t) tdc,
-				(afs_size_t) 1, (afs_size_t) 0);
+				(afs_size_t) offset, (afs_size_t) 1, tdc);
 	    if (!bp) {
 		/* Bkg table full; just abort non-important prefetching to avoid deadlocks */
 		tdc->flags &= ~(DFNextStarted | DFFetchReq);
@@ -614,8 +613,8 @@ tagain:
 			munlocked = 1;
 #endif
 			bp = afs_BQueue(BOP_FETCH, avc, B_DONTWAIT, 0, acred,
-					(afs_size_t)filePos, (afs_size_t) tdc,
-					(afs_size_t) 0, (afs_size_t) 0);
+					(afs_size_t)filePos, (afs_size_t) 0,
+					tdc);
 			if (!bp) {
 			    /* Bkg table full; retry deadlocks */
 			    tdc->flags &= ~DFFetchReq;

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.26 2001/11/01 05:24:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.27 2001/11/02 21:04:58 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -2079,7 +2079,8 @@ struct AFS_UCRED *acred;
 	osi_FreeLargeSpace(tp);
 	return EWOULDBLOCK;	/* pretty close */
     }
-    afs_BQueue(BOP_PATH, (struct vcache*)0, 0, 0, acred, (long)tp, 0L, 0L, 0L);
+    afs_BQueue(BOP_PATH, (struct vcache*)0, 0, 0, acred,
+	       (afs_size_t) 0, (afs_size_t) 0, tp);
     return 0;
 }
 

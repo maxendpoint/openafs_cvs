@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.12 2001/11/01 04:02:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.13 2001/11/02 21:05:23 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -844,7 +844,7 @@ afs_close(OSI_VC_ARG(avc), aflags, acred)
 		Also, note that  we don't lock it any more... */
             tb = afs_BQueue(BOP_STORE, avc, 0, 1, acred,
                                 (afs_size_t) acred->cr_uid, (afs_size_t) 0,
-                                (afs_size_t) 0, (afs_size_t) 0);
+                                (void *) 0);
 	    /* sleep waiting for the store to start, then retrieve error code */
 	    while ((tb->flags & BUVALID) == 0) {
 		tb->flags |= BUWAIT;
