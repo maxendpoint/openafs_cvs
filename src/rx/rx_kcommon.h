@@ -102,7 +102,7 @@ struct coda_inode_info {};
 #include "../afs/afs_stats.h"
 #include "../h/errno.h"
 #ifdef KERNEL
-#include "../sys/afsincludes.h"
+#include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
 #endif
 
