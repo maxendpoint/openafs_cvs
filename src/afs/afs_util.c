@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.12 2002/10/18 17:09:28 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.13 2003/02/13 23:44:24 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -161,7 +161,11 @@ void afs_warn(char *a, long b, long c, long d, long e, long f,
 #else
 void afs_warn(a,b,c,d,e,f,g,h,i,j)
 char *a;
+#if defined( AFS_USE_VOID_PTR)
+void *b, *c, *d, *e, *f, *g, *h, *i, *j;
+#else
 long b,c,d,e,f,g,h,i,j;
+#endif
 #endif
 {
     AFS_STATCNT(afs_warn);

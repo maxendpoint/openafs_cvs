@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.12 2002/10/16 03:58:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.13 2003/02/13 23:44:33 shadow Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -73,7 +73,7 @@ RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.12 2002/10/16 03:58:37 shadow Exp
 #endif /* AFS_MACH_ENV */
 #endif
 #endif
-#if !defined(AFS_SUN5_ENV) && !defined(AFS_LINUX20_ENV)
+#if !defined(AFS_SUN5_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_HPUX1122_ENV)
 #include "h/mbuf.h"
 #endif
 #ifndef AFS_LINUX20_ENV
