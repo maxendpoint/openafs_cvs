@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.16 2003/03/26 09:10:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.17 2003/06/06 19:29:40 shadow Exp $");
 
 #include <linux/version.h>
 #ifdef AFS_LINUX22_ENV
@@ -186,6 +186,13 @@ void osi_StopListener(void)
                     read_unlock(&tasklist_lock);
 #endif
     while (rxk_ListenerPid) {
+	struct task_struct *p;
+
+	read_lock(&tasklist_lock);
+	p = find_task_by_pid(rxk_ListenerPid);
+	read_unlock(&tasklist_lock);
+	
+	flush_signals(p);
 	force_sig(SIGKILL, listener);
 	afs_osi_Sleep(&rxk_ListenerPid); 
     }
