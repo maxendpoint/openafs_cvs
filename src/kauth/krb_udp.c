@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.20 2002/08/22 18:45:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.21 2003/03/18 03:56:18 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -461,6 +461,11 @@ afs_int32 UDP_GetTicket (ksoc, pkt, kvno, authDomain, ticket, ticketLen, auth, a
 	strncpy (cell, lrealm, MAXKTCREALMLEN-1);
 	cell[MAXKTCREALMLEN-1] = 0;
     };
+
+    if (!krb4_cross && strcmp(lrealm, cell) != 0) {
+	code = KERB_ERR_PRINCIPAL_UNKNOWN;
+	goto abort;
+    }
 
     if (krb_udp_debug) {
 	printf ("UGetTicket: got ticket from '%s'.'%s'@'%s'\n",
