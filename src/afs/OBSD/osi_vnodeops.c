@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.7 2003/01/22 21:25:15 rees Exp $
+ * $Id: osi_vnodeops.c,v 1.8 2003/01/30 16:03:11 rees Exp $
  */
 
 /*
@@ -98,7 +98,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.7 2003/01/22 21:25:15 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.8 2003/01/30 16:03:11 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -525,10 +525,10 @@ afs_nbsd_select(ap)
 		struct proc *a_p;
 	} */ *ap;
 {
-	/*
-	 * We should really check to see if I/O is possible.
-	 */
-	return (1);
+    /*
+     * We should really check to see if I/O is possible.
+     */
+    return (1);
 }
 
 int
@@ -886,24 +886,21 @@ afs_nbsd_reclaim(ap)
     int code, slept;
     struct vnode *vp = ap->a_vp;
     struct vcache *avc = VTOAFS(vp);
+    int haveGlock = ISAFS_GLOCK();
 
     cache_purge(vp);			/* just in case... */
-#ifdef UVM
     uvm_vnp_uncache(vp);
-#else
-    vnode_pager_uncache(vp);
-#endif
 
-    AFS_GLOCK();
+    if (!haveGlock)
+	AFS_GLOCK();
 #ifndef AFS_DISCON_ENV
     code = afs_FlushVCache(avc, &slept); /* tosses our stuff from vnode */
 #else
     /* reclaim the vnode and the in-memory vcache, but keep the on-disk vcache */
     code = afs_FlushVS(avc);
 #endif
-    AFS_GUNLOCK();
-    if (!code && vp->v_data)
-	panic("afs_reclaim: vnode not cleaned");
+    if (!haveGlock)
+	AFS_GUNLOCK();
     return code;
 }
 
@@ -1038,25 +1035,25 @@ afs_nbsd_pathconf(ap)
 {
     AFS_STATCNT(afs_cntl);
     switch (ap->a_name) {
-      case _PC_LINK_MAX:
+    case _PC_LINK_MAX:
 	*ap->a_retval = LINK_MAX;
 	break;
-      case _PC_NAME_MAX:
+    case _PC_NAME_MAX:
 	*ap->a_retval = NAME_MAX;
 	break;
-      case _PC_PATH_MAX:
+    case _PC_PATH_MAX:
 	*ap->a_retval = PATH_MAX;
 	break;
-      case _PC_CHOWN_RESTRICTED:
+    case _PC_CHOWN_RESTRICTED:
 	*ap->a_retval = 1;
 	break;
-      case _PC_NO_TRUNC:
+    case _PC_NO_TRUNC:
 	*ap->a_retval = 1;
 	break;
-      case _PC_PIPE_BUF:
+    case _PC_PIPE_BUF:
 	return EINVAL;
 	break;
-      default:
+    default:
 	return EINVAL;
     }
     return 0;
