@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.9 2003/11/23 04:53:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.10 2004/04/03 19:43:15 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1277,7 +1277,7 @@ ubik_Call_SingleServer(aproc, aclient, aflags, p1, p2, p3, p4, p5, p6, p7, p8,
 	     * calls
 	     */
 	    if ((code == 0)
-		&& (aflags & UF_SINGLESERVER != 0)
+		&& ((aflags & UF_SINGLESERVER) != 0)
 		) {
 		/* need to save state */
 		uServer.ucs_flags = UF_SINGLESERVER;
