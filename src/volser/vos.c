@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.27 2003/08/26 02:59:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.28 2003/09/15 21:39:10 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -3521,8 +3521,7 @@ DeleteEntry(as)
 			itp->data);
 		fprintf(STDERR,
 			"You must specify a RW volume name or ID "
-			"(the entire VLDB entry will be deleted)\n",
-			itp->data);
+			"(the entire VLDB entry will be deleted)\n");
 		PrintError("", vcode);
 		totalFail++;
 		continue;
