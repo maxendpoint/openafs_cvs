@@ -49,7 +49,7 @@ Generic install command.  Options are:
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.10 2001/09/13 23:19:21 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.11 2001/10/05 21:22:57 shadow Exp $");
 
 #include <stdio.h>
 #include <pwd.h>
@@ -81,6 +81,7 @@ RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.10 2001/09/13 23:1
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 struct stat istat, ostat;
 
