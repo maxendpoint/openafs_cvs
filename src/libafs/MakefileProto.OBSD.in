@@ -23,12 +23,10 @@ KOBJ = COMMON
 AFS_OS_OBJS = \
 	osi_groups.o \
 	osi_file.o \
-	osi_inode.o \
 	osi_misc.o \
 	osi_sleep.o \
 	osi_vm.o \
-	osi_vnodeops.o \
-	osi_module.o 
+	osi_vnodeops.o
 
 AFS_OS_NFSOBJS = \
 	osi_vfsops_nfs.o
@@ -48,17 +46,17 @@ include Makefile.common
 COMMON_INCLUDE = \
 	-I.. \
 	-I../nfs \
-	-I${TOP_OBJDIR} \
-	-I${TOP_OBJDIR}/afs \
-	-I${TOP_OBJDIR}/afs/${MKAFS_OSTYPE} \
-	-I${TOP_OBJDIR}/config \
-	-I${TOP_OBJDIR}/rx \
-	-I${TOP_OBJDIR}/rx/${MKAFS_OSTYPE} \
-	-I${TOP_OBJDIR}/rxkad \
-	-I${TOP_OBJDIR}/domestic \
-	-I${TOP_OBJDIR}/util \
-	-I${TOP_OBJDIR}/../include \
-	-I${TOP_OBJDIR}/../include/afs
+	-I${TOP_SRCDIR} \
+	-I${TOP_SRCDIR}/afs \
+	-I${TOP_SRCDIR}/afs/${MKAFS_OSTYPE} \
+	-I${TOP_SRCDIR}/config \
+	-I${TOP_SRCDIR}/rx \
+	-I${TOP_SRCDIR}/rx/${MKAFS_OSTYPE} \
+	-I${TOP_SRCDIR}/rxkad \
+	-I${TOP_SRCDIR}/domestic \
+	-I${TOP_SRCDIR}/util \
+	-I${TOP_SRCDIR}/../include \
+	-I${TOP_SRCDIR}/../include/afs
 
 setup:
 	-mkdir $(KOBJ)
