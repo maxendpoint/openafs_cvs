@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.9 2001/10/12 00:24:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.10 2001/11/14 17:39:30 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -554,11 +554,11 @@ static int bproc() {
 			    RememberProcName(tp);
 			}
 			if (tp->coreName)
-			    bozo_Log("%s:%s exited on signal %d%s",
+			    bozo_Log("%s:%s exited on signal %d%s\n",
 				tb->name, tp->coreName, tp->lastSignal,
 				WCOREDUMP(status) ? " (core dumped)" : "");
 			else
-			    bozo_Log("%s exited on signal %d%s",
+			    bozo_Log("%s exited on signal %d%s\n",
 				tb->name, tp->lastSignal,
 				WCOREDUMP(status) ? " (core dumped)" : "");
 			SaveCore(tb, tp);
