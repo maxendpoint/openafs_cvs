@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/export/cfgexport.c,v 1.8 2003/01/11 07:22:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/export/cfgexport.c,v 1.9 2003/04/17 15:05:58 rees Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -214,7 +214,9 @@ char *syms;
 	    case U800WRMAGIC:
 	    case U800ROMAGIC:
 	    case U800TOCMAGIC:
+#ifdef __XCOFF64__
 	    case U64_TOCMAGIC:
+#endif
 		break;
 
 	    default:
