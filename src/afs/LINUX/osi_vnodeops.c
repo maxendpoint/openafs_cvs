@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.59 2002/11/20 15:26:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.60 2002/12/10 04:16:21 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -642,14 +642,14 @@ static int afs_linux_lock(struct file *fp, int cmd, struct file_lock *flp)
     flock.l_len = flp->fl_end - flp->fl_start;
 
     /* Safe because there are no large files, yet */
-#if F_GETLK != F_GETLK64
+#if define (F_GETLK64) && (F_GETLK != F_GETLK64)
     if (cmd = F_GETLK64)
 	cmd = F_GETLK;
     else if (cmd = F_SETLK64)
 	cmd = F_SETLK;
     else if (cmd = F_SETLKW64)
 	cmd = F_SETLKW;
-#endif /* F_GETLK != F_GETLK64 */
+#endif /* F_GETLK64 && F_GETLK != F_GETLK64 */
 
     AFS_GLOCK();
     code = afs_lockctl(vcp, &flock, cmd, credp);
