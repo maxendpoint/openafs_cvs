@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.80 2004/06/08 16:09:09 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81 2004/06/08 17:27:46 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -3758,7 +3758,6 @@ DECL_PIOCTL(PCallBackAddr)
     afs_int32 i, j;
     struct unixuser *tu;
     struct srvAddr **addrs;
-    extern int afs_HaveCallBacksFrom(struct server *aserver);
 
     /*AFS_STATCNT(PCallBackAddr);*/
     if ( !afs_resourceinit_flag )      /* afs deamons havn't started yet */
