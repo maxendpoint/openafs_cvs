@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.29 2003/10/10 14:08:33 rees Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.30 2003/11/12 16:07:28 rees Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -3936,7 +3936,7 @@ BackSys(as)
 		regex_t re;
 		char errbuf[256];
 
-		code = regcomp(&re, ti->data, REG_BASIC | REG_NOSUB);
+		code = regcomp(&re, ti->data, REG_NOSUB);
 		if (code != 0) {
 		    regerror(code, &re, errbuf, sizeof errbuf);
 		    fprintf(STDERR,
@@ -3964,7 +3964,7 @@ BackSys(as)
 		regex_t re;
 		char errbuf[256];
 
-		code = regcomp(&re, ti->data, REG_BASIC | REG_NOSUB);
+		code = regcomp(&re, ti->data, REG_NOSUB);
 		if (code != 0) {
 		    regerror(code, &re, errbuf, sizeof errbuf);
 		    fprintf(STDERR,
@@ -4051,7 +4051,7 @@ BackSys(as)
 		    char errbuf[256];
 
 		    /* XXX -- should just do the compile once! */
-		    code = regcomp(&re, ti->data, REG_BASIC | REG_NOSUB);
+		    code = regcomp(&re, ti->data, REG_NOSUB);
 		    if (code != 0) {
 			regerror(code, &re, errbuf, sizeof errbuf);
 			fprintf(STDERR,
@@ -4096,7 +4096,7 @@ BackSys(as)
 		    char errbuf[256];
 
 		    /* XXX -- should just do the compile once! */
-		    code = regcomp(&re, ti->data, REG_BASIC | REG_NOSUB);
+		    code = regcomp(&re, ti->data, REG_NOSUB);
 		    if (code != 0) {
 			regerror(code, &re, errbuf, sizeof errbuf);
 			fprintf(STDERR,
