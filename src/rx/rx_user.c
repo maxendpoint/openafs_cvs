@@ -32,11 +32,11 @@
 #endif
 #include <afs/afs_args.h>
 #include <afs/afsutil.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
 #ifdef HAVE_STRINGS_H
 #include <strings.h>
+#else
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 #endif
 
