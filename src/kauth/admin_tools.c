@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.9 2001/09/17 19:42:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.10 2001/10/05 20:41:10 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/debug.h>
@@ -715,7 +715,7 @@ int StringToKey (
       
     printf ("Converting %s with the DES string to key yields key='",
 	    as->parms[0].items->data);
-    ka_PrintBytes (&key, sizeof(key));
+    ka_PrintBytes ((char *)&key, sizeof(key));
     printf ("'.\n");
 
     return 0;
