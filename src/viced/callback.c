@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.46 2003/08/08 21:54:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.47 2003/09/16 03:03:42 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1421,7 +1421,7 @@ BreakLaterCallBacks(void)
 		fid.Volume = fe->volid;
 		*feip = fe->fnext;
 		/* Works since volid is deeper than the largest pointer */
-		((struct object *)fe)->next = (struct object *)myfe;
+		fe->next = myfe;
 		myfe = fe;
 	    } else
 		feip = &fe->fnext;
