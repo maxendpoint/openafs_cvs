@@ -1,4 +1,4 @@
-# $Id: buildpkg.sh,v 1.1 2003/02/04 19:05:44 rees Exp $
+# $Id: buildpkg.sh,v 1.2 2003/02/20 22:04:47 rees Exp $
 
 SRC=../../../../..
 umask 022
@@ -29,4 +29,4 @@ ln -s $SRC/afsd/afs.rc.obsd usr/vice/etc/rc.securelevel.afs
 
 echo '/afs:/usr/vice/cache:96000' >usr/vice/etc/cacheinfo
 
-pkg_create -v -h -f packinglist -c -OpenAFS -d desc -p / -s $PWD openafs
+pkg_create -v -h -f packinglist -c -OpenAFS -d desc -p / -s $PWD openafs-client
