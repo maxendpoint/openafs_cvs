@@ -201,7 +201,7 @@ else
 	esac
 	case $AFS_SYSNAME in
 		*_linux*)
-			AFS_SYSKVERS=`uname -r | awk -F\. '{print $1 $2}'`
+			AFS_SYSKVERS=`echo $LINUX_VERSION | awk -F\. '{print $1 $2}'`
 			_AFS_SYSNAME=`echo $AFS_SYSNAME|sed s/XX\$/$AFS_SYSKVERS/`
 			AFS_SYSNAME="$_AFS_SYSNAME"
 			;;
