@@ -524,7 +524,7 @@ links:
 	for file in `find [!NW]* -type f -print` ; do \
 		/bin/ln -s `pwd`/$${file} $${here}/obj/$${file} ; \
 	done; \
-	/bin/ln -s afsconfig.h.in $${here}/obj/config/afsconfig.h ;
+	/bin/ln -s $${here}/obj/afsconfig.h.in $${here}/obj/config/afsconfig.h ;
 
 # config.h link will eventually be replaced with generating the file 
 # directly from config.h.in via configure run. I'm linking instead of
