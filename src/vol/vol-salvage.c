@@ -91,7 +91,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.12 2001/09/17 19:43:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.13 2001/11/01 03:54:40 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -478,7 +478,7 @@ static handleit(as)
 {
     register struct cmd_item *ti;
     char pname[100], *temp;
-    afs_int32 seenpart = 0, seenvol = 0, vid = 0;
+    afs_int32 seenpart = 0, seenvol = 0, vid = 0, seenany = 0, i;
     struct DiskPartition *partP;
 
 #ifdef AFS_SGI_VNODE_GLUE
@@ -488,6 +488,18 @@ static handleit(as)
     }
 #endif
 
+#ifdef FAST_RESTART
+    for (i = 0; i < CMD_MAXPARMS; i++) {
+        if (as->parms[i].items) {
+            seenany = 1;
+            break;
+        }
+    }
+    if (!seenany) {
+      printf("Exiting immediately without salvage. Look into the FileLog to find volumes which really need to be salvaged!\n");
+      Exit(0);
+    }
+#endif /* FAST_RESTART */
     if (ti = as->parms[0].items) {	/* -partition */
 	seenpart = 1;
 	strncpy(pname, ti->data, 100);
