@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.19 2003/01/07 22:44:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.20 2003/03/28 09:27:32 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -3155,7 +3155,7 @@ int UV_DumpClonedVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afr
 			if (!error) error = code;
 		}	
 	}
-	if (fromtid) {
+	if (clonetid) {
 		VPRINT1("Ending transaction on cloned volume %u...", clonevol);
 		code = AFSVolEndTrans(fromconn, clonetid, &rcode);
 		if (code || rcode) {
