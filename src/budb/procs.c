@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/procs.c,v 1.9 2002/08/21 18:12:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/procs.c,v 1.10 2003/06/19 17:14:56 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -2426,11 +2426,14 @@ afs_int32 GetDumps (call, majorVersion, flags, name, start, end,
 	    if (eval) ABORT(eval);
 	}
 
+/*
 	if nothing found
 		return error
 
 	from saved volfragment address, compute dump.
 	otherwise, return dump found
+*/
+
 #endif /* PA */
 	
     }
