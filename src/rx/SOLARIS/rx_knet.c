@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.17 2004/06/24 17:38:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.18 2004/07/08 05:23:53 shadow Exp $");
 
 #ifdef AFS_SUN5_ENV
 #include "rx/rx_kcommon.h"
@@ -341,14 +341,11 @@ osi_FreeSocket(register struct osi_socket *asocket)
 	afs_osi_Sleep(&rxk_ListenerPid);
     }
 
-#ifdef AFS_SUN510_ENV
+    /* Was sockfs_sounbind(so, 0); sockfs_sockfree(so); That's wrong */
     vp = SOTOV(so);
     VOP_CLOSE(vp, FREAD|FWRITE, 1, (offset_t)0, CRED());
     VN_RELE(vp);
-#else
-    sockfs_sounbind(so, 0);
-    sockfs_sockfree(so);
-#endif
+
     return 0;
 }
 
