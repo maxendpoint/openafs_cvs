@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.15 2002/07/31 22:29:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.16 2002/08/01 16:11:35 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -80,6 +80,7 @@ static void *linux_alloc(unsigned int asize, int drop_glock)
 {
     void *new = NULL;
     int max_retry = 10;
+    int haveGlock = ISAFS_GLOCK();
 
     /*  if we can use kmalloc use it to allocate the required memory. */
     while(!new && max_retry)
@@ -106,9 +107,9 @@ static void *linux_alloc(unsigned int asize, int drop_glock)
 #else
 	    current->state = TASK_INTERRUPTIBLE;
 #endif
-	    if (drop_glock) AFS_GUNLOCK();
+	    if (drop_glock && haveGlock) AFS_GUNLOCK();
 	    schedule_timeout(HZ);
-	    if (drop_glock) AFS_GLOCK();
+	    if (drop_glock && haveGlock) AFS_GLOCK();
 #ifdef set_current_state
             set_current_state(TASK_RUNNING);
 #else
