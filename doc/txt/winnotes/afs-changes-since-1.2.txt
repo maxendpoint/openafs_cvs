@@ -1,3 +1,23 @@
+Since 1.3.66:
+   * A locking error was discovered surrounding all references to volume
+     server lists within the cm_cell.c source file. 
+
+   * The logged into Windows username was incorrect on Terminal Server
+     machines.
+
+   * A new registry value "NonPersistentCaching" was added to the service
+     parameters key.  When set to a non-zero value, the afs cache is stored
+     in the Windows paging file.  There are two limitations to choosing
+     this option: 
+        1. when persistent caching is implemented it won't work with 
+           this flag set since there will be nothing to persist.
+        2. with this flag set the initial paging allocation cannot be
+           changed while the service is running
+
+   * An initialization bug was discovered in aklog.exe which affected users
+     who have a domain name for their afs servers which could not be mapped
+     to a realm
+
 Since 1.3.65:
    * afs_config.exe now validates cell names against DNS in addition
      to the CellServDB file.
