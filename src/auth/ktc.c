@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.9 2001/11/21 15:29:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.10 2002/08/22 22:26:34 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -80,8 +80,6 @@ RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.9 2001/11/21 15:29:52 shadow Exp
 #ifdef AFS_KERBEROS_ENV 
 #include <fcntl.h>
 #include <sys/file.h>
-extern afs_uint32 life_to_time();
-extern unsigned char time_to_life();
 #include "cellconfig.h"
 static char lcell[MAXCELLCHARS];
  
