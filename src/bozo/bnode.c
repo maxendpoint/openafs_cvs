@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.10 2001/11/14 17:39:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.11 2001/11/21 15:36:43 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -534,10 +534,10 @@ static int bproc() {
 			    tb->errorSignal = 0;
 			}
 			if (tp->coreName)
-			    bozo_Log("%s:%s exited with code %d",
+			    bozo_Log("%s:%s exited with code %d\n",
 				tb->name, tp->coreName, tp->lastExit);
 			else
-			    bozo_Log("%s exited with code %d",
+			    bozo_Log("%s exited with code %d\n",
 				tb->name, tp->lastExit);
 		    }
 		    else {
