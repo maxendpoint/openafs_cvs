@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/kdump.c,v 1.31 2004/01/14 21:30:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/kdump.c,v 1.32 2004/05/11 19:52:28 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -406,7 +406,6 @@ typedef void *afs_kcondvar_t;
 #endif /* AFS_LINUX20_ENV */
 
 #include <afs/exporter.h>
-#include <afs/nfsclient.h>
 /*#include "afs/osi.h"*/
 
 typedef struct {
@@ -444,6 +443,7 @@ extern off64_t lseek64();
 #include "afs/afs.h"		/* XXXX Getting it from the obj tree XXX */
 #include "afs/afs_axscache.h"	/* XXXX Getting it from the obj tree XXX */
 #include <afs/afs_stats.h>
+#include <afs/nfsclient.h>
 
 #include <afs/cmd.h>
 #include <rx/rx.h>
