@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.17 2002/01/16 02:03:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.18 2002/01/23 05:09:11 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -984,10 +984,10 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp,
 	INIT_LIST_HEAD(&ip->i_data.locked_pages);
 	INIT_LIST_HEAD(&ip->i_dirty_buffers);
 #ifdef STRUCT_INODE_HAS_I_DIRTY_DATA_BUFFERS
-	INIT_LIST_HEAD(&inode->i_dirty_data_buffers);
+	INIT_LIST_HEAD(&ip->i_dirty_data_buffers);
 #endif
 #ifdef STRUCT_INODE_HAS_I_DEVICES
-	INIT_LIST_HEAD(&inode->i_devices);
+	INIT_LIST_HEAD(&ip->i_devices);
 #endif
 	ip->i_data.host = (void*) ip;
 	ip->i_mapping = &ip->i_data;
