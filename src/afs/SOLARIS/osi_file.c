@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_file.c,v 1.9 2002/08/21 18:12:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_file.c,v 1.10 2002/10/01 03:32:22 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -148,7 +148,11 @@ void *osi_VxfsOpen(afs_int32 ainode)
 }
 #endif /* AFS_HAVE_VXFS */
 
+#if defined(AFS_SUN57_64BIT_ENV)
+void *osi_UfsOpen(ino_t ainode)
+#else
 void *osi_UfsOpen(afs_int32 ainode)
+#endif
 {
     struct inode *ip;
     register struct osi_file *afile = NULL;
