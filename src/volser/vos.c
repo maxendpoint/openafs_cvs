@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.16 2002/08/05 22:07:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.17 2002/08/12 21:27:51 kolya Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -3974,6 +3974,10 @@ register struct cmd_syndesc *as;
 	  i++;
           nentries++;
           continue;
+      }
+
+      if (vcode == VL_INDEXERANGE) {
+	  break;
       }
 
       if (vcode) {
