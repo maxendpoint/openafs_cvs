@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.15 2003/08/08 20:40:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.16 2003/11/23 04:53:43 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -350,7 +350,6 @@ ih_open(IHandle_t * ihP)
 int
 fd_close(FdHandle_t * fdP)
 {
-    FD_t closeFd;
     IHandle_t *ihP;
 
     if (!fdP)

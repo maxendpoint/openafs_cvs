@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaauxdb.c,v 1.8 2003/07/15 23:15:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaauxdb.c,v 1.9 2003/11/23 04:53:35 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <io.h>
@@ -130,7 +130,7 @@ kaux_write(afs_int32 to, unsigned int nfailures, afs_uint32 lasttime)
     if ((write(fd, &nfailures, sizeof(int)) != sizeof(int))
 	|| (write(fd, &lasttime, sizeof(afs_int32)) != sizeof(afs_int32)))
 	perror("kaux_write()");
-
+    return 0;
 }
 
 

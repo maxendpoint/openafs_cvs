@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/status.c,v 1.6 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/status.c,v 1.7 2003/11/23 04:53:30 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -71,6 +71,7 @@ unlock_cmdLine()
 
 /* general */
 
+void
 clearStatus(taskId, flags)
      afs_uint32 taskId;
      afs_uint32 flags;
@@ -141,6 +142,7 @@ findStatus(taskId)
     return (ptr);
 }
 
+void
 setStatus(taskId, flags)
      afs_uint32 taskId;
      afs_uint32 flags;

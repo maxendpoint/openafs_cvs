@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.35 2003/08/08 20:40:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.36 2003/11/23 04:53:43 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -507,7 +507,7 @@ handleit(struct cmd_syndesc *as)
 {
     register struct cmd_item *ti;
     char pname[100], *temp;
-    afs_int32 seenpart = 0, seenvol = 0, vid = 0, seenany = 0, i;
+    afs_int32 seenpart = 0, seenvol = 0, vid = 0, seenany = 0;
     struct DiskPartition *partP;
 
 #ifdef AFS_SGI_VNODE_GLUE
@@ -519,11 +519,14 @@ handleit(struct cmd_syndesc *as)
 #endif
 
 #ifdef FAST_RESTART
+    {
+    afs_int32 i;
     for (i = 0; i < CMD_MAXPARMS; i++) {
 	if (as->parms[i].items) {
 	    seenany = 1;
 	    break;
 	}
+    }
     }
     if (!seenany) {
 	char *msg =

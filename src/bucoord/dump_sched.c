@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.6 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.7 2003/11/23 04:53:30 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -64,10 +64,9 @@ bc_AddDumpCmd(as, arock)
      char *arock;
 {
     register char *dname;	/* dump schedule name */
-    char *dateString;		/* expiration date */
     register afs_int32 code;
     afs_int32 expType, expDate;
-    register struct cmd_item *ti, *expItem;
+    register struct cmd_item *ti;
     udbClientTextP ctPtr;
 
     afs_int32 bc_ParseExpiration();

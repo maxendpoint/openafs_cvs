@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.9 2003/07/15 23:14:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.10 2003/11/23 04:53:30 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -103,6 +103,7 @@ nextItem(linkPtr)
 
 char *cmdLine;
 
+int
 cmdDispatch()
 {
 #define	MAXV	100
@@ -127,6 +128,7 @@ cmdDispatch()
      */
     doDispatch(targc, targv, 1);
     cmd_FreeArgv(targv);
+    return(0);
 }
 
 statusWatcher()

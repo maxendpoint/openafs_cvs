@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.8 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.9 2003/11/23 04:53:30 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -65,7 +65,6 @@ bc_AddVolEntryCmd(as, arock)
     char *volSetName, *serverName, *partitionName, *volRegExp;
     udbClientTextP ctPtr;
     struct bc_volumeSet *tset;
-    afs_int32 flags;
 
     volSetName = as->parms[0].items->data;
     serverName = as->parms[1].items->data;
@@ -396,11 +395,8 @@ bc_ListVolSetCmd(as, arock)
 
 bc_ClearVolumeSets()
 {
-    udbClientTextP ctPtr;
     struct udbHandleS *uhptr = &udbHandle;
     struct bc_volumeSet *vsPtr, *vsNextPtr, **vsPrev;
-    struct bc_volumeEntry *vePtr, *veNextPtr;
-    afs_int32 code;
 
     extern struct bc_config *bc_globalConfig;
 
@@ -673,7 +669,6 @@ bc_SaveVolumeSet()
 afs_int32
 bc_UpdateVolumeSet()
 {
-    struct bc_dumpSchedule *dumpPtr, *nextDumpPtr;
     struct udbHandleS *uhptr = &udbHandle;
     udbClientTextP ctPtr;
     afs_int32 code;

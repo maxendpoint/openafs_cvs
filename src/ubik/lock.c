@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/lock.c,v 1.10 2003/08/08 20:18:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/lock.c,v 1.11 2003/11/23 04:53:38 jaltman Exp $");
 
 #include <sys/types.h>
 #ifndef AFS_NT40_ENV
@@ -164,6 +164,7 @@ ulock_relLock(atrans)
  */
 
     atrans->locktype = 0;
+    return 0;
 }
 
 /* debugging hooks */
@@ -177,4 +178,5 @@ ulock_Debug(aparm)
 	aparm->anyReadLocks = rwlock.readers_reading;
 	aparm->anyWriteLocks = ((rwlock.excl_locked == WRITE_LOCK) ? 1 : 0);
     }
+    return 0;
 }

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.7 2003/07/15 23:14:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.8 2003/11/23 04:53:31 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -671,6 +671,8 @@ ht_KeyMatch(type, key, e)
     default:
 	db_panic("illegal hash function");
     }
+    /* not reached */
+    return 0;
 }
 
 /* ht_LookupEntry
@@ -1217,7 +1219,6 @@ scanHashTable(ut, mhtPtr, selectFn, operationFn, rockPtr)
     int tableLength;		/* # entries */
     int blockLength;		/* # blocks */
     int hashIndex;
-    int blockIndex, entryIndex;
     int old;
     int i;
     afs_int32 code = 0;

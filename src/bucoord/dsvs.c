@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dsvs.c,v 1.7 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dsvs.c,v 1.8 2003/11/23 04:53:30 jaltman Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -390,7 +390,7 @@ bc_CreateDumpSchedule(aconfig, adumpName, expDate, expType)
      afs_int32 expDate;
      afs_int32 expType;
 {
-    register struct bc_dumpSchedule **tlast, *tdump;
+    register struct bc_dumpSchedule *tdump;
     struct bc_dumpSchedule *parent, *node;
     afs_int32 code;
 
@@ -517,7 +517,7 @@ bc_DeleteDumpSchedule(aconfig, adumpName)
 bc_ProcessDumpSchedule(aconfig)
      register struct bc_config *aconfig;
 {
-    register struct bc_dumpSchedule *tds, *uds;
+    register struct bc_dumpSchedule *tds;
     struct bc_dumpSchedule *parentptr, *nodeptr;
     int retval;
 

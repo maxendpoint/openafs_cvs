@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.17 2003/10/24 06:31:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.18 2003/11/23 04:53:29 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -774,7 +774,7 @@ SBOZO_ListSUsers(acall, an, aname)
     *tp = 0;			/* in case getnthuser doesn't null-terminate the string */
     code = afsconf_GetNthUser(bozo_confdir, an, tp, 256);
 
-  fail:
+  /* fail: */
     osi_auditU(acall, BOS_ListSUserEvent, code, AUD_END);
     return code;
 }

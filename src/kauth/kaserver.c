@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.15 2003/07/15 23:15:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.16 2003/11/23 04:53:35 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -427,4 +427,5 @@ main(argc, argv)
 
     ViceLog(0, ("Starting to process AuthServer requests\n"));
     rx_ServerProc();		/* donate this LWP */
+    return 0;
 }

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.8 2003/07/15 23:14:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.9 2003/11/23 04:53:32 jaltman Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -414,7 +414,6 @@ PerformDumpTest(TestInfo * tip)
     if ((info.status & BUTM_STATUS_EOD) == 0) {
 	code = butm_ReadFileBegin(&info);
 	if (code && (code != BUTM_EOD)) {
-	  should_eot:
 	    com_err(whoami, code, "Should have encountered an 'End Of Tape'");
 	    ERROR_EXIT(8);
 	}

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/config.c,v 1.7 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/config.c,v 1.8 2003/11/23 04:53:30 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -71,7 +71,6 @@ bc_InitConfig(apath)
      char *apath;
 {
     register struct bc_config *tb;
-    register struct bc_hostEntry *the;
 
     /* initialize global config structure */
     tb = (struct bc_config *)malloc(sizeof(struct bc_config));

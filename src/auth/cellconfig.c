@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.33 2003/07/15 23:14:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.34 2003/11/23 04:53:28 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -786,12 +786,10 @@ afsconf_GetAfsdbInfo(char *acellName, char *aservice,
     register afs_int32 i;
     int tservice;
     struct afsconf_entry DNSce;
-    char *DNStmpStrp;		/* a temp string pointer */
-    struct hostent *thp;
     afs_int32 cellHosts[AFSMAXCELLHOSTS];
     int numServers;
     int rc;
-    int *ttl;
+    int ttl;
 
     DNSce.cellInfo.numServers = 0;
     DNSce.next = NULL;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.30 2003/11/22 03:11:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.31 2003/11/23 04:53:44 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1177,7 +1177,7 @@ SAFSVolForwardMultiple(struct rx_call *acid, afs_int32 fromTrans, afs_int32
     struct rx_connection **tcons;
     struct rx_call **tcalls;
     struct Volume *vp;
-    int i, nconns, is_incremental;
+    int i, is_incremental;
 
     if (results)
 	memset(results, 0, sizeof(manyResults));
@@ -1625,7 +1625,6 @@ afs_int32
 VolListPartitions(struct rx_call *acid, struct pIDs *partIds)
 {
     char namehead[9];
-    int code;
     char i;
 
     strcpy(namehead, "/vicep");	/*7 including null terminator */

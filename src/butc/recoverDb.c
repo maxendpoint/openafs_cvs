@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.8 2003/07/15 23:14:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.9 2003/11/23 04:53:32 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -533,13 +533,10 @@ readDump(taskId, tapeInfoPtr, scanInfoPtr)
     int moreTapes = 1;
     afs_int32 nbytes, flags, seq;
     int newDump = 1, newTape = 1;
-    afs_int32 tapePosition, c;
+    afs_int32 tapePosition;
     afs_int32 code = 0, tcode;
-    int interactiveFlag, badscan;
-
+    int badscan;
     struct volumeHeader volHeader, volTrailer;
-
-    int good;
     struct budb_tapeEntry tapeEntry;
     struct budb_volumeEntry volEntry;
 

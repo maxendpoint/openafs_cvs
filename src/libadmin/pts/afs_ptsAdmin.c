@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.8 2003/07/15 23:15:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.9 2003/11/23 04:53:35 jaltman Exp $");
 
 #include <stdio.h>
 
@@ -2256,8 +2256,6 @@ SetUserAccess(const pts_UserUpdateEntry_p userP, afs_int32 * flags,
 	*flags |= 128;
     }
     rc = 1;
-
-  fail_SetUserAccess:
 
     if (st != NULL) {
 	*st = tst;

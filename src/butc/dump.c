@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/dump.c,v 1.14 2003/08/08 21:54:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/dump.c,v 1.15 2003/11/23 04:53:31 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -1130,7 +1130,6 @@ Dumper(struct dumpNode *nodePtr)
     afs_int32 code = 0;
 
     /* for volume setup */
-    struct tc_dumpDesc *dumpDescPtr;
     int i;
     int failedvolumes = 0;
     int dumpedvolumes = 0;
@@ -1520,11 +1519,10 @@ getDumpTape(struct dumpRock *dparamsPtr, int interactiveFlag,
     struct budb_dumpEntry dumpEntry;
     struct budb_tapeEntry tapeEntry;
     struct budb_volumeEntry volEntry;
-    Date oldTapeExpiration, expir;
-    afs_int32 curTime;
+    Date expir;
     afs_int32 doAppend;
     afs_int32 code = 0;
-    int askForTape, opcode;
+    int askForTape;
     int tapecount = 1;
     char strlevel[5];
     afs_int32 tapepos, lastpos;
@@ -1644,9 +1642,8 @@ getDumpTape(struct dumpRock *dparamsPtr, int interactiveFlag,
 	} else {		/* not appending */
 
 	    afs_uint32 tapeid;
-	    afs_uint32 dmp, parent;
+	    afs_uint32 dmp;
 	    struct budb_dumpEntry de, de2;
-
 
 	    /* Check if tape name is not what expected - null tapes are acceptable
 	     * Don't do check if the tape has a user defined label.
@@ -1877,7 +1874,7 @@ makeVolumeHeader(struct volumeHeader *vhptr, struct dumpRock *dparamsPtr,
     strcpy(vhptr->dumpSetName, nodePtr->dumpSetName);
     strcpy(vhptr->preamble, "H++NAME#");
     strcpy(vhptr->postamble, "T--NAME#");
-  error_exit:
+  
     return (code);
 }
 

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.18 2003/08/08 20:27:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.19 2003/11/23 04:53:29 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -1500,7 +1500,7 @@ SalvageCmd(as)
 
     /* Find out whether fileserver is running MR-AFS (has a scanner instance) */
     /* XXX this should really be done some other way, potentially by RPC */
-    tp = &tname;
+    tp = &tname[0];
     if (code = BOZO_GetInstanceParm(tconn, "fs", 3, &tp) == 0)
 	mrafs = 1;
 

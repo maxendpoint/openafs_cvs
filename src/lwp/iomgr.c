@@ -24,7 +24,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/iomgr.c,v 1.9 2002/08/22 18:45:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/iomgr.c,v 1.10 2003/11/23 04:53:36 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -292,7 +292,7 @@ static int FDSetCmp(int nfds, fd_set *fd_set1, fd_set *fd_set2)
  */
 static void FDSetSet(int nfds, fd_set *fd_set1, fd_set *fd_set2)
 {
-    unsigned int i, n;
+    unsigned int i;
 
     if (fd_set1 == (fd_set*)0 || fd_set2 == (fd_set*)0)
 	return;
@@ -307,8 +307,7 @@ static void FDSetSet(int nfds, fd_set *fd_set1, fd_set *fd_set2)
     if (nfds == 0)
 	return;
 
-    n = INTS_PER_FDS(nfds);
-    for (i=0; i<n; i++) {
+    for (i=0,n = INTS_PER_FDS(nfds); i<n; i++) {
 	fd_set1->FDS_BITS[i] |= fd_set2->FDS_BITS[i];
     }
 #endif

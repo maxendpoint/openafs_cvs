@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.19 2003/08/11 22:22:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.20 2003/11/23 04:53:37 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -952,8 +952,8 @@ SPR_UpdateEntry(call, aid, name, uentry)
     struct ubik_trans *tt;
     afs_int32 cid;
     struct prentry tentry;
-    afs_int32 loc, nptr;
-    int count, id = 0;
+    afs_int32 loc;
+    int id = 0;
 
     code = Initdb();
     if (code)

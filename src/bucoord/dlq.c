@@ -14,7 +14,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dlq.c,v 1.6 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dlq.c,v 1.7 2003/11/23 04:53:30 jaltman Exp $");
 
 #include <afs/bubasics.h>
 
@@ -114,6 +114,7 @@ dlqMoveb(fromptr, toptr)
 
     fromptr->dlq_next = fromptr;
     fromptr->dlq_prev = fromptr;
+    return (0);
 }
 
 /* dlqUnlinkb

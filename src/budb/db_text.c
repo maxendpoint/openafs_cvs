@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/db_text.c,v 1.9 2003/07/15 23:14:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/db_text.c,v 1.10 2003/11/23 04:53:31 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -544,7 +544,6 @@ mkstemp(st)
     retval = open(mktemp(st), O_RDWR | O_CREAT | O_EXCL, 0600);
 #endif
 
-  error_exit:
     return (retval);
 }
 #endif

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.25 2003/11/15 04:02:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.26 2003/11/23 04:53:44 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1977,10 +1977,8 @@ UV_CopyVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
     struct destServer destination;
 
     struct nvldbentry entry, newentry, storeEntry;
-    int i, islocked, pntg;
+    int islocked, pntg;
     afs_int32 error;
-    char in, lf;		/* for test code */
-    int same;
     int justclone = 0;
 
     islocked = 0;
@@ -4473,7 +4471,8 @@ UV_ListPartitions(afs_int32 aserver, struct partList *ptrPartList,
 	}
 	free(partEnts.partEntries_val);
     }
-  out:
+
+   /* out: */
     if (code)
 	fprintf(STDERR,
 		"Could not fetch the list of partitions from the server\n");

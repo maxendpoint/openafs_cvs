@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.12 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.13 2003/11/23 04:53:30 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -333,7 +333,6 @@ static int
 MyBeforeProc(as)
      register struct cmd_syndesc *as;
 {
-    char *rock;
     afs_int32 code;
 
     /* Handling the command line opcode */
@@ -391,11 +390,11 @@ struct Lock dispatchLock;	/* lock on the Dispatch call */
 
 afs_int32
 doDispatch(targc, targv, dispatchCount)
-     char **targv[MAXV];
+     char *targv[MAXV];
      afs_int32 targc;
      afs_int32 dispatchCount;	/* to prevent infinite recursion */
 {
-    char **sargv[MAXV];
+    char *sargv[MAXV];
     afs_int32 sargc;
     afs_int32 code, c;
     FILE *fd;
@@ -489,10 +488,9 @@ main(argc, argv)
      int argc;
      char **argv;
 {				/*main */
-    char **targv[MAXV];		/*Ptr to parsed argv stuff */
+    char *targv[MAXV];		/*Ptr to parsed argv stuff */
     afs_int32 targc;		/*Num parsed arguments */
     afs_int32 code;		/*Return code */
-    char *tp;			/*Result of gets() */
     register struct cmd_syndesc *ts;	/*Ptr to parsed command line */
     int i;
 

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaprocs.c,v 1.14 2003/07/15 23:15:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaprocs.c,v 1.15 2003/11/23 04:53:35 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <errno.h>
@@ -1114,7 +1114,6 @@ Authenticate(version, call, aname, ainstance, start, end, arequest, oanswer)
     struct ktc_encryptionKey tgskey;	/* service key for encrypting ticket */
     Date now;
     afs_uint32 pwexpires;
-    afs_uint32 lasttime;
 
     COUNT_REQ(Authenticate);
     if (!name_instance_legal(aname, ainstance))
