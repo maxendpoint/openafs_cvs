@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.8 2002/08/22 21:00:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.9 2003/06/17 17:08:19 rees Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -1390,8 +1390,10 @@ restoreText(tapeInfo, rstTapeInfoPtr, nextHeader)
 
     /* open the text file */
     sprintf(filename, "%s/bu_XXXXXX", gettmpdir());
-#ifdef AFS_LINUX20_ENV
+#if defined (AFS_LINUX20_ENV)
     fid = open(mkstemp(filename), O_RDWR|O_CREAT|O_EXCL, 0600);
+#elif defined (AFS_XBSD_ENV)
+    fid = mkstemp(filename);
 #else
     fid = open(mktemp(filename), O_RDWR|O_CREAT|O_EXCL, 0600);
 #endif
