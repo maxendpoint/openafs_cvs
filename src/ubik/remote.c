@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.13 2004/08/19 01:07:51 kolya Exp $");
+    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.14 2005/02/04 21:09:58 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -30,6 +30,7 @@ RCSID
 #include <lock.h>
 #include <rx/xdr.h>
 #include <rx/rx.h>
+#include <afs/afsutil.h>
 
 #define UBIK_INTERNALS
 #include "ubik.h"
