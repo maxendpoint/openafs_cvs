@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.17 2001/11/14 23:59:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.18 2001/11/19 16:53:46 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -475,7 +475,7 @@ SRXAFS_FetchData64 (tcon, Fid, Pos, Len, OutStatus, CallBack, Sync)
 #endif /* AFS_64BIT_ENV */
 
     code = common_FetchData (tcon, Fid, tPos, tLen, OutStatus,
-                                                 CallBack, Sync, 0);
+                                                 CallBack, Sync, 1);
     return code;
 }
 
