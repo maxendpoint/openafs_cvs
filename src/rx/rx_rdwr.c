@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.14 2002/08/12 21:31:03 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.15 2002/08/17 16:19:18 kolya Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -1065,7 +1065,7 @@ int rx_WritevAlloc(call, iov, nio, maxio, nbytes)
     int maxio;
     int nbytes;
 {
-    char bytes;
+    int bytes;
     SPLVAR;
 
     NETPRI;
