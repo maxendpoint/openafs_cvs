@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.83 2004/10/11 16:21:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.84 2004/10/13 00:30:03 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -492,7 +492,7 @@ struct afs_ioctl_sys {
     unsigned int com;
     unsigned long arg;
 };
-asmlinkage int
+int
 afs_xioctl(struct inode *ip, struct file *fp, unsigned int com,
 	   unsigned long arg)
 {
