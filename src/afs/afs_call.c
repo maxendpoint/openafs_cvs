@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.35 2002/09/11 05:52:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.36 2002/09/11 06:38:41 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -328,11 +328,11 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 	setuerror(EACCES);
 	return(EACCES);
 #else
-#if	defined(AFS_OSF_ENV)
+#if defined(AFS_OSF_ENV)
 	return EACCES;
-#else	/* AFS_OSF_ENV */
+#else /* AFS_OSF_ENV */
 	return EPERM;
-#endif
+#endif /* AFS_OSF_ENV */
 #endif
 #endif
     }
@@ -342,29 +342,29 @@ long parm, parm2, parm3, parm4, parm5, parm6;
          || parm == AFSOP_RXLISTENER_DAEMON) {
          afs_DaemonOp(parm,parm2,parm3,parm4,parm5,parm6);
     }
-#else
+#else /* !(AFS_LINUX24_ENV && !UKERNEL) */
     if (parm == AFSOP_START_RXCALLBACK) {
 	if (afs_CB_Running) goto out;
 	afs_CB_Running = 1;
 #ifndef RXK_LISTENER_ENV
 	code = afs_InitSetup(parm2);
 	if (!code) 
-#endif /* RXK_LISTENER_ENV */
+#endif /* !RXK_LISTENER_ENV */
 	    {
 #ifdef RXK_LISTENER_ENV
 		while (afs_RX_Running != 2)
 		    afs_osi_Sleep(&afs_RX_Running);
-#else
+#else /* !RXK_LISTENER_ENV */
 		afs_initState = AFSOP_START_AFS;
 		afs_osi_Wakeup(&afs_initState);
 #endif /* RXK_LISTENER_ENV */
 		afs_osi_Invisible();
 		afs_RXCallBackServer();
 	    }
-#ifdef	AFS_SGI_ENV
+#ifdef AFS_SGI_ENV
 	AFS_GUNLOCK();
 	exit(CLD_EXITED, code);
-#endif
+#endif /* AFS_SGI_ENV */
     }
 #ifdef RXK_LISTENER_ENV
     else if (parm == AFSOP_RXLISTENER_DAEMON) {
@@ -385,15 +385,82 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 	    afs_osi_Wakeup(&afs_RX_Running);
 #ifndef UKERNEL
 	    afs_osi_RxkRegister();
-#endif
+#endif /* !UKERNEL */
 	    rxk_Listener();
 	}
 #ifdef	AFS_SGI_ENV
 	AFS_GUNLOCK();
 	exit(CLD_EXITED, code);
-#endif
+#endif /* AFS_SGI_ENV */
     }
-#endif
+#endif /* RXK_LISTENER_ENV */
+    else if (parm == AFSOP_START_AFS) {
+	/* afs daemon */
+	if (AFS_Running) goto out;
+	AFS_Running = 1;
+	while (afs_initState < AFSOP_START_AFS) 
+	    afs_osi_Sleep(&afs_initState);
+
+	afs_initState = AFSOP_START_BKG;
+	afs_osi_Wakeup(&afs_initState);
+	afs_osi_Invisible();
+	afs_Daemon();
+#ifdef AFS_SGI_ENV
+	AFS_GUNLOCK();
+	exit(CLD_EXITED, 0);
+#endif /* AFS_SGI_ENV */
+    }
+    else if (parm == AFSOP_START_CS) {
+	afs_osi_Invisible();
+	afs_CheckServerDaemon();
+#ifdef AFS_SGI_ENV
+	AFS_GUNLOCK();
+	exit(CLD_EXITED, 0);
+#endif /* AFS_SGI_ENV */
+    }
+    else if (parm == AFSOP_START_BKG) {
+	while (afs_initState < AFSOP_START_BKG) 
+	    afs_osi_Sleep(&afs_initState);
+	if (afs_initState < AFSOP_GO) {
+	    afs_initState = AFSOP_GO;
+	    afs_osi_Wakeup(&afs_initState);
+	}
+	/* start the bkg daemon */
+	afs_osi_Invisible();
+#ifdef AFS_AIX32_ENV
+	if (parm2)
+	    afs_BioDaemon(parm2);
+	else
+#endif /* AFS_AIX32_ENV */
+	    afs_BackgroundDaemon();
+#ifdef AFS_SGI_ENV
+	AFS_GUNLOCK();
+	exit(CLD_EXITED, 0);
+#endif /* AFS_SGI_ENV */
+    }
+    else if (parm == AFSOP_START_TRUNCDAEMON) {
+	while (afs_initState < AFSOP_GO) 
+	    afs_osi_Sleep(&afs_initState);
+	/* start the bkg daemon */
+	afs_osi_Invisible();
+	afs_CacheTruncateDaemon();
+#ifdef	AFS_SGI_ENV
+	AFS_GUNLOCK();
+	exit(CLD_EXITED, 0);
+#endif /* AFS_SGI_ENV */
+    }
+#if defined(AFS_SUN5_ENV) || defined(RXK_LISTENER_ENV)
+    else if (parm == AFSOP_RXEVENT_DAEMON) {
+	while (afs_initState < AFSOP_START_BKG) afs_osi_Sleep(&afs_initState);
+	afs_osi_Invisible();
+	afs_rxevent_daemon();
+#ifdef AFS_SGI_ENV
+	AFS_GUNLOCK();
+	exit(CLD_EXITED, 0);
+#endif /* AFS_SGI_ENV */
+    }
+#endif /* AFS_SUN5_ENV || RXK_LISTENER_ENV */
+#endif /* AFS_LINUX24_ENV && !UKERNEL */
     else if (parm == AFSOP_BASIC_INIT) {
 	afs_int32 temp;
 
@@ -413,73 +480,6 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 	afs_rootFid.Fid.Volume = 0;
 	code = 0;
     }
-    else if (parm == AFSOP_START_AFS) {
-	/* afs daemon */
-	if (AFS_Running) goto out;
-	AFS_Running = 1;
-	while (afs_initState < AFSOP_START_AFS) 
-	    afs_osi_Sleep(&afs_initState);
-
-	afs_initState = AFSOP_START_BKG;
-	afs_osi_Wakeup(&afs_initState);
-	afs_osi_Invisible();
-	afs_Daemon();
-#ifdef AFS_SGI_ENV
-	AFS_GUNLOCK();
-	exit(CLD_EXITED, 0);
-#endif
-    }
-    else if (parm == AFSOP_START_CS) {
-	afs_osi_Invisible();
-	afs_CheckServerDaemon();
-#ifdef AFS_SGI_ENV
-	AFS_GUNLOCK();
-	exit(CLD_EXITED, 0);
-#endif
-    }
-    else if (parm == AFSOP_START_BKG) {
-	while (afs_initState < AFSOP_START_BKG) 
-	    afs_osi_Sleep(&afs_initState);
-	if (afs_initState < AFSOP_GO) {
-	    afs_initState = AFSOP_GO;
-	    afs_osi_Wakeup(&afs_initState);
-	}
-	/* start the bkg daemon */
-	afs_osi_Invisible();
-#ifdef	AFS_AIX32_ENV
-	if (parm2)
-	    afs_BioDaemon(parm2);
-	else
-#endif
-	    afs_BackgroundDaemon();
-#ifdef AFS_SGI_ENV
-	AFS_GUNLOCK();
-	exit(CLD_EXITED, 0);
-#endif
-    }
-    else if (parm == AFSOP_START_TRUNCDAEMON) {
-	while (afs_initState < AFSOP_GO) 
-	    afs_osi_Sleep(&afs_initState);
-	/* start the bkg daemon */
-	afs_osi_Invisible();
-	afs_CacheTruncateDaemon();
-#ifdef	AFS_SGI_ENV
-	AFS_GUNLOCK();
-	exit(CLD_EXITED, 0);
-#endif
-    }
-#if defined(AFS_SUN5_ENV) || defined(RXK_LISTENER_ENV)
-    else if (parm == AFSOP_RXEVENT_DAEMON) {
-	while (afs_initState < AFSOP_START_BKG) afs_osi_Sleep(&afs_initState);
-	afs_osi_Invisible();
-	afs_rxevent_daemon();
-#ifdef AFS_SGI_ENV
-	AFS_GUNLOCK();
-	exit(CLD_EXITED, 0);
-#endif
-    }
-#endif	
-#endif
     else if (parm == AFSOP_ADDCELL) {
 	/* add a cell.  Parameter 2 is 8 hosts (in net order),  parm 3 is the null-terminated
 	 name.  Parameter 4 is the length of the name, including the null.  Parm 5 is the
