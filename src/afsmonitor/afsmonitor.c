@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.17 2004/07/29 04:20:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.18 2004/08/06 21:48:28 shadow Exp $");
 
 #include <stdio.h>
 #include <math.h>
@@ -277,7 +277,7 @@ extern char *cm_categories[];	/* cache manager data category names */
 
 
 
-#if !defined(AFS_FBSD_ENV) && !defined(AFS_DARWIN70_ENV)
+#if !defined(AFS_FBSD_ENV) && !defined(AFS_DARWIN70_ENV) && !defined(AFS_NBSD20_ENV)
 /*	
         strcasestr(): Return first occurence of pattern s2 in s1, case 
 	insensitive. 
