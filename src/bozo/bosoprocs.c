@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.16 2003/07/15 23:14:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.17 2003/10/24 06:31:49 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -1415,7 +1415,8 @@ DirAccessOK()
 	if (!StatEachEntry(e)) {
 	    bozo_Log("unhappy with %s which is a %s that should "
 		     "have at least rights %o, at most rights %o %s\n",
-		     e->path, e->dir ? "dir" : "file", e->reqPerm, e->proPerm,
+		     e->path, e->dir ? "dir" : "file", e->reqPerm, 
+		     (~e->proPerm & 0777), 
 		     e->rootOwner ? ", owned by root" : "");
 	    result = 0;
 	    break;
