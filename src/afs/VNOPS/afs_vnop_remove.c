@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.10 2002/02/08 17:28:44 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.11 2002/03/20 18:38:28 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -238,11 +238,21 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	       ICL_TYPE_STRING, aname);
 
     /* Check if this is dynroot */
-    if (afs_IsDynroot(adp))
+    if (afs_IsDynroot(adp)) {
+#ifdef  AFS_OSF_ENV
+        afs_PutVCache(adp, 0);
+        afs_PutVCache(tvc, 0);
+#endif
 	return afs_DynrootVOPRemove(adp, acred, aname);
+    }
 
-    if (code = afs_InitReq(&treq, acred))
+    if (code = afs_InitReq(&treq, acred)) {
+#ifdef  AFS_OSF_ENV
+        afs_PutVCache(adp, 0);
+        afs_PutVCache(tvc, 0);
+#endif
       return code;
+    }
 tagain:
     code = afs_VerifyVCache(adp, &treq);
 #ifdef	AFS_OSF_ENV
@@ -264,6 +274,10 @@ tagain:
       * fileserver
       */
     if ( adp->states & CRO ) {
+#ifdef  AFS_OSF_ENV
+        afs_PutVCache(adp, 0);
+        afs_PutVCache(tvc, 0);
+#endif
         code = EROFS;
 	return code;
     }
