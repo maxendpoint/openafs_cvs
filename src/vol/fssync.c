@@ -38,7 +38,7 @@ static int newVLDB = 1;
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.17 2003/06/02 14:36:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.18 2003/06/02 14:37:48 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -81,6 +81,8 @@ RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.17 2003/06/02 14:36:16 s
 #include "vnode.h"
 #include "volume.h"
 #include "partition.h"
+
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 #ifdef osi_Assert
 #undef osi_Assert

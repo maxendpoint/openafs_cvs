@@ -19,36 +19,44 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/common.c,v 1.4 2001/07/12 19:59:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/common.c,v 1.5 2003/06/02 14:37:48 shadow Exp $");
 
 #include <afs/afsutil.h>
 
 int Statistics = 0;
 
-/* VARARGS */
-Log (a,b,c,d,e,f,g,h,i,j,k)
-    char *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k;
+/*@printflike@*/ void Log(const char *format, ...)
 {
-    int level;
+    int	level;
+    va_list args;
 
     if (Statistics)
 	level = -1;
     else
 	level = 0;
-    ViceLog(level,(a,b,c,d,e,f,g,h,i,j,k));
+
+    va_start(args, format);
+    vViceLog(level, (format, args));
+    va_end(args);
 }
 
-Abort(s,a,b,c,d,e,f,g,h,i,j) 
-    char *s, *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
+/*@printflike@*/ void Abort(const char *format, ...)
 {
+    va_list args;
+
     ViceLog(0, ("Program aborted: "));
-    ViceLog(0, (s,a,b,c,d,e,f,g,h,i,j));
+    va_start(args, format);
+    vViceLog(0, (format, args));
+    va_end(args);
     abort();
 }
 
-Quit(s,a,b,c,d,e,f,g,h,i,j) 
-    char *s, *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
+/*@printflike@*/ void Quit(const char *format, ...)
 {
-    ViceLog(0, (s,a,b,c,d,e,f,g,h,i,j));
+    va_list args;
+
+    va_start(args, format);
+    vViceLog(0, (format, args));
+    va_end(args);
     exit(1);
 }

@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.6 2002/08/21 18:14:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.7 2003/06/02 14:38:05 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
@@ -35,6 +35,8 @@ RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.6 2002/08/21 18:14:34 sha
 
 #include <rx/rx.h>
 #include "volser.h"
+
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 static struct volser_trans *allTrans=0;
 static afs_int32 transCounter = 1;

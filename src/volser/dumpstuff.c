@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.15 2003/06/02 14:28:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.16 2003/06/02 14:38:05 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -50,6 +50,8 @@ RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.15 2003/06/02 14:28:39 s
 #include <afs/acl.h>
 #include "volser.h"
 #include "volint.h"
+
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 extern int DoLogging;
 

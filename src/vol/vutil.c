@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.8 2003/06/02 14:36:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.9 2003/06/02 14:37:49 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -63,6 +63,8 @@ RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.8 2003/06/02 14:36:16 shadow Ex
 #else
 #include <strings.h>
 #endif
+
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 void AssignVolumeName();
 void AssignVolumeName_r();

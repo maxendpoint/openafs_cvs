@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.26 2003/06/02 14:36:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.27 2003/06/02 14:37:49 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -144,6 +144,8 @@ pthread_cond_t vol_sleep_cond;
 #ifdef	AFS_OSF_ENV
 extern void *calloc(), *realloc();
 #endif
+
+/*@printflike@*/ extern void Log(const char* format, ...);
 
 /* Forward declarations */
 static Volume *attach2();

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.12 2003/06/02 14:36:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.13 2003/06/02 14:37:48 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -58,6 +58,8 @@ RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.12 2003/06/02 14:36:16 shadow E
 #include "volume.h"
 #include "partition.h"
 #include "viceinode.h"
+
+/*@printfline@*/ extern void Log(const char *format, ...);
 
 int (*vol_PollProc)() =	0;  /* someone must init this */
 

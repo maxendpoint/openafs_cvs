@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.13 2003/06/02 14:36:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.14 2003/06/02 14:37:49 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -62,6 +62,8 @@ RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.13 2003/06/02 14:36:16 shadow E
 #include <unistd.h>
 #endif /* AFS_NT40_ENV */
 #include <sys/stat.h>
+
+extern void Abort(const char *format, ...);
 
 
 struct VnodeClassInfo VnodeClassInfo[nVNODECLASSES];

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.25 2003/03/28 09:35:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.26 2003/06/02 14:37:48 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -145,6 +145,8 @@ RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.25 2003/03/28 09:35:57 shad
 #ifdef AFS_AIX42_ENV
 #include <jfs/filsys.h>
 #endif
+
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 int aixlow_water = 8;	/* default 8% */
 struct DiskPartition *DiskPartitionList;

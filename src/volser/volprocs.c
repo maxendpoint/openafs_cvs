@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.21 2003/06/02 14:36:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.22 2003/06/02 14:38:05 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -70,6 +70,8 @@ extern int DoLogging;
 extern struct volser_trans *FindTrans(), *NewTrans(),*TransList();
 extern struct afsconf_dir *tdir;
 extern char *volutil_PartitionName();
+
+extern void LogError(afs_int32 errcode);
 
 /* Forward declarations */
 static int GetPartName(afs_int32 partid, char *pname);

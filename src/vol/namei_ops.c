@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.15 2003/06/02 14:36:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.16 2003/06/02 14:37:48 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -43,6 +43,8 @@ RCSID("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.15 2003/06/02 14:36:16 shad
 #include "voldefs.h"
 #include "partition.h"
 #include <afs/errors.h>
+
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 extern char *volutil_PartitionName_r(int volid, char *buf, int buflen);
 

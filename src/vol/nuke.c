@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.8 2003/03/03 15:10:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.9 2003/06/02 14:37:48 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -41,6 +41,8 @@ RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.8 2003/03/03 15:10:38 shadow Exp
 #include "viceinode.h"
 #include "salvage.h"
 #include "fssync.h"
+
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 
 struct Lock localLock;

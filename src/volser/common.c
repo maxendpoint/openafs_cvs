@@ -10,29 +10,34 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/common.c,v 1.7 2002/10/16 03:59:29 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/common.c,v 1.8 2003/06/02 14:38:05 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/afsutil.h>
 #include <afs/com_err.h>
 
-Log(a,b,c,d,e,f)
-char *a, *b, *c, *d, *e, *f; 
+/*@printflike@*/ void Log(const char *format, ...)
 {
-	ViceLog(0, (a, b,c, d, e, f)); 
+    va_list args;
+
+    va_start(args, format);
+    vViceLog(0, (format, args));
+    va_end(args);
 }
 
-LogError(errcode)
-afs_int32 errcode;
+void LogError(afs_int32 errcode)
 {
     ViceLog(0, ("%s: %s\n", error_table_name(errcode),error_message(errcode)));
 }
 
-Abort(s,a,b,c,d,e,f,g,h,i,j) 
-char *s;
+/*@printflike@*/ void Abort(const char* format, ...)
 {
+    va_list args;
+
     ViceLog(0, ("Program aborted: "));
-    ViceLog(0, (s,a,b,c,d,e,f,g,h,i,j));
+    va_start(args, format);
+    vViceLog(0, (format, args));
+    va_end(args);
     abort();
 }
 
