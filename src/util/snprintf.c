@@ -4,14 +4,18 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.17 2003/07/15 23:17:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.18 2003/08/24 17:17:51 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
+#ifndef AFS_NT40_ENV
 #include <netinet/in.h>
 #include <netdb.h>
+#else
+#include <winsock2.h>
+#endif
 #if defined(AFS_AIX32_ENV) || defined(AFS_SUN_ENV) || defined(AFS_XBSD_ENV)
 #include <sys/socket.h>
 #endif
@@ -520,6 +524,7 @@ vsnprintf(char *p, unsigned int avail, char *fmt, va_list ap)
 }
 #endif /* AFS_OSF20_ENV || AFS_AIX32_ENV */
 
+#ifndef AFS_NT40_ENV
 #if defined(AFS_OSF20_ENV) && !defined(AFS_DUX50_ENV) || defined(AFS_AIX32_ENV) || (defined(AFS_SUN55_ENV) && !defined(AFS_SUN56_ENV)) || !defined(HAVE_SNPRINTF)
 
 #ifdef AFS_AIX51_ENV
@@ -541,3 +546,4 @@ snprintf(char *p, unsigned int avail, char *fmt, ...)
 #endif
 }
 #endif /* AFS_OSF20_ENV || AFS_AIX32_ENV */
+#endif /* AFS_NT40_ENV */
