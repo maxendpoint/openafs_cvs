@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.18 2003/08/11 22:16:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.19 2003/08/11 22:22:02 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -1923,7 +1923,7 @@ SPR_ListSuperGroups(call, aid, alist, over)
     osi_auditU(call, "PTS_LstSGrps", code, AUD_LONG, aid, AUD_END);
     return code;
 #else
-    return EINVAL;
+    return RXGEN_OPCODE;
 #endif
 }
 
