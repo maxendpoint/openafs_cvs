@@ -11,8 +11,11 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 #include <stdlib.h>
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
 
-RCSID("$Header: /cvs/openafs/src/util/assert.c,v 1.6 2001/10/09 05:27:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/assert.c,v 1.7 2001/10/11 21:33:05 shadow Exp $");
 
 #include <stdio.h>
 
