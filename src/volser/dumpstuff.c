@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.11 2003/02/13 16:20:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.12 2003/02/13 18:06:10 rees Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -82,7 +82,7 @@ static int DumpPartial(register struct iod *iodp, register Volume *vp,
 static int DumpVnodeIndex(register struct iod *iodp, Volume *vp,
 			  VnodeClass class, afs_int32 fromtime, int forcedump);
 static int DumpVnode(register struct iod *iodp, struct VnodeDiskObject *v,
-		     int vnodeNumber, int dumpEverything);
+		     int volid, int vnodeNumber, int dumpEverything);
 static int ReadDumpHeader(register struct iod *iodp, struct DumpHeader *hp);
 static int ReadVnodes(register struct iod *iodp, Volume *vp,
 		      int incremental, afs_int32 *Lbuf, afs_int32 s1,
