@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.37 2003/03/04 14:49:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.38 2003/03/06 15:43:56 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1578,6 +1578,7 @@ main(int argc, char * argv[])
 	if (eventlog) rxevent_debugFile = debugFile;
     }
 
+    init_sys_error_to_et(); /* Set up error table translation */
     h_InitHostPackage();  /* set up local cellname and realmname */
     InitCallBack(numberofcbs);
     ClearXStatValues();
