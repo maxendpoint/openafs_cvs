@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.36 2003/05/20 06:02:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.37 2003/05/20 07:02:53 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -436,7 +436,7 @@ int init_module(void)
 #endif /* AFS_IA64_LINUX20_ENV */
 #ifdef AFS_AMD64_LINUX20_ENV
     if (ia32_sys_call_table) {
-      sys_call_table[__NR_ia32_afs_syscall] = POINTER2SYSCALL afs_syscall;
+      ia32_sys_call_table[__NR_ia32_afs_syscall] = POINTER2SYSCALL afs_syscall;
     }
 #endif
 
