@@ -52,7 +52,7 @@ prebuild:
    $(COPY) %SystemRoot%\System32\Msvcr80d.pdb $(EXEDIR)
    $(COPY) %SystemRoot%\System32\MFC80D.DLL $(EXEDIR)
    $(COPY) %SystemRoot%\System32\MFC80D.pdb $(EXEDIR)
-!IF ("$(AFSVER_CL)"=="1310")
+!ELSE IF ("$(AFSVER_CL)"=="1310")
    $(COPY) %SystemRoot%\System32\Msvcr71d.dll $(EXEDIR)
    $(COPY) %SystemRoot%\System32\Msvcr71d.pdb $(EXEDIR)
    $(COPY) %SystemRoot%\System32\MFC71D.DLL $(EXEDIR)
@@ -82,7 +82,9 @@ prebuild:
    $(DESTDIR)\bin\util_cr.exe _echo "!define " >>$(OUT)\nsi-includes.nsi 
    "$(NSISDIR)\makensis.exe" /VERSION >>$(OUT)\nsi-includes.nsi          
    echo. >>$(OUT)\nsi-includes.nsi                                       
-!if ("$(AFSVER_CL)" == "1310")
+!if ("$(AFSVER_CL)" == "1400")
+   echo !define CL_1310 1 >> $(OUT)\nsi-includes.nsi
+!else if ("$(AFSVER_CL)" == "1310")
    echo !define CL_1310 1 >> $(OUT)\nsi-includes.nsi
 !else if ("$(AFSVER_CL)" == "1300")
    echo !define CL_1300 1 >> $(OUT)\nsi-includes.nsi
