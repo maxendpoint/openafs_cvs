@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.15 2001/08/07 00:04:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.16 2001/08/07 00:11:25 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -215,7 +215,13 @@ int init_module(void)
 #endif /* AFS_IA64_LINUX20_ENV */
 
     /* setup AFS entry point. */
-    if (SYSCALL2POINTER sys_call_table[__NR_afs_syscall - 1024] == afs_syscall) {
+    if (
+#if defined(AFS_IA64_LINUX20_ENV)
+	SYSCALL2POINTER sys_call_table[__NR_afs_syscall - 1024]
+#else
+	SYSCALL2POINTER sys_call_table[__NR_afs_syscall] 
+#endif
+	== afs_syscall) {
 	printf("AFS syscall entry point already in use!\n");
 	return -EBUSY;
     }
