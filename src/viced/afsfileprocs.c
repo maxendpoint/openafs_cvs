@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.58 2003/03/06 17:11:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.59 2003/03/10 01:46:57 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7257,6 +7257,7 @@ void init_sys_error_to_et(void) {
 }
 
 afs_int32 sys_error_to_et(afs_int32 in) {
+    if (in < 0 || in > 511) return in;
     if (sys2et[in] != 0) return sys2et[in];
     return in;
 }
