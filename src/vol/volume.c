@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.29 2003/06/20 00:40:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.30 2003/06/23 16:04:29 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -285,9 +285,10 @@ int VInitVolumePackage(ProgramType pt, int nLargeVnodes, int nSmallVnodes,
 		    if (error == VOFFLINE)
 			Log("Volume %d stays offline (/vice/offline/%s exists)\n", 
 			    VolumeNumber(dp->d_name), dp->d_name);
-		    else 
+		    else if (LogLevel >= 5) {
 			Log("Partition %s: attached volume %d (%s)\n", diskP->name, 
 			    VolumeNumber(dp->d_name), dp->d_name);
+		    }
 		    if (vp) {
 			VPutVolume(vp);
 		    }
@@ -359,6 +360,8 @@ void VShutdown_r(void)
 	    /* otherwise we go around again, trying another volume */
 	}
 	while(vp) {
+	    if (LogLevel >= 5) 
+		Log("VShutdown:  Attempting to take volume %u offline.\n", vp->hashid);
 	    /* first compute np before releasing vp, in case vp disappears
 	     * after releasing.  Hold it, so it doesn't disapear.  If we
 	     * can't hold it, try the next one in the chain.  Invariant
