@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.13 2001/11/13 17:24:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.14 2001/11/13 20:31:31 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -347,21 +347,6 @@ struct cell *afs_GetCellByName(acellName, locktype)
 
 } /*afs_GetCellByName*/
 
-struct cell *afs_GetCell(acell, locktype)
-    register afs_int32 acell;
-    afs_int32 locktype;
-{
-    return afs_GetCellInternal(acell, locktype, 1);
-}
-
-/* This is only to be called if the caller is already holding afs_xcell */
-struct cell *afs_GetCellNoLock(acell, locktype)
-    register afs_int32 acell;
-    afs_int32 locktype;
-{
-    return afs_GetCellInternal(acell, locktype, 0);
-}
-
 static struct cell *afs_GetCellInternal(acell, locktype, holdxcell)
     register afs_int32 acell;
     afs_int32 locktype;
@@ -391,6 +376,20 @@ static struct cell *afs_GetCellInternal(acell, locktype, holdxcell)
 
 } /*afs_GetCell*/
 
+struct cell *afs_GetCell(acell, locktype)
+    register afs_int32 acell;
+    afs_int32 locktype;
+{
+    return afs_GetCellInternal(acell, locktype, 1);
+}
+
+/* This is only to be called if the caller is already holding afs_xcell */
+struct cell *afs_GetCellNoLock(acell, locktype)
+    register afs_int32 acell;
+    afs_int32 locktype;
+{
+    return afs_GetCellInternal(acell, locktype, 0);
+}
 
 struct cell *afs_GetCellByIndex(cellindex, locktype, refresh)
     register afs_int32 cellindex;
