@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.62 2003/05/21 13:42:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.63 2003/05/22 14:22:18 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1012,12 +1012,16 @@ afs_syscall_pioctl(path, com, cmarg, follow)
 #endif
     }
     PIOCTL_FREE_CRED();
+#ifdef AFS_LINUX22_ENV
+    return -code;
+#else
 #if defined(KERNEL_HAVE_UERROR)
     if (!getuerror())
  	setuerror(code);
     return (getuerror());
 #else
     return (code);
+#endif
 #endif
 }
 
