@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.38 2003/11/24 22:41:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.39 2003/11/27 05:52:51 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -782,6 +782,8 @@ rxk_NewSocket(short aport)
 #if     defined(AFS_HPUX110_ENV)
     /* we need a file associated with the socket so sosend in NetSend 
        will not fail */
+    /* blocking socket */
+    code = socreate(AF_INET, &newSocket, SOCK_DGRAM, 0, 0);
     fp = falloc();
     if (!fp) goto bad;
     fp->f_flag = FREAD | FWRITE;
@@ -791,8 +793,6 @@ rxk_NewSocket(short aport)
     fp->f_data = (void *) newSocket;
     newSocket->so_fp = (void *)fp;
 
-    /* blocking socket */
-    code = socreate(AF_INET, &newSocket, SOCK_DGRAM, 0, 0);
 #else /* AFS_HPUX110_ENV */
     code = socreate(AF_INET, &newSocket, SOCK_DGRAM, 0, SS_NOWAIT);
 #endif /* else AFS_HPUX110_ENV */
@@ -912,8 +912,13 @@ rxk_FreeSocket(register struct socket *asocket)
 #ifdef AFS_HPUX110_ENV
     if (asocket->so_fp) {
 	struct file * fp = asocket->so_fp;
+#if !defined(AFS_HPUX1123_ENV)
+	/* 11.23 still has falloc, but not FPENTRYFREE ! 
+	   so for now if we shutdown, we will waist a file 
+	   structure */
 	FPENTRYFREE(fp);
 	asocket->so_fp = NULL;
+#endif
     }
 #endif /* AFS_HPUX110_ENV */
     soclose(asocket);
