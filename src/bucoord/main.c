@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.13 2003/11/23 04:53:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.14 2003/11/29 22:08:08 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -286,7 +286,7 @@ backupInit()
     rx_SetRxDeadTime(60);
 
     /* VLDB initialization */
-    vldbClientInit(0, localauth, tcell, &cstruct, &ttoken);
+    code = vldbClientInit(0, localauth, tcell, &cstruct, &ttoken);
     if (code)
 	return (code);
 

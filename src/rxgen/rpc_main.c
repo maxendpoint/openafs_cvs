@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.20 2003/07/15 23:16:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.21 2003/11/29 22:08:18 jaltman Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -785,7 +785,7 @@ parseargs(int argc, char *argv[], struct commandline *cmd)
     int i;
     int j;
     char c;
-    char flag[(1 << 8 * sizeof(char))];
+    char flag[(1 << (8 * sizeof(char)))];
     int nflags;
 
     cmdname = argv[0];

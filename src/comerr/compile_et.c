@@ -13,7 +13,7 @@
 #include <afs/afsutil.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/comerr/compile_et.c,v 1.13 2003/07/15 23:14:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/comerr/compile_et.c,v 1.14 2003/11/29 22:08:10 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,7 +57,7 @@ extern int yylineno;
 char *
 xmalloc(unsigned int size)
 {
-    char *p = malloc(size);
+    char *p = (char *)malloc(size);
     if (!p) {
 	perror(whoami);
 	exit(1);

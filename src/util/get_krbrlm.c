@@ -7,7 +7,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.5 2003/07/15 23:17:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.6 2003/11/29 22:08:19 jaltman Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"
@@ -24,12 +24,12 @@ RCSID
  *
  */
 #define	KSUCCESS	0
-#define	KFAILURE	-1
+#define	KFAILURE	(-1)
 
 int
 afs_krb_get_lrealm(char *r, int n)
 {
-    FILE *cnffile, *fopen();
+    FILE *cnffile/*, *fopen()*/;
 
     if (n > 1)
 	return (KFAILURE);	/* Temporary restriction */

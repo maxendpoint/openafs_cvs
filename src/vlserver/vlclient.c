@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.10 2003/07/15 23:17:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.11 2003/11/29 22:08:20 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -107,7 +107,8 @@ static char *opcode_names[VL_NUMBER_OPCODESX] = {
     "ListAttributesU",
     "LinkedListU",
     "RegisterAddr",
-    "GetAddrsU" "ListAttributesN2"
+    "GetAddrsU",
+    "ListAttributesN2"
 };
 
 struct Vlent {
@@ -532,6 +533,7 @@ handleit(as)
 		    ("Volumes not found in main hash tables in vldb will be fixed...\n");
 		memset(&updateentry, 0, sizeof(updateentry));
 		for (index = 0; 1; index = next_index) {
+		    /* FIXME: n2 is never changed for some reason */
 		    int n1 = 0, n2 = 0, n3 = 0, n4 = 0;
 		    memset(&entry, 0, sizeof(entry));
 		    code =

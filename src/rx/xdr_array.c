@@ -30,7 +30,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_array.c,v 1.8 2003/07/15 23:16:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_array.c,v 1.9 2003/11/29 22:08:16 jaltman Exp $");
 
 #ifndef	NeXT
 
@@ -86,6 +86,7 @@ xdr_array(register XDR * xdrs, caddr_t * addrp, u_int * sizep, u_int maxsize,
     register bool_t stat = TRUE;
     register u_int nodesize;
 
+    /* FIXME: this does not look correct: MSVC 6 computes -1 / elsize here */
     i = ((~0) >> 1) / elsize;
     if (maxsize > i)
 	maxsize = i;

@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/bos.c,v 1.9 2003/11/29 21:38:01 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/bos.c,v 1.10 2003/11/29 22:08:13 jaltman Exp $");
 
 #include "bos.h"
 
@@ -632,6 +632,7 @@ static void
 Print_bos_ProcessState_p(bos_ProcessState_p state, const char *prefix)
 {
     printf("%sProcess state:\n", prefix);
+    /* FIXME: BOS_PROCESS_OK is 0, so this test is not right */
     if (*state & BOS_PROCESS_OK) {
 	printf("%s\tBOS_PROCESS_OK:\n", prefix);
     }

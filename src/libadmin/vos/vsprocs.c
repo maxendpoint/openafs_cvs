@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/vsprocs.c,v 1.10 2003/07/15 23:15:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/vsprocs.c,v 1.11 2003/11/29 22:08:14 jaltman Exp $");
 
 #include "vsprocs.h"
 #include "vosutils.h"
@@ -4077,6 +4077,7 @@ UV_SetVolume(struct rx_connection *server, afs_int32 partition,
 
     if (tid) {
 	etst = AFSVolEndTrans(server, tid, &rcode);
+	/* FIXME: this looks like a typo */
 	if (etst || etst) {
 	    if (!tst)
 		tst = (etst ? etst : rcode);

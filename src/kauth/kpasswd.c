@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.11 2003/07/15 23:15:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.12 2003/11/29 22:08:12 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -185,6 +185,7 @@ password_ok(newpw, insist)
 {
     if (insist == 0) {
 	/* see if it is reasonable, but don't get so obnoxious */
+	/* FIXME: null pointer derefence!!! */
 	(*insist)++;		/* so we don't get called again */
 	if (strlen(newpw) < 6)
 	    return 0;

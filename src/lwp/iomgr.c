@@ -24,7 +24,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/iomgr.c,v 1.11 2003/11/24 22:09:18 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/iomgr.c,v 1.12 2003/11/29 22:08:14 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,7 +88,7 @@ typedef unsigned char bool;
 #define TRUE	1
 
 #ifndef MIN
-#define MIN(a,b) ((a)>(b)) ? b : a
+#define MIN(a,b) (((a)>(b)) ? (b) : (a))
 #endif
 
 #ifndef NSIG

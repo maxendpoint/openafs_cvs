@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/update/server.c,v 1.10 2003/07/15 23:17:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/update/server.c,v 1.11 2003/11/29 22:08:19 jaltman Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -354,7 +354,6 @@ UPDATE_FetchInfo(call, name)
      struct rx_call *call;
      char *name;
 {
-    int fd = -1;
     int error = 0;
     struct stat status;
     char *reqObject;
@@ -375,13 +374,9 @@ UPDATE_FetchInfo(call, name)
 	}
 	if ((status.st_mode & S_IFMT) != S_IFDIR) {
 	    printf(" file %s is not a directory \n", reqObject);
-	    if (fd >= 0)
-		close(fd);
 	    error = -1;
 	}
 
-	if (fd >= 0)
-	    close(fd);
 	if (!error)
 	    error = update_SendDirInfo(reqObject, call, &status, name);
     }
@@ -524,7 +519,7 @@ update_SendDirInfo(name, call, status, origDir)
     }
     if (error == 0) {
 	fd = open(dirInfoFile, O_RDONLY, 0);
-	if (fd) {
+	if (fd >= 0) {
 	    fstat(fd, &tstatus);
 	    errcode = update_SendFile(fd, call, &tstatus);
 	    if (errcode)

@@ -35,7 +35,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr.c,v 1.8 2003/07/15 23:16:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr.c,v 1.9 2003/11/29 22:08:16 jaltman Exp $");
 
 /*
  * xdr.c, Generic XDR routines implementation.
@@ -522,6 +522,7 @@ xdr_string(register XDR * xdrs, char **cpp, u_int maxsize)
     u_int size;
     u_int nodesize;
 
+    /* FIXME: this does not look correct: MSVC 6 computes -2 here */
     if (maxsize > ((~0) >> 1) - 1)
 	maxsize = ((~0) >> 1) - 1;
 

@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.5 2003/07/15 23:17:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.6 2003/11/29 22:08:20 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <stdio.h>
@@ -1054,7 +1054,7 @@ nt_ListAFSFiles(char *dev,
 
     if (singleVolumeNumber) {
 	h.ih_vid = singleVolumeNumber;
-	if (nt_HandleToVolDir(name, &h) < 0)
+	if (!nt_HandleToVolDir(name, &h))
 	    return -1;
 	ninodes =
 	    nt_ListAFSSubDirs(&h, writeFun, fp, judgeFun, singleVolumeNumber);

@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/kas.c,v 1.7 2003/11/29 21:38:01 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/kas.c,v 1.8 2003/11/29 22:08:13 jaltman Exp $");
 
 #include "kas.h"
 #include <time.h>
@@ -150,7 +150,7 @@ Print_kas_principalEntry_p(kas_principalEntry_p principal, const char *prefix)
     for (i = 0; i < KAS_ENCRYPTION_KEY_LEN; i++) {
 	printf("%d ", principal->key.key[i]);
     }
-    printf("\n", prefix);
+    printf("\n");
 
     printf("%sKey checksum %u\n", prefix, principal->keyCheckSum);
     printf("%sDays to password expire %d\n", prefix,

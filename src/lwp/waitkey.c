@@ -23,7 +23,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/waitkey.c,v 1.12 2003/07/15 23:15:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/waitkey.c,v 1.13 2003/11/29 22:08:14 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -113,7 +113,7 @@ int
 LWP_GetLine(char *linebuf, int len)
 {
     int cnt = 0;
-    char ch = '\0';
+    int ch = 0;
 
     fflush(stdin);
     /* loop until a new line has been entered */

@@ -38,7 +38,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/crypt.c,v 1.11 2003/07/15 23:14:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/crypt.c,v 1.12 2003/11/29 22:08:12 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <windows.h>
@@ -283,7 +283,7 @@ typedef union {
 #define	LOAD(d,d0,d1,bl)		d0 = (bl).b32.i0, d1 = (bl).b32.i1
 #define	LOADREG(d,d0,d1,s,s0,s1)	d0 = s0, d1 = s1
 #define	OR(d,d0,d1,bl)			d0 |= (bl).b32.i0, d1 |= (bl).b32.i1
-#define	STORE(s,s0,s1,bl)		(bl).b32.i0 = s0, (bl).b32.i1 = s1
+#define	STORE(s,s0,s1,bl)		(bl).b32.i0 = (s0), (bl).b32.i1 = (s1)
 #define	DCL_BLOCK(d,d0,d1)		long d0, d1
 
 #if defined(LARGEDATA)

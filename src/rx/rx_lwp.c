@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.14 2003/07/15 23:16:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.15 2003/11/29 22:08:16 jaltman Exp $");
 
 # include <sys/types.h>		/* fd_set on older platforms */
 # include <errno.h>
@@ -179,7 +179,7 @@ rxi_ListenerProc(fd_set * rfds, int *tnop, struct rx_call **newcallp)
     }
     rx_listenerPid = pid;
     if (swapNameProgram)
-	(*swapNameProgram) (pid, "listener", &name);
+	(*swapNameProgram) (pid, "listener", &name[0]);
 
     for (;;) {
 	/* Grab a new packet only if necessary (otherwise re-use the old one) */

@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.12 2003/11/29 21:37:56 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.13 2003/11/29 22:08:09 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -961,6 +961,7 @@ verifyEntryChains(ut)
 
     static afs_int32(*checkEntry[NBLOCKTYPES]) ()
 	= {
+	/* FIXME: this list does not match typeName[] and may be incorrect */
 	0,			/* free block */
 	    verifyVolFragEntry, verifyVolInfoEntry, verifyTapeEntry, verifyDumpEntry, 0	/* text block */
     };

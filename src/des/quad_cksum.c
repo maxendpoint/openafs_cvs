@@ -67,7 +67,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/quad_cksum.c,v 1.6 2003/07/15 23:15:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/quad_cksum.c,v 1.7 2003/11/29 22:08:12 jaltman Exp $");
 
 #include <mit-cpyright.h>
 
@@ -85,8 +85,8 @@ RCSID
 /* Definitions for byte swapping */
 
 #ifdef LSBFIRST
-#define vaxtohl(x) *((afs_uint32 *)(x))
-#define vaxtohs(x) *((unsigned short *)(x))
+#define vaxtohl(x) (*((afs_uint32 *)(x)))
+#define vaxtohs(x) (*((unsigned short *)(x)))
 #else
 static afs_uint32 four_bytes_vax_to_nets();
 #define vaxtohl(x) four_bytes_vax_to_nets((char *)(x))
