@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.22 2001/11/21 16:01:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.23 2002/07/31 22:15:28 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>	/* for malloc() */
@@ -3950,6 +3950,7 @@ void print_cmstats(cmp)
     printf("\t%10d afs_GetCell\n",         cmp->callInfo.C_afs_GetCell);
     printf("\t%10d afs_GetCellByIndex\n",         cmp->callInfo.C_afs_GetCellByIndex);
     printf("\t%10d afs_GetCellByName\n",         cmp->callInfo.C_afs_GetCellByName);
+    printf("\t%10d afs_GetRealCellByIndex\n",         cmp->callInfo.C_afs_GetRealCellByIndex);
     printf("\t%10d afs_NewCell\n",         cmp->callInfo.C_afs_NewCell);
     printf("\t%10d CheckVLDB\n",         cmp->callInfo.C_CheckVLDB);
     printf("\t%10d afs_GetVolume\n",         cmp->callInfo.C_afs_GetVolume);

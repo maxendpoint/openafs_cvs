@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.5 2001/08/08 00:04:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.6 2002/07/31 22:15:35 shadow Exp $");
 
 #include "xstat_cm.h"		/*Interface for xstat_cm module*/
 #include <cmd.h>		/*Command line interpreter*/
@@ -451,6 +451,7 @@ print_cmCallStats()
     printf("\t%10d afs_GetCell\n",         cmp->callInfo.C_afs_GetCell);
     printf("\t%10d afs_GetCellByIndex\n",         cmp->callInfo.C_afs_GetCellByIndex);
     printf("\t%10d afs_GetCellByName\n",         cmp->callInfo.C_afs_GetCellByName);
+    printf("\t%10d afs_GetRealCellByIndex\n",         cmp->callInfo.C_afs_GetRealCellByIndex);
     printf("\t%10d afs_NewCell\n",         cmp->callInfo.C_afs_NewCell);
     printf("\t%10d CheckVLDB\n",         cmp->callInfo.C_CheckVLDB);
     printf("\t%10d afs_GetVolume\n",         cmp->callInfo.C_afs_GetVolume);
