@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.36 2002/03/25 17:11:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.37 2002/03/25 17:39:55 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -1351,7 +1351,7 @@ int afs_linux_writepage(struct page *pp)
     unsigned offset = PAGE_CACHE_SIZE;
     long status;
 
-    inode = AFSTOV(mapping->host);
+    inode = (struct inode *) mapping->host;
     end_index = inode->i_size >> PAGE_CACHE_SHIFT;
 
     /* easy case */
@@ -1622,7 +1622,7 @@ struct inode_operations afs_dir_iops = {
 #if defined(AFS_LINUX24_ENV)
 static int afs_symlink_filler(struct file *file, struct page *page)
 {
-    struct inode *ip = AFSTOV(page->mapping->host);
+    struct inode *ip = (struct inode *) page->mapping->host;
     char *p = (char *)kmap(page);
     int code;
 
