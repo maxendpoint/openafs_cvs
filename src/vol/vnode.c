@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.11 2003/03/03 15:10:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.12 2003/03/03 15:37:03 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -98,9 +98,9 @@ void VPutVnode_r();
 #define	THELOGSIZE	5120
 static afs_int32 theLog[THELOGSIZE];
 static afs_int32 vnLogPtr=0;
-VNLog(afs_int32 aop, afs_int32 anparms, afs_int32 av1, afs_int32 av2, 
-      afs_int32 av3, afs_int32 av4)
-{
+VNLog(aop, anparms, av1, av2, av3, av4)
+afs_int32 aop, anparms;
+afs_int32 av1, av2, av3,av4; {
     register afs_int32 temp;
     afs_int32 data[4];
 

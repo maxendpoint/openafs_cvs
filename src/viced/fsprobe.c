@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.9 2003/03/03 15:10:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.10 2003/03/03 15:38:42 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/afsint.h>
@@ -135,6 +135,7 @@ main(int argc, char **argv)
     else
 	printf("return code is %d\n", code);
 
+#ifdef notdef
     while (1) {
 	char line[500];
 	int nargs;
@@ -240,6 +241,7 @@ main(int argc, char **argv)
 	       }
 	}
     }
+#endif
 }
 
 
@@ -260,6 +262,7 @@ void GetArgs(register char *line, register char **args, register int *nargs)
     }
 }
 
+#ifdef notdef
 afs_int32 FetchData(char **argp)
 {
     struct afsFetchStatus OutStatus;
@@ -941,3 +944,4 @@ afs_int32 KeepAlive(char **argp)
     code = ubik_Call(AFS_BulkKeepAlive, cstruct, 0, &fex, numExec, 0, 0, 0, &spare4);
     return (code);
 }
+#endif /* notdef */
