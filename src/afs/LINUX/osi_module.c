@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.47 2004/05/10 04:39:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.48 2004/05/11 20:36:13 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -170,9 +170,10 @@ afs_ioctl(struct inode *inode, struct file *file, unsigned int cmd,
 
     struct afsprocdata sysargs;
 
+    if (cmd != VIOC_SYSCALL) return -EINVAL;
 
     if (copy_from_user(&sysargs, (void *)arg, sizeof(struct afsprocdata)))
-	return -1;
+	return -EFAULT;
 
     return afs_syscall(sysargs.syscall, sysargs.param1,
 		       sysargs.param2, sysargs.param3, sysargs.param4);
