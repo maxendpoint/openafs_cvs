@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.51 2004/08/19 02:19:18 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.52 2004/08/26 21:07:01 kolya Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1128,13 +1128,13 @@ afs_lookup(adp, aname, avcp, acred)
     int pass = 0, hit = 0;
     long dirCookie;
     extern afs_int32 afs_mariner;	/*Writing activity to log? */
-    OSI_VC_CONVERT(adp);
     afs_hyper_t versionNo;
     int no_read_access = 0;
     struct sysname_info sysState;	/* used only for @sys checking */
     int dynrootRetry = 1;
     struct afs_fakestat_state fakestate;
     int tryEvalOnly = 0;
+    OSI_VC_CONVERT(adp);
 
     AFS_STATCNT(afs_lookup);
     afs_InitFakeStat(&fakestate);
