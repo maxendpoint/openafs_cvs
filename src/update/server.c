@@ -27,11 +27,12 @@
 #include <sys/file.h>
 #include <dirent.h>
 #endif
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#else
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -46,7 +47,7 @@
 #include <afs/afsutil.h>
 #include <afs/fileutil.h>
 
-RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.3 2001/06/23 16:31:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.4 2001/06/28 15:55:05 shadow Exp $");
 
 #include "update.h"
 #include "global.h"
