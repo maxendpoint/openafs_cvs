@@ -24,7 +24,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.69 2003/11/10 01:36:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.70 2004/02/13 18:55:36 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1141,6 +1141,7 @@ afs_linux_lookup(struct inode *dip, struct dentry *dp)
     dp->d_op = afs_dops;
     d_add(dp, AFSTOI(vcp));
 
+    if (sysState.allocked) osi_FreeLargeSpace(sysState.name);
 #if 0
     /* Set up a dentry alias. Should we be doing this for @sys?
        You only get one for a directory, which would be fine,
