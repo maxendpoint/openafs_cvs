@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.11 2003/12/07 22:49:23 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.12 2003/12/08 01:45:29 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -1443,6 +1443,7 @@ SkipTape(Restore, size, index, tapename, tapeid, taskid)
 	    SkipVolume(Restore, size, i, Restore[i].origVid, taskid);
 	}
     }
+    return 0;
 }
 
 /* SkipVolume
@@ -1468,6 +1469,7 @@ SkipVolume(Restore, size, index, volid, taskid)
 	    }
 	}
     }
+    return 0;
 }
 
 xbsaRestoreVolume(taskId, restoreInfo, rparamsPtr)

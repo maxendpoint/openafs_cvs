@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.13 2003/12/07 22:49:38 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.14 2003/12/08 01:45:31 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -103,6 +103,7 @@ udisk_Debug(struct ubik_debug *aparm)
 		aparm->writeLockedPages++;
 	}
     }
+    return 0;
 }
 
 /* log format is defined here, and implicitly in recovery.c
@@ -472,6 +473,7 @@ FixupBucket(struct buffer *ap)
     ap->hashIndex = i;		/* remember where we are for deletion */
     ap->hashNext = phTable[i];	/* add us to the list */
     phTable[i] = ap;
+    return 0;
 }
 
 /* create a new slot for a particular dbase page */

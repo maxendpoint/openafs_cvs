@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/dump.c,v 1.16 2003/12/07 22:49:23 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/dump.c,v 1.17 2003/12/08 01:45:29 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -106,6 +106,7 @@ int
 localtime_r(time_t * t, struct tm *tm)
 {
     memcpy(tm, localtime(t), sizeof(struct tm));
+    return 0;
 }
 #endif
 
@@ -821,6 +822,8 @@ xbsaDumpVolume(struct tc_dumpDesc * curDump, struct dumpRock * dparamsPtr)
   abort_exit:
     dparamsPtr->curVolumeStatus = DUMP_FAILED;
     ERROR_EXIT(code);
+#else
+    return 0;
 #endif
 }
 
@@ -1459,6 +1462,7 @@ printTapeLabel(struct butm_tapeLabel *tl)
     printf("   pName          = %s\n", tl->pName);
     printf("   size           = %u\n", tl->size);
     printf("   dumpPath       = %s\n", tl->dumpPath);
+    return 0;
 }
 
 /* getXBSATape
@@ -1900,6 +1904,7 @@ volumeHeader_hton(struct volumeHeader *hostPtr, struct volumeHeader *netPtr)
     volHdr.cloneDate = htonl(hostPtr->cloneDate);
 
     memcpy(netPtr, &volHdr, sizeof(struct volumeHeader));
+    return 0;
 }
 
 /* database related routines */

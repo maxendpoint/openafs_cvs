@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/physio.c,v 1.13 2003/12/07 22:49:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/physio.c,v 1.14 2003/12/08 01:45:34 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -202,4 +202,5 @@ FidCpy(DirHandle * tofile, DirHandle * fromfile)
 {
     *tofile = *fromfile;
     IH_COPY(tofile->dirh_handle, fromfile->dirh_handle);
+    return 0;
 }

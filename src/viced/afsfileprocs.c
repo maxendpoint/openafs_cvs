@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.74 2003/12/01 20:16:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.75 2003/12/08 01:45:33 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1898,7 +1898,7 @@ RXGetVolumeStatus(AFSFetchVolumeStatus * status, char **name, char **offMsg,
     }
     strcpy(*motd, V_motd(volptr));
 #endif /* FS_STATS_DETAILED */
-
+    return 0;
 }				/*RXGetVolumeStatus */
 
 

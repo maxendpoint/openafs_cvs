@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.15 2003/12/07 22:49:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.16 2003/12/08 01:45:28 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -468,6 +468,7 @@ bc_interactCmd(as, arock)
      char *arock;
 {
     interact = 1;
+    return 0;
 }
 
 static void

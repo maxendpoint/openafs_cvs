@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.12 2003/12/07 22:49:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.13 2003/12/08 01:45:28 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -550,6 +550,7 @@ LogDebug(level, a, b, c, d, e, f, g, h, i)
 	    fclose(globalConfPtr->log);
 	}
     }
+    return 0;
 }
 
 static char *
@@ -578,6 +579,7 @@ Log(a, b, c, d, e, f, g, h, i)
 	fflush(globalConfPtr->log);
 	fclose(globalConfPtr->log);
     }
+    return 0;
 }
 
  /*VARARGS*/
@@ -600,6 +602,7 @@ LogError(code, a, b, c, d, e, f, g, h, i)
 	fflush(globalConfPtr->log);
 	fclose(globalConfPtr->log);
     }
+    return 0;
 }
 
 
@@ -622,4 +625,5 @@ LogNetDump(dumpPtr)
 	printDump(globalConfPtr->log, &hostDump);
 	fclose(globalConfPtr->log);
     }
+    return 0;
 }

@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.13 2003/07/15 23:16:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.14 2003/12/08 01:45:30 jaltman Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -779,6 +779,7 @@ pr_SetFieldsEntry(id, mask, flags, ngroups, nusers)
 }
 
 
+int
 stolower(s)
      char *s;
 {
@@ -787,4 +788,5 @@ stolower(s)
 	    *s = tolower(*s);
 	s++;
     }
+    return 0;
 }

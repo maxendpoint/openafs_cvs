@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.54 2003/11/23 04:53:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55 2003/12/08 01:45:34 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1489,6 +1489,7 @@ CleanupTimedOutCallBacks(void)
     H_LOCK;
     CleanupTimedOutCallBacks_r();
     H_UNLOCK;
+    return 0;
 }
 
 int

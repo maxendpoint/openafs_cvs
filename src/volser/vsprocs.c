@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.28 2003/12/07 22:49:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.29 2003/12/08 01:45:34 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -415,6 +415,7 @@ UV_SetSecurity(register struct rx_securityClass *as, afs_int32 aindex)
 {
     uvindex = aindex;
     uvclass = as;
+    return 0;
 }
 
 /* bind to volser on <port> <aserver> */

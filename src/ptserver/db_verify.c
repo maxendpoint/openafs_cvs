@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.13 2003/07/15 23:16:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.14 2003/12/08 01:45:30 jaltman Exp $");
 
 /*
  *                      (3) Define a structure, idused, instead of an
@@ -87,6 +87,7 @@ printheader(h)
 /* printf("Sub/super Count   = %d\n", ntohl(h->instcount));    NYI */
     printf("Name Hash         = %d buckets\n", HASHSIZE);
     printf("ID   Hash         = %d buckets\n", HASHSIZE);
+    return 0;
 }
 
 static afs_int32

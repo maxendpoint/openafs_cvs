@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.13 2003/11/23 04:53:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.14 2003/12/08 01:45:29 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -528,6 +528,7 @@ makeDbDumpEntry(tapeEntPtr, dumpEntryPtr)
     strcat(dumpEntryPtr->tapes.format, ".%d");
     dumpEntryPtr->tapes.b = tapeEntPtr->seq;
     dumpEntryPtr->tapes.maxTapes = 0;
+    return 0;
 }
 
 /* readDbTape
@@ -780,6 +781,7 @@ KeepAlive()
 	if (code || done)
 	    break;
     }
+    return 0;
 }
 
 #define BIGCHUNK 102400

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.13 2003/12/07 22:49:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.14 2003/12/08 01:45:28 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -194,6 +194,7 @@ randSPEntries(serverlist, avols)
 	}
 	free(ss);
     }
+    return 0;
 }
 
 int

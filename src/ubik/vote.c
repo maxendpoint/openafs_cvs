@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/vote.c,v 1.13 2003/07/15 23:17:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/vote.c,v 1.14 2003/12/08 01:45:31 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -546,6 +546,7 @@ ubik_dprint(char *a, char *b, char *c, char *d, char *e, char *f, char *g,
 	    char *h)
 {
     ViceLog(5, (a, b, c, d, e, f, g, h));
+    return 0;
 }
 
 int
@@ -553,6 +554,7 @@ ubik_print(char *a, char *b, char *c, char *d, char *e, char *f, char *g,
 	   char *h)
 {
     ViceLog(0, (a, b, c, d, e, f, g, h));
+    return 0;
 }
 
 /* called once/run to init the vote module */
