@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.19 2003/02/13 23:44:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.20 2003/07/01 18:37:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -158,11 +158,12 @@ struct min_direct {	/* miniature direct structure */
 #else
 #if defined(AFS_SUN_ENV) || defined(AFS_AIX32_ENV)
     afs_int32	d_off;
+    afs_uint32  d_fileno;
 #endif
 #if     defined(AFS_HPUX100_ENV)
     unsigned long long d_off;
-#endif
     afs_uint32	d_fileno;
+#endif
     u_short	d_reclen;
     u_short	d_namlen;
 #endif
@@ -295,7 +296,7 @@ afs_size_t		off;
 #if	defined(AFS_SUN56_ENV)
     struct dirent64 *direntp;
 #else
-#ifdef	AFS_SUN5_ENV
+#if  defined(AFS_SUN5_ENV) || (defined(AFS_AIX51_ENV) && defined(AFS_64BIT_KERNEL))
     struct dirent *direntp;
 #endif
 #endif /* AFS_SUN56_ENV */
@@ -367,7 +368,7 @@ afs_size_t		off;
     }
 }
 #else /* AFS_SGI53_ENV */
-#ifdef	AFS_SUN5_ENV
+#if  defined(AFS_SUN5_ENV) || (defined(AFS_AIX51_ENV) && defined(AFS_64BIT_KERNEL))
 #if	defined(AFS_SUN56_ENV)
     direntp = (struct dirent64 *) osi_AllocLargeSpace(AFS_LRALLOCSIZ);
 #else
@@ -375,7 +376,12 @@ afs_size_t		off;
 #endif
     direntp->d_ino =  (vc->fid.Fid.Volume << 16) + ntohl(de->fid.vnode);
     FIXUPSTUPIDINODE(direntp->d_ino);
+#if defined(AFS_AIX51_ENV) && defined(AFS_64BIT_KERNEL)
+    direntp->d_offset = off;
+    direntp->d_namlen = slen;
+#else
     direntp->d_off = off;
+#endif
     direntp->d_reclen = rlen;
     strcpy(direntp->d_name, de->name);
     AFS_UIOMOVE((caddr_t)direntp, rlen, UIO_READ, auio, code);

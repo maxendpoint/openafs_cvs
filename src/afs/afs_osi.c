@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.34 2003/07/01 18:06:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.35 2003/07/01 18:37:20 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -489,10 +489,10 @@ int osi_VMDirty_p(struct vcache *avc)
 			 ^ ((((handle) & ~vmker.stoinio) & vmker.stoimask) << vmker.stoihash) \
 			 ) & 0x000fffff)
 
-    if (avc->vmh) {
+    if (avc->segid) {
 	unsigned int pagef, pri, index, next;
 
-	index = VMHASH(avc->vmh);
+	index = VMHASH(avc->segid);
 	if (scb_valid(index)) {  /* could almost be an ASSERT */
 
 	    pri = disable_ints();
@@ -871,7 +871,11 @@ const struct AFS_UCRED *afs_osi_proc2cred(AFS_PROC *pproc)
     xmem_userp = NULL;
     xm = XMEM_FAIL;
     /* simple_lock(&proc_tbl_lock); */
+#ifdef __64BIT__
+    if (pproc->p_adspace != vm_handle(NULLSEGID, (int32long64_t) 0)) {
+#else
     if (pproc->p_adspace != NULLSEGVAL) {
+#endif
 
 #ifdef AFS_AIX51_ENV
 	simple_lock(&pproc->p_pvprocp->pv_lock);

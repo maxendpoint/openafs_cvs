@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.15 2003/04/16 22:28:54 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.16 2003/07/01 18:37:24 shadow Exp $");
 
 #if !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV)
 
@@ -122,7 +122,7 @@ afs_ustrategy(abp)
 	    if (dbtob(abp->b_blkno) + abp->b_bcount > tvc->m.Length) {
 		if ((abp->b_flags & B_PFSTORE) == 0) {
 		    AFS_GUNLOCK();
-		    vm_protectp(tvc->vmh, dbtob(abp->b_blkno)/PAGESIZE,
+		    vm_protectp(tvc->segid, dbtob(abp->b_blkno)/PAGESIZE,
 				abp->b_bcount/PAGESIZE, RDONLY);
 		    AFS_GLOCK();
 		}

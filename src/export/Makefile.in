@@ -25,7 +25,7 @@ noversion system: install
 
 install: ${DESTDIR}${libdir}/afs/export.exp ${DESTDIR}${libdir}/afs/extras.exp  
 
-export.ext: export4.exp export5.exp
+export.exp: export4.exp export5.exp
 	case ${SYS_NAME} in \
 	rs_aix4* ) \
 		cp -p export4.exp export.exp ; \

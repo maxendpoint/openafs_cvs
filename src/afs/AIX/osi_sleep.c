@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_sleep.c,v 1.8 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_sleep.c,v 1.9 2003/07/01 18:37:21 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -85,7 +85,7 @@ typedef struct afs_event {
     int seq;			/* Sequence number: this is incremented
 				   by wakeup calls; wait will not return until
 				   it changes */
-    int cond;
+    tid_t cond;
 } afs_event_t;
 
 #define HASHSIZE 128

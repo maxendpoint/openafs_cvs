@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_inode.c,v 1.6 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_inode.c,v 1.7 2003/07/01 18:37:21 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -156,6 +156,7 @@ int IGI_mode;
 /* get an existing inode.  Common code for iopen, iread/write, iinc/dec. */
 /* Also used by rmt_remote to support passing of inode number from venus */
 extern int iget();
+extern struct vnode *filevp;
 struct inode *
 igetinode(dev, vfsp, inode, vpp,perror)
         struct vfs *vfsp;
@@ -178,7 +179,11 @@ igetinode(dev, vfsp, inode, vpp,perror)
 	 * If it isn't, then we need to reexamine our code to make
 	 * sure that it is still okay.
 	 */
+#ifdef __64BIT__
+/*      osi_Assert(offsetof(struct inode, afs_inode_lock) == 208); */
+#else
 	osi_Assert(offsetof(struct inode, afs_inode_lock) == 128);
+#endif
 
 	if (!vfsp && !(vfsp = devtovfs((dev_t)dev))) {
 	    afs_warn("Dev=%d not mounted!!; quitting\n", dev);
@@ -201,7 +206,11 @@ igetinode(dev, vfsp, inode, vpp,perror)
 	}
 
 	ICACHE_LOCK(); 
+#ifdef __64BIT__
+        if ((code = iget(dev, inode, &ip, (afs_size_t) 1, nvfsp))) {
+#else
 	if ((code = iget(dev, inode, &ip, 1, nvfsp))) {
+#endif
 	    IGI_error = code;
 	    IGI_inode = inode;
 	    *perror = BAD_IGET;

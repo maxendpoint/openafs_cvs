@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_groups.c,v 1.6 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_groups.c,v 1.7 2003/07/01 18:37:21 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -36,7 +36,7 @@ afs_setgroups(
     gid_t *gidset,
     int change_parent);
 
-#ifndef AFS_AIX5_ENV
+#ifndef AFS_AIX51_ENV
 int
 setgroups(ngroups, gidset)
     int ngroups;

@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.50 2003/07/01 18:06:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.51 2003/07/01 18:37:20 shadow Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -1896,7 +1896,7 @@ struct vcache *afs_LookupVCache(struct VenusFid *afid, struct vrequest *areq,
     if (!tvc) {
         /* no cache entry, better grab one */
 	UpgradeSToWLock(&afs_xvcache,22);
-        tvc = afs_NewVCache(&nfid, NULL);
+        tvc = afs_NewVCache(&nfid, serverp);
 	newvcache = 1;
         ConvertWToSLock(&afs_xvcache);
     }

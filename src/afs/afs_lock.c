@@ -25,7 +25,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_lock.c,v 1.7 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_lock.c,v 1.8 2003/07/01 18:37:20 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -120,6 +120,7 @@ void ReleaseLock(register struct afs_lock *lock, int how)
 void Afs_Lock_Obtain(register struct afs_lock *lock, int how)
 {
     osi_timeval_t tt1, tt2, et;
+    afs_uint32 us;
 
     AFS_STATCNT(Lock_Obtain);
   
@@ -170,9 +171,12 @@ void Afs_Lock_Obtain(register struct afs_lock *lock, int how)
     osi_GetuTime(&tt2);
     afs_stats_GetDiff(et, tt1, tt2);
     afs_stats_AddTo((lock->time_waiting), et);
+    us = (et.tv_sec << 20) + et.tv_usec;
 
     if (afs_trclock) {
-	afs_Trace2(afs_iclSetp, CM_TRACE_LOCKSLEPT, ICL_TYPE_POINTER, lock,
+	afs_Trace3(afs_iclSetp, CM_TRACE_LOCKSLEPT, 
+			ICL_TYPE_INT32, us,
+			ICL_TYPE_POINTER, lock,
 		   ICL_TYPE_INT32, how);
     }
 }

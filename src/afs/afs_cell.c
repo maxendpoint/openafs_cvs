@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.27 2003/06/19 16:53:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.28 2003/07/01 18:37:20 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -463,7 +463,7 @@ afs_int32 afs_NewCellAlias(char *alias, char *cell)
 
 struct afs_q CellLRU;		/* Export for kdump */
 static char *afs_thiscell;
-static afs_int32 afs_cellindex;
+afs_int32 afs_cellindex;        /* Export for kdump */
 
 static void afs_UpdateCellLRU(struct cell *c)
 {

@@ -6,7 +6,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.6 2002/10/16 03:58:50 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.7 2003/07/01 18:37:31 shadow Exp $");
 
 #if defined(KERNEL) && !defined(UKERNEL)
 #ifdef AFS_LINUX20_ENV
@@ -36,8 +36,8 @@ bool_t xdr_int64(register XDR *xdrs, afs_int64 *ulp)
 
 bool_t xdr_afs_int64(register XDR *xdrs, afs_int64 *ulp)
 {
-        static afs_int32 high;
-        static afs_uint32 low;
+        afs_int32 high;
+        afs_uint32 low;
 
         if (xdrs->x_op == XDR_DECODE) {
                 if (!XDR_GETINT32(xdrs, (afs_int32 *) &high)) return (FALSE);
@@ -67,8 +67,8 @@ bool_t xdr_uint64(register XDR *xdrs, afs_uint64 *ulp)
 }
 bool_t xdr_afs_uint64(register XDR *xdrs, afs_uint64 *ulp)
 {
-        static afs_uint32 high;
-        static afs_uint32 low;
+        afs_uint32 high;
+        afs_uint32 low;
 
         if (xdrs->x_op == XDR_DECODE) {
                 if (!XDR_GETINT32(xdrs, (afs_uint32 *) &high)) return (FALSE);
