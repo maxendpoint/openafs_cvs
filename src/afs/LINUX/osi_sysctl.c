@@ -1,7 +1,7 @@
 /*
  * osi_sysctl.c: Linux sysctl interface to OpenAFS
  *
- * $Id: osi_sysctl.c,v 1.4 2002/10/16 03:58:21 shadow Exp $
+ * $Id: osi_sysctl.c,v 1.5 2003/01/13 20:25:56 kolya Exp $
  *
  * Written Jan 30, 2002 by Kris Van Hees (Sine Nomine Associates)
  */
@@ -37,6 +37,9 @@ static ctl_table afs_sysctl_table[] = {
         {4, "GCPAGs",
          &afs_gcpags, sizeof(afs_int32), 0644, NULL,
          &proc_dointvec},
+	{5, "rx_deadtime",
+	 &afs_rx_deadtime, sizeof(afs_int32), 0644, NULL,
+	 &proc_dointvec},
 	{0}
 };
 

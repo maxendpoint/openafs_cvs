@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.10 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.11 2003/01/13 20:25:54 kolya Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -226,10 +226,9 @@ struct conn *afs_ConnBySA(struct srvAddr *sap, unsigned short aport,
 	AFS_GUNLOCK();
 	tc->id = rx_NewConnection(sap->sa_ip, aport, service, csec, isec);
 	AFS_GLOCK();
-        if (service == 52) { 
-           rx_SetConnHardDeadTime(tc->id, AFS_HARDDEADTIME);
-       }
-
+	if (service == 52) { 
+	    rx_SetConnHardDeadTime(tc->id, afs_rx_harddead);
+	}
 
 	tc->forceConnectFS = 0;	/* apparently we're appropriately connected now */
 	if (csec)
