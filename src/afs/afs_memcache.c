@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.16 2004/12/01 23:38:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.17 2005/02/12 19:47:03 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifndef AFS_LINUX22_ENV
@@ -383,8 +383,9 @@ afs_MemCacheStoreProc(register struct rx_call *acall,
 	code = rx_WritevAlloc(acall, tiov, &tnio, RX_MAXIOVECS, tlen);
 	RX_AFS_GLOCK();
 	if (code <= 0) {
+	    code = rx_Error(acall);
 	    osi_FreeSmallSpace(tiov);
-	    return -33;
+	    return code ? code : -33;
 	}
 	tlen = code;
 	code = afs_MemReadvBlk(mceP, offset, tiov, tnio, tlen);
@@ -399,8 +400,9 @@ afs_MemCacheStoreProc(register struct rx_call *acall,
 	(*abytesXferredP) += code;
 #endif /* AFS_NOSTATS */
 	if (code != tlen) {
+	    code = rx_Error(acall);
 	    osi_FreeSmallSpace(tiov);
-	    return -33;
+	    return code ? code : -33;
 	}
 	offset += tlen;
 	alen -= tlen;
