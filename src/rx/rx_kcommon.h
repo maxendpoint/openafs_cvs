@@ -89,7 +89,7 @@ struct coda_inode_info {};
 #if !defined(AFS_HPUX110_ENV) && !defined(AFS_LINUX22_ENV) && !defined(AFS_DARWIN60_ENV)
 #include "../netinet/in_var.h"
 #endif /* ! AFS_HPUX110_ENV && ! AFS_LINUX22_ENV */
-#ifndef AFS_LINUX22_ENV
+#if !defined(AFS_LINUX22_ENV) && !defined(AFS_DUX40_ENV) 
 #include "../rpc/types.h"
 #endif
 #include "../afs/afs_osi.h"
