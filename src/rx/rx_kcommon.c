@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.13 2002/01/23 18:48:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.14 2002/02/08 19:50:01 kolya Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -1061,6 +1061,11 @@ void rxk_Listener(void)
 #endif
 #ifdef AFS_SUN5_ENV
     AFS_GUNLOCK();
+#ifdef AFS_SUN57_ENV
+    if (!curproc->p_corefile)  /* newproc doesn't set it, but exit frees it */
+	curproc->p_corefile = refstr_alloc("core");
+#endif
+    exit(CLD_EXITED, 0);
 #endif /* AFS_SUN5_ENV */
 }
 
