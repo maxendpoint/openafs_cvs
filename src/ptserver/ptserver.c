@@ -111,7 +111,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.15 2003/05/29 18:03:14 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.16 2003/07/01 19:39:18 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -174,9 +174,7 @@ int pr_rxstat_userok(call)
     return afsconf_SuperUser(prdir, call, NULL);
 }
 
-void main (argc, argv)
-  int argc;
-  char **argv;
+int main (int argc, char **argv)
 {
     register afs_int32 code;
     afs_int32 myHost;
