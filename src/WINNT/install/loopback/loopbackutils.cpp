@@ -601,6 +601,13 @@ UINT __stdcall installLoopbackMSI (MSIHANDLE hInstall)
 	Args args;
 	UINT rc;
 
+    /* check if there is already one installed.  If there is, we shouldn't try to 
+     * install another.
+     */
+    
+    if (IsLoopbackInstalled())
+        return ERROR_SUCCESS;
+
 	szValueBuf = (LPWSTR) malloc (cbValueBuf * sizeof (WCHAR));
 	while (rc = MsiGetPropertyW(hInstall, L"CustomActionData", szValueBuf, &cbValueBuf)) {
 		free (szValueBuf);
