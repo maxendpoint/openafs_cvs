@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.16 2002/10/16 03:59:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.17 2002/10/26 15:39:13 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -179,7 +179,7 @@ void MapPartIdIntoName(afs_int32 partId, char *partName)
 
 int yesprompt(char *str)
 {
-    char response, c;
+    int response, c;
     int code;
 
     fprintf(STDERR, "Do you want to %s? [yn](n): ", str);

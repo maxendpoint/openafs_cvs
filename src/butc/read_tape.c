@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.5 2002/08/21 18:12:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.6 2002/10/26 15:39:08 shadow Exp $");
 
 #include <afs/cmd.h>
 #include <lock.h>
@@ -163,7 +163,7 @@ int openOutFile(headerPtr)
   struct volumeHeader *headerPtr;
 {
   afs_int32 len;
-  char ch;
+  int ch;
   int rc;
   int oflag;
   int  skip, first;
