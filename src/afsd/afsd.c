@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.17 2001/10/05 21:03:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.18 2001/10/10 00:05:29 shadow Exp $");
 
 #define VFS 1
 
@@ -1066,6 +1066,10 @@ static AfsdbLookupHandler()
     struct afsconf_cell acellInfo;
     int i;
 
+    kernelMsg[0] = 0;
+    kernelMsg[1] = 0;
+    acellName[0] = '\0';
+
     while (1) {
 	/* On some platforms you only get 4 args to an AFS call */
 	int sizeArg = ((sizeof acellName) << 16) | (sizeof kernelMsg);
@@ -1090,6 +1094,8 @@ static AfsdbLookupHandler()
 		kernelMsg[1] = 0;
 	    for (i=0; i<acellInfo.numServers; i++)
 		kernelMsg[i+2] = acellInfo.hostAddr[i].sin_addr.s_addr;
+	    strncpy(acellName, acellInfo.name, sizeof(acellName));
+	    acellName[sizeof(acellName) - 1] = '\0';
 	}    
     }
 

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.23 2001/10/08 22:15:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.24 2001/10/10 00:05:27 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -2295,7 +2295,7 @@ static PNewCell(avc, afun, areq, ain, aout, ainSize, aoutSize, acred)
     }
 
     linkedstate |= CNoSUID; /* setuid is disabled by default for fs newcell */
-    code = afs_NewCell(newcell, cellHosts, linkedstate, linkedcell, fsport, vlport, (int)0);
+    code = afs_NewCell(newcell, cellHosts, linkedstate, linkedcell, fsport, vlport, (int)0, (char *) 0);
     return code;
 }
 

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.19 2001/10/08 22:47:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.20 2001/10/10 00:05:30 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -582,6 +582,7 @@ afsconf_GetAfsdbInfo(acellName, aservice, acellInfo)
     size_t len;
     unsigned char answer[1024];
     unsigned char *p;
+    char realCellName[256];
     char host[256];
     int server_num = 0;
     int minttl = 0;
@@ -601,7 +602,6 @@ afsconf_GetAfsdbInfo(acellName, aservice, acellInfo)
     code = dn_expand(answer, answer + len, p, host, sizeof(host));
     if (code < 0)
 	return AFSCONF_NOTFOUND;
-    strncpy(acellInfo->name, host, sizeof(acellInfo->name));
 
     p += code + QFIXEDSZ;	/* Skip name */
 
@@ -625,6 +625,15 @@ afsconf_GetAfsdbInfo(acellName, aservice, acellInfo)
 	    short afsdb_type;
 
 	    afsdb_type = (p[0] << 8) | p[1];
+	    if (afsdb_type == 1) {
+		/*
+		 * We know this is an AFSDB record for our cell, of the
+		 * right AFSDB type.  Write down the true cell name that
+		 * the resolver gave us above.
+		 */
+		strcpy(realCellName, host);
+	    }
+
 	    code = dn_expand(answer, answer+len, p+2, host, sizeof(host));
 	    if (code < 0)
 		return AFSCONF_NOTFOUND;
@@ -649,6 +658,7 @@ afsconf_GetAfsdbInfo(acellName, aservice, acellInfo)
 
     if (server_num == 0)		/* No AFSDB records */
 	return AFSCONF_NOTFOUND;
+    strncpy(acellInfo->name, realCellName, sizeof(acellInfo->name));
     acellInfo->numServers = server_num;
 
     if (aservice) {

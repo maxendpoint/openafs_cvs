@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.16 2001/10/05 20:38:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.17 2001/10/10 00:05:27 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -610,6 +610,7 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 	afs_int32 *kmsg = afs_osi_Alloc(kmsgLen);
 	char *cellname = afs_osi_Alloc(cellLen);
 
+	AFS_COPYIN((afs_int32 *)parm2, cellname, cellLen, code);
 	AFS_COPYIN((afs_int32 *)parm3, kmsg, kmsgLen, code);
 	if (!code) {
 	    code = afs_AfsdbHandler(cellname, cellLen, kmsg);
