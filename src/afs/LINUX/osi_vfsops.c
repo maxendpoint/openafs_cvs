@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.11 2001/08/28 18:03:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.12 2001/10/11 03:15:28 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -335,8 +335,8 @@ int afs_statfs(struct super_block *sbp, struct statfs *statp, int size)
 void 
 afs_umount_begin(struct super_block *sbp)
 {
-    afs_shuttingdown=1;
     afs_put_super(sbp);      
+    afs_shuttingdown=1;
     afs_was_mounted=0;
 }
 
