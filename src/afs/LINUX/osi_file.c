@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.14 2003/05/14 15:15:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.15 2003/05/15 16:59:12 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -201,8 +201,12 @@ int afs_osi_Write(register struct osi_file *afile, afs_int32 offset, void *aptr,
     size_t resid;
     register afs_int32 code;
     AFS_STATCNT(osi_Write);
-    if ( !afile )
-        osi_Panic("afs_osi_Write called with null param");
+    if ( !afile ) {
+	if ( !afs_shuttingdown )
+	    osi_Panic("afs_osi_Write called with null param");
+	else
+	    return EIO;
+    } 
     if (offset != -1) afile->offset = offset;
     AFS_GUNLOCK();
     code = osi_rdwr(UIO_WRITE, afile, (caddr_t)aptr, asize, &resid);
