@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.11 2002/08/21 18:14:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.12 2002/08/21 19:26:15 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -4108,7 +4108,7 @@ UV_SyncVolume(aserver, apart, avolname, flags)
        if (modified && (code == VL_NOENT)) {
 	  fprintf(STDOUT,"\n**entry deleted**\n");
        } else if (modified) {
-	  EnumerateEntry(vldbentry);
+	  EnumerateEntry(&vldbentry);
        } else {
 	  fprintf(STDOUT,"\n**no change**\n");
        }
