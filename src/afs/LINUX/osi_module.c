@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.35 2003/05/20 05:46:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.36 2003/05/20 06:02:00 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -336,6 +336,7 @@ int init_module(void)
 #endif
 #endif /* EXPORTED_SYS_CALL_TABLE */
       
+#ifdef AFS_AMD64_LINUX20_ENV
 #ifndef EXPORTED_IA32_SYS_CALL_TABLE
     ia32_sys_call_table=0;
 #ifdef EXPORTED_KALLSYMS_SYMBOL
@@ -394,6 +395,7 @@ int init_module(void)
 #else
     printf("Found ia32_sys_call_table at %x\n", ia32_sys_call_table);
 #endif /* IA32_SYS_CALL_TABLE */
+#endif
 
     /* Initialize pointers to kernel syscalls. */
 #if defined(AFS_IA64_LINUX20_ENV)
