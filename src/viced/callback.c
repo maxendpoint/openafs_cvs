@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.51 2003/11/17 09:40:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.52 2003/11/17 23:21:52 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1431,6 +1431,7 @@ BreakLaterCallBacks(void)
 		feip = &fe->fnext;
 	}
     }
+    FSYNC_UNLOCK;
 
     if (!myfe) {
 	H_UNLOCK
@@ -1438,7 +1439,6 @@ BreakLaterCallBacks(void)
     }
 
     /* loop over FEs from myfe and free/break */
-    FSYNC_UNLOCK;
     tthead = 0;
     for (fe = myfe; fe;) {
 	register struct CallBack *cbnext;
@@ -1476,7 +1476,6 @@ BreakLaterCallBacks(void)
 	    henumParms.ncbas = 0;
 	}
     }
-    FSYNC_LOCK;
     H_UNLOCK;
 
     /* Arrange to be called again */
