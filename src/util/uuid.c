@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.9 2002/06/22 04:26:52 zacheiss Exp $");
+RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.10 2002/07/01 16:26:29 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/sysincludes.h"
@@ -145,6 +145,7 @@ uuid_time_p_t           time2; {
  *    Converts a string UUID to binary representation.
  */
 
+#ifndef KERNEL
 int
 afsUUID_from_string(const char *str, afsUUID *uuid)
 {
@@ -198,6 +199,7 @@ afsUUID_to_string(const afsUUID *uuid, char *str, size_t strsz)
 
     return 0;
 }
+#endif
 
 afs_int32 afs_uuid_create (uuid)
 afsUUID *uuid; {
