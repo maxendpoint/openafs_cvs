@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.17 2003/07/15 23:16:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.18 2003/08/11 22:16:29 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -1908,7 +1908,6 @@ listElements(call, aid, alist, over)
     return code;
 }
 
-#if defined(SUPERGROUPS)
 
 afs_int32
 SPR_ListSuperGroups(call, aid, alist, over)
@@ -1917,13 +1916,18 @@ SPR_ListSuperGroups(call, aid, alist, over)
      prlist *alist;
      afs_int32 *over;
 {
+#if defined(SUPERGROUPS)
     afs_int32 code;
 
     code = listSuperGroups(call, aid, alist, over);
     osi_auditU(call, "PTS_LstSGrps", code, AUD_LONG, aid, AUD_END);
     return code;
+#else
+    return EINVAL;
+#endif
 }
 
+#if defined(SUPERGROUPS)
 afs_int32
 listSuperGroups(call, aid, alist, over)
      struct rx_call *call;
