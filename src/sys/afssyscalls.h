@@ -25,7 +25,7 @@ typedef uint64_t Inode;
 #ifdef AFS_NEC_SX92_ENV
 typedef unsigned long Inode;
 #else /* AFS_NEC_SX92_ENV */
-#if AFS_64BIT_ENV
+#ifdef AFS_64BIT_ENV
 typedef afs_uint64 Inode;
 #else
 typedef u_int64_t Inode;
