@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.29 2004/06/23 18:34:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.30 2004/06/23 22:11:54 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -408,6 +408,7 @@ OSI_VC_DECL(adp);
 #else
     if (tvc && (VREFCOUNT(tvc) > 1) && tvc->opens > 0
 	&& !(tvc->states & CUnlinked)) 
+#endif
 #endif
     {
 	char *unlname = newname();
