@@ -9,14 +9,14 @@
 
 /* RX:  Extended Remote Procedure Call */
 
+#include <afsconfig.h>
 #ifdef	KERNEL
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.20 2001/08/08 00:03:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.21 2001/08/16 00:48:48 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/sysincludes.h"
