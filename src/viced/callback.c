@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.14 2002/10/09 01:20:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.15 2002/10/09 02:26:07 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -134,7 +134,6 @@ int ShowProblems = 1;
 /* max time to break a callback, otherwise client is dead or net is hosed */
 #define MAXCBT 25  
 
-#define u_short	unsigned short
 #define u_byte	unsigned char
 
 struct cbcounters cbstuff;
@@ -145,17 +144,12 @@ struct cbstruct {
 } ;
 
 struct FileEntry {
-    afs_uint32	    vnode;	/* XXX This was u_short XXX */
+    afs_uint32	    vnode;	
     afs_uint32         unique;
     afs_uint32	    volid;
     afs_uint32	    fnext;
     afs_uint32	    ncbs;
     afs_uint32	    firstcb;
-    afs_uint32	    spare;
-#if defined(AFS_ALPHA_ENV) || defined(AFS_ALPHA_LINUX20_ENV)
-    afs_uint32	    spare1;
-    afs_uint32	    spare2;
-#endif
 } *FE;	/* Don't use FE[0] */
 
 struct CallBack {
@@ -268,7 +262,7 @@ struct object {
 struct VCBParams {
   struct cbstruct cba[MAX_CB_HOSTS];  /* re-entrant storage */
   unsigned int ncbas;
-  unsigned short thead;     /* head of timeout queue for youngest callback */
+  afs_uint32 thead;     /* head of timeout queue for youngest callback */
   struct AFSFid *fid;
 };
 
