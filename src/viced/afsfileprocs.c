@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.73 2003/11/23 04:53:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.74 2003/12/01 20:16:02 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -3949,7 +3949,13 @@ SAFSS_Rename(struct rx_call *acall, struct AFSFid *OldDirFid, char *OldName,
      * directory structure.  This is to prevent removing a subtree alltogether
      */
     if ((oldvptr != newvptr) && (fileptr->disk.type == vDirectory)) {
-	for (testnode = newvptr->disk.parent; testnode != 0;) {
+        afs_int32 forpass = 0, vnum = 0, top = 0;
+	for (testnode = newvptr->disk.parent; testnode != 0; forpass++) {
+	    if (testnode > vnum) vnum = testnode;
+	    if (forpass > vnum) {
+		errorCode = FSERR_ELOOP;
+		goto Bad_Rename;
+	    }
 	    if (testnode == oldvptr->vnodeNumber) {
 		testnode = oldvptr->disk.parent;
 		continue;
@@ -3963,10 +3969,16 @@ SAFSS_Rename(struct rx_call *acall, struct AFSFid *OldDirFid, char *OldName,
 		errorCode = FSERR_ELOOP;
 		goto Bad_Rename;
 	    }
+	    if (testnode == 1) top = 1;
 	    testvptr = VGetVnode(&errorCode, volptr, testnode, READ_LOCK);
 	    assert(errorCode == 0);
 	    testnode = testvptr->disk.parent;
 	    VPutVnode(&errorCode, testvptr);
+	    if ((top == 1) && (testnode != 0)) {
+		VTakeOffline(volptr);
+		errorCode = EIO;
+		goto Bad_Rename;
+	    }
 	    assert(errorCode == 0);
 	}
     }
