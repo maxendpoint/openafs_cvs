@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.13 2002/08/26 15:46:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.14 2002/10/09 01:20:52 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -141,31 +141,31 @@ struct cbcounters cbstuff;
 
 struct cbstruct {
   struct host * hp;
-  u_short thead;
+  afs_uint32 thead;
 } ;
 
 struct FileEntry {
     afs_uint32	    vnode;	/* XXX This was u_short XXX */
     afs_uint32         unique;
     afs_uint32	    volid;
-    u_short	    fnext;
-    u_short	    ncbs;
-    u_short	    firstcb;
-    u_short	    spare;
+    afs_uint32	    fnext;
+    afs_uint32	    ncbs;
+    afs_uint32	    firstcb;
+    afs_uint32	    spare;
 #if defined(AFS_ALPHA_ENV) || defined(AFS_ALPHA_LINUX20_ENV)
-    u_short	    spare1;
-    u_short	    spare2;
+    afs_uint32	    spare1;
+    afs_uint32	    spare2;
 #endif
 } *FE;	/* Don't use FE[0] */
 
 struct CallBack {
-    u_short	    cnext;		/* Next call back entry */
-    u_short	    fhead;		/* Head of this call back chain */
+    afs_uint32	    cnext;		/* Next call back entry */
+    afs_uint32	    fhead;		/* Head of this call back chain */
     u_byte	    thead;		/* Head of timeout chain */
     u_byte	    status;		/* Call back status; see definitions, below */
-    u_short	    hhead;		/* Head of host table chain */
-    u_short	    tprev, tnext;	/* Timeout chain */
-    u_short	    hprev, hnext;	/* Chain from host table */
+    afs_uint32	    hhead;		/* Head of host table chain */
+    afs_uint32	    tprev, tnext;	/* Timeout chain */
+    afs_uint32	    hprev, hnext;	/* Chain from host table */
 } *CB;	/* Don't use CB[0] */
 
 /* status bits for status field of CallBack structure */
@@ -236,7 +236,7 @@ static int MinTimeOut = (7*60);
 #define ServerBias	  (3*60)
 
 /* Heads of CB queues; a timeout index is 1+index into this array */
-static u_short timeout[128];
+static afs_uint32 timeout[128];
 
 /* Convert cbtime to timeout queue index */
 #define TIndex(cbtime)  (((cbtime)&127)+1)
@@ -281,15 +281,15 @@ static struct CallBack *iGetCB(register int *nused);
 static int iFreeCB(register struct CallBack *cb, register int *nused);
 static struct FileEntry *iGetFE(register int *nused);
 static int iFreeFE(register struct FileEntry *fe, register int *nused);
-static int TAdd(register struct CallBack *cb, register u_short *thead);
+static int TAdd(register struct CallBack *cb, register afs_uint32 *thead);
 static int TDel(register struct CallBack *cb);
 static int HAdd(register struct CallBack *cb, register struct host *host);
 static int HDel(register struct CallBack *cb);
 static int CDel(struct CallBack *cb);
-static int CDelPtr(register struct FileEntry *fe, register u_short *cbp);
-static u_short *FindCBPtr(struct FileEntry *fe, struct host *host);
+static int CDelPtr(register struct FileEntry *fe, register afs_uint32 *cbp);
+static afs_uint32 *FindCBPtr(struct FileEntry *fe, struct host *host);
 static int FDel(register struct FileEntry *fe);
-static int AddCallBack1_r(struct host *host, AFSFid *fid, u_short *thead, int type, int locked);
+static int AddCallBack1_r(struct host *host, AFSFid *fid, afs_uint32 *thead, int type, int locked);
 static void MultiBreakCallBack_r(struct cbstruct cba[], int ncbas, struct AFSCBFids *afidp, struct host *xhost);
 static int MultiBreakVolumeCallBack_r(struct host *host, int isheld, struct VCBParams *parms);
 static int MultiBreakVolumeCallBack(struct host *host, int isheld, struct VCBParams *parms);
@@ -305,7 +305,7 @@ static int GetSomeSpace_r(struct host *hostp, int locked);
 extern void ShutDown();
 
 #define VHASH 512	/* Power of 2 */
-static u_short HashTable[VHASH]; /* File entry hash table */
+static afs_uint32 HashTable[VHASH]; /* File entry hash table */
 #define VHash(volume, unique) (((volume)+(unique))&(VHASH-1))
 
 static struct FileEntry *FindFE (register AFSFid *fid)
@@ -365,7 +365,7 @@ static int iFreeFE(register struct FileEntry *fe, register int *nused)
 }
 
 /* Add cb to end of specified timeout list */
-static int TAdd(register struct CallBack *cb, register u_short *thead)
+static int TAdd(register struct CallBack *cb, register afs_uint32 *thead)
 {
     if (!*thead) {
 	(*thead) = cb->tnext = cb->tprev = cbtoi(cb);
@@ -388,7 +388,7 @@ static int TAdd(register struct CallBack *cb, register u_short *thead)
 /* Delete call back entry from timeout list */
 static int TDel(register struct CallBack *cb)
 {
-    register u_short *thead = itot(cb->thead);
+    register afs_uint32 *thead = itot(cb->thead);
 
     if (*thead == cbtoi(cb))
 	*thead = (*thead == cb->tnext? 0: cb->tnext);
@@ -419,7 +419,7 @@ static int HAdd(register struct CallBack *cb, register struct host *host)
 /* Delete call back entry from host list */
 static int HDel(register struct CallBack *cb)
 {
-    register u_short *hhead = &h_itoh(cb->hhead)->cblist;
+    register afs_uint32 *hhead = &h_itoh(cb->hhead)->cblist;
 
     if (*hhead == cbtoi(cb))
 	*hhead = (*hhead == cb->hnext? 0: cb->hnext);
@@ -436,7 +436,7 @@ static int CDel(struct CallBack *cb)
 {
     int cbi = cbtoi(cb);
     struct FileEntry *fe = itofe(cb->fhead);
-    register u_short *cbp;
+    register afs_uint32 *cbp;
     register int safety;
 
     for (safety = 0, cbp = &fe->firstcb; *cbp && *cbp != cbi; 
@@ -460,7 +460,7 @@ static int CDel(struct CallBack *cb)
 int Ccdelpt=0, CcdelB=0;
 
 static int CDelPtr(register struct FileEntry *fe, 
-	register u_short *cbp)
+	register afs_uint32 *cbp)
 {
     register struct CallBack *cb;
 
@@ -477,11 +477,11 @@ static int CDelPtr(register struct FileEntry *fe,
     return 0;
 }
 
-static u_short *FindCBPtr(struct FileEntry *fe, struct host *host)
+static afs_uint32 *FindCBPtr(struct FileEntry *fe, struct host *host)
 {
     register afs_uint32 hostindex = h_htoi(host);
     register struct CallBack *cb;
-    register u_short *cbp;
+    register afs_uint32 *cbp;
     register int safety;
 
     for (safety = 0, cbp = &fe->firstcb; *cbp; cbp = &cb->cnext, safety++) {
@@ -580,7 +580,7 @@ afs_int32 XCallBackBulk_r(struct host *ahost, struct AFSFid *fids,
  * as well. If so, the host->ResetDone should probably be set to 0,
  * and we probably don't want to return a callback promise to the
  * cache manager, either. */
-int AddCallBack1(struct host *host, AFSFid *fid, u_short *thead, 
+int AddCallBack1(struct host *host, AFSFid *fid, afs_uint32 *thead, 
 	int type, int locked)
 {
     int retVal;
@@ -597,14 +597,14 @@ int AddCallBack1(struct host *host, AFSFid *fid, u_short *thead,
     return retVal;
 }
 
-static int AddCallBack1_r(struct host *host, AFSFid *fid, u_short *thead, 
+static int AddCallBack1_r(struct host *host, AFSFid *fid, afs_uint32 *thead, 
 	int type, int locked)
 {
     struct FileEntry *fe;
     struct CallBack *cb = 0, *lastcb = 0;
     struct FileEntry *newfe = 0;
     afs_uint32 time_out;
-    u_short *Thead = thead;
+    afs_uint32 *Thead = thead;
     struct CallBack *newcb = 0;
     int safety;
     
@@ -913,7 +913,7 @@ int BreakCallBack(struct host *xhost, AFSFid *fid, int flag)
 int DeleteCallBack(struct host *host, AFSFid *fid)
 {
     register struct FileEntry *fe;
-    register u_short *pcb;
+    register afs_uint32 *pcb;
     char hoststr[16];
 
     cbstuff.DeleteCallBacks++;
@@ -1029,7 +1029,7 @@ extern afsUUID FS_HostUUID;
 int BreakDelayedCallBacks_r(struct host *host)
 {
     struct AFSFid fids[AFSCBMAX];
-    u_short thead[AFSCBMAX];
+    afs_uint32 thead[AFSCBMAX];
     int cbi, first, nfids;
     struct CallBack *cb;
     struct interfaceAddr interf;
@@ -1212,7 +1212,7 @@ int BreakVolumeCallBacks(afs_uint32 volume)
 {
     struct AFSFid fid;
     int hash;
-    u_short *feip;
+    afs_uint32 *feip;
     struct CallBack *cb;
     struct FileEntry *fe;
     struct host *host;
@@ -1285,7 +1285,7 @@ int CleanupTimedOutCallBacks(void)
 int CleanupTimedOutCallBacks_r(void)
 {
     afs_uint32 now = CBtime(FT_ApproxTime());
-    register u_short *thead;
+    register afs_uint32 *thead;
     register struct CallBack *cb;
     register int ntimedout = 0;
     char hoststr[16];
@@ -1631,7 +1631,7 @@ int main(int argc, char **argv)
     }
     if (all || vol) {
 	register hash;
-	register u_short *feip;
+	register afs_uint32 *feip;
 	register struct CallBack *cb;
 	register struct FileEntry *fe;
 
@@ -1651,7 +1651,7 @@ int main(int argc, char **argv)
 	}
     }
     if (cbi) {
-	u_short cfirst = cbi;
+	afs_uint32 cfirst = cbi;
 	do {
 	    cb = itocb(cbi);
 	    PrintCB(cb,now);

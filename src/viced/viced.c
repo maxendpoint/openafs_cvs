@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.17 2002/08/22 18:45:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.18 2002/10/09 01:20:52 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1145,8 +1145,8 @@ static ParseArgs(argc, argv)
 	    if (!strcmp(argv[i], "-cb")) {
 		Sawcbs = 1;
 		numberofcbs = atoi(argv[++i]);
-		if ((numberofcbs < 10000) || (numberofcbs > 65535)) {
-		    printf("number of cbs %d invalid; must be between 10000 and 65535\n",
+		if ((numberofcbs < 10000) || (numberofcbs > 4294967295)) {
+		    printf("number of cbs %d invalid; must be between 10000 and 4294967295\n",
 			   numberofcbs);
 		    return -1;
 		}
