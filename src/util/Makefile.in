@@ -208,7 +208,7 @@ ukinstall: \
 	${UKDIR}/netutils.h \
 	${UKDIR}/netutils.c \
 	${UKDIR}/casestrcpy.c \
-	${UKDIR}/hostparse.c \
+	${UKDIR}/hostparse.c 
 
 ${UKDIR}/errors.h: errors.h
 	${INSTALL} $? $@
