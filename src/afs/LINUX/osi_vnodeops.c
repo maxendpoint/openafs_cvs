@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.64 2003/03/28 09:43:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.65 2003/03/28 17:41:04 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -324,7 +324,6 @@ tagain:
 	ReleaseReadLock(&avc->lock);
 	afs_osi_Sleep(&tdc->validPos);
 	ObtainReadLock(&avc->lock);
-    int need_unlock = 0;
 	ObtainReadLock(&tdc->lock);
     }
     if (!(avc->states & CStatd)
@@ -432,6 +431,7 @@ void afs_linux_vma_close(struct vm_area_struct *vmap)
 {
     struct vcache *vcp;
     cred_t *credp;
+    int need_unlock = 0;
 
     if (!vmap->vm_file)
 	return;
