@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.8 2001/10/05 21:23:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.9 2001/11/21 15:29:52 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -1274,7 +1274,7 @@ afs_tf_save_cred(aserver, atoken, aclient)
     struct ktc_principal principal;
     struct ktc_token token;
     int     status;
-    off_t   start, lseek();
+    off_t   start;
     int     lifetime, kvno;
     int     count;		/* count for write */
 
