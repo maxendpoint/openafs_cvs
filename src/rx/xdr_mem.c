@@ -29,7 +29,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_mem.c,v 1.7 2003/03/21 19:26:36 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_mem.c,v 1.8 2003/04/22 16:45:07 shadow Exp $");
 
 #ifndef	NeXT
 
@@ -47,6 +47,8 @@ RCSID("$Header: /cvs/openafs/src/rx/xdr_mem.c,v 1.7 2003/03/21 19:26:36 rees Exp
 #include "xdr.h"
 #ifndef AFS_NT40_ENV
 #include <netinet/in.h>
+#else
+#include <limits.h>
 #endif
 
 static bool_t	xdrmem_getint32();
