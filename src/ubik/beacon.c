@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.19 2004/01/10 16:59:35 zacheiss Exp $");
+    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.19.2.1 2004/08/25 07:09:43 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -494,8 +494,8 @@ verifyInterfaceAddress(ame, info, aservers)
     }
 
 #ifdef AFS_NT40_ENV
-	/* get all my interface addresses in net byte order */
-	count = rx_getAllAddr(myAddr, UBIK_MAX_INTERFACE_ADDR);
+    /* get all my interface addresses in net byte order */
+    count = rx_getAllAddr(myAddr, UBIK_MAX_INTERFACE_ADDR);
 #else
     if (AFSDIR_SERVER_NETRESTRICT_FILEPATH || AFSDIR_SERVER_NETINFO_FILEPATH) {
 	/*
