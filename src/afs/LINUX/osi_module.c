@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.33 2003/05/20 03:49:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.34 2003/05/20 04:01:15 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -263,8 +263,13 @@ int init_module(void)
     ptr = (unsigned long *) (&sys_close - 0x180000);
     datalen=0x180000/sizeof(ptr);
 #else
+#if defined(AFS_AMD64_LINUX20_ENV)
+    ptr=(unsigned long *)&init_mm;
+    datalen=0x180000/sizeof(ptr);
+#else
     ptr=(unsigned long *)&init_mm;
     datalen=16384;
+#endif
 #endif
 #endif
     for (offset=0;offset <datalen;ptr++,offset++) {
