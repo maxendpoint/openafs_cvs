@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.61 2003/05/21 02:38:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.62 2003/05/21 13:42:53 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -237,7 +237,7 @@ copyin_afs_ioctl(caddr_t cmarg, struct afs_ioctl *dst)
 #elif defined(AFS_SPARC64_LINUX20_ENV)
 	if (current->tss.flags & SPARC_FLAG_32BIT)
 #elif defined(AFS_AMD64_LINUX20_ENV)
-        if (current->thread.flags & IA32_THREAD)
+        if (current->thread.flags & THREAD_IA32)
 #else
 #error Not done for this linux type
 #endif
