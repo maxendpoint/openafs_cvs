@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.13 2003/07/15 23:17:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.14 2003/09/04 15:57:38 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -397,7 +397,11 @@ main(argc, argv)
     if (lwps < 4)
 	lwps = 4;
     rx_SetMaxProcs(service, lwps);
+#ifdef AFS_SGI_ENV
+    rx_SetStackSize(service, 49152);
+#else
     rx_SetStackSize(service, 32768);
+#endif
 
     service =
 	rx_NewService(0, RX_STATS_SERVICE_ID, "rpcstats", securityObjects, 3,
