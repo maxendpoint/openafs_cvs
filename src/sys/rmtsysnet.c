@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/rmtsysnet.c,v 1.4 2001/07/12 19:59:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/rmtsysnet.c,v 1.5 2001/10/05 21:30:56 shadow Exp $");
 
 #include <errno.h>
 #include <sys/param.h>
@@ -25,6 +25,13 @@ RCSID("$Header: /cvs/openafs/src/sys/rmtsysnet.c,v 1.4 2001/07/12 19:59:17 shado
 #endif
 #include <sys/stat.h>
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #include <afs/afsint.h>
 #include <afs/venus.h>
 #include <rx/xdr.h>
