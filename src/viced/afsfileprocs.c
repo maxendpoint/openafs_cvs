@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.16 2001/11/01 04:02:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.17 2001/11/14 23:59:57 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -594,7 +594,7 @@ common_FetchData (tcon, Fid, Pos, Len, OutStatus, CallBack, Sync, type)
 
     /* actually do the data transfer */
 #if FS_STATS_DETAILED
-    errorCode = FetchData_RXStyle(volptr, targetptr, tcall, Pos, Len, type
+    errorCode = FetchData_RXStyle(volptr, targetptr, tcall, Pos, Len, type,
 				  &bytesToXfer, &bytesXferred);
 #else
     if (errorCode = FetchData_RXStyle(volptr, targetptr, tcall, Pos, Len, type))
