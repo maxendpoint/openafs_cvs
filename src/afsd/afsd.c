@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.29 2002/10/06 23:00:21 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.30 2002/10/30 22:56:58 rees Exp $");
 
 #define VFS 1
 
@@ -226,7 +226,11 @@ char cacheMountDir[1024];		/*Mount directory for AFS*/
 char rootVolume[64] = "root.afs";	/*AFS root volume name*/
 afs_int32 cacheSetTime = 1;			/*Keep checking time to avoid drift?*/
 afs_int32 isHomeCell;			/*Is current cell info for the home cell?*/
+#ifdef AFS_XBSD_ENV
+int createAndTrunc = O_RDWR | O_CREAT | O_TRUNC; /*Create & truncate on open*/
+#else
 int createAndTrunc = O_CREAT | O_TRUNC; /*Create & truncate on open*/
+#endif
 int ownerRWmode	= 0600;			/*Read/write OK by owner*/
 static int filesSet = 0;		/*True if number of files explicitly set*/
 static int nFilesPerDir = 2048;		/* # files per cache dir */

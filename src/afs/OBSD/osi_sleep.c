@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.1 2002/10/28 21:28:27 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.2 2002/10/30 22:56:58 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -70,8 +70,19 @@ int afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
     return code;
 }
 
+void afs_osi_Sleep(void *event)
+{
+    tsleep(event, PVFS, "afs", 0);
+}
+
 int afs_osi_SleepSig(void *event)
 {
-    afs_osi_Sleep(event);
+    tsleep(event, PVFS, "afs", 0);
     return 0;
+}
+
+int afs_osi_Wakeup(void *event)
+{
+    wakeup(event);
+    return 1;
 }
