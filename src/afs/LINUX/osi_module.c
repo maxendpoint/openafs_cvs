@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.23 2002/10/16 03:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.24 2002/10/31 20:12:59 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -34,9 +34,6 @@ RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.23 2002/10/16 03:58:
 #endif
 
 asmlinkage int (*sys_settimeofdayp)(struct timeval *tv, struct timezone *tz);
-#if !defined(AFS_ALPHA_LINUX20_ENV)
-asmlinkage int (*sys_socketcallp)(int call, long *args);
-#endif /* no socketcall on alpha */
 asmlinkage int (*sys_killp)(int pid, int signal);
 asmlinkage long (*sys_setgroupsp)(int gidsetsize, gid_t *grouplist);
 
@@ -229,9 +226,6 @@ int init_module(void)
     ((struct fptr *)sys_killp)->gp = kernel_gp;
 #else /* !AFS_IA64_LINUX20_ENV */
     sys_settimeofdayp = SYSCALL2POINTER sys_call_table[__NR_settimeofday];
-#ifdef __NR_socketcall
-    sys_socketcallp = SYSCALL2POINTER sys_call_table[__NR_socketcall];
-#endif /* no socketcall on alpha */
     sys_killp = SYSCALL2POINTER sys_call_table[__NR_kill];
 #endif /* AFS_IA64_LINUX20_ENV */
 
