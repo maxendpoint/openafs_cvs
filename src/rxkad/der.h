@@ -31,14 +31,14 @@
  * SUCH DAMAGE. 
  */
 
-/* $Id: der.h,v 1.2 2002/10/28 01:18:39 jhutz Exp $ */
+/* $Id: der.h,v 1.3 2002/10/28 22:51:34 shadow Exp $ */
 
 #ifndef __DER_H__
 #define __DER_H__
 
 #include <time.h>
 
-typedef enum {UNIV = 0, APPL = 1, CONTEXT = 2 , PRIVATE = 3} Der_class;
+typedef enum {UNIV = 0, APPL = 1, Der_CONTEXT = 2 , PRIVATE = 3} Der_class;
 
 typedef enum {PRIM = 0, CONS = 1} Der_type;
 
