@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/Attic/lex.c,v 1.6 2002/08/21 18:14:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/lex.l,v 1.1 2003/06/19 16:55:10 shadow Exp $");
 
 
 #ifdef HAVE_STRING_H
