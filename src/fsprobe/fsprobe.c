@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.5 2001/08/08 00:03:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.6 2001/08/08 00:57:36 shadow Exp $");
 
 #include <fsprobe.h>			/*Interface for this module*/
 #include <lwp.h>			/*Lightweight process package*/
@@ -95,7 +95,7 @@ static int fsprobe_CleanupInit()
     struct interfaceAddr *interfaceAddr; /*Bogus param*/
 
     fsprobe_ConnInfo = (struct fsprobe_ConnectionInfo *)0;
-    memset(fsprobe_Results, 0, sizeof(struct fsprobe_ProbeResults));
+    memset(&fsprobe_Results, 0, sizeof(struct fsprobe_ProbeResults));
 
     rxcall 	   = (struct rx_call *)0;
     Fids_Array	   = (AFSCBFids *)0;
