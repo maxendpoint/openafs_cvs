@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.46 2003/01/31 21:20:45 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.47 2003/03/23 06:44:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -153,6 +153,7 @@ static int afsd_thread(void *rock) {
     daemonize(); /* doesn't do much, since we were forked from keventd, but
 		    does call mm_release, which wakes up our parent (since it
 		    used CLONE_VFORK) */
+    reparent_to_init();
     afs_osi_MaskSignals();
     switch (parm) {
     case AFSOP_START_RXCALLBACK:
