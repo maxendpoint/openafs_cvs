@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.16 2001/09/26 00:02:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.17 2001/11/01 03:58:36 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -113,11 +113,7 @@ RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.16 2001/09/26 00:02:46 shad
 #include "ntops.h"
 #else
 #include "namei_ops.h"
-#if defined(AFS_SGI_ENV)
-#include <sys/dir.h>
-#else
 #include <dirent.h>
-#endif /* AFS_SGI_ENV */
 #endif /* AFS_NT40_ENV */
 #endif /* AFS_NAMEI_ENV */
 #include "vnode.h"
@@ -500,6 +496,7 @@ int VAttachPartitions(void)
 	    continue; /* Ignore any "special" partitions */
 
 #ifdef AFS_AIX42_ENV
+#ifndef AFS_NAMEI_ENV
 	{
 	    struct superblock fs;
 	    /* The Log statements are non-sequiters in the SalvageLog and don't
@@ -516,6 +513,7 @@ int VAttachPartitions(void)
 		continue;
 	    }
 	}
+#endif
 #endif
 
 	/* If we're going to always attach this partition, do it later. */
@@ -1026,12 +1024,22 @@ void VLockPartition_r(char *name)
     unsigned int	*globalMask;
     int			globalMaskIndex;
 #endif /* defined(AFS_HPUX_ENV) */
+#ifdef AFS_NAMEI_ENV
+#ifdef AFS_AIX42_ENV
+    char LockFileName[MAXPATHLEN + 1];
+
+    sprintf((char *)&LockFileName, "%s/AFSINODE_FSLock", name);
+    partitionName = (char *) &LockFileName;
+#endif
+#endif
     
     if (!dp) return;	/* no partition, will fail later */
     if (dp->lock_fd != -1) return;
 
 #if    defined(AFS_SUN5_ENV) || defined(AFS_AIX41_ENV)
+#if !defined(AFS_AIX42_ENV) || !defined(AFS_NAMEI_ENV)
     partitionName = dp->devName;
+#endif
     code = O_RDWR;
 #else
     partitionName = dp->name;
@@ -1041,6 +1049,8 @@ void VLockPartition_r(char *name)
     for (retries=25; retries; retries--) {
         dp->lock_fd = open(partitionName, code);
         if (dp->lock_fd != -1) break;
+	if (errno == ENOENT)
+	    code |= O_CREAT;
         pausing.tv_sec = 0;
         pausing.tv_usec = 500000;
         select(0, NULL, NULL, NULL, &pausing);
