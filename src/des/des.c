@@ -36,7 +36,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.8 2002/08/21 18:13:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.9 2003/05/15 17:10:40 shadow Exp $");
 
 #ifndef KERNEL
 #include <stdio.h>
@@ -75,8 +75,8 @@ afs_int32 des_ecb_encrypt(afs_uint32 *clear, afs_uint32 *cipher,
 {
     /* better pass 8 bytes, length not checked here */
 
-    register afs_uint32 R1, L1; /* R1 = r10, L1 = r9 */
-    register afs_uint32 R2, L2; /* R2 = r8, L2 = r7 */
+    register afs_uint32 R1 = 0, L1 = 0; /* R1 = r10, L1 = r9 */
+    register afs_uint32 R2 = 0, L2 = 0; /* R2 = r8, L2 = r7 */
     afs_int32 i;
     /* one more registers left on VAX, see below P_temp_p */
 #ifdef BITS16

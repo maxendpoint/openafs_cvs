@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.12 2002/10/16 22:22:43 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.13 2003/05/15 17:10:39 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -655,6 +655,8 @@ struct ktc_principal *aserver; {
     register afs_int32 code;
     register char *tp;
     afs_int32 temp, index;
+
+    memset(tbuffer, 0, sizeof(tbuffer));
 
     LOCK_GLOBAL_MUTEX
 #ifndef NO_AFS_CLIENT

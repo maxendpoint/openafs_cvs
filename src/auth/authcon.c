@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.11 2002/10/16 19:42:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.12 2003/05/15 17:10:39 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -110,6 +110,7 @@ rxkad_level enclevel; {
     
     /* now create the actual ticket */
     ticketLen = sizeof(tbuffer);
+    memset(tbuffer, '\0', sizeof(tbuffer));
     code = tkt_MakeTicket(tbuffer, &ticketLen, &key, AUTH_SUPERUSER, "", "", 0,
 			   0xffffffff, &session, 0, "afs", "");
     /* parms were buffer, ticketlen, key to seal ticket with, principal
