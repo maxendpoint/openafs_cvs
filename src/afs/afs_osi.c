@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.31 2003/02/13 23:44:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.32 2003/03/10 01:51:15 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -75,6 +75,8 @@ void osi_Init(void)
 #ifdef AFS_SGI64_ENV
     osi_flid.fl_pid = osi_flid.fl_sysid = 0;
 #endif
+
+    init_et_to_sys_error();
 }
 
 int osi_Active(register struct vcache *avc)
