@@ -93,7 +93,7 @@ ${DEST}/root.server/etc/vfsck: vfsck
 ${DEST}/root.server/usr/afs/bin/vfsck: vfsck
 	${INSTALL} $? $@
 
-${DESTDIR}${afssrvdir}/vfsck: vfsck
+${DESTDIR}${afssrvlibexecdir}/vfsck: vfsck
 	${INSTALL} $? $@
 
 

@@ -155,7 +155,7 @@ runntp.o: runntp.c ${TOP_INCDIR}/afs/cellconfig.h AFS_component_version_number.c
 runntp: runntp.o ${AFSLIBS}
 	${CC} ${LDFLAGS} -o runntp runntp.o ${AFSLIBS} ${XLIBS}
 
-install:       ${DESTDIR}${afssrvdir}/ntpd ${DESTDIR}${afssrvdir}/ntpdc ${DESTDIR}${sbindir}/ntp ${DESTDIR}${sbindir}/ntpdc ${DESTDIR}${afssrvdir}/runntp
+install:       ${DESTDIR}${afssrvlibexecdir}/ntpd ${DESTDIR}${afssrvsbindir}/ntpdc ${DESTDIR}${sbindir}/ntp ${DESTDIR}${sbindir}/ntpdc ${DESTDIR}${afssrvlibexecdir}/runntp
 
 #
 # If you don't want a symlink to the daemon, comment out the next line
@@ -192,14 +192,14 @@ depend:
 ${DEST}/root.server/usr/afs/bin/ntpd: ntpd
 	${INSTALL} $? $@
 
-${DESTDIR}${afssrvdir}/ntpd: ntpd
+${DESTDIR}${afssrvlibexecdir}/ntpd: ntpd
 	${INSTALL} $? $@
 
 
 ${DEST}/root.server/usr/afs/bin/ntpdc: ntpdc
 	${INSTALL} $? $@
 
-${DESTDIR}${afssrvdir}/ntpdc: ntpdc
+${DESTDIR}${afssrvsbindir}/ntpdc: ntpdc
 	${INSTALL} $? $@
 
 
@@ -220,7 +220,7 @@ ${DESTDIR}${sbindir}/ntpdc: ntpdc
 ${DEST}/root.server/usr/afs/bin/runntp: runntp
 	${INSTALL} $? $@
 
-${DESTDIR}${afssrvdir}/runntp: runntp
+${DESTDIR}${afssrvlibexecdir}/runntp: runntp
 	${INSTALL} $? $@
 
 
