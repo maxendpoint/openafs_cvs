@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.35 2003/06/19 17:25:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.36 2003/07/01 19:23:51 shadow Exp $");
 
 #define VFS 1
 
@@ -2177,7 +2177,7 @@ long param1, param2, param3, param4, param5, param6, param7;
     eparm[2] = param6;
     eparm[3] = param7;
 
-    param4 = eparm;
+    param4 = (long) eparm;
 #endif
 
     error = syscall(AFS_SYSCALL, AFSCALL_CALL, param1, param2, param3, param4, param5, param6, param7);

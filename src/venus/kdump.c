@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.28 2003/05/14 15:10:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.29 2003/07/01 19:24:07 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -55,7 +55,7 @@ struct ncp_sb_info{};
 #define u16 unsigned short
 #include <features.h>
 #if __GLIBC_MINOR__ >= 2
-#define _SYS_TYPES_H
+#define _SYS_TYPES_H 1
 #endif
 #define __KERNEL__
 #endif
