@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.46 2003/01/09 19:16:50 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.47 2003/01/15 18:36:09 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6636,12 +6636,7 @@ FetchData_RXStyle(Volume *volptr,
     FDH_SEEK(fdP, Pos, 0);
     {
 	afs_int32	high, low;
-#ifdef AFS_64BIT_ENV
-	SplitInt64(Len, high, low);
-#else
-	high = 0;
-	low = Len;
-#endif
+	SplitOffsetOrSize(Len, high, low);
 	assert(Int64Mode || high==0);
 	if (Int64Mode) {
 	    high = htonl(high);
