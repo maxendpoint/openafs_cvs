@@ -285,7 +285,7 @@ case "$1" in
 	;;
 
   *)
-	echo Usage: 'afs <start|stop|retart>'
+	echo Usage: 'afs <start|stop|restart>'
 
 esac
 
