@@ -19,14 +19,14 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/domestic/fcrypt.c,v 1.9 2002/10/16 03:59:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/domestic/fcrypt.c,v 1.10 2002/10/16 17:48:50 rees Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
 #ifndef UKERNEL
 #include "afs/stds.h"
 #include "h/types.h"
-#ifndef AFS_LINUX20_ENV
+#if !defined(AFS_LINUX20_ENV) && !defined(AFS_OBSD_ENV)
 #include "netinet/in.h"
 #endif
 #else /* UKERNEL */

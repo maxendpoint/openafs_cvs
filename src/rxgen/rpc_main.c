@@ -36,7 +36,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.18 2002/10/16 03:59:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.19 2002/10/16 17:48:49 rees Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -478,6 +478,9 @@ static void h_output(char *infile, char *define, int extend,
 	f_print(fout, "#endif\n");
 	f_print(fout, "#ifndef	S_IFMT  /* XXXXX */\n");
 	f_print(fout, "#include \"h/stat.h\"\n");
+	f_print(fout, "#endif\n");
+	f_print(fout, "#if defined (AFS_OBSD_ENV) && !defined (MLEN)\n");
+	f_print(fout, "#include \"sys/mbuf.h\"\n");
 	f_print(fout, "#endif\n");
 	f_print(fout, "#ifndef	IPPROTO_UDP /* XXXXX */\n");
 	f_print(fout, "#include \"netinet/in.h\"\n");
