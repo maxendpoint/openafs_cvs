@@ -459,7 +459,7 @@ int GetDefaultCell (LPTSTR pszCell)
         }
 
         if (szCellA[0] == '\0') {
-            rc = cm_GetRootCellName (szCellA));
+            rc = cm_GetRootCellName (szCellA);
         } else {
             rc = 0;
         }
