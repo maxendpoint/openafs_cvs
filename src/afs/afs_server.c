@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.31 2004/06/07 19:52:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.32 2004/06/08 16:09:09 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -260,7 +260,7 @@ afs_ServerDown(struct srvAddr *sa)
 
 /* return true if we have any callback promises from this server */
 int
-HaveCallBacksFrom(struct server *aserver)
+afs_HaveCallBacksFrom(struct server *aserver)
 {
     register afs_int32 now;
     register int i;
@@ -583,7 +583,7 @@ afs_CheckServers(int adown, struct cell *acellp)
 	if (!tc)
 	    continue;
 
-	if ((sa->sa_flags & SRVADDR_ISDOWN) || HaveCallBacksFrom(sa->server)
+	if ((sa->sa_flags & SRVADDR_ISDOWN) || afs_HaveCallBacksFrom(sa->server)
 	    || (tc->srvr->server == afs_setTimeHost)) {
 	    conns[nconns]=tc; 
 	    rxconns[nconns]=tc->id;
