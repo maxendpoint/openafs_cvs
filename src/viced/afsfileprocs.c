@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.53 2003/03/04 12:51:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.54 2003/03/04 12:53:07 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -744,11 +744,7 @@ Check_PermissionRights(Vnode *targetptr,
 #define CHGRP(i,t) (((i)->Mask & AFS_SETGROUP) &&((i)->Group != (t)->disk.group))
 
     if (CallingRoutine & CHK_FETCH) {
-#ifdef	CMUCS
-	if (VanillaUser(client)) 
-#else
 	if (CallingRoutine == CHK_FETCHDATA || VanillaUser(client)) 
-#endif
 	  {
 	    if (targetptr->disk.type == vDirectory || targetptr->disk.type == vSymlink) {
 		if (   !(rights & PRSFS_LOOKUP)
@@ -5895,8 +5891,8 @@ static afs_int32 common_GiveUpCallBacks (struct rx_call *acall,
 	goto Bad_GiveUpCallBacks;
 
     if (!FidArray && !CallBackArray) {
-	ViceLog(1, "SAFS_GiveUpAllCallBacks: host=%x\n", 
-		(tcon->peer ? tcon->peer->host : 0));
+	ViceLog(1, ("SAFS_GiveUpAllCallBacks: host=%x\n", 
+		(tcon->peer ? tcon->peer->host : 0)));
 	errorCode = GetClient(tcon, &client);
         if (!errorCode) 
 	    DeleteAllCallBacks_r(client->host, 1);
