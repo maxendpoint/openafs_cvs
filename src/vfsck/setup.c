@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vfsck/setup.c,v 1.5 2001/09/20 03:03:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vfsck/setup.c,v 1.6 2001/09/21 23:48:56 shadow Exp $");
 
 #include <stdio.h>
 #define VICE
@@ -261,7 +261,6 @@ restat:
 		 }
 	     }
 	 }
-#endif
 	if (rootdev == statb.st_rdev)
 		hotroot++;
 	if ((fsreadfd = open(dev, O_RDONLY)) < 0) {
