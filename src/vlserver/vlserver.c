@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.16 2003/07/15 23:17:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.17 2003/08/25 18:24:31 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -225,7 +225,9 @@ main(argc, argv)
     }
     vl_dbaseName = AFSDIR_SERVER_VLDB_FILEPATH;
 
+#ifndef AFS_NT40_ENV
     serverLogSyslogTag = "vlserver";
+#endif
     OpenLog(AFSDIR_SERVER_VLOG_FILEPATH);	/* set up logging */
     SetupLogSignals();
 
