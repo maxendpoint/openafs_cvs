@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.17 2004/07/28 23:09:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.18 2004/08/06 20:04:07 shadow Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -94,7 +94,7 @@ pthread_mutex_t rx_if_mutex;
  * failure. Port must be in network byte order.	
  */
 osi_socket
-rxi_GetHostUDPSocket(afs_uint32 ahost, u_short port)
+rxi_GetHostUDPSocket(u_int ahost, u_short port)
 {
     int binds, code = 0;
     osi_socket socketFd = OSI_NULLSOCKET;
