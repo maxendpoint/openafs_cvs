@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.36 2003/03/04 14:46:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.37 2003/03/04 14:49:09 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1635,6 +1635,7 @@ main(int argc, char * argv[])
     ih_UseLargeCache();
 
 #ifdef AFS_PTHREAD_ENV
+    ViceLog(5, ("Starting pthreads\n"));
     assert(pthread_attr_init(&tattr) == 0);
     assert(pthread_attr_setdetachstate(&tattr, PTHREAD_CREATE_DETACHED) == 0);
 
@@ -1642,6 +1643,7 @@ main(int argc, char * argv[])
     assert(pthread_create(&serverPid, &tattr, (void *)HostCheckLWP, &fiveminutes) == 0);
     assert(pthread_create(&serverPid, &tattr, (void *)FsyncCheckLWP, &fiveminutes) == 0);
 #else /* AFS_PTHREAD_ENV */
+    ViceLog(5, ("Starting LWP\n"));
     assert(LWP_CreateProcess(FiveMinuteCheckLWP, stack*1024, LWP_MAX_PRIORITY - 2,
 			     (void *) &fiveminutes, "FiveMinuteChecks", &serverPid) == LWP_SUCCESS);
 	    
