@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.42 2002/08/27 21:42:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.43 2002/09/13 02:48:45 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -1360,6 +1360,7 @@ DECL_PIOCTL(PSetTokens)
     ain += sizeof(afs_int32);
     stp	= ain;	/* remember where the ticket is */
     if (i < 0 || i > 2000) return EINVAL;	/* malloc may fail */
+    if (i > MAXKTCTICKETLEN) return EINVAL;
     stLen = i;
     ain	+= i;	/* skip over ticket */
     memcpy((char *)&i, ain, sizeof(afs_int32));
