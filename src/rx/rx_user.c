@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.15 2004/02/26 19:23:02 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.16 2004/03/06 02:42:53 rees Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -121,7 +121,7 @@ rxi_GetUDPSocket(u_short port)
 	goto error;
     }
 
-    taddr.sin_addr.s_addr = ADDR_ANY;
+    taddr.sin_addr.s_addr = INADDR_ANY;
     taddr.sin_family = AF_INET;
     taddr.sin_port = (u_short) port;
 #ifdef STRUCT_SOCKADDR_HAS_SA_LEN
