@@ -22,7 +22,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_clock.c,v 1.13.2.1 2005/03/20 19:40:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_clock.c,v 1.13.2.2 2005/04/03 18:15:51 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -49,11 +49,7 @@ RCSID
 
 #ifndef KERNEL
 
-#if defined(AFS_GFS_ENV)
-#define STARTVALUE 8000000	/* Ultrix bounds smaller, too small for general use */
-#else
 #define	STARTVALUE 100000000	/* Max number of seconds setitimer allows, for some reason */
-#endif
 static int startvalue = STARTVALUE;
 
 struct clock clock_now;		/* The last elapsed time ready by clock_GetTimer */

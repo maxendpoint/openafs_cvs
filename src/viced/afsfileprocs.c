@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.4 2005/02/28 20:19:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.5 2005/04/03 18:15:54 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1255,11 +1255,7 @@ DeleteTarget(Vnode * parentptr, Volume * volptr, Vnode ** targetptr,
 			("DT: inode=%s, name=%s, errno=%d\n",
 			 PrintInode(NULL, VN_GET_INO(*targetptr)), Name,
 			 errno));
-#ifdef	AFS_DEC_ENV
-		if ((errno != ENOENT) && (errno != EIO) && (errno != ENXIO))
-#else
 		if (errno != ENOENT)
-#endif
 		{
 		    ViceLog(0,
 			    ("Volume %u now offline, must be salvaged.\n",
