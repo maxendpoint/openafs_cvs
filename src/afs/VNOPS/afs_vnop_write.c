@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.9 2001/09/17 18:12:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.10 2001/09/20 05:08:20 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -280,7 +280,7 @@ afs_MemWrite(avc, auio, aio, acred, noLock)
 	if (filePos > avc->m.Length)
 	    avc->m.Length = filePos;
 #endif
-#if (!defined(AFS_VM_RDWR_ENV)||defined(AFS_LINUX20_ENV))
+#ifndef AFS_VM_RDWR_ENV
 	/*
 	 * If write is implemented via VM, afs_DoPartialWrite() is called from
 	 * the high-level write op.
