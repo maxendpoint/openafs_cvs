@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/tape_hosts.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/tape_hosts.c,v 1.6 2002/02/16 18:23:53 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -285,6 +285,9 @@ int bc_ParseHosts()
 	the->portOffset = port;
 	if (th) {
 	    memcpy(&the->addr.sin_addr.s_addr, th->h_addr, 4);
+#ifdef STRUCT_SOCKADDR_HAS_SA_LEN
+	    the->addr.sin_len = sizeof(struct sockaddr_in);
+#endif
 	    the->addr.sin_family = AF_INET;
 	    the->addr.sin_port = 0;
 	}

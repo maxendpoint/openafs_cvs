@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.5 2001/07/12 19:58:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.6 2002/02/16 18:23:55 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -22,7 +22,7 @@ RCSID("$Header: /cvs/openafs/src/fsint/afsaux.c,v 1.5 2001/07/12 19:58:36 shadow
 #include "../afs/afsincludes.h"
 #include "../rx/xdr.h"
 #else /* defined(UKERNEL) */
-#if defined(AFS_ALPHA_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV)
+#if defined(AFS_ALPHA_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
 #else
@@ -68,7 +68,7 @@ static afs_int32 bslosers = 0;
 #endif
 #if (defined(AFS_AIX_ENV) && !defined(AUTH_DES)) || (!defined(AFS_SUN_ENV)) && !defined(AFS_SGI_ENV) && !defined(AFS_ALPHA_ENV) && !defined(AFS_SUN5_ENV)
 #ifndef	AFS_AIX32_ENV
-#if !defined(AFS_HPUX110_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV)
+#if !defined(AFS_HPUX110_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
 /*
  * XDR chars; from user mode xdr package.
  */

@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_mariner.c,v 1.4 2001/07/12 19:58:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_mariner.c,v 1.5 2002/02/16 18:23:49 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -81,7 +81,7 @@ void afs_MarinerLogFetch(avc, off, bytes, idx)
     taddr.sin_family = AF_INET;
     taddr.sin_addr.s_addr = afs_marinerHost;
     taddr.sin_port = htons(2106);
-#ifdef  AFS_OSF_ENV
+#ifdef  STRUCT_SOCKADDR_HAS_SA_LEN
     taddr.sin_len = sizeof(taddr);
 #endif  /* AFS_OSF_ENV */
     tp = tp1 = (char *) osi_AllocSmallSpace(AFS_SMALLOCSIZ);
@@ -114,6 +114,9 @@ void afs_MarinerLog(astring, avc)
     taddr.sin_family = AF_INET;
     taddr.sin_addr.s_addr = afs_marinerHost;
     taddr.sin_port = htons(2106);
+#ifdef  STRUCT_SOCKADDR_HAS_SA_LEN
+    taddr.sin_len = sizeof(taddr);
+#endif  /* AFS_OSF_ENV */
     tp = buf = (char *) osi_AllocSmallSpace(AFS_SMALLOCSIZ);
 
     strcpy(tp, astring);

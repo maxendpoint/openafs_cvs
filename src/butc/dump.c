@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/dump.c,v 1.6 2001/08/08 00:03:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/dump.c,v 1.7 2002/02/16 18:23:53 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -914,6 +914,9 @@ dumpPass(dparamsPtr, passNumber)
 	    server.sin_addr.s_addr = vldbEntry.serverNumber[e];
 	    server.sin_port        = 0;
 	    server.sin_family      = AF_INET;
+#ifdef STRUCT_SOCKADDR_HAS_SA_LEN
+	    server.sin_len	   = sizeof(struct sockaddr_in);
+#endif
 	    curDump->hostAddr      = HOSTADDR(&server);
 	    curDump->partition     = vldbEntry.serverPartition[e];
 

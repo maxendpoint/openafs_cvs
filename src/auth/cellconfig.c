@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.23 2001/11/07 00:01:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.24 2002/02/16 18:23:52 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -539,6 +539,9 @@ static ParseHostLine(aline, addr, aname, aclone)
     if (code != 5) return AFSCONF_SYNTAX;
     addr->sin_family = AF_INET;
     addr->sin_port = 0;
+#ifdef STRUCT_SOCKADDR_HAS_SA_LEN
+    addr->sin_len = sizeof(struct sockaddr_in);
+#endif
     tp = (char *) &addr->sin_addr;
     *tp++ = c1;
     *tp++ = c2;

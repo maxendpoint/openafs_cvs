@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.13 2001/11/21 16:01:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.14 2002/02/16 18:23:49 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -102,7 +102,7 @@ extern afs_lock_t afs_ftf;
 /* Exported variables */
 struct osi_dev cacheDev;           /*Cache device*/
 afs_int32 cacheInfoModTime;			/*Last time cache info modified*/
-#if defined(AFS_OSF_ENV) || defined(AFS_DEC_ENV) || defined(AFS_DARWIN_ENV)
+#if defined(AFS_OSF_ENV) || defined(AFS_DEC_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
 struct mount *afs_cacheVfsp=0;
 #elif defined(AFS_LINUX20_ENV)
 struct super_block *afs_cacheSBp = 0;
@@ -444,11 +444,15 @@ afs_InitCacheInfo(afile)
 	      TO_KERNEL_SPACE();
 	  }
 #else
-#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_DARWIN_ENV)
         if (!VFS_STATFS(filevp->v_mount, &st, current_proc()))
 #else 
+#if defined(AFS_FBSD_ENV)
+        if (!VFS_STATFS(filevp->v_mount, &st, curproc))
+#else 
 	if (!VFS_STATFS(filevp->v_vfsp, &st))  
-#endif /* AFS_DARWIN_ENV || AFS_FBSD_ENV */
+#endif /* AFS_FBSD_ENV */
+#endif /* AFS_DARWIN_ENV */
 #endif /* AFS_LINUX20_ENV */
 #endif /* AIX41 */
 #endif /* OSF */

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.24 2002/02/06 23:57:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.25 2002/02/16 18:23:49 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -61,9 +61,10 @@ simple_lock_data_t afs_global_lock;
 #elif defined(AFS_DARWIN_ENV)
 struct lock__bsd__ afs_global_lock;
 #elif defined(AFS_FBSD_ENV)
-struct simplelock afs_global_lock;
+struct lock afs_global_lock;
+struct proc *afs_global_owner;
 #endif
-#if defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV)
 thread_t afs_global_owner;
 #endif /* AFS_OSF_ENV */
 

@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.9 2001/08/08 02:05:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.10 2002/02/16 18:23:51 shadow Exp $");
 
 #include <stdio.h>
 #include <math.h>
@@ -274,6 +274,7 @@ extern char *cm_categories[]; /* cache manager data category names */
 
 
 
+#ifndef AFS_XBSD_ENV
 /*	
         strcasestr(): Return first occurence of pattern s2 in s1, case 
 	insensitive. 
@@ -305,7 +306,7 @@ char *s2;
         }
         return ((char *)NULL);
 }
-
+#endif
 
 struct hostent *GetHostByName(name)
 char *name;
@@ -3491,6 +3492,9 @@ afsmon_execute()
 	memcpy(&(curr_skt->sin_addr.s_addr), he->h_addr, 4);
 	curr_skt->sin_family = htons(AF_INET);    /*Internet family*/
 	curr_skt->sin_port   = htons(7000);       /*FileServer port*/
+#ifdef STRUCT_SOCKADDR_HAS_SA_LEN
+	curr_skt->sin_len = sizeof(struct sockaddr_in);
+#endif
 
 	/* get the next dude */
 	curr_skt++;
@@ -3562,6 +3566,9 @@ afsmon_execute()
 	memcpy(&(curr_skt->sin_addr.s_addr), he->h_addr, 4);
 	curr_skt->sin_family = htons(AF_INET);    /*Internet family*/
 	curr_skt->sin_port   = htons(7001);       /*Cache Manager port*/
+#ifdef STRUCT_SOCKADDR_HAS_SA_LEN
+	curr_skt->sin_len = sizeof(struct sockaddr_in);
+#endif
 
 	/* get the next dude */
 	curr_skt++;

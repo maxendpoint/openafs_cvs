@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.10 2001/08/08 00:03:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.11 2002/02/16 18:23:59 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -207,6 +207,9 @@ struct cmd_syndesc *as;
     taddr.sin_family = AF_INET;
     taddr.sin_port = 0;
     taddr.sin_addr.s_addr = 0;
+#ifdef STRUCT_SOCKADDR_HAS_SA_LEN
+    taddr.sin_len = sizeof(struct sockaddr_in);
+#endif 
     code = bind(s, (struct sockaddr *) &taddr, sizeof(struct sockaddr_in));
     if (code) {
 	perror("bind");
