@@ -55,7 +55,7 @@ struct clock {
        struct timeval tv;                              \
        gettimeofday(&tv, NULL);                        \
        (cv)->sec = (afs_int32)tv.tv_sec;               \
-       (cv)->usec = (afs_int32)tv.usec;                \
+       (cv)->usec = (afs_int32)tv.tv_usec;             \
     END
 
 #else /* AFS_USE_GETTIMEOFDAY || AFS_PTHREAD_ENV */
