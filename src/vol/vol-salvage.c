@@ -91,7 +91,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.19 2002/09/20 15:38:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.20 2002/09/26 02:57:34 kolya Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2754,7 +2754,7 @@ void JudgeEntry(struct DirSummary *dir, char *name, VnodeId vnodeNumber,
      * or if the directory is orphaned.
      */
     if (!vnodeEssence->unique || 
-	(vnodeEssence->unique) != unique) ) {
+	(vnodeEssence->unique) != unique) {
         if (!vnodeEssence->unique && 
 	     ((strcmp(name,"..")==0) || (strcmp(name,".")==0)) ) {
 	   /* This is an orphaned directory. Don't delete the . or ..
