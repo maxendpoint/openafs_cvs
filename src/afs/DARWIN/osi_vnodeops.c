@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.14 2003/10/24 06:26:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.15 2004/02/03 05:10:24 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -898,6 +898,15 @@ afs_vop_rename(ap)
     struct vnode *fvp = ap->a_fvp;
     register struct vnode *fdvp = ap->a_fdvp;
     struct proc *p = fcnp->cn_proc;
+
+	/* Check for cross-device rename.
+	 * For AFS, this means anything not in AFS-space
+	 */
+	if ((0 != strcmp(tdvp->v_mount->mnt_stat.f_fstypename, "afs")) ||
+		(tvp && (0 != strcmp(tvp->v_mount->mnt_stat.f_fstypename, "afs")))) {
+			error = EXDEV;
+			goto abortit;
+	}
 
     /*
      * if fvp == tvp, we're just removing one name of a pair of
