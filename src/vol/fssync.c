@@ -50,7 +50,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.25 2004/07/19 14:39:38 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.26 2004/07/28 21:49:18 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -105,7 +105,7 @@ int (*V_BreakVolumeCallbacks) ();
 
 #define MAXHANDLERS	4	/* Up to 4 clients; must be at least 2, so that
 				 * move = dump+restore can run on single server */
-#define MAXOFFLINEVOLUMES 30	/* This needs to be as big as the maximum
+#define MAXOFFLINEVOLUMES 128   /* This needs to be as big as the maximum
 				 * number that would be offline for 1 operation.
 				 * Current winner is salvage, which needs all
 				 * cloned read-only copies offline when salvaging
