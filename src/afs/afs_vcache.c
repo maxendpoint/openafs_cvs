@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.7 2005/01/31 04:18:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.8 2005/01/31 04:19:55 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -683,11 +683,6 @@ afs_TryFlushDcacheChildren(struct vcache *tvc)
     cur = head;
     while ((cur = cur->next) != head) {
 	dentry = list_entry(cur, struct dentry, d_alias);
-
-	afs_Trace3(afs_iclSetp, CM_TRACE_TRYFLUSHDCACHECHILDREN,
-		   ICL_TYPE_POINTER, ip, ICL_TYPE_STRING,
-		   dentry->d_parent->d_name.name, ICL_TYPE_STRING,
-		   dentry->d_name.name);
 
 	if (!DCOUNT(dentry)) {
 	    AFS_GUNLOCK();
