@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.47 2004/07/29 03:32:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.48 2004/08/09 00:17:33 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -806,6 +806,12 @@ afs_osi_TraverseProcTable(void)
 #endif
 
 #if defined(AFS_OSF_ENV)
+
+#ifdef AFS_DUX50_ENV
+extern struct pid_entry *pidtab;
+extern int npid; 
+#endif
+
 void
 afs_osi_TraverseProcTable(void)
 {
