@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.24 2004/07/13 06:01:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.25 2004/07/14 04:09:12 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -99,7 +99,7 @@ afs_getgroups(cred_t *cr, gid_t *groups)
 
     AFS_STATCNT(afs_getgroups);
 
-    *gp = cr->cr_groups;
+    gp = cr->cr_groups;
     n = cr->cr_ngroups;
 
     for (i = 0; (i < n) && (*gp != (gid_t) NOGROUP); i++)
