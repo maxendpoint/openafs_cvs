@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.74 2004/04/21 02:20:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.75 2004/06/02 07:43:48 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -464,8 +464,9 @@ afs_linux_vma_close(struct vm_area_struct *vmap)
 		(void)afs_close(vcp, vmap->vm_file->f_flags, credp);
 		/* only decrement the execsOrWriters flag if this is not a
 		 * writable file. */
-		if (!(vmap->vm_file->f_flags & (FWRITE | FTRUNC)))
-		    vcp->execsOrWriters--;
+		if (!(vcp->states & CRO) )
+		    if (! (vmap->vm_file->f_flags & (FWRITE | FTRUNC)))
+			vcp->execsOrWriters--;
 		vcp->states &= ~CMAPPED;
 		crfree(credp);
 	    } else if ((vmap->vm_file->f_flags & (FWRITE | FTRUNC)))
@@ -546,7 +547,8 @@ afs_linux_mmap(struct file *fp, struct vm_area_struct *vmap)
 
 	/* Add an open reference on the first mapping. */
 	if (vcp->mapcnt == 0) {
-	    vcp->execsOrWriters++;
+	    if (!(vcp->states & CRO))
+		vcp->execsOrWriters++;
 	    vcp->opens++;
 	    vcp->states |= CMAPPED;
 	}
