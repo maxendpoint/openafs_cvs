@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.39 2003/11/27 05:52:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.40 2004/02/03 06:23:39 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -510,6 +510,8 @@ rxi_GetcbiInfo(void)
     memset((void *)mtus, 0, sizeof(mtus));
 
     for (i = 0; i < afs_cb_interface.numberOfInterfaces; i++) {
+        if (!afs_cb_interface.mtu[i]) 
+	    afs_cb_interface.mtu[i] = htonl(1500);
 	rxmtu = (ntohl(afs_cb_interface.mtu[i]) - RX_IPUDP_SIZE);
 	ifinaddr = ntohl(afs_cb_interface.addr_in[i]);
 	if (myNetAddrs[i] != ifinaddr)

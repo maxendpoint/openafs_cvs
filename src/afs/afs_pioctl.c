@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.71 2004/02/03 05:57:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.72 2004/02/03 06:23:34 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -265,6 +265,8 @@ copyin_afs_ioctl(caddr_t cmarg, struct afs_ioctl *dst)
     if (current->tss.flags & SPARC_FLAG_32BIT)
 #elif defined(AFS_AMD64_LINUX20_ENV)
     if (current->thread.flags & THREAD_IA32)
+#elif defined(AFS_PPC64_LINUX20_ENV)
+    if (current->thread.flags & PPC_FLAG_32BIT)
 #else
 #error Not done for this linux type
 #endif

@@ -38,7 +38,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/crypt.c,v 1.12 2003/11/29 22:08:12 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/des/crypt.c,v 1.13 2004/02/03 06:23:37 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <windows.h>
@@ -91,7 +91,7 @@ RCSID
  */
 
 /* XXX shouldn't this be !AFS_64BIT_ENV ? */
-#if !defined(cray) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV) && !defined(AFS_AMD64_LINUX20_ENV)
+#if !defined(cray) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV) && !defined(AFS_AMD64_LINUX20_ENV) && !defined(AFS_PPC64_LINUX20_ENV)
 #define	LONG_IS_32_BITS
 #endif
 

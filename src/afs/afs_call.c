@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.63 2004/02/03 05:57:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.64 2004/02/03 06:23:34 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1118,6 +1118,8 @@ copyin_iparam(caddr_t cmarg, struct iparam *dst)
     if (current->tss.flags & SPARC_FLAG_32BIT)
 #elif defined(AFS_AMD64_LINUX20_ENV)
     if (current->thread.flags & THREAD_IA32)
+#elif defined(AFS_PPC64_LINUX20_ENV)
+    if (current->thread.flags & PPC_FLAG_32BIT) 
 #else
 #error Not done for this linux version
 #endif

@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.16 2003/07/15 23:16:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.17 2004/02/03 06:23:39 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -38,6 +38,7 @@ RCSID
 #include <rx/rx_globals.h>
 #include <assert.h>
 #include <rx/rx_pthread.h>
+#include <rx/rx_clock.h>
 
 /*
  * Number of times the event handling thread was signalled because a new
@@ -87,7 +88,7 @@ void
 rxi_InitializeThreadSupport(void)
 {
     listeners_started = 0;
-    gettimeofday((struct timeval *)&rxi_clockNow, NULL);
+    clock_GetTime(&rxi_clockNow);
 }
 
 static void *
@@ -154,8 +155,8 @@ event_handler(void *argp)
 
 	next.sec = 30;		/* Time to sleep if there are no events scheduled */
 	next.usec = 0;
-	gettimeofday((struct timeval *)&cv, NULL);
-	rxevent_RaiseEvents(&next);
+	clock_GetTime(&cv);
+ 	rxevent_RaiseEvents(&next);
 
 	assert(pthread_mutex_lock(&event_handler_mutex) == 0);
 	if (rx_pthread_event_rescheduled) {
