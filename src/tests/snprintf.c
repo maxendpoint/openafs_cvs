@@ -33,13 +33,20 @@
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
-RCSID("$Id: snprintf.c,v 1.1 2002/02/16 18:09:26 shadow Exp $");
+RCSID("$Id: snprintf.c,v 1.2 2002/02/19 17:33:49 shadow Exp $");
 #endif
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#ifndef min
+#define min(a, b)               ((a) > (b) ? (b) : (a))
+#endif
+#ifndef max
+#define max(a, b)               ((a) < (b) ? (b) : (a))
+#endif
 
 enum format_flags {
     minus_flag     =  1,
