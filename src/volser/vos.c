@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.10 2001/10/08 22:55:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.11 2001/10/20 16:27:47 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -67,7 +67,7 @@ cmd_AddParm(ts, "-cell", CMD_SINGLE, CMD_OPTIONAL, "cell name");\
 cmd_AddParm(ts, "-noauth", CMD_FLAG, CMD_OPTIONAL, "don't authenticate");\
 cmd_AddParm(ts, "-localauth",CMD_FLAG,CMD_OPTIONAL,"use server tickets");\
 cmd_AddParm(ts, "-verbose", CMD_FLAG, CMD_OPTIONAL, "verbose");\
-cmd_AddParm(ts, "-crypt", CMD_FLAG, CMD_OPTIONAL, "encrypt commands");\
+cmd_AddParm(ts, "-encrypt", CMD_FLAG, CMD_OPTIONAL, "encrypt commands");\
 
 #define ERROR_EXIT(code) {error=(code); goto error_exit;}
 
