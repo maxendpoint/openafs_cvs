@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.8 2002/12/03 23:34:31 rees Exp $ */
+/* $Id: osi_machdep.h,v 1.9 2003/02/14 19:07:19 rees Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -79,6 +79,10 @@ extern struct timeval time;
 #define	afs_hz		hz
 #define osi_GetTime(x)	microtime(x)
 #define osi_Time()	(time.tv_sec)
+
+/* str */
+#define afs_strcasecmp(s1, s2)	strncasecmp((s1), (s2), 65535)
+#define afs_strcat(s1, s2)	strcat((s1), (s2))
 
 /* other */
 #define afs_bufferpages bufpages
