@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.79 2005/02/16 22:47:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.80 2005/03/20 14:32:06 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -100,6 +100,8 @@ afs_int32 afs_rx_harddead = AFS_HARDDEADTIME;
 static int
   Afscall_icl(long opcode, long p1, long p2, long p3, long p4, long *retval);
 
+static int afscall_set_rxpck_received = 0;
+
 #if defined(AFS_HPUX_ENV)
 extern int afs_vfs_mount();
 #endif /* defined(AFS_HPUX_ENV) */
@@ -128,6 +130,7 @@ afs_InitSetup(int preallocs)
     memset(afs_zeros, 0, AFS_ZEROS);
 
     /* start RX */
+    if(!afscall_set_rxpck_received)
     rx_extraPackets = AFS_NRXPACKETS;	/* smaller # of packets */
     code = rx_InitHost(rx_bindhost, htons(7001));
     if (code) {
@@ -901,6 +904,9 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
 	code = 0;
     } else if (parm == AFSOP_SET_BACKUPTREE) {
 	afs_bkvolpref = parm2;
+    } else if (parm == AFSOP_SET_RXPCK) {
+	rx_extraPackets = parm2;
+	afscall_set_rxpck_received = 1;
     } else
 	code = EINVAL;
 
