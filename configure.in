@@ -152,6 +152,18 @@ if test "x$with_afs_sysname" != "x"; then
 else
 	AC_MSG_CHECKING(your AFS sysname)
 	case $host in
+		i?86-*-freebsd4.2*)
+			AFS_SYSNAME="i386_fbsd_42"
+			;;
+		hppa-hp-hpux11*)
+			AFS_SYSNAME="hp_ux110"
+			;;
+		hppa-hp-hpux10*)
+			AFS_SYSNAME="hp_ux102"
+			;;
+		ppc-apple-darwin*)
+			AFS_SYSNAME="ppc_darwin13"
+			;;
 		sparc-sun-solaris2.5*)
 			AFS_SYSNAME="sun4x_55"
 			;;
