@@ -22,12 +22,6 @@
 #include <sys/file.h>
 #include <sys/param.h>
 #include <lock.h>
-#ifdef AFS_AIX_ENV
-#include <sys/lockf.h>
-#endif
-#ifdef AFS_SUN5_ENV
-#include <unistd.h>
-#endif
 #include <afs/afsutil.h>
 #include <lwp.h>
 #include "nfs.h"
