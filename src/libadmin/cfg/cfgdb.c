@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgdb.c,v 1.5 2003/07/15 23:15:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgdb.c,v 1.6 2004/04/02 06:54:05 jaltman Exp $");
 
 #include <afs/stds.h>
 
@@ -316,6 +316,7 @@ cfg_CellServDbEnumerate(const char *fsDbHost,	/* fileserver or database host */
 
 		if (*cellName == NULL) {
 		    free(*cellDbHosts);
+			*cellDbHosts = NULL;
 		    tst = ADMNOMEM;
 		} else {
 		    strcpy(*cellName, dbhostCell);
@@ -347,7 +348,8 @@ int ADMINAPI
 cfg_CellServDbStatusDeallocate(cfg_cellServDbStatus_t * statusItempP,
 			       afs_status_p st)
 {
-    free((void *)statusItempP);
+	if ( statusItempP )
+		free((void *)statusItempP);
 
     if (st != NULL) {
 	*st = 0;
@@ -427,7 +429,7 @@ CellServDbUpdate(int updateOp, void *hostHandle, const char *sysControlHost,
      */
 
     if (tst == 0) {
-	cfg_csdb_update_ctrl_t *ctrlBlockp;
+	cfg_csdb_update_ctrl_t *ctrlBlockp = NULL;
 
 	*maxUpdates = 0;
 
@@ -494,7 +496,7 @@ CellServDbUpdate(int updateOp, void *hostHandle, const char *sysControlHost,
 		     &tst2)) {
 		    tst = tst2;
 		} else {
-		    cfg_csdb_update_name_t *nameBlockp;
+		    cfg_csdb_update_name_t *nameBlockp = NULL;
 		    short nameBlockDone = 0;
 
 		    while (!nameBlockDone) {

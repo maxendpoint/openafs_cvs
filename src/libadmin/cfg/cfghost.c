@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/cfg/cfghost.c,v 1.5 2003/07/15 23:15:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/cfg/cfghost.c,v 1.6 2004/04/02 06:54:05 jaltman Exp $");
 
 #include <afs/stds.h>
 
@@ -961,7 +961,7 @@ cfg_HostPartitionTableEnumerate(void *hostHandle,	/* host config handle */
 			    free(metaTablep);
 			}
 		    } else {
-			free(metaTablep);
+				free(metaTablep);
 		    }
 		}
 	    }
