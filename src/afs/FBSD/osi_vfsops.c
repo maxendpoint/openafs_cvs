@@ -1,7 +1,8 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.13 2003/07/07 16:15:48 rees Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.14 2003/07/15 23:14:20 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */

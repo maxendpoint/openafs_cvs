@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/bulk.example/bulk_client.c,v 1.6 2003/05/14 14:30:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/bulk.example/bulk_client.c,v 1.7 2003/07/15 23:16:29 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -43,10 +43,10 @@ GetIpAddress(char *hostname)
     return host;
 }
 
-long FetchFile(struct rx_call *call, int verbose,
-	       char *localFile, char *remoteFile, long *length_ptr);
-long StoreFile(struct rx_call *call, int verbose,
-	       char *localFile, char *remoteFile, long *length_ptr);
+long FetchFile(struct rx_call *call, int verbose, char *localFile,
+	       char *remoteFile, long *length_ptr);
+long StoreFile(struct rx_call *call, int verbose, char *localFile,
+	       char *remoteFile, long *length_ptr);
 
 
 int
@@ -116,8 +116,8 @@ main(int argc, char **argv)
 }
 
 long
-FetchFile(struct rx_call *call, int verbose,
-	  char *localFile, char *remoteFile, long *length_ptr)
+FetchFile(struct rx_call *call, int verbose, char *localFile,
+	  char *remoteFile, long *length_ptr)
 {
     int fd = -1, error = 0;
     struct stat status;
@@ -139,8 +139,8 @@ FetchFile(struct rx_call *call, int verbose,
 }
 
 long
-StoreFile(struct rx_call *call, int verbose,
-	  char *localFile, char *remoteFile, long *length_ptr)
+StoreFile(struct rx_call *call, int verbose, char *localFile,
+	  char *remoteFile, long *length_ptr)
 {
     int fd = -1, error = 0;
     struct stat status;

@@ -14,7 +14,8 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/samples/rxdebug_supported_stats.c,v 1.4 2001/07/12 19:58:45 shadow Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/libadmin/samples/rxdebug_supported_stats.c,v 1.5 2003/07/15 23:15:33 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -24,18 +25,15 @@ RCSID("$Header: /cvs/openafs/src/libadmin/samples/rxdebug_supported_stats.c,v 1.
 #include <afs/afs_clientAdmin.h>
 #include <afs/afs_utilAdmin.h>
 
-void Usage()
+void
+Usage()
 {
-    fprintf(stderr,
-	    "Usage: rxdebug_supported_stats <host> <port>\n");
+    fprintf(stderr, "Usage: rxdebug_supported_stats <host> <port>\n");
     exit(1);
 }
 
-void ParseArgs(
-    int argc,
-    char *argv[],
-    char **srvrName,
-    long *srvrPort)
+void
+ParseArgs(int argc, char *argv[], char **srvrName, long *srvrPort)
 {
     char **argp = argv;
 
@@ -51,7 +49,8 @@ void ParseArgs(
 	Usage();
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
     int rc;
     afs_status_t st = 0;

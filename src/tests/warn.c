@@ -33,7 +33,7 @@
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
-RCSID("$Id: warn.c,v 1.1 2002/01/14 07:49:18 shadow Exp $");
+RCSID("$Id: warn.c,v 1.2 2003/07/15 23:17:02 shadow Exp $");
 #endif
 
 #include "err.h"
@@ -41,8 +41,8 @@ RCSID("$Id: warn.c,v 1.1 2002/01/14 07:49:18 shadow Exp $");
 void
 warn(const char *fmt, ...)
 {
-  va_list ap;
-  va_start(ap, fmt);
-  vwarn(fmt, ap);
-  va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    vwarn(fmt, ap);
+    va_end(ap);
 }

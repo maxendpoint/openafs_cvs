@@ -17,7 +17,8 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_misc.c,v 1.7 2003/07/01 18:06:39 rees Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_misc.c,v 1.8 2003/07/15 23:14:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -59,7 +60,7 @@ osi_lookupname(char *aname, enum uio_seg seg, int followlink,
 	flags |= FOLLOW;
     else
 	flags |= NOFOLLOW;
-    /*   if (dirvpp) flags|=WANTPARENT;*//* XXX LOCKPARENT? */
+    /*   if (dirvpp) flags|=WANTPARENT; *//* XXX LOCKPARENT? */
     NDINIT(&n, LOOKUP, flags, seg, aname, curproc);
     if (error = namei(&n))
 	return error;

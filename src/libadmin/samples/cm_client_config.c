@@ -14,7 +14,8 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/samples/cm_client_config.c,v 1.4 2001/07/12 19:58:45 shadow Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/libadmin/samples/cm_client_config.c,v 1.5 2003/07/15 23:15:33 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -24,18 +25,15 @@ RCSID("$Header: /cvs/openafs/src/libadmin/samples/cm_client_config.c,v 1.4 2001/
 #include <afs/afs_clientAdmin.h>
 #include <afs/afs_utilAdmin.h>
 
-void Usage()
+void
+Usage()
 {
-    fprintf(stderr,
-	    "Usage: cm_client_config <host> <port>\n");
+    fprintf(stderr, "Usage: cm_client_config <host> <port>\n");
     exit(1);
 }
 
-void ParseArgs(
-    int argc,
-    char *argv[],
-    char **srvrName,
-    long *srvrPort)
+void
+ParseArgs(int argc, char *argv[], char **srvrName, long *srvrPort)
 {
     char **argp = argv;
 
@@ -51,7 +49,8 @@ void ParseArgs(
 	Usage();
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
     int rc;
     afs_status_t st = 0;
@@ -99,9 +98,9 @@ int main(int argc, char *argv[])
 	exit(1);
     }
 
-    
-    printf("\nClient configuration for %s (port %d):\n\n",
-	   srvrName, srvrPort);
+
+    printf("\nClient configuration for %s (port %d):\n\n", srvrName,
+	   srvrPort);
     printf("    clientVersion:  %d\n", config.clientVersion);
     printf("    serverVersion:  %d\n", config.serverVersion);
     printf("    nChunkFiles:    %d\n", config.c.config_v1.nChunkFiles);

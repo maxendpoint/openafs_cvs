@@ -10,33 +10,39 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vm.c,v 1.6 2002/10/16 03:58:24 shadow Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vm.c,v 1.7 2003/07/15 23:14:29 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
-#include "afs/afs_stats.h"  /* statistics */
+#include "afs/afs_stats.h"	/* statistics */
 
-void osi_VM_Truncate(struct vcache *avc, int alen, struct AFS_UCRED *acred)
+void
+osi_VM_Truncate(struct vcache *avc, int alen, struct AFS_UCRED *acred)
 {
     return;
 }
 
-int osi_VM_FlushVCache(struct vcache *avc, int *slept)
+int
+osi_VM_FlushVCache(struct vcache *avc, int *slept)
 {
     return 0;
 }
 
-void osi_VM_StoreAllSegments(struct vcache *avc)
+void
+osi_VM_StoreAllSegments(struct vcache *avc)
 {
     return;
 }
 
-void osi_VM_TryToSmush(struct vcache *avc, struct AFS_UCRED *acred, int sync)
+void
+osi_VM_TryToSmush(struct vcache *avc, struct AFS_UCRED *acred, int sync)
 {
     return;
 }
 
-void osi_VM_FlushPages(struct vcache *avc, struct AFS_UCRED *credp)
+void
+osi_VM_FlushPages(struct vcache *avc, struct AFS_UCRED *credp)
 {
     return;
 }

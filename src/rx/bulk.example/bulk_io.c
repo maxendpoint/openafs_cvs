@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/bulk.example/bulk_io.c,v 1.5 2003/05/14 14:30:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/bulk.example/bulk_io.c,v 1.6 2003/07/15 23:16:29 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -21,8 +21,8 @@ RCSID
 #include "bulk.h"
 
 int
-bulk_SendFile(register int fd,
-	      register struct rx_call *call, register struct stat *status)
+bulk_SendFile(register int fd, register struct rx_call *call,
+	      register struct stat *status)
 {
     char *buffer = (char *)0;
     int blockSize;
@@ -59,8 +59,8 @@ bulk_SendFile(register int fd,
 
 /* Copy the appropriate number of bytes from the call to fd.  The status should reflect the file's status coming into the routine and will reflect it going out of the routine, in the absence of errors */
 int
-bulk_ReceiveFile(register int fd,
-		 register struct rx_call *call, register struct stat *status)
+bulk_ReceiveFile(register int fd, register struct rx_call *call,
+		 register struct stat *status)
 {
     register char *buffer = (char *)0;
     long length;

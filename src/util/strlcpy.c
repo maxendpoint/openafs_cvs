@@ -17,7 +17,8 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/strlcpy.c,v 1.1 2003/06/27 14:01:21 rees Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/util/strlcpy.c,v 1.2 2003/07/15 23:17:16 shadow Exp $");
 
 #ifndef HAVE_STRLCPY
 
@@ -47,10 +48,9 @@ strlcpy(char *dst, const char *src, size_t siz)
     if (n == 0) {
 	if (siz != 0)
 	    *d = '\0';		/* NUL-terminate dst */
-	while (*s++)
-	    ;
+	while (*s++);
     }
 
-    return(s - src - 1);	/* count does not include NUL */
+    return (s - src - 1);	/* count does not include NUL */
 }
 #endif

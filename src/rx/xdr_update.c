@@ -9,12 +9,13 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_update.c,v 1.4 2002/08/21 18:13:51 shadow Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/rx/xdr_update.c,v 1.5 2003/07/15 23:16:13 shadow Exp $");
 
 #ifndef	NeXT
 #include "xdr.h"
 
-#ifdef NULL	/* Strict ANSI-C aborts if we redefine this */
+#ifdef NULL			/* Strict ANSI-C aborts if we redefine this */
 #undef NULL
 #endif
 
@@ -41,21 +42,22 @@ RCSID("$Header: /cvs/openafs/src/rx/xdr_update.c,v 1.4 2002/08/21 18:13:51 shado
  * > xdr_obj: routine to XDR an object.
  *    
  */
-bool_t xdr_pointer(register XDR *xdrs, char **objpp,
-	u_int obj_size, xdrproc_t xdr_obj)
-{                      
-                       
-        bool_t more_data;
-                
-        more_data = (*objpp != NULL);
-        if (! xdr_bool(xdrs,&more_data)) {
-                return(FALSE);
-        }
-        if (! more_data) {
-                *objpp = NULL;
-                return(TRUE);
-        }
-        return(xdr_reference(xdrs,objpp,obj_size,xdr_obj));
+bool_t
+xdr_pointer(register XDR * xdrs, char **objpp, u_int obj_size,
+	    xdrproc_t xdr_obj)
+{
+
+    bool_t more_data;
+
+    more_data = (*objpp != NULL);
+    if (!xdr_bool(xdrs, &more_data)) {
+	return (FALSE);
+    }
+    if (!more_data) {
+	*objpp = NULL;
+	return (TRUE);
+    }
+    return (xdr_reference(xdrs, objpp, obj_size, xdr_obj));
 }
 
 /*
@@ -68,19 +70,20 @@ bool_t xdr_pointer(register XDR *xdrs, char **objpp,
  * > elemsize: size of each element
  * > xdr_elem: routine to XDR each element
  */
-bool_t xdr_vector(register XDR *xdrs, register char *basep, 
-	register u_int nelem, register u_int elemsize, register xdrproc_t xdr_elem)
+bool_t
+xdr_vector(register XDR * xdrs, register char *basep, register u_int nelem,
+	   register u_int elemsize, register xdrproc_t xdr_elem)
 {
-	register u_int i;
-	register char *elptr;
+    register u_int i;
+    register char *elptr;
 
-	elptr = basep;
-	for (i = 0; i < nelem; i++) {
-		if (! (*xdr_elem)(xdrs, elptr, LASTUNSIGNED)) {
-			return(FALSE);
-		}
-		elptr += elemsize;
+    elptr = basep;
+    for (i = 0; i < nelem; i++) {
+	if (!(*xdr_elem) (xdrs, elptr, LASTUNSIGNED)) {
+	    return (FALSE);
 	}
-	return(TRUE);	
+	elptr += elemsize;
+    }
+    return (TRUE);
 }
 #endif /* NeXT */

@@ -1,5 +1,5 @@
 /*
- * $Id: osi_sleep.c,v 1.6 2003/07/07 22:09:27 rees Exp $
+ * $Id: osi_sleep.c,v 1.7 2003/07/15 23:14:25 shadow Exp $
  */
 
 /*
@@ -44,23 +44,26 @@ such damages.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.6 2003/07/07 22:09:27 rees Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.7 2003/07/15 23:14:25 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
-#include "afs/afs_stats.h"   /* afs statistics */
+#include "afs/afs_stats.h"	/* afs statistics */
 
 static char waitV;
 
 
-void afs_osi_InitWaitHandle(struct afs_osi_WaitHandle *achandle)
+void
+afs_osi_InitWaitHandle(struct afs_osi_WaitHandle *achandle)
 {
     AFS_STATCNT(osi_InitWaitHandle);
     achandle->proc = NULL;
 }
 
 /* cancel osi_Wait */
-void afs_osi_CancelWait(struct afs_osi_WaitHandle *achandle)
+void
+afs_osi_CancelWait(struct afs_osi_WaitHandle *achandle)
 {
     caddr_t proc;
 
@@ -76,7 +79,8 @@ void afs_osi_CancelWait(struct afs_osi_WaitHandle *achandle)
  * Waits for data on ahandle, or ams ms later.  ahandle may be null.
  * Returns 0 if timeout and EINTR if signalled.
  */
-int afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
+int
+afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
 {
     int timo, code = 0;
     struct timeval atv, endTime;
@@ -113,7 +117,8 @@ int afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
     return code;
 }
 
-void afs_osi_Sleep(void *event)
+void
+afs_osi_Sleep(void *event)
 {
     AFS_ASSERT_GLOCK();
     AFS_GUNLOCK();
@@ -121,7 +126,8 @@ void afs_osi_Sleep(void *event)
     AFS_GLOCK();
 }
 
-int afs_osi_SleepSig(void *event)
+int
+afs_osi_SleepSig(void *event)
 {
     AFS_ASSERT_GLOCK();
     AFS_GUNLOCK();
@@ -130,7 +136,8 @@ int afs_osi_SleepSig(void *event)
     return 0;
 }
 
-int afs_osi_Wakeup(void *event)
+int
+afs_osi_Wakeup(void *event)
 {
     wakeup(event);
     return 1;

@@ -29,7 +29,8 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.5 2002/08/21 18:13:51 shadow Exp $");
+RCSID
+    ("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.6 2003/07/15 23:16:13 shadow Exp $");
 
 #ifndef	NeXT
 
@@ -57,34 +58,34 @@ RCSID("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.5 2002/08/21 18:13:51 sha
  */
 bool_t
 xdr_reference(xdrs, pp, size, proc)
-	register XDR *xdrs;
-	caddr_t *pp;		/* the pointer to work on */
-	u_int size;		/* size of the object pointed to */
-	xdrproc_t proc;		/* xdr routine to handle the object */
+     register XDR *xdrs;
+     caddr_t *pp;		/* the pointer to work on */
+     u_int size;		/* size of the object pointed to */
+     xdrproc_t proc;		/* xdr routine to handle the object */
 {
-	register caddr_t loc = *pp;
-	register bool_t stat;
+    register caddr_t loc = *pp;
+    register bool_t stat;
 
-	if (loc == NULL)
-		switch (xdrs->x_op) {
-		case XDR_FREE:
-			return (TRUE);
+    if (loc == NULL)
+	switch (xdrs->x_op) {
+	case XDR_FREE:
+	    return (TRUE);
 
-		case XDR_DECODE:
-			*pp = loc = osi_alloc(size);
-			if (loc == NULL) {
-				return (FALSE);
-			}
-			memset(loc, 0, (int)size);
-			break;
+	case XDR_DECODE:
+	    *pp = loc = osi_alloc(size);
+	    if (loc == NULL) {
+		return (FALSE);
+	    }
+	    memset(loc, 0, (int)size);
+	    break;
 	}
 
-	stat = (*proc)(xdrs, loc, LASTUNSIGNED);
+    stat = (*proc) (xdrs, loc, LASTUNSIGNED);
 
-	if (xdrs->x_op == XDR_FREE) {
-		osi_free(loc, size);
-		*pp = NULL;
-	}
-	return (stat);
+    if (xdrs->x_op == XDR_FREE) {
+	osi_free(loc, size);
+	*pp = NULL;
+    }
+    return (stat);
 }
 #endif /* NeXT */
