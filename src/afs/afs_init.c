@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.17 2002/08/22 22:44:53 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.18 2002/09/26 06:39:46 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -446,6 +446,8 @@ int afs_ResourceInit(int preallocs)
     RWLOCK_INIT(&afs_xuser, "afs_xuser");
     RWLOCK_INIT(&afs_xvolume, "afs_xvolume");
     RWLOCK_INIT(&afs_xserver, "afs_xserver");
+    RWLOCK_INIT(&afs_xsrvAddr, "afs_xsrvAddr");
+    RWLOCK_INIT(&afs_icl_lock, "afs_icl_lock");
     RWLOCK_INIT(&afs_xinterface, "afs_xinterface");
     LOCK_INIT(&afs_puttofileLock, "afs_puttofileLock");
 #ifndef	AFS_AIX32_ENV

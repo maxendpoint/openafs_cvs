@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.21 2002/05/02 14:38:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.22 2002/09/26 06:39:49 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -200,7 +200,7 @@ int init_module(void)
 #endif
 #endif
 
-
+    RWLOCK_INIT(&afs_xosi, "afs_xosi");
 
     /* obtain PAGE_OFFSET value */
     afs_linux_page_offset = get_page_offset();
