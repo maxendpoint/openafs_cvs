@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.12 2002/12/27 03:51:51 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.13 2002/12/28 05:17:08 kolya Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifndef AFS_LINUX22_ENV
@@ -34,7 +34,7 @@ static int memAllocMaySleep = 0;
 
 extern int cacheDiskType;
 
-int afs_InitMemCache(afs_int64 size, int blkSize, int flags)
+int afs_InitMemCache(int blkCount, int blkSize, int flags)
   {
       int index;
 
@@ -42,7 +42,7 @@ int afs_InitMemCache(afs_int64 size, int blkSize, int flags)
       if(blkSize)
 	  memCacheBlkSize = blkSize;
       
-      memMaxBlkNumber = size / memCacheBlkSize;
+      memMaxBlkNumber = blkCount;
       memCache = (struct memCacheEntry *)
 	  afs_osi_Alloc(memMaxBlkNumber * sizeof(struct memCacheEntry));
       if (flags & AFSCALL_INIT_MEMCACHE_SLEEP) {
