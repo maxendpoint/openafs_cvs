@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.97 2005/03/08 22:05:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.98 2005/04/06 21:24:27 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1835,6 +1835,7 @@ struct inode_operations afs_symlink_iops = {
   .follow_link =	page_follow_link,
 #else
   .follow_link =	page_follow_link_light,
+  .put_link =           page_put_link,
 #endif
   .setattr =		afs_notify_change,
 #else
