@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/lock.c,v 1.5 2001/07/12 19:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/lock.c,v 1.6 2001/09/17 19:43:01 shadow Exp $");
 
 #include <sys/types.h>
 #ifndef AFS_NT40_ENV
@@ -62,7 +62,6 @@ ulock_getLock(atrans, atype, await)
   struct ubik_trans *atrans;
   int               atype, await;
 {
-  struct ubik_trans *tt;
   struct ubik_dbase *dbase=atrans->dbase;
 
   /* On first pass, initialize the lock */
@@ -118,6 +117,7 @@ ulock_getLock(atrans, atype, await)
 }
 
 /* Release the transaction lock */
+void 
 ulock_relLock(atrans)
   struct ubik_trans *atrans;
 {

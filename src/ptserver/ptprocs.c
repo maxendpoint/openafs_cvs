@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.7 2001/08/08 00:03:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.8 2001/09/17 19:42:56 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -1194,7 +1194,7 @@ afs_int32 listEntries(call, flag, startindex, bulkentries, nextstartindex)
   afs_int32 code;
   struct ubik_trans *tt;
   afs_int32 cid;
-  afs_int32 temp, i, eof, pos, maxentries, f;
+  afs_int32 i, eof, pos, maxentries, f;
   struct prentry tentry;
   afs_int32 pollcount=0;
 

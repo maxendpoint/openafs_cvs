@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.7 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.8 2001/09/17 19:42:54 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -637,7 +637,6 @@ afs_int32 ka_GetToken (
     des_key_schedule schedule;
     int   version;
     afs_int32  pwexpires;
-    char bob[KA_TIMESTR_LEN];
 
     LOCK_GLOBAL_MUTEX
     aticket.SeqLen = auth_token->ticketLen;

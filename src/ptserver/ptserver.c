@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.9 2001/08/08 00:03:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.10 2001/09/17 19:42:56 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -81,7 +81,6 @@ void main (argc, argv)
 #endif
     struct afsconf_cell info;
     int kerberosKeys;			/* set if found some keys */
-    afs_int32 i,j;
     int lwps = 3;
     char clones[MAXHOSTSPERCELL];
 
@@ -157,8 +156,6 @@ void main (argc, argv)
 	}
 #endif
 	else if (*arg == '-') {
-	  usage:
-
 		/* hack in help flag support */
 
 #ifndef AFS_NT40_ENV

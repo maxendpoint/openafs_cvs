@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/readgroup.c,v 1.5 2001/08/08 00:03:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/readgroup.c,v 1.6 2001/09/17 19:42:56 shadow Exp $");
 
 #include <stdio.h>
 #ifndef AFS_NT40_ENV
@@ -27,7 +27,9 @@ RCSID("$Header: /cvs/openafs/src/ptserver/readgroup.c,v 1.5 2001/08/08 00:03:54 
 #include "pterror.h"
 
 int verbose = 0;
+void skip();
 
+void
 report_error (code, name, gname)
   afs_int32 code;
   char *name;
@@ -66,7 +68,6 @@ char **argv;
     char buf[3000];
     FILE *fp;
     char *ptr;
-    char *aptr;
     char *tmp;
     char *cellname;
     namelist lnames;
@@ -195,6 +196,7 @@ char **argv;
     }
 }
 
+void
 skip(s)
 char **s;
 {

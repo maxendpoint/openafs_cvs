@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.12 2001/09/13 23:19:23 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.13 2001/09/17 19:43:03 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -803,7 +803,6 @@ void VResetDiskUsage(void)
 
 void VAdjustDiskUsage_r(Error *ec, Volume *vp, afs_int32 blocks, afs_int32 checkBlocks)
 {
-    afs_int32 rem, minavail;
     *ec = 0;
     /* why blocks instead of checkBlocks in the check below?  Otherwise, any check
        for less than BlocksSpare would skip the error-checking path, and we
@@ -811,6 +810,8 @@ void VAdjustDiskUsage_r(Error *ec, Volume *vp, afs_int32 blocks, afs_int32 check
        blocks. */
     if (blocks > 0) {
 #ifdef	AFS_AIX32_ENV
+        afs_int32 rem, minavail;
+
 	if ((rem = vp->partition->free - checkBlocks) < 
 	    (minavail = (vp->partition->totalUsable * aixlow_water) / 100))
 #else
@@ -833,9 +834,10 @@ void VAdjustDiskUsage(Error *ec, Volume *vp, afs_int32 blocks, afs_int32 checkBl
 
 int VDiskUsage_r(Volume *vp, afs_int32 blocks)
 {
-    afs_int32 rem, minavail;
     if (blocks > 0) {
 #ifdef	AFS_AIX32_ENV
+        afs_int32 rem, minavail;
+
 	if ((rem = vp->partition->free - blocks) < 
 	    (minavail = (vp->partition->totalUsable * aixlow_water) / 100))
 #else

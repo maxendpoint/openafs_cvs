@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.7 2001/08/08 00:03:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.8 2001/09/17 19:42:52 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -397,6 +397,7 @@ struct fsbnode *abnode; {
         }
     }
     SetNeedsClock(abnode);
+    return 0;
 }
 
 static int fs_getstat(abnode, astatus)

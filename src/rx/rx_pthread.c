@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.6 2001/07/12 19:58:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.7 2001/09/17 19:42:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -207,12 +207,6 @@ struct rx_call **newcallp;
     u_long host;
     u_short port;
     register struct rx_packet *p = (struct rx_packet *)0;
-    unsigned long rfds;
-    register unsigned long rrfds;
-    struct clock cv;
-    long nextPollTime;		/* time to next poll FD before sleeping */
-    int lastPollWorked, doingPoll;	/* true iff last poll was useful */
-    struct timeval tv, *tvp;
 
     assert(pthread_mutex_lock(&listener_mutex)==0);
     while (!listeners_started) {
@@ -378,6 +372,7 @@ rxi_Listen(sock)
 	exit(1);
     }
     AFS_SIGSET_RESTORE();
+    return 0;
 }
 
 
@@ -415,4 +410,5 @@ rxi_Sendmsg(socket, msg_p, flags)
 	printf("rxi_sendmsg failed, error %d\n", errno);
 	fflush(stdout);
     }
+    return 0;
 }

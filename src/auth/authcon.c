@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.6 2001/07/12 19:58:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.7 2001/09/17 19:42:51 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -99,9 +99,7 @@ rxkad_level enclevel; {
     struct rx_securityClass *tclass;
     afs_int32 kvno;
     afs_int32 ticketLen;
-    struct timeval tv;
-    Key_schedule schedule;
-    register afs_int32 i, code;
+    register afs_int32 code;
     
     /* first, find the right key and kvno to use */
     code = afsconf_GetLatestKey(adir, &kvno, &key);

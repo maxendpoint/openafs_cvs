@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/buffer.c,v 1.5 2001/08/07 00:05:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/buffer.c,v 1.6 2001/09/17 19:42:53 shadow Exp $");
 
 #include <stdlib.h>
 #include <lock.h>
@@ -75,6 +75,7 @@ int DStat (abuffers, acalls, aios)
     {*abuffers = nbuffers;
     *acalls = calls;
     *aios = ios;
+    return 0;
     }
 
 int DInit (abuffers)
@@ -215,7 +216,7 @@ struct buffer *newslot (afid, apage, lp)
      register struct buffer *lp;   /* pointer to a fairly-old buffer */
     {/* Find a usable buffer slot */
     register afs_int32 i;
-    afs_int32 lt,pt;
+    afs_int32 lt;
     register struct buffer **tbp;
 
     if (lp && (lp->lockers == 0)) {
@@ -263,6 +264,7 @@ struct buffer *newslot (afid, apage, lp)
     return lp;
     }
 
+void
 DRelease (bp,flag)
     register struct buffer *bp;
     int flag;

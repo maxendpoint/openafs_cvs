@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.7 2001/08/08 00:04:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.8 2001/09/17 19:43:01 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -430,7 +430,7 @@ SVOTE_SDebugOld(rxcall, awhich, aparm)
     afs_int32 awhich;
     register struct ubik_sdebug_old *aparm; {
     register struct ubik_server *ts;
-    register int i;
+
     for(ts=ubik_servers; ts; ts=ts->next) {
 	if (awhich-- == 0) {
 	    /* we're done */
@@ -453,7 +453,7 @@ SVOTE_SDebugOld(rxcall, awhich, aparm)
 SVOTE_DebugOld(rxcall, aparm)
     struct rx_call *rxcall;
     register struct ubik_debug_old *aparm; {
-    int  i;
+
     /* fill in the basic debug structure.  Note the the RPC protocol transfers,
      * integers in host order. */
     

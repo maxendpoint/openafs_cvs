@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.4 2001/07/12 19:59:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.5 2001/09/17 19:43:05 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -71,6 +71,7 @@ int FindIndex(entry, server, part, type)
 }
 
 /* Changes the rw site only */
+void
 SetAValue (entry, oserver, opart, nserver, npart, type)
      struct nvldbentry *entry;
      afs_int32             oserver, opart, nserver, npart, type;

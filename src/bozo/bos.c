@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bos.c,v 1.10 2001/08/08 00:03:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bos.c,v 1.11 2001/09/17 19:42:52 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -387,6 +387,7 @@ register struct cmd_syndesc *as; {
 	    printf("\n");
 	}
     }
+    return 0;
 }
 
 static UnInstall(as)

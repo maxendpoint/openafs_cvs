@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.8 2001/08/08 00:04:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.9 2001/09/17 19:43:05 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -3153,7 +3153,7 @@ static ListVLDB(as)
        if (vcode == RXGEN_OPCODE) {
 	  /* Vlserver not running with ListAttributesN2. Fall back */
 	  vcode = VLDB_ListAttributes(&attributes, &centries, &arrayEntries);
-	  nextindex == -1;
+	  nextindex = -1;
        }
        if (vcode) {
 	  fprintf(STDERR,"Could not access the VLDB for attributes\n");

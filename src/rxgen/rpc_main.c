@@ -36,7 +36,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.13 2001/09/13 23:19:21 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.14 2001/09/17 19:42:58 shadow Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -334,9 +334,7 @@ open_input(infile, define)
 	char *infile;
 	char *define;
 {
-        char *exec_args[MAXCPPARGS+10];
 	int nargs = 0;
-	char **args;
 	char cpp_cmdline[MAXCMDLINE];
 
 	int i;
