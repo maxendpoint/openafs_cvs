@@ -13,10 +13,20 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/main.c,v 1.1 2001/08/28 23:12:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/main.c,v 1.2 2001/10/05 21:19:20 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+
 #include "des_internal.h"
 
 extern void gen PROTOTYPE((FILE * stream));
