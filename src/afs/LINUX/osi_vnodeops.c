@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.48 2002/07/27 18:06:08 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.49 2002/07/29 20:45:50 kolya Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -797,7 +797,7 @@ static int afs_linux_revalidate(struct dentry *dp)
 #ifdef AFS_LINUX24_ENV
 	unlock_kernel();
 #endif
-	if (rootvp) afs_PutVCache(rootvp);
+	if (rootvp) afs_PutVCache(rootvp, 0);
 	AFS_GUNLOCK();
 	return 0;
     }
