@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.19 2002/10/29 00:06:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.20 2002/10/30 08:19:42 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -494,7 +494,7 @@ main(argc, argv)
 	ViceLog(0, ("Failed to initialize RX, probably two servers running.\n"));
 	exit(-1);
     }
-    rx_SetDestroyConnProc(tservice, h_FreeConnection);
+    rx_SetDestroyConnProc(tservice, (void (*)())h_FreeConnection);
     rx_SetMinProcs(tservice, 3);
     rx_SetMaxProcs(tservice, lwps);
     rx_SetCheckReach(tservice, 1);
@@ -1150,8 +1150,8 @@ static ParseArgs(argc, argv)
 	    if (!strcmp(argv[i], "-cb")) {
 		Sawcbs = 1;
 		numberofcbs = atoi(argv[++i]);
-		if ((numberofcbs < 10000) || (numberofcbs > 4294967295)) {
-		    printf("number of cbs %d invalid; must be between 10000 and 4294967295\n",
+		if ((numberofcbs < 10000) || (numberofcbs > 2147483647)) {
+		    printf("number of cbs %d invalid; must be between 10000 and 2147483647\n",
 			   numberofcbs);
 		    return -1;
 		}
