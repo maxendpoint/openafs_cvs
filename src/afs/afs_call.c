@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.48 2003/03/23 19:43:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.49 2003/04/23 23:03:45 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -65,7 +65,11 @@ struct lock__bsd__ afs_global_lock;
 
 #if defined(AFS_XBSD_ENV)
 struct lock afs_global_lock;
+#ifdef AFS_FBSD50_ENV
+struct thread *afs_global_owner;
+#else
 struct proc *afs_global_owner;
+#endif
 #endif
 
 #if defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV)
