@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.23 2004/09/28 04:44:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.24 2004/09/28 05:00:33 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1042,7 +1042,7 @@ static int namei_ListAFSSubDirs(IHandle_t * dirIH,
 						  char *, char *), FILE * fp,
 				int (*judgeFun) (struct ViceInodeInfo *,
 						 int vid),
-				int singleVolumeNumber);
+				int singleVolumeNumber, void *rock);
 
 
 /* WriteInodeInfo

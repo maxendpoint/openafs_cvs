@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.8 2004/09/28 04:44:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.9 2004/09/28 05:00:33 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <stdio.h>
@@ -936,7 +936,7 @@ static int nt_ListAFSSubDirs(IHandle_t * dirIH,
 					       char *, char *), FILE * fp,
 			     int (*judgeFun) (struct ViceInodeInfo *,
 					      int vid),
-			     int singleVolumeNumber);
+			     int singleVolumeNumber, void *rock);
 
 
 /* WriteInodeInfo
