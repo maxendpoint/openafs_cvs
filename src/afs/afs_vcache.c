@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.49 2003/05/29 18:20:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.50 2003/07/01 18:06:38 rees Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -771,8 +771,22 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 		    continue;	/* start over - may have raced. */
 		}
             }
-#endif
-#if defined(AFS_FBSD_ENV)
+#elif defined(AFS_FBSD50_ENV)
+	    if (VREFCOUNT(tvc) == 1 && tvc->opens == 0
+		&& (tvc->states & CUnlinkedDel) == 0) {
+		if (!(VOP_LOCK(&tvc->v, LK_EXCLUSIVE, curthread))) {
+		    if (VREFCOUNT(tvc) == 1 && tvc->opens == 0
+			&& (tvc->states & CUnlinkedDel) == 0) {
+			VREFCOUNT_DEC(tvc);
+			AFS_GUNLOCK(); /* perhaps inline inactive for locking */
+			VOP_INACTIVE(&tvc->v, curthread);
+			AFS_GLOCK();
+		    } else {
+			VOP_UNLOCK(&tvc->v, 0, curthread);
+		    }
+		}
+	    }
+#elif defined(AFS_FBSD_ENV) && !defined(AFS_FBSD50_ENV)
 	    if (VREFCOUNT(tvc) == 1 && tvc->opens == 0
 		&& (tvc->states & CUnlinkedDel) == 0) {
 		if (!(VOP_LOCK(&tvc->v, LK_EXCLUSIVE, curproc))) {
@@ -787,8 +801,7 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 		    }
 		}
 	    }
-#endif
-#if defined(AFS_LINUX22_ENV)
+#elif defined(AFS_LINUX22_ENV)
 	    if (tvc != afs_globalVp && VREFCOUNT(tvc) && tvc->opens == 0)
 		afs_TryFlushDcacheChildren(tvc);
 #endif
