@@ -105,7 +105,7 @@ ${DEST}/lib/libafsauthent.${SHLIB_SUFFIX}: ${DEST}/lib/${LIBAFSAUTHENT}
 
 all: ${TOP_LIBDIR}/${LIBAFSAUTHENT}
 
-install: ${DESTDIR}${libdir}/${LIBAFSAUTHENT}
+install: ${DESTDIR}${libdir}/${LIBAFSAUTHENT} ${DESTDIR}${libdir}/libafsauthent.${SHLIB_SUFFIX}
 
 ${LIBAFSAUTHENT}: ${LIBOBJS}
 	case ${SYS_NAME} in \
@@ -268,5 +268,6 @@ ${TOP_LIBDIR}/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
 ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}: ${TOP_LIBDIR}/${LIBAFSAUTHENT}
 	-ln -f -s ${LIBAFSAUTHENT} ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}
 
-dest: ${DEST}/lib/${LIBAFSAUTHENT}
+dest: ${DEST}/lib/${LIBAFSAUTHENT} ${DEST}/lib/libafsauthent.${SHLIB_SUFFIX}
+
 

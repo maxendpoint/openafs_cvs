@@ -121,7 +121,7 @@ LIBAFSRPC = libafsrpc.${SHLIB_SUFFIX}.${LIBAFSRPCMAJOR}.${LIBAFSRPCMINOR}
 
 all: ${TOP_LIBDIR}/${LIBAFSRPC}
 
-install: ${DESTDIR}${libdir}/${LIBAFSRPC}
+install: ${DESTDIR}${libdir}/${LIBAFSRPC} ${DESTDIR}${libdir}/libafsrpc.${SHLIB_SUFFIX}
 
 ${DEST}/lib/${LIBAFSRPC}: ${LIBAFSRPC}
 	${INSTALL} ${LIBAFSRPC} ${DEST}/lib/${LIBAFSRPC}
@@ -254,7 +254,7 @@ xdr_afsuuid.o: ${RX}/xdr_afsuuid.c
 #
 #   $ what /opt/langtools/bin/pxdb32
 #   /opt/langtools/bin/pxdb32:
-#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.4 $
+#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.5 $
 #
 # The problem occurs when -g and -O are both used when compiling des.c.
 # The simplest way to work around the problem is to leave out either -g or -O.
@@ -389,5 +389,5 @@ ${TOP_LIBDIR}/${LIBAFSRPC}: ${LIBAFSRPC}
 ${TOP_LIBDIR}/libafsrpc.${SHLIB_SUFFIX}: ${TOP_LIBDIR}/${LIBAFSRPC}
 	-ln -f -s ${LIBAFSRPC} ${TOP_LIBDIR}/libafsrpc.${SHLIB_SUFFIX}
 
-dest: ${DEST}/lib/${LIBAFSRPC}
+dest: ${DEST}/lib/${LIBAFSRPC} ${DEST}/lib/libafsrpc.${SHLIB_SUFFIX}
 
