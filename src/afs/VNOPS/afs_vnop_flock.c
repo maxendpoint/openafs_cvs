@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.15 2002/04/09 18:08:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.16 2002/04/09 19:21:59 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -916,7 +916,7 @@ afs_xflock () {
 		return;
 	    }
 #endif
-	    code = afs_EvalFakeStat(&fakestate, &tvc, &treq);
+	    code = afs_EvalFakeStat(&tvc, &fakestate, &treq);
 	    if (code) {
 		afs_PutFakeStat(&fakestate);
 		return code;

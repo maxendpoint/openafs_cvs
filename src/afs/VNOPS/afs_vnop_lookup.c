@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.29 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.30 2002/04/09 19:21:59 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -243,7 +243,7 @@ EvalMountPoint(avc, advc, avolpp, areq)
  * afs_InitFakeStat
  *
  * Must be called on an afs_fakestat_state object before calling
- * afs_EvalFakeStat or afs_PutFakeStat.  Calling afS_PutFakeStat
+ * afs_EvalFakeStat or afs_PutFakeStat.  Calling afs_PutFakeStat
  * without calling afs_EvalFakeStat is legal, as long as this
  * function is called.
  */

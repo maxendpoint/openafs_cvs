@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.13 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.14 2002/04/09 19:21:59 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -827,7 +827,7 @@ afs1_readdir(avc, auio, acred)
 	return code;
     }
     afs_InitFakeStat(&fakestate);
-    code = afs_EvalFakeStat(&fakestate, &avc, &treq);
+    code = afs_EvalFakeStat(&avc, &fakestate, &treq);
     if (code) {
 #ifdef	AFS_HPUX_ENV
 	osi_FreeSmallSpace((char *)sdirEntry);
