@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.32 2003/03/10 01:51:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.33 2003/03/23 06:45:02 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -282,9 +282,6 @@ void afs_osi_MaskSignals(void)
 /* unmask signals in rxk listener */
 void afs_osi_UnmaskRxkSignals(void)
 {
-#ifdef AFS_LINUX22_ENV
-    osi_linux_unmask();
-#endif
 }
 
 /* register rxk listener proc info */

@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.13 2002/10/16 03:58:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.14 2003/03/23 06:45:05 shadow Exp $");
 
 #ifdef AFS_LINUX22_ENV
 #include "rx/rx_kcommon.h"
@@ -174,11 +174,12 @@ int osi_NetReceive(osi_socket so, struct sockaddr_in *from,
 
 void osi_StopListener(void)
 {
-    extern int (*sys_killp)();
+    struct task_struct *listener;
     extern int rxk_ListenerPid;
 
+    listener =  find_task_by_pid(rxk_ListenerPid);
     while (rxk_ListenerPid) {
-	(void) (*sys_killp)(rxk_ListenerPid, SIGKILL);
+	force_sig(SIGKILL, find_task_by_pid(rxk_ListenerPid));
 	afs_osi_Sleep(&rxk_ListenerPid); 
     }
     sock_release(rx_socket);
