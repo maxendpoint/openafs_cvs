@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.32 2003/12/07 22:49:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.33 2004/01/01 06:22:31 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -74,6 +74,9 @@ RCSID
 extern int DoLogging;
 extern struct volser_trans *FindTrans(), *NewTrans(), *TransList();
 extern struct afsconf_dir *tdir;
+
+/* Needed by Irix. Leave, or include a header */
+extern char *volutil_PartitionName();
 
 extern void LogError(afs_int32 errcode);
 
