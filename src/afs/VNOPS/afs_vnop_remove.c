@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.30 2004/06/23 22:11:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.31 2004/06/23 22:25:06 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -403,6 +403,7 @@ OSI_VC_DECL(adp);
 #ifdef	AFS_AIX_ENV
     if (tvc && (VREFCOUNT(tvc) > 2) && tvc->opens > 0
 	&& !(tvc->states & CUnlinked)) 
+#else
 #ifdef AFS_DARWIN14_ENV
     if (tvc && (VREFCOUNT(tvc) > 1 + DARWIN_REFBASE) && tvc->opens > 0 && !(tvc->states & CUnlinked)) 
 #else
