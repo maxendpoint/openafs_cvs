@@ -1,14 +1,14 @@
-# File:         psf-1.2.8
+# File:         psf-1.2.10-11.22
 #
 # Purpose:      OpenAFS Product Specification File (PSF) for swpackage
 #
 # Copyright:    Copyright (c) 2003 
 #
-# Header:       $Header: /cvs/openafs/src/packaging/HP-UX/swpackage/Attic/psf-1.2.8-transarc-paths-11.00,v 1.1 2003/06/02 14:47:12 shadow Exp $
+# Header:       $Header: /cvs/openafs/src/packaging/HP-UX/psf-1.2.10-transarc-paths-11.22,v 1.1 2003/06/19 22:03:29 shadow Exp $
 #
 # Description:  This PSF contains a valid product definition which includes
 #               all attributes for OpenAFS installation via software Distributor
-#
+#		This psf is for 11.22, Itanium only
 #
 # Not all control scripts are required for installation of a product/fileset
 # 
@@ -51,7 +51,7 @@
 
     tag         "OPENAFS"		# The identifier for the product.
     title       "Open Source Andrews File System" # The name of the product.
-    revision    "A.1.2.8"	# The revision (release) number of the product.
+    revision    "B.1.2.10"	# The revision (release) number of the product.
 
     #number	"the_number"       # The order/part number for the product.
     category    "OpenSource"" # The type of software (identifier).
@@ -65,12 +65,12 @@
     readme      < data/product.README # A multi-page README for the product.
 
 
-    architecture HP-UX_B.11.00_32/64 # A concise summary of hardware/OS'es 
+    architecture HP-UX_B.11.22_IA/PA # A concise summary of hardware/OS'es 
 				     #supported.
 
-    machine_type *:32*   	# Machines the product supports (uname -m).
+    machine_type ia64*   	# Machines the product supports (uname -m).
     os_name      HP-UX   	# OS'es the product supports (uname -s).
-    os_release   ?.11.00	# OS releases the product supports (uname -r).
+    os_release   ?.11.22	# OS releases the product supports (uname -r).
     os_version   *	 	# OS versions the product supports (uname -v).
 
     directory   /usr/afs # The root directory for the product
@@ -105,13 +105,13 @@
       fileset
         tag     OPENAFS-RUN
         title   "OpenAFS Runtime"
-        revision   A.1.2.8
-        architecture HP-UX_B.11.00_32/64
-        machine_type *:32*   	# Machines the product supports (uname -m).
+        revision   B.1.2.10
+        architecture HP-UX_B.11.22_IA/PA
+        machine_type ia64*   	# Machines the product supports (uname -m).
         os_name      HP-UX   	# OS'es the product supports (uname -s).
-        os_release   ?.11.00	# OS releases the product supports (uname -r).
+        os_release   ?.11.22	# OS releases the product supports (uname -r).
         os_version   *	 	# OS versions the product supports (uname -v).
-        ancestor OPENAFS.OPENAFS-RUN,fa=HP-UX_B.11.00_32/64,fr=<A.1.2.8
+        ancestor OPENAFS.OPENAFS-RUN,fa=HP-UX_B.11.22_IA/PA,fr=<B.1.2.10
 
         description < data/openafs-run.description
 
@@ -208,13 +208,13 @@
       fileset
         tag     OPENAFS-ENG-DOC
         title   "OpenAFS English Documentation"
-        revision   A.1.2.8
-        machine_type *:32*   	# Machines the product supports (uname -m).
+        revision   B.1.2.10
+        machine_type ia64*   	# Machines the product supports (uname -m).
         os_name      HP-UX   	# OS'es the product supports (uname -s).
-        os_release   ?.11.00	# OS releases the product supports (uname -r).
+        os_release   ?.11.22	# OS releases the product supports (uname -r).
         os_version   *	 	# OS versions the product supports (uname -v).
-        architecture HP-UX_B.11.00_32/64
-        ancestor OPENAFS.OPENAFS-ENG-DOC,fa=HP-UX_B.11.00_32/64,fr=<A.1.2.8
+        architecture HP-UX_B.11.22_IA/PA
+        ancestor OPENAFS.OPENAFS-ENG-DOC,fa=HP-UX_B.11.22_IA/PA,fr=<B.1.2.10
 
         description < data/openafs-run.description
 
@@ -245,13 +245,13 @@
     fileset
       tag     OPENAFS-SRV
       title   "OpenAFS Server"
-      machine_type *:32*   	# Machines the product supports (uname -m).
+      machine_type ia64*   	# Machines the product supports (uname -m).
       os_name      HP-UX   	# OS'es the product supports (uname -s).
-      os_release   ?.11.00	# OS releases the product supports (uname -r).
+      os_release   ?.11.22	# OS releases the product supports (uname -r).
       os_version   *	 	# OS versions the product supports (uname -v).
-      revision   A.1.2.8
-      architecture HP-UX_B.11.00_32/64
-      ancestor OPENAFS.OPENAFS-SRV,fa=HP-UX_B.11.00_32/64,fr=<A.1.2.8
+      revision   B.1.2.10
+      architecture HP-UX_B.11.22_IA/PA
+      ancestor OPENAFS.OPENAFS-SRV,fa=HP-UX_B.11.22_IA/PA,fr=<B.1.2.10
 
       description < data/openafs-srv.description
 
@@ -265,7 +265,7 @@
       # Server product. 
 
       prerequisite OPENAFS.OPENAFS-RUN
-      prerequisite OPENAFS.OPENAFS-KRN32 | OPENAFS.OPENAFS-KRN64
+      prerequisite OPENAFS.OPENAFS-KRN64
       # corequisite
 
 
@@ -329,13 +329,13 @@
     fileset
       tag     OPENAFS-CLNT
       title   "OpenAFS Client"
-      revision   A.1.2.8
-      machine_type *:32*   	# Machines the product supports (uname -m).
+      revision   B.1.2.10
+      machine_type ia64*   	# Machines the product supports (uname -m).
       os_name      HP-UX   	# OS'es the product supports (uname -s).
-      os_release   ?.11.00	# OS releases the product supports (uname -r).
+      os_release   ?.11.22	# OS releases the product supports (uname -r).
       os_version   *	 	# OS versions the product supports (uname -v).
-      architecture HP-UX_B.11.00_32/64
-      ancestor OPENAFS.OPENAFS-CLNT,fa=HP-UX_B.11.00_32/64,fr=<A.1.2.8
+      architecture HP-UX_B.11.22_IA/PA
+      ancestor OPENAFS.OPENAFS-CLNT,fa=HP-UX_B.11.22_IA/PA,fr=<B.1.2.10
 
       description < data/openafs-clnt.description
 
@@ -346,11 +346,10 @@
       #
       # If the client is installed, you must install the kernel driver
       #
-      # This prereq means that either kernel fileset must be installed
-      # the KRN32 for 32 bitOS or KRN64 for 64BIT OS
+      # This prereq means that the kernel fileset must be installed
 
       prerequisite OPENAFS.OPENAFS-RUN
-      prerequisite OPENAFS.OPENAFS-KRN32 | OPENAFS.OPENAFS-KRN64
+      prerequisite OPENAFS.OPENAFS-KRN64
       # corequisite
 
       checkinstall	scripts/openafs-clnt.checkinstall
@@ -408,63 +407,22 @@
     # Put the afs kernel driver filesets into a subproduct
     # in order that the prerequisite for the client filelset
     # will automatically select the correct kernel fileset
-    # based on os-bitness
+    # based on os-bitness, leaving as a subproduct for now
     subproduct
       tag	Kernel
       title	"OpenAFS Kernel Drivers"
-      contents	OPENAFS-KRN32 OPENAFS-KRN64
+      contents	OPENAFS-KRN64
     end
-      fileset
-        tag     OPENAFS-KRN32
-        title   "OpenAFS 32bit Kernel Drivers"
-        revision   A.1.2.8
-        machine_type *:32*   	# Machines the product supports (uname -m).
-        os_name      HP-UX   	# OS'es the product supports (uname -s).
-        os_release   ?.11.00	# OS releases the product supports (uname -r).
-        os_version   *	 	# OS versions the product supports (uname -v).
-        architecture HP-UX_B.11.00_32
-        ancestor OPENAFS.OPENAFS-KRN,fa=HP-UX_B.11.00_32,fr=<A.1.2.8
-
-        description < data/openafs-krn.description
-
-        is_kernel true
-        is_reboot true
-
-        # Dependency definition(s):
-        #
-
-        # prerequisite
-        # corequisite
-        exrequisite	OPENAFS.OPENAFS-KRN64
-
-        checkremove  scripts/openafs-krn.checkremove
-        configure  scripts/openafs-krn.configure
-        postinstall   scripts/openafs-krn.postinstall
-        unconfigure  scripts/openafs-krn.unconfigure
-        verify       scripts/openafs-krn.verify
-
-        # File definition(s):
-        #
-
-        file_permissions -u 222 -o bin -g bin
-        directory    ../hp_ux110/dest/root.client/bin = /usr/conf/lib
-          file	libafs.nonfs.a	libafs.a
-
-        file_permissions -u 222 -o bin -g bin
-        directory    ../hp_ux110/dest/root.client/usr/vice/etc = /usr/conf/master.d
-          file   afs.driver	afs
-
-      end # fileset
       fileset
         tag     OPENAFS-KRN64
         title   "OpenAFS 64 bit Kernel Drivers"
-        revision   A.1.2.8
+        revision   B.1.2.10
         os_name      HP-UX   	# OS'es the product supports (uname -s).
-        os_release   ?.11.00	# OS releases the product supports (uname -r).
+        os_release   ?.11.22	# OS releases the product supports (uname -r).
         os_version   *	 	# OS versions the product supports (uname -v).
-        machine_type *:64*
-        architecture HP-UX_B.11.00_64
-        ancestor OPENAFS.OPENAFS-KRN,fa=HP-UX_B.11.00_64,fr=<A.1.2.8
+        machine_type ia64*
+        architecture HP-UX_B.11.22_IA/PA
+        ancestor OPENAFS.OPENAFS-KRN,fa=HP-UX_B.11.22_IA/PA,fr=<B.1.2.10
 
         description < data/openafs-krn.description
 
@@ -498,13 +456,13 @@
     # We can call this whatever you like, the name falls in line
     # with other SD packaged media
     #
-    fileset
+    filese10
       tag     OPENAFS-DEV
       title   "OpenAFS Developers Kit"
-      revision   A.1.2.8
-      architecture HP-UX_B.11.00_64
-      ancestor OPENAFS.OPENAFS-DEV,fa=HP-UX_B.11.00_32/64,fr=<A.1.2.8
-      machine_type *:32*
+      revision   B.1.2.10
+      architecture HP-UX_B.11.22_IA/PA
+      ancestor OPENAFS.OPENAFS-DEV,fa=HP-UX_B.11.22_IA/PA,fr=<B.1.2.10
+      machine_type ia64*
 
       description < data/openafs-krn.description
 
@@ -553,9 +511,9 @@
       fileset
         tag     OPENAFS-ENG-MAN
         title   "OpenAFS English Manual Pages"
-        revision   A.1.2.8
-        architecture HP-UX_B.11.00_32/64
-        ancestor OPENAFS.OPENAFS-ENG-MAN,fa=HP-UX_B.11.00_32/64,fr=<A.1.2.8
+        revision   B.1.2.10
+        architecture HP-UX_B.11.22_IA/PA
+        ancestor OPENAFS.OPENAFS-ENG-MAN,fa=HP-UX_B.11.22_IA/PA,fr=<B.1.2.10
 
         # description < data/openafs-run.description
 
