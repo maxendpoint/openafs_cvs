@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.34 2004/11/06 07:16:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.35 2004/12/01 23:39:02 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -459,7 +459,9 @@ afs_remunlink(register struct vcache *avc, register int doit)
     struct VenusFid dirFid;
     register struct dcache *tdc;
     afs_int32 code = 0;
+#ifdef AFS_DARWIN14_ENV
     int oldref;
+#endif
 
     if (NBObtainWriteLock(&avc->lock, 423))
 	return 0;

@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.20 2004/11/06 07:16:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.21 2004/12/01 23:38:56 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -236,7 +236,6 @@ afs_StoreAllSegments(register struct vcache *avc, struct vrequest *areq,
      */
     origCBs = afs_allCBs;
 
-  retry:
     maxStoredLength = 0;
     tlen = avc->m.Length;
     minj = 0;
@@ -301,7 +300,7 @@ afs_StoreAllSegments(register struct vcache *avc, struct vrequest *areq,
 	    afs_size_t base, bytes;
 	    afs_uint32 nchunks;
 	    int nomore;
-	    unsigned int first;
+	    unsigned int first = 0;
 	    int *shouldwake;
 	    struct conn *tc;
 	    struct osi_file *tfile;
