@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.1 2004/08/25 07:09:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.2 2004/08/25 07:13:09 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -4009,11 +4009,12 @@ rxi_AttachServerProc(register struct rx_call *call,
 	if (call->flags & RX_CALL_WAIT_PROC) {
 	    /* Conservative:  I don't think this should happen */
 	    call->flags &= ~RX_CALL_WAIT_PROC;
-	    MUTEX_ENTER(&rx_stats_mutex);
-	    rx_nWaiting--;
-	    MUTEX_EXIT(&rx_stats_mutex);
-	    if (queue_IsOnQueue(call))
-	        queue_Remove(call);
+	    if (queue_IsOnQueue(call)) {
+		queue_Remove(call);
+		MUTEX_ENTER(&rx_stats_mutex);
+		rx_nWaiting--;
+		MUTEX_EXIT(&rx_stats_mutex);
+	    }
 	}
 	call->state = RX_STATE_ACTIVE;
 	call->mode = RX_MODE_RECEIVING;
