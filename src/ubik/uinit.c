@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.1 2004/10/10 00:25:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.2 2004/10/10 00:37:16 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef AFS_NT40_ENV
@@ -57,7 +57,7 @@ RCSID
 afs_int32
 gen_ClientInit(int noAuthFlag, char *confDir, char *cellName, afs_int32 sauth,
 	       struct ubik_client **uclientp, int (*secproc) (),
-	       char *funcName, rxkad_level gen_rxkad_level, 
+	       char *funcName, afs_int32 gen_rxkad_level, 
 	       afs_int32 maxservers, afs_int32 serviceid, afs_int32 deadtime,
 	       afs_uint32 server, afs_uint32 port)
 {
