@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_cout.c,v 1.7 2002/08/21 18:14:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_cout.c,v 1.8 2003/05/13 04:27:59 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -160,13 +160,13 @@ static void print_ifarg(char *arg)
 static void print_ifsizeof(char *prefix, char *type)
 {
 	if (streq(type, "bool")) {
-		f_print(fout, ", sizeof(bool_t), xdr_bool");
+	    f_print(fout, ", sizeof(bool_t), (xdrproc_t) xdr_bool");
 	} else {
 		f_print(fout, ", sizeof(");
 		if (undefined(type) && prefix) {
 			f_print(fout, "%s ", prefix);
 		}
-		f_print(fout, "%s), xdr_%s", type, type);
+		f_print(fout, "%s), (xdrproc_t) xdr_%s", type, type);
 	}
 }
 
