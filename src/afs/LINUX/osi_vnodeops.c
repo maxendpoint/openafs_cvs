@@ -631,6 +631,9 @@ static int afs_linux_revalidate(struct dentry *dp)
     /* Drop the dentry if the callback is broken */
     if (!(vcp->states & CStatd)) {
         d_drop(dp); 
+#ifdef AFS_LINUX24_ENV
+	unlock_kernel();
+#endif
         AFS_GUNLOCK();
         return 0;
     }
