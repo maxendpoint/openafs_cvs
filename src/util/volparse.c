@@ -10,13 +10,13 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/volparse.c,v 1.7 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/volparse.c,v 1.8 2001/08/06 23:50:13 shadow Exp $");
 
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #ifdef HAVE_STDLIB_H

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.8 2001/07/12 19:58:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.9 2001/08/06 23:50:11 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -30,11 +30,11 @@ RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.8 2001/07/12 19:58:56 sh
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <string.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #include <sys/stat.h>

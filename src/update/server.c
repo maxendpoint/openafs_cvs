@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.7 2001/07/12 19:59:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.8 2001/08/06 23:50:12 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -30,11 +30,11 @@ RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.7 2001/07/12 19:59:20 shado
 #include <sys/file.h>
 #include <dirent.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #ifdef HAVE_UNISTD_H

@@ -18,18 +18,19 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/new_rnd_key.c,v 1.8 2001/07/12 19:58:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/new_rnd_key.c,v 1.9 2001/08/06 23:50:09 shadow Exp $");
 
 #include <des.h>
 #include "des_internal.h"
 #ifdef AFS_PTHREAD_ENV
 #include <pthread.h>
 #endif
-#if defined(HAVE_STRINGS_H)
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
 #include <strings.h>
 #endif
-#if defined(HAVE_STRING_H)
-#include <string.h>
 #endif
 #include "stats.h"
 

@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.11 2001/07/21 07:07:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.12 2001/08/06 23:50:11 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -77,11 +77,11 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.11 2001/07/21 07:07:51 shado
 #include "rx_globals.h"
 #include <lwp.h>
 #include "rx_internal.h"
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #ifdef HAVE_UNISTD_H

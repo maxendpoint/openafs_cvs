@@ -37,17 +37,18 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.5 2001/07/12 19:58:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.6 2001/08/06 23:50:09 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <windows.h>
 #endif
 #include <stdlib.h>
-#if defined(HAVE_STRINGS_H)
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
 #include <strings.h>
 #endif
-#if defined(HAVE_STRING_H)
-#include <string.h>
 #endif
 
 /*

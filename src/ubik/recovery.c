@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.5 2001/07/12 19:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.6 2001/08/06 23:50:12 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -26,6 +26,7 @@ RCSID("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.5 2001/07/12 19:59:18 shado
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <errno.h>
+#include <afs/afsutil.h>
 
 #define UBIK_INTERNALS
 #include "ubik.h"

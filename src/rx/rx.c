@@ -16,7 +16,7 @@
 #endif
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.18 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.19 2001/08/06 23:50:11 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/sysincludes.h"
@@ -88,11 +88,11 @@ extern afs_int32 afs_termState;
 # include <netinet/in.h>
 # include <sys/time.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 # include "rx.h"

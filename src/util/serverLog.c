@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.15 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.16 2001/08/06 23:50:13 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -36,11 +36,11 @@ RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.15 2001/07/12 19:59:23 sha
 #include <afs/procmgmt.h>  /* signal(), kill(), wait(), etc. */
 #include <fcntl.h>
 #include <afs/stds.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #include "afsutil.h"

@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.9 2001/07/12 19:58:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.10 2001/08/06 23:50:11 shadow Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -35,11 +35,11 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.9 2001/07/12 19:58:56 shadow E
 #endif
 #include <afs/afs_args.h>
 #include <afs/afsutil.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 

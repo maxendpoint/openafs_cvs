@@ -10,15 +10,15 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.9 2001/07/12 19:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.10 2001/08/06 23:50:12 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdlib.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #ifdef AFS_NT40_ENV

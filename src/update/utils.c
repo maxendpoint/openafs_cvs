@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.6 2001/07/12 19:59:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.7 2001/08/06 23:50:13 shadow Exp $");
 
 #include <afs/stds.h>
 #include <rx/rxkad.h>
@@ -21,11 +21,11 @@ RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.6 2001/07/12 19:59:20 shadow
 #include <WINNT/afssw.h>
 #endif
 #include <stdio.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#else
 #ifdef HAVE_STRING_H
 #include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
 #endif
 #endif
 #ifdef HAVE_UNISTD_H
