@@ -52,17 +52,19 @@ pam_afs.so.1: $(SHOBJS) afs_setcred.o afs_auth.o afs_util.o
 	set -x; \
 	case "$(SYS_NAME)" in \
 	hp_ux*) \
-		$(LD) $(LDFLAGS) -c ${srcdir}/mapfile.hp -o $@ afs_setcred.o \
-			afs_auth.o afs_util.o $(SHOBJS) $(LIBS) ;; \
+		$(LD) $(LDFLAGS) -c ${srcdir}/mapfile.hp -o $@ \
+			afs_setcred.o afs_auth.o afs_util.o \
+			$(SHOBJS) $(LIBS) ;; \
 	sun*_5*) \
-		$(LD) $(LDFLAGS) -M ${srcdir}/mapfile -o $@ afs_setcred.o \
-			afs_auth.o afs_util.o $(SHOBJS) $(LIBS) ;; \
+		$(LD) $(LDFLAGS) -M ${srcdir}/mapfile -o $@ \
+			afs_setcred.o afs_auth.o afs_util.o \
+			$(SHOBJS) $(LIBS) ;; \
 	*linux*) \
 		$(CC) $(LDFLAGS) -o $@ afs_setcred.o \
-			afs_auth.o afs_util.o (SHOBJS) $(LIBS) ;;\
+			afs_auth.o afs_util.o $(SHOBJS) $(LIBS) ;;\
 	*fbsd*) \
 		$(CC) $(LDFLAGS) -o $@ afs_setcred.o \
-		afs_auth.o afs_util.o $(SHOBJS) $(LIBS) ;;\
+			afs_auth.o afs_util.o $(SHOBJS) $(LIBS) ;;\
 	* ) \
 		echo No link line for system $(SYS_NAME). ;; \
 	esac
