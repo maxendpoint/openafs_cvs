@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.6 2003/07/15 23:14:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.7 2003/07/29 22:31:46 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -31,6 +31,15 @@ RCSID
 #include <afs/usd.h>
 #include "error_macros.h"
 
+#ifdef O_LARGEFILE
+typedef off64_t         osi_lloff_t;
+#else /* O_LARGEFILE */
+#ifdef AFS_HAVE_LLSEEK
+typedef offset_t        osi_lloff_t;
+#else /* AFS_HAVE_LLSEEK */
+typedef off_t           osi_lloff_t;
+#endif /* AFS_HAVE_LLSEEK */
+#endif /* O_LARGEFILE */
 
 extern int isafile;
 
@@ -652,7 +661,7 @@ incPosition(info, fid, dataSize)
 
     if (info->posCount >= 2147467264) {	/* 2GB - 16K */
 	info->posCount = 0;
-#if (defined(AFS_SUN_ENV) || defined(AFS_DEC_ENV))
+#if (defined(AFS_SUN_ENV) || defined(AFS_DEC_ENV) || defined(AFS_LINUX24_ENV))
 	if (!isafile) {
 	    hset64(off, 0, 0);
 	    USD_IOCTL(fid, USD_IOCTL_SETSIZE, &off);
@@ -1611,9 +1620,18 @@ file_Seek(info, position)
 
     if (isafile) {
 	p = (struct progress *)info->tmRock;
-	posit = (position * BUTM_BLOCKSIZE);
+	posit = (osi_lloff_t)position * (osi_lloff_t)BUTM_BLOCKSIZE;
 
-	hset64(startOff, 0, posit);
+	/* Not really necessary to do it this way, should be fixed */
+#ifdef O_LARGEFILE
+	c = (posit >> 32);
+	d = (posit & 0xffffffff);
+#else
+	c = 0;
+	d = posit;
+#endif
+	hset64(startOff, c, d);
+
 	w = USD_SEEK(p->fid, startOff, SEEK_SET, &stopOff);
 	if (w)
 	    info->error == w;
