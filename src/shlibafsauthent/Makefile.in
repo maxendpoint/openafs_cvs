@@ -98,10 +98,10 @@ LIBOBJS = \
 LIBAFSAUTHENT = libafsauthent.${SHLIB_SUFFIX}.${LIBAFSAUTHENTMAJOR}.${LIBAFSAUTHENTMINOR}
 
 ${DEST}${libdir}/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
-        ${INSTALL} ${LIBAFSAUTHENT} ${DEST}${libdir}/${LIBAFSAUTHENT}
+	${INSTALL} ${LIBAFSAUTHENT} ${DEST}${libdir}/${LIBAFSAUTHENT}
 
 ${DEST}${libdir}/libafsauthent.${SHLIB_SUFFIX}: ${DEST}${libdir}/${LIBAFSAUTHENT}
-        -ln -f -s ${LIBAFSAUTHENT} ${DEST}${libdir}/libafsauthent.${SHLIB_SUFFIX}
+	-ln -f -s ${LIBAFSAUTHENT} ${DEST}${libdir}/libafsauthent.${SHLIB_SUFFIX}
 
 all: ${TOP_LIBDIR}/${LIBAFSAUTHENT}
 
@@ -257,16 +257,16 @@ clean:
 	$(RM) -f *.o *.a libafsauthent*
 
 ${DESTDIR}${libdir}/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
-        ${INSTALL} ${LIBAFSAUTHENT} ${DESTDIR}${libdir}/${LIBAFSAUTHENT}
+	${INSTALL} ${LIBAFSAUTHENT} ${DESTDIR}${libdir}/${LIBAFSAUTHENT}
 
 ${DESTDIR}${libdir}/libafsauthent.${SHLIB_SUFFIX}: ${DESTDIR}${libdir}/${LIBAFSAUTHENT}
-        -ln -f -s ${LIBAFSAUTHENT} ${DESTDIR}${libdir}/libafsauthent.${SHLIB_SUFFIX}
+	-ln -f -s ${LIBAFSAUTHENT} ${DESTDIR}${libdir}/libafsauthent.${SHLIB_SUFFIX}
 
 ${TOP_LIBDIR}/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
-        ${INSTALL} ${LIBAFSAUTHENT} ${TOP_LIBDIR}/${LIBAFSAUTHENT}
+	${INSTALL} ${LIBAFSAUTHENT} ${TOP_LIBDIR}/${LIBAFSAUTHENT}
 
 ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}: ${TOP_LIBDIR}/${LIBAFSAUTHENT}
-        -ln -f -s ${LIBAFSAUTHENT} ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}
+	-ln -f -s ${LIBAFSAUTHENT} ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}
 
 dest: ${DEST}/lib/${LIBAFSAUTHENT}
 
