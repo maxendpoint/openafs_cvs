@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.8 2003/07/15 23:16:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.9 2004/04/18 06:10:35 kolya Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -228,7 +228,7 @@ rxk_InitializeSocket(void)
     optlen = sizeof(optval);
     rc = getsockopt(sock, SOL_SOCKET, SO_SNDBUF, (void *)&optval, &optlen);
     usr_assert(rc == 0);
-    usr_assert(optval == optval0);
+    /* usr_assert(optval == optval0); */
 #ifdef AFS_USR_LINUX22_ENV
     optval0 = 131070;
 #else
@@ -241,7 +241,7 @@ rxk_InitializeSocket(void)
     optlen = sizeof(optval);
     rc = getsockopt(sock, SOL_SOCKET, SO_RCVBUF, (void *)&optval, &optlen);
     usr_assert(rc == 0);
-    usr_assert(optval == optval0);
+    /* usr_assert(optval == optval0); */
 
 #ifdef AFS_USR_AIX_ENV
     optval = 1;
