@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.17 2004/11/07 02:21:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.18 2004/11/07 17:11:50 shadow Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -372,10 +372,10 @@ rx_getAllAddr_internal(afs_int32 buffer[], int maxSize, int loopbacks)
 	}
 	if (a->sin_addr.s_addr != 0) {
             if (!loopbacks) {
-                if (a->sin_addr.s_addr == htonl(0x7f000001)) {
+                if (a->sin_addr.s_addr == htonl(0x7f000001)) 
 		    continue;	/* skip loopback address as well. */
             } else {
-                if (ifr->ifr_flags & IFF_LOOPBACK) {
+                if (ifr->ifr_flags & IFF_LOOPBACK) 
 		    continue;	/* skip aliased loopbacks as well. */
 	    }
 	    if (count >= maxSize)	/* no more space */
