@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.24 2002/02/16 18:23:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.25 2002/07/29 20:03:39 kolya Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -856,7 +856,7 @@ struct afsconf_cell *acellInfo; {
 	    bestce = tce;
 	}
     }
-    if (!ambig && bestce) {
+    if (!ambig && bestce && bestce->cellInfo.numServers) {
 	*acellInfo = bestce->cellInfo;	/* structure assignment */
 	if (aservice) {
 	    tservice = afsconf_FindService(aservice);
