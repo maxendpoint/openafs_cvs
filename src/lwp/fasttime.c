@@ -27,7 +27,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/fasttime.c,v 1.6 2003/07/15 23:15:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/fasttime.c,v 1.7 2003/08/08 20:21:27 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -37,9 +37,6 @@ RCSID
 #else
 #include <sys/time.h>
 #include <sys/file.h>
-#endif
-#if !defined(AFS_AIX_ENV) && !defined(AFS_NT40_ENV)
-#include <sys/mman.h>
 #endif
 #include <afs/afsutil.h>
 
