@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.8 2002/10/15 04:41:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.9 2002/10/15 04:45:04 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
@@ -245,16 +245,17 @@ afs_nfs2_dispatcher(int type, afs_int32 which, char *argp,
 	return 2;
     
     sa = (struct sockaddr *)svc_getrpccaller(rp->rq_xprt)->buf;
-    client = ((struct sockaddr_in *)sa)->sin_addr.s_addr;
+    if (sa->sa_family == AF_INET)
+	client = ((struct sockaddr_in *)sa)->sin_addr.s_addr;
     
     AFS_GLOCK();
     code = 0;
     switch (type) {
     case 0:
-	code = nfs2_to_afs_call(which, argp, &fh, &fh2);
+	code = (client && nfs2_to_afs_call(which, argp, &fh, &fh2));
 	break;
     case 1:
-	code = acl2_to_afs_call(which, argp, &fh);
+	code = (client && acl2_to_afs_call(which, argp, &fh));
 	break;
     default:
 	break;
@@ -922,6 +923,9 @@ afs_nfs3_smallfidder(struct nfs_fh3 *fhp, int status)
 	    Sfid.Vnode = (u_short)(vcp->fid.Fid.Vnode & 0xffff);
 	    fhp->fh3_len = SIZEOF_SMALLFID;
 	    memcpy(fhp->fh3_data, (char*)&Sfid, fhp->fh3_len);
+
+	    afs_Trace3(afs_iclSetp, CM_TRACE_NFS3OUT, ICL_TYPE_INT32, status,
+		       ICL_TYPE_POINTER, vcp, ICL_TYPE_FID, &Sfid);
 	}
 	
 	/* If we have a ref, release it */
@@ -1054,7 +1058,10 @@ void afs_nfs3_symlink(char *args, char *xp, char *exp, char *rp, char *crp) {
     curthread->t_cred = (struct cred*)crp; 
     call=afs_nfs3_dispatcher(0, NFSPROC3_SYMLINK, (char *)args, &exp, rp, crp); 
     if (call>1) afs_nfs3_noaccess((struct afs_nfs3_resp *)xp); 
-    else (*afs_rfs3_disp_tbl[NFSPROC3_SYMLINK].orig_proc)(args, xp, exp, rp, crp); 
+    else { (*afs_rfs3_disp_tbl[NFSPROC3_SYMLINK].orig_proc)(args, xp, exp, rp, crp); 
+    if (afs_NFSRootOnly && call) {
+        SYMLINK3res *resp = ( SYMLINK3res *)xp;
+        afs_nfs3_smallfidder( &resp->resok.obj.handle , resp->status); } }
     curthread->t_cred = svcred; 
     return; 
 }
@@ -1066,7 +1073,10 @@ void afs_nfs3_mknod(char *args, char *xp, char *exp, char *rp, char *crp) {
     curthread->t_cred = (struct cred*)crp; 
     call=afs_nfs3_dispatcher(0, NFSPROC3_MKNOD, (char *)args, &exp, rp, crp); 
     if (call>1) afs_nfs3_noaccess((struct afs_nfs3_resp *)xp); 
-    else (*afs_rfs3_disp_tbl[NFSPROC3_MKNOD].orig_proc)(args, xp, exp, rp, crp); 
+    else { (*afs_rfs3_disp_tbl[NFSPROC3_MKNOD].orig_proc)(args, xp, exp, rp, crp); 
+    if (afs_NFSRootOnly && call) {
+        MKNOD3res *resp = ( MKDIR3res *)xp;
+        afs_nfs3_smallfidder( &resp->resok.obj.handle , resp->status); } }
     curthread->t_cred = svcred; 
     return; 
 }
