@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.10 2002/10/15 04:46:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.11 2002/10/16 03:00:48 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
@@ -269,6 +269,10 @@ afs_nfs2_dispatcher(int type, afs_int32 which, char *argp,
 	
 	memcpy((char *)&Sfid, fh->fh_data, SIZEOF_SMALLFID);
 	
+	afs_Trace2(afs_iclSetp, CM_TRACE_NFSIN1,
+		   ICL_TYPE_POINTER, client,
+		   ICL_TYPE_FID, &Sfid);
+
 	/* We ran */
 	call = 1;
 	if (!once && *expp) {
@@ -298,7 +302,7 @@ afs_nfs2_smallfidder(struct nfsdiropres *dr)
     
 #if defined(AFS_SUN57_64BIT_ENV)
     /* See also afs_fid() */    
-    memcpy((char *)addr, fhp->fh_data, 10);
+    memcpy((char *)addr, fhp->fh_data, SIZEOF_SMALLFID);
     addr[1] = (addr[1] >> 48) & 0xffff;
 #else 
     memcpy((char *)addr, fhp->fh_data, 2 * sizeof(long));
@@ -322,6 +326,9 @@ afs_nfs2_smallfidder(struct nfsdiropres *dr)
 	    Sfid.Vnode = (u_short)(vcp->fid.Fid.Vnode & 0xffff);
 	    fhp->fh_len = SIZEOF_SMALLFID;
 	    memcpy(dr->dr_fhandle.fh_data, (char*)&Sfid, fhp->fh_len);
+
+	    afs_Trace3(afs_iclSetp, CM_TRACE_NFSOUT, ICL_TYPE_INT32, 0,
+                       ICL_TYPE_POINTER, vcp, ICL_TYPE_FID, &Sfid);
 	}
 	
 	/* If we have a ref, release it */
@@ -652,6 +659,7 @@ nfs3_to_afs_call(int which, caddr_t *args, nfs_fh3 **fhpp, nfs_fh3 **fh2pp)
     nfs_fh3 *fhp2=0;
     int errorcode;
     
+    afs_Trace1(afs_iclSetp, CM_TRACE_NFS3IN, ICL_TYPE_INT32, which);
     *fh2pp = (nfs_fh3 *)0;
     switch (which) {
     case NFSPROC3_GETATTR:
@@ -870,6 +878,10 @@ afs_nfs3_dispatcher(int type, afs_int32 which, char *argp,
 	
 	memcpy((char *)&Sfid, fh->fh3_data, SIZEOF_SMALLFID);
 	
+	afs_Trace2(afs_iclSetp, CM_TRACE_NFS3IN1,
+		   ICL_TYPE_INT32, client,
+		   ICL_TYPE_FID, &Sfid);
+
 	call = 1;
 	if (!once && *expp) {
 	    afs_nobody = (*expp)->exi_export.ex_anon;
