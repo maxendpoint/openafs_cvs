@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.39 2003/03/14 20:09:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.40 2003/03/14 20:11:44 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -252,7 +252,7 @@ static void ResetCheckSignal(void)
 #endif
 #endif
 
-#if defined(AFS_PTHREAD_ENV)
+#if defined(AFS_PTHREAD_ENV) && !defined(AFS_NT40_ENV)
     softsig_signal(signo, CheckSignal_Signal);
 #else
     signal(signo, CheckSignal_Signal);
