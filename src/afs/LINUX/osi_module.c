@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.16 2001/08/07 00:11:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.17 2001/10/09 05:14:20 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -320,7 +320,7 @@ module_exit(afs_cleanup);
 
 static long get_page_offset(void)
 {
-#if defined(AFS_PPC_LINUX22_ENV) || defined(AFS_SPARC64_LINUX20_ENV) || defined(AFS_SPARC_LINUX20_ENV) || defined(AFS_ALPHA_LINUX20_ENV) || defined(AFS_S390_LINUX22_ENV) || defined(AFS_IA64_LINUX20_ENV)
+#if defined(AFS_PPC_LINUX22_ENV) || defined(AFS_SPARC64_LINUX20_ENV) || defined(AFS_SPARC_LINUX20_ENV) || defined(AFS_ALPHA_LINUX20_ENV) || defined(AFS_S390_LINUX22_ENV) || defined(AFS_IA64_LINUX20_ENV) || defined(AFS_PARISC_LINUX24_ENV)
     return PAGE_OFFSET;
 #else
     struct task_struct *p;
