@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_file.c,v 1.9 2003/10/08 13:48:11 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_file.c,v 1.10 2004/03/10 23:01:52 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -37,19 +37,21 @@ osi_UFSOpen(afs_int32 ainode)
     if (cacheDiskType != AFS_FCACHE_TYPE_UFS)
 	osi_Panic("UFSOpen called for non-UFS cache\n");
     afile = (struct osi_file *)osi_AllocSmallSpace(sizeof(struct osi_file));
+    AFS_GUNLOCK();
     code = VFS_VGET(cacheDev.mp, (ino_t) ainode, &vp);
-    if (vp->v_type == VNON)
+    AFS_GLOCK();
+    if (code == 0 && vp->v_type == VNON)
 	code = ENOENT;
     if (code) {
 	osi_FreeSmallSpace(afile);
 	osi_Panic("UFSOpen: igetinode failed");
     }
+    VOP_UNLOCK(vp, 0, curproc);
     afile->vnode = vp;
     afile->size = VTOI(vp)->i_ffs_size;
     afile->offset = 0;
     afile->proc = NULL;
     afile->inum = ainode;	/* for hint validity checking */
-    VOP_UNLOCK(vp, 0, curproc);
     return (void *)afile;
 }
 

@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_inode.c,v 1.8 2003/07/15 23:14:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_inode.c,v 1.9 2004/03/10 23:01:51 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -53,14 +53,14 @@ getinode(fs, dev, inode, ipp, perror)
 #else
 	simple_lock(&mountlist_slock);
 #endif
-	if (mp = TAILQ_FIRST(&mountlist))
+	if ((mp = TAILQ_FIRST(&mountlist)) != NULL)
 	    do {
 		/*
 		 * XXX Also do the test for MFS
 		 */
 #undef m_data
 #undef m_next
-		if (mp->mnt_stat.f_type == MOUNT_UFS) {
+		if (!strcmp(mp->mnt_stat.f_fstypename, MOUNT_UFS)) {
 		    ump = VFSTOUFS(mp);
 		    if (ump->um_fs == NULL)
 			break;

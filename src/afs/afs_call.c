@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.64 2004/02/03 06:23:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.65 2004/03/10 23:01:50 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -64,13 +64,12 @@ simple_lock_data_t afs_global_lock;
 struct lock__bsd__ afs_global_lock;
 #endif
 
-#if defined(AFS_XBSD_ENV)
+#if defined(AFS_XBSD_ENV) && !defined(AFS_FBSD50_ENV)
 struct lock afs_global_lock;
-#ifdef AFS_FBSD50_ENV
-struct thread *afs_global_owner;
-#else
 struct proc *afs_global_owner;
 #endif
+#ifdef AFS_FBSD50_ENV
+struct mtx afs_global_mtx;
 #endif
 
 #if defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV)

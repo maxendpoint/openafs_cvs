@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_module.c,v 1.4 2003/07/15 23:14:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_module.c,v 1.5 2004/03/10 23:01:51 rees Exp $");
 
 #include <afs/sysincludes.h>
 #include <afsincludes.h>
@@ -37,8 +37,8 @@ afs_module_handler(module_t mod, int what, void *arg)
 {
     static sy_call_t *old_handler;
     static int inited = 0;
-    int error;
-    error = 0;
+    int error = 0;
+
     switch (what) {
     case MOD_LOAD:
 	if (inited) {
@@ -60,8 +60,10 @@ afs_module_handler(module_t mod, int what, void *arg)
 	vfs_register(&afs_vfsconf);	/* doesn't fail */
 	vfs_add_vnodeops(&afs_vnodeop_opv_desc);
 	osi_Init();
+#if 0
 	sysent[SYS_setgroups].sy_call = Afs_xsetgroups;
 	sysent[SYS_ioctl].sy_call = afs_xioctl;
+#endif
 	old_handler = sysent[AFS_SYSCALL].sy_call;
 	sysent[AFS_SYSCALL].sy_call = afs3_syscall;
 	sysent[AFS_SYSCALL].sy_narg = 5;
@@ -86,8 +88,10 @@ afs_module_handler(module_t mod, int what, void *arg)
 	    break;
 	}
 	vfs_rm_vnodeops(&afs_vnodeop_opv_desc);
+#if 0
 	sysent[SYS_ioctl].sy_call = ioctl;
 	sysent[SYS_setgroups].sy_call = setgroups;
+#endif
 	sysent[AFS_SYSCALL].sy_narg = 0;
 	sysent[AFS_SYSCALL].sy_call = old_handler;
 	break;

@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.13 2003/07/15 23:16:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.14 2004/03/10 23:01:55 rees Exp $");
 
 #ifdef AFS_FBSD40_ENV
 #include <sys/malloc.h>
@@ -83,10 +83,20 @@ osi_StopListener(void)
 {
     struct proc *p;
 
+    /*
+     * Have to drop global lock to safely do this.
+     * soclose() is currently protected by Giant,
+     * but pfind and psignal are MPSAFE.
+     */
+    AFS_GUNLOCK();
     soclose(rx_socket);
     p = pfind(rxk_ListenerPid);
     if (p)
 	psignal(p, SIGUSR1);
+#ifdef AFS_FBSD50_ENV
+    PROC_UNLOCK(p);
+#endif
+    AFS_GLOCK();
 }
 
 int
