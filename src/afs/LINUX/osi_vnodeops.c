@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.83 2004/08/19 00:58:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.84 2004/10/11 16:21:31 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -649,12 +649,7 @@ afs_linux_lock(struct file *fp, int cmd, struct file_lock *flp)
     int code = 0;
     struct vcache *vcp = ITOAFS(FILE_INODE(fp));
     cred_t *credp = crref();
-#ifdef AFS_LINUX24_ENV
-    struct flock64 flock;
-#else
-    struct flock flock;
-#endif
-
+    struct AFS_FLOCK flock;
     /* Convert to a lock format afs_lockctl understands. */
     memset((char *)&flock, 0, sizeof(flock));
     flock.l_type = flp->fl_type;

@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.82 2004/08/11 15:45:43 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.83 2004/10/11 16:21:28 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -268,7 +268,11 @@ copyin_afs_ioctl(caddr_t cmarg, struct afs_ioctl *dst)
 #elif defined(AFS_AMD64_LINUX20_ENV)
     if (current->thread.flags & THREAD_IA32)
 #elif defined(AFS_PPC64_LINUX20_ENV)
-    if (current->thread.flags & PPC_FLAG_32BIT)
+#ifdef AFS_PPC64_LINUX26_ENV
+      if (current->thread_info->flags & _TIF_32BIT)
+#else /*Linux 2.6*/
+    if (current->thread.flags & PPC_FLAG_32BIT) 
+#endif
 #elif defined(AFS_S390X_LINUX20_ENV)
     if (current->thread.flags & S390_FLAG_31BIT)
 #else
