@@ -32,7 +32,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.16 2002/02/28 06:34:15 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.17 2002/03/21 18:11:50 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -561,7 +561,7 @@ void afs_CheckServers(adown, acellp)
 	    continue;  /* have just been added by setsprefs */ 
 
 	/* get a connection, even if host is down; bumps conn ref count */
-	tu = afs_GetUser(treq.uid, ts->cell, SHARED_LOCK);
+	tu = afs_GetUser(treq.uid, ts->cell->cell, SHARED_LOCK);
 	tc = afs_ConnBySA(sa, ts->cell->fsport, ts->cell->cell, tu,
 			  1/*force*/, 1/*create*/, SHARED_LOCK);
 	afs_PutUser(tu, SHARED_LOCK);
