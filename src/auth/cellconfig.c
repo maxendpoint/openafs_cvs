@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.39 2004/07/22 09:23:58 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.40 2004/07/22 09:42:40 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -204,16 +204,17 @@ IsClientConfigDirectory(const char *path)
 static int
 afsconf_Check(register struct afsconf_dir *adir)
 {
-    char tbuffer[256];
+    char tbuffer[256], *p;
     struct stat tstat;
     register afs_int32 code;
 
 #ifdef AFS_NT40_ENV
     /* NT client CellServDB has different file name than NT server or Unix */
     if (IsClientConfigDirectory(adir->name)) {
-        if ( !afssw_GetClientCellServDBDir(tbuffer) ) {
-            strcompose(tbuffer, sizeof(tbuffer), adir->name, "/",
+        if ( !afssw_GetClientCellServDBDir(&p) ) {
+            strcompose(tbuffer, sizeof(tbuffer), p, "/",
                         AFSDIR_CELLSERVDB_FILE_NTCLIENT, NULL);
+            free(p);
         } else {
             int len;
 			strncpy(tbuffer, adir->name, sizeof(tbuffer));
@@ -248,7 +249,7 @@ afsconf_Check(register struct afsconf_dir *adir)
 static int
 afsconf_Touch(register struct afsconf_dir *adir)
 {
-    char tbuffer[256];
+    char tbuffer[256], *p;
 #ifndef AFS_NT40_ENV
     struct timeval tvp[2];
 #endif
@@ -259,9 +260,10 @@ afsconf_Touch(register struct afsconf_dir *adir)
     /* NT client CellServDB has different file name than NT server or Unix */
 
     if (IsClientConfigDirectory(adir->name)) {
-        if ( !afssw_GetClientCellServDBDir(tbuffer) ) {
-            strcompose(tbuffer, sizeof(tbuffer), adir->name, "/",
+        if ( !afssw_GetClientCellServDBDir(&p) ) {
+            strcompose(tbuffer, sizeof(tbuffer), p, "/",
                         AFSDIR_CELLSERVDB_FILE_NTCLIENT, NULL);
+            free(p);
         } else {
             int len = strlen(tbuffer);
             if ( tbuffer[len-1] != '\\' && tbuffer[len-1] != '/' ) {
@@ -432,9 +434,11 @@ afsconf_OpenInternal(register struct afsconf_dir *adir, char *cell,
      */
     if (IsClientConfigDirectory(adir->name)) {
 	/* NT client config dir */
-        if ( !afssw_GetClientCellServDBDir(tbuffer) ) {
-            strcompose(tbuffer, sizeof(tbuffer), adir->name, "/",
+        char * p;
+        if ( !afssw_GetClientCellServDBDir(&p) ) {
+            strcompose(tbuffer, sizeof(tbuffer), p, "/",
                         AFSDIR_CELLSERVDB_FILE_NTCLIENT, NULL);
+            free(p);
         } else {
             int len;
 			strncpy(tbuffer, adir->name, sizeof(tbuffer));
