@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.10 2004/03/13 21:07:36 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.11 2004/04/02 07:46:07 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -248,7 +248,7 @@ ktc_SetToken(struct ktc_principal *server, struct ktc_token *token,
 	     struct ktc_principal *client, int flags)
 {
     struct ViceIoctl iob;
-    char tbuffer[1024];
+    char tbuffer[MAXKTCTICKETLEN];
     char *tp;
     struct ClearToken ct;
     int temp;
@@ -416,7 +416,7 @@ ktc_GetToken(struct ktc_principal *server, struct ktc_token *token,
 	     int tokenLen, struct ktc_principal *client)
 {
     struct ViceIoctl iob;
-    char tbuffer[1024];
+    char tbuffer[MAXKTCTICKETLEN];
     char *tp, *cp;
     char *ticketP;
     int ticketLen, temp;
