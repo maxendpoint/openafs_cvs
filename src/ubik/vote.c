@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.8 2001/09/17 19:43:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.9 2001/09/20 03:58:23 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -126,7 +126,7 @@ int uvote_ShouldIRun() {
     
     now = FT_ApproxTime();
     if (BIGTIME + ubik_lastYesTime < now) return 1;    /* no valid guy even trying */
-    if (lastYesState && lastYerHost != ubik_host[0]) return 0; /* other guy is sync site, leave him alone */
+    if (lastYesState && lastYesHost != ubik_host[0]) return 0; /* other guy is sync site, leave him alone */
     if (ntohl((afs_uint32) lastYesHost) < ntohl((afs_uint32) ubik_host[0]))
 	return 0;    /* if someone is valid and better than us, don't run */
     /* otherwise we should run */
