@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.7 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.8 2002/11/04 20:15:38 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -746,9 +746,9 @@ VPutVnode_r(ec,vnp)
 			    PrintInode(NULL, vp->vnodeIndex[class].handle->ih_ino));
 			*ec = VIO;
 		    } else {
-			Log("VPutVnode: Couldn't write vnode %d, volume %u (%s)\n",
+			Log("VPutVnode: Couldn't write vnode %d, volume %u (%s) (error %d)\n",
 			    vnp->vnodeNumber, V_id(vnp->volumePtr),
-			    V_name(vnp->volumePtr));
+			    V_name(vnp->volumePtr), code);
 			VForceOffline_r(vp);
 			*ec = VSALVAGE;
 		    }
