@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.6 2005/01/31 04:19:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.7 2005/02/21 01:13:04 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1154,6 +1154,7 @@ afs_HandlePioctl(struct vnode *avp, afs_int32 acom,
 	} else {
 	    osi_FreeLargeSpace(inData);
 	}
+	afs_PutFakeStat(&fakestate);
 	return ENOMEM;
     }
     outSize = 0;
