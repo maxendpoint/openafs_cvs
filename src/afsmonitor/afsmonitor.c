@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.16 2004/07/29 04:09:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.17 2004/07/29 04:20:52 shadow Exp $");
 
 #include <stdio.h>
 #include <math.h>
@@ -2624,7 +2624,7 @@ cm_Results_ltoa(a_cmData, a_cmResults)
 
 
     fullP = (struct afs_stats_CMFullPerf *)
-	(xstat_cm_Results.data.AFSCB_CollData_val);
+	(a_cmResults->data.AFSCB_CollData_val);
 
     /* There are 4 parts to CM statistics
      * - Overall performance statistics (including up/down statistics)
@@ -3615,7 +3615,7 @@ quit_signal(sig)
 
 
 /*-----------------------------------------------------------------------
- * afsmon_execut()
+ * afsmon_execute()
  *
  * Description:
  *	This is where we start it all. Initialize an array of sockets for
