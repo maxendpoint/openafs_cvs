@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.9 2002/01/11 16:44:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.10 2002/01/24 20:13:22 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -103,7 +103,6 @@ int afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
         if (code == EINTR) {
                 if (aintok) 
 		    return EINTR;
-                flush_signals(current);
         }
 #else
 	timer = afs_osi_CallProc(AfsWaitHack, (char *) current, ams);
