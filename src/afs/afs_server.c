@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.33.2.1 2004/08/25 07:07:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.33.2.2 2004/12/07 06:12:12 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -498,9 +498,8 @@ afs_CheckServers(int adown, struct cell *acellp)
     struct conn *tc;
     afs_int32 i, j;
     afs_int32 code;
-    afs_int32 start, end, delta;
+    afs_int32 start, end = 0, delta;
     osi_timeval_t tv;
-    int setTimer;
     struct unixuser *tu;
     char tbuffer[CVBS];
     int srvAddrCount;
@@ -508,9 +507,7 @@ afs_CheckServers(int adown, struct cell *acellp)
     struct conn **conns;
     int nconns;
     struct rx_connection **rxconns;      
-    int nrxconns;
     afs_int32 *conntimer, *deltas;
-    XSTATS_DECLS;
 
     AFS_STATCNT(afs_CheckServers);
 
@@ -1053,7 +1050,7 @@ typedef struct ill_s {
  * afs_uint32 subnetmask;         subnet mask of local addr in net order
  *
  */
-int
+void
 afsi_SetServerIPRank(struct srvAddr *sa, afs_int32 addr,
 		     afs_uint32 subnetmask)
 {
