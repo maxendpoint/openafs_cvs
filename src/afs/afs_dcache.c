@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.10 2001/08/08 00:03:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.11 2001/10/05 20:36:59 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -294,7 +294,11 @@ void afs_CacheTruncateDaemon() {
 	    afs_stats_AddTo(CTD_stats.CTD_sleepTime, CTD_tmpTime);
 	}
 	if (afs_termState == AFSOP_STOP_TRUNCDAEMON) {
+#ifdef AFS_AFSDB_ENV
+	    afs_termState = AFSOP_STOP_AFSDB;
+#else
 	    afs_termState = AFSOP_STOP_RXEVENT;
+#endif
 	    afs_osi_Wakeup(&afs_termState);
 	    break;
 	}

@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.14 2001/09/13 23:19:19 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.15 2001/10/05 20:37:01 shadow Exp $");
 
 #define VFS 1
 
@@ -1067,6 +1067,9 @@ static AfsdbLookupHandler()
 	    continue;
 	}
 
+	if (*acellName == 1)	/* Shutting down */
+	    break;
+
 	code = afsconf_GetAfsdbInfo(acellName, 0, &acellInfo);
 	if (code) {
 	    kernelMsg[0] = 0;
@@ -1081,6 +1084,8 @@ static AfsdbLookupHandler()
 		kernelMsg[i+2] = acellInfo.hostAddr[i].sin_addr.s_addr;
 	}    
     }
+
+    exit(1);
 }
 #endif
 
