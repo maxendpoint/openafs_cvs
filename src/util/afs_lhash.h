@@ -28,7 +28,7 @@
 #ifndef AFS_LHASH_H
 #define AFS_LHASH_H
 
-#if defined(KERNEL) && !defined(UKERNEL)
+#if !defined(KERNEL) && defined(UKERNEL)
 #include <stddef.h>
 #endif
 
