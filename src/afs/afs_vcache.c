@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.62 2004/05/08 04:20:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.63 2004/06/21 21:54:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1051,6 +1051,12 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 #if !defined(AFS_LINUX26_ENV)
     if (afs_globalVFS)
 	ip->i_dev = afs_globalVFS->s_dev;
+#else
+#ifdef STRUCT_INODE_HAS_I_SECURITY
+    ip->i_security = NULL;
+    if (security_inode_alloc(ip))
+        panic("Cannot allocate inode security");
+#endif
 #endif
     ip->i_sb = afs_globalVFS;
     put_inode_on_dummy_list(ip);
