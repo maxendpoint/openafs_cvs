@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.8 2003/01/30 16:03:11 rees Exp $
+ * $Id: osi_vnodeops.c,v 1.9 2003/01/30 21:43:54 rees Exp $
  */
 
 /*
@@ -98,7 +98,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.8 2003/01/30 16:03:11 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.9 2003/01/30 21:43:54 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -864,14 +864,18 @@ afs_nbsd_inactive(ap)
 {
     struct vnode *vp = ap->a_vp;
     struct vcache *vc = VTOAFS(vp);
+    int haveGlock = ISAFS_GLOCK();
 
     AFS_STATCNT(afs_inactive);
 
     if (prtactive && vp->v_usecount != 0)
 	vprint("afs_nbsd_inactive(): pushing active", vp);
 
-    vc->states &= ~CMAPPED;
-    vc->states &= ~CDirty;
+    if (!haveGlock)
+	AFS_GLOCK();
+    afs_InactiveVCache(vc, 0);   /* decrs ref counts */
+    if (!haveGlock)
+	AFS_GUNLOCK();
 
     lockinit(&vc->rwlock, PINOD, "vcache", 0, 0);
     return 0;
@@ -887,18 +891,20 @@ afs_nbsd_reclaim(ap)
     struct vnode *vp = ap->a_vp;
     struct vcache *avc = VTOAFS(vp);
     int haveGlock = ISAFS_GLOCK();
-
-    cache_purge(vp);			/* just in case... */
-    uvm_vnp_uncache(vp);
+    int haveVlock = CheckLock(&afs_xvcache);
 
     if (!haveGlock)
 	AFS_GLOCK();
+    if (!haveVlock)
+	ObtainWriteLock(&afs_xvcache, 901);
 #ifndef AFS_DISCON_ENV
     code = afs_FlushVCache(avc, &slept); /* tosses our stuff from vnode */
 #else
     /* reclaim the vnode and the in-memory vcache, but keep the on-disk vcache */
     code = afs_FlushVS(avc);
 #endif
+    if (!haveVlock)
+	ReleaseWriteLock(&afs_xvcache);
     if (!haveGlock)
 	AFS_GUNLOCK();
     return code;
@@ -915,10 +921,8 @@ afs_nbsd_lock(ap)
     struct vnode *vp = ap->a_vp;
     struct vcache *vc = VTOAFS(vp);
 
-#ifdef DIAGNOSTIC
     if (!vc)
 	panic("afs_nbsd_lock: null vcache");
-#endif
     return lockmgr(&vc->rwlock, ap->a_flags | LK_CANRECURSE, &vp->v_interlock, ap->a_p);
 }
 
@@ -933,10 +937,8 @@ afs_nbsd_unlock(ap)
     struct vnode *vp = ap->a_vp;
     struct vcache *vc = VTOAFS(vp);
 
-#ifdef DIAGNOSTIC
     if (!vc)
 	panic("afs_nbsd_unlock: null vcache");
-#endif
     return lockmgr(&vc->rwlock, ap->a_flags | LK_RELEASE, &vp->v_interlock, ap->a_p);
 }
 
