@@ -1,5 +1,5 @@
 /*
- * $Id: osi_sleep.c,v 1.4 2002/11/19 18:28:02 rees Exp $
+ * $Id: osi_sleep.c,v 1.5 2003/03/01 18:16:01 rees Exp $
  */
 
 /*
@@ -44,7 +44,7 @@ such damages.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.4 2002/11/19 18:28:02 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.5 2003/03/01 18:16:01 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -90,11 +90,11 @@ int afs_osi_Wait(afs_int32 ams, struct afs_osi_WaitHandle *ahandle, int aintok)
     AFS_GUNLOCK();
     do {
 	if (aintok) {
-	    code = tsleep(&waitV, PCATCH | (PZERO+8), "afs_osi_Wait", timo);
+	    code = tsleep(&waitV, PCATCH | PVFS, "afs_osi_Wait", timo);
 	    if (code)	/* if interrupted, return EINTR */
 		code = EINTR;
 	} else
-	    tsleep(&waitV, (PZERO-3), "afs_osi_Wait", timo);
+	    tsleep(&waitV, PVFS, "afs_osi_Wait", timo);
 
 	/* if we were cancelled, quit now */
 	if (ahandle && (ahandle->proc == NULL)) {
