@@ -124,15 +124,18 @@ unwind( "rm $openafsdirpath->{'afsdbdir'}/prdb* ");
 # Start up ptserver and vlserver
 run("$openafsdirpath->{'afssrvbindir'}/bos create $server ptserver simple $openafsdirpath->{'afssrvlibexecdir'}/ptserver -localauth");
 unwind("$openafsdirpath->{'afssrvbindir'}/bos delete $server ptserver -localauth");
+unwind("$openafsdirpath->{'afssrvbindir'}/bos stop $server ptserver -localauth -wait");
 
 run("$openafsdirpath->{'afssrvbindir'}/bos create $server vlserver simple $openafsdirpath->{'afssrvlibexecdir'}/vlserver -localauth");
 unwind("$openafsdirpath->{'afssrvbindir'}/bos delete $server vlserver -localauth");
+unwind("$openafsdirpath->{'afssrvbindir'}/bos stop $server vlserver -localauth -wait");
 
 run( "$openafsdirpath->{'afssrvbindir'}/bos create $server fs fs ".
      "-cmd $openafsdirpath->{'afssrvlibexecdir'}/fileserver ".
      "-cmd $openafsdirpath->{'afssrvlibexecdir'}/volserver ".
      "-cmd $openafsdirpath->{'afssrvlibexecdir'}/salvager -localauth");
 unwind( "$openafsdirpath->{'afssrvbindir'}/bos delete $server fs -localauth ");
+unwind( "$openafsdirpath->{'afssrvbindir'}/bos stop $server fs -localauth -wait");
 
 print "Waiting for database elections: ";
 sleep(30);
