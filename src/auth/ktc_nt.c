@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.15 2004/04/02 11:12:01 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.16 2004/04/04 02:35:47 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -32,7 +32,7 @@ RCSID
 #include <afs/afsutil.h>
 
 /* TBUFFERSIZE must be at least 512 larger than KTCMAXTICKETSIZE */
-#define TBUFFERSIZE 8192  
+#define TBUFFERSIZE 12512
 
 /* Forward declarations for local token cache. */
 static int SetLocalToken(struct ktc_principal *aserver,
