@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.36 2002/06/12 21:41:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.37 2002/07/26 20:38:41 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -1439,7 +1439,7 @@ static PGCPAGs(avc, afun, areq, ain, aout, ainSize, aoutSize, acred)
       ain += sizeof(afs_int32);			/* skip id field */
       /* rest is cell name, look it up */
       /* some versions of gcc appear to need != 0 in order to get this right */
-      if (flag & 0x8000 != 0) {			/* XXX Use Constant XXX */
+      if ((flag & 0x8000) != 0) {		/* XXX Use Constant XXX */
 	  flag &= ~0x8000;
 	  set_parent_pag = 1;
       }
