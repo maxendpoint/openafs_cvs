@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.16 2005/03/26 05:37:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.17 2005/04/03 18:09:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -49,7 +49,7 @@ osi_VM_FlushVCache(struct vcache *avc, int *slept)
 	return EBUSY;
 
     /* if a lock is held, give up */
-    if (CheckLock(&avc->lock) || afs_CheckBozonLock(&avc->pvnLock))
+    if (CheckLock(&avc->lock))
 	return EBUSY;
 
     AFS_GUNLOCK();

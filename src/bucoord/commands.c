@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.15 2004/09/08 21:35:51 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.16 2005/04/03 18:09:25 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -60,11 +60,7 @@ extern statusP createStatusNode();
 char *loadFile;
 extern afs_int32 lastTaskCode;
 
-#ifdef AFS_DEC_ENV
-#define HOSTADDR(sockaddr) (sockaddr)->sin_addr.S_un.S_addr
-#else
 #define HOSTADDR(sockaddr) (sockaddr)->sin_addr.s_addr
-#endif
 
 int
 bc_EvalVolumeSet(aconfig, avs, avols, uclient)
