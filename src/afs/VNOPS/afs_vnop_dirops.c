@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.17 2004/11/06 07:16:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.18 2004/12/24 06:08:22 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -36,16 +36,6 @@ extern afs_rwlock_t afs_xcbhash;
 /* don't set CDirty in here because RPC is called synchronously */
 
 int
-#ifdef	AFS_OSF_ENV
-afs_mkdir(ndp, attrs)
-     struct nameidata *ndp;
-     struct vattr *attrs;
-{
-    register struct vcache *adp = VTOAFS(ndp->ni_dvp);
-    char *aname = ndp->ni_dent.d_name;
-    register struct vcache **avcp = (struct vcache **)&(ndp->ni_vp);
-    struct ucred *acred = ndp->ni_cred;
-#else /* AFS_OSF_ENV */
 afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
      OSI_VC_DECL(adp);
      register struct vcache **avcp;
@@ -53,7 +43,6 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
      struct vattr *attrs;
      struct AFS_UCRED *acred;
 {
-#endif
     struct vrequest treq;
     register afs_int32 code;
     register struct conn *tc;
@@ -172,22 +161,11 @@ afs_mkdir(OSI_VC_ARG(adp), aname, attrs, avcp, acred)
     afs_PutFakeStat(&fakestate);
     code = afs_CheckCode(code, &treq, 26);
   done2:
-#ifdef	AFS_OSF_ENV
-    AFS_RELE(ndp->ni_dvp);
-#endif /* AFS_OSF_ENV */
     return code;
 }
 
 
 int
-#ifdef	AFS_OSF_ENV
-afs_rmdir(ndp)
-     struct nameidata *ndp;
-{
-    register struct vcache *adp = VTOAFS(ndp->ni_dvp);
-    char *aname = ndp->ni_dent.d_name;
-    struct ucred *acred = ndp->ni_cred;
-#else /* AFS_OSF_ENV */
 /* don't set CDirty in here because RPC is called synchronously */
 #if	defined(AFS_SUN5_ENV) || defined(AFS_SGI_ENV)
 afs_rmdir(OSI_VC_ARG(adp), aname, cdirp, acred)
@@ -199,7 +177,6 @@ afs_rmdir(adp, aname, acred)
      char *aname;
      struct AFS_UCRED *acred;
 {
-#endif
     struct vrequest treq;
     register struct dcache *tdc;
     register struct vcache *tvc = NULL;
@@ -336,9 +313,5 @@ afs_rmdir(adp, aname, acred)
     afs_PutFakeStat(&fakestate);
     code = afs_CheckCode(code, &treq, 27);
   done2:
-#ifdef	AFS_OSF_ENV
-    afs_PutVCache(adp);
-    afs_PutVCache(ndp->ni_vp);
-#endif /* AFS_OSF_ENV */
     return code;
 }
