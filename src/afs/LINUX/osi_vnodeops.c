@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.42 2002/05/06 07:13:10 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.43 2002/06/30 06:39:12 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -354,6 +354,7 @@ tagain:
              afid.Fid.Unique=ntohl(de->fid.vunique);
              if ((avc->states & CForeign) == 0 &&
                  (ntohl(de->fid.vnode) & 1)) {
+		 type=DT_DIR;
              } else if ((tvc=afs_FindVCache(&afid,0,0,0,0))) {
                   if (tvc->mvstat) {
                        type=DT_DIR;
