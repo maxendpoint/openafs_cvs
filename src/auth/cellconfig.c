@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.38 2004/07/21 14:06:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.39 2004/07/22 09:23:58 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -215,7 +215,9 @@ afsconf_Check(register struct afsconf_dir *adir)
             strcompose(tbuffer, sizeof(tbuffer), adir->name, "/",
                         AFSDIR_CELLSERVDB_FILE_NTCLIENT, NULL);
         } else {
-            int len = strlen(tbuffer);
+            int len;
+			strncpy(tbuffer, adir->name, sizeof(tbuffer));
+			len = strlen(tbuffer);
             if ( tbuffer[len-1] != '\\' && tbuffer[len-1] != '/' ) {
                 strncat(tbuffer, "\\", sizeof(tbuffer));
             }
@@ -434,7 +436,9 @@ afsconf_OpenInternal(register struct afsconf_dir *adir, char *cell,
             strcompose(tbuffer, sizeof(tbuffer), adir->name, "/",
                         AFSDIR_CELLSERVDB_FILE_NTCLIENT, NULL);
         } else {
-            int len = strlen(tbuffer);
+            int len;
+			strncpy(tbuffer, adir->name, sizeof(tbuffer));
+			len = strlen(tbuffer);
             if ( tbuffer[len-1] != '\\' && tbuffer[len-1] != '/' ) {
                 strncat(tbuffer, "\\", sizeof(tbuffer));
             }
