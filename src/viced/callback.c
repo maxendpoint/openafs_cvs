@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.29 2003/01/15 00:28:46 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.30 2003/02/08 06:43:26 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1886,7 +1886,9 @@ int MultiBreakCallBackAlternateAddress_r(struct host *host, struct AFSCBFids *af
 
 	i = host->interface->numberOfInterfaces;
 	addr = malloc(i * sizeof(afs_int32));
+	if (!addr) return 1;
 	conns = malloc(i * sizeof(struct rx_connection *));
+	if (!conns) { free(addr); return 1; }
 
 	/* initialize alternate rx connections */
 	for ( i=0,j=0; i < host->interface->numberOfInterfaces; i++)
@@ -1970,7 +1972,9 @@ int MultiProbeAlternateAddress_r(struct host *host)
 
 	i = host->interface->numberOfInterfaces;
 	addr = malloc(i * sizeof(afs_int32));
+	if (!addr) return 1;
 	conns = malloc(i * sizeof(struct rx_connection *));
+	if (!conns) { free(addr); return 1; }
 
 	/* initialize alternate rx connections */
 	for ( i=0,j=0; i < host->interface->numberOfInterfaces; i++)
