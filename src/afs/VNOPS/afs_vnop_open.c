@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_open.c,v 1.8 2002/10/16 03:58:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_open.c,v 1.9 2003/07/07 22:09:28 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -32,15 +32,12 @@ RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_open.c,v 1.8 2002/10/16 03:5
  * checks are done here, instead they're done by afs_create or afs_access,
  * both called by the vn_open call.
  */
+int
 #ifdef AFS_SGI64_ENV
-afs_open(bhv, avcp, aflags, acred)
-    bhv_desc_t *bhv;
+afs_open(bhv_desc_t *bhv, struct vcache **avcp, afs_int32 aflags, struct AFS_UCRED *acred)
 #else
-afs_open(avcp, aflags, acred)
+afs_open(struct vcache **avcp, afs_int32 aflags, struct AFS_UCRED *acred)
 #endif
-    register struct vcache **avcp;
-    afs_int32 aflags;
-    struct AFS_UCRED *acred; 
 {
     register afs_int32 code;
     struct vrequest treq;

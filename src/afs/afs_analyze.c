@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.19 2003/07/01 23:53:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.20 2003/07/07 22:09:27 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -131,7 +131,6 @@ void init_et_to_sys_error(void) {
     et2sys[(UAENOANO-ERROR_TABLE_BASE_uae)] = ENOANO;
     et2sys[(UAEBADRQC-ERROR_TABLE_BASE_uae)] = EBADRQC;
     et2sys[(UAEBADSLT-ERROR_TABLE_BASE_uae)] = EBADSLT;
-    et2sys[(UAEDEADLK-ERROR_TABLE_BASE_uae)] = EDEADLK;
     et2sys[(UAEBFONT-ERROR_TABLE_BASE_uae)] = EBFONT;
     et2sys[(UAENOSTR-ERROR_TABLE_BASE_uae)] = ENOSTR;
     et2sys[(UAENODATA-ERROR_TABLE_BASE_uae)] = ENODATA;
