@@ -112,7 +112,7 @@ AC_PROG_LEX
 AC_DECL_YYTEXT])
 
 dnl
-dnl $Id: aclocal.m4,v 1.1 2001/06/28 04:07:08 shadow Exp $
+dnl $Id: aclocal.m4,v 1.2 2001/06/28 04:54:20 shadow Exp $
 dnl
 
 dnl check if this computer is little or big-endian

@@ -54,7 +54,6 @@ case $system in
 		else
 			LINUX_KERNEL_PATH="/usr/src/linux"
 		fi
-#		AC_CACHE_VAL(ac_cv_openafs_linux_kernel_path, "$LINUX_KERNEL_PATH")
 		if test -f "$with_linux_kernel_headers/include/linux/version.h"; then
 		 linux_kvers=`fgrep UTS_RELEASE $with_linux_kernel_headers/include/linux/version.h |awk 'BEGIN { FS="\"" } { print $2 }'`
 		 if test "x$linux_kvers" = "x"; then
@@ -67,7 +66,6 @@ case $system in
 		 AC_MSG_ERROR(No linux headers found at $with_linux_kernel_headers)
 		 exit 1
 		fi
-#		AC_CACHE_VAL(ac_cv_openafs_linux_version, "$LINUX_VERSION")
                 AC_MSG_RESULT(linux)
 		LINUX_FS_STRUCT_INODE_HAS_I_BYTES
 		LINUX_INODE_SETATTR_RETURN_TYPE
