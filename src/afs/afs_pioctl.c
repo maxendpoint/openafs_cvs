@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.48 2002/10/10 22:45:14 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.49 2002/10/11 00:50:40 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -2690,7 +2690,7 @@ DECL_PIOCTL(PSetSysName)
  * l - array of cell ids which have volumes that need to be sorted
  * vlonly - sort vl servers or file servers?
  */
-static void ReSortCells_cb(struct cell *cell, void *arg)
+static void *ReSortCells_cb(struct cell *cell, void *arg)
 {
     afs_int32 *p = (afs_int32 *) arg;
     afs_int32 *l = p + 1;
@@ -2703,6 +2703,8 @@ static void ReSortCells_cb(struct cell *cell, void *arg)
 	    ReleaseWriteLock(&cell->lock);
 	}
     }
+
+    return NULL;
 }
 
 static void ReSortCells(int s, afs_int32 *l, int vlonly)  
