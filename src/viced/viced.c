@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.35 2003/03/04 11:26:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.36 2003/03/04 14:46:04 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -420,6 +420,8 @@ static FsyncCheckLWP()
     struct timespec fsync_next;
 #endif
     ViceLog(1, ("Starting fsync check process\n"));
+
+    setThreadId("FsyncCheckLWP");
 
 #ifdef AFS_PTHREAD_ENV
     assert(pthread_cond_init(&fsync_cond, NULL) == 0);
