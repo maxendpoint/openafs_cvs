@@ -7,7 +7,6 @@ AC_DEFUN(LINUX_KERNEL_LINUX_SYSCALL_H,[
     ac_linux_syscall=no
     AC_MSG_RESULT($ac_linux_syscall)
   fi
-fi
 ])
 
 AC_DEFUN(LINUX_NEED_RHCONFIG,[
