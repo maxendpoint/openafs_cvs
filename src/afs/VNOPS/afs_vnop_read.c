@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.12 2002/06/24 15:03:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.13 2002/06/24 15:23:40 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -609,7 +609,7 @@ afs_UFSRead(avc, auio, acred, albn, abpp, noLock)
     struct vrequest treq;
 
     AFS_STATCNT(afs_UFSRead);
-    if (avc->vc_error)
+    if (avc && avc->vc_error)
 	return EIO;
 
     /* check that we have the latest status info in the vnode cache */
