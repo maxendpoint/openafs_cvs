@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.16 2002/07/31 22:15:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.17 2002/08/21 05:52:18 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -512,7 +512,7 @@ afs_int32 afs_NewCell(acellName, acellHosts, aflags, linkedcname, fsport, vlport
 	tc->vlport = (vlport ? vlport : AFS_VLPORT);
 	afs_stats_cmperf.numCellsVisible++;
 	newc++;
-	if (!aflags & CAlias) {
+	if (!(aflags & CAlias)) {
 	    tc->realcellIndex = afs_realcellindex++;
 	} else {
 	    tc->realcellIndex = -1;
@@ -546,7 +546,7 @@ afs_int32 afs_NewCell(acellName, acellHosts, aflags, linkedcname, fsport, vlport
     tc->timeout = timeout;
 
     /* Allow converting an alias into a real cell */
-    if (!(aflags & CAlias)) {
+    if ((!(aflags & CAlias)) && (tc->states & CAlias)) {
 	tc->states &= ~CAlias;
 	tc->realcellIndex = afs_realcellindex++;
     }
