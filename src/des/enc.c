@@ -5,9 +5,10 @@
  * <mit-copyright.h>.
  */
 
-#ifndef	lint
-static char rcsid_enc_c[] =
-#endif /* lint */
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/enc.c,v 1.2 2001/07/05 15:20:20 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <des.h>

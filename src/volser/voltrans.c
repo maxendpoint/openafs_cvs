@@ -15,6 +15,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.3 2001/07/05 15:21:25 shadow Exp $");
+
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
 #else

@@ -7,6 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/isathing.c,v 1.3 2001/07/05 15:21:05 shadow Exp $");
+
 #include <ctype.h>
 
 /* checks a string to determine whether it's a non-negative decimal integer or not */

@@ -15,6 +15,10 @@
 /* These two needed for rxgen output to work */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/kauth/test/multiklog.c,v 1.3 2001/07/05 15:20:27 shadow Exp $");
+
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <rx/xdr.h>

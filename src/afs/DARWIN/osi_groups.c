@@ -15,6 +15,10 @@
  *
  */
 #include "../afs/param.h"
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_groups.c,v 1.2 2001/07/05 15:20:02 shadow Exp $");
+
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
 #include "../afs/afs_stats.h"  /* statistics */

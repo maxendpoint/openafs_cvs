@@ -12,6 +12,10 @@
  */
 
 #include "../afs/param.h"	/* Should be always first */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afsweb/nsafs.c,v 1.3 2001/07/05 15:20:09 shadow Exp $");
+
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include <net/if.h>
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */

@@ -14,6 +14,9 @@
  */
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.6 2001/07/05 15:20:57 shadow Exp $");
+
 #include <errno.h>
 #include <limits.h>
 #include <sys/types.h>

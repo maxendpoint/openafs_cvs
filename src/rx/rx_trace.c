@@ -7,10 +7,12 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifdef RXDEBUG
-
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.6 2001/07/05 15:20:44 shadow Exp $");
+
+#ifdef RXDEBUG
 #ifdef HAVE_STRINGS_H
 #include <strings.h>
 #else

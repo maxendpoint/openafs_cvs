@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/venus/twiddle.c,v 1.3 2001/07/05 15:21:11 shadow Exp $");
+
 #include <rx/xdr.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>

@@ -10,6 +10,10 @@
 /* Server test program */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/test/testserver.c,v 1.3 2001/07/05 15:20:53 shadow Exp $");
+
 #include <sys/types.h>
 #include <stdio.h>
 #ifdef AFS_NT40_ENV

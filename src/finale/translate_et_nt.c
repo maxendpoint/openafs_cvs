@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/finale/translate_et_nt.c,v 1.3 2001/07/05 15:20:23 shadow Exp $");
+
 #include <afs/stds.h>
 #include <stdio.h>
 

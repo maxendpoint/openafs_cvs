@@ -7,8 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 /*
 	System:		VICE-TWO
 	Module:		physio.c
@@ -17,6 +15,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/physio.c,v 1.3 2001/07/05 15:21:20 shadow Exp $");
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <errno.h>

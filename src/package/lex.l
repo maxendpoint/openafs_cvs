@@ -10,6 +10,11 @@
  *	workstation configuration facility.
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/package/Attic/lex.l,v 1.2 2001/07/05 15:20:39 shadow Exp $");
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>

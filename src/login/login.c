@@ -26,12 +26,6 @@
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef lint
-char copyright[] =
-"@(#) Copyright (c) 1980, 1987, 1988 The Regents of the University of California.\n\
- All rights reserved.\n";
-#endif /* not lint */
-
 /*
  * login [ name ]
  * login -h hostname	(for telnetd, etc.)
@@ -43,6 +37,10 @@ char copyright[] =
 #endif
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/login/Attic/login.c,v 1.3 2001/07/05 15:20:37 shadow Exp $");
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>

@@ -7,8 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 /*  physio.c	- Physical I/O routines for the buffer package		*/
 /*									*/
 /*  Date: 5/1/85							*/
@@ -16,6 +14,10 @@
 /************************************************************************/
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/viced/physio.c,v 1.3 2001/07/05 15:21:16 shadow Exp $");
+
 #include <stdio.h>
 #include <errno.h>
 #ifdef AFS_NT40_ENV

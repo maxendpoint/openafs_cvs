@@ -7,8 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/gi.c,v 1.3 2001/07/05 15:21:19 shadow Exp $");
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>

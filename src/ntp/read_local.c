@@ -7,6 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/read_local.c,v 1.3 2001/07/05 15:20:38 shadow Exp $");
+
 #ifdef	REFCLOCK
 /*
  *  A dummy clock reading routine that reads the current system time.

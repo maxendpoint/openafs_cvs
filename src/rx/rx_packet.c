@@ -9,7 +9,14 @@
 
 #ifdef KERNEL
 #include "../afs/param.h"
+#else
+#include <afs/param.h>
+#endif
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.8 2001/07/05 15:20:44 shadow Exp $");
+
+#ifdef KERNEL
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -44,8 +51,6 @@
 #endif /* defined(UKERNEL) */
 #include "../rx/rx_globals.h"
 #else /* KERNEL */
-#include <afs/param.h>
-#include <afsconfig.h>
 #include "sys/types.h"
 #include <sys/stat.h>
 #include <errno.h>

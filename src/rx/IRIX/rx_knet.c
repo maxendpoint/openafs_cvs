@@ -8,6 +8,10 @@
  */
 
 #include "../afs/param.h"
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.3 2001/07/05 15:20:48 shadow Exp $");
+
 #include "../rx/rx_kcommon.h"
 #include "../h/tcp-param.h"
 /* This must be loaded after proc.h to avoid macro collision with a variable*/

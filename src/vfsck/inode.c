@@ -15,11 +15,11 @@
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef lint
-static char sccsid[] = "@(#)inode.c	5.11 (Berkeley) 2/1/90";
-#endif /* not lint */
-
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vfsck/inode.c,v 1.2 2001/07/05 15:21:14 shadow Exp $");
+
 #define VICE	/* control whether AFS changes are present */
 #include <stdio.h>
 

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/bucoord/volstub.c,v 1.3 2001/07/05 15:20:12 shadow Exp $");
+
 #include <sys/types.h>
 #include <stdio.h>
 #ifdef AFS_NT40_ENV

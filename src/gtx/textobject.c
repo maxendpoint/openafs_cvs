@@ -13,6 +13,10 @@
  *------------------------------------------------------------------------*/
 #define	IGNORE_STDS_H
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/gtx/textobject.c,v 1.3 2001/07/05 15:20:25 shadow Exp $");
+
 #include "gtxtextobj.h"		/*Interface for this module*/
 #include "gtxwindows.h"		/*Gator window interface*/
 #include "gtxcurseswin.h"	/*Gator curses window interface*/

@@ -10,6 +10,10 @@
 /* Security related utilities for the Windows platform */
 
 #include <param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/secutil_nt.c,v 1.3 2001/07/05 15:21:06 shadow Exp $");
+
 #include <stds.h>
 
 #include <stddef.h>

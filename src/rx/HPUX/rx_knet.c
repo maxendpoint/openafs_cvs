@@ -3,6 +3,10 @@
  */
 
 #include "../afs/param.h"
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/HPUX/rx_knet.c,v 1.6 2001/07/05 15:20:48 shadow Exp $");
+
 #include "../h/types.h"
 #include "../h/param.h"
 #include "../rx/rx_kcommon.h"

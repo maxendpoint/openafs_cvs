@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ubik/lock.c,v 1.4 2001/07/05 15:20:59 shadow Exp $");
+
 #include <sys/types.h>
 #ifndef AFS_NT40_ENV
 #include <sys/file.h>

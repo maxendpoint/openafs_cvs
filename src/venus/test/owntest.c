@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/venus/test/owntest.c,v 1.3 2001/07/05 15:21:12 shadow Exp $");
+
 #include <sys/types.h>
 #include <sys/file.h>
 #include <sys/stat.h>

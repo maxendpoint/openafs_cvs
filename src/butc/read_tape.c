@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.3 2001/07/05 15:20:15 shadow Exp $");
+
 #include <afs/cmd.h>
 #include <lock.h>
 #include <afs/tcdata.h>

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/bucoord/dlq.c,v 1.3 2001/07/05 15:20:12 shadow Exp $");
+
 #include <afs/bubasics.h>
 
 #define	DLQ_ASSERT_HEAD(headptr)				\

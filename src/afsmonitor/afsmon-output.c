@@ -18,6 +18,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmon-output.c,v 1.6 2001/07/05 15:20:09 shadow Exp $");
+
 #include <afs/xstat_fs.h>  
 #include <afs/xstat_cm.h>
 

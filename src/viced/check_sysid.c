@@ -12,6 +12,11 @@
 /*                                                                       */
 /* ********************************************************************* */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/viced/check_sysid.c,v 1.3 2001/07/05 15:21:16 shadow Exp $");
+
 #include <fcntl.h>
 #include <errno.h>
 #include <afs/vldbint.h>

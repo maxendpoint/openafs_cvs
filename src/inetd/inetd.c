@@ -17,16 +17,6 @@
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef lint
-char copyright[] =
-"@(#) Copyright (c) 1983 Regents of the University of California.\n\
- All rights reserved.\n";
-#endif /* not lint */
-
-#ifndef lint
-static char sccsid[] = "@(#)inetd.c	5.14 (Berkeley) 1/23/89";
-#endif /* not lint */
-
 /*
  * Inetd - Internet super-server
  *
@@ -63,6 +53,10 @@ static char sccsid[] = "@(#)inetd.c	5.14 (Berkeley) 1/23/89";
  * Comment lines are indicated by a `#' in column 1.
  */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/inetd/Attic/inetd.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+
 #include <sys/param.h>
 #include <sys/stat.h>
 #ifdef AFS_SUN5_ENV

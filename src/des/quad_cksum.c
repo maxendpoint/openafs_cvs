@@ -63,6 +63,11 @@
  *	but nontheless is 64 bit arithmetic.
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/quad_cksum.c,v 1.3 2001/07/05 15:20:20 shadow Exp $");
+
 #include <mit-cpyright.h>
 
 /* System include files */

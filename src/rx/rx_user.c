@@ -9,8 +9,11 @@
 
 /* rx_user.c contains routines specific to the user space UNIX implementation of rx */
 
-# include <afs/param.h>
-# include <afsconfig.h>
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.8 2001/07/05 15:20:44 shadow Exp $");
+
 # include <sys/types.h>
 # include <errno.h>
 # include <signal.h>

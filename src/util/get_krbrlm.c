@@ -4,6 +4,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.2 2001/07/05 15:21:05 shadow Exp $");
+
 #include <stdio.h>
 #include "afsutil.h"
 

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>				/* for machine/host info */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/bu_utils/fms.c,v 1.3 2001/07/05 15:20:11 shadow Exp $");
+
 #undef	IN
 #include <stdio.h>
 #include <errno.h>

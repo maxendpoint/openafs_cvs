@@ -10,6 +10,10 @@
 /* RX Authentication Stress test: server side code. */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rxkad/test/stress.c,v 1.3 2001/07/05 15:20:55 shadow Exp $");
+
 #include <afs/stds.h>
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

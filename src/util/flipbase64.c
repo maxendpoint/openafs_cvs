@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/flipbase64.c,v 1.7 2001/07/05 15:21:05 shadow Exp $");
+
 
 #if defined(AFS_NAMEI_ENV)
 #include <sys/types.h>

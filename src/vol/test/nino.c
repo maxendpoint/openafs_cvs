@@ -10,6 +10,11 @@
 /*
  * translate between inode numbers and contents.
  */
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/test/nino.c,v 1.3 2001/07/05 15:21:23 shadow Exp $");
+
 #include <stdio.h>
 #include <sys/types.h>
 #include "../../util/afsutil.h"

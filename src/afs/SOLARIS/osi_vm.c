@@ -8,6 +8,10 @@
  */
 
 #include "../afs/param.h"	/* Should be always first */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vm.c,v 1.3 2001/07/05 15:20:05 shadow Exp $");
+
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
 #include "../afs/afs_stats.h"  /* statistics */

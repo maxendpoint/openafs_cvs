@@ -17,6 +17,10 @@
  */
 
 #include "../afs/param.h"	/* Should be always first */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.4 2001/07/05 15:20:07 shadow Exp $");
+
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
 #include "../afs/afs_stats.h" /* statistics */

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/log/kseal.c,v 1.3 2001/07/05 15:20:36 shadow Exp $");
+
 #include <sys/types.h>
 #include <netinet/in.h>
 #ifdef	AFS_AIX32_ENV

@@ -15,6 +15,10 @@
 #include <pwd.h>
 #include <unistd.h>
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/pam/afs_setcred.c,v 1.4 2001/07/05 15:20:39 shadow Exp $");
+
 #include <sys/param.h>
 #include <afs/kautils.h>
 #include "afs_message.h"

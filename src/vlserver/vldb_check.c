@@ -22,6 +22,10 @@
 #define FRC 0x200      /* on free chain */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.3 2001/07/05 15:21:17 shadow Exp $");
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.5 2001/07/05 15:20:11 shadow Exp $");
+
 #include <sys/types.h>
 #include <lwp.h>
 #include <errno.h>

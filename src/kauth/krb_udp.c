@@ -13,6 +13,10 @@
    level compatibility with the standard Kerberos servers. */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.10 2001/07/05 15:20:26 shadow Exp $");
+
 #include <afs/stds.h>
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

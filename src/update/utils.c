@@ -9,6 +9,9 @@
 
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.5 2001/07/05 15:21:00 shadow Exp $");
+
 #include <afs/stds.h>
 #include <rx/rxkad.h>
 #include "global.h"
@@ -29,8 +32,6 @@
 #include <unistd.h>
 #endif
 #include <stdlib.h>
-
-RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.4 2001/06/28 15:45:45 shadow Exp $");
 
 int
 AddToList(ah, aname)

@@ -34,6 +34,9 @@
  */
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_cout.c,v 1.4 2001/07/05 15:20:53 shadow Exp $");
+
 #include <stdio.h>
 #include <stdlib.h>
 #ifdef HAVE_STRINGS_H
@@ -45,8 +48,6 @@
 #endif
 #include "rpc_util.h"
 #include "rpc_parse.h"
-
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_cout.c,v 1.3 2001/06/28 06:52:33 shadow Exp $");
 
 static print_header();
 static print_trailer();

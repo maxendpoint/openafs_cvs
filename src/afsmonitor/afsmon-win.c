@@ -12,19 +12,20 @@
  *
  *-------------------------------------------------------------------------*/
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmon-win.c,v 1.5 2001/07/05 15:20:09 shadow Exp $");
+
 #include <stdio.h>
 #include <signal.h>
 #include <math.h>
 #include <cmd.h>
-#include <afs/param.h>
-#include <afsconfig.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 #undef IN
 #include <time.h>
-
-#include <afs/param.h>
 
 #include <gtxwindows.h>		/*Generic window package*/
 #include <gtxobjects.h>		/*Object definitions*/

@@ -7,6 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/test/testpart.c,v 1.3 2001/07/05 15:21:23 shadow Exp $");
+
 #include <stdio.h>
 
 Log(a, b, c, d, e, f, g, h, i, j, k)

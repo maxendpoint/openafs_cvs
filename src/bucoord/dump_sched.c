@@ -14,6 +14,10 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.3 2001/07/05 15:20:12 shadow Exp $");
+
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.7 2001/07/05 15:20:59 shadow Exp $");
+
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

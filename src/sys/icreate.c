@@ -7,13 +7,15 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <stdio.h>
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/sys/icreate.c,v 1.3 2001/07/05 15:20:57 shadow Exp $");
+
 
 #include "AFS_component_version_number.c"
 

@@ -20,6 +20,11 @@
 			    This implies -x, unless the given cellname matches our local one.
 */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/log/test/testlog.c,v 1.3 2001/07/05 15:20:36 shadow Exp $");
+
 #include <itc.h>
 #include <stdio.h>
 #include <pwd.h>

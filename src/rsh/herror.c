@@ -15,11 +15,11 @@
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)herror.c	6.4 (Berkeley) 10/30/88";
-#endif /* LIBC_SCCS and not lint */
-
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rsh/Attic/herror.c,v 1.3 2001/07/05 15:20:43 shadow Exp $");
+
 #ifndef AFS_DARWIN_ENV
 #include <sys/types.h>
 #include <sys/uio.h>

@@ -8,6 +8,10 @@
  */
 
 #include "../afs/param.h"
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.3 2001/07/05 15:20:00 shadow Exp $");
+
 #include "../afs/sysincludes.h"
 #if !defined(UKERNEL)
 #include "../h/param.h"

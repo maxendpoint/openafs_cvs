@@ -36,6 +36,10 @@
  *
  */
 #include "../afs/param.h"       /*Should be always first*/
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.6 2001/07/05 15:20:00 shadow Exp $");
+
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
 #include "../afs/afs_stats.h"

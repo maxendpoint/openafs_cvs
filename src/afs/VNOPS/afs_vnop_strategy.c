@@ -13,6 +13,10 @@
  */
 
 #include "../afs/param.h"	/* Should be always first */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.5 2001/07/05 15:20:07 shadow Exp $");
+
 #if !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV)
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */

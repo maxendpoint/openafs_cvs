@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.4 2001/07/05 15:20:22 shadow Exp $");
+
 #ifdef KERNEL
 #if !defined(UKERNEL)
 #include "../h/types.h"

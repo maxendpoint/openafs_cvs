@@ -22,6 +22,11 @@
  *	need to be ``visible'' to anyone else.
  *------------------------------------------------------------------------*/
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_callback.c,v 1.3 2001/07/05 15:21:28 shadow Exp $");
+
 #include <errno.h>
 #include <stdio.h>			/*Standard I/O stuff*/
 #include <afs/afscbint.h>		/*Callback interface defs*/

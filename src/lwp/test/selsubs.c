@@ -26,6 +26,10 @@
 #include <sys/stat.h>
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/lwp/test/selsubs.c,v 1.3 2001/07/05 15:20:38 shadow Exp $");
+
 
 #include "../lwp.h"
 #include "seltest.h"

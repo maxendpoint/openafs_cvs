@@ -8,6 +8,11 @@
  *			-1 ==> error
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/test/key_test.c,v 1.3 2001/07/05 15:20:22 shadow Exp $");
+
 #include <mit-cpyright.h>
 #include <stdio.h>
 #include <errno.h>

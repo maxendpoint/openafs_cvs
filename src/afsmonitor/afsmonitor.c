@@ -13,17 +13,18 @@
  *-------------------------------------------------------------------------*/
 
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.6 2001/07/05 15:20:09 shadow Exp $");
+
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
 #include <errno.h>
 #include <cmd.h>
 #include <signal.h>
-#include <afs/param.h>
-#include <afsconfig.h>
-
 #undef IN
-
 #include <sys/types.h>
 #include <netinet/in.h>
 #ifndef AFS_DEC_ENV

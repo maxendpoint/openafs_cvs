@@ -24,6 +24,10 @@
 #include <stdio.h>
 #include <des.h>
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/pcbc_encrypt.c,v 1.5 2001/07/05 15:20:20 shadow Exp $");
+
 #include "des_internal.h"
 
 #define XPRT_PCBC_ENCRYPT

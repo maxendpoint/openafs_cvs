@@ -10,6 +10,11 @@
 /*
  * symtab -	symbol table routines
  */
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/export/symtab.c,v 1.3 2001/07/05 15:20:23 shadow Exp $");
+
 #include "sys/types.h"
 #include "sym.h"
 

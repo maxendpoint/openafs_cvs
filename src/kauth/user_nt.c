@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/kauth/user_nt.c,v 1.4 2001/07/05 15:20:26 shadow Exp $");
+
 #include <afs/stds.h>
 
 #include <windows.h>

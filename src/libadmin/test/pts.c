@@ -11,6 +11,11 @@
  * This file implements the pts related funtions for afscp
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/libadmin/test/pts.c,v 1.3 2001/07/05 15:20:32 shadow Exp $");
+
 #include "pts.h"
 
 /*

@@ -7,6 +7,11 @@
  * This routine generates the P permutation code for the DES.
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/make_p.c,v 1.2 2001/07/05 15:20:20 shadow Exp $");
+
 #include <mit-cpyright.h>
 #include <stdio.h>
 #include "des_internal.h"

@@ -7,6 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/kauth/test/background.c,v 1.3 2001/07/05 15:20:27 shadow Exp $");
+
 main (argc, argv)
   int   argc;
   char *argv[];

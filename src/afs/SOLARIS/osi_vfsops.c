@@ -11,6 +11,10 @@
  * osi_vfsops.c for SOLARIS
  */
 #include "../afs/param.h"	/* Should be always first */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.7 2001/07/05 15:20:05 shadow Exp $");
+
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
 #include "../afs/afs_stats.h"   /* statistics stuff */

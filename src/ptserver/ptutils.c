@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.7 2001/07/05 15:20:42 shadow Exp $");
+
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <stdio.h>

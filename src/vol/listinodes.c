@@ -7,8 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 /*
 
 	System:		VICE-TWO
@@ -20,6 +18,10 @@
 #define ITC	/* Required by inode.h */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.7 2001/07/05 15:21:19 shadow Exp $");
+
 #ifndef AFS_NAMEI_ENV
 #ifdef AFS_LINUX20_ENV
 /* ListViceInodes

@@ -34,9 +34,10 @@
  * SUCH DAMAGE.
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)crypt.c	5.11 (Berkeley) 6/25/91";
-#endif /* LIBC_SCCS and not lint */
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.4 2001/07/05 15:20:20 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <windows.h>

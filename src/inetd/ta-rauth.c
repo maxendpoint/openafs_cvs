@@ -12,6 +12,10 @@
  * token from the local system to the remote system.
  */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/inetd/Attic/ta-rauth.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/stat.h>

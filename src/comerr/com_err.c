@@ -4,6 +4,11 @@
  * For copyright info, see mit-sipb-cr.h.
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/comerr/com_err.c,v 1.2 2001/07/05 15:20:17 shadow Exp $");
+
 #include "internal.h"
 #include <stdio.h>
 #include <stdarg.h>

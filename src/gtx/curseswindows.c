@@ -16,6 +16,10 @@
  *------------------------------------------------------------------------*/
 #define	IGNORE_STDS_H
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/gtx/curseswindows.c,v 1.4 2001/07/05 15:20:25 shadow Exp $");
+
 
 #if defined(AFS_HPUX110_ENV) && !defined(__HP_CURSES)
 #define __HP_CURSES

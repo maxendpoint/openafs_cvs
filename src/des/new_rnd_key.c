@@ -16,6 +16,10 @@
 #include <mit-cpyright.h>
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/new_rnd_key.c,v 1.7 2001/07/05 15:20:20 shadow Exp $");
+
 #include <des.h>
 #include "des_internal.h"
 #ifdef AFS_PTHREAD_ENV

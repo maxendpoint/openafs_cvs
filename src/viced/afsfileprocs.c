@@ -26,6 +26,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.7 2001/07/05 15:21:16 shadow Exp $");
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

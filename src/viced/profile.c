@@ -7,11 +7,13 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 /* profile.c -- routines to deal with profiling.   2 June 1986 */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/viced/profile.c,v 1.3 2001/07/05 15:21:16 shadow Exp $");
+
 #include <stdio.h>
 #include <sys/file.h>
 #include <signal.h>

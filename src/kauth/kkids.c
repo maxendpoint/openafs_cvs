@@ -13,6 +13,10 @@
 
 /* These two needed for rxgen output to work */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/kauth/kkids.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -9,6 +9,9 @@
 
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.5 2001/07/05 15:21:00 shadow Exp $");
+
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -46,12 +49,8 @@
 #include <afs/cellconfig.h>
 #include <afs/afsutil.h>
 #include <afs/fileutil.h>
-
-RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.4 2001/06/28 15:55:05 shadow Exp $");
-
 #include "update.h"
 #include "global.h"
-
 
 extern int UPDATE_ExecuteRequest();
 static int AddObject(char **expPath, char *dir);

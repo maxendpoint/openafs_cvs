@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.3 2001/07/05 15:20:16 shadow Exp $");
+
 #include <sys/types.h>
 #include <fcntl.h>
 #include <errno.h>

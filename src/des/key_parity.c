@@ -14,6 +14,11 @@
  *
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/key_parity.c,v 1.2 2001/07/05 15:20:20 shadow Exp $");
+
 #include <mit-cpyright.h>
 #include <des.h>
 #include "des_internal.h"

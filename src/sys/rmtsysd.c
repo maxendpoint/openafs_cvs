@@ -14,6 +14,10 @@
  * afsd.
  */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/sys/rmtsysd.c,v 1.3 2001/07/05 15:20:57 shadow Exp $");
+
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif

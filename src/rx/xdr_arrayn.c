@@ -27,10 +27,11 @@
  * Mountain View, California  94043
  */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/xdr_arrayn.c,v 1.2 2001/07/05 15:20:44 shadow Exp $");
+
 #if !defined(NeXT)
-#ifndef lint
-static char sccsid[] = "@(#)xdr_array.c 1.1 86/02/03 Copyr 1984 Sun Micro";
-#endif
 
 /*
  * xdr_array.c, Generic XDR routines impelmentation.

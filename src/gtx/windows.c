@@ -15,6 +15,11 @@
  *
  *--------------------------------------------------------------------------------*/
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/gtx/windows.c,v 1.3 2001/07/05 15:20:25 shadow Exp $");
+
 #include "gtxwindows.h"		/*Interface for this module*/
 #include "gtxcurseswin.h"	/*Interface for the curses module*/
 #include "gtxdumbwin.h"		/*Interface for the dumb terminal module*/

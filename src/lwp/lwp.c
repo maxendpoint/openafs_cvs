@@ -14,6 +14,11 @@
 * 								    *
 \*******************************************************************/
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.13 2001/07/05 15:20:37 shadow Exp $");
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>

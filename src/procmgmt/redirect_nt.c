@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/procmgmt/redirect_nt.c,v 1.3 2001/07/05 15:20:41 shadow Exp $");
+
 
 #include <stddef.h>
 #include <stdlib.h>

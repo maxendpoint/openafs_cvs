@@ -7,8 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 /*
    System:		VICE-TWO
    Module:		vol-info.c
@@ -17,6 +15,10 @@
    */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.5 2001/07/05 15:21:20 shadow Exp $");
+
 #include <ctype.h>
 #include <errno.h>
 #include <sys/stat.h>

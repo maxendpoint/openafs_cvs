@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.4 2001/07/05 15:20:10 shadow Exp $");
+
 #include <afs/pthread_glock.h>
 #include <afs/afsutil.h>
 #include <sys/types.h>

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/bozo/bos.c,v 1.8 2001/07/05 15:20:11 shadow Exp $");
+
 #include <afs/stds.h>
 #include <stdlib.h>
 #include <stddef.h>

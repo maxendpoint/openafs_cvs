@@ -11,6 +11,11 @@
  * Test of the curses package, to make sure I really understand how to use it.
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/gtx/curses_test.c,v 1.3 2001/07/05 15:20:25 shadow Exp $");
+
 #if defined(AFS_HPUX110_ENV) && !defined(__HP_CURSES)
 #define __HP_CURSES
 #endif

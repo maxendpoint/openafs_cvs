@@ -7,6 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/log/test/gettoktest.c,v 1.3 2001/07/05 15:20:36 shadow Exp $");
+
 #include <itc.h>
 #include <stdio.h>
 #include <sys/file.h>

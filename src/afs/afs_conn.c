@@ -11,6 +11,10 @@
  * Implements:
  */
 #include "../afs/param.h"	/* Should be always first */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.5 2001/07/05 15:20:00 shadow Exp $");
+
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 

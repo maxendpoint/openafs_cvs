@@ -7,9 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.5 2001/07/05 15:20:42 shadow Exp $");
+
 #include <stdio.h>
 #include <string.h>
 #ifdef	AFS_AIX32_ENV

@@ -7,10 +7,12 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 #define PAGESIZE 2048
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/dir/test/dtest.c,v 1.3 2001/07/05 15:20:23 shadow Exp $");
+
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
 #include <windows.h>

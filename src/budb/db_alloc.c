@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/budb/db_alloc.c,v 1.3 2001/07/05 15:20:15 shadow Exp $");
+
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else

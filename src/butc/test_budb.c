@@ -11,6 +11,10 @@
 #include <netinet/in.h>
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/butc/test_budb.c,v 1.3 2001/07/05 15:20:15 shadow Exp $");
+
 #include <afs/auth.h>
 #include <afs/budb_client.h>
 #include <afs/budb.h>

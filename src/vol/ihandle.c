@@ -7,13 +7,15 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
 /*  ihandle.c	- file descriptor cacheing for Inode handles.           */
 /*									*/
 /************************************************************************/
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.3 2001/07/05 15:21:19 shadow Exp $");
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <errno.h>

@@ -35,6 +35,9 @@
 
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.8 2001/07/05 15:20:53 shadow Exp $");
+
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,8 +58,6 @@
 #include "rpc_util.h"
 #include "rpc_parse.h"
 #include "rpc_scan.h"
-
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.7 2001/06/28 06:52:33 shadow Exp $");
 
 #define EXTEND	1		/* alias for TRUE */
 

@@ -17,6 +17,10 @@
  * 3) Try to read a file.
  */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/test/treaddir.c,v 1.3 2001/07/05 15:21:08 shadow Exp $");
+
 #include <stdio.h>
 #include <errno.h>
 #include <dirent.h>

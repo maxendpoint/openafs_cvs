@@ -13,6 +13,10 @@
 #include <errno.h>
 #include <des.h>
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/test/testit.c,v 1.4 2001/07/05 15:20:22 shadow Exp $");
+
 
 #define MIN_ARGC	0	/* min # args, not incl flags */
 #define MAX_ARGC	2	/* max # args, not incl flags */

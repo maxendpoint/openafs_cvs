@@ -69,6 +69,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/dauth/Attic/dlog.c,v 1.4 2001/07/05 15:20:18 shadow Exp $");
+
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <rx/xdr.h>

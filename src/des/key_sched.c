@@ -27,6 +27,11 @@
  * Originally written 6/85 by Steve Miller, MIT Project Athena.
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/key_sched.c,v 1.3 2001/07/05 15:20:20 shadow Exp $");
+
 #include <mit-cpyright.h>
 #include "des_internal.h"
 #include <stdio.h>

@@ -7,6 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/test/ktest.c,v 1.3 2001/07/05 15:21:07 shadow Exp $");
+
 #include "ktime.h"
 
 main(argc, argv)

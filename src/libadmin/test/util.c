@@ -11,6 +11,11 @@
  * This file implements the util related funtions for afscp
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/libadmin/test/util.c,v 1.3 2001/07/05 15:20:32 shadow Exp $");
+
 #include "util.h"
 
 int

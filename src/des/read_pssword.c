@@ -12,6 +12,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/read_pssword.c,v 1.9 2001/07/05 15:20:20 shadow Exp $");
+
 #include <mit-cpyright.h>
 #include <des.h>
 #include "conf.h"

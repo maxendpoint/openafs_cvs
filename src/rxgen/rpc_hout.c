@@ -34,12 +34,13 @@
  */
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.3 2001/07/05 15:20:53 shadow Exp $");
+
 #include <stdio.h>
 #include <ctype.h>
 #include "rpc_util.h"
 #include "rpc_parse.h"
-
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.2 2001/06/23 15:14:37 shadow Exp $");
 
 static pconstdef();
 static pstructdef();

@@ -9,6 +9,10 @@
 
 #undef MEMORYLEAK
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/comerr/compile_et.c,v 1.5 2001/07/05 15:20:17 shadow Exp $");
+
 #include <stdio.h>
 #include <stdlib.h>
 

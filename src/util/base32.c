@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/base32.c,v 1.3 2001/07/05 15:21:05 shadow Exp $");
+
 #include "afsutil.h"
 
 static char *c_xlate = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

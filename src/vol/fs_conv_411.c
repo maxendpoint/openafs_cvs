@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fs_conv_411.c,v 1.3 2001/07/05 15:21:19 shadow Exp $");
+
 #if	defined(AFS_DUX40_ENV) || (defined(AFS_SUN_ENV) && !defined(AFS_SUN5_ENV)) || defined(AFS_SUN54_ENV)
 #if defined AFS_DUX40_ENV
 #define OSVERS "DUX 4.0D"

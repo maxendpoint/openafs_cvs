@@ -7,6 +7,10 @@
  *
  */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rx/xdr_update.c,v 1.2 2001/07/05 15:20:44 shadow Exp $");
+
 #ifndef	NeXT
 #include "xdr.h"
 

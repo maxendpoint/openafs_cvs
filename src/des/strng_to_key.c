@@ -23,6 +23,10 @@
 #include <mit-cpyright.h>
 #include <stdio.h>
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.6 2001/07/05 15:20:20 shadow Exp $");
+
 #include <des.h>
 #include "des_internal.h"
 #if defined(HAVE_STRINGS_H)

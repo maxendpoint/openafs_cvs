@@ -11,6 +11,10 @@
 
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/venus/whatfid.c,v 1.3 2001/07/05 15:21:11 shadow Exp $");
+
 #include <stdio.h>
 #include <errno.h>
 #ifdef	AFS_AIX32_ENV

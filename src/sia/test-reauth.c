@@ -10,6 +10,10 @@
 /* test-reauth.c - test SIA reauthorization code. */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/sia/Attic/test-reauth.c,v 1.3 2001/07/05 15:20:57 shadow Exp $");
+
 #include <afs/stds.h>
 #include <stdio.h>
 #include <sgtty.h>

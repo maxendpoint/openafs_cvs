@@ -11,6 +11,10 @@
  * osi_vfsops.c for AIX
  */
 #include "../afs/param.h"	/* Should be always first */
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_vfsops.c,v 1.3 2001/07/05 15:20:02 shadow Exp $");
+
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
 #include "../afs/afs_stats.h"   /* statistics stuff */

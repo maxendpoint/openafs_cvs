@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.3 2001/07/05 15:21:17 shadow Exp $");
+
 #include <sys/types.h>
 #include <stdio.h>
 #include <lock.h>

@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.5 2001/07/05 15:21:00 shadow Exp $");
+
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

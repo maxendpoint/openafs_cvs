@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/sys/afssyscalls.c,v 1.3 2001/07/05 15:20:57 shadow Exp $");
+
 #include <signal.h>
 #include <sys/errno.h>
 #include <afs/afs_args.h>

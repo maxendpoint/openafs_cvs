@@ -9,6 +9,9 @@
 
 #include <afs/param.h>
 #include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.8 2001/07/05 15:21:00 shadow Exp $");
+
 #include <sys/types.h>
 #include <stdlib.h>
 #ifdef HAVE_STRINGS_H

@@ -18,6 +18,11 @@
  * eliminate the practice of reporting errors to STDOUT.
  */
 
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/libadmin/vos/vsprocs.c,v 1.5 2001/07/05 15:20:35 shadow Exp $");
+
 #include "vsprocs.h"
 #include "vosutils.h"
 #include "lockprocs.h"

@@ -8,6 +8,10 @@
  */
 
 #include "param.h"
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_debug.c,v 1.3 2001/07/05 15:20:04 shadow Exp $");
+
 #include "sysincludes.h"
 #include "afsincludes.h"
 #include "afs_cbqueue.h"

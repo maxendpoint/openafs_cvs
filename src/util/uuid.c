@@ -9,12 +9,19 @@
 
 #ifdef KERNEL
 #include "../afs/param.h"
+#else
+#include <afs/param.h>
+#endif
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.4 2001/07/05 15:21:06 shadow Exp $");
+
+#ifdef KERNEL
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
 #define uuid_memcmp(A,B,C)	bcmp(A,B,C)
 #define uuid_memcpy(A,B,C)	bcopy(B,A,C)
 #else /* KERNEL */
-#include <afs/param.h>
 #include <stdio.h>
 #include <errno.h>
 #ifdef AFS_NT40_ENV

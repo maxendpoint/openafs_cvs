@@ -8,9 +8,10 @@
  * originally written 8/85 by Steve Miller.
  */
 
-#ifndef	lint
-static char rcsid_make_e_c[] =
-#endif /* lint */
+#include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/des/make_e.c,v 1.2 2001/07/05 15:20:20 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <stdio.h>

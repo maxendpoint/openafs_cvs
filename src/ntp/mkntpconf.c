@@ -7,26 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#ifndef lint
-#endif
-/*
- * $Revision: 1.2 $
- * $Date: 2000/11/04 10:05:15 $
- * $State: Exp $
- * $Locker:  $
- ****************************************************************
- * Revision 1.3  89/12/22  20:29:14  
- * hp/ux specific (initial port to it); Added <afs/param.h> and special include files for HPUX
- * 
- * Revision 1.2  88/11/11  16:03:44
- * New/improved primary servers.
- * 
- * Revision 1.1  88/08/15  22:21:44
- * Initial revision
- * 
- */
-
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/mkntpconf.c,v 1.3 2001/07/05 15:20:38 shadow Exp $");
+
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

@@ -20,6 +20,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/lwp/waitkey.c,v 1.6 2001/07/05 15:20:37 shadow Exp $");
+
 #include <stdio.h>
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

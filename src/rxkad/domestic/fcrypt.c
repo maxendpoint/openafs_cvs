@@ -11,10 +11,18 @@
  * scatter/gather vectors.
  */
 
-#define DEBUG 0
 
 #ifdef KERNEL
 #include "../afs/param.h"
+#else
+#include <afs/param.h>
+#endif
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/rxkad/domestic/fcrypt.c,v 1.5 2001/07/05 15:20:54 shadow Exp $");
+
+#define DEBUG 0
+#ifdef KERNEL
 #ifndef UKERNEL
 #include "../afs/stds.h"
 #include "../h/types.h"
@@ -33,7 +41,6 @@
 
 #else /* KERNEL */
 
-#include <afs/param.h>
 #include <afs/stds.h>
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

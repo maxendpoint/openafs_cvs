@@ -8,6 +8,10 @@
  */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/audit/audit.c,v 1.4 2001/07/05 15:20:09 shadow Exp $");
+
 #include <fcntl.h>
 #include <stdarg.h>
 #ifdef AFS_AIX32_ENV

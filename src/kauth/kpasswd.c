@@ -9,6 +9,10 @@
 
 /* These two needed for rxgen output to work */
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.5 2001/07/05 15:20:26 shadow Exp $");
+
 #include <afs/stds.h>
 #include <sys/types.h>
 #ifdef	AFS_AIX32_ENV
@@ -370,7 +374,7 @@ CommandProc (as, arock)
 	}
     } 
     ka_StringToKey (passwd, realm, &key);
-    ka_CellStringToKey (passwd, realm, &mitkey);
+    des_string_to_key(passwd, &mitkey);
     give_to_child(passwd);
 
     /* Get new password if it wasn't provided. */

@@ -14,6 +14,10 @@
 
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.4 2001/07/05 15:20:28 shadow Exp $");
+
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

@@ -10,6 +10,10 @@
 /* File-oriented utility functions */
 
 #include <afs/param.h>
+#include <afsconfig.h>
+
+RCSID("$Header: /cvs/openafs/src/util/fileutil.c,v 1.4 2001/07/05 15:21:05 shadow Exp $");
+
 #include <afs/stds.h>
 #include <stddef.h>
 #include <stdlib.h>
