@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.8 2001/08/08 00:04:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.9 2002/02/28 06:10:51 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -337,8 +337,7 @@ usage:
     }
     if (!rxJumbograms) {
 	/* Don't allow 3.4 vos clients to send jumbograms and we don't send. */
-	rx_maxReceiveSize = OLD_MAX_PACKET_SIZE;
-	rxi_nSendFrags = rxi_nRecvFrags = 1;
+        rx_SetNoJumbo();
     }
     rx_GetIFInfo();
     rx_SetRxDeadTime(420);
