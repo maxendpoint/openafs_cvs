@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.32 2003/04/16 22:28:55 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.33 2003/05/13 04:05:39 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -340,12 +340,12 @@ void rxi_StartListener(void)
   to get interesting information. */
 void rxi_InitPeerParams(register struct rx_peer *pp)
 {
-#ifdef	ADAPT_MTU
-#ifndef AFS_SUN5_ENV
-#ifdef AFS_USERSPACE_IP_ADDR	
     u_short rxmtu;
     afs_int32 i, mtu;
 
+#ifdef	ADAPT_MTU
+#ifndef AFS_SUN5_ENV
+#ifdef AFS_USERSPACE_IP_ADDR	
     i = rxi_Findcbi(pp->host);
     if (i == -1) {
 	pp->timeout.sec = 3;
