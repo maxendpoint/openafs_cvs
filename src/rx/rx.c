@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.61 2004/09/17 13:35:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.62 2004/09/24 15:42:32 rees Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -662,7 +662,7 @@ void
 rx_StartServer(int donateMe)
 {
     register struct rx_service *service;
-    register int i, nProcs = 0;
+    register int i;
     SPLVAR;
     clock_NewTime();
 
@@ -701,6 +701,7 @@ rx_StartServer(int donateMe)
 #ifndef AFS_NT40_ENV
 #ifndef KERNEL
 	char name[32];
+	static int nProcs;
 #ifdef AFS_PTHREAD_ENV
 	pid_t pid;
 	pid = (pid_t) pthread_self();
