@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.59 2003/05/13 03:55:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.60 2003/05/15 14:53:28 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1066,10 +1066,10 @@ int afs_HandlePioctl(struct vnode *avp, afs_int32 acom,
 	return EINVAL;		/* out of range */
     }
     inSize = ablob->in_size;
-    
+
     /* Do all range checking before continuing */
-    if ((inSize >= PIGGYSIZE) || (inSize < 0)) return E2BIG;
-    if ((ablob->out_size >= PIGGYSIZE) || (ablob->out_size < 0)) return E2BIG;
+    if (inSize >= PIGGYSIZE || inSize < 0 || ablob->out_size < 0)
+	return E2BIG;
 
     inData = osi_AllocLargeSpace(AFS_LRALLOCSIZ);
     if (inSize > 0) {
