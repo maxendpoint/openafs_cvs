@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.68 2004/06/21 19:17:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.69 2004/06/24 17:38:22 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -130,7 +130,7 @@ afs_InitSetup(int preallocs)
     rx_extraPackets = AFS_NRXPACKETS;	/* smaller # of packets */
     code = rx_Init(htons(7001));
     if (code) {
-	printf("AFS: RX failed to initialize.\n");
+	printf("AFS: RX failed to initialize %d).\n", code);
 	return code;
     }
     rx_SetRxDeadTime(afs_rx_deadtime);
