@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.51 2002/08/06 19:49:00 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.52 2002/08/13 23:15:49 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -840,6 +840,7 @@ static int afs_linux_dentry_revalidate(struct dentry *dp)
     struct vcache *parentvcp = ITOAFS(dp->d_parent->d_inode);
 
     AFS_GLOCK();
+    lock_kernel();
 
     sysState.allocked = 0;
 
@@ -889,13 +890,14 @@ done:
     if (sysState.allocked)
         osi_FreeLargeSpace(name);
 
-    AFS_GUNLOCK();
-    crfree(credp);
-
     if (bad_dentry) {
         shrink_dcache_parent(dp);
         d_drop(dp);
     }
+
+    unlock_kernel();
+    AFS_GUNLOCK();
+    crfree(credp);
 
     return !bad_dentry;
 }
