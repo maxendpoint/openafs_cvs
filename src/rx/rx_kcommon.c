@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.33 2003/05/13 04:05:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.34 2003/05/13 21:22:19 rees Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -369,7 +369,6 @@ void rxi_InitPeerParams(register struct rx_peer *pp)
 	pp->ifMTU = RX_REMOTE_PACKET_SIZE;
     }
 #else /* AFS_USERSPACE_IP_ADDR */
-    u_short rxmtu;
     struct ifnet *ifn;
 
 #if !defined(AFS_SGI62_ENV)
