@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.38 2003/02/19 02:21:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.39 2003/02/28 23:56:25 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1986,7 +1986,7 @@ int CheckHost(register struct host *host, int held)
 			if (code) {
 			    char hoststr[16];
 			    afs_inet_ntoa_r(host->host, hoststr);
-			    ViceLog(0, ("ProbeUuid failed for host %s:%d\n",
+			    ViceLog(0, ("Probe failed for host %s:%d\n",
 					hoststr, ntohs(host->port)));
 			    host->hostFlags |= VENUSDOWN;
 			}
