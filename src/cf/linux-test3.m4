@@ -126,5 +126,5 @@ AC_TRY_COMPILE(
   ],
   ac_cv_linux_kernel_page_follow_link=yes,
   ac_cv_linux_kernel_page_follow_link=no)])
-AC_MSG_RESULT($ac_cv_linux_kernel_page_follow_page)
+AC_MSG_RESULT($ac_cv_linux_kernel_page_follow_link)
 CPPFLAGS="$save_CPPFLAGS"])
