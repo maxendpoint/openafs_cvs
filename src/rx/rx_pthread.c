@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.14 2003/03/03 15:53:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.15 2003/03/14 19:47:38 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -33,8 +33,8 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.14 2003/03/03 15:53:28 shad
 # include <sys/time.h>
 #endif
 #include <sys/stat.h>
-#include <rx.h>
-#include <rx_globals.h>
+#include <rx/rx.h>
+#include <rx/rx_globals.h>
 #include <assert.h>
 #include <rx/rx_pthread.h>
 

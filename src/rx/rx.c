@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.49 2003/03/14 19:24:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.50 2003/03/14 19:47:38 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -79,7 +79,7 @@ extern afs_int32 afs_termState;
 #ifdef AFS_NT40_ENV
 # include <stdlib.h>
 # include <fcntl.h>
-# include <afsutil.h>
+# include <afs/afsutil.h>
 #else
 # include <sys/socket.h>
 # include <sys/file.h>

@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.10 2001/09/17 19:42:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.11 2003/03/14 19:47:36 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -29,7 +29,7 @@ RCSID("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.10 2001/09/17 19:42:55 sh
 #endif
 #include <rx/xdr.h>
 #include <rx/rx.h>
-#include <ptclient.h>
+#include <afs/ptclient.h>
 #include "acl.h"
 
 #ifdef AFS_PTHREAD_ENV
