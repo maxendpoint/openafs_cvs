@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.15 2005/02/03 17:02:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.16 2005/03/26 05:37:42 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -404,7 +404,7 @@ osi_VM_Setup(struct vcache *avc, int force)
 	    if ((error = ubc_info_init(&avc->v))) {
 		AFS_GLOCK();
 		avc->states &= ~CUBCinit;
-		AFS_RELE(avc);
+		AFS_RELE(AFSTOV(avc));
 		return error;
 	    }
 #ifndef AFS_DARWIN14_ENV
@@ -421,7 +421,7 @@ osi_VM_Setup(struct vcache *avc, int force)
 #endif
 	    AFS_GLOCK();
 	    avc->states &= ~CUBCinit;
-	    AFS_RELE(avc);
+	    AFS_RELE(AFSTOV(avc));
 	}
 	if (UBCINFOEXISTS(&avc->v))
 	    ubc_setsize(&avc->v, avc->m.Length);
