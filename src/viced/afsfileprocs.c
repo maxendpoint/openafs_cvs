@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.20 2001/12/03 23:21:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.21 2001/12/08 02:29:24 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -5251,7 +5251,6 @@ StoreData_RXStyle(volptr, targetptr, Fid, client, Call, Pos, Length,
     afs_uint32 Pos;
     afs_uint32 Length;
     afs_uint32 FileLength;
-    afs_int32 FileLength;
     int sync;
 #if FS_STATS_DETAILED
     afs_int32 *a_bytesToStoreP;
