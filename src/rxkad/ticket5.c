@@ -38,7 +38,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/ticket5.c,v 1.2 2002/10/28 01:18:39 jhutz Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/ticket5.c,v 1.3 2002/11/15 05:02:33 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -182,6 +182,14 @@ int tkt_DecodeTicket5(char *ticket, afs_int32 ticket_len,
 	goto bad_ticket;
     }
     
+    /* 
+     * If the first part of the name_string contains a dot, punt since
+     * then we can't see the diffrence between the kerberos 5
+     * principals foo.root and foo/root later in the fileserver.
+     */
+     if (strchr(decr_part.cname.name_string.val[0], '.') != NULL) 
+	 goto bad_ticket;
+
     /* Verify that decr_part.key is of right type */
     switch (decr_part.key.keytype) {
     case ETYPE_DES_CBC_CRC:
