@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.31 2003/11/15 05:35:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.32 2003/11/15 05:57:42 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -260,7 +260,7 @@ GetVolumeType(char *aname)
 }
 
 int
-IsPartValid(afs_int32 partId, afs_int32 server, afs_int32 code)
+IsPartValid(afs_int32 partId, afs_int32 server, afs_int32 *code)
 {
     struct partList dummyPartList;
     int i, success, cnt;
