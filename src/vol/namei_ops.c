@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.19 2003/08/08 20:40:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.20 2003/11/14 23:35:27 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -694,9 +694,13 @@ namei_dec(IHandle_t * ih, Inode ino, int p1)
 	    }
 	}
 	if (count == 0) {
-	    IHandle_t th = *ih;
-	    th.ih_ino = ino;
-	    namei_HandleToName(&name, &th);
+	    IHandle_t *th;
+	    IH_INIT(th, ih->ih_dev, ih->ih_vid, ino);
+            if (th->ih_refcnt > 1) 
+                Log("Warning: Leaked ref on ihandle dev %d vid %d ino %lld\n",
+		    th->ih_dev, th->ih_vid, (int64_t) th->ih_ino);
+            namei_HandleToName(&name, th);
+            IH_RELEASE(th);
 	    code = unlink(name.n_path);
 	}
 	FDH_CLOSE(fdP);
