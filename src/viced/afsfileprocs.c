@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.27 2002/05/09 15:56:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.28 2002/06/12 17:06:45 zacheiss Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -5556,8 +5556,6 @@ Check_PermissionRights(targetptr, client, rights, CallingRoutine, InStatus)
 		    /* grant admins fetch on all directories */
 		    && VanillaUser(client)
 #endif /* ADMIN_IMPLICIT_LOOKUP */
-		    && !OWNSp(client, targetptr)
-		    && !acl_IsAMember(targetptr->disk.owner, &client->CPS)
 		    && !VolumeOwner(client, targetptr))
 		    return(EACCES);
 	    } else {    /* file */
@@ -5615,8 +5613,6 @@ Check_PermissionRights(targetptr, client, rights, CallingRoutine, InStatus)
 	  else {
 	    if (CallingRoutine == CHK_STOREACL) {
 	      if (!(rights & PRSFS_ADMINISTER) &&
-		  !OWNSp(client, targetptr) && 
-		  !acl_IsAMember(targetptr->disk.owner, &client->CPS) &&
 		  !VolumeOwner(client, targetptr)) return(EACCES);
 	    }
 	    else {	/* store data or status */
