@@ -1,7 +1,7 @@
 /* 
  * osi_misc.c
  *
- * $Id: osi_misc.c,v 1.3 2003/07/15 23:14:25 shadow Exp $
+ * $Id: osi_misc.c,v 1.4 2003/10/09 16:13:16 rees Exp $
  */
 
 /*
@@ -47,7 +47,7 @@ such damages.
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_misc.c,v 1.3 2003/07/15 23:14:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_misc.c,v 1.4 2003/10/09 16:13:16 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -67,7 +67,11 @@ RCSID
 int
 afs_osi_suser(void *credp)
 {
+#ifdef AFS_OBSD35_ENV
+    return (suser_ucred((struct ucred *)credp) ? 0 : 1);
+#else
     return (suser((struct ucred *)credp, &curproc->p_acflag) ? 0 : 1);
+#endif
 }
 
 void *
