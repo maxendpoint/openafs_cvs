@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.15 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.16 2002/04/11 07:18:11 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -382,7 +382,7 @@ tagain:
 
 	ReleaseWriteLock(&adp->lock);
 	if (tdc) ReleaseSharedLock(&tdc->lock);
-	code = afsrename(adp, aname, adp, unlname, acred);
+	code = afsrename(adp, aname, adp, unlname, acred, &treq);
 	Tnam1 = unlname;
 	if (!code) {
 	    tvc->mvid = (struct VenusFid *)unlname;
