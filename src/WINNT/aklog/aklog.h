@@ -17,7 +17,7 @@
 #define __AKLOG_H__
 
 #if !defined(lint) && !defined(SABER)
-static char *rcsid_aklog_h = "$Id: aklog.h,v 1.1 2004/04/13 03:05:31 jaltman Exp $";
+static char *rcsid_aklog_h = "$Id: aklog.h,v 1.2 2005/03/11 05:34:27 jaltman Exp $";
 #endif /* lint || SABER */
 
 #ifndef WIN32

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.25 2005/01/13 04:46:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.26 2005/03/11 05:38:44 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -40,11 +40,10 @@ RCSID
 
 #include <smb.h>
 #include <pioctl_nt.h>
-
+#include <WINNT/afsreg.h>
 #include <lanahelper.h>
 
-static char AFSConfigKeyName[] =
-    "SYSTEM\\CurrentControlSet\\Services\\TransarcAFSDaemon\\Parameters";
+static char AFSConfigKeyName[] = AFSREG_CLT_SVC_PARAM_SUBKEY;
 
 #define FS_IOCTLREQUEST_MAXSIZE	8192
 /* big structure for representing and storing an IOCTL request */

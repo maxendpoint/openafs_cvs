@@ -24,7 +24,7 @@
 #define _GSSAPI_GENERIC_H_
 
 /*
- * $Id: gssapi_generic.h,v 1.1 2004/02/26 19:22:54 jaltman Exp $
+ * $Id: gssapi_generic.h,v 1.2 2005/03/11 05:37:54 jaltman Exp $
  */
 
 #include <gssapi/gssapi.h>

@@ -15,7 +15,7 @@
 
 /* This file contains general linked list routines. */
 
-static const char rcsid[] = "$Id: linked_list.c,v 1.1 2004/04/13 03:05:31 jaltman Exp $";
+static const char rcsid[] = "$Id: linked_list.c,v 1.2 2005/03/11 05:34:27 jaltman Exp $";
 
 #include <stdio.h>
 #include <stdlib.h>

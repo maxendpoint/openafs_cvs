@@ -1,5 +1,5 @@
 /*
- *  $Id: cacheapi.h,v 1.1 2004/02/26 19:22:54 jaltman Exp $
+ *  $Id: cacheapi.h,v 1.2 2005/03/11 05:37:56 jaltman Exp $
  *
  * Copyright 1997 by the Regents of the University of Michigan
  *

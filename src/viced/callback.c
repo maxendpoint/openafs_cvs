@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.65 2005/02/25 19:49:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.66 2005/03/11 05:38:53 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -328,7 +328,7 @@ FindFE(register AFSFid * fid)
     for (fei = HashTable[hash]; fei; fei = fe->fnext) {
 	fe = itofe(fei);
 	if (fe->volid == fid->Volume && fe->unique == fid->Unique
-	    && fe->vnode == fid->Vnode && fe->status != FE_LATER)
+	    && fe->vnode == fid->Vnode && (fe->status & FE_LATER) != FE_LATER)
 	    return fe;
     }
     return 0;

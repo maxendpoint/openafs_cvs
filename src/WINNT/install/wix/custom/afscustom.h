@@ -27,7 +27,7 @@ SOFTWARE.
  *
  * Declarations for OpenAFS MSI setup tools
  *
- * rcsid : $Id: afscustom.h,v 1.3 2004/08/23 15:49:51 jaltman Exp $
+ * rcsid : $Id: afscustom.h,v 1.4 2005/03/11 05:37:52 jaltman Exp $
  */
 
 #ifndef __afsMsiTools_H__

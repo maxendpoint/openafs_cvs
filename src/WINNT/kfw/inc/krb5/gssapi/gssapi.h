@@ -78,7 +78,7 @@ extern "C" {
 #endif	/* HAVE_XOM_H */
 
 /*
- * $Id: gssapi.h,v 1.1 2004/02/26 19:22:54 jaltman Exp $
+ * $Id: gssapi.h,v 1.2 2005/03/11 05:37:54 jaltman Exp $
  */
 
 /*

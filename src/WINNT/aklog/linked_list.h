@@ -1,4 +1,4 @@
-/* $Id: linked_list.h,v 1.1 2004/04/13 03:05:31 jaltman Exp $ */
+/* $Id: linked_list.h,v 1.2 2005/03/11 05:34:27 jaltman Exp $ */
 
 /* Copyright 1990, 1991, 1999 by the Massachusetts Institute of
  * Technology.
