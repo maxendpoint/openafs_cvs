@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.63 2004/10/11 18:35:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.64 2004/10/12 20:51:55 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -5763,7 +5763,7 @@ rxi_ReapConnections(void)
 		    MUTEX_ENTER(&rx_stats_mutex);
 		    rx_stats.nPeerStructs--;
 		    MUTEX_EXIT(&rx_stats_mutex);
-		    if (prev == *peer_ptr) {
+		    if (peer == *peer_ptr) {
 			*peer_ptr = next;
 			prev = next;
 		    } else
