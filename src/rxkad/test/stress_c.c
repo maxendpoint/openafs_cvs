@@ -9,10 +9,10 @@
 
 /* RX Authentication Stress test: client side code. */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxkad/test/stress_c.c,v 1.4 2001/07/05 15:20:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/test/stress_c.c,v 1.5 2001/07/12 19:59:13 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

@@ -13,10 +13,10 @@
  * This is the main routine for rmtsysd, which can be used separately from
  * afsd.
  */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/rmtsysd.c,v 1.3 2001/07/05 15:20:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/rmtsysd.c,v 1.4 2001/07/12 19:59:17 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>

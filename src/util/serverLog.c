@@ -16,10 +16,10 @@
 /*                                                                        */
 /* ********************************************************************** */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.14 2001/07/11 16:58:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.15 2001/07/12 19:59:23 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV

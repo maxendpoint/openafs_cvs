@@ -8,10 +8,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/Attic/lex.c,v 1.3 2001/07/05 15:21:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/Attic/lex.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
 
 #include "y.tab.h"
 #include "uss_common.h"

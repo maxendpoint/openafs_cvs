@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.5 2001/07/05 15:20:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.6 2001/07/12 19:58:54 shadow Exp $");
 
 #include <sys/types.h>
 #include <lock.h>

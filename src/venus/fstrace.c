@@ -10,10 +10,10 @@
 /*
  * All Rights Reserved
  */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.5 2001/07/05 15:21:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.6 2001/07/12 19:59:27 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>

@@ -13,10 +13,10 @@
  *
  *------------------------------------------------------------------------*/
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/objdict.c,v 1.3 2001/07/05 15:20:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/objdict.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
 
 #include "gtxobjdict.h"			/*Interface for this module*/
 #include <stdio.h>			/*Standard I/O package*/

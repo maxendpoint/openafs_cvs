@@ -11,10 +11,10 @@
  * ALL RIGHTS RESERVED
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/stds.h>

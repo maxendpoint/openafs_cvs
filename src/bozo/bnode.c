@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.5 2001/07/06 01:15:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.6 2001/07/12 19:58:26 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>

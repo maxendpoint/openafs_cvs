@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/bulktest/bulk_io.c,v 1.3 2001/07/05 15:20:50 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/bulktest/bulk_io.c,v 1.4 2001/07/12 19:59:03 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

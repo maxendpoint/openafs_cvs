@@ -1,4 +1,4 @@
-/* $Id: pt_util.c,v 1.2 2001/07/05 15:20:42 shadow Exp $ */
+/* $Id: pt_util.c,v 1.3 2001/07/12 19:58:54 shadow Exp $ */
 
 /*
  *
@@ -18,10 +18,10 @@
 #include <string.h>
 #include <sys/file.h>
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.2 2001/07/05 15:20:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.3 2001/07/12 19:58:54 shadow Exp $");
 
 #include <lock.h>
 #include <netinet/in.h>

@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.3 2001/07/05 15:20:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.4 2001/07/12 19:58:15 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #ifndef	AFS_DEC_ENV

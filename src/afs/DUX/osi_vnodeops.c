@@ -11,10 +11,10 @@
  * vnodeops structure and Digital Unix specific ops and support routines.
  */
 
-#include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vnodeops.c,v 1.4 2001/07/05 15:20:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vnodeops.c,v 1.5 2001/07/12 19:58:19 shadow Exp $");
 
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */

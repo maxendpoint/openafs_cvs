@@ -14,10 +14,10 @@
    
    */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.5 2001/07/05 15:21:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.6 2001/07/12 19:59:33 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>

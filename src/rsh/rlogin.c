@@ -7,10 +7,10 @@
 /*
  * rlogin - remote login
  */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rsh/Attic/rlogin.c,v 1.2 2001/07/05 15:20:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rsh/Attic/rlogin.c,v 1.3 2001/07/12 19:58:55 shadow Exp $");
 
 #if	!defined(AFS_HPUX_ENV) && !defined(AFS_SUN5_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV)
 #include <sys/param.h>

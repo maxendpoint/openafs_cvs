@@ -52,10 +52,10 @@
  *
  * Comment lines are indicated by a `#' in column 1.
  */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/inetd/Attic/inetd.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/inetd/Attic/inetd.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
 
 #include <sys/param.h>
 #include <sys/stat.h>

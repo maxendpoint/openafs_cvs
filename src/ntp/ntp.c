@@ -29,10 +29,10 @@
  *
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp.c,v 1.3 2001/07/05 15:20:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp.c,v 1.4 2001/07/12 19:58:51 shadow Exp $");
 
 #include <stdio.h>
 #ifdef	AFS_AIX32_ENV

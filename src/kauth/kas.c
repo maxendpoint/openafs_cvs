@@ -8,10 +8,10 @@
  */
 
 /* These two needed for rxgen output to work */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kas.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kas.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV

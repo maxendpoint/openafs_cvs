@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "param.h"
 #include <afsconfig.h>
+#include "param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_debug.c,v 1.3 2001/07/05 15:20:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_debug.c,v 1.4 2001/07/12 19:58:20 shadow Exp $");
 
 #include "sysincludes.h"
 #include "afsincludes.h"

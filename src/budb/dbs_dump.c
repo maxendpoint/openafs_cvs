@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/dbs_dump.c,v 1.3 2001/07/05 15:20:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/dbs_dump.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

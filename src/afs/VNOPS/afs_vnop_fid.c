@@ -14,10 +14,10 @@
  * afs_vptofh (DUX) is now in DUX/osi_vfsops.c
  */
 
-#include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_fid.c,v 1.4 2001/07/05 15:20:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_fid.c,v 1.5 2001/07/12 19:58:22 shadow Exp $");
 
 #if !defined(AFS_DUX40_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV)
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */

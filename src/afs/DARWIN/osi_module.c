@@ -1,7 +1,7 @@
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_module.c,v 1.3 2001/07/12 19:00:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_module.c,v 1.4 2001/07/12 19:58:19 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"

@@ -33,10 +33,10 @@
  *
  */
 
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_config.c,v 1.3 2001/07/05 15:20:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_config.c,v 1.4 2001/07/12 19:58:18 shadow Exp $");
 
 #include "sys/limits.h"
 #include "sys/types.h"

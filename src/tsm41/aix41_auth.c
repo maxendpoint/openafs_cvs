@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/tsm41/aix41_auth.c,v 1.3 2001/07/05 15:20:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/tsm41/aix41_auth.c,v 1.4 2001/07/12 19:59:18 shadow Exp $");
 
 #if defined(AFS_AIX41_ENV)
 #include <sys/types.h>

@@ -16,10 +16,10 @@
 
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.10 2001/07/05 15:21:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.11 2001/07/12 19:59:33 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>

@@ -12,10 +12,10 @@
  * test whether a program can link with libuafs.a.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.3 2001/07/05 15:20:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.4 2001/07/12 19:58:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <rx/rx.h>

@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.4 2001/07/05 15:20:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.5 2001/07/12 19:59:00 shadow Exp $");
 
 #ifdef AFS_SUN5_ENV
 #include "../rx/rx_kcommon.h"

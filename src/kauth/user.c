@@ -10,14 +10,14 @@
 /* This file provides the easiest, turn-key interface to the authication
  * package. */
 
+#include <afsconfig.h>
 #if defined(UKERNEL)
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/user.c,v 1.5 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/user.c,v 1.6 2001/07/12 19:58:40 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"

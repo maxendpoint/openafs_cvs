@@ -10,10 +10,10 @@
 /* file		whatfid.c */
 
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/whatfid.c,v 1.3 2001/07/05 15:21:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/whatfid.c,v 1.4 2001/07/12 19:59:27 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>

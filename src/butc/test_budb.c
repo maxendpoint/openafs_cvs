@@ -10,10 +10,10 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/test_budb.c,v 1.3 2001/07/05 15:20:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/test_budb.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
 
 #include <afs/auth.h>
 #include <afs/budb_client.h>

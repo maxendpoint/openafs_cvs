@@ -15,10 +15,10 @@
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rsh/Attic/herror.c,v 1.3 2001/07/05 15:20:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rsh/Attic/herror.c,v 1.4 2001/07/12 19:58:55 shadow Exp $");
 
 #ifndef AFS_DARWIN_ENV
 #include <sys/types.h>

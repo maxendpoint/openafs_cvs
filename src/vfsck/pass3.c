@@ -15,10 +15,10 @@
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vfsck/pass3.c,v 1.2 2001/07/05 15:21:14 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vfsck/pass3.c,v 1.3 2001/07/12 19:59:28 shadow Exp $");
 
 #define VICE
 #include <sys/param.h>

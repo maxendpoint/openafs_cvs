@@ -18,10 +18,10 @@
 \*******************************************************************/
 
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/timer.c,v 1.5 2001/07/05 15:20:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/timer.c,v 1.6 2001/07/12 19:58:48 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

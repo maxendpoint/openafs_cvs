@@ -7,14 +7,14 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afsconfig.h>
 #if defined(UKERNEL)
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.4 2001/07/05 15:20:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.5 2001/07/12 19:58:54 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"

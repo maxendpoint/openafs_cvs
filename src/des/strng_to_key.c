@@ -22,10 +22,10 @@
 
 #include <mit-cpyright.h>
 #include <stdio.h>
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.6 2001/07/05 15:20:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/strng_to_key.c,v 1.7 2001/07/12 19:58:34 shadow Exp $");
 
 #include <des.h>
 #include "des_internal.h"

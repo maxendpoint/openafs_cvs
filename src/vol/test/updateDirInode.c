@@ -14,10 +14,10 @@
 **	at customer sites too. 
 **
 */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/test/updateDirInode.c,v 1.3 2001/07/05 15:21:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/test/updateDirInode.c,v 1.4 2001/07/12 19:59:34 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>

@@ -14,10 +14,10 @@
 #include <stdio.h>
 #include <errno.h>
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/test/ktctest.c,v 1.3 2001/07/05 15:20:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/test/ktctest.c,v 1.4 2001/07/12 19:58:26 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/afsutil.h>

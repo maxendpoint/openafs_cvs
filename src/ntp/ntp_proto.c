@@ -14,10 +14,10 @@
  * ntpd.c module, while arithmetic conversion routines are in ntpsubs.c
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp_proto.c,v 1.4 2001/07/05 15:20:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp_proto.c,v 1.5 2001/07/12 19:58:51 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>

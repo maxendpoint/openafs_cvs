@@ -68,10 +68,10 @@
  * may be called by another program (such as login), using the -pipe switch.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dauth/Attic/dlog.c,v 1.4 2001/07/05 15:20:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dauth/Attic/dlog.c,v 1.5 2001/07/12 19:58:33 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

@@ -13,10 +13,10 @@
  *         writing a few blocks of data to it, doing a fsf, bsf
  */
 
-#include <afs/param.h> 
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/usd/test/usd_test.c,v 1.3 2001/07/05 15:21:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/usd/test/usd_test.c,v 1.4 2001/07/12 19:59:22 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/usd.h>

@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.3 2001/07/05 15:20:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.4 2001/07/12 19:58:59 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 #include "../h/tcp-param.h"

@@ -17,10 +17,10 @@
 
 
 /* allocate externs here */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/test/testlwp.c,v 1.3 2001/07/05 15:20:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/test/testlwp.c,v 1.4 2001/07/12 19:58:49 shadow Exp $");
 
 #define LWP_KERNEL
 #include "lwp.h"

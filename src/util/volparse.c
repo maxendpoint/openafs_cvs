@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/volparse.c,v 1.6 2001/07/05 15:21:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/volparse.c,v 1.7 2001/07/12 19:59:23 shadow Exp $");
 
 #ifdef HAVE_STRINGS_H
 #include <strings.h>

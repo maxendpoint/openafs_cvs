@@ -10,10 +10,10 @@
 /*
  * SGI specific vnodeops + other misc interface glue
  */
-#include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.4 2001/07/05 15:20:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.5 2001/07/12 19:58:20 shadow Exp $");
 
 #ifdef	AFS_SGI62_ENV
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */

@@ -11,10 +11,10 @@
  * Linux support routines.
  *
  */
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.9 2001/07/05 15:20:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.10 2001/07/12 19:58:21 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"

@@ -11,10 +11,10 @@
  *
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sia/Attic/siad.c,v 1.3 2001/07/05 15:20:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sia/Attic/siad.c,v 1.4 2001/07/12 19:59:17 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

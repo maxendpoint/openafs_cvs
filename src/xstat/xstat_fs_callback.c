@@ -22,10 +22,10 @@
  *	need to be ``visible'' to anyone else.
  *------------------------------------------------------------------------*/
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_callback.c,v 1.3 2001/07/05 15:21:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_callback.c,v 1.4 2001/07/12 19:59:36 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>			/*Standard I/O stuff*/

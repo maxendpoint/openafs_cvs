@@ -35,10 +35,10 @@
  * shutdown_vcache
  *
  */
-#include "../afs/param.h"       /*Should be always first*/
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.7 2001/07/12 15:37:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.8 2001/07/12 19:58:15 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/

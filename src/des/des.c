@@ -33,10 +33,10 @@
  */
 #include <mit-cpyright.h>
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.5 2001/07/05 15:20:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/des.c,v 1.6 2001/07/12 19:58:34 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_PTHREAD_ENV

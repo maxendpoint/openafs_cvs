@@ -12,10 +12,10 @@
  * the rpc version (via rx) of non-standard system calls. Currently only rpc
  * calls of setpag, and pioctl are supported.
  */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.6 2001/07/05 15:20:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.7 2001/07/12 19:59:17 shadow Exp $");
 
 #include <errno.h>
 #include <limits.h>

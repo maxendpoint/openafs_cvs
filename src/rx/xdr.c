@@ -27,14 +27,14 @@
  * Mountain View, California  94043
  */
 
+#include <afsconfig.h>
 #ifdef KERNEL
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr.c,v 1.2 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr.c,v 1.3 2001/07/12 19:58:56 shadow Exp $");
 
 /*
  * xdr.c, Generic XDR routines implementation.

@@ -11,14 +11,14 @@
    kernel.  Principally it handles cache misses by requesting the desired token
    from the AuthServer. */
 
+#include <afsconfig.h>
 #if defined(UKERNEL)
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/token.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/token.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"

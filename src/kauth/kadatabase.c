@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kadatabase.c,v 1.4 2001/07/11 18:04:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kadatabase.c,v 1.5 2001/07/12 19:58:40 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

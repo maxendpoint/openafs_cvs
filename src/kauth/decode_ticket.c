@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/decode_ticket.c,v 1.3 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/decode_ticket.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
 
 #include <des.h>
 #include <afs/com_err.h>

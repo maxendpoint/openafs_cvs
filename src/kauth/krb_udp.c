@@ -12,10 +12,10 @@
    handle authentication and get ticket requests to provide read-only protocol
    level compatibility with the standard Kerberos servers. */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.10 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.11 2001/07/12 19:58:40 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

@@ -12,10 +12,10 @@
  *
  * super_block operations should return negated errno to Linux.
  */
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.8 2001/07/05 15:20:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.9 2001/07/12 19:58:21 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"

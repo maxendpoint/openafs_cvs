@@ -3,10 +3,10 @@
  *  XDR routine for int64 (long long or struct)
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.2 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.3 2001/07/12 19:58:56 shadow Exp $");
 
 #if defined(KERNEL) && !defined(UKERNEL)
 #ifdef AFS_LINUX20_ENV

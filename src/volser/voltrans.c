@@ -14,10 +14,10 @@
  *  Date:		    December, 88
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.3 2001/07/05 15:21:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.4 2001/07/12 19:59:35 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>

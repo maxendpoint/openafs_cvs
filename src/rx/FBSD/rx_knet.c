@@ -20,10 +20,10 @@
 ****************************************************************************
 */
 
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.2 2001/07/05 15:20:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.3 2001/07/12 19:58:59 shadow Exp $");
 
 #ifdef AFS_FBSD40_ENV
 #include "../rx/rx_kcommon.h"

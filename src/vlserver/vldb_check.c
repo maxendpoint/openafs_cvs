@@ -21,10 +21,10 @@
 #define MHC 0x100      /* on multihomed chain */
 #define FRC 0x200      /* on free chain */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.3 2001/07/05 15:21:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.4 2001/07/12 19:59:31 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

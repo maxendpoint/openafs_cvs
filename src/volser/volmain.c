@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.6 2001/07/05 15:21:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.7 2001/07/12 19:59:35 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

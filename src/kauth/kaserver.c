@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.7 2001/07/05 15:40:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.8 2001/07/12 19:58:40 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

@@ -11,10 +11,10 @@
  * This file contains sample code for the client admin interface 
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/samples/cm_list_cells.c,v 1.3 2001/07/05 15:20:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/samples/cm_list_cells.c,v 1.4 2001/07/12 19:58:45 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

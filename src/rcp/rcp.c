@@ -18,10 +18,10 @@
 /*
  * rcp
  */
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rcp/Attic/rcp.c,v 1.4 2001/07/05 15:20:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rcp/Attic/rcp.c,v 1.5 2001/07/12 19:58:55 shadow Exp $");
 
 #include <sys/param.h>
 #include <sys/file.h>

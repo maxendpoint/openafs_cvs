@@ -9,10 +9,10 @@
 
 /* Interface and supporting routines for the backup system's ubik database */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.4 2001/07/05 15:20:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.5 2001/07/12 19:58:27 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>

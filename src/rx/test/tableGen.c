@@ -16,10 +16,10 @@
  * a change in generator.c
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/test/tableGen.c,v 1.3 2001/07/05 15:20:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/test/tableGen.c,v 1.4 2001/07/12 19:59:08 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>

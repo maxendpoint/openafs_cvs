@@ -9,10 +9,10 @@
 
 extern int errno;
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.4 2001/07/05 15:20:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.5 2001/07/12 19:58:54 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

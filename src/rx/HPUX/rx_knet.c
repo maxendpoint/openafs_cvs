@@ -2,10 +2,10 @@
    in 1994, available from ftp.dementia.org/pub/rx 
  */
 
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/HPUX/rx_knet.c,v 1.6 2001/07/05 15:20:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/HPUX/rx_knet.c,v 1.7 2001/07/12 19:58:59 shadow Exp $");
 
 #include "../h/types.h"
 #include "../h/param.h"

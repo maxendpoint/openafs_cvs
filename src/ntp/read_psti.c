@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/read_psti.c,v 1.3 2001/07/05 15:20:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/read_psti.c,v 1.4 2001/07/12 19:58:52 shadow Exp $");
 
 #if	defined(REFCLOCK) && defined(PSTI)
 #define	ERR_RATE	60	/* Repeat errors once an hour */

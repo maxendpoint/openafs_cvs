@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.7 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.8 2001/07/12 19:58:56 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>

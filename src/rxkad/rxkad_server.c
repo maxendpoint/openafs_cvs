@@ -11,10 +11,10 @@
  * Kerberos-style ticket.  These are the server-only routines. */
 
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.5 2001/07/05 15:20:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.6 2001/07/12 19:59:11 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>

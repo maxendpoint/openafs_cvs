@@ -9,10 +9,10 @@
 
 /* Test driver for configuration functions. */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/cfg/test/cfgtest.c,v 1.3 2001/07/05 15:20:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/cfg/test/cfgtest.c,v 1.4 2001/07/12 19:58:43 shadow Exp $");
 
 #include <afs/stds.h>
 

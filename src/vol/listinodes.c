@@ -17,10 +17,10 @@
 
 #define ITC	/* Required by inode.h */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.7 2001/07/05 15:21:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.8 2001/07/12 19:59:33 shadow Exp $");
 
 #ifndef AFS_NAMEI_ENV
 #ifdef AFS_LINUX20_ENV

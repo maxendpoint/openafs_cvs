@@ -39,10 +39,10 @@
  *
  */
 
-#include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_inode.c,v 1.6 2001/07/05 15:20:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_inode.c,v 1.7 2001/07/12 19:58:20 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */

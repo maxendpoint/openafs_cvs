@@ -11,14 +11,14 @@
 
 This file is now obsolete.
 
+#include <afsconfig.h>
 #ifdef KERNEL
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/Attic/rx_stream.c,v 1.3 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/Attic/rx_stream.c,v 1.4 2001/07/12 19:58:56 shadow Exp $");
 
 #ifdef	KERNEL
 #include "../h/types.h"

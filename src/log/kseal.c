@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/log/kseal.c,v 1.3 2001/07/05 15:20:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/log/kseal.c,v 1.4 2001/07/12 19:58:47 shadow Exp $");
 
 #include <sys/types.h>
 #include <netinet/in.h>

@@ -7,14 +7,14 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
+#include <afsconfig.h>
 #if defined(UKERNEL)
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.5 2001/07/05 15:20:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.6 2001/07/12 19:58:25 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"

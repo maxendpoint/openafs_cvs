@@ -15,10 +15,10 @@
  *
  *------------------------------------------------------------------------*/
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/X11windows.c,v 1.3 2001/07/05 15:20:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/X11windows.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
 
 #include "gtxX11win.h"			/*Interface definition*/
 #include <stdio.h>			/*Standard I/O package*/

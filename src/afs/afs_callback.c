@@ -13,10 +13,10 @@
  *	the callback RPC interface.
  */
 
-#include "../afs/param.h"       /*Should be always first*/
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.3 2001/07/05 15:20:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.4 2001/07/12 19:58:15 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/

@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.5 2001/07/05 15:21:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.6 2001/07/12 19:59:18 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

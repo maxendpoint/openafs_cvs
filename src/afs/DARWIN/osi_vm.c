@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "../afs/param.h"       /* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.2 2001/07/05 15:20:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.3 2001/07/12 19:58:19 shadow Exp $");
 
 #include "../afs/sysincludes.h" /* Standard vendor system headers */
 #include "../afs/afsincludes.h" /* Afs-based standard headers */

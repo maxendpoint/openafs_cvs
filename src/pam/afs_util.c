@@ -10,10 +10,10 @@
 #include <stdio.h>
 #include <assert.h>
 #include <security/pam_appl.h>
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.3 2001/07/05 15:20:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.4 2001/07/12 19:58:53 shadow Exp $");
 
 #include "afs_util.h"
 

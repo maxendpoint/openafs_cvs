@@ -9,10 +9,10 @@
 
 /* ol_verify - online database verification */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.3 2001/07/05 15:20:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV

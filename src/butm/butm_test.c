@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butm/butm_test.c,v 1.3 2001/07/05 15:20:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butm/butm_test.c,v 1.4 2001/07/12 19:58:29 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/file.h>

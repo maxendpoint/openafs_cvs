@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.5 2001/07/05 15:20:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.6 2001/07/12 19:58:21 shadow Exp $");
 
 #if	defined(AFS_SUN_ENV) || defined(AFS_SUN5_ENV)
 /*

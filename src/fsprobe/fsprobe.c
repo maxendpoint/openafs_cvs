@@ -13,10 +13,10 @@
  *
  *------------------------------------------------------------------------*/
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.3 2001/07/05 15:20:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.4 2001/07/12 19:58:36 shadow Exp $");
 
 #include <fsprobe.h>			/*Interface for this module*/
 #include <lwp.h>			/*Lightweight process package*/

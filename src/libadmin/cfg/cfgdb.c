@@ -11,10 +11,10 @@
  *   cfg_CellServDb*()   - manage the cell-wide server CellServDb database.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/cfg/cfgdb.c,v 1.3 2001/07/05 15:20:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/cfg/cfgdb.c,v 1.4 2001/07/12 19:58:42 shadow Exp $");
 
 #include <afs/stds.h>
 

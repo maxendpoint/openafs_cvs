@@ -11,10 +11,10 @@
  * echoing.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/read_pssword.c,v 1.9 2001/07/05 15:20:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/read_pssword.c,v 1.10 2001/07/12 19:58:34 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <des.h>

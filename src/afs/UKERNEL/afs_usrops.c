@@ -11,10 +11,10 @@
  * User space client specific interface glue
  */
 
-#include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.7 2001/07/05 15:20:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.8 2001/07/12 19:58:21 shadow Exp $");
 
 
 #ifdef	UKERNEL

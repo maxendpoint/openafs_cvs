@@ -14,10 +14,10 @@
  * This is true if rx_packets are being sent, so we should be ok.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_xmit_nt.c,v 1.4 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_xmit_nt.c,v 1.5 2001/07/12 19:58:56 shadow Exp $");
 
 #if defined(AFS_NT40_ENV) || defined(AFS_DJGPP_ENV)
 

@@ -15,10 +15,10 @@
 #include <stdio.h>
 #include <errno.h>
 #include <des.h>
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/test/verify.c,v 1.4 2001/07/05 15:20:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/test/verify.c,v 1.5 2001/07/12 19:58:34 shadow Exp $");
 
 
 extern char *errmsg();

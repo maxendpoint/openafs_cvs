@@ -9,14 +9,14 @@
 
 /* ticket caching code */
 
+#include <afsconfig.h>
 #if defined(UKERNEL)
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.5 2001/07/11 17:45:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.6 2001/07/12 19:58:25 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"

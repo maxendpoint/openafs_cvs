@@ -79,10 +79,10 @@
  * this package to work correctly.  Every 5 minutes is suggested.
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.4 2001/07/05 15:21:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.5 2001/07/12 19:59:30 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */

@@ -46,10 +46,10 @@ Generic install command.  Options are:
 
 #define MAXFILES 200
 #define BUFSIZE 32768
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.7 2001/07/05 15:20:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.8 2001/07/12 19:58:53 shadow Exp $");
 
 #include <stdio.h>
 #include <pwd.h>

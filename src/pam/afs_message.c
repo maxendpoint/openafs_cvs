@@ -14,10 +14,10 @@
 #include <string.h>
 #include <pwd.h>
 #include <unistd.h>
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_message.c,v 1.5 2001/07/05 15:20:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_message.c,v 1.6 2001/07/12 19:58:53 shadow Exp $");
 
 #include <sys/param.h>
 #include <afs/kautils.h>

@@ -7,10 +7,10 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "../afs/param.h"
 #include <afsconfig.h>
+#include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.2 2001/07/05 15:20:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.3 2001/07/12 19:58:58 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 

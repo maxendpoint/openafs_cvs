@@ -6,10 +6,10 @@
  *
  */
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/make_p_table.c,v 1.4 2001/07/05 15:20:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/make_p_table.c,v 1.5 2001/07/12 19:58:34 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <stdio.h>

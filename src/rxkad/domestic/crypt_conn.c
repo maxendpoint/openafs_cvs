@@ -11,14 +11,14 @@
  * are prohibited from being exported. */
 
 
+#include <afsconfig.h>
 #ifdef KERNEL
 #include "../afs/param.h"
 #else
 #include <afs/param.h>
 #endif
-#include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rxkad/domestic/crypt_conn.c,v 1.6 2001/07/05 15:20:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/domestic/crypt_conn.c,v 1.7 2001/07/12 19:59:12 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/stds.h"

@@ -26,10 +26,10 @@
 #define	VIRTUE	    1
 #define	VICE	    1
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/log/unlog.c,v 1.3 2001/07/05 15:20:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/log/unlog.c,v 1.4 2001/07/12 19:58:47 shadow Exp $");
 
 #include <stdio.h>
 #include <potpourri.h>

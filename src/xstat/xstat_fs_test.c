@@ -13,10 +13,10 @@
  *
  *------------------------------------------------------------------------*/
 
-#include <afs/param.h>
 #include <afsconfig.h>
+#include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.3 2001/07/05 15:21:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.4 2001/07/12 19:59:36 shadow Exp $");
 
 #include "xstat_fs.h"		/*Interface for xstat_fs module*/
 #include <cmd.h>		/*Command line interpreter*/
