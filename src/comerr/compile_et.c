@@ -12,7 +12,7 @@
 #include <afs/param.h>
 #include <afs/afsutil.h>
 
-RCSID("$Header: /cvs/openafs/src/comerr/compile_et.c,v 1.11 2002/09/26 07:01:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/comerr/compile_et.c,v 1.12 2003/06/19 17:10:45 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -188,7 +188,8 @@ int main (int argc, char **argv)
 		    usage ();
 		if (language)
 		    dup_err ("languanges", language_names[(int)language], arg);
-#define check_lang(x,v) else if (!strcasecmp(arg,x)) language = v
+
+#define check_lang(x,v) if (!strcasecmp(arg,x)) language = v
 		check_lang ("c", lang_C);
 		check_lang ("ansi_c", lang_C);
 		check_lang ("ansi-c", lang_C);
@@ -201,7 +202,9 @@ int main (int argc, char **argv)
 		check_lang ("cplusplus", lang_CPP);
 		check_lang ("c-plus-plus", lang_CPP);
 #undef check_lang
-		else {
+
+		if (!language)
+		{
 		    fprintf (stderr, "%s: unknown language name `%s'\n",
 			     whoami, arg);
 		    fprintf (stderr, "\tpick one of: C K&R-C\n");
