@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.8 2002/11/19 18:28:02 rees Exp $
+ * $Id: osi_vfsops.c,v 1.9 2002/12/05 16:17:26 rees Exp $
  */
 
 /*
@@ -93,7 +93,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.8 2002/11/19 18:28:02 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.9 2002/12/05 16:17:26 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -109,11 +109,11 @@ RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.8 2002/11/19 18:28:02
 /* from /usr/src/sys/kern/vfs_subr.c */
 extern void insmntque(struct vnode *, struct mount *);
 
-#define NBSD_DONTFOLLOW_LINK 0
-#define NBSD_FOLLOW_LINK 1
+extern int sys_lkmnosys(), afs3_syscall(), afs_xioctl(), Afs_xsetgroups();
 
 static int lkmid = -1;
 static int afs_badcall(struct proc *p, void *xx, register_t *yy);
+static struct sysent old_sysent;
 
 char afs_NetBSD_osname[] = "OpenBSD";
 struct osi_vfs *afs_globalVFS;
@@ -166,7 +166,7 @@ afs_nbsd_lookupname(char *fnamep,
      * pathname is user or system space.
      */
     /* XXX LOCKLEAF ? */
-    niflag =  (followlink == NBSD_FOLLOW_LINK) ? FOLLOW : NOFOLLOW;
+    niflag = followlink ? FOLLOW : NOFOLLOW;
     if (dirvpp)
 	niflag |= WANTPARENT;		/* XXX LOCKPARENT? */
     NDINIT(&nd, LOOKUP,
@@ -196,7 +196,7 @@ afs_sysctl()
 int
 afs_checkexp()
 {
-	return EOPNOTSUPP;
+    return EOPNOTSUPP;
 }
 
 int
@@ -454,7 +454,7 @@ static char afsbfrmem[] = "afsbfrmem";
 int
 afsinit()
 {
-    extern int afs3_syscall(), afs_xioctl(), Afs_xsetgroups(), afs_xflock();
+    old_sysent = sysent[AFS_SYSCALL];
 
     sysent[AFS_SYSCALL].sy_call = afs3_syscall;
     sysent[AFS_SYSCALL].sy_narg = 6;
@@ -482,16 +482,14 @@ afs_vfs_load(struct lkm_table *lkmtp,
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.8 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.9 $) lkm loaded\n");
     return 0;
 }
 
 int
-afs_vfs_unload(struct lkm_table *lktmp,
-	     int cmd)
+afs_vfs_unload(struct lkm_table *lktmp, int cmd)
 {
     extern char *memname[];
-    extern int sys_lkmnosys();
 
     if (afs_globalVp)
 	return EBUSY;
@@ -507,30 +505,24 @@ afs_vfs_unload(struct lkm_table *lktmp,
     if (memname[M_AFSBUFFER] == afsbfrmem)
 	memname[M_AFSBUFFER] = NULL;
 
-    sysent[AFS_SYSCALL].sy_call = sys_lkmnosys;
+    sysent[AFS_SYSCALL] = old_sysent;
     printf("OpenAFS unloaded\n");
     return 0;
 }
 
-
-
 int
-afsmodload(struct lkm_table *lkmtp,
-	   int cmd,
-	   int ver)
+afsmodload(struct lkm_table *lkmtp, int cmd, int ver)
 {
-    extern int sys_lkmnosys();
-
     if (cmd == LKM_E_LOAD) {
-	if (strcmp(ostype,afs_NetBSD_osname)) {
+	if (strcmp(ostype, afs_NetBSD_osname)) {
 	    printf("This is %s version %s\n", ostype, osrelease);
 	    printf("This version of AFS is only for %s\n",
 		   afs_NetBSD_osname);
-/*	    return EPROGMISMATCH;*/
+	    return EPROGMISMATCH;
 	}
-	if (sysent[AFS_SYSCALL].sy_call != sys_lkmnosys) {
-	    printf("AFS must be loaded with syscall %d assigned to sys_lkmnosys\nIs AFS already loaded?\n",
-		   AFS_SYSCALL);
+	if (sysent[AFS_SYSCALL].sy_call == afs3_syscall
+	    || sysent[AFS_SYSCALL].sy_call == afs_badcall) {
+	    printf("AFS already loaded\n");
 	    return EINVAL;
 	}
     }
