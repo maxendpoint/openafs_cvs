@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/lock.c,v 1.12 2003/12/07 22:49:38 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/lock.c,v 1.13 2003/12/12 23:16:12 shadow Exp $");
 
 #include <sys/types.h>
 #ifndef AFS_NT40_ENV
@@ -164,7 +164,7 @@ ulock_relLock(atrans)
  */
 
     atrans->locktype = 0;
-    return 0;
+    return;
 }
 
 /* debugging hooks */
