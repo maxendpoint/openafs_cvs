@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/hputil.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/hputil.c,v 1.5 2003/03/10 02:03:12 shadow Exp $");
 
 #ifdef AFS_HPUX_ENV
 #include <stdio.h>
@@ -21,9 +21,7 @@ RCSID("$Header: /cvs/openafs/src/util/hputil.c,v 1.4 2001/07/12 19:59:23 shadow 
 /* insque/remque moved to timer.c where they are used. */
 
 #ifndef AFS_HPUX102_ENV
-utimes(file,tvp)
-char *file;
-struct timeval tvp[2];
+int utimes(char *file, struct timeval tvp[2])
 {
 	struct utimbuf times;
 	
@@ -33,30 +31,27 @@ struct timeval tvp[2];
 }
 #endif
 
-random()
+int random(void)
 {
 	return rand();
 }
 
-srandom(seed)
+void srandom(int seed)
 {
 	srand(seed);
 }
 	       
-getdtablesize()
+int getdtablesize(void)
 {
 	return (20);
 }
 
-setlinebuf(file)
-FILE *file;
+void setlinebuf(FILE *file)
 {
 	setbuf(file,NULL);
 }
 
-psignal(sig,s)
-unsigned sig;
-char *s;
+void psignal(unsigned int sig, char *s)
 {
 	fprintf (stderr,"%s: signal %d\n",s,sig);
 }

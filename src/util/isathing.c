@@ -10,21 +10,19 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/isathing.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/isathing.c,v 1.5 2003/03/10 02:03:12 shadow Exp $");
 
 #include <ctype.h>
 
 /* checks a string to determine whether it's a non-negative decimal integer or not */
-int
-isint (str)
-char *str;
+int util_isint(char *str)
 {
-char *i;
+    char *i;
 
-for (i=str; *i && !isspace(*i); i++) {
-    if (!isdigit(*i))
-      return 0;
-  }
+    for (i=str; *i && !isspace(*i); i++) {
+	if (!isdigit(*i))
+	    return 0;
+    }
 
-return 1;
+    return 1;
 }

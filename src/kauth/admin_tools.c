@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.11 2002/08/21 18:13:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.12 2003/03/10 02:03:11 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/debug.h>
@@ -584,7 +584,7 @@ int SetFields (
     for (i=0;i<4;misc_auth_bytes[i++] = 0);
 
     if (as->parms[4].items) {
-        if (isint(as->parms[4].items->data))
+        if (util_isint(as->parms[4].items->data))
 	  pwexpiry = atoi (as->parms[4].items->data);
 	else {
 	  fprintf(stderr,"Password lifetime specified must be a non-negative decimal integer.\n");
@@ -620,7 +620,7 @@ int SetFields (
       int nfailures;
 
       
-      if (isint(as->parms[6].items->data) && 
+      if (util_isint(as->parms[6].items->data) && 
         ((nfailures = atoi(as->parms[6].items->data)) < 255)) {
 	misc_auth_bytes[2] = nfailures+1;
       }

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/ktime.c,v 1.7 2002/08/21 18:14:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/ktime.c,v 1.8 2003/03/10 02:03:12 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -30,10 +30,6 @@ RCSID("$Header: /cvs/openafs/src/util/ktime.c,v 1.7 2002/08/21 18:14:25 shadow E
 #include "afsutil.h"
 
 #include "ktime.h"
-
-/* some forward reference dcls */
-static afs_int32 ktime_ParseDate();
-static ParseTime();
 
 /* some date parsing routines */
 
@@ -168,17 +164,6 @@ char *ktime_DateOf(afs_int32 atime)
     return tbuffer;
 }
 
-afs_int32 ktime_Str2int32(register char *astr) 
-{
-struct ktime tk;
-
-memset(&tk, 0, sizeof(tk));
-if ( ParseTime(&tk, astr) )
-  return (-1);    /* syntax error */
-
-return ((tk.hour*60 + tk.min)*60 + tk.sec);
-}
-
 /* ParseTime
  *	parse 12:33:12 or 12:33 or 12 into ktime structure
  * entry:
@@ -223,6 +208,17 @@ static int ParseTime(register struct ktime *ak, register char *astr)
     }
     if (ak->hour >= 24 || ak->min >= 60 || ak->sec >= 60) return -1;
     return 0;
+}
+
+afs_int32 ktime_Str2int32(register char *astr) 
+{
+    struct ktime tk;
+
+    memset(&tk, 0, sizeof(tk));
+    if ( ParseTime(&tk, astr) )
+	return (-1);    /* syntax error */
+    
+    return ((tk.hour*60 + tk.min)*60 + tk.sec);
 }
 
 /* ktime_ParsePeriodic
@@ -443,29 +439,6 @@ static int KDateCmp(register struct ktime_date *akdate, register struct tm *atm)
     return 0;
 }
 
-/* ktime_DateToInt32
- *	Converts a ktime date string into an afs_int32
- * entry:
- *	adate - ktime date string
- *	aint32 - ptr to afs_int32
- * exit:
- *	0 - aint32 contains converted date.
- */
-
-afs_int32 ktime_DateToInt32(char *adate, afs_int32 *aint32)
-{
-    struct ktime_date tdate;
-    register afs_int32 code;
-
-    /* parse the date into a ktime_date structure */
-    code = ktime_ParseDate(adate, &tdate);
-    if (code) return code;	/* failed to parse */
-
-    code = ktime_InterpretDate(&tdate);	/* interpret date as seconds since 1970 */
-    *aint32 = code;	/* return it */
-    return 0;		/* and declare no errors */
-}
-
 /* ktime_ParseDate
  * 	parse date string into ktime_date structure
  * entry:
@@ -529,6 +502,29 @@ static afs_int32 ktime_ParseDate(char *adate, struct ktime_date *akdate)
 
     /* done successfully */
     return 0;
+}
+
+/* ktime_DateToInt32
+ *	Converts a ktime date string into an afs_int32
+ * entry:
+ *	adate - ktime date string
+ *	aint32 - ptr to afs_int32
+ * exit:
+ *	0 - aint32 contains converted date.
+ */
+
+afs_int32 ktime_DateToInt32(char *adate, afs_int32 *aint32)
+{
+    struct ktime_date tdate;
+    register afs_int32 code;
+
+    /* parse the date into a ktime_date structure */
+    code = ktime_ParseDate(adate, &tdate);
+    if (code) return code;	/* failed to parse */
+
+    code = ktime_InterpretDate(&tdate);	/* interpret as seconds since 1970 */
+    *aint32 = code;	/* return it */
+    return 0;		/* and declare no errors */
 }
 
 /* get useful error message to print about date input format */

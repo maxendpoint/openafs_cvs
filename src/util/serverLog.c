@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.16 2001/08/06 23:50:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/serverLog.c,v 1.17 2003/03/10 02:03:12 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -82,9 +82,7 @@ int mrafsStyleLogs = 0;
 int printLocks = 0;
 static char ourName[MAXPATHLEN];
 
-void WriteLogBuffer(buf,len)
-    char *buf;
-    afs_uint32 len;
+void WriteLogBuffer(char *buf, afs_uint32 len)
 {
     LOCK_SERVERLOG();
     if (serverLogFD > 0)

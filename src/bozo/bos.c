@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bos.c,v 1.15 2002/08/21 18:12:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bos.c,v 1.16 2003/03/10 02:03:09 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -1450,8 +1450,8 @@ struct cmd_syndesc *as; {
                 printf("Can't specify -Residencies with -SalvageRemote or -SalvageArchival\n");
                 return EINVAL;
             }
-            code = GetUInt32(as->parms[MRAFS_OFFSET + 17].items->data, 
-                                       &mrafsParm.OptResidencies);
+            code = util_GetUInt32(as->parms[MRAFS_OFFSET + 17].items->data, 
+				  &mrafsParm.OptResidencies);
             if (code) {
                 printf("bos: '%s' is not a valid residency mask.\n",
                        as->parms[MRAFS_OFFSET + 13].items->data);
