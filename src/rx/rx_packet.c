@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.25 2003/01/08 02:27:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.26 2003/01/08 05:35:25 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -1524,7 +1524,7 @@ void rxi_SendPacket(struct rx_call * call, struct rx_connection * conn,
 	  p->retryTime = p->timeSent;  /* resend it very soon */
 	  clock_Addmsec(&(p->retryTime), 10 + (((afs_uint32) p->backoff) << 8));
 
-#if defined(KERNEL) && DEFINED(AFS_LINUX_ENV)
+#if defined(KERNEL) && defined(AFS_LINUX_ENV)
 	  /* Linux is nice -- it can tell us right away that we cannot
 	   * reach this recipient by returning an ENETUNREACH error
 	   * code.  So, when this happens let's "down" the host NOW so
@@ -1698,7 +1698,7 @@ void rxi_SendPacketList(struct rx_call * call, struct rx_connection * conn,
 	    p->retryTime = p->timeSent;  /* resend it very soon */
 	    clock_Addmsec(&(p->retryTime), 10 + (((afs_uint32) p->backoff) << 8));
 	  }
-#if defined(KERNEL) && DEFINED(AFS_LINUX_ENV)
+#if defined(KERNEL) && defined(AFS_LINUX_ENV)
 	  /* Linux is nice -- it can tell us right away that we cannot
 	   * reach this recipient by returning an ENETUNREACH error
 	   * code.  So, when this happens let's "down" the host NOW so
