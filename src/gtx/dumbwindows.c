@@ -16,14 +16,12 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/dumbwindows.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/dumbwindows.c,v 1.6 2003/01/11 07:22:17 shadow Exp $");
 
 #include "gtxdumbwin.h"			/*Interface definition*/
 #include <stdio.h>			/*Standard I/O package*/
+#include <errno.h>
 
-#if	!defined(NeXT)
-extern int errno;			/*System error number*/
-#endif /* NeXT */
 int dumb_debug;				/*Is debugging turned on?*/
 static char mn[] = "gator_dumbwindows";	/*Module name*/
 

@@ -10,8 +10,9 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butm/butm_test.c,v 1.6 2001/09/18 04:27:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butm/butm_test.c,v 1.7 2003/01/11 07:22:16 shadow Exp $");
 
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/file.h>
 #include <sys/stat.h>
@@ -23,7 +24,7 @@ RCSID("$Header: /cvs/openafs/src/butm/butm_test.c,v 1.6 2001/09/18 04:27:03 shad
 #include <afs/butm.h>
 #include "AFS_component_version_number.c"
 
-extern int errno;
+
 
 static char *whoami = "TEST FAIL";
 

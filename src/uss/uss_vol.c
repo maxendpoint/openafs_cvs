@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.7 2002/09/09 17:00:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.8 2003/01/11 07:22:21 shadow Exp $");
 
 #include "uss_vol.h"		/*Interface to this module*/
 #include "uss_common.h"		/*Common definitions*/
@@ -27,7 +27,7 @@ RCSID("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.7 2002/09/09 17:00:40 shadow 
 #include <sys/stat.h>
 #include <pwd.h>
 #include <netdb.h>
-#include <sys/errno.h>
+#include <errno.h>
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -47,7 +47,6 @@ RCSID("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.7 2002/09/09 17:00:40 shadow 
 #include <afs/keys.h>
 #include <ubik.h>
 
-extern int errno;
 extern struct rx_connection *UV_Bind();
 extern int line;
 extern int VL_GetEntryByID();

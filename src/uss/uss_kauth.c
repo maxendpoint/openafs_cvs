@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/uss_kauth.c,v 1.7 2002/08/21 18:14:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/uss_kauth.c,v 1.8 2003/01/11 07:22:21 shadow Exp $");
 
 #include "uss_kauth.h"		/*Module interface*/
 #include "uss_common.h"		/*Common defs & operations*/
@@ -36,8 +36,6 @@ RCSID("$Header: /cvs/openafs/src/uss/uss_kauth.c,v 1.7 2002/08/21 18:14:24 shado
 #include <afs/com_err.h>
 #include <afs/kautils.h>	/*MAXKTCREALMLEN*/
 #include <afs/kaport.h>         /* pack_long */
-
-extern int errno;
 
 #define uss_kauth_MAX_SIZE	2048
 

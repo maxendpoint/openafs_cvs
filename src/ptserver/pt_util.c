@@ -1,4 +1,4 @@
-/* $Id: pt_util.c,v 1.5 2003/01/08 03:13:14 shadow Exp $ */
+/* $Id: pt_util.c,v 1.6 2003/01/11 07:22:19 shadow Exp $ */
 
 /*
  *
@@ -22,8 +22,9 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.5 2003/01/08 03:13:14 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.6 2003/01/11 07:22:19 shadow Exp $");
 
+#include <errno.h>
 #include <lock.h>
 #include <netinet/in.h>
 #define UBIK_INTERNALS
@@ -40,7 +41,6 @@ RCSID("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.5 2003/01/08 03:13:14 sh
 
 extern char *optarg;
 extern int optind;
-extern int errno;
 
 int display_entry();
 void add_group();

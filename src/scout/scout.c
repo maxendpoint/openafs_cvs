@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/scout/scout.c,v 1.7 2002/08/22 18:45:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/scout/scout.c,v 1.8 2003/01/11 07:22:19 shadow Exp $");
 
 #undef	IN
 #ifdef	AFS_AIX32_ENV
@@ -39,8 +39,9 @@ RCSID("$Header: /cvs/openafs/src/scout/scout.c,v 1.7 2002/08/22 18:45:17 shadow 
 #include <stdio.h>		/*Standard I/O stuff*/
 #include <cmd.h>		/*Command interpretation library*/
 #include <fsprobe.h>		/*Interface for fsprobe module*/
+#include <errno.h>
 
-extern int errno;
+
 extern struct hostent *hostutil_GetHostByName();
 extern int gtx_InputServer();
 extern int gethostname();

@@ -10,9 +10,10 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.26 2002/10/16 03:59:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.27 2003/01/11 07:22:21 shadow Exp $");
 
 #include <stdio.h>
+#include <errno.h>
 #include <stdlib.h>	/* for malloc() */
 
 #ifdef AFS_LINUX24_ENV
@@ -518,7 +519,6 @@ void print_cmstats();
 #ifndef AFS_KDUMP_LIB
 extern struct cmd_syndesc *cmd_CreateSyntax();
 #endif
-extern int errno;
 int opencore();
 
 #if	defined(AFS_HPUX_ENV) && defined(__LP64__)
