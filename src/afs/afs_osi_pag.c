@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.16 2002/11/12 23:57:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.17 2003/01/17 05:39:20 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -450,7 +450,7 @@ afs_int32 PagInCred(const struct AFS_UCRED *cred)
     }
 #endif
 #else
-#if defined(AFS_SGI_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DUX40_ENV) || defined(AFS_LINUX_ENV) || defined(AFS_XBSD_ENV)
+#if defined(AFS_SGI_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DUX40_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_XBSD_ENV)
     if (cred->cr_ngroups < 2) return NOPAG;
 #endif
 #endif
