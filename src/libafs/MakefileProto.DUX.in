@@ -85,7 +85,7 @@ DEST_AFSMOD = ${DESTDIR}/root.client/bin/${AFSMOD}
 # libafs:	${DEST_LIBAFS} ${DEST_LIBAFSNONFS} ${DESTAFSMOD}
 
 .PHONY: libafs
-libafs:	$(DEST_LIBAFSNONFS)
+libafs:	${DEST_LIBAFSNONFS} ${DESTAFSMOD}
 
 
 ${DEST_LIBAFS}: ${LIBAFS}
