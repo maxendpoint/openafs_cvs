@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.48 2003/02/08 07:30:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.49 2003/02/15 06:22:32 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6002,6 +6002,7 @@ afs_int32 SRXAFS_FlushCPS(struct rx_call *acall,
       if ((client->ViceId != ANONYMOUSID) && client->CPS.prlist_val) {
 	free(client->CPS.prlist_val);
 	client->CPS.prlist_val = NULL;
+	client->CPS.prlist_len = 0;
       }
       ReleaseWriteLock(&client->lock);
     }
