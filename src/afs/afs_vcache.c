@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.30 2002/07/12 20:41:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.31 2002/07/20 07:53:33 kolya Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -485,8 +485,8 @@ static void afs_TryFlushDcacheChildren(struct vcache *tvc)
     VN_HOLD(tvc);
     AFS_GUNLOCK();
     d_prune_aliases(ip);
-    AFS_GLOCK();
     VN_RELE(tvc);
+    AFS_GLOCK();
 #else
 restart:
     DLOCK();
