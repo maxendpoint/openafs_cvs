@@ -33,7 +33,7 @@ CFLAGS=-g -I. \
 	-I${TOP_SRCDIR}/config \
 	-I${TOP_INCDIR} \
 	-I${TOP_INCDIR}/afs \
-	-I${SRCDIR} ${XCFLAGS}
+	${XCFLAGS}
 LDFLAGS = ${XLDFLAGS}
 
 INCLS=${TOP_INCDIR}/afs/gtxobjects.h \
