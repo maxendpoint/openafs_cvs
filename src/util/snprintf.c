@@ -4,7 +4,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.20 2003/11/27 01:23:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.21 2004/05/10 03:43:02 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
@@ -16,7 +16,7 @@ RCSID
 #else
 #include <winsock2.h>
 #endif
-#if defined(AFS_AIX32_ENV) || defined(AFS_SUN_ENV) || defined(AFS_XBSD_ENV) || defined(AFS_HPUX_ENV)
+#if defined(AFS_AIX32_ENV) || defined(AFS_SUN_ENV) || defined(AFS_XBSD_ENV) || defined(AFS_HPUX_ENV) || defined(AFS_SGI65_ENV)
 #include <sys/socket.h>
 #endif
 #ifdef HAVE_STRING_H
