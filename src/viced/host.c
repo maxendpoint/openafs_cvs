@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.24 2003/01/15 00:10:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.25 2003/01/15 00:21:08 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -525,7 +525,7 @@ return;
 
 /*
  * Allocate a host.  It will be identified by the peer (ip,port) info in the
- * rx connection provided.  The host is returned un-held and un-locked
+ * rx connection provided.  The host is returned held and locked
  */
 #define	DEF_ROPCONS 2115
 
@@ -586,6 +586,8 @@ struct host *h_Alloc_r(register struct rx_connection *r_con)
     h_gethostcps(host);      /* do this under host lock */
 #endif
     host->FirstClient = 0;      
+    h_Hold_r(host);
+    h_Lock_r(host);
     h_InsertList_r(host);	/* update global host List */
 #if FS_STATS_DETAILED
     /*
@@ -1008,9 +1010,7 @@ retry:
 		goto retry;
 	}
     } else {
-        host = h_Alloc_r(tcon);
-        h_Hold_r(host);
-        h_Lock_r(host);
+	host = h_Alloc_r(tcon); /* returned held and locked */
 	h_gethostcps_r(host,FT_ApproxTime());
         if (!(host->Console&1)) {
 	    if (!identP || !interfValid) {
