@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.18.2.6 2004/12/13 23:43:51 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.18.2.7 2005/01/31 04:09:37 shadow Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -343,6 +343,8 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
                 }
                 return -1;
             }
+        } else {
+            return -1;
         }
     }
 
