@@ -10,7 +10,7 @@
 #include <afs/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.6 2001/07/05 15:20:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.7 2001/07/05 15:40:49 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -155,7 +155,6 @@ main (argc, argv)
     struct rx_securityClass *sca[1];
     struct rx_securityClass *scm[3];
     
-    extern int afsconf_ClientAuth();
     extern int afsconf_ClientAuthSecure();
     extern int afsconf_ServerAuth();
     extern int afsconf_CheckAuth();
