@@ -850,25 +850,37 @@ int smb_IsStarMask(char *maskp)
 
 void smb_ReleaseVCNoLock(smb_vc_t *vcp)
 {
+    osi_Log2(smb_logp,"smb_ReleaseVCNoLock vcp %x ref %d",vcp, vcp->refCount);
+#ifdef DEBUG
     osi_assert(vcp->refCount-- != 0);
+#else
+    vcp->refCount--;
+#endif
 }       
 
 void smb_ReleaseVC(smb_vc_t *vcp)
 {
     lock_ObtainWrite(&smb_rctLock);
+    osi_Log2(smb_logp,"smb_ReleaseVC       vcp %x ref %d",vcp, vcp->refCount);
+#ifdef DEBUG
     osi_assert(vcp->refCount-- != 0);
+#else
+    vcp->refCount--;
+#endif
     lock_ReleaseWrite(&smb_rctLock);
 }       
 
 void smb_HoldVCNoLock(smb_vc_t *vcp)
 {
     vcp->refCount++;
+    osi_Log2(smb_logp,"smb_HoldVCNoLock vcp %x ref %d",vcp, vcp->refCount);
 }       
 
 void smb_HoldVC(smb_vc_t *vcp)
 {
     lock_ObtainWrite(&smb_rctLock);
     vcp->refCount++;
+    osi_Log2(smb_logp,"smb_HoldVC       vcp %x ref %d",vcp, vcp->refCount);
     lock_ReleaseWrite(&smb_rctLock);
 }       
 
@@ -8268,11 +8280,11 @@ void smb_Shutdown(void)
                 cm_scache_t * scp;
 
                 lock_ObtainMutex(&fidp->mx);
-				if (fidp->scp != NULL) {
-					scp = fidp->scp;
-					fidp->scp = NULL;
-	                cm_ReleaseSCache(scp);
-				}
+                if (fidp->scp != NULL) {
+                    scp = fidp->scp;
+                    fidp->scp = NULL;
+                    cm_ReleaseSCache(scp);
+                }
                 lock_ReleaseMutex(&fidp->mx);
             }
         }
