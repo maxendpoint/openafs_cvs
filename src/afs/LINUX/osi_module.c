@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.44 2004/04/12 16:04:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.45 2004/05/08 03:58:27 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -48,8 +48,10 @@ MODULE_INFO(vermagic, VERMAGIC_STRING);
 #define __NR_setgroups32      82	/* This number is not exported for some bizarre reason. */
 #endif
 
+#if !defined(AFS_LINUX24_ENV)
 asmlinkage int (*sys_settimeofdayp) (struct timeval * tv,
 				     struct timezone * tz);
+#endif
 asmlinkage long (*sys_setgroupsp) (int gidsetsize, gid_t * grouplist);
 
 #ifdef EXPORTED_SYS_CALL_TABLE
@@ -188,7 +190,7 @@ init_module(void)
 {
 #if defined(AFS_IA64_LINUX20_ENV)
     unsigned long kernel_gp = 0;
-    static struct fptr sys_settimeofday, sys_setgroups;
+    static struct fptr sys_setgroups;
 #endif
     extern int afs_syscall();
     extern long afs_xsetgroups();
@@ -400,16 +402,7 @@ init_module(void)
 #endif
 
     /* Initialize pointers to kernel syscalls. */
-#if defined(AFS_IA64_LINUX20_ENV)
-    kernel_gp = ((struct fptr *)printk)->gp;
-
-    sys_settimeofdayp = (void *)&sys_settimeofday;
-
-    ((struct fptr *)sys_settimeofdayp)->ip =
-	SYSCALL2POINTER sys_call_table[__NR_settimeofday - 1024];
-    ((struct fptr *)sys_settimeofdayp)->gp = kernel_gp;
-
-#else /* !AFS_IA64_LINUX20_ENV */
+#if !defined(AFS_LINUX24_ENV)
     sys_settimeofdayp = SYSCALL2POINTER sys_call_table[__NR_settimeofday];
 #endif /* AFS_IA64_LINUX20_ENV */
 
