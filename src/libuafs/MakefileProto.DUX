@@ -14,7 +14,6 @@ include ../config/Makefile.${SYS_NAME}
 MKDIR_IF_NEEDED=[ -d $$1 ] || mkdir -p $$1
 
 # System specific build commands and flags
-CC = cc
 DEFINES=-DAFSDEBUG -DKERNEL -DUKERNEL -DAFS -DVICE -D_NO_PROTO -DOSF
 KOPTS=
 DBUG=
