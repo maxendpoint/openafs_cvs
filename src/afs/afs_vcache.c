@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.28 2002/06/15 17:11:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.29 2002/06/24 18:57:30 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -997,6 +997,9 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp,
 	INIT_LIST_HEAD(&ip->i_devices);
 #endif
 	ip->i_data.host = (void*) ip;
+#ifdef STRUCT_ADDRESS_SPACE_HAS_GFP_MASK
+	ip->i_data.gfp_mask = GFP_HIGHUSER;
+#endif
 	ip->i_mapping = &ip->i_data;
 #ifdef STRUCT_INODE_HAS_I_TRUNCATE_SEM
 	init_rwsem(&ip->i_truncate_sem);
