@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.9 2003/07/15 23:14:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.10 2003/12/07 22:49:17 jaltman Exp $");
 
 #include <afs/pthread_glock.h>
 #include <afs/afsutil.h>
@@ -48,7 +48,7 @@ RCSID
     by acellInfo parm.   Useful only on the server (which describes only one cell).
 */
 
-static
+static int
 VerifyEntries(aci)
      register struct afsconf_cell *aci;
 {
@@ -90,6 +90,7 @@ VerifyEntries(aci)
    This is a handle to the internal cache that is maintained by the bosserver.
    */
 
+int
 afsconf_SetCellInfo(adir, apath, acellInfo)
      struct afsconf_dir *adir;
      char *apath;
@@ -101,6 +102,7 @@ afsconf_SetCellInfo(adir, apath, acellInfo)
     return code;
 }
 
+int
 afsconf_SetExtendedCellInfo(adir, apath, acellInfo, clones)
      struct afsconf_dir *adir;
      char *apath;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/volstub.c,v 1.5 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/volstub.c,v 1.6 2003/12/07 22:49:19 jaltman Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -29,7 +29,6 @@ RCSID
 #include "bc.h"
 #include <afs/volint.h>
 
-extern int VL_GetEntryByID();
 extern char *whoami;
 
 /* ********************************************************************* */

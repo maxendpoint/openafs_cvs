@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.7 2003/07/15 23:14:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.8 2003/12/07 22:49:23 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -40,7 +40,6 @@ RCSID
 
 #include "error_macros.h"
 
-extern struct ubik_client *cstruct;
 dlqlinkT savedEntries;
 dlqlinkT entries_to_flush;
 

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.11 2003/07/15 23:14:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.12 2003/12/07 22:49:19 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -57,10 +57,6 @@ RCSID
 #include "error_macros.h"
 #include "globals.h"
 #include "afs/audit.h"
-
-
-extern afs_int32 ubik_lastYesTime;
-extern afs_int32 ubik_nBuffers;
 
 struct ubik_dbase *BU_dbase;
 struct afsconf_dir *BU_conf;	/* for getting cell info */

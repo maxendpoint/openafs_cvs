@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.14 2003/07/15 23:17:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.15 2003/12/07 22:49:38 jaltman Exp $");
 
 #include <sys/types.h>
 #include <stdlib.h>
@@ -44,8 +44,6 @@ RCSID
 #define UBIK_INTERNALS
 #include "ubik.h"
 #include "ubik_int.h"
-
-extern struct hostent *hostutil_GetHostByName();
 
 static short
 PortNumber(register char *aport)

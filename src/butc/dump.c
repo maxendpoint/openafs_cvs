@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/dump.c,v 1.15 2003/11/23 04:53:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/dump.c,v 1.16 2003/12/07 22:49:23 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -59,15 +59,13 @@ addVolume();
 
 extern struct rx_connection *UV_Bind();
 
-extern char *globalCellName;
-
-extern afs_int32 xbsaType;
 extern afs_int32 groupId;
 extern afs_int32 BufferSize;
 extern afs_int32 statusSize;
 extern FILE *centralLogIO;
 afs_int32 lastPass = 0;
 #ifdef xbsa
+extern afs_int32 xbsaType;
 char *butcdumpIdStr = "/backup_afs_volume_dumps";
 extern struct butx_transactionInfo butxInfo;
 extern char *xbsaObjectOwner;
@@ -145,7 +143,7 @@ extern int maxpass;
 
 afs_int32 tc_EndMargin;
 afs_int32 tc_KEndMargin;
-char *bufferBlock;
+static char *bufferBlock;
 
 /* compute the absolute expiration date */
 afs_int32

@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/new_rnd_key.c,v 1.12 2003/07/15 23:15:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/new_rnd_key.c,v 1.13 2003/12/07 22:49:24 jaltman Exp $");
 
 #ifndef KERNEL
 #include <stdio.h>
@@ -76,7 +76,6 @@ int
 des_random_key(des_cblock key)
 {
     LOCK_INIT if (!is_inited) {
-	void des_init_random_number_generator();
 	des_init_random_number_generator(key);
     }
     UNLOCK_INIT

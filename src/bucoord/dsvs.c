@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dsvs.c,v 1.8 2003/11/23 04:53:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dsvs.c,v 1.9 2003/12/07 22:49:19 jaltman Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -37,11 +37,6 @@ RCSID
 
 #include <afs/bubasics.h>
 #include "bc.h"
-
-extern struct bc_config *bc_globalConfig;
-extern FILE *bc_open();
-extern void bc_HandleMisc();
-extern char *whoami;
 
 static char db_dsvs = 0;	/*Assume debugging output turned off */
 static char mn[] = "dsvs";	/*Module name */

@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/timer.c,v 1.8 2003/07/15 23:15:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/timer.c,v 1.9 2003/12/07 22:49:33 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -49,10 +49,7 @@ typedef unsigned char bool;
 
 #define MILLION	1000000
 
-static globalInitDone = 0;
-
-void openafs_insque(struct TM_Elem *, struct TM_Elem *);
-void openafs_remque(struct TM_Elem *);
+static int globalInitDone = 0;
 
 /* t1 = t2 - t3 */
 static void

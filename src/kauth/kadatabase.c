@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kadatabase.c,v 1.9 2003/11/23 04:53:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kadatabase.c,v 1.10 2003/12/07 22:49:26 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -35,9 +35,7 @@ RCSID
 #include "kautils.h"
 #include "kaserver.h"
 
-extern struct kaheader cheader;
 extern Date cheaderReadTime;	/* time cheader last read in */
-extern struct ubik_dbase *KA_dbase;
 
 #define set_header_word(tt,field,value) kawrite ((tt), ((char *)&(cheader.field) - (char *)&cheader), ((cheader.field = (value)), (char *)&(cheader.field)), sizeof(afs_int32))
 

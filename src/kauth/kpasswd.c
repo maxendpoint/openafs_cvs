@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.12 2003/11/29 22:08:12 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.13 2003/12/07 22:49:26 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -83,7 +83,7 @@ int CommandProc();
 
 static int zero_argc;
 static char **zero_argv;
-extern int init_child(), pasword_bad(), give_to_child(), terminate_child();
+extern int init_child(), give_to_child(), terminate_child();
 
 #ifdef AFS_NT40_ENV
 struct passwd {

@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/procs.c,v 1.13 2003/11/23 04:53:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/procs.c,v 1.14 2003/12/07 22:49:19 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -65,8 +65,6 @@ RCSID
 
 extern struct ubik_dbase *BU_dbase;
 extern struct afsconf_dir *BU_conf;	/* for getting cell info */
-extern afs_int32 myHost;
-extern struct memoryDB db;	/* incore copies of db structures */
 
 afs_int32 AddVolume(), AddVolumes(), CreateDump(), DoDeleteDump(),
 DoDeleteTape(), ListDumps();

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/list.c,v 1.7 2003/07/15 23:14:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/list.c,v 1.8 2003/12/07 22:49:23 jaltman Exp $");
 
 #ifndef AFS_NT40_ENV
 #include <sys/time.h>
@@ -23,7 +23,9 @@ RCSID
 #include <errno.h>
 #include <afs/tcdata.h>
 
-extern int debugLevel;
+#include "error_macros.h"
+
+/*extern int debugLevel;*/
 static struct dumpNode *dumpQHeader;	/* ptr to head of the dumpNode list */
 static struct dumpNode headNode;	/* the dummy header of the node list */
 static afs_int32 maxTaskID;	/* the largest task Id allotted so far, this is never reused */

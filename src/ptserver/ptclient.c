@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.11 2003/08/08 21:54:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.12 2003/12/07 22:49:35 jaltman Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -41,7 +41,9 @@ char confdir[AFSDIR_PATH_MAX];
 
 char *whoami;
 
+#ifndef AFS_PTHREAD_ENV
 extern struct ubik_client *pruclient;
+#endif
 
 static int ignoreExist = 0;
 static char line[256];

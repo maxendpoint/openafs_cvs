@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.22 2003/07/15 23:15:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.23 2003/12/07 22:49:27 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -84,7 +84,6 @@ struct packet {
     char data[MAX_PKT_LEN];
 };
 
-extern struct kadstats dynamic_statistics;
 extern char *lastOperation;
 extern char lrealm[];
 

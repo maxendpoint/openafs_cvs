@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/buffer.c,v 1.13 2003/07/15 23:15:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/dir/buffer.c,v 1.14 2003/12/07 22:49:25 jaltman Exp $");
 
 #include <stdlib.h>
 #include <lock.h>
@@ -46,7 +46,7 @@ struct Lock afs_bufferLock;
 #define BUFFER_FID_SIZE (6 + 2*sizeof(char*)/sizeof(int))
 #endif
 
-struct buffer {
+static struct buffer {
     /* fid is used for Unique cache key + i/o addressing.
      * fid size is based on 4 + size of inode and size of pointer
      */

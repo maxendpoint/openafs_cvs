@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/update/server.c,v 1.11 2003/11/29 22:08:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/update/server.c,v 1.12 2003/12/07 22:49:39 jaltman Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -54,6 +54,8 @@ RCSID
 #include "global.h"
 
 extern int UPDATE_ExecuteRequest();
+extern rxkad_level StringToLevel(char *name);
+
 static int AddObject(char **expPath, char *dir);
 static int PathInDirectory(char *dir, char *path);
 

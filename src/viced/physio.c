@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/physio.c,v 1.12 2003/07/15 23:17:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/physio.c,v 1.13 2003/12/07 22:49:41 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -50,8 +50,6 @@ RCSID
 #undef PAGESIZE
 #endif
 #define PAGESIZE 2048
-
-extern int LogLevel;
 
 afs_int32 lpErrno, lpCount;
 

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.11 2003/11/29 22:08:20 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.12 2003/12/07 22:49:42 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -72,7 +72,6 @@ void print_usage();
 void fill_entry();
 void fill_update_entry();
 
-extern int VL_GetAddrsU(), VL_RegisterAddrs();
 #define	VL_NUMBER_OPCODESX	34
 static char *opcode_names[VL_NUMBER_OPCODESX] = {
     "CreateEntry",
@@ -119,7 +118,6 @@ struct Vlent {
     char name[64];
 };
 
-extern int VL_UpdateEntryByName();
 #define	NVOLS	1000
 #define	ALLOCNT 50000
 struct Vlent *VLa[NVOLS];
@@ -130,7 +128,6 @@ struct ubik_client *cstruct;
 struct rx_connection *serverconns[MAXSERVERS];
 char confdir[AFSDIR_PATH_MAX];
 char *(args[50]);
-extern struct cmd_syndesc *cmd_CreateSyntax();
 
 struct Vlent *
 GetVolume(vol, entry)

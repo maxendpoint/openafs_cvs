@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.18 2003/11/23 04:53:29 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.19 2003/12/07 22:49:18 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -53,7 +53,6 @@ RCSID
 extern struct ktime bozo_nextRestartKT, bozo_nextDayKT;
 
 extern struct afsconf_dir *bozo_confdir;
-extern struct rx_securityClass *bozo_rxsc[2];
 extern int bozo_newKTs;
 extern int DoLogging;
 #ifdef BOS_RESTRICTED_MODE

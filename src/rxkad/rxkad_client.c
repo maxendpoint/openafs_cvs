@@ -19,7 +19,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.15 2003/07/15 23:16:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.16 2003/12/07 22:49:37 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/stds.h"
@@ -65,8 +65,6 @@ RCSID
 
 #include "private_data.h"
 #define XPRT_RXKAD_CLIENT
-
-char *rxi_Alloc();
 
 #ifndef max
 #define	max(a,b)    ((a) < (b)? (b) : (a))

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.16 2003/11/23 04:53:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.17 2003/12/07 22:49:26 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -61,8 +61,6 @@ afs_int32 krb4_cross = 0;
 
 struct afsconf_dir *KA_conf;	/* for getting cell info */
 
-extern afs_int32 ubik_lastYesTime;
-extern afs_int32 ubik_nBuffers;
 int MinHours = 0;
 int npwSums = KA_NPWSUMS;	/* needs to be variable sometime */
 

@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.39 2003/12/04 17:02:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.40 2003/12/07 22:49:43 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -219,7 +219,6 @@ extern off_t afs_lseek(int FD, off_t O, int F);
 #ifdef	AFS_OSF_ENV
 extern void *calloc();
 #endif
-extern char *vol_DevName();
 static char *TimeStamp(time_t clock, int precision);
 
 #define ORPH_IGNORE 0

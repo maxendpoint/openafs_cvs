@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.17 2003/08/25 18:24:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18 2003/12/07 22:49:42 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -65,9 +65,6 @@ struct ubik_dbase *VL_dbase;
 afs_uint32 HostAddress[MAXSERVERID + 1];
 extern int afsconf_CheckAuth();
 extern int afsconf_ServerAuth();
-
-extern afs_int32 ubik_lastYesTime;
-extern afs_int32 ubik_nBuffers;
 
 static CheckSignal();
 int LogLevel = 0;

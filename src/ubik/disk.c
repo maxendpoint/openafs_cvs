@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.12 2003/07/15 23:17:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.13 2003/12/07 22:49:38 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -38,7 +38,7 @@ RCSID
 #include "ubik_int.h"
 
 #define	PHSIZE	128
-struct buffer {
+static struct buffer {
     struct ubik_dbase *dbase;	/* dbase within which the buffer resides */
     afs_int32 file;		/* Unique cache key */
     afs_int32 page;		/* page number */

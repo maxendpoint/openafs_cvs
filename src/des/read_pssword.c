@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/read_pssword.c,v 1.16 2003/07/15 23:15:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/read_pssword.c,v 1.17 2003/12/07 22:49:24 jaltman Exp $");
 
 #include <mit-cpyright.h>
 #include <des.h>
@@ -87,7 +87,7 @@ static push_signals(), pop_signals();
 #endif
 
 int des_read_pw_string(char *, int, char *, int);
-int des_string_to_key(char *, des_cblock *);
+void des_string_to_key(char *, des_cblock *);
 
 /*** Routines ****************************************************** */
 int

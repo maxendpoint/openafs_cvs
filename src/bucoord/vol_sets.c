@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.9 2003/11/23 04:53:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.10 2003/12/07 22:49:19 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -39,8 +39,9 @@ afs_int32 bc_UpdateVolumeSet();
 extern struct bc_config *bc_globalConfig;
 extern struct udbHandleS udbHandle;
 extern char *whoami;
-extern struct bc_volumeSet *bc_FindVolumeSet(struct bc_config *cf,
-					     char *name);
+extern struct bc_volumeSet *bc_FindVolumeSet(struct bc_config *cf, char *name);
+extern void FreeVolumeSet(struct bc_volumeSet *avset);
+
 
 /* ------------------------------------
  * command level routines

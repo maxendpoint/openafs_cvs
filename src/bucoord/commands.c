@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.12 2003/11/23 04:53:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.13 2003/12/07 22:49:19 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -45,7 +45,6 @@ RCSID
 
 
 extern struct bc_config *bc_globalConfig;
-extern char *ktime_GetDateUsage();
 extern struct bc_dumpSchedule *bc_FindDumpSchedule();
 extern struct bc_volumeSet *bc_FindVolumeSet(struct bc_config *cfg,
 					     char *name);
@@ -53,12 +52,7 @@ extern struct bc_dumpTask bc_dumpTasks[BC_MAXSIMDUMPS];
 extern struct ubik_client *cstruct;
 extern int bc_Dumper();		/* function to do dumps */
 extern int bc_Restorer();	/* function to do restores */
-extern void bc_HandleMisc();
-extern afs_int32 ScanDumpHdr();
-extern afs_int32 ScanTapeVolume();
 extern char *whoami;
-extern int VL_ListEntry();
-extern int VL_ListAttributesN2();
 extern struct ktc_token ttoken;
 extern char *tailCompPtr();
 extern statusP createStatusNode();
@@ -3066,6 +3060,7 @@ dumpInfo(dumpid, detailFlag)
     return (code);
 }
 
+int
 compareDump(ptr1, ptr2)
      struct budb_dumpEntry *ptr1, *ptr2;
 {

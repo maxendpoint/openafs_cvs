@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.27 2003/11/29 21:38:06 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.28 2003/12/07 22:49:44 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -64,17 +64,8 @@ RCSID
 
 #include <volser_prototypes.h>
 
-afs_int32 VolumeExists(), CheckVldbRWBK(), CheckVldb();
-
 struct ubik_client *cstruct;
 int verbose = 0;
-extern int VL_GetNewVolumeId();
-extern int VL_SetLock();
-extern int VL_ReleaseLock();
-extern int VL_DeleteEntry();
-
-void MapNetworkToHost();
-void MapHostToNetwork();
 
 struct release {
     afs_int32 time;

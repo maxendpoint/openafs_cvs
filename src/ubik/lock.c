@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/lock.c,v 1.11 2003/11/23 04:53:38 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/lock.c,v 1.12 2003/12/07 22:49:38 jaltman Exp $");
 
 #include <sys/types.h>
 #ifndef AFS_NT40_ENV
@@ -145,12 +145,12 @@ ulock_getLock(atrans, atype, await)
 }
 
 /* Release the transaction lock */
-int
+void
 ulock_relLock(atrans)
      struct ubik_trans *atrans;
 {
     if (rwlockinit)
-	return EINVAL;
+	return;
 
     if (atrans->locktype == LOCKREAD) {
 	ReleaseReadLock(&rwlock);

@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.11 2003/11/23 04:53:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.12 2003/12/07 22:49:19 jaltman Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -43,7 +43,6 @@ RCSID
 
 struct bc_dumpTask bc_dumpTasks[BC_MAXSIMDUMPS];
 
-extern struct bc_config *bc_globalConfig;
 extern char *bc_CopyString();
 extern void bc_HandleMisc();
 extern char *whoami;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/afs_vosAdmin.c,v 1.8 2003/07/15 23:15:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/afs_vosAdmin.c,v 1.9 2003/12/07 22:49:32 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -45,8 +45,6 @@ RCSID
 #include "vosutils.h"
 #include "vsprocs.h"
 #include "lockprocs.h"
-
-extern int VL_GetAddrsU();
 
 typedef struct file_server {
     int begin_magic;

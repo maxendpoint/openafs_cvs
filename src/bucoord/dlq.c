@@ -14,7 +14,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dlq.c,v 1.7 2003/11/23 04:53:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dlq.c,v 1.8 2003/12/07 22:49:19 jaltman Exp $");
 
 #include <afs/bubasics.h>
 
@@ -89,6 +89,7 @@ dlqLinkb(headptr, entryptr)
  *	move all the items on the fromptr and append to the toptr's list
  */
 
+void
 dlqMoveb(fromptr, toptr)
      dlqlinkP fromptr;
      dlqlinkP toptr;

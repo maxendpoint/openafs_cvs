@@ -39,7 +39,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.21 2003/11/15 04:59:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.22 2003/12/07 22:49:43 jaltman Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -90,7 +90,6 @@ RCSID
 #endif
 #define osi_Assert(e) (void)(e)
 
-extern int LogLevel;		/* Vice loglevel */
 int (*V_BreakVolumeCallbacks) ();
 
 #define MAXHANDLERS	4	/* Up to 4 clients; must be at least 2, so that
@@ -123,9 +122,7 @@ struct command {
     char partName[16];		/* partition name, e.g. /vicepa */
 };
 
-
 /* Forward declarations */
-static int getport();
 static void FSYNC_sync();
 static void FSYNC_newconnection();
 static void FSYNC_com();

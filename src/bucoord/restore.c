@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.7 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.8 2003/12/07 22:49:19 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -38,12 +38,8 @@ RCSID
 #include <afs/vlserver.h>
 #include "error_macros.h"
 
-
-extern struct bc_config *bc_globalConfig;
 extern struct bc_dumpTask bc_dumpTasks[BC_MAXSIMDUMPS];
-extern void bc_HandleMisc();
 extern char *whoami;
-extern struct rx_connection *bc_GetConn();
 
 #define	BC_MAXLEVELS	    20
 #define	MAXTAPESATONCE	    10

@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/regex.c,v 1.6 2003/11/29 22:08:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/regex.c,v 1.7 2003/12/07 22:49:40 jaltman Exp $");
 
 /*
  * routines to do regular expression matching
@@ -107,9 +107,9 @@ static char circf;
 /* forward defs
 */
 
-static int advance();
-static int backref();
-static int cclass();
+static int advance(register char *lp, register char *ep);
+static int backref(register int i, register char *lp);
+static int cclass(register char *set, register char c, int af);
 
 
 /*
@@ -277,8 +277,7 @@ re_exec(register char *p1)
  * try to match the next thing in the dfa
  */
 static int
-advance(lp, ep)
-     register char *lp, *ep;
+advance(register char *lp, register char *ep)
 {
     register char *curlp;
     int ct, i;
@@ -382,9 +381,7 @@ advance(lp, ep)
 }
 
 static int
-backref(i, lp)
-     register int i;
-     register char *lp;
+backref(register int i, register char *lp)
 {
     register char *bp;
 
@@ -396,9 +393,7 @@ backref(i, lp)
 }
 
 static int
-cclass(set, c, af)
-     register char *set, c;
-     int af;
+cclass(register char *set, register char c, int af)
 {
     register int n;
 

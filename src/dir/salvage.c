@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/salvage.c,v 1.9 2003/11/29 21:37:59 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/dir/salvage.c,v 1.10 2003/12/07 22:49:26 jaltman Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -38,10 +38,7 @@ RCSID
 
 #define MAXENAME 256
 
-struct DirEntry *GetBlob();
-struct PageHeader *DRead();
 extern afs_int32 DErrno;
-int NameBlobs(), Lookup(), Create(), MakeDir();
 
 /* figure out how many pages in use in a directory, given ptr to its (locked) header */
 static

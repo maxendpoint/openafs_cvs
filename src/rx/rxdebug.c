@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.14 2003/11/29 22:08:16 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.15 2003/12/07 22:49:36 jaltman Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -52,8 +52,6 @@ RCSID
 
 
 #define	TIMEOUT	    20
-
-extern struct hostent *hostutil_GetHostByName();
 
 static short
 PortNumber(aport)

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.9 2003/07/15 23:14:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.10 2003/12/07 22:49:18 jaltman Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -41,7 +41,6 @@ static int cron_timeout(), cron_getstat(), cron_setstat(), cron_delete();
 static int cron_procexit(), cron_getstring(), cron_getparm(), cron_restartp();
 static int cron_hascore();
 struct bnode *cron_create();
-extern char *ktime_DateOf();
 
 #define	SDTIME		60	/* time in seconds given to a process to evaporate */
 

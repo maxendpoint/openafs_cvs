@@ -1,10 +1,10 @@
-/* $Id: ubik.c,v 1.5 2003/07/15 23:16:04 shadow Exp $ */
+/* $Id: ubik.c,v 1.6 2003/12/07 22:49:35 jaltman Exp $ */
 
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ubik.c,v 1.5 2003/07/15 23:16:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ubik.c,v 1.6 2003/12/07 22:49:35 jaltman Exp $");
 
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -182,6 +182,7 @@ struct rx_securityClass *ubik_sc[3];
 
 /* Other declarations */
 
+int
 afsconf_GetNoAuthFlag()
 {
     return (1);

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/testpt.c,v 1.12 2003/11/23 04:53:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/testpt.c,v 1.13 2003/12/07 22:49:35 jaltman Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -49,9 +49,6 @@ RCSID
 #include "ptclient.h"
 #include "pterror.h"
 #include <afs/afsutil.h>
-
-extern char *ucstring();
-extern char *lcstring();
 
 static char *whoami = "testpr";
 static struct afsconf_dir *conf;	/* cell info, set by MyBeforeProc */

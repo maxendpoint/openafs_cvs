@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.21 2003/07/15 23:17:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.22 2003/12/07 22:49:40 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -165,7 +165,7 @@ DebugOn(int loglevel)
 void
 SetDebug_Signal(int signo)
 {
-    extern int IOMGR_SoftSig();
+/*    extern int IOMGR_SoftSig();*/
 
     if (LogLevel > 0) {
 	LogLevel *= 5;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.22 2003/08/08 21:54:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.23 2003/12/07 22:49:18 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -51,7 +51,6 @@ RCSID
 #define BOZO_LWP_STACKSIZE	16000
 extern int BOZO_ExecuteRequest();
 extern int RXSTATS_ExecuteRequest();
-extern int afsconf_GetKey();
 extern struct bnode_ops fsbnode_ops, ezbnode_ops, cronbnode_ops;
 
 void bozo_Log();
@@ -61,7 +60,6 @@ static char *bozo_pid;
 struct rx_securityClass *bozo_rxsc[3];
 const char *bozo_fileName;
 FILE *bozo_logFile;
-extern int rx_stackSize;	/* for rx_SetStackSize macro */
 
 int DoLogging = 0;
 int DoSyslog = 0;

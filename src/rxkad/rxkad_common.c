@@ -23,7 +23,7 @@
 #define INCLUDE_RXKAD_PRIVATE_DECLS
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.17 2003/07/15 23:16:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.18 2003/12/07 22:49:37 jaltman Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -73,8 +73,6 @@ RCSID
 
 #include "private_data.h"
 #define XPRT_RXKAD_COMMON
-
-char *rxi_Alloc();
 
 #ifndef afs_max
 #define	afs_max(a,b)    ((a) < (b)? (b) : (a))

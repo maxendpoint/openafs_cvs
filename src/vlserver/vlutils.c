@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlutils.c,v 1.8 2003/07/15 23:17:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlutils.c,v 1.9 2003/12/07 22:49:42 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -35,7 +35,6 @@ RCSID
 
 extern struct vlheader cheader;
 struct vlheader xheader;
-extern struct ubik_dbase *VL_dbase;
 extern afs_uint32 HostAddress[];
 extern int maxnservers;
 struct extentaddr extentaddr;

@@ -27,7 +27,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/fasttime.c,v 1.7 2003/08/08 20:21:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/fasttime.c,v 1.8 2003/12/07 22:49:33 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -40,7 +40,6 @@ RCSID
 #endif
 #include <afs/afsutil.h>
 
-extern char *valloc();
 int ft_debug;
 
 #define TRUE	1

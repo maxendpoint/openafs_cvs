@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.16 2003/11/23 04:53:43 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.17 2003/12/07 22:49:43 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -61,8 +61,6 @@ RCSID
 #define	afs_fstat	fstat
 #endif /* !O_LARGEFILE */
 #endif /* AFS_NT40_ENV */
-
-extern afs_int32 DErrno;
 
 #ifdef AFS_PTHREAD_ENV
 pthread_once_t ih_glock_once = PTHREAD_ONCE_INIT;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/vosutils.c,v 1.9 2003/07/15 23:15:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/vosutils.c,v 1.10 2003/12/07 22:49:32 jaltman Exp $");
 
 #include "vosutils.h"
 #include "vsprocs.h"
@@ -24,15 +24,6 @@ RCSID
 #include <strings.h>
 #endif
 #endif
-
-/*
- * Functions that aren't prototyped, but that we use
- */
-
-extern int VL_CreateEntryN(), VL_CreateEntry(), VL_GetEntryByIDN(),
-VL_GetEntryByID(), VL_GetEntryByNameN(), VL_GetEntryByNameO(),
-VL_ReplaceEntryN(), VL_ReplaceEntry(), VL_ListAttributesN(),
-VL_ListAttributes(), VL_GetAddrsU();
 
 /*
  * VLDB entry conversion routines.

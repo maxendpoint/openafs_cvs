@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.12 2003/07/15 23:14:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.13 2003/12/07 22:49:18 jaltman Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -45,7 +45,6 @@ static int fs_timeout(), fs_getstat(), fs_setstat(), fs_delete();
 static int fs_procexit(), fs_getstring(), fs_getparm(), fs_restartp();
 static int fs_hascore();
 struct bnode *fs_create();
-struct bnode *fsmr_create();
 
 static SetNeedsClock();
 static NudgeProcs();

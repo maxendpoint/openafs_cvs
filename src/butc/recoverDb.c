@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.9 2003/11/23 04:53:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.10 2003/12/07 22:49:23 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -38,7 +38,6 @@ RCSID
 /* GLOBAL CONFIGURATION PARAMETERS */
 extern int autoQuery;
 extern int queryoperator;
-extern int isafile;
 
 /* Handle for the information read from all the tapes of a dump */
 afs_int32 tapepos;		/* when read a label, remember its position */

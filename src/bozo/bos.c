@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.19 2003/11/23 04:53:29 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.20 2003/12/07 22:49:18 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -46,13 +46,6 @@ RCSID
 #include <afs/com_err.h>
 #include <ubik.h>
 #include <afs/ktime.h>
-
-
-
-extern char *volutil_PartitionName();
-extern struct rx_call *rx_NewCall();
-extern char *volutil_PartitionName();
-extern struct hostent *hostutil_GetHostByName();
 
 static IStatServer();
 static DoStat();

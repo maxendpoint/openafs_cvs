@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_clock_nt.c,v 1.7 2003/07/15 23:16:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_clock_nt.c,v 1.8 2003/12/07 22:49:36 jaltman Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <stdio.h>
@@ -42,7 +42,7 @@ LARGE_INTEGER rxi_clockFreq;
 void clock_UpdateTime(void);
 
 void
-clock_Init()
+clock_Init(void)
 {
     if (!QueryPerformanceFrequency(&rxi_clockFreq)) {
 	printf("No High Performance clock, exiting.\n");
@@ -57,9 +57,11 @@ clock_Init()
 
 #ifndef KERNEL
 /* Make clock uninitialized. */
-clock_UnInit()
+int
+clock_UnInit(void)
 {
     clockInitialized = 0;
+	return 0;
 }
 #endif
 

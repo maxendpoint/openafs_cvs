@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.31 2003/11/23 04:53:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.32 2003/12/07 22:49:44 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -74,7 +74,6 @@ RCSID
 extern int DoLogging;
 extern struct volser_trans *FindTrans(), *NewTrans(), *TransList();
 extern struct afsconf_dir *tdir;
-extern char *volutil_PartitionName();
 
 extern void LogError(afs_int32 errcode);
 
@@ -92,10 +91,9 @@ afs_int32 VolPartitionInfo(), VolNukeVolume(), VolCreateVolume(),
 VolDeleteVolume(), VolClone();
 afs_int32 VolReClone(), VolTransCreate(), VolGetNthVolume(), VolGetFlags(),
 VolForward(), VolDump();
-afs_int32 VolForwardMultiple();
 afs_int32 VolRestore(), VolEndTrans(), VolSetForwarding(), VolGetStatus(),
 VolSetInfo(), VolGetName();
-afs_int32 VolSignalRestore(), VolListPartitions(), VolListOneVolume(),
+afs_int32 VolListPartitions(), VolListOneVolume(),
 VolXListOneVolume(), VolXListVolumes();
 afs_int32 VolListVolumes(), XVolListPartitions(), VolMonitor(),
 VolSetIdsTypes(), VolSetDate(), VolSetFlags();

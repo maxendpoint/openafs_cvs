@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/butc_xbsa.c,v 1.5 2003/07/15 23:14:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/butc_xbsa.c,v 1.6 2003/12/07 22:49:21 jaltman Exp $");
 
 #include <sys/types.h>
 #include <afs/stds.h>
@@ -24,6 +24,8 @@ RCSID
 #include <errno.h>
 #include "butc_xbsa.h"
 #include <afs/butx.h>
+
+#include "error_macros.h"
 
 extern int debugLevel;
 

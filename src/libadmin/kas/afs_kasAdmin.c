@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.8 2003/07/15 23:15:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.9 2003/12/07 22:49:30 jaltman Exp $");
 
 #include <stdio.h>
 
@@ -36,7 +36,6 @@ RCSID
 #undef ENCRYPT
 
 extern int ubik_Call();
-extern int ubik_Call_New();
 extern int ubik_CallIter();
 
 typedef struct {

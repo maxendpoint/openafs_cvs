@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.9 2003/11/23 04:53:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.10 2003/12/07 22:49:31 jaltman Exp $");
 
 #include <stdio.h>
 
@@ -30,27 +30,6 @@ RCSID
 #include <afs/afs_utilAdmin.h>
 #include <afs/ptint.h>
 #include <afs/ptserver.h>
-
-/*
- * The list of external functions that aren't prototyped anywhere
- */
-
-extern int PR_NameToID();
-extern int PR_AddToGroup();
-extern int PR_ChangeEntry();
-extern int PR_RemoveFromGroup();
-extern int PR_INewEntry();
-extern int PR_NewEntry();
-extern int PR_Delete();
-extern int PR_IDToName();
-extern int PR_ListEntry();
-extern int PR_SetMax();
-extern int PR_ListElements();
-extern int PR_SetFieldsEntry();
-extern int PR_IsAMemberOf();
-extern int PR_ListMax();
-extern int PR_ListOwned();
-extern int PR_ListEntries();
 
 /*
  * IsValidCellHandle - validate the cell handle for making pts

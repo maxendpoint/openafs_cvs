@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.10 2003/11/23 04:53:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.11 2003/12/07 22:49:23 jaltman Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -41,7 +41,6 @@ RCSID
 #include <afs/tcdata.h>
 #include "error_macros.h"
 #include "butc_xbsa.h"
-extern afs_int32 xbsaType;
 
 callPermitted(call)
      struct rx_call *call;

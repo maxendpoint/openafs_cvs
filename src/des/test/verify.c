@@ -19,11 +19,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/test/verify.c,v 1.7 2003/07/15 23:15:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/test/verify.c,v 1.8 2003/12/07 22:49:25 jaltman Exp $");
 
 
 extern char *errmsg();
-extern int des_string_to_key();
+extern void des_string_to_key();
 extern int des_key_sched();
 extern int des_ecb_encrypt();
 extern int des_cbc_encrypt();

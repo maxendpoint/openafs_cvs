@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.17 2003/12/01 05:35:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.18 2003/12/07 22:49:44 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -71,9 +71,9 @@ RCSID
 #define VolserVersion "2.0"
 #define N_SECURITY_OBJECTS 3
 
-extern int (*vol_PollProc) ();
 extern struct volser_trans *TransList();
 #ifndef AFS_PTHREAD_ENV
+extern int (*vol_PollProc) ();
 extern int IOMGR_Poll();
 #endif
 char *GlobalNameHack = NULL;
@@ -83,10 +83,6 @@ int GlobalVolType;
 int VolumeChanged;		/* XXXX */
 static char busyFlags[MAXHELPERS];
 struct volser_trans *QI_GlobalWriteTrans = 0;
-extern int QI_write();
-extern int QI_flush();
-extern int (*VolWriteProc) ();
-extern int (*VolFlushProc) ();
 extern void AFSVolExecuteRequest();
 extern void RXSTATS_ExecuteRequest();
 struct afsconf_dir *tdir;
