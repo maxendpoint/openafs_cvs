@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.9 2001/07/12 19:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.10 2001/08/16 01:01:05 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -244,9 +244,7 @@ void afs_delete_inode(struct inode *ip)
     struct vcache *vc = (struct vcache*)ip;
 
     AFS_GLOCK();
-    ObtainWriteLock(&vc->lock, 504);
     osi_clear_inode(ip);
-    ReleaseWriteLock(&vc->lock);
     AFS_GUNLOCK();
 }
 
