@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.45 2004/06/21 20:01:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.46 2004/07/29 03:13:37 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -617,7 +617,7 @@ afs_osi_suser(void *credp)
 #if defined(AFS_SUN5_ENV)
     return afs_suser(credp);
 #else
-    return afs_suser();
+    return afs_suser(NULL);
 #endif
 }
 #endif

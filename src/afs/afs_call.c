@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.71 2004/07/28 22:47:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.72 2004/07/29 03:13:37 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -355,7 +355,7 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
 	/* only root can run this code */
 	return (EACCES);
 #else
-    if (!afs_suser() && (parm != AFSOP_GETMTU)
+    if (!afs_suser(NULL) && (parm != AFSOP_GETMTU)
 	&& (parm != AFSOP_GETMASK)) {
 	/* only root can run this code */
 #if defined(KERNEL_HAVE_UERROR)
@@ -1694,7 +1694,7 @@ Afscall_icl(long opcode, long p1, long p2, long p3, long p4, long *retval)
 	return (EACCES);
     }
 #else
-    if (!afs_suser()) {		/* only root can run this code */
+    if (!afs_suser(NULL)) {	/* only root can run this code */
 #if defined(KERNEL_HAVE_UERROR)
 	setuerror(EACCES);
 	return EACCES;
