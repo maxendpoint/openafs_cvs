@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.6 2001/08/16 00:48:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.7 2001/08/16 00:50:55 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -420,6 +420,7 @@ void shutdown_rxevent(void)
 	osi_Free((char *)xp, sizeof(struct xfreelist));
 	xp = nxp;
     }
+    xfreemallocs = (struct xfreelist *) 0;
 #endif
 
 }
