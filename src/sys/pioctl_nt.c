@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.12 2004/06/02 05:21:16 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.13 2004/06/04 03:00:39 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -103,7 +103,7 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
 {
     char *drivep;
     char netbiosName[MAX_NB_NAME_LENGTH];
-    char tbuffer[100]="";
+    char tbuffer[256]="";
     HANDLE fh;
 
     if (fileNamep) {
@@ -112,6 +112,15 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
             tbuffer[0] = *(drivep - 1);
             tbuffer[1] = ':';
             strcpy(tbuffer + 2, SMB_IOCTL_FILENAME);
+        } else {
+            char curdir[256]="";
+
+            GetCurrentDirectory(sizeof(curdir), curdir);
+            if ( curdir[1] == ':' ) {
+                tbuffer[0] = curdir[0];
+                tbuffer[1] = ':';
+                strcpy(tbuffer + 2, SMB_IOCTL_FILENAME);
+            }
         }
 	}
 	if (!tbuffer[0]) {
