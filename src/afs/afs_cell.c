@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.29 2003/07/15 23:14:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.30 2004/05/08 04:22:19 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -843,6 +843,18 @@ shutdown_cell()
 	afs_osi_Free(tc, sizeof(struct cell));
     }
     QInit(&CellLRU);
+
+{
+    struct cell_name *cn = afs_cellname_head;
+
+    while (cn) {
+	struct cell_name *next = cn->next;
+
+	afs_osi_FreeStr(cn->cellname);
+	afs_osi_Free(cn, sizeof(struct cell_name));
+	cn = next;
+    }
+}
 }
 
 void
