@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.3 2002/11/12 23:57:38 rees Exp $
+ * $Id: osi_vnodeops.c,v 1.4 2002/11/15 17:19:40 rees Exp $
  */
 
 /*
@@ -98,7 +98,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.3 2002/11/12 23:57:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.4 2002/11/15 17:19:40 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -168,7 +168,7 @@ struct vnodeopv_entry_desc afs_vnodeop_entries[] = {
 	{ &vop_setattr_desc, afs_nbsd_setattr },	/* setattr */
 	{ &vop_read_desc, afs_nbsd_read },		/* read */
 	{ &vop_write_desc, afs_nbsd_write },		/* write */
-	{ &vop_ioctl_desc, afs_nbsd_ioctl }, /* XXX ioctl */
+	{ &vop_ioctl_desc, afs_nbsd_ioctl },		/* XXX ioctl */
 	{ &vop_select_desc, afs_nbsd_select },		/* select */
 	{ &vop_fsync_desc, afs_nbsd_fsync },		/* fsync */
 	{ &vop_remove_desc, afs_nbsd_remove },		/* remove */

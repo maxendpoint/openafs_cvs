@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.23 2002/11/14 23:53:37 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.24 2002/11/15 17:19:41 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -430,7 +430,7 @@ int afs_remunlink(register struct vcache *avc, register int doit)
 	    cred = avc->uncred;
 	    avc->uncred = NULL;
 
-#if defined(AFS_DARWIN_ENV)
+#ifdef AFS_DARWIN_ENV
            /* this is called by vrele (via VOP_INACTIVE) when the refcount
               is 0. we can't just call VN_HOLD since vref will panic.
               we can't just call osi_vnhold because a later AFS_RELE will call
@@ -440,15 +440,8 @@ int afs_remunlink(register struct vcache *avc, register int doit)
               refcounts and hope nobody else can touch the file now */
 	    osi_Assert(VREFCOUNT(avc) == 0);
 	    VREFCOUNT_SET(avc, 1);
-#elif defined(AFS_OBSD_ENV)
-	    /*
-	     * I suspect OpenBSD has the same problem as Darwin, but I'm
-	     * going to be brave and try it this way for now.
-	     */
-	    osi_vnhold(avc, 0);
-#else
-	    VN_HOLD(AFSTOV(avc));
 #endif
+	    VN_HOLD(AFSTOV(avc));
 
 	    /* We'll only try this once. If it fails, just release the vnode.
 	     * Clear after doing hold so that NewVCache doesn't find us yet.

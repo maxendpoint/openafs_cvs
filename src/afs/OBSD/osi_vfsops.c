@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.6 2002/11/14 23:53:37 rees Exp $
+ * $Id: osi_vfsops.c,v 1.7 2002/11/15 17:19:40 rees Exp $
  */
 
 /*
@@ -93,7 +93,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.6 2002/11/14 23:53:37 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.7 2002/11/15 17:19:40 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -106,8 +106,12 @@ RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.6 2002/11/14 23:53:37
 #include <sys/syscall.h>
 #include <sys/syscallargs.h>
 
+/* from /usr/src/sys/kern/vfs_subr.c */
+extern void insmntque(struct vnode *, struct mount *);
+
 #define NBSD_DONTFOLLOW_LINK 0
 #define NBSD_FOLLOW_LINK 1
+
 static int lkmid = -1;
 static int afs_badcall(struct proc *p, void *xx, register_t *yy);
 
@@ -489,7 +493,7 @@ afs_vfs_load(struct lkm_table *lkmtp,
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.6 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.7 $) lkm loaded\n");
     return 0;
 }
 

@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.33 2002/11/12 23:57:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.34 2002/11/15 17:19:40 rees Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -84,11 +84,6 @@ afs_int32  afs_dcentries;		/* In-memory dcache entries */
 
 int dcacheDisabled = 0;
 
-extern struct dcache *afs_UFSGetDSlot();
-extern struct volume *afs_UFSGetVolSlot();
-extern int osi_UFSTruncate(), afs_osi_Read(), afs_osi_Write(), osi_UFSClose();
-extern int afs_UFSRead(), afs_UFSWrite();
-extern int afs_UFSHandleLink();
 static int afs_UFSCacheFetchProc(), afs_UFSCacheStoreProc();
 struct afs_cacheOps afs_UfsCacheOps = {
     osi_UFSOpen,
