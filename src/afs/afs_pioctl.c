@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.51 2002/10/18 17:09:28 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.52 2002/10/28 21:28:25 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -532,6 +532,9 @@ int afs_xioctl (void)
 	/* good, this is a vnode; next see if it is an AFS vnode */
 #if	defined(AFS_AIX32_ENV) || defined(AFS_SUN5_ENV)
 	tvc = VTOAFS(fd->f_vnode);	/* valid, given a vnode */
+#elif defined(AFS_OBSD_ENV)
+	tvc = IsAfsVnode((struct vnode *) fd->f_data) ?
+	    VTOAFS((struct vnode *) fd->f_data) : NULL;
 #else
 	tvc = VTOAFS((struct vnode*)fd->f_data);	/* valid, given a vnode */
 #endif

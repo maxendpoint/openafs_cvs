@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.22 2002/10/16 03:58:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.23 2002/10/28 21:28:26 rees Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -31,6 +31,9 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.22 2002/10/16 03:58:49 shado
 #endif
 #if defined(AFS_SGI_ENV) || defined(AFS_HPUX110_ENV)
 #include "afs/sysincludes.h"
+#endif
+#if defined(AFS_OBSD_ENV)
+#include "h/proc.h"
 #endif
 #include "h/socket.h"
 #if !defined(AFS_SUN5_ENV) &&  !defined(AFS_LINUX20_ENV)
