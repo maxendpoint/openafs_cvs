@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.59 2004/04/16 06:26:11 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.60 2004/04/21 02:20:21 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1024,6 +1024,7 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 	ip->i_dev = afs_globalVFS->s_dev;
 #endif
     ip->i_sb = afs_globalVFS;
+    put_inode_on_dummy_list(ip);
 }
 #endif
 
