@@ -48,7 +48,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.17 2004/03/10 23:01:51 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.18 2004/03/19 15:37:10 rees Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1103,7 +1103,6 @@ afs_vop_mkdir(ap)
     error = afs_mkdir(VTOAFS(dvp), name, vap, &vcp, cnp->cn_cred);
     AFS_GUNLOCK();
     if (error) {
-	vput(dvp);
 	DROPNAME();
 	return (error);
     }
