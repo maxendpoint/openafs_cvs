@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.5 2001/07/12 19:58:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.6 2001/11/21 06:44:33 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -333,6 +333,19 @@ int ktc_SetToken(
 	strcpy(tp, client->name);
 	tp += temp+1;
 
+    /* we need the SMB user name to associate the tokens with in the
+    integrated logon case. */
+    if (flags & AFS_SETTOK_LOGON) {
+    if (client->smbname == NULL)
+      temp = 0;
+    else
+	    temp = strlen(client->smbname);
+        if (temp == 0 || temp >= MAXKTCNAMELEN)
+          return KTC_INVAL;
+	    strcpy(tp, client->smbname);
+          tp += temp+1;
+    }
+           
 	/* uuid */
 	status = UuidCreate((UUID *)&uuid);
 	memcpy(tp, &uuid, sizeof(uuid));
