@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/gi.c,v 1.5 2001/08/02 16:20:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/gi.c,v 1.6 2003/03/03 15:10:38 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -20,8 +20,7 @@ int statflag;
 
 #include "AFS_component_version_number.c"
 
-main(argc,argv)
-char **argv;
+int main(int argc, char **argv)
 {
 	int error=0;
 	struct stat status;
@@ -74,11 +73,10 @@ char **argv;
 #endif /* AFS_NT40_ENV || AFS_NAMEI_ENV */
 }
 
-Perror(err, a1, a2, a3)
-   char *err;
+void Perror(char *err, int a1, int a2, int a3)
 {
-	char msg[200];
-	sprintf(msg, err, a1, a2, a3);
-	perror(msg);
+    char msg[200];
+    sprintf(msg, err, a1, a2, a3);
+    perror(msg);
 }
 

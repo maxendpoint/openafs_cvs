@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.10 2003/02/08 07:38:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.11 2003/03/03 15:10:38 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -98,9 +98,9 @@ void VPutVnode_r();
 #define	THELOGSIZE	5120
 static afs_int32 theLog[THELOGSIZE];
 static afs_int32 vnLogPtr=0;
-VNLog(aop, anparms, av1, av2, av3, av4)
-afs_int32 aop, anparms;
-afs_int32 av1, av2, av3,av4; {
+VNLog(afs_int32 aop, afs_int32 anparms, afs_int32 av1, afs_int32 av2, 
+      afs_int32 av3, afs_int32 av4)
+{
     register afs_int32 temp;
     afs_int32 data[4];
 
@@ -151,8 +151,8 @@ private Vnode *VnodeHashTable[VNODE_HASH_TABLE_SIZE];
 /* Code to invalidate a vnode entry.  Called when we've damaged a vnode, and want
     to prevent future VGetVnode's from applying to it.  Leaves it in the same hash bucket
     but that shouldn't be important.  */
-VInvalidateVnode_r(avnode)
-register struct Vnode *avnode; {
+void VInvalidateVnode_r(register struct Vnode *avnode)
+{
     avnode->changed_newTime = 0;    /* don't let it get flushed out again */
     avnode->changed_oldTime = 0;
     avnode->delete = 0;	    /* it isn't deleted, erally */
@@ -160,9 +160,7 @@ register struct Vnode *avnode; {
 }
 
 /* Not normally called by general client; called by volume.c */
-VInitVnodes(class,nVnodes)
-    VnodeClass class;
-    int nVnodes;
+int VInitVnodes(VnodeClass class, int nVnodes)
 {
     byte *va;
     register struct VnodeClassInfo *vcp = &VnodeClassInfo[class];

@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/profile.c,v 1.5 2001/08/08 00:04:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/profile.c,v 1.6 2003/03/03 15:10:35 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/file.h>
@@ -106,8 +106,7 @@ void AllocProfBuf()
 int ProfileToggle();
 
 /* Arrange to start and stop profiling when signo is sent. */
-ProfileSig(signo)
-    int signo;
+void ProfileSig(int signo)
 {
 #if !defined (AFS_AIX_ENV) && !defined (AFS_HPUX_ENV)
 /* Soon should handle aix profiling */

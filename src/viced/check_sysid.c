@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/check_sysid.c,v 1.4 2001/07/12 19:59:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/check_sysid.c,v 1.5 2003/03/03 15:10:35 shadow Exp $");
 
 #include <fcntl.h>
 #include <errno.h>
@@ -29,9 +29,7 @@ struct versionStamp {       /* Stolen from <afs/volume.h> */
   int version;
 };
 
-main(argc, argv)
-  int  argc;
-  char **argv;
+int main(int argc, char **argv)
 {
   int fd, size, i;
 

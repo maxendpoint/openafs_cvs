@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.23 2003/01/11 07:22:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.24 2003/03/03 15:10:38 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -251,9 +251,7 @@ static void VInitPartition(char *path, char *devname, Device dev)
  *
  * Use partition name as devname.
  */
-int VCheckPartition(part, devname)
-     char *part;
-     char *devname;
+int VCheckPartition(char *part, char *devname)
 {
 #ifdef AFS_LARGEFILE_ENV
     struct stat64 status;
@@ -355,8 +353,7 @@ int VCheckPartition(part, devname)
  * mounted partition (return value 0).  For non-NAMEI environments, it
  * always returns 0.
  */
-static int VIsAlwaysAttach(part)
-    char *part;
+static int VIsAlwaysAttach(char *part)
 {
 #ifdef AFS_NAMEI_ENV
     struct stat st;
@@ -474,8 +471,7 @@ int VAttachPartitions(void)
  * (This function was grabbed from df.c)
  */
 int
-getmount(vmountpp)
-register struct vmount	**vmountpp;	/* place to tell where buffer is */
+getmount(register struct vmount	**vmountpp)
 {
 	int			size;
 	register struct vmount	*vm;
