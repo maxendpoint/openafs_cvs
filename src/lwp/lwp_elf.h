@@ -35,11 +35,11 @@
  * This file is mis-named. It is used by both a.out and elf platforms.
  * It either adds the leading underscore or not as needed.
  *
- * $Id: lwp_elf.h,v 1.7 2004/12/07 14:23:36 shadow Exp $
+ * $Id: lwp_elf.h,v 1.8 2004/12/07 22:26:46 shadow Exp $
  */
 
 #ifndef _C_LABEL
-#if defined(SYSV) || defined(__ELF__) || (defined(AFS_SUN5_ENV) && defined(__sun))
+#if defined(SYSV) || defined(__ELF__) || defined(__sun)
 #define _C_LABEL(name)  name
 #else /* SYSV || __ELF__ || __sun */
 #ifdef __STDC__
@@ -51,7 +51,7 @@
 #endif /* _C_LABEL */
 
 #ifndef ENTRY
-#if defined(SYSV) || defined(__ELF__) || (defined(AFS_SUN5_ENV) && defined(__sun))
+#if defined(SYSV) || defined(__ELF__) || defined(__sun)
 #define ENTRY(name)     name:
 #else
 #ifdef __STDC__
