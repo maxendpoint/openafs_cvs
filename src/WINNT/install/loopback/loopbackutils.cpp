@@ -506,13 +506,13 @@ static void display_usage()
                  L"loopback_install", MB_ICONINFORMATION | MB_OK );
 }
 
-static int process_args (LPWSTR lpCmdLine, Args & args) {
+static int process_args (LPWSTR lpCmdLine, int skip, Args & args) {
 	int i, iNumArgs;
 	LPWSTR * argvW;
 
 	argvW = CommandLineToArgvW (lpCmdLine, &iNumArgs);
 	// Skip over the command name
-	for (i = 1; i < iNumArgs; i++)
+	for (i = skip; i < iNumArgs; i++)
 	{
 		if (wcsstr (argvW[i], L"help")
 			|| !_wcsicmp (argvW[i], L"?")
@@ -564,7 +564,7 @@ void CALLBACK doLoopBackEntryW (HWND hwnd, HINSTANCE hinst, LPWSTR lpCmdLine, in
 {
 	Args args;
 
-	if (!process_args(lpCmdLine, args)) 
+	if (!process_args(lpCmdLine, 0, args)) 
         return;
 
 	InstallLoopBack(args.lpConnectionName, args.lpIPAddr, args.lpSubnetMask);
@@ -621,7 +621,7 @@ UINT __stdcall installLoopbackMSI (MSIHANDLE hInstall)
             return ERROR_INSTALL_FAILURE;
 	}
 
-	if (!process_args(szValueBuf, args)) 
+	if (!process_args(szValueBuf, 1, args)) 
         return ERROR_INSTALL_FAILURE;
 		
 	rc = InstallLoopBack (args.lpConnectionName, args.lpIPAddr, args.lpSubnetMask);
@@ -656,7 +656,7 @@ UINT __stdcall uninstallLoopbackMSI (MSIHANDLE hInstall)
             return ERROR_INSTALL_FAILURE;
 	}
 
-	if (!process_args(szValueBuf, args)) 
+	if (!process_args(szValueBuf, 1, args)) 
         return ERROR_INSTALL_FAILURE;
 		
 	rc = UnInstallLoopBack ();
