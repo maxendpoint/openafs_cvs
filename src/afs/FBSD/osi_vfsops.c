@@ -1,7 +1,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.9 2002/10/16 03:58:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.10 2003/04/16 22:28:53 rees Exp $");
 
 #include <afs/sysincludes.h>            /* Standard vendor system headers */
 #include <afsincludes.h>            /* Afs-based standard headers */
@@ -229,7 +229,13 @@ struct vfsops afs_vfsops = {
   afs_sync,
   afs_vget,
   afs_fhtovp,
+#ifdef AFS_FBSD50_ENV
+  vfs_stdcheckexp,
+#endif
   afs_vptofh,
   afs_init,
+#ifdef AFS_FBSD50_ENV
+  vfs_stduninit,
+#endif
   afs_sysctl
 };

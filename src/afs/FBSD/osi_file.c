@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_file.c,v 1.7 2002/10/16 03:58:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_file.c,v 1.8 2003/04/16 22:28:53 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -123,7 +123,6 @@ int afs_osi_Read(register struct osi_file *afile, int offset, void *aptr, afs_in
 {
     unsigned int resid;
     register afs_int32 code;
-    register afs_int32 cnt1=0;
     AFS_STATCNT(osi_Read);
 
     /**

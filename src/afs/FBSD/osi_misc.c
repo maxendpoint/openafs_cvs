@@ -17,11 +17,13 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_misc.c,v 1.5 2002/10/16 03:58:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_misc.c,v 1.6 2003/04/16 22:28:53 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
 #include <sys/namei.h>
+
+#ifndef AFS_FBSD50_ENV
 /*
  * afs_suser() returns true if the caller is superuser, false otherwise.
  *
@@ -36,6 +38,7 @@ afs_suser() {
     }
     return(0);
 }
+#endif
 
 int osi_lookupname(char *aname, enum uio_seg seg, int followlink,
                           struct vnode **dirvpp, struct vnode **vpp)

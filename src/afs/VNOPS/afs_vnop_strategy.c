@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.14 2002/10/16 03:58:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.15 2003/04/16 22:28:54 rees Exp $");
 
 #if !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV)
 
@@ -28,7 +28,7 @@ RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.14 2002/10/16
 
 
 
-
+int
 #if	defined(AFS_SUN5_ENV) || defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 afs_ustrategy(abp, credp)
     struct AFS_UCRED *credp;
@@ -64,7 +64,11 @@ afs_ustrategy(abp)
     ReleaseReadLock(&tvc->lock);
     osi_Assert(credp);
 #endif
+#ifdef AFS_FBSD50_ENV
+    if (abp->b_iocmd == BIO_READ) {
+#else
     if ((abp->b_flags & B_READ) == B_READ) {
+#endif
 	/* read b_bcount bytes into kernel address b_un.b_addr starting
 	    at byte DEV_BSIZE * b_blkno.  Bzero anything we can't read,
 	    and finally call iodone(abp).  File is in abp->b_vp.  Credentials
@@ -178,7 +182,7 @@ afs_ustrategy(abp)
 #endif
     }
 #if	!defined(AFS_AIX32_ENV) && !defined(AFS_SUN5_ENV)
-#if defined(AFS_DUX40_ENV) || defined (AFS_XBSD_ENV)
+#if defined(AFS_DUX40_ENV) || (defined (AFS_XBSD_ENV) && !defined (AFS_FBSD50_ENV))
     if (code) {
 	abp->b_error = code;
 	abp->b_flags |= B_ERROR;
