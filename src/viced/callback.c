@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.48 2003/09/22 19:19:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.49 2003/09/24 18:54:10 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1387,7 +1387,7 @@ BreakVolumeCallBacksLater(afs_uint32 volume)
 #ifdef AFS_PTHREAD_ENV
     assert(pthread_cond_broadcast(&fsync_cond) == 0);
 #else
-    LWP_NoYieldSignal(&fsync_wait);
+    LWP_NoYieldSignal(fsync_wait);
 #endif
     return 0;
 }
