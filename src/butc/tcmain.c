@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.8 2002/08/21 18:12:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.9 2002/08/22 21:00:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1086,7 +1086,8 @@ char *arock; {
     code = pthread_create(&dbWatcherPid, &tattr, dbWatcher, (void *)2);
     AFS_SIGSET_RESTORE();
 #else
-    code = LWP_CreateProcess(dbWatcher, 20480, LWP_NORMAL_PRIORITY, 2, "dbWatcher", &dbWatcherPid);
+    code = LWP_CreateProcess(dbWatcher, 20480, LWP_NORMAL_PRIORITY, 
+			     (void *) 2, "dbWatcher", &dbWatcherPid);
 #endif
     if (code)
     {

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.7 2002/08/21 18:12:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.8 2002/08/22 21:00:57 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -910,7 +910,7 @@ writeDbDump(tapeInfoPtr, taskId, expires, dumpid)
 		code = pthread_create(&alivePid, &tattr, KeepAlive, 0);
 		AFS_SIGSET_RESTORE();
 #else
-	        code = LWP_CreateProcess(KeepAlive, 16384, 1, NULL, 
+	        code = LWP_CreateProcess(KeepAlive, 16384, 1, (void *) NULL, 
 					 "Keep-alive process", &alivePid);
 #endif
 		/* XXX should we check code here ??? XXX */
