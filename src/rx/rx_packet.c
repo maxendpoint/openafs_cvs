@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.33 2003/11/29 21:46:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.34 2004/06/02 02:49:28 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -1154,6 +1154,7 @@ rxi_ReceiveDebugPacket(register struct rx_packet *ap, osi_socket asocket,
 #ifndef	RX_ENABLE_LOCKS
 	    tstat.waitingForPackets = rx_waitingForPackets;
 #endif
+	    MUTEX_ENTER(&rx_serverPool_lock);
 	    tstat.nFreePackets = htonl(rx_nFreePackets);
 	    tstat.callsExecuted = htonl(rxi_nCalls);
 	    tstat.packetReclaims = htonl(rx_packetReclaims);
@@ -1161,6 +1162,7 @@ rxi_ReceiveDebugPacket(register struct rx_packet *ap, osi_socket asocket,
 	    tstat.nWaiting = htonl(rx_nWaiting);
 	    queue_Count(&rx_idleServerQueue, np, nqe, rx_serverQueueEntry,
 			tstat.idleThreads);
+	    MUTEX_EXIT(&rx_serverPool_lock);
 	    tstat.idleThreads = htonl(tstat.idleThreads);
 	    tl = sizeof(struct rx_debugStats) - ap->length;
 	    if (tl > 0)
