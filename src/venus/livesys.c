@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/livesys.c,v 1.2 2002/08/21 18:14:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/livesys.c,v 1.3 2002/08/22 22:19:31 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -34,7 +34,6 @@ RCSID("$Header: /cvs/openafs/src/venus/livesys.c,v 1.2 2002/08/21 18:14:26 shado
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
-#include <strings.h>
 
 #define	MAXSIZE	2048
 static char space[MAXSIZE];
