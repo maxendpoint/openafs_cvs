@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55 2003/12/08 01:45:34 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.56 2004/10/11 05:16:30 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -776,6 +776,8 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
 	if (!thishost || (thishost->hostFlags & HOSTDELETED)) {
 	    continue;
 	}
+	/* Should this instead get/drop a reference on the connection? */
+	h_Lock_r(thishost);
 	conns[j++] = thishost->callback_rxcon;
 
 #ifdef	ADAPT_MTU
@@ -832,14 +834,14 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
 			}
 
 			H_LOCK;
-			h_Lock_r(hp);
+			/* h_Lock_r(hp); */
 			hp->hostFlags |= VENUSDOWN;
 		/**
 		  * We always go into AddCallBack1_r with the host locked
 		  */
 			AddCallBack1_r(hp, afidp->AFSCBFids_val, itot(idx),
 				       CB_DELAYED, 1);
-			h_Unlock_r(hp);
+			/* h_Unlock_r(hp); */
 			H_UNLOCK;
 		    }
 		}
@@ -853,8 +855,10 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
     for (i = 0; i < ncbas; i++) {
 	struct host *hp;
 	hp = cba[i].hp;
-	if (hp && xhost != hp)
+	if (hp && xhost != hp) {
+	    h_Unlock_r(hp);
 	    h_Release_r(hp);
+	}
     }
 
     return;
