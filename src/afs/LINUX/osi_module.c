@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.50 2004/06/02 02:55:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.51 2004/06/21 21:40:53 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -35,14 +35,6 @@ RCSID
 #endif
 #if !defined(EXPORTED_SYS_CALL_TABLE) && defined(HAVE_KERNEL_LINUX_SYSCALL_H)
 #include <linux/syscall.h>
-#endif
-
-#if defined(AFS_LINUX26_ENV)
-#include <linux/vermagic.h>
-#include <linux/compiler.h>
-
-MODULE_INFO(vermagic, VERMAGIC_STRING);
-
 #endif
 
 #ifdef AFS_SPARC64_LINUX24_ENV
