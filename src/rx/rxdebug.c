@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.18 2004/12/01 23:03:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.19 2004/12/02 05:59:55 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -214,7 +214,7 @@ MainCommand(as, arock)
     dallyCounter = 0;
 
     hostAddr.s_addr = host;
-    afs_inet_ntoa_r(hostAddr, hoststr);
+    afs_inet_ntoa_r(hostAddr.s_addr, hoststr);
     printf("Trying %s (port %d):\n", hoststr, ntohs(port));
     s = socket(AF_INET, SOCK_DGRAM, 0);
     taddr.sin_family = AF_INET;
@@ -324,7 +324,7 @@ MainCommand(as, arock)
 	}
 	if (onlyHost != -1) {
 	    hostAddr.s_addr = onlyHost;
-	    afs_inet_ntoa_r(hostAddr, hoststr);
+	    afs_inet_ntoa_r(hostAddr.s_addr, hoststr);
 	    printf("Showing only connections from host %s\n",
 		   hoststr);
 	}
@@ -385,7 +385,7 @@ MainCommand(as, arock)
 
 	    /* now display the connection */
 	    hostAddr.s_addr = tconn.host;
-	    afs_inet_ntoa_r(hostAddr, hoststr);
+	    afs_inet_ntoa_r(hostAddr.s_addr, hoststr);
 	    printf("Connection from host %s, port %hu, ", hoststr,
 		   ntohs(tconn.port));
 	    if (tconn.epoch)
@@ -548,7 +548,7 @@ MainCommand(as, arock)
 
 	    /* now display the peer */
 	    hostAddr.s_addr = tpeer.host;
-	    afs_inet_ntoa_r(hostAddr, hoststr);
+	    afs_inet_ntoa_r(hostAddr.s_addr, hoststr);
 	    printf("Peer at host %s, port %hu\n", hoststr, 
 		   ntohs(tpeer.port));
 	    printf("\tifMTU %hu\tnatMTU %hu\tmaxMTU %hu\n", tpeer.ifMTU,
