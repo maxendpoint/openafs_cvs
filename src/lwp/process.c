@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/process.c,v 1.13 2001/10/23 20:36:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/process.c,v 1.14 2001/10/26 03:50:06 shadow Exp $");
 
 #include <stdio.h>
 #include <assert.h>
@@ -109,7 +109,9 @@ struct lwp_context *savearea;
 #define LWP_SP 8
 #define LWP_FP 7
 #elif defined(AFS_PARISC_LINUX24_ENV)
-#define LWP_SP 19
+#define LWP_SP 19*2
+	/* really 19 when structure is double, but requires too many changes
+	   below to make a double work */
 #else
 #error Unsupported linux LWP system type.
 #endif
