@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.45 2004/05/08 03:58:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.46 2004/05/08 04:12:25 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -27,6 +27,7 @@ RCSID
 #endif
 
 #include <linux/module.h>
+#include <linux/proc_fs.h>
 #include <linux/slab.h>
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
 #include <linux/init.h>
@@ -53,7 +54,6 @@ asmlinkage int (*sys_settimeofdayp) (struct timeval * tv,
 				     struct timezone * tz);
 #endif
 asmlinkage long (*sys_setgroupsp) (int gidsetsize, gid_t * grouplist);
-
 #ifdef EXPORTED_SYS_CALL_TABLE
 #ifdef AFS_SPARC64_LINUX20_ENV
 extern unsigned int sys_call_table[];	/* changed to uint because SPARC64 has syscaltable of 32bit items */
@@ -131,6 +131,52 @@ afs_syscall32(long syscall, long parm1, long parm2, long parm3, long parm4,
 			 "ret\n\t" "nop");
 }
 #endif /* AFS_SPARC64_LINUX20_ENV */
+
+static int afs_ioctl(struct inode *, struct file *, unsigned int,
+		     unsigned long);
+
+static struct file_operations afs_syscall_fops = {
+    .ioctl = afs_ioctl,
+};
+
+static struct proc_dir_entry *openafs_procfs;
+
+static int
+afsproc_init()
+{
+    struct proc_dir_entry *entry1;
+
+    openafs_procfs = proc_mkdir(PROC_FSDIRNAME, proc_root_fs);
+    entry1 = create_proc_entry(PROC_SYSCALL_NAME, 0, openafs_procfs);
+
+    entry1->proc_fops = &afs_syscall_fops;
+
+    entry1->owner = THIS_MODULE;
+
+    return 0;
+}
+
+static void
+afsproc_exit()
+{
+    remove_proc_entry(PROC_SYSCALL_NAME, openafs_procfs);
+    remove_proc_entry(PROC_FSDIRNAME, proc_root_fs);
+}
+
+static int
+afs_ioctl(struct inode *inode, struct file *file, unsigned int cmd,
+	  unsigned long arg)
+{
+
+    struct afsprocdata sysargs;
+
+
+    if (copy_from_user(&sysargs, (void *)arg, sizeof(struct afsprocdata)))
+	return -1;
+
+    return afs_syscall(sysargs.syscall, sysargs.param1,
+		       sysargs.param2, sysargs.param3, sysargs.param4);
+}
 
 #ifdef AFS_IA64_LINUX20_ENV
 
@@ -308,11 +354,15 @@ init_module(void)
 	    break;
 	}
 #else
+#ifdef EXPORTED_SYS_OPEN
 	if (ptr[0] == (unsigned long)&sys_exit
 	    && ptr[__NR_open - __NR_exit] == (unsigned long)&sys_open) {
 	    sys_call_table = ptr - __NR_exit;
 	    break;
 	}
+#else
+	break;
+#endif
 #endif
 #endif
 #endif
@@ -329,8 +379,8 @@ init_module(void)
 #endif
     if (!sys_call_table) {
 	printf("Failed to find address of sys_call_table\n");
-	return -EIO;
-    }
+	sys_settimeofdayp = 0;
+    } else {
     printf("Found sys_call_table at %x\n", sys_call_table);
 # ifdef AFS_SPARC64_LINUX20_ENV
     error cant support this yet.
@@ -359,9 +409,9 @@ init_module(void)
 #ifdef EXPORTED_KALLSYMS_ADDRESS
     ret =
 	kallsyms_address_to_symbol((unsigned long)&interruptible_sleep_on,
-				   &mod_name, &mod_start, &mod_end, &sec_name,
-				   &sec_start, &sec_end, &sym_name,
-				   &sym_start, &sym_end);
+				       &mod_name, &mod_start, &mod_end,
+				       &sec_name, &sec_start, &sec_end,
+				       &sym_name, &sym_start, &sym_end);
     ptr = (unsigned long *)sec_start;
     datalen = (sec_end - sec_start) / sizeof(unsigned long);
 #else /* EXPORTED_KALLSYMS_ADDRESS */
@@ -384,15 +434,16 @@ init_module(void)
 #ifdef EXPORTED_KALLSYMS_ADDRESS
     ret =
 	kallsyms_address_to_symbol((unsigned long)ia32_sys_call_table,
-				   &mod_name, &mod_start, &mod_end, &sec_name,
-				   &sec_start, &sec_end, &sym_name,
-				   &sym_start, &sym_end);
+				       &mod_name, &mod_start, &mod_end,
+				       &sec_name, &sec_start, &sec_end,
+				       &sym_name, &sym_start, &sym_end);
     if (ret && strcmp(sym_name, "ia32_sys_call_table"))
 	ia32_sys_call_table = 0;
 #endif /* EXPORTED_KALLSYMS_ADDRESS */
 #endif /* EXPORTED_KALLSYMS_SYMBOL */
     if (!ia32_sys_call_table) {
-	printf("Warning: Failed to find address of ia32_sys_call_table\n");
+	    printf
+		("Warning: Failed to find address of ia32_sys_call_table\n");
     } else {
 	printf("Found ia32_sys_call_table at %x\n", ia32_sys_call_table);
     }
@@ -436,11 +487,12 @@ init_module(void)
 	    POINTER2SYSCALL afs_syscall;
     }
 #endif /* AFS_S390_LINUX22_ENV */
-
+    }
     osi_Init();
     register_filesystem(&afs_fs_type);
 
     /* Intercept setgroups calls */
+    if (sys_call_table) {
 #if defined(AFS_IA64_LINUX20_ENV)
     sys_setgroupsp = (void *)&sys_setgroups;
 
@@ -461,8 +513,10 @@ init_module(void)
     sys_setgroups32p = SYSCALL2POINTER sys_call_table[__NR_setgroups32];
     sys_call_table[__NR_setgroups32] = POINTER2SYSCALL afs_xsetgroups32;
 #ifdef AFS_SPARC64_LINUX20_ENV
-    sys32_setgroups32p = SYSCALL2POINTER sys_call_table32[__NR_setgroups32];
-    sys_call_table32[__NR_setgroups32] = POINTER2SYSCALL afs32_xsetgroups32;
+	sys32_setgroups32p =
+	    SYSCALL2POINTER sys_call_table32[__NR_setgroups32];
+	sys_call_table32[__NR_setgroups32] =
+	    POINTER2SYSCALL afs32_xsetgroups32;
 #endif /* AFS_SPARC64_LINUX20_ENV */
 #endif /* __NR_setgroups32 */
 #ifdef AFS_AMD64_LINUX20_ENV
@@ -486,8 +540,10 @@ init_module(void)
     sys_setgroupsp = set_afs_xsetgroups_syscall(afs_xsetgroups);
     sys32_setgroupsp = set_afs_xsetgroups_syscall32(afs32_xsetgroups);
 #endif
+    }
 
     osi_sysctl_init();
+    afsproc_init();
 
     return 0;
 }
@@ -503,7 +559,7 @@ cleanup_module(void)
     struct task_struct *t;
 
     osi_sysctl_clean();
-
+    if (sys_call_table) {
 #if defined(AFS_IA64_LINUX20_ENV)
     sys_call_table[__NR_setgroups - 1024] =
 	POINTER2SYSCALL((struct fptr *)sys_setgroupsp)->ip;
@@ -518,7 +574,8 @@ cleanup_module(void)
 # if defined(__NR_setgroups32)
     sys_call_table[__NR_setgroups32] = POINTER2SYSCALL sys_setgroups32p;
 # ifdef AFS_SPARC64_LINUX20_ENV
-    sys_call_table32[__NR_setgroups32] = POINTER2SYSCALL sys32_setgroups32p;
+	sys_call_table32[__NR_setgroups32] =
+	    POINTER2SYSCALL sys32_setgroups32p;
 # endif
 # endif
 #endif /* AFS_IA64_LINUX20_ENV */
@@ -534,6 +591,7 @@ cleanup_module(void)
 #endif
     }
 #endif
+    }
 #ifdef AFS_PPC64_LINUX20_ENV
     set_afs_syscall(afs_ni_syscall);
     set_afs_xsetgroups_syscall(sys_setgroupsp);
@@ -544,6 +602,7 @@ cleanup_module(void)
     osi_linux_free_inode_pages();	/* Invalidate all pages using AFS inodes. */
     osi_linux_free_afs_memory();
 
+    afsproc_exit();
     return;
 }
 
