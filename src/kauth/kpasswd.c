@@ -370,7 +370,7 @@ CommandProc (as, arock)
 	}
     } 
     ka_StringToKey (passwd, realm, &key);
-    des_string_to_key(passwd, &mitkey);
+    ka_CellStringToKey (passwd, realm, &mitkey);
     give_to_child(passwd);
 
     /* Get new password if it wasn't provided. */
