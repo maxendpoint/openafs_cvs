@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/test/physio.c,v 1.4 2001/07/12 19:58:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/test/physio.c,v 1.5 2003/01/07 23:38:25 shadow Exp $");
 
 #include <sys/param.h>
 #ifdef AFS_VFSINCL_ENV
@@ -45,7 +45,7 @@ RCSID("$Header: /cvs/openafs/src/dir/test/physio.c,v 1.4 2001/07/12 19:58:35 sha
 
 ReallyRead(fid, block, data)
     long *fid;		/* View the fid as longs. */
-    long block;
+    afs_size_t block;
     char *data;
     {/* Do a real read. */
     char fname[100];
@@ -53,9 +53,9 @@ ReallyRead(fid, block, data)
     sprintf(fname, "F%d", *fid);
     s = open(fname,O_RDONLY,0644);
     if (s<0) Die("can't open cache file");
-    code=lseek(s,PAGESIZE*block,0);
+    code=lseek(s,(off_t)(PAGESIZE*block),0);
     if (code<0) Die("r:lseek");
-    code=read(s,data,PAGESIZE);
+    code=read(s,data,(size_t)PAGESIZE);
     if (code<0) {
 	Die("read");
     }
@@ -65,7 +65,7 @@ ReallyRead(fid, block, data)
 
 ReallyWrite(fid, block, data)
     long *fid;		/* View the fid as longs. */
-    long block;
+    afs_size_t block;
     char *data;
     {/* Do a real write. */
     char fname[100];
@@ -73,9 +73,9 @@ ReallyWrite(fid, block, data)
     sprintf(fname, "F%d", *fid);
     s = open(fname,O_RDWR|O_CREAT,0644);
     if (s<0) Die("can't find cache file");
-    code = lseek(s,PAGESIZE*block,0);
+    code = lseek(s,(off_t)(PAGESIZE*block),0);
     if (code<0) Die("w:lseek");
-    code=write(s,data,PAGESIZE);
+    code=write(s,data,(size_t)PAGESIZE);
     if (code<0) Die("write");
     close(s);
     return 0;

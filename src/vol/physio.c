@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/physio.c,v 1.6 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/physio.c,v 1.7 2003/01/07 23:38:30 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -51,7 +51,7 @@ RCSID("$Header: /cvs/openafs/src/vol/physio.c,v 1.6 2002/08/21 18:14:33 shadow E
 /* returns 0 on success, errno on failure */
 int ReallyRead (file, block, data)
 DirHandle     *	file;
-int 		block;
+afs_size_t	block;
 char	      *	data;
 {
     FdHandle_t *fdP;
@@ -62,12 +62,12 @@ char	      *	data;
 	code = errno;
 	return code;
     }
-    if (FDH_SEEK(fdP, block*AFS_PAGESIZE, SEEK_SET) < 0) {
+    if (FDH_SEEK(fdP, (afs_size_t)(block*AFS_PAGESIZE), SEEK_SET) < 0) {
 	code = errno;
 	FDH_REALLYCLOSE(fdP);
 	return code;
     }
-    code = FDH_READ(fdP, data, AFS_PAGESIZE);
+    code = FDH_READ(fdP, data, (afs_size_t) AFS_PAGESIZE);
     if (code != AFS_PAGESIZE) {
 	if (code < 0)
 	    code = errno;
@@ -83,7 +83,7 @@ char	      *	data;
 /* returns 0 on success, errno on failure */
 int ReallyWrite (file, block, data)
 DirHandle     *	file;
-int 		block;
+afs_size_t	block;
 char	      *	data;
 {
     FdHandle_t *fdP;
@@ -97,12 +97,12 @@ char	      *	data;
 	code = errno;
 	return code;
     }
-    if (FDH_SEEK(fdP, block*AFS_PAGESIZE, SEEK_SET) < 0) {
+    if (FDH_SEEK(fdP, (afs_size_t)(block*AFS_PAGESIZE), SEEK_SET) < 0) {
 	code = errno;
 	FDH_REALLYCLOSE(fdP);
 	return code;
     }
-    code = FDH_WRITE(fdP, data, AFS_PAGESIZE);
+    code = FDH_WRITE(fdP, data, (afs_size_t) AFS_PAGESIZE);
     if (code != AFS_PAGESIZE) {
 	if (code < 0)
 	    code = errno;
