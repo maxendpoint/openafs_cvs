@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.14 2003/08/08 21:54:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.15 2003/09/03 06:48:02 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -2155,8 +2155,8 @@ afs_syscall(call, parm0, parm1, parm2, parm3, parm4, parm5, parm6)
     code = syscall(AFSCALL_ICL, parm0, parm1, parm2, parm3, parm4);
 #endif
 #endif
-    return code;
 #endif /* AFS_LINUX20_ENV */
+    return code;
 }
 #endif
 
