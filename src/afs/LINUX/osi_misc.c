@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.35 2004/12/01 23:38:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.36 2005/01/14 17:36:40 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -138,8 +138,8 @@ osi_rdwr(int rw, struct osi_file *file, caddr_t addrp, size_t asize,
     } else
 	filp->f_pos = offset;
 
-    savelim = current->rlim[RLIMIT_FSIZE].rlim_cur;
-    current->rlim[RLIMIT_FSIZE].rlim_cur = RLIM_INFINITY;
+    savelim = current->TASK_STRUCT_RLIM[RLIMIT_FSIZE].rlim_cur;
+    current->TASK_STRUCT_RLIM[RLIMIT_FSIZE].rlim_cur = RLIM_INFINITY;
 
     /* Read/Write the data. */
     TO_USER_SPACE();
@@ -151,7 +151,7 @@ osi_rdwr(int rw, struct osi_file *file, caddr_t addrp, size_t asize,
 	code = asize;
     TO_KERNEL_SPACE();
 
-    current->rlim[RLIMIT_FSIZE].rlim_cur = savelim;
+    current->TASK_STRUCT_RLIM[RLIMIT_FSIZE].rlim_cur = savelim;
 
     if (code >= 0) {
 	*resid = asize - code;
@@ -173,8 +173,8 @@ osi_file_uio_rdwr(struct osi_file *osifile, uio_t * uiop, int rw)
     int count;
     unsigned long savelim;
 
-    savelim = current->rlim[RLIMIT_FSIZE].rlim_cur;
-    current->rlim[RLIMIT_FSIZE].rlim_cur = RLIM_INFINITY;
+    savelim = current->TASK_STRUCT_RLIM[RLIMIT_FSIZE].rlim_cur;
+    current->TASK_STRUCT_RLIM[RLIMIT_FSIZE].rlim_cur = RLIM_INFINITY;
 
     if (uiop->uio_seg == AFS_UIOSYS)
 	TO_USER_SPACE();
@@ -217,7 +217,7 @@ osi_file_uio_rdwr(struct osi_file *osifile, uio_t * uiop, int rw)
     if (uiop->uio_seg == AFS_UIOSYS)
 	TO_KERNEL_SPACE();
 
-    current->rlim[RLIMIT_FSIZE].rlim_cur = savelim;
+    current->TASK_STRUCT_RLIM[RLIMIT_FSIZE].rlim_cur = savelim;
 
     return code;
 }
