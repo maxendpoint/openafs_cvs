@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.57 2004/07/28 22:33:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58 2004/08/04 19:41:53 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -2309,7 +2309,8 @@ rxi_FindConnection(osi_socket socket, register afs_int32 host,
 		break;
 	    if (type == RX_CLIENT_CONNECTION && pp->port == port)
 		break;
-	    if (type == RX_CLIENT_CONNECTION && (conn->epoch & 0x80000000))
+	    /* So what happens when it's a callback connection? */
+	    if (/*type == RX_CLIENT_CONNECTION &&*/ (conn->epoch & 0x80000000))
 		break;
 	}
 	if (!flag) {
