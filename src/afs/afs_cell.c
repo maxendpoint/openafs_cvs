@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.25 2003/04/30 01:14:43 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.26 2003/05/14 15:14:54 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -316,7 +316,7 @@ int afs_cellname_init(ino_t inode, int lookupcode)
     return 0;
 }
 
-int afs_cellname_write()
+int afs_cellname_write(void)
 {
     struct osi_file *tfile;
     struct cell_name *cn;

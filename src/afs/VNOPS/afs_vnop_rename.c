@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.13 2002/10/16 03:58:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.14 2003/05/14 15:15:05 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -31,11 +31,8 @@ extern afs_rwlock_t afs_xcbhash;
 /* Note that we don't set CDirty here, this is OK because the rename
  * RPC is called synchronously. */
 
-afsrename(aodp, aname1, andp, aname2, acred, areq)
-    struct vcache *aodp, *andp;
-    char *aname1, *aname2;
-    struct AFS_UCRED *acred;
-    struct vrequest *areq;
+int afsrename(struct vcache *aodp, char *aname1, struct vcache *andp, 
+	char *aname2, struct AFS_UCRED *acred, struct vrequest *areq)
 {
     register struct conn *tc;
     register afs_int32 code;
