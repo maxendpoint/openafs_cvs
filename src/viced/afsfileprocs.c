@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.54 2003/03/04 12:53:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.55 2003/03/04 15:42:23 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6031,7 +6031,7 @@ afs_int32 SRXAFS_FlushCPS(struct rx_call *acall,
     addr = addrs->IPAddrs_val;
     for (i=0; i<naddrs; i++, addr++) {
       if (*addr)
-	h_flushhostcps(*addr, 7001);
+	h_flushhostcps(*addr, htons(7001));
     }
 
 Bad_FlushCPS:
