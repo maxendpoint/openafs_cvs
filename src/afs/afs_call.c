@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.72 2004/07/29 03:13:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.73 2004/07/29 03:18:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1510,6 +1510,11 @@ afs_shutdown(void)
     extern struct osi_file *afs_cacheInodep;
 
     AFS_STATCNT(afs_shutdown);
+    if (afs_initState == 0) {
+        afs_warn("AFS not initialized - not shutting down\n");
+      return;
+    }
+
     if (afs_shuttingdown)
 	return;
     afs_shuttingdown = 1;
