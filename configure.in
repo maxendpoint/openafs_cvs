@@ -219,4 +219,5 @@ AC_SUBST(WITH_DEPRECATED)
 AC_OUTPUT(             \
 Makefile               \
 src/config/Makefile.${AFS_SYSNAME} \
+src/libafs/MakefileProto.${MKAFS_OSTYPE} \
 )

@@ -9,7 +9,7 @@
 #
 
 DESTDIR=DEST/
-include $(DESTDIR)../obj/config/Makefile.${SYS_NAME}
+include $(DESTDIR)../src/config/Makefile.${SYS_NAME}
 
 # OS specific object files:
 AFS_OS_OBJS = \

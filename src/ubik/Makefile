@@ -82,7 +82,7 @@ Kubik_int.h: ubik_int.xg
 utst_int.ss.o: utst_int.ss.c utst_int.xdr.c
 utst_int.cs.o: utst_int.cs.c utst_int.xdr.c
 utst_int.xdr.o: utst_int.xdr.c utst_int.h
-utst_int.rs.c utst_int.cs.c utst_int.xdr.c utst_int.h: utst_int.xg
+utst_int.ss.c utst_int.cs.c utst_int.xdr.c utst_int.h: utst_int.xg
 	${RXGEN}  utst_int.xg
 
 utst_server.o: utst_server.c ${INCLS} utst_int.h AFS_component_version_number.c

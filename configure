@@ -3499,6 +3499,7 @@ ac_given_INSTALL="$INSTALL"
 trap 'rm -fr `echo "\
 Makefile               \
 src/config/Makefile.${AFS_SYSNAME} \
+src/libafs/MakefileProto.${MKAFS_OSTYPE} \
  src/config/afsconfig.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
@@ -3607,6 +3608,7 @@ cat >> $CONFIG_STATUS <<EOF
 CONFIG_FILES=\${CONFIG_FILES-"\
 Makefile               \
 src/config/Makefile.${AFS_SYSNAME} \
+src/libafs/MakefileProto.${MKAFS_OSTYPE} \
 "}
 EOF
 cat >> $CONFIG_STATUS <<\EOF

@@ -1,15 +1,10 @@
-# Copyright 2000, International Business Machines Corporation and others.
-# All Rights Reserved.
-# 
-# This software has been released under the terms of the IBM Public
-# License.  For details, see the LICENSE file in the top-level source
-# directory or online at http://www.openafs.org/dl/license10.html
-
+#/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
+#
 # MakefileProto for Digital Unix systems
 #
 
 DESTDIR=DEST/
-include $(DESTDIR)../obj/config/Makefile.${SYS_NAME}
+# include $(DESTDIR)/../src/config/Makefile.${SYS_NAME}
 
 
 # OS specific object files:
@@ -30,12 +25,13 @@ AFS_OS_NONFSOBJS = \
 
 
 # System specific build commands and flags
-KDEFS=-DLANGUAGE_C -G 4 -I/usr/sys/include -I../include \
-	 -I/usr/sys/${HEADER_RT} -I/usr/sys/BINARY -I/usr/sys/AFS \
-	-DDEC3000_500 -DSWAPTYPE=1 -DUERF -DOSF -DCOMPAT_43 -DMACH -DUFS \
-	-DRT -DKERNEL -D_KERNEL  -signed  -no_excpt -Wb,-static -Wco,-nofloat \
-	-Olimit 1000 -D__alpha -Umips -UMIPS 
-DBUG = -O2 -g3
+# KDEFS=-DLANGUAGE_C  -I/usr/sys/include -I../include \
+# 	 -I/usr/src/sys/${HEADER_RT} -I/usr/src/sys/sys \
+# 	-DSWAPTYPE=1 -DUERF -DOSF -DCOMPAT_43 -DUFS \
+#	-DRT -DKERNEL -D_KERNEL
+KDEFS=-Wall -fformat-extensions -ansi -nostdinc -I/usr/include -D_KERNEL \
+	-elf -mpreferred-stack-boundary=2 -I/usr/src/sys/sys -I../afs
+DBUG = -O2
 DEFINES= -DAFSDEBUG -DKERNEL -DAFS -DVICE -DNFS -DUFS -DINET -DQUOTA -DGETMOUNT
 OPTF=${OPT} 
 OPTF2=${OPT2} 
@@ -56,15 +52,15 @@ setup:
 	ln -s ../Makefile $(KOBJ)/Makefile
 	ln -s ../Makefile.common $(KOBJ)/Makefile.common
 	-rm -f  h net netinet rpc ufs nfs  machine sys vm
-	-ln -s /usr/sys/include/net net
-	-ln -s /usr/sys/include/machine machine
-	-ln -s /usr/sys/include/netinet netinet
-	-ln -s /usr/sys/include/nfs nfs
-	-ln -s /usr/sys/include/rpc rpc
-	-ln -s /usr/sys/include/sys sys
-	-ln -s /usr/sys/include/ufs ufs
-	-ln -s /usr/sys/include/sys h
-	-ln -s /usr/sys/include/vm vm
+	-ln -s /usr/src/sys/net net
+	-ln -s /usr/src/sys/i386/include machine
+	-ln -s /usr/src/sys/netinet netinet
+	-ln -s /usr/src/sys/nfs nfs
+	-ln -s /usr/include/rpc rpc
+	-ln -s /usr/src/sys/sys sys
+	-ln -s /usr/src/sys/ufs/ufs ufs
+	-ln -s /usr/src/sys/sys h
+	-ln -s /usr/src/sys/vm vm
 	-touch $(KOBJ)/sec_net.h
 
 
@@ -77,9 +73,9 @@ DEST_LIBAFSNONFS = ${DESTDIR}/root.client/bin/${LIBAFSNONFS}
 
 
 # libafs:	$(DEST_LIBAFS) $(DEST_LIBAFSNONFS)
-
-.PHONY: libafs
-libafs:	$(DEST_LIBAFSNONFS)
+# libafs:	$(DEST_LIBAFSNONFS)
+libafs:
+	echo WARNING: No kernel module for ${SYS_NAME}
 
 
 $(DEST_LIBAFS): $(LIBAFS)

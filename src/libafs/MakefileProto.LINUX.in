@@ -78,7 +78,9 @@ COMPDIRS=linux_compdirs
 
 include Makefile.common
 
-LINUX_VERS=${LINUX_VERSION}
+LINUX_VERS=@LINUX_VERSION@
+LINUX_KERNEL_PATH=@LINUX_KERNEL_PATH@
+
 setup:
 	-rm -f h net netinet sys rpc
 	-ln -s rx rpc
