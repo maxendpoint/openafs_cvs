@@ -15,9 +15,9 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.15 2003/03/23 17:14:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.16 2003/03/26 09:10:59 shadow Exp $");
 
-#include <linux/module.h>
+#include <linux/version.h>
 #ifdef AFS_LINUX22_ENV
 #include "rx/rx_kcommon.h"
 #if defined(AFS_LINUX24_ENV)
