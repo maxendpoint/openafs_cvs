@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/rmtsyss.c,v 1.7 2002/03/10 19:08:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/rmtsyss.c,v 1.8 2003/01/08 03:13:17 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -26,6 +26,7 @@ RCSID("$Header: /cvs/openafs/src/sys/rmtsyss.c,v 1.7 2002/03/10 19:08:00 shadow 
 #include <sys/file.h>
 #include <stdio.h>
 #include <rx/xdr.h>
+#include <errno.h>
 #include <signal.h>
 #ifdef HAVE_STRING_H
 #include <string.h>

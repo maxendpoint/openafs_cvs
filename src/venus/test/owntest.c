@@ -13,12 +13,13 @@
 #include <stdlib.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/venus/test/owntest.c,v 1.6 2002/08/21 18:14:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/test/owntest.c,v 1.7 2003/01/08 03:13:18 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/file.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include <errno.h>
 
 extern int errno;
 

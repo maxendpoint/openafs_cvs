@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.19 2002/10/16 03:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.20 2003/01/08 03:13:11 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -208,18 +208,18 @@ void afs_osi_Sleep(void *event)
 {
     sigset_t saved_set;
 
-    spin_lock_irq(&current->sigmask_lock);
+    SIG_LOCK(current);
     saved_set = current->blocked;
     sigfillset(&current->blocked);
-    recalc_sigpending(current);
-    spin_unlock_irq(&current->sigmask_lock);
+    RECALC_SIGPENDING(current);
+    SIG_UNLOCK(current);
 
     afs_osi_SleepSig(event);
 
-    spin_lock_irq(&current->sigmask_lock);
+    SIG_LOCK(current);
     current->blocked = saved_set;
-    recalc_sigpending(current);
-    spin_unlock_irq(&current->sigmask_lock);
+    RECALC_SIGPENDING(current);
+    SIG_UNLOCK(current);
 }
 
 /* osi_TimedSleep

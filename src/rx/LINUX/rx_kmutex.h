@@ -32,7 +32,6 @@
 struct coda_inode_info {};
 #endif
 #include "linux/wait.h"
-#include "linux/sched.h"
 
 typedef struct afs_kmutex {
     struct semaphore sem;

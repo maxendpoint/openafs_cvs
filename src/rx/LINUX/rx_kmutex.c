@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.5 2002/10/16 03:58:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.6 2003/01/08 03:13:16 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 #include "rx_kmutex.h"
@@ -84,21 +84,21 @@ int afs_cv_wait(afs_kcondvar_t *cv, afs_kmutex_t *l, int sigok)
     MUTEX_EXIT(l);
 
     if (!sigok) {
-	spin_lock_irq(&current->sigmask_lock);
+	SIG_LOCK(current);
 	saved_set = current->blocked;
 	sigfillset(&current->blocked);
-	recalc_sigpending(current);
-	spin_unlock_irq(&current->sigmask_lock);
+	RECALC_SIGPENDING(current);
+	SIG_UNLOCK(current);
     }
 
     schedule();
     remove_wait_queue(cv, &wait);
 
     if (!sigok) {
-	spin_lock_irq(&current->sigmask_lock);
+	SIG_LOCK(current);
 	current->blocked = saved_set;
-	recalc_sigpending(current);
-	spin_unlock_irq(&current->sigmask_lock);
+	RECALC_SIGPENDING(current);
+	SIG_UNLOCK(current);
     }
 
     if (isAFSGlocked) AFS_GLOCK();
