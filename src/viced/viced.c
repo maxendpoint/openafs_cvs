@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.51 2003/09/24 18:54:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.52 2003/11/17 09:40:06 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -498,6 +498,7 @@ FsyncCheckLWP()
 	if ((code = LWP_WaitProcess(fsync_wait)) != LWP_SUCCESS)
 	    ViceLog(0, ("LWP_WaitProcess returned %d\n", code));
 #endif /* AFS_PTHREAD_ENV */
+	FSYNC_UNLOCK;
 	ViceLog(2, ("Checking for fsync events\n"));
 	do {
 	    code = BreakLaterCallBacks();

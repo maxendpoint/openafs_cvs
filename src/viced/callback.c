@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.50 2003/11/15 03:08:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.51 2003/11/17 09:40:06 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1408,6 +1408,7 @@ BreakLaterCallBacks(void)
     /* Unchain first */
     ViceLog(25, ("Looking for FileEntries to unchain\n"));
     H_LOCK;
+    FSYNC_LOCK;
     /* Pick the first volume we see to clean up */
     fid.Volume = fid.Vnode = fid.Unique = 0;
 
@@ -1432,7 +1433,7 @@ BreakLaterCallBacks(void)
     }
 
     if (!myfe) {
-	H_UNLOCK;
+	H_UNLOCK
 	return 0;
     }
 
@@ -1476,7 +1477,7 @@ BreakLaterCallBacks(void)
 	}
     }
     FSYNC_LOCK;
-    H_UNLOCK;;
+    H_UNLOCK;
 
     /* Arrange to be called again */
     return 1;
