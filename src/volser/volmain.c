@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.16 2003/11/22 02:43:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.17 2003/12/01 05:35:04 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -397,8 +397,7 @@ main(argc, argv)
 	assert(pthread_attr_init(&tattr) == 0);
 	assert(pthread_attr_setdetachstate(&tattr, PTHREAD_CREATE_DETACHED) == 0);
 
-	assert(pthread_create(&tid, &tattr, BKGLoop, NULL) == 0);
-	assert(pthread_create(&tid, &tattr, BKGSleep, NULL) == 0);
+	assert(pthread_create(&tid, &tattr, (void *)BKGLoop, NULL) == 0);
 #else
 	PROCESS pid;
 	LWP_CreateProcess(BKGLoop, 16*1024, 3, 0, "vol bkg daemon", &pid);
