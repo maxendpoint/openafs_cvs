@@ -1,5 +1,3 @@
-!define RELEASE 1
-
 ;OpenAFS Install Script for NSIS
 ;
 ; Written by Rob Murawski <rsm4@ieee.org>
@@ -676,13 +674,13 @@ skipremove:
   ; I do not have time to track this down so I am simply going to disable it
   WriteRegDWORD HKLM "SYSTEM\CurrentControlSet\Services\TransarcAFSDaemon\Parameters" "NoFindLanaByName" 1
 
-  strcpy $REG_SUB_KEY "SYSTEM\CurrentControlSet\Services\TransarcAFSDaemon\NetworkProvider" 
+  strcpy $REG_SUB_KEY "SYSTEM\CurrentControlSet\Services\TransarcAFSDaemon" 
   strcpy $REG_VALUE   "DependOnGroup" 
   strcpy $REG_DATA_1  "PNP_TDI"
   strcpy $REG_DATA_2  ""
   strcpy $REG_DATA_3  ""
   Call RegWriteMultiStr
-  strcpy $REG_SUB_KEY "SYSTEM\CurrentControlSet\Services\TransarcAFSDaemon\NetworkProvider" 
+  strcpy $REG_SUB_KEY "SYSTEM\CurrentControlSet\Services\TransarcAFSDaemon" 
   strcpy $REG_VALUE   "DependOnService" 
   strcpy $REG_DATA_1  "Tcpip"
   strcpy $REG_DATA_2  "NETBIOS"
@@ -1130,10 +1128,10 @@ SectionEnd
 Section "Software Development Kit (SDK)" secSDK
 
     SetOutPath "$INSTDIR\Client\Program\lib"
-    File: /r "${AFS_CLIENT_LIBDIR}\*.*"
+    File /r "${AFS_CLIENT_LIBDIR}\*.*"
 
     SetOutPath "$INSTDIR\Client\Program\Include"
-    File: /r "${AFS_BUILD_INCDIR}\*.*"    
+    File /r "${AFS_BUILD_INCDIR}\*.*"    
 
    ; Client Sample
    SetOutPath "$INSTDIR\Client\Program\Sample"
