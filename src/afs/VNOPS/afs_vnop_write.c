@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.21 2002/07/30 19:34:32 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.22 2002/08/01 18:08:13 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -299,7 +299,7 @@ afs_MemWrite(avc, auio, aio, acred, noLock)
 #endif
 	ReleaseWriteLock(&tdc->lock);
 	afs_PutDCache(tdc);
-#if !defined(AFS_VM_RDWR_ENV) || defined(AFS_LINUX22_ENV)
+#if !defined(AFS_VM_RDWR_ENV)
 	/*
 	 * If write is implemented via VM, afs_DoPartialWrite() is called from
 	 * the high-level write op.
@@ -618,7 +618,7 @@ afs_UFSWrite(avc, auio, aio, acred, noLock)
 	osi_UFSClose(tfile);
 	ReleaseWriteLock(&tdc->lock);
 	afs_PutDCache(tdc);
-#if !defined(AFS_VM_RDWR_ENV) || defined(AFS_LINUX22_ENV)
+#if !defined(AFS_VM_RDWR_ENV)
 	/*
 	 * If write is implemented via VM, afs_DoPartialWrite() is called from
 	 * the high-level write op.
