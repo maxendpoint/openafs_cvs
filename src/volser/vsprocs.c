@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.7 2001/09/17 19:43:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.8 2001/09/17 21:37:21 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -83,14 +83,14 @@ char *partName;
 	strcpy(partName,"/vicep");
 	partName[6] = partId + 'a';
 	partName[7] = '\0';
-	return 0;
+	return;
     } else if (partId < VOLMAXPARTS) {
         strcpy(partName,"/vicep");
 	partId -= 26;
 	partName[6] = 'a' + (partId/26);
 	partName[7] = 'a' + (partId%26);
 	partName[8] = '\0';
-	return 0;
+	return;
     }
 }
 
