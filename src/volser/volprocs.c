@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.9 2001/10/09 05:29:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.10 2001/10/11 21:51:13 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1629,7 +1629,8 @@ struct partEntries *pEntries;
     struct stat rbuf, pbuf;
     char namehead[9];
     struct partList partList;
-    int code, i, j=0, k;
+    struct DiskPartition *dp;
+    int i, j=0, k;
 
     strcpy(namehead, "/vicep");	/*7 including null terminator*/
 
@@ -1644,8 +1645,8 @@ struct partEntries *pEntries;
 	    namehead[7] = 'a' + (k%26);
 	    namehead[8] = '\0';
 	}
-	code = VGetPartition(namehead, 0);
-	if (code)
+	dp = VGetPartition(namehead, 0);
+	if (dp)
 	    partList.partId[j++] = i;
     }
     pEntries->partEntries_val = (afs_int32 *) malloc(j * sizeof(int));
