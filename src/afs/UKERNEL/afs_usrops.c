@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.20 2003/06/19 16:53:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.21 2003/07/04 15:56:32 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -1587,7 +1587,7 @@ void uafs_Init(
     /*
      * Set the primary cell name.
      */
-    call_syscall(AFSOP_SET_THISCELL, afs_LclCellName, 0, 0, 0, 0);
+    call_syscall(AFSOP_SET_THISCELL, (long) afs_LclCellName, 0, 0, 0, 0);
 
     if ((logfd = fopen(fullpn_AFSLogFile,"r+")) == 0) {
 	if (afsd_verbose)  printf("%s: Creating '%s'\n",  rn, fullpn_AFSLogFile);

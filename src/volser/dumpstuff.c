@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.18 2003/06/19 17:35:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.19 2003/07/04 15:58:20 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -1250,7 +1250,7 @@ int SizeDumpVolume(register struct rx_call *call, register Volume *vp, afs_int32
     struct iod iod;
     int code = 0;
     register struct iod *iodp = (struct iod *)0;
-//    iod_Init(iodp, call);
+/*    iod_Init(iodp, call); */
 
     if (!code) code = SizeDumpDumpHeader(iodp, vp, fromtime, v_size);
     if (!code) code = SizeDumpPartial(iodp, vp, fromtime, dumpAllDirs, v_size);
@@ -1265,9 +1265,9 @@ static int SizeDumpDumpHeader(register struct iod *iodp, register Volume *vp, af
     int code = 0;
     int UseLatestReadOnlyClone = 1;
     afs_int32 dumpTimes[2];
-//    iodp->device = vp->device;
-//    iodp->parentId = V_parentId(vp);
-//    iodp->dumpPartition = vp->partition;
+/*    iodp->device = vp->device; */
+/*    iodp->parentId = V_parentId(vp); */
+/*    iodp->dumpPartition = vp->partition; */
 
     v_size->dump_size = 0; /* initialize the size */
 /*     if (!code) code = DumpDouble(iodp, D_DUMPHEADER, DUMPBEGINMAGIC, DUMPVERSION); */

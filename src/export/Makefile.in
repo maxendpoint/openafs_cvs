@@ -102,7 +102,7 @@ cfgafs64.o: cfgafs.c AFS_component_version_number.c
 	${CC} -q64 ${CFLAGS} -c cfgafs.c -o cfgafs64.o
 
 clean:
-	$(RM) -f *.o *.Zlst *.map *.out cfgexport cfgafs *.ext AFS_component_version_number.c
+	$(RM) -f *.o *.Zlst *.map *.out cfgexport cfgafs *.ext AFS_component_version_number.c export.exp
 ${DEST}/root.client/usr/vice/etc/dkload/export.ext: export.ext
 	${INSTALL} $? $@
 
