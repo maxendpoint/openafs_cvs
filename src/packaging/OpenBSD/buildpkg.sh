@@ -1,4 +1,4 @@
-# $Id: buildpkg.sh,v 1.2 2003/02/20 22:04:47 rees Exp $
+# $Id: buildpkg.sh,v 1.3 2003/07/07 22:30:46 rees Exp $
 
 SRC=../../../../..
 umask 022
@@ -17,6 +17,7 @@ ln -s \
   $SRC/log/tokens \
   $SRC/log/unlog \
   $SRC/volser/vos \
+  $SRC/bozo/bos \
   usr/vice/bin
 ln -s $SRC/pinstall/pinstall usr/vice/bin/install
 
