@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.10 2001/10/08 22:42:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.11 2001/10/10 14:00:54 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -281,7 +281,9 @@ int h_Release_r(host)
 	    }		
 	} else 
 	    (host)->holds[h_holdSlot()] &= ~h_holdbit();
-    }
+    } else 
+      (host)->holds[h_holdSlot()] &= ~h_holdbit();
+
     return 0;
 }
 
