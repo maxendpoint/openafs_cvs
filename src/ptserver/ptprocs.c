@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.12 2002/08/21 18:13:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.13 2002/08/21 21:12:58 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -524,7 +524,8 @@ afs_int32 idToName (call, aid, aname)
 
     /* leave this first for rpc stub */
     size = aid->idlist_len;
-    if (size <= 0) size = 0;
+    if (size == 0) return 0;
+    if (size <  0) return PRTOOMANY;
     aname->namelist_val = (prname *)malloc(size*PR_MAXNAMELEN);
     aname->namelist_len = 0;
     if (aname->namelist_val == 0) return PRNOMEM;
