@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.56 2003/01/07 23:14:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.57 2003/04/28 21:07:44 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -229,7 +229,7 @@ copyin_afs_ioctl(caddr_t cmarg, struct afs_ioctl *dst)
 	}
 #endif /* defined(AFS_SGI_ENV) && (_MIPS_SZLONG==64) */
 
-#if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV)
+#if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV) && !defined(AFS_AMD64_LINUX20_ENV)
 	struct afs_ioctl32 dst32;
 
 #ifdef AFS_SPARC64_LINUX24_ENV

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.49 2003/04/23 23:03:45 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.50 2003/04/28 21:07:44 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1071,7 +1071,7 @@ copyin_iparam(caddr_t cmarg, struct iparam *dst)
 	}
 #endif /* AFS_SUN57_64BIT_ENV */
 
-#if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV)
+#if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV) && !defined(AFS_AMD64_LINUX20_ENV)
 	struct iparam32 dst32;
 
 #ifdef AFS_SPARC64_LINUX24_ENV

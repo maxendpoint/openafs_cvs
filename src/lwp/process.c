@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/process.c,v 1.17 2003/02/27 17:27:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/process.c,v 1.18 2003/04/28 21:07:49 shadow Exp $");
 
 #include <stdio.h>
 #include <assert.h>
@@ -37,6 +37,8 @@ char*	newsp;
 {
 #if defined(AFS_IA64_LINUX20_ENV)
 	register unsigned long sp __asm__("r12");
+#elif defined(AFS_AMD64_LINUX24_ENV)
+	register unsigned long sp __asm__("sp");
 #elif defined(AFS_HPUX1122_ENV)
 /* don't need anything special, will use
  * ucontext.uc_stack.ss_sp as it matches r12.

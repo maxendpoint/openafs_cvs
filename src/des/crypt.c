@@ -37,7 +37,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.9 2003/03/10 01:59:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.10 2003/04/28 21:07:46 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <windows.h>
@@ -88,7 +88,9 @@ RCSID("$Header: /cvs/openafs/src/des/crypt.c,v 1.9 2003/03/10 01:59:31 shadow Ex
  * define "LONG_IS_32_BITS" only if sizeof(long)==4.
  * This avoids use of bit fields (your compiler may be sloppy with them).
  */
-#if !defined(cray) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV)
+
+/* XXX shouldn't this be !AFS_64BIT_ENV ? */
+#if !defined(cray) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV) && !defined(AFS_AMD64_LINUX20_ENV)
 #define	LONG_IS_32_BITS
 #endif
 
