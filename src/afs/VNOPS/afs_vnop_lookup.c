@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.15 2001/09/26 13:07:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.16 2001/09/27 17:37:49 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -1199,6 +1199,7 @@ afs_lookup(adp, aname, avcp, acred)
 	    ReleaseWriteLock(&tvc->lock);
 
 	    if (code) {
+		afs_PutVCache(tvc, WRITE_LOCK);
 		if (tvolp) afs_PutVolume(tvolp, WRITE_LOCK);
 		goto done;
 	    }
