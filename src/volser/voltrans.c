@@ -18,13 +18,49 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.9 2003/11/22 02:43:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.10 2003/11/22 02:57:04 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
 #else
 #include <sys/time.h>
 #endif
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <errno.h>
+#ifdef AFS_NT40_ENV
+#include <fcntl.h>
+#include <winsock2.h>
+#else
+#include <sys/file.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#endif
+#include <dirent.h>
+#include <sys/stat.h>
+#include <afs/afsint.h>
+#include <signal.h>
+#ifdef AFS_PTHREAD_ENV
+#include <assert.h>
+#else /* AFS_PTHREAD_ENV */
+#include <afs/assert.h>
+#endif /* AFS_PTHREAD_ENV */
+#include <afs/prs_fs.h>
+#include <afs/nfs.h>
+#include <lwp.h>
+#include <lock.h>
+#include <afs/auth.h>
+#include <afs/cellconfig.h>
+#include <afs/keys.h>
+#include <rx/rx.h>
+#include <ubik.h>
+#include <afs/ihandle.h>
+#ifdef AFS_NT40_ENV
+#include <afs/ntops.h>
+#endif
+#include <afs/vnode.h>
+#include <afs/volume.h>
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -34,7 +70,6 @@ RCSID
 #endif
 #endif
 
-#include <rx/rx.h>
 #include "volser.h"
 
 /*@printflike@*/ extern void Log(const char *format, ...);
