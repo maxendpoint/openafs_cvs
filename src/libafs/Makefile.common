@@ -232,7 +232,7 @@ afs_uuid.o: $(AFS)/afs_uuid.c
 xdr_afsuuid.o: $(RX)/xdr_afsuuid.c
 	$(CRULE2);
 xdr_int64.o: $(RX)/xdr_int64.c
-        $(CRULE2);
+	$(CRULE2);
 
 # these files are not to be optimized - subject to change.
 afs_cbqueue.o: $(AFS)/afs_cbqueue.c
