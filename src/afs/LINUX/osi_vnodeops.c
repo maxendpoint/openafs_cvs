@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.41 2002/05/03 19:03:34 zacheiss Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.42 2002/05/06 07:13:10 kolya Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -34,7 +34,6 @@ RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.41 2002/05/03 19:0
 #if defined(AFS_LINUX24_ENV)
 #include "../h/smp_lock.h"
 #endif
-#include "../afs/afs_osidnlc.h"
 
 #ifdef pgoff2loff
 #define pageoff(pp) pgoff2loff((pp)->index)
