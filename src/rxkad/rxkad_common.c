@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.7 2001/08/08 00:04:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.8 2001/08/23 17:26:46 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -59,9 +59,9 @@ RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.7 2001/08/08 00:04:05 
 
 char *rxi_Alloc();
 
-#ifndef max
-#define	max(a,b)    ((a) < (b)? (b) : (a))
-#endif /* max */
+#ifndef afs_max
+#define	afs_max(a,b)    ((a) < (b)? (b) : (a))
+#endif /* afs_max */
 
 #ifndef KERNEL
 #define osi_Time() time(0)
@@ -452,7 +452,7 @@ rxs_return_t rxkad_PreparePacket (aobj, acall, apacket)
     switch (level) {
       case rxkad_clear: return 0;	/* shouldn't happen */
       case rxkad_auth:
-	nlen = max (ENCRYPTIONBLOCKSIZE,
+	nlen = afs_max (ENCRYPTIONBLOCKSIZE,
 		    len + rx_GetSecurityHeaderSize(tconn));
 	if (nlen > (len + rx_GetSecurityHeaderSize(tconn))) {
 	  rxi_RoundUpPacket(apacket, nlen - (len + rx_GetSecurityHeaderSize(tconn)));
