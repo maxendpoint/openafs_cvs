@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.87 2004/10/13 14:07:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.88 2004/11/06 07:16:57 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -333,11 +333,11 @@ afs_linux_readdir(struct file *fp, void *dirbuf, filldir_t filldir)
     code = 0;
     offset = (int) fp->f_pos;
     while (1) {
-	dirpos = BlobScan(&tdc->f, offset);
+	dirpos = BlobScan(tdc, offset);
 	if (!dirpos)
 	    break;
 
-	de = afs_dir_GetBlob(&tdc->f, dirpos);
+	de = afs_dir_GetBlob(tdc, dirpos);
 	if (!de)
 	    break;
 
