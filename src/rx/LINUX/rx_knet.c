@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.26 2004/10/09 22:34:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.27 2004/12/01 23:36:52 shadow Exp $");
 
 #include <linux/version.h>
 #ifdef AFS_LINUX22_ENV
@@ -67,7 +67,8 @@ rxk_NewSocketHost(afs_uint32 ahost, short aport)
     }
 
     TO_USER_SPACE();
-    sockp->ops->setsockopt(sockp, SOL_IP, IP_MTU_DISCOVER, &pmtu, sizeof(pmtu));
+    sockp->ops->setsockopt(sockp, SOL_IP, IP_MTU_DISCOVER, (char *)&pmtu,
+                           sizeof(pmtu));
     TO_KERNEL_SPACE();
     return (struct osi_socket *)sockp;
 }
@@ -208,8 +209,6 @@ osi_StopListener(void)
     read_unlock(&tasklist_lock);
 #endif
     while (rxk_ListenerPid) {
-	struct task_struct *p;
-
 	flush_signals(listener);
 	force_sig(SIGKILL, listener);
 	afs_osi_Sleep(&rxk_ListenerPid);
