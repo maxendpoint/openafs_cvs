@@ -87,6 +87,8 @@ RXKADOBJS =\
 	ticket.o \
 	ticket5.o \
 	crc.o \
+	md4.o \
+	md5.o \
 	fcrypt.o \
 	crypt_conn.o
 
@@ -194,6 +196,12 @@ ticket5.o: ${RXKAD}/ticket5.c
 crc.o: ${RXKAD}/crc.c
 	${CCRULE} ${RXKAD}/crc.c
 
+md4.o: ${RXKAD}/md4.c
+	${CCRULE} ${RXKAD}/md4.c
+
+md5.o: ${RXKAD}/md5.c
+	${CCRULE} ${RXKAD}/md5.c
+
 fcrypt.o: ${TOP_OBJDIR}/src/rxkad/fcrypt.c
 	${CCRULE} ${TOP_OBJDIR}/src/rxkad/fcrypt.c
 
@@ -258,7 +266,7 @@ xdr_afsuuid.o: ${RX}/xdr_afsuuid.c
 #
 #   $ what /opt/langtools/bin/pxdb32
 #   /opt/langtools/bin/pxdb32:
-#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.28 $
+#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.29 $
 #
 # The problem occurs when -g and -O are both used when compiling des.c.
 # The simplest way to work around the problem is to leave out either -g or -O.
