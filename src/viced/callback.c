@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.9 2001/10/17 23:07:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.10 2002/02/01 22:12:51 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1427,6 +1427,7 @@ static int GetSomeSpace_r(hostp, locked)
 	    cbstuff.GSS4++;
 	    if ( ! ClearHostCallbacks_r(hp, 0 /* not locked or held */) )
 		return;
+	    hp1 = hp;
 	} else {
 	    hp1 = hostp;
 	    cbstuff.GSS1++;
