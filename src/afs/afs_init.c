@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.14 2002/02/16 18:23:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.15 2002/05/21 06:35:57 kolya Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -245,7 +245,7 @@ afs_CacheInit(astatSize, afiles, ablocks, aDentries, aVolumes, achunk, aflags,
     cm_initParams.cmi_nVolumeCaches = aVolumes;
     cm_initParams.cmi_firstChunkSize = AFS_FIRSTCSIZE;
     cm_initParams.cmi_otherChunkSize = AFS_OTHERCSIZE;
-    cm_initParams.cmi_cacheSize = ablocks;
+    cm_initParams.cmi_cacheSize = afs_cacheBlocks;
     cm_initParams.cmi_setTime = afs_setTime;
     cm_initParams.cmi_memCache = (aflags & AFSCALL_INIT_MEMCACHE) ? 1 : 0;
 
