@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.47 2003/09/16 03:03:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.48 2003/09/22 19:19:21 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1415,13 +1415,16 @@ BreakLaterCallBacks(void)
 	for (feip = &HashTable[hash]; fe = itofe(*feip);) {
 	    if (fe && (fe->status & FE_LATER)
 		&& (fid.Volume == 0 || fid.Volume == fe->volid)) {
+		/* Ugly, but used to avoid left side casting */
+		struct object *tmpfe;
 		ViceLog(125,
 			("Unchaining for %u:%u:%u\n", fe->vnode, fe->unique,
 			 fe->volid));
 		fid.Volume = fe->volid;
 		*feip = fe->fnext;
 		/* Works since volid is deeper than the largest pointer */
-		fe->next = myfe;
+		tmpfe = (struct object *)fe;
+		tmpfe->next = (struct object *)myfe;
 		myfe = fe;
 	    } else
 		feip = &fe->fnext;
