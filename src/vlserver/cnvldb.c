@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.6 2002/08/21 18:14:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.7 2002/08/22 21:25:45 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -34,7 +34,6 @@ RCSID("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.6 2002/08/21 18:14:32 sha
 #include <afs/fileutil.h>
 
 #include "vlserver.h"
-#include <strings.h>
 
 #define MAXSIZE 2048 /* most I'll get back from PIOCTL */
 #define	BADSERVERID	255	/* XXX */
