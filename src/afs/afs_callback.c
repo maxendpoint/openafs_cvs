@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.25 2003/07/15 23:14:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.26 2004/04/16 04:57:01 kolya Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -974,6 +974,8 @@ SRXAFSCB_WhoAreYou(struct rx_call *a_call, struct interfaceAddr *addr)
     RX_AFS_GLOCK();
 
     AFS_STATCNT(SRXAFSCB_WhoAreYou);
+
+    memset(addr, 0, sizeof(*addr));
 
     ObtainReadLock(&afs_xinterface);
 
