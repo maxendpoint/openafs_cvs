@@ -13,7 +13,7 @@ SRCDIR_PARENT=`pwd`
 AC_ARG_WITH(afs-sysname,
 [  --with-afs-sysname=sys    use sys for the afs sysname]
 )
-AC_ARG_ENABeLE( obsolete,
+AC_ARG_ENABLE( obsolete,
 [  --enable-obsolete 			enable obsolete portions of AFS (mpp, ntp and package)],, enable_obsolete="no")
 AC_ARG_ENABLE( insecure,
 [  --enable-insecure 			enable insecure portions of AFS (ftpd, inetd, rcp, rlogind and rsh)],, enable_insecure="no")
