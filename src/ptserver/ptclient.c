@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.10 2003/07/15 23:16:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.11 2003/08/08 21:54:45 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -368,10 +368,9 @@ main(argc, argv)
 	    lnames.namelist_len = 0;
 	    foo = line;
 	    skip(&foo);
-	    for (i = 0;
-		 ((lnames.namelist_len < PR_MAXLIST)
-		  && (sscanf(foo, "%s", lnames.namelist_val[i]) != EOF));
-		 i++) {
+	    for (i = 0; ((lnames.namelist_len < PR_MAXLIST)
+			 && (sscanf(foo, "%s", lnames.namelist_val[i]) !=
+			     EOF)); i++) {
 		lnames.namelist_len++;
 		skip(&foo);
 	    }

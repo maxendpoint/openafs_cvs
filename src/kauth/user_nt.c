@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/user_nt.c,v 1.10 2003/07/15 23:15:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/user_nt.c,v 1.11 2003/08/08 21:54:40 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -296,8 +296,10 @@ KTEXT pkt_cipher(KTEXT packet);
  * Check the response with the supplied key. If the key is apparently
  * wrong, return INTK_BADPW, otherwise zero.
  */
-static check_response(KTEXT rpkt, KTEXT cip, char *service, char *instance,
-		      char *realm, struct ktc_encryptionKey *key) {
+static
+check_response(KTEXT rpkt, KTEXT cip, char *service, char *instance,
+	       char *realm, struct ktc_encryptionKey *key)
+{
     Key_schedule key_s;
     char *ptr;
     char s_service[SNAME_SZ];

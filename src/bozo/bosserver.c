@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.21 2003/07/15 23:14:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.22 2003/08/08 21:54:36 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -966,8 +966,8 @@ main(int argc, char **argv, char **envp)
     rx_SetNoJumbo();
 
     tservice = rx_NewService( /* port */ 0, /* service id */ 1,
-							/*service name */ "bozo",
-							/* security classes */
+			     /*service name */ "bozo",
+			     /* security classes */
 			     bozo_rxsc,
 			     /* numb sec classes */ 3, BOZO_ExecuteRequest);
     rx_SetMinProcs(tservice, 2);

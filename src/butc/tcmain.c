@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.10 2003/07/15 23:14:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.11 2003/08/08 21:54:36 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -642,7 +642,6 @@ GetConfigParams(filename, port)
 #endif
 	    }
 	}
-
 #ifndef xbsa
 	/* All the xbsa spacific parameters */
 	else if (!strcmp(cmd, "TYPE") || !strcmp(cmd, "NODE")

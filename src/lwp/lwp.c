@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.23 2003/08/04 17:48:33 rees Exp $");
+    ("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.24 2003/08/08 21:54:42 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -973,8 +973,9 @@ Free_PCB(PROCESS pid)
 {
     Debug(4, ("Entered Free_PCB"));
     if (pid->stack != NULL) {
-	Debug(0, ("HWM stack usage: %d, [PCB at 0x%x]",
-		  Stack_Used(pid->stack, pid->stacksize), pid));
+	Debug(0,
+	      ("HWM stack usage: %d, [PCB at 0x%x]",
+	       Stack_Used(pid->stack, pid->stacksize), pid));
 	free(pid->stack);
     }
     if (pid->eventlist != NULL)

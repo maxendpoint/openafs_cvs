@@ -17,8 +17,8 @@ This file is now obsolete.
 #include <afs/param.h>
 #endif
  
-RCSID
-  ("$Header: /cvs/openafs/src/rx/Attic/rx_stream.c,v 1.7 2003/07/15 23:16:10 shadow Exp $");
+    RCSID
+    ("$Header: /cvs/openafs/src/rx/Attic/rx_stream.c,v 1.8 2003/08/08 21:54:47 shadow Exp $");
 
 #ifdef	KERNEL
 #include "h/types.h"

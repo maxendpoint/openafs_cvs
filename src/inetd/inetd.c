@@ -56,7 +56,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/inetd/Attic/inetd.c,v 1.8 2003/07/15 23:15:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/inetd/Attic/inetd.c,v 1.9 2003/08/08 21:54:40 shadow Exp $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -1270,9 +1270,8 @@ auth_stream(s, sepent)
 		debug = 0;
 		dup2(0, 2);
 
-		if (!afs_didsetpag
-		    && (!strcmp(sep->se_service, "login")
-			|| !strcmp(sep->se_service, "shell"))) {
+		if (!afs_didsetpag && (!strcmp(sep->se_service, "login")
+				       || !strcmp(sep->se_service, "shell"))) {
 		    setpag();	/* to disassociate it from current group... */
 		}
 		execv(sep->se_server, sep->se_argv);

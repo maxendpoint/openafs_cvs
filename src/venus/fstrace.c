@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.13 2003/07/15 23:17:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.14 2003/08/08 21:54:51 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -963,7 +963,7 @@ open1catfile(file)
 	    while (*np && *np != ':')
 		*p++ = *np++;
 	    *p = '\0';
-	    if (*np)				/*----  iff on a colon then advance --*/
+	    if (*np)					/*----  iff on a colon then advance --*/
 		np++;
 	    valid = 0;
 	    if (strlen(cpth)) {
@@ -1081,7 +1081,7 @@ cat_already_open(cat)
 
 
 int
-catclose1(catd)				/*---- the catd to be closed ----*/
+catclose1(catd)					/*---- the catd to be closed ----*/
      nl_catd catd;	/*---- the catd to be closed ----*/
 
 {

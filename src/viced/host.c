@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.53 2003/08/08 20:40:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.54 2003/08/08 21:54:53 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1761,12 +1761,11 @@ h_DumpHost(register struct host *host, int held, StreamHandle_t * file)
     (void)afs_snprintf(tmpStr, sizeof tmpStr,
 		       "ip:%x port:%d hidx:%d cbid:%d lock:%x last:%u active:%u down:%d del:%d cons:%d cldel:%d\n\t hpfailed:%d hcpsCall:%u hcps [",
 		       host->host, ntohs(host->port), host->index,
-		       host->cblist, CheckLock(&host->lock),
-		       host->LastCall, host->ActiveCall,
-		       (host->hostFlags & VENUSDOWN),
+		       host->cblist, CheckLock(&host->lock), host->LastCall,
+		       host->ActiveCall, (host->hostFlags & VENUSDOWN),
 		       host->hostFlags & HOSTDELETED, host->Console,
-		       host->hostFlags & CLIENTDELETED,
-		       host->hcpsfailed, host->cpsCall);
+		       host->hostFlags & CLIENTDELETED, host->hcpsfailed,
+		       host->cpsCall);
     (void)STREAM_WRITE(tmpStr, strlen(tmpStr), 1, file);
     if (host->hcps.prlist_val)
 	for (i = 0; i < host->hcps.prlist_len; i++) {

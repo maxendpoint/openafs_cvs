@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.12 2003/08/08 20:18:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.13 2003/08/08 21:54:45 shadow Exp $");
 
 #include <sys/types.h>
 #include <lock.h>
@@ -35,8 +35,8 @@ RCSID
 
 #if defined(SUPERGROUPS)
 extern afs_int32 depthsg;
-afs_int32 IsAMemberOfSG(struct ubik_trans *at, afs_int32 aid,
-			afs_int32 gid, afs_int32 depth);
+afs_int32 IsAMemberOfSG(struct ubik_trans *at, afs_int32 aid, afs_int32 gid,
+			afs_int32 depth);
 #endif
 
 afs_int32

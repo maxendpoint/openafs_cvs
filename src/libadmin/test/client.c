@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/client.c,v 1.5 2003/07/15 23:15:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/client.c,v 1.6 2003/08/08 21:54:41 shadow Exp $");
 
 #include "client.h"
 #include <afs/cellconfig.h>
@@ -278,7 +278,8 @@ int
 DoClientMountPointCreate(struct cmd_syndesc *as, char *arock)
 {
     typedef enum { DIRECTORY, VOLUME, READWRITE,
-	    CHECK } DoClientMountPointCreate_parm_t;
+	CHECK
+    } DoClientMountPointCreate_parm_t;
     afs_status_t st = 0;
     const char *directory;
     const char *volume;
@@ -476,7 +477,8 @@ int
 DoClientRPCStatsStateGet(struct cmd_syndesc *as, char *arock)
 {
     typedef enum { SERVER, PROCESS,
-	    STAT_TYPE } DoClientRPCStatsStateGet_parm_t;
+	STAT_TYPE
+    } DoClientRPCStatsStateGet_parm_t;
     afs_status_t st = 0;
     struct rx_connection *conn;
     int servAddr = 0;
@@ -589,7 +591,8 @@ int
 DoClientRPCStatsStateDisable(struct cmd_syndesc *as, char *arock)
 {
     typedef enum { SERVER, PROCESS,
-	    STAT_TYPE } DoClientRPCStatsDisable_parm_t;
+	STAT_TYPE
+    } DoClientRPCStatsDisable_parm_t;
     afs_status_t st = 0;
     struct rx_connection *conn;
     int servAddr = 0;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/afs_atomlist.c,v 1.6 2003/07/15 23:17:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/afs_atomlist.c,v 1.7 2003/08/08 21:54:48 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs_atomlist.h"
@@ -86,10 +86,12 @@ struct afs_atomlist {
     void *block_head;		/* pointer to block list */
 };
 
-afs_atomlist *afs_atomlist_create(size_t atom_size, size_t block_size,
-				  void *(*allocate) (size_t n)
-				  , void (*deallocate) (void *p, size_t n)
-    ) {
+afs_atomlist *
+afs_atomlist_create(size_t atom_size, size_t block_size,
+		    void *(*allocate) (size_t n)
+		    , void (*deallocate) (void *p, size_t n)
+    )
+{
     afs_atomlist *al;
     size_t atoms_per_block;
     size_t extra_space;
