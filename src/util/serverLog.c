@@ -76,16 +76,6 @@ int mrafsStyleLogs = 0;
 int printLocks = 0;
 static char ourName[MAXPATHLEN];
 
-void WriteLogBuffer(buf,len)
-    char *buf;
-    afs_uint32 len;
-{
-    LOCK_SERVERLOG();
-    if (serverLogFD > 0)
-      write(serverLogFD, tbuffer, len);
-    UNLOCK_SERVERLOG();
-}
-
 /* VARARGS1 */
 void FSLog (const char *format, ...)
 {
