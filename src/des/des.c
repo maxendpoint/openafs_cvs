@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/des.c,v 1.15 2004/10/16 22:31:49 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/des/des.c,v 1.16 2004/10/16 22:41:18 jaltman Exp $");
 
 #ifndef KERNEL
 #include <stdio.h>
@@ -444,8 +444,8 @@ des_ecb_encrypt(void * clear, void * cipher,
     if ((afs_int32) cipher & 3) {
 	L_save = L2;		/* cant bcopy a reg */
 	R_save = R2;
-	cipher=((afs_uint32*)cipher)+1;
 	memcpy((char *)cipher, (char *)&L_save, sizeof(L_save));
+	cipher=((afs_uint32*)cipher)+1;
 	memcpy((char *)cipher, (char *)&R_save, sizeof(R_save));
     } else
 #endif
