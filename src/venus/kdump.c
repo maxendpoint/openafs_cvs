@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.18 2001/11/05 19:34:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.19 2001/11/05 19:39:06 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>	/* for malloc() */
@@ -250,7 +250,7 @@ typedef	struct adaptive_mutex2	adaptive_mutex2_t;
 struct timezone {
     int a,b;
 };
-#ifndef AFS_ALPHA_LINUX20_ENV
+#if 0/*ndef AFS_ALPHA_LINUX20_ENV*/
 typedef struct timeval {
     int tv_sec;
     int tv_usec;
