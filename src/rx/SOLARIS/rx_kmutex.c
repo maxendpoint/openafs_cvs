@@ -16,11 +16,13 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_kmutex.c,v 1.1 2002/02/01 20:30:37 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_kmutex.c,v 1.2 2002/02/02 18:33:49 kolya Exp $");
 
 #if defined(AFS_SUN5_ENV) && defined(KERNEL) 
 
+#include "../rx/rx_kcommon.h"
 #include "../rx/rx_kmutex.h"
+#include "../rx/rx_kernel.h"
 
 #include <errno.h>
 #include <sys/tiuser.h>
