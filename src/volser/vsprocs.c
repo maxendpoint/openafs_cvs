@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.21 2003/06/02 14:36:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.22 2003/06/19 16:06:58 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -5655,6 +5655,45 @@ int UV_SetVolumeInfo(afs_int32 server, afs_int32 partition, afs_int32 volid, vol
 
   if (conn) rx_DestroyConnection(conn);
   return(error);
+}
+
+int UV_GetSize(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart, 
+	afs_int32 fromdate, struct volintSize *vol_size)
+{
+   struct rx_connection *aconn = (struct rx_connection *)0;
+   afs_int32 tid=0, rcode=0;
+   afs_int32 code, error = 0;
+
+
+   /* get connections to the servers */
+   aconn = UV_Bind(afromserver, AFSCONF_VOLUMEPORT);
+
+   VPRINT1("Starting transaction on volume %u...", afromvol);
+   code = AFSVolTransCreate(aconn, afromvol, afrompart, ITBusy, &tid);
+   EGOTO1(error_exit, code, "Could not start transaction on the volume %u to be measured\n", afromvol);
+   VDONE;
+
+   VPRINT1("Getting size of volume on volume %u...", afromvol);
+   code = AFSVolGetSize(aconn, tid, fromdate, vol_size);
+   EGOTO(error_exit, code, "Could not start the measurement process \n");
+   VDONE;
+      
+ error_exit:
+   if (tid) {
+      VPRINT1("Ending transaction on volume %u...", afromvol);
+      code = AFSVolEndTrans(aconn, tid, &rcode);
+      if (code || rcode) {
+	 fprintf(STDERR,"Could not end transaction on the volume %u\n", afromvol);
+	 fprintf(STDERR,"error codes: %d and %d\n", code, rcode);
+	 if (!error) error = (code?code:rcode);
+      }
+      VDONE;
+   }
+   if (aconn)
+      rx_DestroyConnection(aconn);
+
+   PrintError("", error);
+   return(error);
 }
 
 /*maps the host addresses in <old > (present in network byte order) to

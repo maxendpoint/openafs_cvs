@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.22 2003/06/02 14:38:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.23 2003/06/19 16:06:58 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -2799,6 +2799,33 @@ afs_int32 SAFSVolConvertROtoRWvolume(acid, partId, volumeId)
 #else /* AFS_NAMEI_ENV */
     return EINVAL;
 #endif /* AFS_NAMEI_ENV */
+}
+
+afs_int32 SAFSVolGetSize (acid, fromTrans, fromDate, size)
+struct rx_call *acid;
+afs_int32 fromTrans;
+afs_int32 fromDate;
+register struct volintSize *size;
+{
+    int code = 0;
+    register struct volser_trans *tt;
+    char caller[MAXKTCNAMELEN];
+
+    if (!afsconf_SuperUser(tdir, acid, caller)) return VOLSERBAD_ACCESS;/*not a super user*/
+    tt = FindTrans(fromTrans);
+    if (!tt) return ENOENT;
+    if (tt->vflags & VTDeleted) {
+	TRELE(tt);
+	return ENOENT;
+    }
+    strcpy(tt->lastProcName,"GetSize"); 
+    tt->rxCallPtr = acid; 
+    code = SizeDumpVolume(acid, tt->volume, fromDate, 1, size);	/* measure volume's data */
+    tt->rxCallPtr = (struct rx_call *)0; 
+    if(TRELE(tt)) return VOLSERTRELE_ERROR; 
+    
+/*    osi_auditU(acid, VS_DumpEvent, code, AUD_LONG, fromTrans, AUD_END);  */
+    return code;
 }
 
 /* GetPartName - map partid (a decimal number) into pname (a string)
