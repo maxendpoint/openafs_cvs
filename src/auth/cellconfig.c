@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.18 2001/10/05 21:40:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.19 2001/10/08 22:47:01 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -33,6 +33,7 @@ RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.18 2001/10/05 21:40:48 sh
 #include <netdb.h>
 #include <sys/file.h>
 #include <sys/time.h>
+#include <afs/afsint.h>
 #ifdef AFS_AFSDB_ENV
 #include <arpa/nameser.h>
 #include <resolv.h>
@@ -59,7 +60,6 @@ RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.18 2001/10/05 21:40:48 sh
 #include <afs/afsutil.h>
 #include "cellconfig.h"
 #include "keys.h"
-#include <afs/afsint.h>
 
 static ParseHostLine();
 static ParseCellLine();
