@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.10 2001/09/08 04:31:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.11 2001/09/20 20:10:09 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -222,6 +222,11 @@ static void initDirPathArray(void)
   strcpy(dirPathArray[AFSDIR_CLIENT_VICE_DIRPATH_ID], afsClntDirPath);
 
   pathp = dirPathArray[AFSDIR_CLIENT_ETC_DIRPATH_ID];
+#ifdef AFS_DARWIN_ENV
+  if (access(AFSDIR_ALTERNATE_CLIENT_ETC_DIR, F_OK) == 0)
+      AFSDIR_CLIENT_DIRPATH(pathp, AFSDIR_ALTERNATE_CLIENT_ETC_DIR);
+  else 
+#endif
   AFSDIR_CLIENT_DIRPATH(pathp, AFSDIR_CLIENT_ETC_DIR);
 #endif /* AFS_NT40_ENV */
 
