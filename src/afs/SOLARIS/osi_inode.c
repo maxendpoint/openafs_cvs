@@ -16,7 +16,7 @@
 #include "../afs/param.h"	/* Should be always first */
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_inode.c,v 1.8 2001/07/11 16:09:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_inode.c,v 1.9 2001/07/12 19:04:09 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -65,11 +65,11 @@ getinode(vfsp, dev, inode, ipp, credp,perror)
     }
     ufsvfsp = (struct ufsvfs *)vfsp->vfs_data;
 
-#if defined(AFS_SUN57_ENV)
+#ifdef HAVE_VFS_DQRWLOCK
     rw_enter(&ufsvfsp->vfs_dqrwlock, RW_READER);
 #endif
     code = (*ufs_igetp)(vfsp, inode, &ip, credp);
-#if defined(AFS_SUN57_ENV)
+#ifdef HAVE_VFS_DQRWLOCK
     rw_exit(&ufsvfsp->vfs_dqrwlock);
 #endif
 
@@ -173,14 +173,14 @@ afs_syscall_icreate(dev, near_inode, param1, param2, param3, param4, rvp, credp)
 
     ufsvfsp = ip->i_ufsvfs;
     rw_enter(&ip->i_rwlock, RW_WRITER);
-#if defined(AFS_SUN57_ENV)
+#ifdef HAVE_VFS_DQRWLOCK
     rw_enter(&ufsvfsp->vfs_dqrwlock, RW_READER);
 #endif
     rw_enter(&ip->i_contents, RW_WRITER);
     code = (*ufs_iallocp)(ip, near_inode, 0, &newip, credp);
     AFS_ITIMES_NOLOCK(ip);
     rw_exit(&ip->i_contents);
-#if defined(AFS_SUN57_ENV)
+#ifdef HAVE_VFS_DQRWLOCK
     rw_exit(&ufsvfsp->vfs_dqrwlock);
 #endif
     rw_exit(&ip->i_rwlock);
