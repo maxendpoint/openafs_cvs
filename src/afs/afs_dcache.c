@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.20 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.21 2002/08/22 22:37:11 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -1798,22 +1798,22 @@ RetryLookup:
 	overWriteWholeChunk = 1;
     if (doAdjustSize || overWriteWholeChunk) {
 #if	defined(AFS_AIX32_ENV) || defined(AFS_SGI_ENV)
- #ifdef	AFS_SGI_ENV
-  #ifdef AFS_SGI64_ENV
+#ifdef	AFS_SGI_ENV
+#ifdef AFS_SGI64_ENV
         if (doAdjustSize) adjustsize = NBPP;
-  #else /* AFS_SGI64_ENV */
-        if (doAdjustSize) adjustsize = 8192;
-  #endif /* AFS_SGI64_ENV */
- #else /* AFS_SGI_ENV */
+#else /* AFS_SGI64_ENV */
+	if (doAdjustSize) adjustsize = 8192;
+#endif /* AFS_SGI64_ENV */
+#else /* AFS_SGI_ENV */
         if (doAdjustSize) adjustsize = 4096;
- #endif /* AFS_SGI_ENV */
+#endif /* AFS_SGI_ENV */
         if (AFS_CHUNKTOBASE(chunk)+adjustsize >= avc->m.Length &&
 #else /* defined(AFS_AIX32_ENV) || defined(AFS_SGI_ENV) */
- #if	defined(AFS_SUN_ENV)  || defined(AFS_OSF_ENV)
+#if	defined(AFS_SUN_ENV)  || defined(AFS_OSF_ENV)
         if ((doAdjustSize || (AFS_CHUNKTOBASE(chunk) >= avc->m.Length)) &&
- #else
+#else
         if (AFS_CHUNKTOBASE(chunk) >= avc->m.Length &&
- #endif
+#endif
 #endif /* defined(AFS_AIX32_ENV) || defined(AFS_SGI_ENV) */
 	!hsame(avc->m.DataVersion, tdc->f.versionNo))
 	    doReallyAdjustSize = 1;
