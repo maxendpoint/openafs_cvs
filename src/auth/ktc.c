@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.7 2001/08/08 00:03:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.8 2001/10/05 21:23:58 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -48,9 +48,19 @@ RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.7 2001/08/08 00:03:37 shadow Exp
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <netinet/in.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #include <afs/vice.h>
 #ifdef	AFS_AIX_ENV
 #include <sys/lockf.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
 #include "auth.h"
 #include <afs/venus.h>
