@@ -234,10 +234,14 @@ of three things must be done:
 
 (2) The user must login with the local Windows account
 
-(3) The user must browse the \\AFS with the Windows Explorer and enter the
-    local username and password before attempting to obtain tokens.  The 
-    user cannot specify "remember my password" to avoid the need to set
-    the password in the future.
+(3) The user must attach to the AFS server using the local account credentials.
+    The user can do this either by browsing \\AFS in the Windows Explorer and
+    specify "remember my password" to avoid the need to perform this operation
+    in the future; or the following commands may be executed from the command
+    line:
+
+    NET USE \\AFS /USER:<local-account-name> <password>
+    NET USE \\AFS /SAVECRED
 
 (4) SMB Authentication for OpenAFS must be disabled.  (see registry.txt 
     for information on how to set the SMBAuthType to NONE.
