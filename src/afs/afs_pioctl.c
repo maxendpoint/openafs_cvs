@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.75 2004/04/14 23:27:20 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.76 2004/04/15 21:04:21 jaltman Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1103,7 +1103,7 @@ afs_HandlePioctl(struct vnode *avp, afs_int32 acom,
     inSize = ablob->in_size;
 
     /* Do all range checking before continuing */
-    if (inSize >= MAXPIOCTLTOKENLEN || inSize < 0 || ablob->out_size < 0)
+    if (inSize > MAXPIOCTLTOKENLEN || inSize < 0 || ablob->out_size < 0)
 	return E2BIG;
 
     if (inSize > AFS_LRALLOCSIZE) {
