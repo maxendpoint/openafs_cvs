@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.17 2004/03/11 20:39:07 rees Exp $
+ * $Id: osi_vfsops.c,v 1.18 2004/03/25 17:04:44 rees Exp $
  */
 
 /*
@@ -94,7 +94,7 @@ NONINFRINGEMENT.
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.17 2004/03/11 20:39:07 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.18 2004/03/25 17:04:44 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -405,8 +405,10 @@ afs_vget(vp, lfl)
 	panic("afs_vget");
     }
     error = vget(vp, lfl, curproc);
-    if (!error)
-	insmntque(vp, afs_globalVFS);	/* take off free list */
+    if (!error && vp->v_usecount == 1) {
+	/* vget() took it off the freelist; put it on our mount queue */
+	insmntque(vp, afs_globalVFS);
+    }
     return error;
 }
 
@@ -461,7 +463,7 @@ afs_vfs_load(struct lkm_table *lkmtp, int cmd)
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.17 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.18 $) lkm loaded\n");
     return 0;
 }
 
