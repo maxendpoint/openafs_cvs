@@ -16,7 +16,7 @@
 #include <sys/select.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <bstring.h>
+#include <string.h>
 #include <sys/time.h>
 #include <netinet/in.h>
 #include <netdb.h>
@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/test/selsubs.c,v 1.6 2002/10/16 03:58:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/test/selsubs.c,v 1.7 2003/02/03 23:27:06 shadow Exp $");
 
 
 #include "lwp.h"
@@ -141,12 +141,13 @@ void Log(char *fmt, ...)
 {
     va_list args;
     struct timeval now;
+    struct timezone tz;
     struct tm *ltime;
     int code;
     PROCESS pid;
     extern char *program;
     
-    code = gettimeofday(&now);
+    code = gettimeofday(&now,&tz);
     assert (code == 0);
 
     ltime = localtime((time_t*)&now.tv_sec);

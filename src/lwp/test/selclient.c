@@ -41,7 +41,7 @@
 #include <sys/select.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <bstring.h>
+#include <string.h>
 #include <sys/time.h>
 #include <netinet/in.h>
 #include <netdb.h>
@@ -53,7 +53,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/test/selclient.c,v 1.5 2002/10/16 03:58:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/test/selclient.c,v 1.6 2003/02/03 23:27:06 shadow Exp $");
 
 
 #include "lwp.h"
@@ -181,6 +181,11 @@ main(int ac, char **av)
     }
     if (port == -1) {
 	printf("%s: Missing port.\n", program);
+	Usage();
+    }
+
+    if (writeSize == 0 && doEnd ==0 && putOOB == 0) {
+	printf("%s: Missing action.\n", program);
 	Usage();
     }
 
