@@ -10,15 +10,22 @@
 #ifndef	__CM_RPC_H__
 #define __CM_RPC_H__
 
-#ifndef DJGPP
-#include "afsrpc.h"
-#else
-#include "afsrpc95.h"
-#endif
+/* Copied from declaration of GUID in RPCDCE.H */
+typedef struct afs_uuid {
+     unsigned long Data1;
+     unsigned short Data2;
+     unsigned short Data3;
+     unsigned char Data4[8];
+} afs_uuid_t;
 
-void cm_RegisterNewTokenEvent(afs_uuid_t uuid, char sessionKey[8]);
-BOOL cm_FindTokenEvent(afs_uuid_t uuid, char sessionKey[8]);
+long AFSRPC_SetToken(
+     afs_uuid_t     uuid,
+     unsigned char  sessionKey[8]
+);
 
-extern long RpcInit();
+long AFSRPC_GetToken(
+     afs_uuid_t     uuid,
+     unsigned char  sessionKey[8]
+);
 
 #endif /* __CM_RPC_H__ */
