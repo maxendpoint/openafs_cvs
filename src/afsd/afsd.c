@@ -54,17 +54,15 @@
 #include <afs/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.10 2001/07/05 15:20:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.11 2001/07/12 15:54:10 shadow Exp $");
 
 #define VFS 1
 
 #include <afs/cmd.h>
 
 #include <assert.h>
-#include <itc.h>
+#include <potpourri.h>
 #include <afs/afsutil.h>
-#undef in
-#undef out
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
