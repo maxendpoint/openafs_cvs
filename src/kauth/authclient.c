@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.10 2002/02/16 18:23:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.11 2002/02/26 22:54:07 kolya Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -550,7 +550,6 @@ afs_int32 ka_Authenticate (
     code = kawrap_ubik_Call (KAA_AuthenticateV2, conn, 0,
 		     name, instance, start, end, &arequest, &oanswer);
     if (code == RXGEN_OPCODE) {
-	extern afs_int32 KAA_Authenticate();
 	oanswer.MaxSeqLen = sizeof(answer);
 	oanswer.SeqBody = (char *)&answer;
 	version = 1;

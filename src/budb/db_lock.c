@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/db_lock.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/db_lock.c,v 1.5 2002/02/26 22:54:01 kolya Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -32,7 +32,7 @@ RCSID("$Header: /cvs/openafs/src/budb/db_lock.c,v 1.4 2001/07/12 19:58:28 shadow
 
 afs_int32 FreeAllLocks(), FreeLock(), GetInstanceId(), GetLock();
 
-afs_int32 BUDB_FreeAllLocks (call, instanceId)
+afs_int32 SBUDB_FreeAllLocks (call, instanceId)
      struct rx_call *call;
      afs_uint32 instanceId;
 {
@@ -80,7 +80,7 @@ afs_int32 FreeAllLocks (call, instanceId)
     return(code);
 }
 
-afs_int32 BUDB_FreeLock (call, lockHandle)
+afs_int32 SBUDB_FreeLock (call, lockHandle)
      struct rx_call *call;
      afs_uint32 lockHandle;
 {
@@ -125,7 +125,7 @@ abort_exit:
     return(code);
 }
 
-afs_int32 BUDB_GetInstanceId(call, instanceId)
+afs_int32 SBUDB_GetInstanceId(call, instanceId)
      struct rx_call *call;
      afs_uint32 *instanceId;
 {
@@ -164,7 +164,7 @@ afs_int32 GetInstanceId (call, instanceId)
 }
 
 
-afs_int32 BUDB_GetLock (call, instanceId, lockName, expiration, lockHandle)
+afs_int32 SBUDB_GetLock (call, instanceId, lockName, expiration, lockHandle)
      struct rx_call *call;
      afs_uint32 instanceId;
      afs_int32 lockName;

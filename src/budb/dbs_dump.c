@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/dbs_dump.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/dbs_dump.c,v 1.6 2002/02/26 22:54:01 kolya Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -90,7 +90,7 @@ error_exit:
 
 
 afs_int32 DumpDB(), RestoreDbHeader();
-afs_int32 BUDB_DumpDB (call, firstcall, maxLength, charListPtr, done)
+afs_int32 SBUDB_DumpDB (call, firstcall, maxLength, charListPtr, done)
      struct rx_call *call;
      int  firstcall;
      afs_int32 maxLength;
@@ -227,7 +227,7 @@ error_exit:
     return(code);
 }
 
-afs_int32 BUDB_RestoreDbHeader (call, header)
+afs_int32 SBUDB_RestoreDbHeader (call, header)
      struct rx_call *call;
      struct DbHeader *header;
 {

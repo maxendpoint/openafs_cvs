@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/ol_verify.c,v 1.6 2002/02/26 22:54:01 kolya Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -1415,7 +1415,7 @@ error_exit:
  *	host - address of host that did verification
  */
 afs_int32 DbVerify();
-afs_int32 BUDB_DbVerify(call, status, orphans, host)
+afs_int32 SBUDB_DbVerify(call, status, orphans, host)
      struct rx_call *call;
      afs_int32 *status;
      afs_int32 *orphans;

@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.5 2001/08/08 00:03:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.6 2002/02/26 22:54:03 kolya Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -568,7 +568,8 @@ STC_TCInfo(acid, tciptr)
  */
 STC_DeleteDump(acid, dumpID, taskId)
    struct rx_call *acid;
-   afs_int32 *taskId;
+   afs_uint32 dumpID;
+   afs_uint32 *taskId;
 {
    struct deleteDumpIf *ptr=0;
    statusP statusPtr=0;

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.6 2001/08/08 00:03:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.7 2002/02/26 22:54:01 kolya Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -44,7 +44,7 @@ RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.6 2001/08/08 00:03:39 shadow
 
 afs_int32 GetText(), GetTextVersion(), SaveText();
 
-afs_int32 BUDB_GetText (call, lockHandle, textType, maxLength, offset, 
+afs_int32 SBUDB_GetText (call, lockHandle, textType, maxLength, offset, 
 		  nextOffset, charListPtr)
      struct rx_call *call;
      afs_uint32 lockHandle;
@@ -237,7 +237,7 @@ abort_exit:
  *	get the version number for the specified text block
  */
 
-afs_int32 BUDB_GetTextVersion (call, textType,  tversion)
+afs_int32 SBUDB_GetTextVersion (call, textType,  tversion)
      struct rx_call *call;
      afs_int32 textType;
      afs_uint32 *tversion;
@@ -282,7 +282,7 @@ afs_int32 GetTextVersion (call, textType,  tversion)
  *	charListPtr storage automatically malloced and freed
  */
 
-afs_int32 BUDB_SaveText (call, lockHandle, textType, offset, flags, charListPtr)
+afs_int32 SBUDB_SaveText (call, lockHandle, textType, offset, flags, charListPtr)
      struct rx_call *call;
      afs_uint32 lockHandle;
      afs_int32 textType;

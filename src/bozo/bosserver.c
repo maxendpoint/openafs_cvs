@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.14 2002/01/19 16:31:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.15 2002/02/26 22:53:59 kolya Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -488,7 +488,7 @@ static BozoDaemon() {
 
 	/* see if we should do a restart */
 	if (now > nextRestart) {
-	    BOZO_ReBozo(0);	/* doesn't come back */
+	    SBOZO_ReBozo(0);	/* doesn't come back */
 	}
 	
 	/* see if we should restart a server */
