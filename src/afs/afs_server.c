@@ -32,7 +32,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.14 2001/11/02 08:07:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.15 2002/02/28 06:08:11 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -297,13 +297,9 @@ static void CheckVLServer(sa, areq)
 	return;
     rx_SetConnDeadTime(tc->id, 3);
 
-#ifdef RX_ENABLE_LOCKS
-    AFS_GUNLOCK();
-#endif /* RX_ENABLE_LOCKS */
+    RX_AFS_GUNLOCK();
     code = VL_ProbeServer(tc->id);
-#ifdef RX_ENABLE_LOCKS
-    AFS_GLOCK();
-#endif /* RX_ENABLE_LOCKS */
+    RX_AFS_GLOCK();
     rx_SetConnDeadTime(tc->id, 50);
     afs_PutConn(tc, SHARED_LOCK);
     /*
@@ -582,13 +578,9 @@ void afs_CheckServers(adown, acellp)
 
 	    XSTATS_START_TIME(AFS_STATS_FS_RPCIDX_GETTIME);
 	    start = osi_Time();		/* time the gettimeofday call */
-#ifdef RX_ENABLE_LOCKS
-	    AFS_GUNLOCK();
-#endif /* RX_ENABLE_LOCKS */
+	    RX_AFS_GUNLOCK();
 	    code = RXAFS_GetTime(tc->id, &tv.tv_sec, &tv.tv_usec);
-#ifdef RX_ENABLE_LOCKS
-	    AFS_GLOCK();
-#endif /* RX_ENABLE_LOCKS */
+	    RX_AFS_GLOCK();
 	    end = osi_Time();
 	    XSTATS_END_TIME;
 	    /*
