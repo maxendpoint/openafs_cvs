@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.34 2002/03/10 19:23:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.35 2002/03/14 19:50:48 kolya Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -806,6 +806,8 @@ static int afs_linux_dentry_revalidate(struct dentry *dp)
     struct vcache *parentvcp = (struct vcache*) dp->d_parent->d_inode;
 
     AFS_GLOCK();
+
+    sysState.allocked = 0;
 
     /* If it's a negative dentry, then there's nothing to do. */
     if (!vcp || !parentvcp)
