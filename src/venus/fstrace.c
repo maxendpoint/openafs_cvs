@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.17 2005/01/14 01:21:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.18 2005/01/14 17:31:31 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -2137,7 +2137,7 @@ afs_syscall(call, parm0, parm1, parm2, parm3, parm4, parm5, parm6)
 	if (rval)
 	    code = syscall(AFS_SYSCALL, call, parm0, parm1, parm2, eparm);
     } else {
-	rval = proc_afs_syscall(call, parm&code);
+	rval = proc_afs_syscall(call, parm0, parm1, parm2, parm3, &code);
 	if (rval)
 	    code = syscall(AFS_SYSCALL, call, parm0, parm1, parm2, parm3);
     }
