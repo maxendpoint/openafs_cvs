@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.24 2003/06/19 17:35:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.25 2003/06/20 00:40:18 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -389,7 +389,7 @@ afs_int32 *avolid;
     if (strlen(aname) > 31) return VOLSERBADNAME;
     if (!afsconf_SuperUser(tdir, acid, caller)) return VOLSERBAD_ACCESS;
     if (DoLogging) Log("%s is executing CreateVolume '%s'\n", caller, aname);
-    if (error = ConvertPartition(apart, ppath, sizeof(ppath))) return error;/*a standard unix error*/
+    if ((error = ConvertPartition(apart, ppath, sizeof(ppath)))) return error;/*a standard unix error*/
     if (atype != readwriteVolume && atype != readonlyVolume && atype != backupVolume)
 	return EINVAL;
     if ((volumeID = *avolid) == 0) {

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.14 2003/06/19 17:35:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.15 2003/06/20 00:40:17 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -279,7 +279,7 @@ afs_int32 DoCloneIndex(Volume *rwvp, Volume *clvp,
 	 }
       }
 
-      /* Overwrite the vnode etnry in the clone volume */
+      /* Overwrite the vnode entry in the clone volume */
       rwvnode->cloned = 0;
       code = STREAM_WRITE(rwvnode, vcp->diskSize, 1, clfileout);
       if (code != 1) {

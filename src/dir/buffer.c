@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/buffer.c,v 1.11 2003/03/28 09:35:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/buffer.c,v 1.12 2003/06/20 00:40:19 shadow Exp $");
 
 #include <stdlib.h>
 #include <lock.h>
@@ -325,6 +325,7 @@ DZap (fid)
     ReleaseReadLock(&afs_bufferLock);
 }
 
+int
 DFlushVolume (vid)
     register afs_int32 vid;
 {

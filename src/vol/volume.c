@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.28 2003/06/19 17:35:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.29 2003/06/20 00:40:17 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -193,9 +193,6 @@ ffs(x) { \
 struct Lock vol_listLock;		/* Lock obtained when listing volumes:  prevents a volume from being missed if the volume is attached during a list volumes */
 
 extern struct Lock FSYNC_handler_lock;
-
-Volume *VAttachVolumeByName();
-Volume *VAttachVolumeByName_r();
 
 static int TimeZoneCorrection; /* Number of seconds west of GMT */
 
@@ -1680,7 +1677,7 @@ void VAddToVolumeUpdateList_r(Error *ec, Volume *vp)
     UpdateList[nUpdatedVolumes++] = V_id(vp);
 }
 
-static void VScanUpdateList() {
+static void VScanUpdateList(void) {
     register int i, gap;
     register Volume *vp;
     Error error;
