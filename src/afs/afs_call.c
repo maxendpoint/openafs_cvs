@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.38 2002/09/11 06:56:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.39 2002/09/11 16:15:31 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -162,7 +162,7 @@ static int afsd_thread(void *rock) {
 	sprintf(current->comm, "afs_callback");
 	afs_RXCallBackServer();
 	AFS_GUNLOCK();
-	sys_exit(0);
+	complete_and_exit(0,0);
 	break;
     case AFSOP_START_AFS:
 	sprintf(current->comm, "afs_afsstart");
@@ -176,7 +176,7 @@ static int afsd_thread(void *rock) {
 	sprintf(current->comm, "afsd");
 	afs_Daemon();
 	AFS_GUNLOCK();
-	sys_exit(0);
+	complete_and_exit(0,0);
 	break;
     case AFSOP_START_BKG:
 	sprintf(current->comm, "afs_bkgstart");
@@ -191,7 +191,7 @@ static int afsd_thread(void *rock) {
 	sprintf(current->comm, "afs_background");          
 	afs_BackgroundDaemon();
 	AFS_GUNLOCK();
-	sys_exit(0);
+	complete_and_exit(0,0);
 	break;
     case AFSOP_START_TRUNCDAEMON:
 	sprintf(current->comm, "afs_trimstart");
@@ -202,7 +202,7 @@ static int afsd_thread(void *rock) {
 	sprintf(current->comm, "afs_cachetrim");
 	afs_CacheTruncateDaemon();
 	AFS_GUNLOCK();
-	sys_exit(0);
+	complete_and_exit(0,0);
 	break;
     case AFSOP_START_CS:
 	sprintf(current->comm, "afs_checkserver");
@@ -210,7 +210,7 @@ static int afsd_thread(void *rock) {
 	complete(arg->complete);
 	afs_CheckServerDaemon();
 	AFS_GUNLOCK();
-	sys_exit(0);
+	complete_and_exit(0,0);
 	break;
     case AFSOP_RXEVENT_DAEMON:
 	sprintf(current->comm, "afs_evtstart");
@@ -228,7 +228,7 @@ static int afsd_thread(void *rock) {
 	sprintf(current->comm, "afs_rxevent");
 	afs_rxevent_daemon();
 	AFS_GUNLOCK();
-	sys_exit(0);
+	complete_and_exit(0,0);
 	break;
     case AFSOP_RXLISTENER_DAEMON:
 	sprintf(current->comm, "afs_lsnstart");
@@ -249,7 +249,7 @@ static int afsd_thread(void *rock) {
 	sprintf(current->comm, "afs_rxlistener");
 	rxk_Listener();
 	AFS_GUNLOCK();
-	sys_exit(0);
+	complete_and_exit(0,0);
 	break;
     default:
 	printf("Unknown op %d in StartDaemon()\n");
