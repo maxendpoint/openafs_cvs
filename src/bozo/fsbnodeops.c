@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.10 2002/08/21 18:58:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.11 2002/08/21 19:00:49 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -650,7 +650,7 @@ static int fs_getstring(struct fsbnode *abnode, char *abuffer, afs_int32 alen)
     return 0;
 }
 
-static fs_getparm(struct fsbnode *abnode, afs_int32 aindex, char *abuffer,
+static int fs_getparm(struct fsbnode *abnode, afs_int32 aindex, char *abuffer,
 		  afs_int32 alen)
 {
     if (aindex == 0)
