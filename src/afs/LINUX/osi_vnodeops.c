@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.47 2002/07/25 23:11:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.48 2002/07/27 18:06:08 kolya Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -640,6 +640,13 @@ static int afs_linux_lock(struct file *fp, int cmd, struct file_lock *flp)
     AFS_GLOCK();
     code = afs_lockctl(vcp, &flock, cmd, credp);
     AFS_GUNLOCK();
+
+    /* Convert flock back to Linux's file_lock */
+    flp->fl_type = flock.l_type;
+    flp->fl_pid = flock.l_pid;
+    flp->fl_start = flock.l_start;
+    flp->fl_end = flock.l_start + flock.l_len;
+
     crfree(credp);
     return -code;
     
