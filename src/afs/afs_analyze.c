@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.7 2001/09/18 04:26:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.8 2001/11/01 04:01:22 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -448,6 +448,10 @@ int afs_Analyze(aconn, acode, afid, areq, op, locktype, cellp)
     /* If network troubles, mark server as having bogued out again. */
     /* VRESTARTING is < 0 because of backward compatibility issues 
      * with 3.4 file servers and older cache managers */
+#ifdef AFS_64BIT_CLIENT
+    if (acode == -455)
+        acode = 455;
+#endif /* AFS_64BIT_CLIENT */
     if ((acode < 0) && (acode != VRESTARTING)) { 
 	afs_ServerDown(sa);
 	ForceNewConnections(sa); /*multi homed clients lock:afs_xsrvAddr?*/

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.5 2001/07/12 19:58:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.6 2001/11/01 04:02:18 shadow Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -80,6 +80,7 @@ RCSID("$Header: /cvs/openafs/src/dir/dir.c,v 1.5 2001/07/12 19:58:34 shadow Exp 
 #include "../h/mbuf.h"
 #endif
 #else /* !defined(UKERNEL) */
+#include "../afs/stds.h"
 #include "../afs/sysincludes.h"
 #endif /* !defined(UKERNEL) */
 #include "../afs/afs_osi.h"

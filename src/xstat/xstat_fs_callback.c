@@ -25,7 +25,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_callback.c,v 1.4 2001/07/12 19:59:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_callback.c,v 1.5 2001/11/01 04:02:32 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>			/*Standard I/O stuff*/
@@ -217,7 +217,7 @@ afs_int32 SRXAFSCB_Probe(rxcall)
 
 
 /*------------------------------------------------------------------------
- * SRXAFSCB_GetCE
+ * SRXAFSCB_GetCE64
  *
  * Description:
  *	Respond minimally to a request for returning the contents of
@@ -237,13 +237,36 @@ afs_int32 SRXAFSCB_Probe(rxcall)
  *	As advertised.
  *------------------------------------------------------------------------*/
 
+afs_int32 SRXAFSCB_GetCE64(rxcall)
+    struct rx_call *rxcall;
+
+{ /*SRXAFSCB_GetCE64*/
+
+#if XSTAT_FS_CALLBACK_VERBOSE
+    static char rn[] = "SRXAFSCB_GetCE64";		/*Routine name*/
+    char hostName[256];				/*Host name buffer*/
+    char *hostNameResult;			/*Ptr to static*/
+
+    if (rxcall != (struct rx_call *)0) {
+	hostNameResult =
+	    hostutil_GetNameByINet((afs_int32)(rxcall->conn->peer->host));
+	strcpy(hostName, hostNameResult);
+	fprintf(stderr, "[%s:%s] Called from host %s, port %d\n",
+		mn, rn, hostName, rxcall->conn->peer->port);
+    } /*Valid rxcall param*/
+#endif /* XSTAT_FS_CALLBACK_VERBOSE */
+
+    return(0);
+
+} /*SRXAFSCB_GetCE64*/
+
 afs_int32 SRXAFSCB_GetCE(rxcall)
     struct rx_call *rxcall;
 
 { /*SRXAFSCB_GetCE*/
 
 #if XSTAT_FS_CALLBACK_VERBOSE
-    static char rn[] = "SRXAFSCB_GetCE";		/*Routine name*/
+    static char rn[] = "SRXAFSCB_GetCE";	/*Routine name*/
     char hostName[256];				/*Host name buffer*/
     char *hostNameResult;			/*Ptr to static*/
 

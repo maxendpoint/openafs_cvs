@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_vfsops.c,v 1.4 2001/07/12 19:58:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_vfsops.c,v 1.5 2001/11/01 04:01:26 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -58,6 +58,9 @@ static int afs_mount(afsp, path, data)
 
     afs_globalVFS = afsp;
     afsp->vfs_bsize = 8192;
+#ifdef AFS_64BIT_CLIENT
+    afsp->vfs_flag |= VFS_DEVMOUNT;
+#endif /* AFS_64BIT_CLIENT */
 
     afsp->vfs_fsid.val[0] = AFS_VFSMAGIC; /* magic */
     afsp->vfs_fsid.val[1] = AFS_VFSFSID; 

@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.12 2001/09/06 19:07:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.13 2001/11/01 04:01:54 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -90,7 +90,7 @@ int osi_InitCacheInfo(char *aname)
 
     cacheInode = dp->d_inode->i_ino;
     cacheDev.dev = dp->d_inode->i_dev;
-    afs_fsfragsize = dp->d_inode->i_sb->s_blocksize;
+    afs_fsfragsize = dp->d_inode->i_sb->s_blocksize - 1;
     afs_cacheSBp = dp->d_inode->i_sb;
 
     dput(dp);
@@ -192,7 +192,7 @@ int osi_file_uio_rdwr(struct osi_file *osifile, uio_t *uiop, int rw)
  * Setup a uio struct.
  */
 void setup_uio(uio_t *uiop, struct iovec *iovecp, char *buf,
-			     int pos, int count, uio_flag_t flag,
+			     afs_offs_t pos, int count, uio_flag_t flag,
 			     uio_seg_t seg)
 {
     iovecp->iov_base = buf;

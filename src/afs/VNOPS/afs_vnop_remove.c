@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.5 2001/10/08 22:15:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.6 2001/11/01 04:02:05 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -50,9 +50,9 @@ static void FetchWholeEnchilada(avc, areq)
 #endif
 struct vrequest *areq;
 register struct vcache *avc; {
-    register afs_int32 nextChunk, pos;
+    register afs_int32 nextChunk;
     register struct dcache *tdc;
-    afs_int32 offset, len;
+    afs_size_t pos, offset, len;
 
     AFS_STATCNT(FetchWholeEnchilada);
     if ((avc->states & CStatd) == 0) return;	/* don't know size */
@@ -260,7 +260,7 @@ tagain:
 	return code;
     }
 
-    tdc	= afs_GetDCache(adp, 0,	&treq, &offset,	&len, 1);  /* test for error below */
+    tdc	= afs_GetDCache(adp, (afs_size_t) 0,	&treq, &offset,	&len, 1);  /* test for error below */
     ObtainWriteLock(&adp->lock,142);
 
     /*

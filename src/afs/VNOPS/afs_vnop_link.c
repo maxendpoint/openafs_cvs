@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.4 2001/07/12 19:58:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.5 2001/11/01 04:02:05 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -53,7 +53,7 @@ afs_link(avc, OSI_VC_ARG(adp), aname, acred)
     register struct dcache *tdc;
     register afs_int32 code;
     register struct conn *tc;
-    afs_int32 offset, len;
+    afs_size_t offset, len;
     struct AFSFetchStatus OutFidStatus, OutDirStatus;
     struct AFSVolSync tsync;
     XSTATS_DECLS
@@ -79,7 +79,7 @@ afs_link(avc, OSI_VC_ARG(adp), aname, acred)
 	goto done;
     }
 
-    tdc	= afs_GetDCache(adp, 0,	&treq, &offset,	&len, 1);  /* test for error below */
+    tdc	= afs_GetDCache(adp, (afs_size_t) 0, &treq, &offset, &len, 1);  /* test for error below */
     ObtainWriteLock(&adp->lock,145);
     do {
 	tc = afs_Conn(&adp->fid, &treq, SHARED_LOCK);
@@ -147,6 +147,6 @@ done:
 #ifdef	AFS_OSF_ENV
     afs_PutVCache(adp, WRITE_LOCK);
 #endif	/* AFS_OSF_ENV */
-    return afs_CheckCode(code, &treq);
+    return afs_CheckCode(code, &treq, 24);
 }
 

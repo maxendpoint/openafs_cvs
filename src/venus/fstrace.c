@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.7 2001/08/08 00:04:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.8 2001/11/01 04:02:31 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -310,6 +310,7 @@ static DisplayRecord(outFilep, alp, rsize)
 	    printfParms[pfpix++] = alp[pix];
 	    break;
 	case ICL_TYPE_HYPER:
+	case ICL_TYPE_INT64:
 	    printfTypes[pftix++] = 0;
 	    printfParms[pfpix++] = alp[pix];
 	    printfTypes[pftix++] = 0;
@@ -472,6 +473,7 @@ static DisplayRecord(outFilep, alp, rsize)
 #endif /* AFS_SGI61_ENV */
 		    break;
 		case ICL_TYPE_HYPER:
+		case ICL_TYPE_INT64:
 		    fprintf(outFilep, "p%d:%x.%x ", i, alp[pix], alp[pix+1]);
 		    break;
 		case ICL_TYPE_FID:

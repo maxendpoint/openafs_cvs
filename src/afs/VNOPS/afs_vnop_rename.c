@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.4 2001/07/12 19:58:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.5 2001/11/01 04:02:05 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -102,7 +102,7 @@ tagain:
      * fileFid in order to handle ".." invalidation at the very end.
      */
     code = 0;
-    tdc1 = afs_GetDCache(aodp, 0, &treq, &offset, &len, 0);
+    tdc1 = afs_GetDCache(aodp, (afs_size_t) 0, &treq, &offset, &len, 0);
     if (!tdc1) {
 	code = ENOENT;
     }

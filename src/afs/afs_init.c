@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.11 2001/08/08 00:03:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.12 2001/11/01 04:01:22 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -223,6 +223,11 @@ afs_CacheInit(astatSize, afiles, ablocks, aDentries, aVolumes, achunk, aflags,
     afs_cacheStats = astatSize;
     afs_vcacheInit(astatSize);
     afs_dcacheInit(afiles, ablocks, aDentries, achunk, aflags);
+#ifdef AFS_64BIT_CLIENT
+#ifdef AFS_VM_RDWR_ENV
+    afs_vmMappingEnd = AFS_CHUNKBASE(0x7fffffff);
+#endif /* AFS_VM_RDWR_ENV */
+#endif /* AFS_64BIT_CLIENT */
 
 #if defined(AFS_AIX_ENV)
     {

@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.5 2001/07/12 19:58:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.6 2001/11/01 04:02:05 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -192,7 +192,8 @@ afs_access(OSI_VC_ARG(avc), amode, acred)
 
     AFS_STATCNT(afs_access);
     afs_Trace3(afs_iclSetp, CM_TRACE_ACCESS, ICL_TYPE_POINTER, avc, 
-	       ICL_TYPE_INT32, amode, ICL_TYPE_INT32, avc->m.Length);
+		ICL_TYPE_INT32, amode,
+		ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(avc->m.Length));
     if (code = afs_InitReq(&treq, acred)) return code;
 
     code = afs_VerifyVCache(avc, &treq);
