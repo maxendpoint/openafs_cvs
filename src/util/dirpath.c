@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.9 2001/09/07 03:19:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.10 2001/09/08 04:31:32 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -158,7 +158,7 @@ static void initDirPathArray(void)
 
     /* setup top level dirpath (/usr equivalent); valid for server ONLY */
     strcpy(dirPathArray[AFSDIR_USR_DIRPATH_ID], ntServerInstallDirShort);
-    serverPrefix = ntInstallDirShort;
+    serverPrefix = ntServerInstallDirShort;
     strcat(dirPathArray[AFSDIR_USR_DIRPATH_ID], AFSDIR_CANONICAL_USR_DIRPATH);
 
 #else /* AFS_NT40_ENV */
