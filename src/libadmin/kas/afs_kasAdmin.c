@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.11 2004/12/10 09:47:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/kas/afs_kasAdmin.c,v 1.12 2004/12/10 10:47:17 shadow Exp $");
 
 #include <stdio.h>
 
@@ -1274,7 +1274,7 @@ kas_PrincipalUnlock(const void *cellHandle, const void *serverHandle,
 	tst =
 	    ubik_CallIter(KAM_Unlock, kaserver.servers, 0, &count,
 			  who->principal, who->instance, 0, 0, 0, 0, 0, 0,
-			  0, 0, 0, 0, 0, 0, 0, 0, 0);
+			  0, 0, 0, 0, 0, 0, 0, 0);
 	if (tst && (tst != UNOSERVERS)) {
 	    if (save_tst == 0) {
 		save_tst = tst;	/* save the first failure */
