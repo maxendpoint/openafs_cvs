@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.44 2004/11/06 06:43:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.45 2004/11/08 19:59:57 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -1589,7 +1589,8 @@ GetInodeSummary(char *path, VolumeId singleVolumeNumber)
     }
     if (!canfork || debug || Fork() == 0) {
 	int nInodes;
-	nInodes = status.st_size / sizeof(struct ViceInodeInfo);
+	unsigned long st_size=(unsigned long) status.st_size;
+	nInodes = st_size / sizeof(struct ViceInodeInfo);
 	if (nInodes == 0) {
 	    fclose(summaryFile);
 	    close(inodeFd);
@@ -1598,7 +1599,7 @@ GetInodeSummary(char *path, VolumeId singleVolumeNumber)
 		RemoveTheForce(fileSysPath);
 	    else {
 		struct VolumeSummary *vsp;
-		int i, j;
+		int i;
 
 		GetVolumeSummary(singleVolumeNumber);
 
@@ -1611,7 +1612,6 @@ GetInodeSummary(char *path, VolumeId singleVolumeNumber)
 		singleVolumeNumber ? "No applicable" : "No", dev);
 	    return -1;
 	}
-	unsigned long st_size=(unsigned long) status.st_size;
 	ip = (struct ViceInodeInfo *)malloc(nInodes*sizeof(struct ViceInodeInfo));
 	if (ip == NULL) {
 	    fclose(summaryFile);
