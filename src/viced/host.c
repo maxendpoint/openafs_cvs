@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.8 2001/10/05 21:10:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.9 2001/10/05 21:25:24 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -114,8 +114,10 @@ static void GetCEBlock()
     register int i;
 
     block = (struct CEBlock *)malloc(sizeof(struct CEBlock));
-    if (!block)
+    if (!block) {
+	ViceLog(0, ("Failed malloc in GetCEBlock\n"));
 	ShutDownAndCore(PANIC);
+    }
 
     for(i = 0; i < (CESPERBLOCK -1); i++) {
 	Lock_Init(&block->entry[i].lock);
@@ -137,8 +139,10 @@ static struct client *GetCE()
 
     if (CEFree == 0)
 	GetCEBlock();
-    if (CEFree == 0)
+    if (CEFree == 0) {
+	ViceLog(0, ("CEFree NULL in GetCE\n"));
 	ShutDownAndCore(PANIC);
+    }
 
     entry = CEFree;
     CEFree = entry->next;
@@ -193,8 +197,10 @@ static void GetHTBlock()
     static int index = 0;
 
     block = (struct HTBlock *)malloc(sizeof(struct HTBlock));
-    if (!block)
+    if (!block) {
+	ViceLog(0, ("Failed malloc in GetHTBlock\n"));
 	ShutDownAndCore(PANIC);
+    }
 
 #ifdef AFS_PTHREAD_ENV
     for(i=0; i < (h_HTSPERBLOCK); i++)
