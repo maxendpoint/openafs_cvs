@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.41 2004/03/11 07:20:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.42 2004/03/19 07:58:52 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -40,10 +40,7 @@ lock_t afs_event_lock;
 flid_t osi_flid;
 #endif
 
-#ifndef AFS_SGI_ENV
-/* I'm unsure where it's really coming from on Irix; afs_osi.h conflicts... */
 struct AFS_UCRED *afs_osi_credp;
-#endif
 
 void
 osi_Init(void)
