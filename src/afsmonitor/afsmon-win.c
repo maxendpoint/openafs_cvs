@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmon-win.c,v 1.7 2002/08/21 18:12:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsmonitor/afsmon-win.c,v 1.8 2003/03/27 20:29:51 rees Exp $");
 
 #include <stdio.h>
 #include <signal.h>
@@ -1052,13 +1052,13 @@ create_ovwFrame_objects()
 	fflush(debugFD);
     }
 
-   /* get frame dimensions, it must be atleast 80x10 for any sensible output*/
+   /* get frame dimensions, it must be atleast 80x12 for any sensible output*/
    WOP_GETDIMENSIONS(ovwFrame->window,&frameDims);
    maxX = frameDims.maxx;
    maxY = frameDims.maxy;
-   if (maxX < MINX || maxY < MINY) {
-	sprintf(errMsg1,"[ %s ] Window size must be atleaset 80x12\n",
-		rn);
+   if (maxX + 1 < MINX || maxY + 1 < MINY) {
+	sprintf(errMsg1,"[ %s ] Window size %dx%d; must be at least 80x12\n",
+		rn, maxX + 1, maxY + 1);
 	return(-1);
    }
    if (afsmon_debug)
