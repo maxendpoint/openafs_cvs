@@ -32,7 +32,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.12 2001/10/05 20:44:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.13 2001/10/09 05:56:43 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -801,10 +801,13 @@ void afs_SortServers(struct server *aservers[], int count)
     for (i=0; i<count; i++) {
        if (!aservers[i]) break;
        for (low=i,j=i+1; j<=count; j++) {
-	  if (!aservers[j]) break;
-	  if (aservers[j]->addr->sa_iprank < aservers[low]->addr->sa_iprank) {
-	     low = j;
-	  }
+	   if ((!aservers[j]) || (!aservers[j]->addr)) 
+	       break;
+	   if ((!aservers[low]) || (!aservers[low]->addr))
+	       break;
+	   if (aservers[j]->addr->sa_iprank < aservers[low]->addr->sa_iprank) {
+	       low = j;
+	   }
        }
        if (low != i) {
 	  ts = aservers[i]; 
