@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.94 2005/01/16 16:49:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.95 2005/01/25 06:54:31 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -518,6 +518,9 @@ afs_linux_mmap(struct file *fp, struct vm_area_struct *vmap)
     if (!code)
 	code = afs_VerifyVCache(vcp, &treq);
 
+    if (!code && (vcp->states & CRO) && 
+	(vmap->vm_file->f_flags & (FWRITE | FTRUNC)))
+	code = EACCES;
 
     if (code)
 	code = -code;
