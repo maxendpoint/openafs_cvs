@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.11 2001/08/16 01:01:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.12 2001/09/06 19:07:12 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -49,11 +49,10 @@ int osi_lookupname(char *aname, uio_seg_t seg, int followlink,
 
     if (!code) {
 	if (nd.dentry->d_inode) {
-	    *dpp = nd.dentry;
+	    *dpp = dget(nd.dentry);
 	    code = 0;
 	}
-	else
-	    path_release(&nd);
+	path_release(&nd);
     }
 #else
     if (seg == AFS_UIOUSER) {
