@@ -39,7 +39,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.22 2003/12/07 22:49:43 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.23 2003/12/08 06:09:12 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -136,6 +136,8 @@ static int FindHandler();
 static int FindHandler_r();
 static int RemoveHandler();
 static void GetHandler(fd_set * fdsetp, int *maxfdp);
+
+extern int LogLevel;
 
 /*
  * This lock controls access to the handler array. The overhead
