@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.26 2002/09/30 20:01:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.27 2002/09/30 20:05:00 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -2340,12 +2340,16 @@ RetryLookup:
 #endif /* AFS_NOSTATS */
 
 	tdc->dflags &= ~DFFetching;
+#ifdef AFS_AIX_ENV
 	if (afs_osi_Wakeup(&tdc->validPos) == 0)
 	    afs_Trace4(afs_iclSetp, CM_TRACE_DCACHEWAKE,
 		       ICL_TYPE_STRING, __FILE__,
 		       ICL_TYPE_INT32, __LINE__,
 		       ICL_TYPE_POINTER, tdc,
 		       ICL_TYPE_INT32, tdc->dflags);
+#else
+	    afs_osi_Wakeup(&tdc->validPos);
+#endif
 	if (avc->execsOrWriters == 0) tdc->f.states &= ~DWriting;
 
 	/* now, if code != 0, we have an error and should punt.
