@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.38 2002/10/16 22:22:44 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.39 2002/10/17 23:04:56 rees Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -635,7 +635,7 @@ void rxi_StartServerProcs(int nExistingProcs)
 void rx_StartServer(int donateMe)
 {
     register struct rx_service *service;
-    register int i;
+    register int i, nProcs=0;
     SPLVAR;
     clock_NewTime();
 
