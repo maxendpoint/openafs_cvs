@@ -16,7 +16,7 @@
 #endif
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.4 2001/07/05 15:20:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.5 2001/07/11 17:45:04 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -136,9 +136,6 @@ char *ktc_tkt_string();
 
 #ifdef KERNEL_KTC_COMPAT
 
-/* In case there is no include file. */
-#ifdef MAYBE_NO_KTC
-
 #ifndef KTC_SYSCALL
 #define KTC_SYSCALL 	32
 #endif
@@ -155,10 +152,6 @@ char *ktc_tkt_string();
 #define KTC_GC_OP		(7+KTC_OPCODE_BASE)
 
 #define KTC_INTERFACE_VERSION 3
-
-#else
-#include <afs/ktc.h>
-#endif
 
 /* We have to determine if the kernel supports the ktc system call.  To do so
  * we attempt to execute its noop function.  If this is successful we use the
