@@ -16,7 +16,11 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.11 2002/06/08 04:43:40 shadow Exp $");
+#ifdef AFS_SUN59_ENV
+#include <sys/time_impl.h>
+#endif
+
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.12 2002/06/12 00:03:30 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
