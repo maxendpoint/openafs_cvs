@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.8 2003/07/15 23:14:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.9 2003/08/08 20:01:25 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -775,7 +775,7 @@ PromptForTape(flag, name, dbDumpId, taskId, tapecount)
 	while (1) {
 	    if (time(0) > start + BELLTIME) {
 		start = time(0);
-		FFlushInput(stdin);
+		FFlushInput();
 		putchar(BELLCHAR);
 		fflush(stdout);
 	    }
