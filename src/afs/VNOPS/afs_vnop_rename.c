@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.5 2001/11/01 04:02:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.6 2001/11/01 04:40:02 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -40,7 +40,7 @@ afsrename(aodp, aname1, andp, aname2, acred)
     register afs_int32 code;
     afs_int32 returnCode;
     int oneDir, doLocally;
-    afs_int32 offset, len;
+    afs_size_t offset, len;
     struct VenusFid unlinkFid, fileFid;
     struct vcache *tvc;
     struct dcache *tdc1, *tdc2;
