@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.28 2004/04/12 16:04:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.29 2004/04/12 19:42:19 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -396,30 +396,29 @@ osi_iput(struct inode *ip)
     extern struct vfs *afs_globalVFS;
 
     AFS_GLOCK();
+
+    if (afs_globalVFS && ip->i_sb != afs_globalVFS)
+	osi_Panic("IPUT Not an afs inode\n");
+
 #if defined(AFS_LINUX24_ENV)
-    if (atomic_read(&ip->i_count) == 0
-	|| atomic_read(&ip->i_count) & 0xffff0000) {
+    if (atomic_read(&ip->i_count) == 0)
 #else
-    if (ip->i_count == 0 || ip->i_count & 0xffff0000) {
+    if (ip->i_count == 0)
 #endif
 	osi_Panic("IPUT Bad refCount %d on inode 0x%x\n",
 #if defined(AFS_LINUX24_ENV)
-		  atomic_read(&ip->i_count), ip);
+		  atomic_read(&ip->i_count),
 #else
-		  ip->i_count, ip);
+		  ip->i_count,
 #endif
-    }
-    if (afs_globalVFS && afs_globalVFS == ip->i_sb) {
+				ip);
+
 #if defined(AFS_LINUX24_ENV)
-	atomic_dec(&ip->i_count);
-	if (!atomic_read(&ip->i_count))
+    if (atomic_dec_and_test(&ip->i_count))
 #else
-	ip->i_count--;
-	if (!ip->i_count)
+    if (!--ip->i_count)
 #endif
 	    osi_clear_inode(ip);
-    } else
-	iput(ip);
     AFS_GUNLOCK();
 }
 

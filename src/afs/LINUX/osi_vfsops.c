@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.25 2004/04/12 16:04:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.26 2004/04/12 19:42:19 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -259,10 +259,10 @@ static LIST_HEAD(dummy_inode_list);
  * has synced some pages of a file to disk.
  */
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
-void
+static void
 afs_write_inode(struct inode *ip, int unused)
 #else
-void
+static void
 afs_write_inode(struct inode *ip)
 #endif
 {
@@ -275,6 +275,22 @@ afs_write_inode(struct inode *ip)
 }
 
 
+#if defined(AFS_LINUX26_ENV)
+static void
+afs_destroy_inode(struct inode *ip)
+{
+    /* afs inodes cannot be destroyed */
+}
+
+static void
+afs_clear_inode(struct inode *ip)
+{
+    AFS_GLOCK();
+    osi_clear_inode(ip);
+    AFS_GUNLOCK();
+}
+#else
+
 /* afs_put_inode
  * called from iput when count goes to zero. Linux version of inactive.
  * For Linux 2.2, this funcionality has moved to the delete inode super op.
@@ -282,7 +298,7 @@ afs_write_inode(struct inode *ip)
  * That will trigger the call to delete routine.
  */
 
-void
+static void
 afs_delete_inode(struct inode *ip)
 {
     struct vcache *vp = ITOAFS(ip);
@@ -291,11 +307,12 @@ afs_delete_inode(struct inode *ip)
     osi_clear_inode(ip);
     AFS_GUNLOCK();
 }
+#endif
 
 
 /* afs_put_super
  * Called from unmount to release super_block. */
-void
+static void
 afs_put_super(struct super_block *sbp)
 {
     extern int afs_afs_cold_shutdown;
@@ -383,10 +400,12 @@ afs_umount_begin(struct super_block *sbp)
 
 struct super_operations afs_sops = {
 #if defined(AFS_LINUX26_ENV)
-  .drop_inode =		generic_delete_inode,
+  .destroy_inode =	afs_destroy_inode,
+  .clear_inode =	afs_clear_inode,
+#else
+  .delete_inode =	afs_delete_inode,
 #endif
   .write_inode =	afs_write_inode,
-  .delete_inode =	afs_delete_inode,
   .put_super =		afs_put_super,
   .statfs =		afs_statfs,
   .umount_begin =	afs_umount_begin
