@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.21 2001/11/01 05:24:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.22 2001/11/10 18:21:59 shadow Exp $");
 
 #define VFS 1
 
@@ -806,6 +806,10 @@ static int doSweepAFSCache(vFilesFound,directory,dirNum,maxDir)
 		  (strcmp(currp->d_name,         ".tags") == 0) ||
 		  (strcmp(currp->d_name,         "quota.user") == 0) ||
 		  (strcmp(currp->d_name,         "quota.group") == 0) ||
+#endif
+#ifdef AFS_LINUX22_ENV
+		  /* this is the ext3 journal file */
+		  (strcmp(currp->d_name,         ".journal") == 0) ||
 #endif
 		  (strcmp(currp->d_name, "lost+found") == 0)) {
 	    /*
