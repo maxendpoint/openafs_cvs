@@ -3,7 +3,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.13 2003/06/19 17:35:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.14 2003/06/19 23:37:32 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
@@ -11,7 +11,7 @@ RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.13 2003/06/19 17:35:49 shad
 #include <ctype.h>
 #include <netinet/in.h>
 #include <netdb.h>
-#if defined(AFS_AIX32_ENV) || defined(AFS_SUN_ENV)
+#if defined(AFS_AIX32_ENV) || defined(AFS_SUN_ENV) || defined(AFS_XBSD_ENV)
 #include <sys/socket.h>
 #endif
 
