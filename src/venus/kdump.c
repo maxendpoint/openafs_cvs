@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.16 2001/11/01 04:02:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.17 2001/11/01 05:18:30 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>	/* for malloc() */
@@ -2259,9 +2259,9 @@ void print_cell(kmem, clep, ptr, pnt)
     cellName[40] = 0;
     Sum_cellnames += strlen(cellName)+1;
     if (pnt) {
-	printf("%lx: cell=%s, cellname=%s, states=%x, cindex=%d fsport=%d vlport=%d\n", ptr,
+	printf("%lx: cell=%s, cellname=%s, states=%x, cindex=%d fsport=%d vlport=%d timeout=%d\n", ptr,
 	       PrintIPAddr(clep->cell), cellName, clep->states, clep->cellIndex,
-	       clep->fsport, clep->vlport);
+	       clep->fsport, clep->vlport, clep->timeout);
 #ifdef	AFS33
 	if (clep->lcellp)
 	    printf("\tlinked cellp %lx\n", clep->lcellp);
