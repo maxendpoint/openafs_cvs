@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.29 2004/12/01 23:38:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.30 2005/03/08 21:57:41 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -237,14 +237,14 @@ LookupInodeByPath(char *filename, ino_t * inode, struct vnode **fvpp)
 
 #ifdef AFS_LINUX22_ENV
     struct dentry *dp;
-    code = gop_lookupname(filename, AFS_UIOSYS, 0, NULL, &dp);
+    code = gop_lookupname(filename, AFS_UIOSYS, 0, &dp);
     if (code)
 	return code;
     *inode = dp->d_inode->i_ino;
     dput(dp);
 #else
     struct vnode *filevp;
-    code = gop_lookupname(filename, AFS_UIOSYS, 0, NULL, &filevp);
+    code = gop_lookupname(filename, AFS_UIOSYS, 0, &filevp);
     if (code)
 	return code;
     *inode = afs_vnodeToInumber(filevp);
@@ -364,7 +364,7 @@ afs_InitCacheInfo(register char *afile)
     if (code)
 	return code;
 #else
-    code = gop_lookupname(afile, AFS_UIOSYS, 0, NULL, &filevp);
+    code = gop_lookupname(afile, AFS_UIOSYS, 0, &filevp);
     if (code || !filevp)
 	return ENOENT;
     {
