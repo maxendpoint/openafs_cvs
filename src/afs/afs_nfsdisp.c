@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.6 2002/10/11 21:31:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.7 2002/10/14 21:31:09 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
@@ -42,7 +42,17 @@ extern int afs_NFSRootOnly;
 
 struct rfs_disp_tbl {
     void (*dis_proc)();
+    xdrproc_t dis_xdrargs;
+    xdrproc_t dis_fastxdrargs;
+    int       dis_argsz;           
+    xdrproc_t dis_xdrres;          
+    xdrproc_t dis_fastxdrres;      
+    int       dis_ressz;           
+    void      (*dis_resfree)();    
+    int       dis_flags;
+    fhandle_t (*dis_getfh)();      
 };
+
 struct afs_nfs_disp_tbl {
     void (*afs_proc)();
     void (*orig_proc)();
@@ -781,7 +791,7 @@ nfs3_to_afs_call(int which, caddr_t *args, nfs_fh3 **fhpp, nfs_fh3 **fh2pp)
 	    *fh2pp = fhp2;
 	return 1;
     }
-    if (is_afs_fh3(fhp2)) {
+    if (fhp2 && is_afs_fh3(fhp2)) {
 	*fhpp = fhp1;
 	*fh2pp = fhp2;
 	return 1;
@@ -835,16 +845,17 @@ afs_nfs3_dispatcher(int type, afs_int32 which, char *argp,
 	return 2;
     
     sa = (struct sockaddr *)svc_getrpccaller(rp->rq_xprt)->buf;
-    client = ((struct sockaddr_in *)sa)->sin_addr.s_addr;
+    if (sa->sa_family == AF_INET) 
+	client = ((struct sockaddr_in *)sa)->sin_addr.s_addr;
     
     AFS_GLOCK();
     code = 0;
     switch (type) {
     case 0:
-	code = nfs3_to_afs_call(which, argp, &fh, &fh2);
+	code = (client && nfs3_to_afs_call(which, argp, &fh, &fh2));
 	break;
     case 1:
-	code = acl3_to_afs_call(which, argp, &fh);
+	code = (client && acl3_to_afs_call(which, argp, &fh));
 	break;
     default:
 	break;
