@@ -56,7 +56,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.41 2004/05/08 04:12:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.42 2004/07/08 04:52:38 shadow Exp $");
 
 #define VFS 1
 
@@ -1049,6 +1049,8 @@ CheckCacheBaseDir(char *dir)
 	}
 	if (statfsbuf.f_type == 0x52654973) {	/* REISERFS_SUPER_MAGIC */
 	    return "cannot use reiserfs as cache partition";
+	} else if  (statfsbuf.f_type == 0x58465342) { /* XFS_SUPER_MAGIC */
+	    return "cannot use xfs as cache partition";
 	}
     }
 #endif
@@ -1638,7 +1640,7 @@ mainproc(as, arock)
     sprintf(fullpn_VFile, "%s/", cacheBaseDir);
     vFilePtr = fullpn_VFile + strlen(fullpn_VFile);
 
-    if ((fsTypeMsg = CheckCacheBaseDir(cacheBaseDir))) {
+    if  (!(cacheFlags & AFSCALL_INIT_MEMCACHE) && (fsTypeMsg = CheckCacheBaseDir(cacheBaseDir))) {
 	printf("%s: WARNING: Cache dir check failed (%s)\n", rn, fsTypeMsg);
     }
 #if 0
