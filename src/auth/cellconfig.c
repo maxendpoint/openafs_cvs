@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.15 2001/09/17 19:42:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.16 2001/09/17 20:59:46 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -191,6 +191,9 @@ register struct afsconf_dir *adir; {
 static afsconf_Touch(adir)
 register struct afsconf_dir *adir; {
     char tbuffer[256];
+#ifndef AFS_NT40_ENV
+    struct timeval tvp[2];
+#endif
 
     adir->timeRead = 0;	/* just in case */
 
