@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.63 2003/03/28 09:35:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.64 2003/04/08 21:38:18 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -874,13 +874,14 @@ Check_PermissionRights(Vnode *targetptr,
 			} else
 #endif
 		if ((targetptr->disk.type != vDirectory)
-		    && (!(targetptr->disk.modeBits & OWNERWRITE)))
+		    && (!(targetptr->disk.modeBits & OWNERWRITE))) {
 		  if (readonlyServer)
 		    return(VREADONLY);
 		  if (VanillaUser(client))
 		    return(EACCES);
 		  else osi_audit( PrivilegeEvent, 0, AUD_INT, (client ? client->ViceId : 0),
 				                     AUD_INT, CallingRoutine, AUD_END);
+		}
 	      }
 	      else {  /* a status store */
 		if (readonlyServer)
