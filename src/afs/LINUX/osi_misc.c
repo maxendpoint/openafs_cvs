@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.34.2.3 2005/02/21 01:13:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.34.2.4 2005/03/11 04:37:17 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -415,7 +415,9 @@ osi_clear_inode(struct inode *ip)
     afs_InactiveVCache(vcp, credp);
     ObtainWriteLock(&vcp->lock, 504);
     ip->i_nlink = 0;		/* iput checks this after calling this routine. */
+#ifdef I_CLEAR
     ip->i_state = I_CLEAR;
+#endif
     ReleaseWriteLock(&vcp->lock);
     crfree(credp);
 }
