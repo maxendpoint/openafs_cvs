@@ -43,7 +43,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.12 2003/08/08 20:40:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.13 2003/12/05 08:36:06 shadow Exp $");
 
 #include <afs/afsint.h>
 #include <afs/nfs.h>
@@ -147,7 +147,7 @@ readdata(buffer, size)
 	    if (code < 0)
 		fprintf(stderr, "Code = %d; Errno = %d\n", code, errno);
 	    else
-		fprintf(stderr, "Read %d bytes out of %d\n", code, size);
+		fprintf(stderr, "Read %d bytes out of %lld\n", code, (afs_uintmax_t)size);
 	}
 	if ((code >= 0) && (code < BUFSIZE))
 	    buffer[size] = 0;	/* Add null char at end */
