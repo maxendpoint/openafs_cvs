@@ -18,11 +18,12 @@
 
 
 CD = cd
-NTMAKE = nmake /nologo /f ntmakefile install
-NTMAKELANG = nmake /nologo /f ntmakefile en_US
+NTMAKE = nmake /nologo /f ntmakefile install9x
+NTMAKELANG = nmake /nologo /f ntmakefile en_install
 NTMAKE_HEADERS = nmake /nologo /f ntmakefile install_headers
+NTMAKE_LIBUTILS = nmake /nologo /f ntmakefile install_libutils
 MKDIR = mkdir
-OBJ = obj
+OBJ = src
 
 # Standard install directory.
 !IFDEF AFSDEV_DESTDIR
@@ -193,7 +194,7 @@ ubik: auth
 ptserver: ubik
      echo ***** $@
 	$(CD) $(OBJ)\$@
-	$(NTMAKE)
+	$(NTMAKE_LIBUTILS)
 	$(CD) ..\..	
 
 libacl: ptserver
@@ -211,7 +212,7 @@ kauth: libacl
 vlserver: kauth
      echo ***** $@
 	$(CD) $(OBJ)\$@
-	$(NTMAKE)
+	$(NTMAKE_LIBUTILS)
 	$(CD) ..\..
 
 usd: vlserver
@@ -220,84 +221,7 @@ usd: vlserver
 	$(NTMAKE)
 	$(CD) ..\..
 
-bubasics: usd
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-budb:	bubasics
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-butm:  budb
-     echo ***** $@
-        $(CD) $(OBJ)\$@
-        $(NTMAKE)
-        $(CD) ..\..
-
-dir: butm
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-vol: dir
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-volser: vol
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-viced: volser
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-update: viced
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-bucoord: update
-     echo ***** $@
-        $(CD) $(OBJ)\$@
-        $(NTMAKE)
-        $(CD) ..\..
-
-butc:   bucoord
-     echo ***** $@
-        $(CD) $(OBJ)\$@
-        $(NTMAKE)
-        $(CD) ..\..
-
-bozo: butc
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-bosctlsvc: bozo
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-bu_utils: bosctlsvc
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-
-libafsrpc: bu_utils
+libafsrpc: usd
      echo ***** $@
 	$(CD) $(OBJ)\$@
 	$(NTMAKE)
@@ -309,121 +233,13 @@ libafsauthent: libafsrpc
 	$(NTMAKE)
 	$(CD) ..\..
 
-tviced: libafsauthent
+libadmin: libafsauthent
      echo ***** $@
 	$(CD) $(OBJ)\$@
 	$(NTMAKE)
 	$(CD) ..\..
 
-tbutc:  tviced
-     echo ***** $@
-        $(CD) $(OBJ)\$@
-        $(NTMAKE)
-        $(CD) ..\..
-
-libadmin: tbutc
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..
-	
-adminutil: libadmin
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-	
-vos: adminutil
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-	
-client: vos
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-	
-kas: client
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-	
-pts: kas
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-	
-bos: pts
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-cfg: bos
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-admintest: cfg
-     echo ***** $@
-	$(CD) $(OBJ)\libadmin\test
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-talocale: admintest
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-license: talocale
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-afsadmsvr: license
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-afsusrmgr: afsadmsvr
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-afssvrmgr: afsusrmgr
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-afssvrcfg: afssvrmgr
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-afssvrcpa: afssvrcfg
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-afs_setup_utils: afssvrcpa
-     echo ***** $@
-	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
-	$(CD) ..\..\..
-
-client_talocale: afs_setup_utils
+client_talocale: libadmin
      echo ***** $@
 	$(CD) $(OBJ)\WINNT\talocale
 	$(NTMAKE)
@@ -438,7 +254,7 @@ client_osi: client_talocale
 afsd: client_osi
      echo ***** $@
 	$(CD) $(OBJ)\WINNT\$@
-	$(NTMAKE)
+	$(NTMAKE_LIBUTILS)
 	$(CD) ..\..\..
 
 client_cpa: afsd
@@ -459,38 +275,45 @@ client_exp: client_config
 	$(NTMAKE)
 	$(CD) ..\..\..
 
-client_creds: client_exp
-     echo ***** $@
+
+#Leave last echo in - it helps the build reconize the last $(CD)
+win9xpanel :
+	echo ***** $@
 	$(CD) $(OBJ)\WINNT\$@
 	$(NTMAKE)
 	$(CD) ..\..\..
+	echo ***** End of Build 
 
-finale: client_creds
-     echo ***** $@
-	$(CD) $(OBJ)\$@
-	$(NTMAKE)
-	$(CD) ..\..	
+install: start client_exp win9xpanel
 
-install: start finale
+install9x: install
 
 # InstallShield dependencies
 
-InstallShield5: install
+#Leave last echo in - it helps the build reconize the last $(CD)
+Win9x::
 	$(CD) $(OBJ)\WINNT\install\$@
-	$(NTMAKE)
+    nmake /nologo /f NTMakefile  install9x
 	$(CD) ..\..\..\..
+	echo **** End of Install Scripts
 
-media: InstallShield5
-
-
+media: Win9x
 
 # Clean target for obj tree
+# Fake the version copy so clean will go through the complete cycle with undefines
 clean: start
-        nmake /nologo /f ntmakefile "NTMAKE = nmake /nologo /f ntmakefile clean" "NTMAKE_HEADERS = nmake /nologo /f ntmakefile clean" install
+	if not exist .\src\config\NTMakefile.version copy .\src\config\NTMakefile.version-NOCML .\src\config\NTMakefile.version
+    nmake /nologo /f ntmake9x "NTMAKE = nmake /nologo /f ntmakefile clean" "NTMAKE_HEADERS = nmake /nologo /f ntmakefile clean" "NTMAKE_LIBUTILS = nmake /nologo /f ntmakefile clean" install
+	$(CD) $(OBJ)\WINNT\install\Win9x
+	nmake /nologo /f NTMakefile clean
+	$(CD) ..\..\..\..
+	.\src\rmbat $(DESTDIR)\include\*.* $(DESTDIR)\include\afs\*.* $(DESTDIR)\include\WINNT\*.* $(DESTDIR)\include\rx\*.*
+	.\src\rmbat $(DESTDIR)\LIB\*.LIB $(DESTDIR)\LIB\*.DLL $(DESTDIR)\LIB\AFS\*.LIB
+	.\src\RMBAT $(DESTDIR)\root.client\usr\vice\etc\*.*
 	$(CD) $(OBJ)\config
 	nmake /nologo /f ntmakefile clean_version
 	$(CD) ..\..
-
+	echo **** End of Clean
 
 # Language-only build target
 lang:
