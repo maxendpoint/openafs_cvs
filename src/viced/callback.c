@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.33 2003/02/19 02:21:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.34 2003/02/19 03:29:55 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1353,58 +1353,52 @@ int BreakLaterCallBacks(void)
     /* Unchain first */
     ViceLog(25, ("Looking for FileEntries to unchain\n"));
     H_LOCK
-restart:
-    tthead = 0;
+
+    /* Pick the first volume we see to clean up */
+    fid.Volume = fid.Vnode = fid.Unique = 0;
+
     for (hash=0; hash<VHASH; hash++) {
 	for (feip = &HashTable[hash]; fe = itofe(*feip); ) {
-	    if (fe && fe->status & FE_LATER) {
+	    if (fe && (fe->status & FE_LATER) && 
+		(fid.Volume == 0 || fid.Volume == fe->volid)) {
 		ViceLog(125, ("Unchaining for %d:%d:%d\n", fe->vnode, 
 			      fe->unique, fe->volid));
+		fid.Volume = fe->volid;
 		*feip = fe->fnext;
 		/* Works since volid is deeper than the largest pointer */
 		((struct object *)fe)->next = (struct object *)myfe;
 		myfe = fe;
-	    } else {
+	    } else 
 		feip = &fe->fnext;
-	    }
 	}
     }
     
     if (!myfe) {
-       H_UNLOCK
-       return 0;
+	H_UNLOCK
+	return 0;
     }
 
     /* loop over myfe and free/break */
     FSYNC_UNLOCK
     while (myfe) {
-	/* Clear for next pass */
-	fid.Volume = 0, fid.Vnode = fid.Unique = 0;
 	tthead = 0;
 	for (fepp = &myfe; fe = *fepp; ) {
-	    /* Pick up first volid we see and break callbacks for it */
-	    if (fid.Volume == 0 || fid.Volume == fe->volid) {
-		register struct CallBack *cbnext;
-		ViceLog(125, ("Caught volume %d for breaking\n", fe->volid));
-		fid.Volume = fe->volid;
-		for (cb = itocb(fe->firstcb); cb; cb = cbnext) {
-		    host = h_itoh(cb->hhead);
-		    h_Hold_r(host);
-		    cbnext = itocb(cb->cnext);
-		    if (!tthead || (TNorm(tthead) < TNorm(cb->thead))) {
-			tthead = cb->thead;
-		    }
-		    TDel(cb);
-		    HDel(cb);
-		    CDel(cb, 0); /* Don't let CDel clean up the fe */
-		    /* leave hold for MultiBreakVolumeCallBack to clear */
+	    register struct CallBack *cbnext;
+	    for (cb = itocb(fe->firstcb); cb; cb = cbnext) {
+		host = h_itoh(cb->hhead);
+		h_Hold_r(host);
+		cbnext = itocb(cb->cnext);
+		if (!tthead || (TNorm(tthead) < TNorm(cb->thead))) {
+		    tthead = cb->thead;
 		}
-		/* relink chain */
-		(struct object *) *fepp = ((struct object *)fe)->next;
-		FreeFE(fe);
-	    } else {
-		(struct object **) fepp = &(((struct object *)fe)->next);
+		TDel(cb);
+		HDel(cb);
+		CDel(cb, 0); /* Don't let CDel clean up the fe */
+		/* leave hold for MultiBreakVolumeCallBack to clear */
 	    }
+	    /* relink chain */
+	    (struct object *) *fepp = ((struct object *)fe)->next;
+	    FreeFE(fe);
 	}
 
 	if (tthead) {
@@ -1427,10 +1421,9 @@ restart:
 	}  
     }
     FSYNC_LOCK
-
-    if (tthead) goto restart;
     H_UNLOCK
 
+    /* Arrange to be called again */
     return 1;
 }
 
