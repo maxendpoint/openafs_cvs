@@ -49,7 +49,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.14 2002/10/16 03:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/uuid.c,v 1.15 2003/07/15 19:49:30 rees Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -270,7 +270,11 @@ afs_int32 afs_uuid_create (afsUUID *uuid)
 	seed ^= *seedp++;
 	seed ^= *seedp++;
 	seed ^= *seedp++;
-	rand_irand += seed + (afs_uint32)getpid();
+#if defined(KERNEL) && defined(AFS_XBSD_ENV)
+	rand_irand += seed + (afs_uint32) curproc->p_pid;
+#else
+	rand_irand += seed + (afs_uint32) getpid();
+#endif
 	uuid__get_os_time (&time_last);
 	clock_seq = true_random();
 #ifdef AFS_NT40_ENV
