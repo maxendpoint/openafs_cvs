@@ -37,7 +37,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.1 2002/10/29 00:05:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.2 2002/10/30 22:58:30 shadow Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
@@ -428,7 +428,10 @@ fc_ecb_encrypt(afs_uint32 *in, afs_uint32 *out,
 	       fc_KeySchedule sched,
 	       int encrypt)
 {
-  if (encrypt)
+  LOCK_RXKAD_STATS
+  rxkad_stats.fc_encrypts[encrypt]++;
+  UNLOCK_RXKAD_STATS
+  if (encrypt) 
     fc_ecb_enc(in[0], in[1], out, sched);
   else
     fc_ecb_dec(in[0], in[1], out, sched);
@@ -533,7 +536,6 @@ fc_keysched(void *key_,
   *sched++ = EFF_NTOHL((afs_uint32)k);
   ROT56R64(k, 11);
   *sched++ = EFF_NTOHL((afs_uint32)k);
-  return 0;
 #else
   afs_uint32 hi, lo; /* hi is upper 24 bits and lo lower 32, total 56 */
 
@@ -591,8 +593,11 @@ fc_keysched(void *key_,
   *sched++ = EFF_NTOHL(lo);
   ROT56R(hi, lo, 11);
   *sched++ = EFF_NTOHL(lo);
-  return 0;
 #endif
+  LOCK_RXKAD_STATS
+  rxkad_stats.fc_key_scheds++;
+  UNLOCK_RXKAD_STATS
+  return 0;
 }
 
 /*
@@ -609,6 +614,14 @@ rxkad_EncryptPacket(const struct rx_connection *rx_connection_not_used,
 {
   afs_uint32 ivec[2];
   struct iovec *frag;
+  struct rx_securityClass *obj;
+  struct rxkad_cprivate *tp;          /* s & c have type at same offset */
+
+  obj = rx_SecurityObjectOf(rx_connection_not_used);
+  tp = (struct rxkad_cprivate *)obj->privateData;
+  LOCK_RXKAD_STATS
+  rxkad_stats.bytesEncrypted[rxkad_TypeIndex(tp->type)] += len;
+  UNLOCK_RXKAD_STATS
 
   {
     /* What is this good for?
@@ -643,6 +656,14 @@ rxkad_DecryptPacket(const struct rx_connection *rx_connection_not_used,
 {
   afs_uint32 ivec[2];
   struct iovec *frag;
+  struct rx_securityClass *obj;
+  struct rxkad_cprivate *tp;          /* s & c have type at same offset */
+
+  obj = rx_SecurityObjectOf(rx_connection_not_used);
+  tp = (struct rxkad_cprivate *)obj->privateData;
+  LOCK_RXKAD_STATS
+  rxkad_stats.bytesDecrypted[rxkad_TypeIndex(tp->type)] += len;
+  UNLOCK_RXKAD_STATS
 
   memcpy(ivec, iv, sizeof(ivec)); /* Must use copy of iv */
   for (frag = &packet->wirevec[1]; len > 0; frag++)
