@@ -3,7 +3,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.14 2003/06/19 23:37:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.15 2003/06/20 00:35:19 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
@@ -13,6 +13,13 @@ RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.14 2003/06/19 23:37:32 shad
 #include <netdb.h>
 #if defined(AFS_AIX32_ENV) || defined(AFS_SUN_ENV) || defined(AFS_XBSD_ENV)
 #include <sys/socket.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 
 #define MAXPREC 100
@@ -332,15 +339,16 @@ int afs_vsnprintf(char *p, size_t avail, const char *fmt, va_list ap)
           x = he->h_name;
           len = strlen(x);
           if (haveprec && precision < len) len = precision;
-          if (altform)
-            for (y = x; *y; y++) if (isupper(*y)) *y = tolower(*y);
-          else if (plsign)
+          if (altform) {
+            for (y = x; *y; y++) if (isupper(*y)) *y = tolower(*y); }
+          else if (plsign) {
             for (y = x; *y; y++) if (islower(*y)) *y = toupper(*y);
+	  }
         } else {
           UVAL = ntohl(UVAL);
-          if      (zfill)  x = "%03u.%03u.%03u.%03u";
-          else if (spsign) x = "%3u.%3u.%3u.%3u";
-          else             x = "%u.%u.%u.%u";
+          if      (zfill)  { x = "%03u.%03u.%03u.%03u"; }
+          else if (spsign) { x = "%3u.%3u.%3u.%3u"; }
+          else       {      x = "%u.%u.%u.%u"; }
           sprintf(xbuf, x,
                   (UVAL & 0xff000000) >> 24, (UVAL & 0x00ff0000) >> 16,
                   (UVAL & 0x0000ff00) >> 8,  (UVAL & 0x000000ff));
