@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.46 2005/03/21 02:47:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.47 2005/03/21 02:54:11 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -853,8 +853,10 @@ XDisplayFormat2(a_xInfoP, a_servID, a_partID, a_totalOKP, a_totalNotOKP,
 	     * Volume's status is OK - all the fields are valid.
 	     */
 
-	     static long server_cache = -1, partition_cache = -1;
-		static char hostname[256], address[32], pname[16];
+                static long server_cache = -1, partition_cache = -1;
+                static char hostname[256], address[32], pname[16];
+                int i,ai[] = {VOLINT_STATS_TIME_IDX_0,VOLINT_STATS_TIME_IDX_1,VOLINT_STATS_TIME_IDX_2,
+                              VOLINT_STATS_TIME_IDX_3,VOLINT_STATS_TIME_IDX_4,VOLINT_STATS_TIME_IDX_5};
 
 		if (a_servID != server_cache) {
 			struct in_addr s;
@@ -932,17 +934,12 @@ XDisplayFormat2(a_xInfoP, a_servID, a_partID, a_totalOKP, a_totalNotOKP,
 		fprintf(STDOUT,"writes_diff_net\t%8d\n",a_xInfoP->stat_writes[VOLINT_STATS_DIFF_NET]);
 		fprintf(STDOUT,"writes_diff_net_auth\t%8d\n",a_xInfoP->stat_writes[VOLINT_STATS_DIFF_NET_AUTH]);
 
-
-
-
-		int i; /*,ai[] = {VOLINT_STATS_TIME_IDX_0,VOLINT_STATS_TIME_IDX_1,VOLINT_STATS_TIME_IDX_2,*/
-		/*VOLINT_STATS_TIME_IDX_3,VOLINT_STATS_TIME_IDX_4,VOLINT_STATS_TIME_IDX_5}; dynamic arrays suck */
 		for(i=0;i<5;i++)
 		{
-			fprintf(STDOUT,"file_same_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_fileSameAuthor[i]);
-			fprintf(STDOUT,"file_diff_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_fileDiffAuthor[i]);
-			fprintf(STDOUT,"dir_same_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_dirSameAuthor[i]);
-			fprintf(STDOUT,"dir_dif_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_dirDiffAuthor[i]);
+			fprintf(STDOUT,"file_same_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_fileSameAuthor[ai[i]]);
+			fprintf(STDOUT,"file_diff_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_fileDiffAuthor[ai[i]]);
+			fprintf(STDOUT,"dir_same_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_dirSameAuthor[ai[i]]);
+			fprintf(STDOUT,"dir_dif_author_idx_%d\t%8d\n",i+1,a_xInfoP->stat_dirDiffAuthor[ai[i]]);
 		}
 
 	} /*Volume status OK */
