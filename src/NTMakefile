@@ -65,21 +65,21 @@ util: procmgmt_headers afsreg_headers
 	$(NTMAKE)
 	$(CD) ..\..
 
-afs: util
-      echo ***** $@
-      $(DOCD) $(SRC)\afs
-      $(CD) $(SRC)\afs
-      $(NTMAKE)
-      $(CD) ..\..
-
-comerr: afs
+comerr: util
      echo ***** $@
 	$(DOCD) $(SRC)\$@
 	$(CD) $(SRC)\$@
 	$(NTMAKE)
 	$(CD) ..\..
 
-cmd: comerr
+afs: comerr
+      echo ***** $@
+      $(DOCD) $(SRC)\afs
+      $(CD) $(SRC)\afs
+      $(NTMAKE)
+      $(CD) ..\..
+
+cmd: afs
      echo ***** $@
 	$(DOCD) $(SRC)\$@
 	$(CD) $(SRC)\$@
