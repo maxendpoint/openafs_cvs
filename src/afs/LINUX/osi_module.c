@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.17 2001/10/09 05:14:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.18 2002/02/07 00:06:35 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -276,6 +276,8 @@ int init_module(void)
 # endif
 #endif /* AFS_IA64_LINUX20_ENV */
 
+    osi_sysctl_init();
+
     return 0;
 }
 
@@ -286,6 +288,8 @@ void cleanup_module(void)
 #endif
 {
     struct task_struct *t;
+
+    osi_sysctl_clean();
 
 #if defined(AFS_IA64_LINUX20_ENV)
     sys_call_table[__NR_setgroups - 1024] = POINTER2SYSCALL ((struct fptr *) sys_setgroupsp)->ip;
