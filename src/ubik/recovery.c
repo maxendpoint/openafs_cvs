@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.12 2003/12/08 01:45:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.13 2003/12/08 02:41:22 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -164,7 +164,7 @@ urecovery_CheckTid(register struct ubik_tid *atid)
 	    ubik_currentTrans = (struct ubik_trans *)0;
 	}
     }
-    return;
+    return 0;
 }
 
 /* log format is defined here, and implicitly in disk.c
