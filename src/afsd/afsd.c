@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.24 2002/05/23 05:21:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.25 2002/06/15 16:52:00 shadow Exp $");
 
 #define VFS 1
 
@@ -342,8 +342,6 @@ int ParseCacheInfoFile()
 	    printf("\t%d out of 3 fields successfully parsed.\n",
 		   parseResult);
 
-	printf("\tcacheMountDir: '%s'\n\tcacheBaseDir: '%s'\n\tcacheBlocks: %d\n",
-	       cacheMountDir, cacheBaseDir, cacheBlocks);
 	return(1);
     }
 
