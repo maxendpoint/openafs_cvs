@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.10 2001/07/12 19:58:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.11 2001/09/27 02:16:36 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -831,7 +831,7 @@ static int GetFlockCount(struct vcache *avc, struct vrequest *areq)
     if (code) {
 	return(0);              /* failed, say it is 'unlocked' */
     } else {
-	return((int)OutStatus.spare2);
+	return((int)OutStatus.lockCount);
     }
 }
 #endif
