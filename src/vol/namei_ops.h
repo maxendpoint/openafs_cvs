@@ -50,9 +50,11 @@ int namei_ListAFSFiles(char *dev,
 					 struct ViceInodeInfo * info,
 					 char *dir, char *file), FILE * fp,
 		       int (*judge_fun) (struct ViceInodeInfo * info,
-					 int vid), int singleVolumeNumber, void *rock);
+					 int vid, void *rock), 
+		       int singleVolumeNumber, void *rock);
 int ListViceInodes(char *devname, char *mountedOn, char *resultFile,
-		   int (*judgeInode) (struct ViceInodeInfo * info, int vid),
+		   int (*judgeInode) (struct ViceInodeInfo * info, int vid, 
+				      void *rock),
 		   int singleVolumeNumber, int *forcep, int forceR,
 		   char *wpath, void *rock);
 

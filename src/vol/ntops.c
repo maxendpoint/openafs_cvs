@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.9 2004/09/28 05:00:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.10 2004/09/28 05:07:15 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <stdio.h>
@@ -935,7 +935,7 @@ static int nt_ListAFSSubDirs(IHandle_t * dirIH,
 			     int (*write_fun) (FILE *, struct ViceInodeInfo *,
 					       char *, char *), FILE * fp,
 			     int (*judgeFun) (struct ViceInodeInfo *,
-					      int vid),
+					      int vid, void *rock),
 			     int singleVolumeNumber, void *rock);
 
 
@@ -972,7 +972,7 @@ WriteInodeInfo(FILE * fp, struct ViceInodeInfo *info, char *dir, char *name)
  */
 int
 ListViceInodes(char *devname, char *mountedOn, char *resultFile,
-	       int (*judgeInode) (struct ViceInodeInfo * info, int vid),
+	       int (*judgeInode) (struct ViceInodeInfo * info, int vid, void *rock),
 	       int singleVolumeNumber, int *forcep, int forceR, char *wpath, 
 	       void *rock)
 {
@@ -1042,7 +1042,7 @@ int
 nt_ListAFSFiles(char *dev,
 		int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				 char *), FILE * fp,
-		int (*judgeFun) (struct ViceInodeInfo *, int),
+		int (*judgeFun) (struct ViceInodeInfo *, int, void *),
 		int singleVolumeNumber, void *rock)
 {
     IHandle_t h;
@@ -1095,7 +1095,7 @@ static int
 nt_ListAFSSubDirs(IHandle_t * dirIH,
 		  int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				   char *), FILE * fp,
-		  int (*judgeFun) (struct ViceInodeInfo *, int),
+		  int (*judgeFun) (struct ViceInodeInfo *, int, void *),
 		  int singleVolumeNumber, void *rock)
 {
     int i;

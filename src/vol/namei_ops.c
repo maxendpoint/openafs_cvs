@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.24 2004/09/28 05:00:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.25 2004/09/28 05:07:15 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1041,7 +1041,7 @@ static int namei_ListAFSSubDirs(IHandle_t * dirIH,
 						  struct ViceInodeInfo *,
 						  char *, char *), FILE * fp,
 				int (*judgeFun) (struct ViceInodeInfo *,
-						 int vid),
+						 int vid, void *),
 				int singleVolumeNumber, void *rock);
 
 
@@ -1093,7 +1093,7 @@ VerifyDirPerms(char *path)
  */
 int
 ListViceInodes(char *devname, char *mountedOn, char *resultFile,
-	       int (*judgeInode) (struct ViceInodeInfo * info, int vid),
+	       int (*judgeInode) (struct ViceInodeInfo * info, int vid, void *rock),
 	       int singleVolumeNumber, int *forcep, int forceR, char *wpath, 
 	       void *rock)
 {
@@ -1168,7 +1168,7 @@ int
 namei_ListAFSFiles(char *dev,
 		   int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				    char *), FILE * fp,
-		   int (*judgeFun) (struct ViceInodeInfo *, int),
+		   int (*judgeFun) (struct ViceInodeInfo *, int, void *),
 		   int singleVolumeNumber, void *rock)
 {
     IHandle_t ih;
@@ -1240,7 +1240,7 @@ static int
 namei_ListAFSSubDirs(IHandle_t * dirIH,
 		     int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				      char *), FILE * fp,
-		     int (*judgeFun) (struct ViceInodeInfo *, int),
+		     int (*judgeFun) (struct ViceInodeInfo *, int, void *),
 		     int singleVolumeNumber, void *rock)
 {
     IHandle_t myIH = *dirIH;
