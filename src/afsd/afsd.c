@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.16 2001/10/05 20:38:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.17 2001/10/05 21:03:16 shadow Exp $");
 
 #define VFS 1
 
@@ -111,6 +111,14 @@ RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.16 2001/10/05 20:38:58 shadow E
 
 #ifdef HAVE_SYS_VFS_H
 #include <sys/vfs.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#ifdef HAVE_FCNTL_H
+#include <fcntl.h>
 #endif
 
 #include <netinet/in.h>

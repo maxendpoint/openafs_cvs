@@ -9,8 +9,21 @@
 
 #include <afsconfig.h>
 #include <afs/param.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
-RCSID("$Header: /cvs/openafs/src/afsd/vsys.c,v 1.4 2001/07/12 19:58:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/vsys.c,v 1.5 2001/10/05 21:03:16 shadow Exp $");
 
 #include <afs/afs_args.h>
 
@@ -46,4 +59,5 @@ main (argc, argv)
     }
     code = syscall(AFS_SYSCALL, parms[0], parms[1], parms[2], parms[3], parms[4], parms[5]);
     printf("code %d\n", code);
+    return 0;
 }
