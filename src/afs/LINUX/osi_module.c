@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.49 2004/05/15 06:43:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.50 2004/06/02 02:55:57 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -147,7 +147,7 @@ afsproc_init()
     struct proc_dir_entry *entry1;
 
     openafs_procfs = proc_mkdir(PROC_FSDIRNAME, proc_root_fs);
-    entry1 = create_proc_entry(PROC_SYSCALL_NAME, 0, openafs_procfs);
+    entry1 = create_proc_entry(PROC_SYSCALL_NAME, 0666, openafs_procfs);
 
     entry1->proc_fops = &afs_syscall_fops;
 
