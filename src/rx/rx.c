@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.47 2003/03/03 15:53:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.48 2003/03/13 19:01:24 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -398,6 +398,8 @@ int rx_Init(u_int port)
     rxi_InitializeThreadSupport();
 #endif
 
+    MUTEX_INIT(&rx_stats_mutex, "rx_stats_mutex",MUTEX_DEFAULT,0);
+
     /* Allocate and initialize a socket for client and perhaps server
      * connections. */
 
@@ -412,7 +414,6 @@ int rx_Init(u_int port)
 #ifdef RX_LOCKS_DB
     rxdb_init();
 #endif /* RX_LOCKS_DB */
-    MUTEX_INIT(&rx_stats_mutex, "rx_stats_mutex",MUTEX_DEFAULT,0);
     MUTEX_INIT(&rx_rpc_stats, "rx_rpc_stats",MUTEX_DEFAULT,0);
     MUTEX_INIT(&rx_freePktQ_lock, "rx_freePktQ_lock",MUTEX_DEFAULT,0);
     MUTEX_INIT(&freeSQEList_lock, "freeSQEList lock",MUTEX_DEFAULT,0);
