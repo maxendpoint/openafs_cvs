@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.20 2002/08/22 17:01:51 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.21 2002/08/28 04:13:20 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -793,13 +793,17 @@ void afs_osi_TraverseProcTable()
 {   
     struct task_struct *p;
 
+#ifdef EXPORTED_TASKLIST_LOCK
     read_lock(&tasklist_lock);
+#endif
     for_each_task(p) if (p->pid) {
         if (p->state & TASK_ZOMBIE)
             continue;
 	afs_GCPAGs_perproc_func(p);
     }
+#ifdef EXPORTED_TASKLIST_LOCK
     read_unlock(&tasklist_lock);
+#endif
 }   
 #endif
 
