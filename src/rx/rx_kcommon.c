@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.41 2004/03/10 23:01:54 rees Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.42 2004/07/28 22:33:54 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -102,16 +102,21 @@ rxk_shutdownPorts(void)
 }
 
 osi_socket
-rxi_GetUDPSocket(u_short port)
+rxi_GetHostUDPSocket(u_int host, u_short port)
 {
     struct osi_socket *sockp;
-    sockp = (struct osi_socket *)rxk_NewSocket(port);
+    sockp = (struct osi_socket *)rxk_NewSocketHost(host, port);
     if (sockp == (struct osi_socket *)0)
 	return OSI_NULLSOCKET;
     rxk_AddPort(port, (char *)sockp);
     return (osi_socket) sockp;
 }
 
+osi_socket
+rxi_GetUDPSocket(u_short port)
+{
+    return rxi_GetHostUDPSocket(htonl(INADDR_ANY), port);
+}
 
 void
 osi_Panic(msg, a1, a2, a3)
