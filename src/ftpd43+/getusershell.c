@@ -54,6 +54,9 @@ getusershell()
 	return (ret);
 }
 
+#ifdef AFS_AIX42_ENV
+void
+#endif
 endusershell()
 {
 	
@@ -114,6 +117,9 @@ initshells()
 	return (shells);
 }
 
+#ifdef AFS_AIX42_ENV
+void
+#endif
 setusershell()
 {
 
