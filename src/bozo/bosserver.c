@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.18 2002/08/21 18:58:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.19 2002/08/21 19:49:04 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -180,15 +180,26 @@ static int MakeDir(register char *adir)
 /* create all the bozo dirs */
 static int CreateDirs()
 {
-    MakeDir(AFSDIR_USR_DIRPATH);
-    MakeDir(AFSDIR_SERVER_AFS_DIRPATH);
+    if ((!strncmp(AFSDIR_USR_DIRPATH, AFSDIR_CLIENT_ETC_DIRPATH, 
+		  strlen(AFSDIR_USR_DIRPATH))) || 
+	(!strncmp(AFSDIR_USR_DIRPATH, AFSDIR_SERVER_BIN_DIRPATH,
+		  strlen(AFSDIR_USR_DIRPATH)))) {
+	MakeDir(AFSDIR_USR_DIRPATH);
+    }
+    if (!strncmp(AFSDIR_SERVER_AFS_DIRPATH, AFSDIR_SERVER_BIN_DIRPATH, 
+		 strlen(AFSDIR_SERVER_AFS_DIRPATH))) {
+	MakeDir(AFSDIR_SERVER_AFS_DIRPATH);
+    }
     MakeDir(AFSDIR_SERVER_BIN_DIRPATH);
     MakeDir(AFSDIR_SERVER_ETC_DIRPATH); 
     MakeDir(AFSDIR_SERVER_LOCAL_DIRPATH);
     MakeDir(AFSDIR_SERVER_DB_DIRPATH); 
     MakeDir(AFSDIR_SERVER_LOGS_DIRPATH);
 #ifndef AFS_NT40_ENV
-    MakeDir(AFSDIR_CLIENT_VICE_DIRPATH);
+    if (!strncmp(AFSDIR_CLIENT_VICE_DIRPATH, AFSDIR_CLIENT_ETC_DIRPATH, 
+		 strlen(AFSDIR_CLIENT_VICE_DIRPATH))) {
+	MakeDir(AFSDIR_CLIENT_VICE_DIRPATH);
+    }
     MakeDir(AFSDIR_CLIENT_ETC_DIRPATH);
 
     symlink(AFSDIR_SERVER_THISCELL_FILEPATH, AFSDIR_CLIENT_THISCELL_FILEPATH); 
