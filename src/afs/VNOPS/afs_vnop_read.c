@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.19 2002/10/09 01:02:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.20 2002/10/11 21:43:14 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -59,7 +59,6 @@ int afs_MemRead(register struct vcache *avc, struct uio *auio, struct AFS_UCRED 
     afs_int32 error, trybusy=1;
     struct uio tuio;
     struct iovec *tvec;
-    char *tfile;
     afs_int32 code;
     struct vrequest treq;
 
@@ -449,7 +448,6 @@ int afs_UFSReadFast(register struct vcache *avc, struct uio *auio,
     struct vrequest treq;
     int offDiff;
     struct dcache *tdc;
-    struct vnode *vp;
     struct osi_file *tfile;
     afs_int32 code = 0;
 
@@ -534,7 +532,7 @@ int afs_UFSReadFast(register struct vcache *avc, struct uio *auio,
             VOP_UNLOCK(tfile->vnode, 0, current_proc());
             AFS_GLOCK();
 #else
-#if defined(AFS_FBSD_ENV)
+#if defined(AFS_XBSD_ENV)
             AFS_GUNLOCK();
             VOP_LOCK(tfile->vnode, LK_EXCLUSIVE, curproc);
             code = VOP_READ(tfile->vnode, auio, 0, &afs_osi_cred);
@@ -599,7 +597,6 @@ int afs_UFSRead(register struct vcache *avc, struct uio *auio,
     struct osi_file *tfile;
     afs_int32 code;
     int trybusy=1;
-    struct vnode *vp;
     struct vrequest treq;
 
     AFS_STATCNT(afs_UFSRead);
@@ -947,7 +944,7 @@ tagain:
             VOP_UNLOCK(tfile->vnode, 0, current_proc());
             AFS_GLOCK();
 #else
-#if defined(AFS_FBSD_ENV)
+#if defined(AFS_XBSD_ENV)
             AFS_GUNLOCK();
             VOP_LOCK(tfile->vnode, LK_EXCLUSIVE, curproc);
             code = VOP_READ(tfile->vnode, &tuio, 0, &afs_osi_cred);

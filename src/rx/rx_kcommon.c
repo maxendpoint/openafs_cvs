@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.24 2002/09/26 07:01:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.25 2002/10/11 21:43:16 rees Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -599,11 +599,15 @@ int rxi_GetIFInfo(void)
     memset(addrs, 0, sizeof(addrs));
     memset(mtus, 0, sizeof(mtus));
 
-#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
+#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
     TAILQ_FOREACH(ifn, &ifnet, if_link) {
       if (i >= ADDRSPERSITE) break;
-#else 
+#else
+#if defined(AFS_OBSD_ENV)
+    for (ifn = ifnet.tqh_first; i < ADDRSPERSITE && ifn != NULL; ifn = ifn->if_list.tqe_next) {
+#else
     for (ifn = ifnet; ifn != NULL && i < ADDRSPERSITE; ifn = ifn->if_next) {
+#endif
 #endif
       rxmtu = (ifn->if_mtu - RX_IPUDP_SIZE);
 #if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
@@ -1063,7 +1067,7 @@ void rxk_Listener(void)
 #ifdef AFS_SUN5_ENV
     rxk_ListenerPid = 1;	/* No PID, just a flag that we're alive */
 #endif /* AFS_SUN5_ENV */
-#ifdef AFS_FBSD_ENV
+#ifdef AFS_XBSD_ENV
     rxk_ListenerPid = curproc->p_pid;
 #endif /* AFS_FBSD_ENV */
 #if defined(AFS_DARWIN_ENV)

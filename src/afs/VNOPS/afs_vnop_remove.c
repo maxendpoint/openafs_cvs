@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.20 2002/10/09 01:02:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.21 2002/10/11 21:43:14 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -222,10 +222,7 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
     register afs_int32 code;
     register struct vcache *tvc;
     afs_size_t offset, len;
-    struct AFSFetchStatus OutDirStatus;
-    struct AFSVolSync tsync;
     struct afs_fakestat_state fakestate;
-    XSTATS_DECLS
     OSI_VC_CONVERT(adp)
 
     AFS_STATCNT(afs_remove);
