@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.67 2004/06/02 07:08:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.68 2004/06/21 19:17:14 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -270,7 +270,7 @@ afsd_thread(void *rock)
 	complete_and_exit(0, 0);
 	break;
     default:
-	printf("Unknown op %d in StartDaemon()\n");
+	printf("Unknown op %d in StartDaemon()\n", parm);
 	break;
     }
     return 0;
