@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.9 2001/08/06 23:50:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.10 2001/08/08 00:03:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -159,7 +159,7 @@ struct cmd_syndesc *as;
 	    printf("rxdebug: host %s not found in host table\n", name);
 	    exit(1);
 	}
-	bcopy(th->h_addr, &onlyHost, sizeof(afs_int32));
+	memcpy(&onlyHost, th->h_addr, sizeof(afs_int32));
     } else onlyHost = -1;
 
     if (as->parms[9].items) {
@@ -184,7 +184,7 @@ struct cmd_syndesc *as;
 	    printf("rxdebug: host %s not found in host table\n", hostName);
 	    exit(1);
 	}
-	bcopy(th->h_addr, &host, sizeof(afs_int32));
+	memcpy(&host, th->h_addr, sizeof(afs_int32));
     }
     else host = htonl(0x7f000001);	/* IP localhost */
 

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vfsck/pass1b.c,v 1.3 2001/07/12 19:59:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vfsck/pass1b.c,v 1.4 2001/08/08 00:04:20 shadow Exp $");
 
 #define VICE
 #include <sys/param.h>
@@ -74,7 +74,7 @@ pass1b()
 	struct inodesc idesc;
 	ino_t inumber;
 
-	bzero((char *)&idesc, sizeof(struct inodesc));
+	memset((char *)&idesc, 0, sizeof(struct inodesc));
 	idesc.id_type = ADDR;
 	idesc.id_func = pass1bcheck;
 	duphead = duplist;

@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.10 2001/08/06 23:50:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.11 2001/08/08 00:03:57 shadow Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -372,10 +372,10 @@ void rx_GetIFInfo()
 
     LOCK_IF
     rxi_numNetAddrs = 0;
-    bzero(rxi_NetAddrs, sizeof(rxi_NetAddrs));
-    bzero(myNetFlags, sizeof(myNetFlags));
-    bzero(myNetMTUs, sizeof(myNetMTUs));
-    bzero(myNetMasks, sizeof(myNetMasks));
+    memset(rxi_NetAddrs, 0, sizeof(rxi_NetAddrs));
+    memset(myNetFlags, 0, sizeof(myNetFlags));
+    memset(myNetMTUs, 0, sizeof(myNetMTUs));
+    memset(myNetMasks, 0, sizeof(myNetMasks));
     UNLOCK_IF
 
     s = socket(AF_INET, SOCK_DGRAM, 0);
@@ -389,7 +389,7 @@ void rx_GetIFInfo()
 #else
     ifc.ifc_len = sizeof(ifs);
     ifc.ifc_buf = (caddr_t) &ifs[0];
-    bzero(&ifs[0], sizeof(ifs));
+    memset(&ifs[0], 0, sizeof(ifs));
 #endif 
     res = ioctl(s, SIOCGIFCONF, &ifc);
     if (res < 0) {

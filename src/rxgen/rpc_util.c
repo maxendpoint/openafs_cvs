@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_util.c,v 1.6 2001/08/06 23:50:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_util.c,v 1.7 2001/08/08 00:04:05 shadow Exp $");
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -72,7 +72,7 @@ static printwhere();
 reinitialize()
 {
     int i;
-	bzero(curline, MAXLINESIZE);
+	memset(curline, 0, MAXLINESIZE);
 	where = curline;
 	linenum = 0;
 	defined = NULL;

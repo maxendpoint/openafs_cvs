@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/volparse.c,v 1.8 2001/08/06 23:50:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/volparse.c,v 1.9 2001/08/08 00:04:17 shadow Exp $");
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -85,7 +85,7 @@ char *volutil_PartitionName_r(int avalue, char *tbuffer, int buflen)
 	    tbuffer[0] = '\0';
 	return tbuffer;
     }
-    bzero(tbuffer, buflen);
+    memset(tbuffer, 0, buflen);
     tempString[1] = tempString[2] = 0;
     strcpy(tbuffer, "/vicep");
     if (avalue < 0 || avalue >= (26*26+26)) {

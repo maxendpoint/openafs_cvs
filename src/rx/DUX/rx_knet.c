@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/DUX/Attic/rx_knet.c,v 1.4 2001/07/12 19:58:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/DUX/Attic/rx_knet.c,v 1.5 2001/08/08 00:03:58 shadow Exp $");
 
 #ifdef AFS_DUX40_ENV
 #include "../rx/rx_kcommon.h"
@@ -31,7 +31,7 @@ rxk_init() {
 	/* force UDP checksumming on for AFS	*/
 	 extern int udpcksum;
 	 udpcksum = 1;	
-          bcopy(tpro, &parent_proto, sizeof(parent_proto));
+          memcpy(&parent_proto, tpro, sizeof(parent_proto));
           tpro->pr_input = rxk_input;
           tpro->pr_fasttimo = rxk_fasttimo;
           /*
@@ -292,7 +292,7 @@ nopages:
 	tpa = mtod(m, caddr_t);
 	while (len) {
 	  rlen = MIN(len, tl);
-	  bcopy(tdata, tpa, rlen);
+	  memcpy(tpa, tdata, rlen);
 	  asize -= rlen;
 	  len -= rlen;
 	  tpa += rlen;
@@ -328,7 +328,7 @@ nopages:
 	splx(s);
 	return 1;
     }
-    bcopy(addr, mtod(um, caddr_t), sizeof(*addr));
+    memcpy(mtod(um, addr, caddr_t), sizeof(*addr));
     um->m_len = sizeof(*addr);
     /* note that udp_usrreq frees funny mbuf.  We hold onto data, but mbuf
      * around it is gone.  we free address ourselves.  */

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.5 2001/08/08 00:04:15 shadow Exp $");
 
 #include "uss_vol.h"		/*Interface to this module*/
 #include "uss_common.h"		/*Common definitions*/
@@ -405,7 +405,7 @@ afs_int32 uss_vol_GetServer(a_name)
     th = gethostbyname(a_name);
     if (!th)
 	return(0);
-    bcopy(th->h_addr, &addr, sizeof(addr));
+    memcpy(&addr, th->h_addr, sizeof(addr));
     return(addr);
 
 }  /*uss_vol_GetServer*/

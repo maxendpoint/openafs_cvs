@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/simple.example/sample_client.c,v 1.4 2001/07/12 19:59:06 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/simple.example/sample_client.c,v 1.5 2001/08/08 00:04:03 shadow Exp $");
 
 #include <sys/types.h>
 #include <netdb.h>
@@ -29,7 +29,7 @@ static u_long GetIpAddress(hostname)
 	printf("host address is disagreeable length (%d)", hostent->h_length);
 	exit(1);
     }
-    bcopy(hostent->h_addr, (char *)&host, sizeof(host));
+    memcpy((char *)&host, hostent->h_addr, sizeof(host));
     return host;
 }
 

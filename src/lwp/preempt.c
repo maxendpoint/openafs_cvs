@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.9 2001/07/12 19:58:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.10 2001/08/08 00:03:52 shadow Exp $");
 
 
 #if defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV) || defined(AFS_DJGPP_ENV)
@@ -67,7 +67,7 @@ int PRE_InitPreempt(slice)
 	itv.it_interval = itv.it_value = *slice;
 	}
 
-    bzero((char *)&action, sizeof(action));
+    memset((char *)&action, 0, sizeof(action));
     action.sa_sigaction = AlarmHandler;
     action.sa_flags = SA_SIGINFO;
 
@@ -87,7 +87,7 @@ int PRE_EndPreempt()
     
     itv.it_value.tv_sec = itv.it_value.tv_usec = 0;
 
-    bzero((char *)&action, sizeof(action));
+    memset((char *)&action, 0, sizeof(action));
     action.sa_handler = SIG_DFL;
 
     if ((setitimer(ITIMER_REAL, &itv, (struct itimerval *) 0) == -1) ||

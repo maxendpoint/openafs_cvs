@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.5 2001/07/12 19:59:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.6 2001/08/08 00:04:21 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1631,7 +1631,7 @@ main(argc, argv)
     register struct CallBack *cb;
     time_t now;
 
-    bzero(&fid, sizeof(fid));
+    memset(&fid, 0, sizeof(fid));
     argc--; argv++;
     while (argc && **argv == '-') {
 	noptions++;

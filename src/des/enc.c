@@ -8,7 +8,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/enc.c,v 1.3 2001/07/12 19:58:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/enc.c,v 1.4 2001/08/08 00:03:41 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <des.h>
@@ -74,7 +74,7 @@ main(argc,argv)
     }
     ivec[0] = 0;
     ivec[1] = 0;
-    bcopy(key,sum,sizeof(C_Block));
+    memcpy(sum, key, sizeof(C_Block));
     for (;;) {
 	if ((length = read (ind, inbuf, 512)) < 0) {
 	    fprintf (stderr, "%s: Error reading from input.\n",

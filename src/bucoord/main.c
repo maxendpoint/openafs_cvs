@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/main.c,v 1.5 2001/07/19 21:51:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/main.c,v 1.6 2001/08/08 00:03:39 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -195,7 +195,7 @@ bc_InitTextConfig()
 
     for ( i = 0; i < TB_NUM; i++ )
     {
-	bzero(ctPtr, sizeof(*ctPtr));
+	memset(ctPtr, 0, sizeof(*ctPtr));
 	ctPtr->textType = i;
 	ctPtr->textVersion = -1;
 	ctPtr++;

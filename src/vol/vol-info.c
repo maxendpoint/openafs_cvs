@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.6 2001/07/12 19:59:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-info.c,v 1.7 2001/08/08 00:04:23 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -403,7 +403,7 @@ void HandlePart(struct DiskPartition *partP)
     if (dsizeOnly && !saveinodes)
 	printf("Volume-Id\t  Volsize  Auxsize Inodesize  AVolsize SizeDiff                (VolName)\n");
     while (dp = readdir(dirp)) {
-	p = (char *)rindex(dp->d_name, '.');
+	p = (char *)strrchr(dp->d_name, '.');
 	if (p != NULL && strcmp(p, VHDREXT) == 0) {
 	    HandleVolume(partP, dp->d_name);		
 	    Totvolsize += totvolsize;

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/kreltime.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/kreltime.c,v 1.5 2001/08/08 00:04:17 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -76,7 +76,7 @@ Int32To_ktimeRelDate(int32Date, kdptr)
      afs_int32 int32Date;
      struct ktime_date *kdptr;
 {
-    bzero(kdptr, sizeof(*kdptr));
+    memset(kdptr, 0, sizeof(*kdptr));
     
     kdptr->day = int32Date % (MAX_DAY_VALUE + 1);
     if ( kdptr->day != 0 )
@@ -152,7 +152,7 @@ ParseRelDate(dateStr, relDatePtr)
     afs_int32 value, digit_limit;
     afs_int32 type_index;
 
-    bzero(relDatePtr, sizeof(*relDatePtr));
+    memset(relDatePtr, 0, sizeof(*relDatePtr));
     type_index = 0;
 
     while ( 1 )

@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_svcout.c,v 1.6 2001/08/06 23:50:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_svcout.c,v 1.7 2001/08/08 00:04:05 shadow Exp $");
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -231,7 +231,7 @@ write_program(def, storage)
 		f_print(fout, "\t\treturn;\n");
 		f_print(fout, "\t}\n");
 
-		f_print(fout, "\tbzero(&%s, sizeof(%s));\n", ARG, ARG);
+		f_print(fout, "\tmemset(&%s, 0, sizeof(%s));\n", ARG, ARG);
 		printif("getargs", TRANSP, "&", ARG);
 		printerr("decode", TRANSP);
 		f_print(fout, "\t\treturn;\n");

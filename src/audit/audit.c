@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/audit/audit.c,v 1.5 2001/07/12 19:58:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/audit/audit.c,v 1.6 2001/08/08 00:03:35 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -94,10 +94,10 @@ static aixmakebuf (audEvent, vaList)
       case AUD_FID :                             /* AFSFid - contains 3 entries */
 	vaFid = (struct AFSFid *) va_arg(vaList, int);
 	if (vaFid) {
-	  bcopy(vaFid, bufferPtr, sizeof(struct AFSFid));
+	  memcpy(bufferPtr, vaFid, sizeof(struct AFSFid));
 	}
 	else {
-	  bzero (bufferPtr, sizeof(struct AFSFid));
+	  memset(bufferPtr, 0, sizeof(struct AFSFid));
 	}
 	bufferPtr += sizeof(struct AFSFid);
 	break;
@@ -113,13 +113,13 @@ static aixmakebuf (audEvent, vaList)
 	  if (Fids && Fids->AFSCBFids_len) {
 	    *((u_int *)bufferPtr) = Fids->AFSCBFids_len;
 	    bufferPtr += sizeof(u_int);
-	    bcopy(Fids->AFSCBFids_val, bufferPtr, sizeof(struct AFSFid));
+	    memcpy(bufferPtr, Fids->AFSCBFids_val, sizeof(struct AFSFid));
 	  }
 	  else {
 	    struct AFSFid dummy;
 	    *((u_int *)bufferPtr) = 0;
 	    bufferPtr += sizeof(u_int);
-	    bzero (bufferPtr, sizeof(struct AFSFid));
+	    memset(bufferPtr, 0, sizeof(struct AFSFid));
 	  }
 	  bufferPtr += sizeof(struct AFSFid);
 	  break;

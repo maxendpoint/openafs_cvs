@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/db_alloc.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/db_alloc.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -84,7 +84,7 @@ AllocBlock (ut, block, aP)
     }
 
     /* clear and return the block */
-    bzero (block, sizeof(*block));
+    memset(block, 0, sizeof(*block));
     *aP = a;
     return 0;
 }
@@ -103,7 +103,7 @@ FreeBlock (ut, bh, a)
   dbadr a;				/* db address of block */
 {
     if (a != BlockBase(a)) db_panic ("Block addr no good");
-    bzero (bh, sizeof(*bh));
+    memset(bh, 0, sizeof(*bh));
     bh->next = db.h.freePtrs[0];
     if (set_header_word (ut, freePtrs[0], htonl(a)) ||
 	dbwrite (ut, a, (char *)bh, sizeof(*bh))) return BUDB_IO;

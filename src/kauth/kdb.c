@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kdb.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kdb.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/types.h>
@@ -66,7 +66,7 @@ static cmdproc(
 		fprintf(stderr, "%s: data came out corrupt\n", ti->data);
 		continue;
 	    }
-	    bcopy(data.dptr, &rdata, sizeof(kalog_elt));
+	    memcpy(&rdata, data.dptr, sizeof(kalog_elt));
 	    printf("%s: last operation from host %x at %s", ti->data, rdata.host, 
 		   ctime(&rdata.last_use));
 	}

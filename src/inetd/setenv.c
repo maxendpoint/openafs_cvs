@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/inetd/Attic/setenv.c,v 1.3 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/inetd/Attic/setenv.c,v 1.4 2001/08/08 00:03:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -66,7 +66,7 @@ setenv(name, value, rewrite)
 			    (cnt + 2)));
 			if (!P)
 				return(-1);
-			bcopy(environ, P, cnt * sizeof(char *));
+			memcpy(P, environ, cnt * sizeof(char *));
 			environ = P;
 		}
 		environ[cnt + 1] = NULL;

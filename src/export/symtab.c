@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/export/symtab.c,v 1.4 2001/07/12 19:58:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/export/symtab.c,v 1.5 2001/08/08 00:03:44 shadow Exp $");
 
 #include "sys/types.h"
 #include "sym.h"
@@ -41,7 +41,7 @@ char *name; {
 		 */
 		if (sym = symsrch(name))
 			return sym;
-		bcopy(name, buf+1, sizeof (buf) - 2);
+		memcpy(buf+1, name, sizeof (buf) - 2);
 		buf[0] = '.';
 
 		if (sym = symsrch(buf))

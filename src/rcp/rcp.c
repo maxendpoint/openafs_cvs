@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rcp/Attic/rcp.c,v 1.5 2001/07/12 19:58:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rcp/Attic/rcp.c,v 1.6 2001/08/08 00:03:54 shadow Exp $");
 
 #include <sys/param.h>
 #include <sys/file.h>
@@ -70,7 +70,7 @@ RCSID("$Header: /cvs/openafs/src/rcp/Attic/rcp.c,v 1.5 2001/07/12 19:58:55 shado
 #endif
 
 int	rem;
-char	*colon(), *index(), *rindex(), *malloc(), *strcpy();
+char	*colon(), *malloc(), *strcpy();
 int	errs;
 #if !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
 extern char *sys_errlist[];
@@ -170,7 +170,7 @@ main(argc, argv)
 		*targ++ = 0;
 		if (*targ == 0)
 			targ = ".";
-		thost = index(argv[argc - 1], '@');
+		thost = strchr(argv[argc - 1], '@');
 		if (thost) {
 			*thost++ = 0;
 			tuser = argv[argc - 1];
@@ -197,7 +197,7 @@ main(argc, argv)
 				*src++ = 0;
 				if (*src == 0)
 					src = ".";
-				host = index(argv[i], '@');
+				host = strchr(argv[i], '@');
 				if (host) {
 					*host++ = 0;
 					suser = argv[i];
@@ -258,7 +258,7 @@ main(argc, argv)
 				*src++ = 0;
 				if (*src == 0)
 					src = ".";
-				host = index(argv[i], '@');
+				host = strchr(argv[i], '@');
 				if (host) {
 					*host++ = 0;
 					suser = argv[i];
@@ -415,7 +415,7 @@ notreg:
 			error("rcp: %s: not a plain file\n", name);
 			continue;
 		}
-		last = rindex(name, '/');
+		last = strrchr(name, '/');
 		if (last == 0)
 			last = name;
 		else
@@ -477,7 +477,7 @@ rsource(name, statp)
 		error("rcp: %s: %s\n", name, sys_errlist[errno]);
 		return;
 	}
-	last = rindex(name, '/');
+	last = strrchr(name, '/');
 	if (last == 0)
 		last = name;
 	else

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.4 2001/07/12 19:59:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.5 2001/08/08 00:04:23 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -107,7 +107,7 @@ struct clone_head *ah; {
 /* initialize a clone header */
 int ci_InitHead(struct clone_head *ah)
 {
-    bzero(ah, sizeof(*ah));
+    memset(ah, 0, sizeof(*ah));
     return 0;
 }
 

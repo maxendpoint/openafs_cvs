@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.6 2001/07/12 19:58:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.7 2001/08/08 00:03:38 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -342,7 +342,7 @@ char *ascancmd; {
     }
 
     te = (struct fsbnode *) malloc(sizeof(struct fsbnode));
-    bzero(te, sizeof(struct fsbnode));
+    memset(te, 0, sizeof(struct fsbnode));
     te->filecmd = fileCmdpath;
     te->volcmd = volCmdpath;
     te->salcmd = salCmdpath;

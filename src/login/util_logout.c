@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/login/Attic/util_logout.c,v 1.3 2001/07/12 19:58:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/login/Attic/util_logout.c,v 1.4 2001/08/08 00:03:51 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/file.h>
@@ -54,9 +54,9 @@ logout(line)
 		if (!ut.ut_name[0] ||
 		    strncmp(ut.ut_line, line, sizeof(ut.ut_line)))
 			continue;
-		bzero(ut.ut_name, sizeof(ut.ut_name));
+		memset(ut.ut_name, 0, sizeof(ut.ut_name));
 #if	!defined(AIX) && !defined(AFS_SUN5_ENV)
-		bzero(ut.ut_host, sizeof(ut.ut_host));
+		memset(ut.ut_host, 0, sizeof(ut.ut_host));
 #endif /* AIX */
 		(void)time(&ut.ut_time);
 		(void)fseek(fp, (long)-sizeof(struct utmp), L_INCR);

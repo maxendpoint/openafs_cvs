@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.4 2001/07/12 19:58:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -394,7 +394,7 @@ bc_ParseDumpSchedule()
 	    return (BC_INTERNALERROR);
 	}
 	tds = (struct bc_dumpSchedule *)malloc(sizeof(struct bc_dumpSchedule));
-	bzero(tds, sizeof(*tds));
+	memset(tds, 0, sizeof(*tds));
 
 	tds->next = (struct bc_dumpSchedule *) 0;
 	tds->name = (char *) malloc(strlen(dsname)+1);

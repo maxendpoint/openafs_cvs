@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/cksum.c,v 1.8 2001/08/06 23:50:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/cksum.c,v 1.9 2001/08/08 00:03:41 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include <stdio.h>
@@ -75,8 +75,8 @@ des_cbc_cksum(in,out,length,key,iv)
 
 #ifdef MUSTALIGN
     if ((afs_int32) ivec & 3) {
-	bcopy((char *)ivec++,(char *)&t_output[0],sizeof(t_output[0]));
-	bcopy((char *)ivec,(char *)&t_output[1],sizeof(t_output[1]));
+	memcpy((char *)&t_output[0], (char *)ivec++, sizeof(t_output[0]));
+	memcpy((char *)&t_output[1], (char *)ivec, sizeof(t_output[1]));
     }
     else
 #endif
@@ -89,8 +89,8 @@ des_cbc_cksum(in,out,length,key,iv)
 	/* get input */
 #ifdef MUSTALIGN
 	if ((afs_int32) input & 3) {
-	    bcopy((char *)input++,(char *)&t_input[0],sizeof(t_input[0]));
-	    bcopy((char *)input++,(char *)&t_input[1],sizeof(t_input[1]));
+	    memcpy((char *)&t_input[0], (char *)input++, sizeof(t_input[0]));
+	    memcpy((char *)&t_input[1], (char *)input++, sizeof(t_input[1]));
 	}
 	else
 #endif
@@ -127,8 +127,8 @@ des_cbc_cksum(in,out,length,key,iv)
     /* copy temp output and save it for checksum */
 #ifdef MUSTALIGN
     if ((afs_int32) output & 3) {
-	bcopy((char *)&t_output[0],(char *)output++,sizeof(t_output[0]));
-	bcopy((char *)&t_output[1],(char *)output,sizeof(t_output[1]));
+	memcpy((char *)output++, (char *)&t_output[0], sizeof(t_output[0]));
+	memcpy((char *)output, (char *)&t_output[1], sizeof(t_output[1]));
     }
     else
 #endif

@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/log/test/testlog.c,v 1.4 2001/07/12 19:58:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/log/test/testlog.c,v 1.5 2001/08/08 00:03:51 shadow Exp $");
 
 #include <itc.h>
 #include <stdio.h>
@@ -193,7 +193,7 @@ main (argc, argv)
 	         */
 	    foundPassword = TRUE;
 	    strcpy(passwd, argv[currArg]);
-	    bzero(argv[currArg], strlen(passwd));
+	    memset(argv[currArg], 0, strlen(passwd));
 	    currArg++;
 #if DB_ARGPARSE
 	    fprintf(stderr, "Found password: '%s' (%d chars), erased from arg list (now '%s').\n",

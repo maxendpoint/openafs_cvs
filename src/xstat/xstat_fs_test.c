@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.4 2001/07/12 19:59:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.5 2001/08/08 00:04:27 shadow Exp $");
 
 #include "xstat_fs.h"		/*Interface for xstat_fs module*/
 #include <cmd.h>		/*Command line interpreter*/
@@ -709,7 +709,7 @@ int RunTheTest(a_s)
 		    rn, curr_item->data);
 	    exit(-1);
 	}
-	bcopy(he->h_addr, &(FSSktArray[currFS].sin_addr.s_addr), 4);
+	memcpy(&(FSSktArray[currFS].sin_addr.s_addr), he->h_addr, 4);
 
 	/*
 	 * Move to the next File Server name.

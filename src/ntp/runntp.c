@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/runntp.c,v 1.4 2001/07/12 19:58:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/runntp.c,v 1.5 2001/08/08 00:03:53 shadow Exp $");
 
 #include <afs/stds.h>
 #include <signal.h>
@@ -212,7 +212,7 @@ main (argc, argv)
     /* handle bozo kills right */
 
     {	struct sigaction sa;
-	bzero((char *)&sa, sizeof(sa));
+	memset((char *)&sa, 0, sizeof(sa));
 	sa.sa_handler = terminate;
 	code = sigaction (SIGTERM, &sa, NULL);
 	if (code) {

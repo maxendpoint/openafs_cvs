@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/remote.c,v 1.5 2001/07/12 19:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/remote.c,v 1.6 2001/08/08 00:04:12 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -522,7 +522,7 @@ SDISK_SendFile(rxcall, file, length, avers)
        This way, good label is only on good database. */
     (*ubik_dbase->sync)(dbase, file);
     code = (*ubik_dbase->setlabel)(dbase, file, avers);
-    bcopy(avers, &ubik_dbase->version, sizeof(struct ubik_version));
+    memcpy(&ubik_dbase->version, avers, sizeof(struct ubik_version));
     udisk_Invalidate(dbase, file); /* new dbase, flush disk buffers */
     LWP_NoYieldSignal(&dbase->version);
     DBRELE(dbase);

@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/weak_key.c,v 1.6 2001/08/06 23:50:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/weak_key.c,v 1.7 2001/08/08 00:03:42 shadow Exp $");
 
 #include <des.h>
 #include "des_internal.h"
@@ -70,7 +70,7 @@ des_is_weak_key(key)
     const des_cblock *weak_p = weak;
 
     for (i = 0; i < (sizeof(weak)/sizeof(des_cblock)); i++) {
-	if (!bcmp((char *)weak_p++,(char *)key,sizeof(des_cblock)))
+	if (!memcmp((char *)weak_p++,(char *)key,sizeof(des_cblock)))
 	    return 1;
     }
 

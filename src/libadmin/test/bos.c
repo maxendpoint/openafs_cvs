@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libadmin/test/bos.c,v 1.4 2001/07/12 19:58:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libadmin/test/bos.c,v 1.5 2001/08/08 00:03:47 shadow Exp $");
 
 #include "bos.h"
 
@@ -203,7 +203,7 @@ int ktime_ParsePeriodic(
     register afs_int32 code;
     struct ptemp *tp;
 
-    bzero(ak, sizeof(*ak));
+    memset(ak, 0, sizeof(*ak));
     code = LocalParseLine(adate, &tt);
     if (code) return -1;
     for(;tt;tt=tt->next) {

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.4 2001/07/12 19:58:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.5 2001/08/08 00:03:38 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -151,7 +151,7 @@ char *acommand; {
     }
 
     te = (struct cronbnode *) malloc(sizeof(struct cronbnode));
-    bzero(te, sizeof(struct cronbnode));
+    memset(te, 0, sizeof(struct cronbnode));
     code = ktime_ParsePeriodic(awhen, &te->whenToRun);
     if (code < 0) {
 	free(te);

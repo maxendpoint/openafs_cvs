@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.6 2001/07/12 19:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.7 2001/08/08 00:04:12 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -343,7 +343,7 @@ SVOTE_XSDebug(rxcall, awhich, aparm, isclone)
 	    	aparm->altAddr[i] = ntohl(ts->addr[i+1]);
 	    aparm->lastVoteTime = ts->lastVoteTime;
 	    aparm->lastBeaconSent = ts->lastBeaconSent;
-	    bcopy(&ts->version, &aparm->remoteVersion, sizeof(struct ubik_version));
+	    memcpy(&aparm->remoteVersion, &ts->version, sizeof(struct ubik_version));
 	    aparm->lastVote = ts->lastVote;
 	    aparm->up = ts->up;
 	    aparm->beaconSinceDown = ts->beaconSinceDown;
@@ -406,8 +406,8 @@ SVOTE_Debug(rxcall, aparm)
 	(urecovery_state & UBIK_RECHAVEDB  ) ) {
        aparm->recoveryState |= UBIK_RECLABELDB;
     }
-    bcopy(&ubik_dbVersion, &aparm->syncVersion, sizeof(struct ubik_version));
-    bcopy(&ubik_dbTid, &aparm->syncTid, sizeof(struct ubik_tid));
+    memcpy(&aparm->syncVersion, &ubik_dbVersion, sizeof(struct ubik_version));
+    memcpy(&aparm->syncTid, &ubik_dbTid, sizeof(struct ubik_tid));
     aparm->activeWrite = (ubik_dbase->flags & DBWRITING);
     aparm->tidCounter = ubik_dbase->tidCounter;
     
@@ -437,7 +437,7 @@ SVOTE_SDebugOld(rxcall, awhich, aparm)
 	    aparm->addr = ntohl(ts->addr[0]); /* primary interface */
 	    aparm->lastVoteTime = ts->lastVoteTime;
 	    aparm->lastBeaconSent = ts->lastBeaconSent;
-	    bcopy(&ts->version, &aparm->remoteVersion, sizeof(struct ubik_version));
+	    memcpy(&aparm->remoteVersion, &ts->version, sizeof(struct ubik_version));
 	    aparm->lastVote = ts->lastVote;
 	    aparm->up = ts->up;
 	    aparm->beaconSinceDown = ts->beaconSinceDown;
@@ -484,8 +484,8 @@ SVOTE_DebugOld(rxcall, aparm)
 	(urecovery_state & UBIK_RECHAVEDB  ) ) {
        aparm->recoveryState |= UBIK_RECLABELDB;
     }
-    bcopy(&ubik_dbVersion, &aparm->syncVersion, sizeof(struct ubik_version));
-    bcopy(&ubik_dbTid, &aparm->syncTid, sizeof(struct ubik_tid));
+    memcpy(&aparm->syncVersion, &ubik_dbVersion, sizeof(struct ubik_version));
+    memcpy(&aparm->syncTid, &ubik_dbTid, sizeof(struct ubik_tid));
     aparm->activeWrite = (ubik_dbase->flags & DBWRITING);
     aparm->tidCounter = ubik_dbase->tidCounter;
     

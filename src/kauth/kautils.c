@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kautils.c,v 1.6 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kautils.c,v 1.7 2001/08/08 00:03:46 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -142,11 +142,11 @@ afs_int32 ka_KeyCheckSum (
     afs_int32 code;
 
     *cksumP = 0;
-    bzero (block, 8);
+    memset(block, 0, 8);
     code = des_key_sched (key, s);
     if (code) return KABADKEY;
     des_ecb_encrypt (block, block, s, ENCRYPT);
-    bcopy (block, &cksum, sizeof(afs_int32));
+    memcpy(&cksum, block, sizeof(afs_int32));
     *cksumP = ntohl(cksum);
     return 0;
 }

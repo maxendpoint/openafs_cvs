@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/test/testlwp.c,v 1.4 2001/07/12 19:58:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/test/testlwp.c,v 1.5 2001/08/08 00:03:52 shadow Exp $");
 
 #define LWP_KERNEL
 #include "lwp.h"
@@ -376,7 +376,7 @@ int LWP_MwaitProcess(wcount, evlist, ecount)	/* wait on m of n events */
 	if (ecount == 1)
 	    lwp_cpptr->eventlist[0] = evlist[0];
 	else
-	    bcopy(evlist, lwp_cpptr->eventlist, ecount*sizeof(char *));
+	    memcpy(lwp_cpptr->eventlist, evlist, ecount*sizeof(char *));
 	if (wcount > 0) {
 	    lwp_cpptr -> status = WAITING;
 	    move(lwp_cpptr, &runnable[lwp_cpptr->priority], &blocked);

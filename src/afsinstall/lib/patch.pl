@@ -232,7 +232,7 @@ sub Patch {
 	#  to match a '\)'. Once this is found we can push the entire string
 	#  that was orignally between the '()' into our matches buffer.
 	my $end = $[;
-	while (($end = index($tmp, ")", $end)) >= $[) {
+	while (($end = strchr($tmp, ")", $end)) >= $[) {
 	  if (substr($tmp, $end-1, 1) eq "\\") {
 	  } else {
 	    push(@matches, substr($tmp, 0, $end));

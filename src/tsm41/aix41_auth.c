@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/tsm41/aix41_auth.c,v 1.4 2001/07/12 19:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/tsm41/aix41_auth.c,v 1.5 2001/08/08 00:04:11 shadow Exp $");
 
 #if defined(AFS_AIX41_ENV)
 #include <sys/types.h>
@@ -107,7 +107,7 @@ int afs_initialize(struct secmethod_table *meths) {
      * each time we call the authenticate routine.	
      */
     ka_Init(0);
-    bzero(meths, sizeof(struct secmethod_table));
+    memset(meths, 0, sizeof(struct secmethod_table));
     /*
      * Initialize the exported interface routines. Except the authenticate one
      * the others are currently mainly noops.

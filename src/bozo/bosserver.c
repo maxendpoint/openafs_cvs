@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.11 2001/07/12 19:58:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.12 2001/08/08 00:03:38 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -866,7 +866,7 @@ char **envp;
 	    bozo_Log("try the 'hostname' command\n");
 	    exit(1);
 	}
-	bzero(tcell.hostAddr, sizeof(tcell.hostAddr));	/* not computed */
+	memset(tcell.hostAddr, 0, sizeof(tcell.hostAddr));	/* not computed */
 	code = afsconf_SetCellInfo(bozo_confdir, AFSDIR_SERVER_ETC_DIRPATH, &tcell);
 	if (code) {
 	    bozo_Log("could not create cell database in '%s' (code %d), quitting\n", AFSDIR_SERVER_ETC_DIRPATH, code);

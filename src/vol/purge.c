@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/purge.c,v 1.4 2001/07/12 19:59:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/purge.c,v 1.5 2001/08/08 00:04:23 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -129,7 +129,7 @@ Volume *avp; {
 
     /* next, obliterate the index and fflush (and fsync) it */
     STREAM_SEEK(afile, *aoffset, 0);	/* seek back to start of vnode index region */
-    bzero(buf, sizeof(buf));	/* zero out our proto-vnode */
+    memset(buf, 0, sizeof(buf));	/* zero out our proto-vnode */
     for(i=0;i<nscanned;i++) {
 	if (STREAM_WRITE(buf, vcp->diskSize, 1, afile) != 1)
 	    goto fail;

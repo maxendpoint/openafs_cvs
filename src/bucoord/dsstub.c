@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/dsstub.c,v 1.4 2001/07/12 19:58:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/dsstub.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -177,7 +177,7 @@ tailCompPtr(pathNamePtr)
      char *pathNamePtr;
 {
     char *ptr;
-    ptr = rindex(pathNamePtr, '/');
+    ptr = strrchr(pathNamePtr, '/');
     if ( ptr == 0 )
     {
     	/* this should never happen */

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp_adjust.c,v 1.4 2001/07/12 19:58:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp_adjust.c,v 1.5 2001/08/08 00:03:53 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -287,7 +287,7 @@ ZeroAIXcum()
     if (debug > 6)
 	printf ("Zeroing aix_adjtime accumulation: %d %d\n",
 		cum.tv_sec, cum.tv_usec);
-    bzero (&cum, sizeof(cum));
+    memset(&cum, 0, sizeof(cum));
 }
 
 int adjtime(newdelta, olddelta)

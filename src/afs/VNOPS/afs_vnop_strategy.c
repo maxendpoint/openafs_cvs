@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.6 2001/07/12 19:58:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.7 2001/08/08 00:03:32 shadow Exp $");
 
 #if !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV)
 
@@ -104,9 +104,9 @@ afs_ustrategy(abp)
 	if (code == 0) {
 	    if (tuio.afsio_resid > 0)
 #if defined(AFS_FBSD_ENV)
-		bzero(abp->b_saveaddr + abp->b_bcount - tuio.afsio_resid, tuio.afsio_resid);
+		memset(abp->b_saveaddr + abp->b_bcount - tuio.afsio_resid, 0, tuio.afsio_resid);
 #else
-		bzero(abp->b_un.b_addr + abp->b_bcount - tuio.afsio_resid, tuio.afsio_resid);
+		memset(abp->b_un.b_addr + abp->b_bcount - tuio.afsio_resid, 0, tuio.afsio_resid);
 #endif /* AFS_FBSD_ENV */
 #ifdef	AFS_AIX32_ENV
 	    /*

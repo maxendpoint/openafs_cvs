@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.10 2001/07/12 19:58:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.11 2001/08/08 00:03:28 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -695,8 +695,8 @@ shutdown_cache()
     cacheInfoModTime = 0;
 
     afs_fsfragsize = 1023;
-    bzero((char *)&afs_stats_cmperf, sizeof(afs_stats_cmperf));
-    bzero((char *)&cacheDev, sizeof(struct osi_dev));
+    memset((char *)&afs_stats_cmperf, 0, sizeof(afs_stats_cmperf));
+    memset((char *)&cacheDev, 0, sizeof(struct osi_dev));
     osi_dnlc_shutdown();
   }
 } /*shutdown_cache*/
@@ -860,7 +860,7 @@ void shutdown_AFS()
       afs_FVIndex = -1;
       afs_server = (struct rx_service *)0;
       RWLOCK_INIT(&afs_xconn, "afs_xconn");
-      bzero((char *)&afs_rootFid, sizeof(struct VenusFid));
+      memset((char *)&afs_rootFid, 0, sizeof(struct VenusFid));
       RWLOCK_INIT(&afs_xuser, "afs_xuser");
       RWLOCK_INIT(&afs_xvolume, "afs_xvolume"), RWLOCK_INIT(&afs_xcell, "afs_xcell");
       RWLOCK_INIT(&afs_xserver, "afs_xserver"), LOCK_INIT(&afs_puttofileLock, "afs_puttofileLock");

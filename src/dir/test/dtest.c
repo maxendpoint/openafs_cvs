@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/test/dtest.c,v 1.4 2001/07/12 19:58:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/test/dtest.c,v 1.5 2001/08/08 00:03:42 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
@@ -157,7 +157,7 @@ int count; {
     dirhandle dir;
 
     CreateDir(dname, &dir);
-    bzero(fid, sizeof(fid));
+    memset(fid, 0, sizeof(fid));
     MakeDir(&dir, fid, fid);
     for(i=0;i<count;i++) {
 	sprintf(tbuffer, "%s%d", ename, i);

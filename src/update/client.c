@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/update/client.c,v 1.7 2001/08/06 23:50:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/client.c,v 1.8 2001/08/08 00:04:13 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -77,7 +77,7 @@ char *aname; {
 	printf("host %s not found \n", aname);
 	exit(1);
     }
-    bcopy(th->h_addr, &addr, sizeof(addr));
+    memcpy(&addr, th->h_addr, sizeof(addr));
     return addr;
 }
 

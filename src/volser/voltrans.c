@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.4 2001/07/12 19:59:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.5 2001/08/08 00:04:26 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
@@ -46,7 +46,7 @@ afs_int32 apart; {
 	}
     }
     tt = (struct volser_trans *) malloc(sizeof(struct volser_trans));
-    bzero(tt, sizeof(struct volser_trans));
+    memset(tt, 0, sizeof(struct volser_trans));
     tt->volid = avol;
     tt->partition = apart;
     tt->next = allTrans;

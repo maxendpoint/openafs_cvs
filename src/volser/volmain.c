@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.7 2001/07/12 19:59:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.8 2001/08/08 00:04:26 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -342,7 +342,7 @@ usage:
     }
     rx_GetIFInfo();
     rx_SetRxDeadTime(420);
-    bzero(busyFlags, sizeof(busyFlags));
+    memset(busyFlags, 0, sizeof(busyFlags));
 
     /* Open FileLog and map stdout, stderr into it */
     OpenLog(AFSDIR_SERVER_VOLSERLOG_FILEPATH);

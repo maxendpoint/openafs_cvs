@@ -10,7 +10,7 @@
 #include <sys/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/test.c,v 1.3 2001/07/05 15:20:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/test.c,v 1.4 2001/08/08 00:03:53 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -198,8 +198,8 @@ test5(v)
     struct sysdata sys;
     double delay;
 
-    bzero (&peer, sizeof(peer));
-    bzero (&sys, sizeof(sys));
+    memset(&peer, 0, sizeof(peer));
+    memset(&sys, 0, sizeof(sys));
     pkt.precision = -6;
     peer.precision = pkt.precision;
     sys.precision = pkt.precision;

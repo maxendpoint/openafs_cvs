@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.4 2001/07/12 19:59:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.5 2001/08/08 00:04:23 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -77,7 +77,7 @@ afs_int32 avolid; {
     /* record the info */
     if (!allInodes || allInodes->freePtr >= MAXATONCE) {
 	ti = (struct ilist *) malloc(sizeof(struct ilist));
-	bzero(ti, sizeof(*ti));
+	memset(ti, 0, sizeof(*ti));
 	ti->next = allInodes;
 	allInodes = ti;
     }

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/usd/usd_nt.c,v 1.4 2001/07/12 19:59:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/usd/usd_nt.c,v 1.5 2001/08/08 00:04:14 shadow Exp $");
 
 #include <windows.h>
 #include <stdio.h>
@@ -485,7 +485,7 @@ static int usd_DeviceOpen(
 	return nterr_nt2unix(GetLastError(), EIO);
 
     usd = (usd_handle_t) malloc(sizeof(*usd));
-    bzero(usd, sizeof(*usd));
+    memset(usd, 0, sizeof(*usd));
 
     
     _ASSERT(sizeof(devhandle) <= sizeof(usd->handle));
@@ -541,7 +541,7 @@ static int usd_DeviceStandardInput(usd_handle_t *usdP)
 	*usdP = NULL;
 
     usd = (usd_handle_t) malloc(sizeof(*usd));
-    bzero(usd, sizeof(*usd));
+    memset(usd, 0, sizeof(*usd));
     usd->handle = (void *)0;
     usd->read = usd_DeviceRead;
     usd->write = usd_DeviceWrite;
@@ -568,7 +568,7 @@ static int usd_DeviceStandardOutput(
 	*usdP = NULL;
 
     usd = (usd_handle_t) malloc(sizeof(*usd));
-    bzero(usd, sizeof(*usd));
+    memset(usd, 0, sizeof(*usd));
     usd->handle = (void *)1;
     usd->read = usd_DeviceRead;
     usd->write = usd_DeviceWrite;

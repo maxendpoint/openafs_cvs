@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_uio.c,v 1.4 2001/07/12 19:58:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_uio.c,v 1.5 2001/08/08 00:03:28 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -33,11 +33,11 @@ register struct iovec *aoutvec; {
 
     AFS_STATCNT(afsio_copy);
     if (ainuio->afsio_iovcnt > AFS_MAXIOVCNT) return EINVAL;
-    bcopy((char *)ainuio, (char *)aoutuio, sizeof(struct uio));
+    memcpy((char *)aoutuio, (char *)ainuio, sizeof(struct uio));
     tvec = ainuio->afsio_iov;
     aoutuio->afsio_iov = aoutvec;
     for(i=0;i<ainuio->afsio_iovcnt;i++){
-	bcopy((char *)tvec, (char *)aoutvec, sizeof(struct iovec));
+	memcpy((char *)aoutvec, (char *)tvec, sizeof(struct iovec));
 	tvec++;	    /* too many compiler bugs to do this as one expr */
 	aoutvec++;
     }

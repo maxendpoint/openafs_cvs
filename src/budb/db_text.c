@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.5 2001/07/12 19:58:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/db_text.c,v 1.6 2001/08/08 00:03:39 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -172,7 +172,7 @@ afs_int32 GetText (call, lockHandle, textType, maxLength, offset,
 	textRemaining = BLOCK_DATA_SIZE - blockOffset;
 	chunkSize = min(textRemaining, transferSize);
 
-	bcopy(&block.a[blockOffset], textPtr, chunkSize);
+	memcpy(textPtr, &block.a[blockOffset], chunkSize);
 
 	/* LogDebug(5, "transfering %d bytes: %s\n", chunkSize, textPtr); */
 
@@ -400,7 +400,7 @@ afs_int32 SaveText (call, lockHandle, textType, offset, flags, charListPtr)
 	chunkSize = MIN(remainingInBlock, textLength);	
 
 	/* copy in the data */
-	bcopy(textptr, &diskBlock.a[offset % BLOCK_DATA_SIZE], chunkSize);
+	memcpy(&diskBlock.a[offset % BLOCK_DATA_SIZE], textptr, chunkSize);
 
         /* LogDebug(5, "text is %s\n", textptr); */
 

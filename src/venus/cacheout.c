@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/cacheout.c,v 1.4 2001/07/12 19:59:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/cacheout.c,v 1.5 2001/08/08 00:04:18 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -174,8 +174,8 @@ afs_int32 ListServers()
 	afs_uint32 *p;
 
 	/* get list of file servers in NW byte order */
-	bzero(&addrs, sizeof(addrs));
-	bzero(&spare3, sizeof(spare3));
+	memset(&addrs, 0, sizeof(addrs));
+	memset(&spare3, 0, sizeof(spare3));
 	code=ubik_Call(VL_GetAddrs,client,0,Handle,spare2,&spare3,
 		&server_count,&addrs);
 	if(code)

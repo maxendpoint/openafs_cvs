@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.7 2001/07/12 19:59:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.8 2001/08/08 00:04:10 shadow Exp $");
 
 #include <errno.h>
 #include <limits.h>
@@ -107,7 +107,7 @@ char *syscall;
 	printf("host %s not found; %s call aborted\n", afs_server, syscall);
 	return 0;
     }
-    bcopy(th->h_addr, &hostAddr, sizeof(hostAddr));
+    memcpy(&hostAddr, th->h_addr, sizeof(hostAddr));
     return hostAddr;
 }
 
@@ -229,7 +229,7 @@ struct ViceIoctl *data;
     if (!(inbuffer = (char *)malloc(ins)))
 	 return	(-1);	    /* helpless here */
     if (data->in_size)
-	bcopy(data->in, inbuffer, data->in_size);
+	memcpy(inbuffer, data->in, data->in_size);
     InData.rmtbulk_len = data->in_size;
     InData.rmtbulk_val = inbuffer;
     inparam_conversion(cmd, InData.rmtbulk_val, 0);

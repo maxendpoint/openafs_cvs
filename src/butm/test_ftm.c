@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.4 2001/07/12 19:58:29 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.5 2001/08/08 00:03:40 shadow Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -220,7 +220,7 @@ int PerformDumpTest(TestInfo *tip)
     ERROR_EXIT (2);
   }
   
-  bzero(&label, sizeof(label));
+  memset(&label, 0, sizeof(label));
   gettimeofday(&tp, 0);
   label.structVersion = CUR_TAPE_VERSION;
   label.creationTime = tp.tv_sec;
@@ -355,14 +355,14 @@ int PerformDumpTest(TestInfo *tip)
     
     tprogress = tlen = fprogress = flen = 0;
     while (1) {
-      bzero(tbuffer,BUTM_BLKSIZE);
+      memset(tbuffer, 0, BUTM_BLKSIZE);
       code = butm_ReadFileData (&info, tbuffer, BUTM_BLKSIZE, &tlen);
       
       if (code && code != BUTM_STATUS_EOF) {
 	com_err (whoami, code, "Reading %dth tape data", i+1);
 	ERROR_EXIT(6);
       }
-      bzero(fbuffer,BUTM_BLKSIZE);
+      memset(fbuffer, 0, BUTM_BLKSIZE);
       flen = read (fid, fbuffer, sizeof(fbuffer));
       if (flen < 0) {
 	com_err (whoami, errno, "Reading %dth file data", i+1);

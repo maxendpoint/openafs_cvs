@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.12 2001/07/12 19:59:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.13 2001/08/08 00:04:18 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>	/* for malloc() */
@@ -1259,7 +1259,7 @@ int pnt;
     int chainCount[NSERVERS];
 
     if (pnt) {
-	bzero((char*)chainCount, sizeof(chainCount));
+	memset((char*)chainCount, 0, sizeof(chainCount));
 	printf("\n\nPrinting 'afs_servers' structures...\n");
     }
     findsym( "afs_servers", &symoff);
@@ -1297,7 +1297,7 @@ int pnt;
 
     /* Verify against afs_totalServers. */
     if (pnt) {
-	bzero((char*)chainCount, sizeof(chainCount));
+	memset((char*)chainCount, 0, sizeof(chainCount));
 	if (findsym( "afs_totalServers", &symoff)) {
 	    kread(kmem, symoff, (char*)&afs_totalServers, sizeof(afs_int32));
 	    if (afs_totalServers != nServers) {
@@ -2016,7 +2016,7 @@ void kread(int kmem,off_t loc,void *buf,KDUMP_SIZE_T len)
 {
     int i;
 
-    bzero(buf,len);
+    memset(buf, 0, len);
 
 #ifdef	AFS_OSF_ENV
     if (mem) {

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.8 2001/07/12 19:58:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.9 2001/08/08 00:03:54 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -206,7 +206,7 @@ void main (argc, argv)
 	fprintf (stderr, "ptserver: couldn't get address of this host.\n");
 	PT_EXIT(1);
     }
-    bcopy(th->h_addr,&myHost,sizeof(afs_int32));
+    memcpy(&myHost, th->h_addr, sizeof(afs_int32));
         
     /* get list of servers */
     code = afsconf_GetExtendedCellInfo(prdir,(char *)0,"afsprot",

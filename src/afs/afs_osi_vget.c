@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_vget.c,v 1.4 2001/07/12 19:58:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_vget.c,v 1.5 2001/08/08 00:03:28 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -37,7 +37,7 @@ int afs_osi_vget(struct vcache **avcpp, struct fid *afidp,
     register afs_int32 code = 0, cellindex;
     afs_int32 ret;
 
-    bcopy(afidp->fid_data, (char *)&Sfid, SIZEOF_SMALLFID);
+    memcpy((char *)&Sfid, afidp->fid_data, SIZEOF_SMALLFID);
 #ifdef AFS_OSF_ENV
     Sfid.Vnode = afidp->fid_reserved;
 #endif

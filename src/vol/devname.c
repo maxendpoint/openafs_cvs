@@ -10,7 +10,7 @@
 #include <sys/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/devname.c,v 1.6 2001/07/05 15:21:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/devname.c,v 1.7 2001/08/08 00:04:23 shadow Exp $");
 
 #include <afs/param.h>
 #include <rx/xdr.h>
@@ -201,14 +201,14 @@ dev_t adev; {
 #endif
 	    if (wpath) {
 		strcpy(pbuf, pbuffer);
-		ptr = (char *)rindex(pbuf, '/');
+		ptr = (char *)strrchr(pbuf, '/');
 		if (ptr) {
 		    *ptr = '\0';
 		    strcpy(wpath, pbuf);
 		} else
 		    return (char *)0;
 	    }
-	    ptr = (char *)rindex(pbuffer, '/');	    
+	    ptr = (char *)strrchr(pbuffer, '/');	    
 	    if (ptr) {
 		strcpy(pbuffer, ptr+1);
 		return pbuffer;

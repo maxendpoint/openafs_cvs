@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_clntout.c,v 1.4 2001/07/12 19:59:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_clntout.c,v 1.5 2001/08/08 00:04:05 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -112,7 +112,7 @@ printbody(proc)
 	}
 	f_print(fout, "res;\n");
 	f_print(fout, "\n");
-	f_print(fout, "\tbzero(%sres, sizeof(res));\n", ampr(proc->res_type));
+	f_print(fout, "\tmemset(%sres, 0, sizeof(res));\n", ampr(proc->res_type));
 	f_print(fout,
 		"\tif (clnt_call(clnt, %s, xdr_%s, argp, xdr_%s, %sres, TIMEOUT) != RPC_SUCCESS) {\n",
 		proc->proc_name, stringfix(proc->arg_type),

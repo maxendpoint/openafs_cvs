@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vlserver/sascnvldb.c,v 1.4 2001/07/12 19:59:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vlserver/sascnvldb.c,v 1.5 2001/08/08 00:04:22 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -95,7 +95,7 @@ static char *Parent(apath)
 char *apath; {
     register char *tp;
     strcpy(tspace, apath);
-    tp = rindex(tspace, '/');
+    tp = strrchr(tspace, '/');
     if (tp) {
 	*tp = 0;
     }
@@ -335,7 +335,7 @@ struct vlheader_2 *tvp1;
 struct vlheader_2 *tvp2;
 int i,j,diff;
 
-    bcopy (fromaddr, toaddr, sizeof(struct vlheader_2));
+    memcpy(toaddr, fromaddr, sizeof(struct vlheader_2));
     tvp2 = (struct vlheader_2 *) toaddr;
     tvp2->vital_header.vldbversion = htonl(2);
 

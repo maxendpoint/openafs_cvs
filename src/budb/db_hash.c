@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.5 2001/08/08 00:03:39 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -159,7 +159,7 @@ afs_int32 ht_AllocTable (ut, mht)
 
     mht->size = nb*sizeof(struct memoryHTBlock *);
     b = mht->blocks = (struct memoryHTBlock **)malloc (mht->size);
-    bzero (b, mht->size);
+    memset(b, 0, mht->size);
 
     for (i=0; i<nb; i++) {
 	b[i] = (struct memoryHTBlock *)malloc (sizeof (struct memoryHTBlock));
@@ -265,7 +265,7 @@ ht_GetTableBlock (ut, mht, hash, old, blockP, boP)
     if (*blocksP == 0) {
 	*sizeP = ht_TableSize (length);
 	*blocksP = (struct memoryHTBlock **)malloc (*sizeP);
-	bzero (*blocksP, *sizeP);
+	memset(*blocksP, 0, *sizeP);
     }
     n = *sizeP / sizeof (struct memoryHTBlock *);
     if (bi >= n) db_panic ("table size inconsistent");

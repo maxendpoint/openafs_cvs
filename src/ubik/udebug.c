@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.10 2001/08/06 23:50:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.11 2001/08/08 00:04:12 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdlib.h>
@@ -121,7 +121,7 @@ struct cmd_syndesc *as; {
 	    printf("udebug: host %s not found in host table\n", hostName);
 	    exit(1);
 	}
-	bcopy(th->h_addr, &hostAddr, sizeof(afs_int32));
+	memcpy(&hostAddr, th->h_addr, sizeof(afs_int32));
     }
     else hostAddr = htonl(0x7f000001);	/* IP localhost */
 

@@ -39,7 +39,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/login/Attic/login.c,v 1.4 2001/07/12 19:58:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/login/Attic/login.c,v 1.5 2001/08/08 00:03:51 shadow Exp $");
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -747,7 +747,7 @@ doafs:
 		    (void)signal(SIGTSTP, SIG_IGN);
 		    
 		    tbuf[0] = '-';
-		    (void)strcpy(tbuf + 1, (p = rindex(shell, '/')) ? p + 1 : shell);
+		    (void)strcpy(tbuf + 1, (p = strrchr(shell, '/')) ? p + 1 : shell);
 		    sia_ses_release(&entity);
 		    execlp(shell, tbuf, 0);
 		    (void)printf("login: no shell: %s.\n", strerror(errno));
@@ -2040,7 +2040,7 @@ static char *getlinep(const char *string, int size, FILE *stream) {
     if(!fgets(string, size, stream) || ferror(stream) || errno == EINTR)
 	return NULL;
     else
-	if(cp=index(string, '\n'))
+	if(cp=strchr(string, '\n'))
 	    *cp = '\0';
 	else
 	    while((c=getc(stdin)) != '\n' && c != EOF && errno != EINTR)

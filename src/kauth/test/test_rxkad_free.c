@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/test/test_rxkad_free.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/test/test_rxkad_free.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -140,7 +140,7 @@ static long Main (as, arock)
     
     if (as->parms[13].items) { /* if password specified */
 	strncpy (passwd, as->parms[13].items->data, sizeof(passwd));
-	bzero (as->parms[13].items->data, strlen (as->parms[13].items->data));
+	memset(as->parms[13].items->data, 0, strlen (as->parms[13].items->data));
     } else {
 	char msg[sizeof(name)+15];
 	if (as->parms[12].items) strcpy (msg, "Admin Password: ");
@@ -171,11 +171,11 @@ static long Main (as, arock)
 
     if (!doAuth) {
 	ka_StringToKey (passwd, cell, &key);
-	bzero (passwd, sizeof(passwd));
+	memset(passwd, 0, sizeof(passwd));
     }
     if (hostUsage) {
-	bzero (serversUse, sizeof(serversUse));
-	bzero (serversHost, sizeof(serversHost));
+	memset(serversUse, 0, sizeof(serversUse));
+	memset(serversHost, 0, sizeof(serversHost));
     }
 
     startTime = time(0);

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
  
-RCSID("$Header: /cvs/openafs/src/auth/setkey.c,v 1.6 2001/08/06 23:50:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/setkey.c,v 1.7 2001/08/08 00:03:37 shadow Exp $");
  
 #include <sys/types.h>
 #include <stdio.h>
@@ -77,7 +77,7 @@ char **argv; {
 	  printf("  Ex: setkey add 0 \"80b6a7cd7a9dadb6\"\n");
 	  exit(1);
 	}
-	bzero(tkey, sizeof(tkey));
+	memset(tkey, 0, sizeof(tkey));
 	for(i=7, cp = argv[3] + 15;i>=0; i--,cp-=2)
 	  tkey[i] = char2hex(*cp) + char2hex(*(cp-1))*16;
 
@@ -115,7 +115,7 @@ char **argv; {
 	    char hexbuf[17];
 	    unsigned char c;
 	    int j;
-	    bcopy(tkeys.key[i].key, tbuffer, 8);
+	    memcpy(tbuffer, tkeys.key[i].key, 8);
 	    tbuffer[8] = 0;
 	    for(j=0;j<8;j++) {
 	      c = tbuffer[j];

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/ezbnodeops.c,v 1.4 2001/07/12 19:58:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/ezbnodeops.c,v 1.5 2001/08/08 00:03:38 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -91,7 +91,7 @@ char *acommand; {
     }
 
     te = (struct ezbnode *) malloc(sizeof(struct ezbnode));
-    bzero(te, sizeof(struct ezbnode));
+    memset(te, 0, sizeof(struct ezbnode));
     bnode_InitBnode(te, &ezbnode_ops, ainstance);
     te->command = cmdpath;
     return (struct bnode *) te;

@@ -38,7 +38,7 @@ static int newVLDB = 1;
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.4 2001/07/12 19:59:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.5 2001/08/08 00:04:23 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -234,7 +234,7 @@ static int getport(addr)
 {
     int sd;
 
-    bzero(addr, sizeof(*addr));
+    memset(addr, 0, sizeof(*addr));
     assert((sd = socket(AF_INET, SOCK_STREAM, 0)) >= 0);
     addr->sin_addr.s_addr = htonl(0x7f000001);
     addr->sin_family = AF_INET; /* was localhost->h_addrtype */

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/new_rnd_key.c,v 1.9 2001/08/06 23:50:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/new_rnd_key.c,v 1.10 2001/08/08 00:03:41 shadow Exp $");
 
 #include <des.h>
 #include "des_internal.h"
@@ -243,8 +243,7 @@ static afs_int32
 des_set_sequence_number(des_cblock new_sequence_number)
 {
     LOCK_RANDOM
-    bcopy((char *)new_sequence_number, (char *)sequence_number,
-	  sizeof(sequence_number));
+    memcpy((char *)sequence_number, (char *)new_sequence_number, sizeof(sequence_number));
     UNLOCK_RANDOM
     return 0;
 }

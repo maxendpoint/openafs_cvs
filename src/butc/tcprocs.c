@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.4 2001/07/12 19:58:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.5 2001/08/08 00:03:40 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -99,7 +99,7 @@ STC_LabelTape(acid, label, taskId)
 
     ptr = (struct labelTapeIf *) malloc(sizeof(*ptr));
     if (!ptr) ERROR_EXIT(TC_NOMEMORY);
-    bcopy(label, &ptr->label, sizeof(ptr->label));
+    memcpy(&ptr->label, label, sizeof(ptr->label));
 
     /* set up the status node */
     *taskId = allocTaskId();			/* for bucoord */

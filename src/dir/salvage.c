@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/salvage.c,v 1.4 2001/07/12 19:58:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/salvage.c,v 1.5 2001/08/08 00:03:42 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -398,8 +398,8 @@ int DirSalvage (fromFile, toFile, vn, vu, pvn, pvu)
     struct DirEntry *ep;
     int entry;
 
-    bzero(dot, sizeof(dot));
-    bzero(dotdot, sizeof(dotdot));
+    memset(dot, 0, sizeof(dot));
+    memset(dotdot, 0, sizeof(dotdot));
     dot[1]    = vn;
     dot[2]    = vu;
     dotdot[1] = pvn;

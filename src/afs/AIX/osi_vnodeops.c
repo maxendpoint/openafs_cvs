@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_vnodeops.c,v 1.4 2001/07/12 19:58:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_vnodeops.c,v 1.5 2001/08/08 00:03:28 shadow Exp $");
 
 #include "../h/systm.h"
 #include "../h/types.h"
@@ -735,7 +735,7 @@ struct ucred	*cred;
 
    AFS_STATCNT(afs_gn_fclear);
     if (!fclear_init) {
-	bzero(zero_buffer, PAGESIZE);
+	memset(zero_buffer, 0, PAGESIZE);
 	fclear_init = 1;
     }
     /*

@@ -32,7 +32,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp.c,v 1.4 2001/07/12 19:58:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ntp/Attic/ntp.c,v 1.5 2001/08/08 00:03:53 shadow Exp $");
 
 #include <stdio.h>
 #ifdef	AFS_AIX32_ENV
@@ -160,10 +160,10 @@ main(argc, argv)
 					argv[host]);
 				continue;
 			}
-			bcopy(hp->h_addr, (char *) &dst.sin_addr,hp->h_length);
+			memcpy((char *) &dst.sin_addr, hp->h_addr, hp->h_length);
 		}
 
-		bzero((char *)pkt, sizeof(ntp_data));
+		memset((char *)pkt, 0, sizeof(ntp_data));
 
 		pkt->status = NTPVERSION_1 | NO_WARNING | MODE_CLIENT;
 		pkt->stratum = UNSPECIFIED;

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vfsck/proplist.c,v 1.4 2001/07/12 19:59:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vfsck/proplist.c,v 1.5 2001/08/08 00:04:20 shadow Exp $");
 
 #define VICE	/* control whether AFS changes are present */
 
@@ -173,8 +173,7 @@ int proplist_blkscan(dp, idesc, entry_list)
 	       return(SKIP);
 	    entry->next = NULL;
 	    entry->flags = 0;
-	    bcopy((char *)&pl_descp[1], entry->name,
-		  pl_descp->pl_namelen);
+	    memcpy(entry->name, (char *)&pl_descp[1], pl_descp->pl_namelen);
 	    entry->blkno = idesc->id_blkno;
 	    entry->blksize = blksize;
 	    entry->offset = idesc->id_loc;

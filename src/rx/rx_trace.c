@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.8 2001/08/06 23:50:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.9 2001/08/08 00:03:57 shadow Exp $");
 
 #ifdef RXDEBUG
 #ifdef HAVE_STRING_H
@@ -119,7 +119,7 @@ void rxi_calltrace(event, call)
 	 break;
     }
 
-  bcopy(&rxtinfo, rxi_tracebuf+rxi_tracepos, sizeof(struct rx_trace));
+  memcpy(rxi_tracebuf+rxi_tracepos, &rxtinfo, sizeof(struct rx_trace));
   rxi_tracepos += sizeof(struct rx_trace);
   if (rxi_tracepos >= (4096 - sizeof(struct rx_trace)))
     rxi_flushtrace();

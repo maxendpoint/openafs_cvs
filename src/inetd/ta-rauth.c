@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/inetd/Attic/ta-rauth.c,v 1.4 2001/07/12 19:58:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/inetd/Attic/ta-rauth.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -177,7 +177,7 @@ outtoken(s,token,svc,localName)
 
     /* (4) sessionKey */
     bp = buf + strlen(buf);
-    bcopy(&token->sessionKey,bp,8);
+    memcpy(bp, &token->sessionKey, 8);
     bp += 8;
 
     /* (5) - (6) */
@@ -185,7 +185,7 @@ outtoken(s,token,svc,localName)
 
     /* (7) ticket */
     bp += strlen(bp);
-    bcopy(token->ticket, bp, token->ticketLen);
+    memcpy(bp, token->ticket, token->ticketLen);
     bp += token->ticketLen;
 
     if((count = write(s, buf, (int)(bp - buf))) == -1) {
