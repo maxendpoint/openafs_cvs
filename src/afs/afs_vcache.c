@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.55 2003/09/03 16:47:15 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.56 2003/10/10 20:01:56 rees Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -928,7 +928,9 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
     tvc->v.v_vm_info->pager = MEMORY_OBJECT_NULL;
 #endif /* AFS_MACH_ENV */
 #ifdef AFS_OBSD_ENV
+    AFS_GUNLOCK();
     afs_nbsd_getnewvnode(tvc);	/* includes one refcount */
+    AFS_GLOCK();
     lockinit(&tvc->rwlock, PINOD, "vcache", 0, 0);
 #endif
     tvc->parentVnode = 0;
