@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.46 2002/07/22 03:47:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.47 2002/07/25 23:11:30 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -931,19 +931,27 @@ static int afs_linux_dentry_revalidate(struct dentry *dp)
 /* afs_dentry_iput */
 static void afs_dentry_iput(struct dentry *dp, struct inode *ip)
 {
-    afs_Trace3(afs_iclSetp, CM_TRACE_DENTRYIPUT,
-	       ICL_TYPE_POINTER, ip,
-	       ICL_TYPE_STRING, dp->d_parent->d_name.name,
-	       ICL_TYPE_STRING, dp->d_name.name);
+    if (ICL_SETACTIVE(afs_iclSetp)) {
+	AFS_GLOCK();
+	afs_Trace3(afs_iclSetp, CM_TRACE_DENTRYIPUT,
+		   ICL_TYPE_POINTER, ip,
+		   ICL_TYPE_STRING, dp->d_parent->d_name.name,
+		   ICL_TYPE_STRING, dp->d_name.name);
+	AFS_GUNLOCK();
+    }
 
     osi_iput(ip);
 }
 
 static int afs_dentry_delete(struct dentry *dp)
 {
-    afs_Trace3(afs_iclSetp, CM_TRACE_DENTRYDELETE, ICL_TYPE_POINTER, 
-	       dp->d_inode, ICL_TYPE_STRING, dp->d_parent->d_name.name,
-	       ICL_TYPE_STRING, dp->d_name.name);
+    if (ICL_SETACTIVE(afs_iclSetp)) {
+	AFS_GLOCK();
+	afs_Trace3(afs_iclSetp, CM_TRACE_DENTRYDELETE, ICL_TYPE_POINTER, 
+		   dp->d_inode, ICL_TYPE_STRING, dp->d_parent->d_name.name,
+		   ICL_TYPE_STRING, dp->d_name.name);
+	AFS_GUNLOCK();
+    }
 
     if (dp->d_inode && (ITOAFS(dp->d_inode)->states & CUnlinked))
 	return 1;               /* bad inode? */
