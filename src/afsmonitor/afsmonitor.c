@@ -5,6 +5,8 @@
  * This software has been released under the terms of the IBM Public
  * License.  For details, see the LICENSE file in the top-level source
  * directory or online at http://www.openafs.org/dl/license10.html
+ *
+ * Portions Copyright (c) 2003 Apple Computer, Inc.
  */
 
 /*
@@ -17,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.14 2003/07/15 23:14:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsmonitor/afsmonitor.c,v 1.15 2003/10/24 06:26:06 shadow Exp $");
 
 #include <stdio.h>
 #include <math.h>
@@ -275,7 +277,7 @@ extern char *cm_categories[];	/* cache manager data category names */
 
 
 
-#ifndef AFS_FBSD_ENV
+#if !defined(AFS_FBSD_ENV) && !defined(AFS_DARWIN70_ENV)
 /*	
         strcasestr(): Return first occurence of pattern s2 in s1, case 
 	insensitive. 
