@@ -1227,11 +1227,6 @@ struct memCacheEntry {
 };
 
 /* First 32 bits of capabilities */
-#define CAPABILITY_ERRORTRANS (1<<1)
-
-#define CAPABILITY_BITS 1
-
-/* First 32 bits of capabilities */
 #define CAPABILITY_ERRORTRANS (1<<0)
 
 #define CAPABILITY_BITS 1
