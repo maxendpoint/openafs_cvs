@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.38 2003/07/01 18:37:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.39 2003/07/01 23:53:09 shadow Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -169,7 +169,7 @@ void afs_StoreWarn(register afs_int32 acode, afs_int32 avolume, register afs_int
 		afs_warnuser(problem_fmt, avolume, partfull);
 	}
 	else
-#ifndef	AFS_SUN5_ENV
+#ifdef	EDQUOT
 	    /* EDQUOT doesn't exist on solaris and won't be sent by the server.
 	     * Instead ENOSPC will be sent...
 	     */

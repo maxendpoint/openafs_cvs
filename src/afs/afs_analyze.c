@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.18 2003/05/29 18:20:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.19 2003/07/01 23:53:09 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -262,6 +262,17 @@ int afs_CheckCode(afs_int32 acode, struct vrequest *areq, int where)
 	return EWOULDBLOCK;
     if (acode == VNOVNODE)
 	return ENOENT;
+    if (acode == VDISKFULL)
+	return ENOSPC;
+    if (acode == VOVERQUOTA)
+	return
+#ifdef EDQUOT
+	    EDQUOT
+#else
+	    ENOSPC
+#endif
+	    ;
+
     return acode;
 
 } /*afs_CheckCode*/
