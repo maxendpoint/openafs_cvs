@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_setcred.c,v 1.5 2001/07/12 19:58:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_setcred.c,v 1.6 2001/07/20 20:41:13 shadow Exp $");
 
 #include <sys/param.h>
 #include <afs/kautils.h>
@@ -128,7 +128,7 @@ pam_sm_setcred(
         RET(PAM_AUTH_ERR);
     }
 #else
-#ifdef AFS_LINUX20_ENV
+#if     defined(AFS_LINUX20_ENV) || defined(AFS_FBSD_ENV)
     upwd = getpwnam(user);
 #else
     upwd = getpwnam_r(user, &unix_pwd, upwd_buf, sizeof(upwd_buf));
