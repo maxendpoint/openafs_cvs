@@ -35,7 +35,6 @@ typedef unsigned short                  etap_event_t;
 #include "../h/socket.h"
 #ifndef AFS_LINUX22_ENV
 #include "../h/socketvar.h"
-#include "../h/protosw.h"
 #if !defined(AFS_SUN5_ENV) && !defined(AFS_XBSD_ENV)
 #include "../h/domain.h"
 #include "../h/dir.h"
@@ -103,6 +102,7 @@ struct coda_inode_info {};
 #include "../afs/afs_stats.h"
 #include "../h/errno.h"
 #ifdef KERNEL
+#include "../sys/afsincludes.h"
 #include "../afs/afsincludes.h"
 #endif
 
