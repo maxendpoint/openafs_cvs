@@ -19,6 +19,7 @@
 static char sccsid[] = "@(#)getusershell.c	5.5 (Berkeley) 7/21/88";
 #endif /* LIBC_SCCS and not lint */
 
+#include <afs/param.h>
 #include <sys/param.h>
 #include <sys/file.h>
 #include <sys/stat.h>
