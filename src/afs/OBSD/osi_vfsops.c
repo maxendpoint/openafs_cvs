@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.5 2002/11/12 23:57:38 rees Exp $
+ * $Id: osi_vfsops.c,v 1.6 2002/11/14 23:53:37 rees Exp $
  */
 
 /*
@@ -93,7 +93,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.5 2002/11/12 23:57:38 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.6 2002/11/14 23:53:37 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -176,23 +176,6 @@ afs_nbsd_lookupname(char *fnamep,
 	*dirvpp = nd.ni_dvp;
     return error;
 }
-
-#if 0
-int
-afs_rdwr(struct vnode *vp, struct uio *uiop, enum uio_rw op,
-	      int flags, struct AFS_UCRED *cred)
-{
-    uiop->uio_rw = op;
-    if (op == UIO_READ)
-	return VOP_READ(vp, uiop, flags, cred);
-    if (op == UIO_WRITE)
-	return VOP_WRITE(vp, uiop, flags, cred);
-#ifdef DIAGNOSTIC
-    panic("afs_rdwr mode");
-#endif
-    return EINVAL;
-}
-#endif
 
 int
 afs_quotactl()
@@ -506,7 +489,7 @@ afs_vfs_load(struct lkm_table *lkmtp,
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.5 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.6 $) lkm loaded\n");
     return 0;
 }
 

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.22 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.23 2002/11/14 23:53:36 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -542,7 +542,7 @@ struct brequest *afs_BQueue(register short aopcode, register struct vcache *avc,
 #ifdef	AFS_DEC_ENV
 		avc->vrefCount++;
 #else
-#ifdef AFS_NETBSD_ENV
+#if defined(AFS_NETBSD_ENV) || defined(AFS_OBSD_ENV)
 		AFS_HOLD(AFSTOV(avc));
 #else
 		VN_HOLD(AFSTOV(avc));

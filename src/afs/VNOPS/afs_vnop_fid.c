@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_fid.c,v 1.8 2002/10/16 03:58:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_fid.c,v 1.9 2002/11/14 23:53:37 rees Exp $");
 
 #if !defined(AFS_DUX40_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV)
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -65,6 +65,8 @@ int afs_iauth_initd = 0;
 
 
 extern int afs_NFSRootOnly; /* 1 => only allow NFS mounts of /afs. */
+
+int
 #if !defined(AFS_DEC_ENV) && !defined(AFS_ATHENA_ENV)
 #ifdef AFS_AIX41_ENV
 afs_fid(OSI_VC_ARG(avc), fidpp, credp)
@@ -115,7 +117,9 @@ struct fid **fidpp;
 	SizeOfSmallFid = sizeof(addr);
 #endif /* defined(AFS_SGI61_ENV) && (_MIPS_SZPTR == 64) */
 	addr[0] = (long)avc;
-#ifndef AFS_AIX41_ENV
+#if defined(AFS_OBSD_ENV)
+	osi_vnhold(avc, 0);
+#elif !defined(AFS_AIX41_ENV)
 	/* No post processing, so don't hold ref count. */
 	VN_HOLD(AFSTOV(avc));
 #endif

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.19 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.20 2002/11/14 23:53:36 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -65,7 +65,7 @@ afs_int32 fvTable[NFENTRIES];
 static struct volume *afs_NewVolumeByName(char *aname, afs_int32 acell, int agood,
 				   struct vrequest *areq, afs_int32 locktype);
 static struct volume *afs_NewDynrootVolume(struct VenusFid *fid);
-static inVolList();
+static int inVolList(struct VenusFid *fid, afs_int32 nvols, afs_int32 *vID, afs_int32 *cID);
 
 
 /* Convert a volume name to a #; return 0 if can't parse as a number */

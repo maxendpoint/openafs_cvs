@@ -12,17 +12,12 @@
  * afs_lookup
  * EvalMountPoint
  * afs_DoBulkStat
- *
- * Locals:
- * afs_strcat
- * AFS_EQ_ATSYS (macro)
- * afs_index
  */
 
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.43 2002/11/12 23:57:39 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.44 2002/11/14 23:53:37 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -992,6 +987,7 @@ tagain:
 /* was: (AFS_DEC_ENV) || defined(AFS_OSF30_ENV) || defined(AFS_NCR_ENV) */
 static int AFSDOBULK = 1;
 
+int
 #ifdef	AFS_OSF_ENV
 afs_lookup(adp, ndp)
     struct vcache *adp;
