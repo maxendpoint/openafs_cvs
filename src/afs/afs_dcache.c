@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.17 2001/12/25 18:04:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.18 2002/05/09 20:37:29 kolya Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -2127,7 +2127,7 @@ RetryLookup:
 	    if (size > dynrootLen)
 		size = dynrootLen;
 	    if (size < 0) size = 0;
-	    code = afs_osi_Write(file, -1, dynrootDir, size);
+	    code = afs_CFileWrite(file, 0, dynrootDir, size);
 	    afs_PutDynroot();
 
 	    if (code == size)
