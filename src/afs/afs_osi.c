@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.35 2003/07/01 18:37:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.36 2003/07/01 22:41:22 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -67,11 +67,22 @@ void osi_Init(void)
 #endif 	/* AFS_GLOBAL_SUNLOCK */
 #endif 	/* AFS_HPUX_ENV */
 
-    if ( !afs_osicred_initialized ) {
-	memset((char *)&afs_osi_cred, 0, sizeof(struct AFS_UCRED));
+    if (!afs_osicred_initialized) {
+	memset(&afs_osi_cred, 0, sizeof(struct AFS_UCRED));
+#ifdef AFS_FBSD50_ENV
+	/*
+	 * We don't init the mutex.
+	 * This will be trouble if anyone tries to use change the refcount.
+	 * Proper fix would be to make afs_osi_cred into a pointer,
+	 * and crdup() it from curthread.
+	 */
+	afs_osi_cred.cr_ref = 1;
+#else
 	crhold(&afs_osi_cred);	/* don't let it evaporate */
+#endif
 	afs_osicred_initialized = 1;
     }
+
 #ifdef AFS_SGI64_ENV
     osi_flid.fl_pid = osi_flid.fl_sysid = 0;
 #endif
