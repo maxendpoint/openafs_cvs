@@ -16,17 +16,31 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.11 2001/09/13 23:19:20 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.12 2002/01/19 09:25:20 shadow Exp $");
 
+
+#include "lwp.h"
+#include "preempt.h"
 
 #if defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV) || defined(AFS_DJGPP_ENV)
 int PRE_Block = 0;
+
+
+int PRE_InitPreempt(slice)
+    struct timeval *slice;
+{
+    return LWP_SUCCESS;
+}
+
+int PRE_EndPreempt()
+{
+    return LWP_SUCCESS;
+}
+
 #else
 #include <sys/time.h>
 #include <signal.h>
 #include <ucontext.h>
-#include "lwp.h"
-#include "preempt.h"
 
 #if defined(AFS_OSF_ENV) || defined(AFS_S390_LINUX20_ENV)
 int PRE_Block = 0;		/* used in lwp.c and process.s */
