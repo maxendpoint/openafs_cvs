@@ -16,7 +16,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.22 2001/09/07 20:47:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx.c,v 1.23 2001/09/24 10:44:32 shadow Exp $");
 
 #ifdef KERNEL
 #include "../afs/sysincludes.h"
@@ -3460,7 +3460,7 @@ struct rx_packet *rxi_ReceiveAckPacket(call, np, istack)
 
     /* if the ack packet has a receivelen field hanging off it,
      * update our state */
-    if ( np->length >= rx_AckDataSize(ap->nAcks) +sizeof(afs_int32)) {
+    if ( np->length >= rx_AckDataSize(ap->nAcks) + 2*sizeof(afs_int32)) {
       afs_uint32 tSize;
 
       /* If the ack packet has a "recommended" size that is less than 
