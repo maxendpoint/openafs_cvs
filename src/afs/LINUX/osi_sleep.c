@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.8 2002/01/01 18:49:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.9 2002/01/11 16:44:53 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -224,11 +224,6 @@ void afs_osi_Sleep(char *event)
     seq = evp->seq;
 
     while (seq == evp->seq) {
-        afs_Trace4(afs_iclSetp, CM_TRACE_SLEEP,
-		ICL_TYPE_POINTER, evp,
-		   ICL_TYPE_INT32, 0/*count*/,
-		ICL_TYPE_INT32, seq,
-		ICL_TYPE_INT32, evp->seq);
 	AFS_ASSERT_GLOCK();
 	AFS_GUNLOCK();
 	interruptible_sleep_on(&evp->cond);
@@ -285,9 +280,6 @@ void afs_osi_Wakeup(char *event)
 
     if (evp->refcount > 1) {
 	evp->seq++;    
-        afs_Trace2(afs_iclSetp, CM_TRACE_WAKE,
-		ICL_TYPE_POINTER, evp,
-		ICL_TYPE_INT32, evp->seq);
 	wake_up(&evp->cond);
     }
     relevent(evp);
