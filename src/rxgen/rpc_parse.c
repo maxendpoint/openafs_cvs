@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.15 2003/01/15 04:27:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.16 2003/04/10 14:55:32 rees Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -667,7 +667,8 @@ static void customize_struct(definition *defp)
 
 static char *structname(char *name)
 {
-    char namecontents[150], *pnt, *pnt1;
+    static char namecontents[150];
+    char *pnt, *pnt1;
 
     strcpy(namecontents, name);
     pnt = namecontents;
