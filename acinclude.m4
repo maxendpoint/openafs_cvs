@@ -571,7 +571,6 @@ else
 			fi
 			CPPFLAGS="$save_CPPFLAGS"
 			AFS_SYSNAME="$_AFS_SYSNAME"
-			fi
 			;;
 	esac
         AC_MSG_RESULT($AFS_SYSNAME)
