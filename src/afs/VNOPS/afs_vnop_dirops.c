@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.19 2004/12/24 06:31:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.20 2004/12/24 06:32:25 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -169,9 +169,6 @@ afs_rmdir(OSI_VC_DECL(adp), char *aname, struct vnode *cdirp,
 #else
 afs_rmdir(OSI_VC_DECL(adp), char *aname, struct AFS_UCRED *acred)
 #endif
-     OSI_VC_DECL(adp);
-     char *aname;
-     struct AFS_UCRED *acred;
 {
     struct vrequest treq;
     register struct dcache *tdc;
