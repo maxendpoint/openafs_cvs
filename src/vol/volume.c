@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.32 2003/08/08 20:40:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.33 2003/11/15 04:59:14 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -148,6 +148,7 @@ RCSID
 #ifdef AFS_PTHREAD_ENV
 pthread_mutex_t vol_glock_mutex;
 pthread_mutex_t vol_attach_mutex;
+pthread_mutex_t vol_fsync_mutex;
 pthread_cond_t vol_put_volume_cond;
 pthread_cond_t vol_sleep_cond;
 #endif /* AFS_PTHREAD_ENV */

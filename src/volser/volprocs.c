@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.27 2003/11/14 23:36:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.28 2003/11/15 04:59:16 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -40,7 +40,11 @@ RCSID
 #include <rx/rxkad.h>
 #include <afs/afsint.h>
 #include <signal.h>
+#ifdef AFS_PTHREAD_ENV
+#include <assert.h>
+#else /* AFS_PTHREAD_ENV */
 #include <afs/assert.h>
+#endif /* AFS_PTHREAD_ENV */
 #include <afs/prs_fs.h>
 #include <afs/nfs.h>
 #include <lwp.h>
@@ -1916,7 +1920,9 @@ VolListOneVolume(acid, partid, volumeId, volumeInfo)
 
 	if (volid == volumeId) {	/*copy other things too */
 	    found = 1;
+#ifndef AFS_PTHREAD_ENV
 	    IOMGR_Poll();	/*make sure that the client doesnot time out */
+#endif
 	    ttc = NewTrans(volid, partid);
 	    if (!ttc) {
 		pntr->status = VBUSY;
@@ -2127,7 +2133,9 @@ VolXListOneVolume(a_rxCidP, a_partID, a_volID, a_volumeXInfoP)
 	     * doesn't time out) and to set up a transaction on the volume.
 	     */
 	    found = 1;
+#ifndef AFS_PTHREAD_ENV
 	    IOMGR_Poll();
+#endif
 	    ttc = NewTrans(currVolID, a_partID);
 	    if (!ttc) {
 		/*
@@ -2304,7 +2312,9 @@ VolListVolumes(acid, partid, flags, volumeInfo)
 	}
 
 	if (flags) {		/*copy other things too */
+#ifndef AFS_PTHREAD_ENV
 	    IOMGR_Poll();	/*make sure that the client doesnot time out */
+#endif
 	    ttc = NewTrans(volid, partid);
 	    if (!ttc) {
 		pntr->status = VBUSY;
@@ -2543,7 +2553,9 @@ VolXListVolumes(a_rxCidP, a_partID, a_flags, a_volumeXInfoP)
 	     * Full info about the volume desired.  Poll to make sure the
 	     * client doesn't time out, then start up a new transaction.
 	     */
+#ifndef AFS_PTHREAD_ENV
 	    IOMGR_Poll();
+#endif
 	    ttc = NewTrans(volid, a_partID);
 	    if (!ttc) {
 		/*
