@@ -736,4 +736,4 @@ OpenAFS for Windows
     (Q/A's will be added here as needed)
 
 ----------------------------------------------------------------------
-$Id: msi-deployment-guide.txt,v 1.2.2.3 2005/04/02 09:07:17 jaltman Exp $
+$Id: msi-deployment-guide.txt,v 1.2.2.4 2005/04/04 11:51:53 jaltman Exp $
