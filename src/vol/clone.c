@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.9 2003/01/17 06:46:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.10 2003/02/08 07:38:39 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -94,6 +94,10 @@ struct clone_head *ah; {
     /* if no last elt (first call) or last item full, get a new one */
     if ((!ah->last) || ah->last->nitems >= CLONE_MAXITEMS) {
 	ti = (struct clone_items *) malloc(sizeof(struct clone_items));
+	if (!ti) {
+	    Log("ci_AddItem: malloc failed\n");
+	    assert(0);
+	}
 	ti->nitems = 0;
 	ti->next = (struct clone_items *) 0;
 	if (ah->last) {

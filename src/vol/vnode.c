@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.9 2003/01/11 07:26:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vnode.c,v 1.10 2003/02/08 07:38:39 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -392,6 +392,7 @@ Vnode *VAllocVnode_r(ec,vp,type)
 	  } else {
 	      /* growing file - grow in a reasonable increment */
 	      char *buf = (char *)malloc(16*1024);
+	      if (!buf) Abort("VAllocVnode: malloc failed\n");
 	      memset(buf, 0, 16*1024);
 	      FDH_WRITE(fdP, buf, 16*1024);
 	      free(buf);

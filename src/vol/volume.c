@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.20 2003/01/11 07:26:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.21 2003/02/08 07:38:39 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -1719,6 +1719,7 @@ void VAddToVolumeUpdateList_r(Error *ec, Volume *vp)
 	    UpdateList = (VolumeId *) realloc(UpdateList, sizeof (VolumeId) * updateSize);
 	}
     }
+    assert(UpdateList != NULL);
     UpdateList[nUpdatedVolumes++] = V_id(vp);
 }
 
