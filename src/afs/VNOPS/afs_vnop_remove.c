@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.25 2003/07/15 23:14:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.26 2004/03/25 22:10:54 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -279,6 +279,15 @@ OSI_VC_DECL(adp);
 #endif
 	return code;
     }
+
+    if (adp->mvstat == 1) {
+#ifdef  AFS_OSF_ENV
+        afs_PutVCache(adp);
+	afs_PutVCache(tvc);
+#endif
+	return EISDIR;
+    }
+
     if (strlen(aname) > AFSNAMEMAX) {
 	afs_PutFakeStat(&fakestate);
 #ifdef  AFS_OSF_ENV
