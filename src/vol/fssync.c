@@ -38,7 +38,7 @@ static int newVLDB = 1;
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.15 2003/03/03 15:10:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.16 2003/03/14 20:09:30 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -81,6 +81,11 @@ RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.15 2003/03/03 15:10:38 s
 #include "vnode.h"
 #include "volume.h"
 #include "partition.h"
+
+#ifdef osi_Assert
+#undef osi_Assert
+#endif
+#define osi_Assert(e) (void)(e)
 
 extern int LogLevel; /* Vice loglevel */
 int (*V_BreakVolumeCallbacks)();

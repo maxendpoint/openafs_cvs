@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.7 2002/10/16 03:58:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.8 2003/03/14 20:08:13 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -25,7 +25,7 @@ RCSID("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.7 2002/10/16 03:58:30 shadow 
 #include <rpc.h>
 #include <afs/smb_iocons.h>
 #include <afs/pioctl_nt.h>
-#include "WINNT/afsd/afsrpc.h"
+#include "afs/afsrpc.h"
 #include <afs/vice.h>
 #include "auth.h"
 #include <afs/afsutil.h>

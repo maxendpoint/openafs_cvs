@@ -14,7 +14,7 @@
 #endif
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rxstat/rxstat.c,v 1.4 2002/10/16 03:59:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxstat/rxstat.c,v 1.5 2003/03/14 20:09:13 shadow Exp $");
 
 #ifdef UKERNEL
 #include "afs/sysincludes.h"
@@ -23,7 +23,7 @@ RCSID("$Header: /cvs/openafs/src/rxstat/rxstat.c,v 1.4 2002/10/16 03:59:10 shado
 #else /* UKERNEL */
 #include <afs/stds.h>
 #include <rx/rx.h>
-#include "rxstat/rxstat.h"
+#include "rxstat.h"
 #ifdef KERNEL
 #include "sys/errno.h"
 #else /* KERNEL */
