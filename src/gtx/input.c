@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/gtx/input.c,v 1.5 2002/08/21 18:13:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/gtx/input.c,v 1.6 2002/08/22 18:45:15 shadow Exp $");
 
 #ifdef AFS_HPUX_ENV
 #include <sys/types.h>
@@ -91,7 +91,7 @@ int astartInput; {
     IOMGR_Initialize();	/* input thread uses it */
     if (astartInput)
 	code = LWP_CreateProcess(gtx_InputServer, 8192, LWP_NORMAL_PRIORITY,
-				 0, "gx-listener", &junk);
+				 (void *) 0, "gx-listener", &junk);
     /* all done */
     twin = &gator_basegwin;
     return twin;

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.10 2002/08/21 18:14:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volmain.c,v 1.11 2002/08/22 18:45:20 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -355,8 +355,8 @@ usage:
     SetupLogSignals();
 
     /* create the lwp to garbage-collect old transactions and sleep periodically */
-    LWP_CreateProcess(BKGLoop, 16*1024, 3, 0, "vol bkg daemon", &pid);
-    LWP_CreateProcess(BKGSleep,16*1024, 3, 0, "vol slp daemon", &pid);
+    LWP_CreateProcess(BKGLoop, 16*1024, 3, (void *) 0, "vol bkg daemon", &pid);
+    LWP_CreateProcess(BKGSleep,16*1024, 3, (void *) 0, "vol slp daemon", &pid);
 
     /* Create a single security object, in this case the null security object, for unauthenticated connections, which will be used to control security on connections made to this server */
 

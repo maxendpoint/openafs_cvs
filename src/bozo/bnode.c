@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.14 2002/08/21 19:19:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.15 2002/08/22 18:45:11 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -737,7 +737,8 @@ int bnode_Init() {
     LWP_InitializeProcessSupport(1, &junk); /* just in case */
     IOMGR_Initialize();
     code = LWP_CreateProcess(bproc, BNODE_LWP_STACKSIZE,
-			     /* priority */ 1, /* parm */0, "bnode-manager", &bproc_pid);
+			     /* priority */ 1, (void *) /* parm */0, 
+			     "bnode-manager", &bproc_pid);
     if (code) return code;
     memset((char *)&newaction, 0, sizeof(newaction));
     newaction.sa_handler = bnode_Int;

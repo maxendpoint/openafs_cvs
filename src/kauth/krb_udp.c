@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.19 2002/08/01 02:45:06 zacheiss Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.20 2002/08/22 18:45:16 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -920,12 +920,12 @@ afs_int32 init_krb_udp ()
     IOMGR_Initialize();
 #endif
     LWP_CreateProcess(SocketListener, /*stacksize*/16000, LWP_NORMAL_PRIORITY,
-		      0, "Socket Listener", &slPid);
+		      (void *) 0, "Socket Listener", &slPid);
 
 	/* just to close the log every five minutes */
 
 	LWP_CreateProcess(FiveMinuteCheckLWP, 24*1024,
-		 LWP_MAX_PRIORITY - 2, &fiveminutes,
+		 LWP_MAX_PRIORITY - 2, (void *) &fiveminutes,
 		 "FiveMinuteChecks", &checkPid);
 
 #if MAIN

@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/scout/scout.c,v 1.6 2002/08/21 18:14:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/scout/scout.c,v 1.7 2002/08/22 18:45:17 shadow Exp $");
 
 #undef	IN
 #ifdef	AFS_AIX32_ENV
@@ -2011,7 +2011,7 @@ static int execute_scout(a_numservers, a_srvname, a_pkg)
       LWP_CreateProcess(gtx_InputServer,	/*Fcn to start up*/
 			8192,			/*Stack size in bytes*/
 			LWP_NORMAL_PRIORITY,	/*Priority*/
-			scout_gwin,		/*Params: Ptr to window*/
+			(void *) scout_gwin,	/*Params: Ptr to window*/
 			"gx-listener",		/*Name to use*/
 			&gxlistener_ID);	/*Returned LWP process ID*/
 #endif /* 0 */

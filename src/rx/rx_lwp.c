@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.12 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.13 2002/08/22 18:45:17 shadow Exp $");
 
 # include <sys/types.h>		/* fd_set on older platforms */
 # include <errno.h>
@@ -109,7 +109,7 @@ void rxi_StartServerProc(void (*proc)(void), int stacksize)
 
     sprintf(name, "srv_%d", ++number);
     LWP_CreateProcess(proc, stacksize, RX_PROCESS_PRIORITY,
-		      0, "rx_ServerProc", &scratchPid);
+		      (void *) 0, "rx_ServerProc", &scratchPid);
     if (registerProgram)
 	(*registerProgram)(scratchPid, name);
 }
@@ -118,8 +118,8 @@ void rxi_StartListener(void)
 {
     /* Priority of listener should be high, so it can keep conns alive */
 #define	RX_LIST_STACK	24000
-    LWP_CreateProcess(rx_ListenerProc, RX_LIST_STACK, LWP_MAX_PRIORITY, 0,
-		      "rx_Listener", &rx_listenerPid);
+    LWP_CreateProcess(rx_ListenerProc, RX_LIST_STACK, LWP_MAX_PRIORITY, 
+		      (void *) 0, "rx_Listener", &rx_listenerPid);
     if (registerProgram)
 	(*registerProgram)(rx_listenerPid, "listener");
 }

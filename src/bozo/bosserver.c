@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.19 2002/08/21 19:49:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.20 2002/08/22 18:45:11 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -861,7 +861,7 @@ int main (int argc, char **argv, char **envp)
     }
 
     code = LWP_CreateProcess(BozoDaemon, BOZO_LWP_STACKSIZE, /* priority */ 1,
-			     /* parm */0, "bozo-the-clown", &bozo_pid);
+			     (void *) /*parm*/0, "bozo-the-clown", &bozo_pid);
 
     /* try to read the key from the config file */
     tdir = afsconf_Open(AFSDIR_SERVER_ETC_DIRPATH);

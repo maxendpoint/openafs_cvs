@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.6 2002/08/21 18:14:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.7 2002/08/22 18:45:20 shadow Exp $");
 
 #include "xstat_cm.h"			/*Interface for this module*/
 #include <lwp.h>			/*Lightweight process package*/
@@ -613,7 +613,7 @@ int xstat_cm_Init(a_numServers, a_socketArray, a_ProbeFreqInSecs,
 	LWP_CreateProcess(xstat_cm_LWP,		/*Function to start up*/
 			  LWP_STACK_SIZE,	/*Stack size in bytes*/
 			  1,			/*Priority*/
-			  0,			/*Parameters*/
+			  (void *) 0,		/*Parameters*/
 			  "xstat_cm Worker",	/*Name to use*/
 			  &probeLWP_ID);	/*Returned LWP process ID*/
     if (code) {

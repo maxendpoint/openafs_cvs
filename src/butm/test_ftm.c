@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.6 2001/09/18 04:27:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.7 2002/08/22 18:45:14 shadow Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -171,7 +171,7 @@ main (argc, argv)
       exit(1);
     }
     /* Perform normal test */
-    code = LWP_CreateProcess(PerformDumpTest, 100000, 0, &ti ,
+    code = LWP_CreateProcess(PerformDumpTest, 100000, 0, (void *) &ti,
 			     "BUTM Tester", &pid);
     if (code) {
       com_err(whoami,code,"libbutm.a: Normal Tests failed!. :-( ");
@@ -183,7 +183,7 @@ main (argc, argv)
     /* Perform Appended Test, on tapes */
     if (!isafile) {
       ti.appended = 1;
-      code = LWP_CreateProcess(PerformDumpTest, 100000, 0, &ti ,
+      code = LWP_CreateProcess(PerformDumpTest, 100000, 0, (void *) &ti,
 			       "BUTM Tester", &pid);
       if (code) {
 	com_err(whoami,code,"libbutm.a: Appended Tests failed!. :-( ");

@@ -38,7 +38,7 @@ static int newVLDB = 1;
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.8 2002/08/21 18:14:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.9 2002/08/22 18:45:19 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -233,7 +233,7 @@ void FSYNC_fsInit(void)
 #else /* AFS_PTHREAD_ENV */
     PROCESS pid;
     assert (LWP_CreateProcess(FSYNC_sync, USUAL_STACK_SIZE,
-			      USUAL_PRIORITY, 0,
+			      USUAL_PRIORITY, (void *) 0,
 			      "FSYNC_sync", &pid) == LWP_SUCCESS);
 #endif /* AFS_PTHREAD_ENV */
 }

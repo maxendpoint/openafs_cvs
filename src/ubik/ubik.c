@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.11 2002/08/21 18:14:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.12 2002/08/22 18:45:18 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -281,7 +281,7 @@ int ubik_ServerInitCommon(myHost, myPort, info, clones, serverList, pathName, db
      * the "steplock" problem in ubik initialization. Defect 11037.
      */
     LWP_CreateProcess(rx_ServerProc, rx_stackSize, RX_PROCESS_PRIORITY,
-		      0, "rx_ServerProc", &junk);
+		      (void *) 0, "rx_ServerProc", &junk);
 
     /* do basic initialization */
     code = uvote_Init();
@@ -296,10 +296,10 @@ int ubik_ServerInitCommon(myHost, myPort, info, clones, serverList, pathName, db
 
     /* now start up async processes */
     code = LWP_CreateProcess(ubeacon_Interact, 16384/*8192*/, LWP_MAX_PRIORITY-1,
-			     0, "beacon", &junk);
+			     (void *) 0, "beacon", &junk);
     if (code) return code;
     code = LWP_CreateProcess(urecovery_Interact, 16384/*8192*/, LWP_MAX_PRIORITY-1,
-			     0, "recovery", &junk);
+			     (void *) 0, "recovery", &junk);
     return code;
 }
 

@@ -24,7 +24,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/iomgr.c,v 1.8 2002/08/21 18:13:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/iomgr.c,v 1.9 2002/08/22 18:45:16 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -736,8 +736,8 @@ static int SignalSignals (void)
     for (i=0; i < NSOFTSIG; i++) {
 	PROCESS pid;
 	if (p=sigProc[i]) /* This yields!!! */
-	    LWP_CreateProcess2(p, stackSize, LWP_NORMAL_PRIORITY, sigRock[i],
-		"SignalHandler", &pid);
+	    LWP_CreateProcess2(p, stackSize, LWP_NORMAL_PRIORITY, 
+			       (void *) sigRock[i], "SignalHandler", &pid);
 	sigProc[i] = 0;
     }
 
@@ -807,8 +807,8 @@ int IOMGR_Initialize(void)
     install_ncb_handler();
 #endif /* AFS_DJGPP_ENV */
 
-    return LWP_CreateProcess(IOMGR, AFS_LWP_MINSTACKSIZE, 0, 0, "IO MANAGER",
-			     &IOMGR_Id);
+    return LWP_CreateProcess(IOMGR, AFS_LWP_MINSTACKSIZE, 0, (void *) 0, 
+			     "IO MANAGER", &IOMGR_Id);
 }
 
 int IOMGR_Finalize()

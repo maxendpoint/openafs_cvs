@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.7 2002/08/21 18:13:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.8 2002/08/22 18:45:14 shadow Exp $");
 
 
 #ifdef HAVE_STRING_H
@@ -748,7 +748,7 @@ int fsprobe_Init(a_numServers, a_socketArray, a_ProbeFreqInSecs, a_ProbeHandler,
       LWP_CreateProcess(fsprobe_LWP,		/*Function to start up*/
 			LWP_STACK_SIZE,		/*Stack size in bytes*/
 			1,			/*Priority*/
-			0,			/*Parameters*/
+			(void *) 0,		/*Parameters*/
 			"fsprobe Worker",	/*Name to use*/
 			&probeLWP_ID);		/*Returned LWP process ID*/
     if (code) {
