@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.19 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.20 2002/08/22 17:01:51 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -490,6 +490,10 @@ void afs_osi_Free(void *x, size_t asize)
 #endif
 }
 
+void afs_osi_FreeStr(char *x)
+{
+    afs_osi_Free(x, strlen(x) + 1);
+}
 
 /* ? is it moderately likely that there are dirty VM pages associated with 
  * this vnode?

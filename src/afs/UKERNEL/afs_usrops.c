@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.14 2002/08/21 20:30:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.15 2002/08/22 17:01:53 kolya Exp $");
 
 
 #ifdef	UKERNEL
@@ -895,6 +895,11 @@ void *afs_osi_Alloc(size_t size)
 }
 
 void afs_osi_Free(void *ptr, size_t size)
+{
+    free(ptr);
+}
+
+void afs_osi_FreeStr(char *ptr)
 {
     free(ptr);
 }

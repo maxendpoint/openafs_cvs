@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.19 2002/08/21 20:50:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.20 2002/08/22 17:01:51 kolya Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -76,23 +76,6 @@ char **afs_AfsdbHandler_RealName;
 char afs_AfsdbHandler_ReqPending = 0;
 /* Handler sets Completed to 1 when it completes the client request */
 char afs_AfsdbHandler_Completed = 0;
-
-int afs_strcasecmp(register char *s1, register char *s2)
-{
-    while (*s1 && *s2) {
-	register char c1, c2;
-
-	c1 = *s1++;
-	c2 = *s2++;
-	if (c1 >= 'A' && c1 <= 'Z') c1 += 0x20;
-	if (c2 >= 'A' && c2 <= 'Z') c2 += 0x20;
-	if (c1 != c2)
-	    return c1-c2;
-    }
-
-    return *s1 - *s2;
-}
-
 
 #ifdef AFS_AFSDB_ENV
 void afs_StopAfsdb(void)
