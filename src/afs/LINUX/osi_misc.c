@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.31 2004/05/04 09:31:55 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.32 2004/05/04 21:38:15 kolya Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -203,6 +203,7 @@ osi_file_uio_rdwr(struct osi_file *osifile, uio_t * uiop, int rw)
 	     * This is bad -- we can't read any more data from the
 	     * file, but we have no good way of signaling a partial
 	     * read either.
+	     */
 	    code = EIO;
 	    break;
 	}
