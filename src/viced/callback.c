@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.23 2002/12/03 02:03:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.24 2002/12/04 16:52:55 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -120,7 +120,7 @@ RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.23 2002/12/03 02:03:42 sha
 #include <afs/ptclient.h>  /* need definition of prlist for host.h */
 #include "host.h"
 
-
+extern afsUUID FS_HostUUID;
 extern int hostCount;
 int ShowProblems = 1;
 
@@ -146,12 +146,15 @@ struct cbstruct {
 
 struct FileEntry {
     afs_uint32	    vnode;	
-    afs_uint32         unique;
+    afs_uint32      unique;
     afs_uint32	    volid;
     afs_uint32	    fnext;
     afs_uint32	    ncbs;
     afs_uint32	    firstcb;
+    afs_uint32      status;
+    afs_uint32      spare;
 } *FE;	/* Don't use FE[0] */
+#define FE_LATER 0x1
 
 struct CallBack {
     afs_uint32	    cnext;		/* Next call back entry */
@@ -511,8 +514,7 @@ int InitCallBack(int nblks)
 {
     H_LOCK
     tfirst = CBtime(FT_ApproxTime());
-    /* N.B. FE's, CB's share same free list.  If the sizes of either change,
-      FE and CB will have to be separated.  The "-1", below, is because
+    /* N.B. The "-1", below, is because
       FE[0] and CB[0] are not used--and not allocated */
     FE = ((struct FileEntry *)(malloc(sizeof(struct FileEntry)*nblks)))-1;
     cbstuff.nFEs = nblks;
@@ -1020,8 +1022,6 @@ int BreakDelayedCallBacks(struct host *host)
     return retVal;
 }
 
-extern afsUUID FS_HostUUID;
-
 int BreakDelayedCallBacks_r(struct host *host)
 {
     struct AFSFid fids[AFSCBMAX];
@@ -1119,6 +1119,9 @@ int BreakDelayedCallBacks_r(struct host *host)
     }
 
     cbstuff.nbreakers--;
+    /* If we succeeded it's always ok to unset HFE_LATER */
+    if (!host->hostFlags & VENUSDOWN)
+	host->hostFlags &= ~HFE_LATER;
     return (host->hostFlags & VENUSDOWN);
 }
 
@@ -1265,6 +1268,157 @@ int BreakVolumeCallBacks(afs_uint32 volume)
     H_UNLOCK
 
     return 0;
+}
+
+#ifdef AFS_PTHREAD_ENV
+extern pthread_cond_t fsync_cond;
+#else
+extern char fsync_wait[];
+#endif
+
+int BreakVolumeCallBacksLater(afs_uint32 volume)
+{
+    int hash;
+    u_short *feip;
+    struct FileEntry *fe;
+    struct CallBack *cb;
+    struct host *host;
+    int found = 0;
+
+    ViceLog(25, ("Setting later on volume %d\n", volume));
+    H_LOCK
+    for (hash=0; hash<VHASH; hash++) {
+	for (feip = &HashTable[hash]; fe = itofe(*feip); ) {
+	    if (fe->volid == volume) {
+		register struct CallBack *cbnext;
+                for (cb = itocb(fe->firstcb); cb; cb = cbnext) {
+		    host = h_itoh(cb->hhead);
+		    host->hostFlags |= HFE_LATER;
+		    cb->status = CB_DELAYED;
+                    cbnext = itocb(cb->cnext);
+                }
+		FSYNC_LOCK
+		fe->status |= FE_LATER;
+		FSYNC_UNLOCK
+		found++;
+	    }
+	    feip = &fe->fnext;
+	}
+    }
+    H_UNLOCK
+
+    if (!found) {
+	/* didn't find any callbacks, so return right away. */
+	return 0;
+    }
+
+    ViceLog(25, ("Fsync thread wakeup\n"));
+#ifdef AFS_PTHREAD_ENV
+    assert(pthread_cond_broadcast(&fsync_cond) == 0);
+#else
+    LWP_NoYieldSignal(&fsync_wait);
+#endif
+    return 0;
+}
+
+int BreakLaterCallBacks(void)
+{
+    struct AFSFid fid;
+    int hash;
+    u_short *feip;
+    struct CallBack *cb;
+    struct FileEntry *fe = NULL;
+    struct FileEntry *myfe = NULL;
+    struct FileEntry *tmpfe;
+    struct host *host;
+    struct VCBParams henumParms;
+    unsigned short tthead = 0;  /* zero is illegal value */
+    
+    /* Unchain first */
+    ViceLog(25, ("Looking for FileEntries to unchain\n"));
+    H_LOCK
+restart:
+    tthead = 0;
+    for (hash=0; hash<VHASH; hash++) {
+	for (feip = &HashTable[hash]; fe = itofe(*feip); ) {
+	    if (fe && fe->status & FE_LATER) {
+		ViceLog(125, ("Unchaining for %d:%d:%d\n", fe->vnode, 
+			      fe->unique, fe->volid));
+		*feip = fe->fnext;
+		/* Works since volid is deeper than the largest pointer */
+		((struct object *)fe)->next = (struct object *)myfe;
+		myfe = fe;
+	    } else {
+		feip = &fe->fnext;
+	    }
+	}
+    }
+    
+    if (!myfe) {
+       H_UNLOCK
+       return 0;
+    }
+
+    /* loop over myfe and free/break */
+    FSYNC_UNLOCK
+    while (myfe) {
+	/* Clear for next pass */
+	fid.Volume = 0, fid.Vnode = fid.Unique = 0;
+	tthead = 0;
+	for (fe = myfe; fe; ) {
+	    /* Pick up first volid we see and break callbacks for it */
+	    if (fid.Volume == 0 || fid.Volume == fe->volid) {
+		register struct CallBack *cbnext;
+		ViceLog(125, ("Caught volume %d for breaking\n", fe->volid));
+		fid.Volume = fe->volid;
+		for (cb = itocb(fe->firstcb); cb; cb = cbnext) {
+		    host = h_itoh(cb->hhead);
+		    h_Hold_r(host);
+		    cbnext = itocb(cb->cnext);
+		    if (!tthead || (TNorm(tthead) < TNorm(cb->thead))) {
+			tthead = cb->thead;
+		    }
+		    TDel(cb);
+		    HDel(cb);
+		    FreeCB(cb);
+		    /* leave hold for MultiBreakVolumeCallBack to clear */
+		}
+		/* if we delete the head element, relink chain */
+		if (myfe == fe) 
+		    (struct object *)myfe = ((struct object *)fe)->next;
+		tmpfe = fe;
+		(struct object *)fe = ((struct object *)fe)->next;
+		FreeFE(tmpfe);
+	    } else {
+		(struct object *)fe = ((struct object *)fe)->next;
+	    }
+	}
+
+	if (tthead) {
+	    ViceLog(125, ("Breaking volume %d\n", fid.Volume));
+	    henumParms.ncbas = 0;
+	    henumParms.fid = &fid;
+	    henumParms.thead = tthead;
+	    H_UNLOCK
+	    h_Enumerate(MultiBreakVolumeCallBack, (char *) &henumParms);
+	    H_LOCK
+
+	    if (henumParms.ncbas) {    /* do left-overs */
+		struct AFSCBFids tf;
+		tf.AFSCBFids_len = 1;
+		tf.AFSCBFids_val = &fid;
+		
+		MultiBreakCallBack_r(henumParms.cba, henumParms.ncbas, &tf, 0 );
+		henumParms.ncbas = 0;
+	    }
+	}  
+    }
+    FSYNC_LOCK
+
+    if (tthead) goto restart;
+    H_UNLOCK
+
+    return 1;
 }
 
 /*
@@ -1681,9 +1835,9 @@ int PrintCB(register struct CallBack *cb, afs_uint32 now)
     struct FileEntry *fe = itofe(cb->fhead);
     time_t expires = TIndexToTime(cb->thead);
 
-    printf("vol=%u vn=%u cbs=%d hi=%d st=%d, exp in %d secs at %s", 
+    printf("vol=%u vn=%u cbs=%d hi=%d st=%d fest=%d, exp in %d secs at %s", 
 	   fe->volid, fe->vnode, fe->ncbs, cb->hhead, cb->status,
-	   expires - now, ctime(&expires));
+	   fe->status, expires - now, ctime(&expires));
 }
 
 #endif

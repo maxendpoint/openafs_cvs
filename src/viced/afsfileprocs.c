@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.43 2002/12/03 17:44:14 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.44 2002/12/04 16:52:55 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -343,7 +343,7 @@ retry:
       ViceLog(3,("Discarded a packet for deleted host %s\n",afs_inet_ntoa_r(thost->host,hoststr)));
       code = VBUSY; /* raced, so retry */
     }
-    else if (thost->hostFlags & VENUSDOWN) {
+    else if ((thost->hostFlags & VENUSDOWN) || (thost->hostFlags & HFE_LATER)){
       if (BreakDelayedCallBacks_r(thost)) {
 	ViceLog(0,("BreakDelayedCallbacks FAILED for host %s which IS UP.  Possible network or routing failure.\n",
 		afs_inet_ntoa_r(thost->host, hoststr)));
