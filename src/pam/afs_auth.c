@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_auth.c,v 1.7 2001/09/07 04:36:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_auth.c,v 1.8 2001/11/02 22:14:49 shadow Exp $");
 
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
@@ -256,6 +256,9 @@ try_auth:
      */
     if (!refresh_token) {
        setpag();
+#ifdef AFS_KERBEROS_ENV
+       ktc_newpag();
+#endif
        if (logmask && LOG_MASK(LOG_DEBUG))
 	 syslog(LOG_DEBUG, "New PAG created in pam_authenticate()");
     }
