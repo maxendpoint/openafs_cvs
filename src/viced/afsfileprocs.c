@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.51 2003/02/19 02:21:35 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.52 2003/03/04 11:14:13 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -5860,9 +5860,9 @@ afs_int32 SRXAFS_GetXStats(struct rx_call *a_call,
 } /*SRXAFS_GetXStats*/
 
 
-afs_int32 SRXAFS_GiveUpCallBacks (struct rx_call *acall,
-				  struct AFSCBFids *FidArray,
-				  struct AFSCBs *CallBackArray)
+static afs_int32 common_GiveUpCallBacks (struct rx_call *acall,
+					 struct AFSCBFids *FidArray,
+					 struct AFSCBs *CallBackArray)
 {
     afs_int32 errorCode;
     register int i;
@@ -5892,20 +5892,26 @@ afs_int32 SRXAFS_GiveUpCallBacks (struct rx_call *acall,
     if ((errorCode = CallPreamble(acall, ACTIVECALL, &tcon)))
 	goto Bad_GiveUpCallBacks;
 
-    if (FidArray->AFSCBFids_len < CallBackArray->AFSCBs_len) {
-       ViceLog(0, ("GiveUpCallBacks: #Fids %d < #CallBacks %d, host=%x\n", 
-		   FidArray->AFSCBFids_len, CallBackArray->AFSCBs_len, 
-		   (tcon->peer ? tcon->peer->host : 0)));
-       errorCode = EINVAL;
-       goto Bad_GiveUpCallBacks;
-    }
+    if (!FidArray && !CallBackArray) {
+	errorCode = GetClient(tcon, &client);
+        if (!errorCode) 
+	    DeleteAllCallBacks_r(client->host, 1);
+    } else {
+	if (FidArray->AFSCBFids_len < CallBackArray->AFSCBs_len) {
+	    ViceLog(0, ("GiveUpCallBacks: #Fids %d < #CallBacks %d, host=%x\n", 
+			FidArray->AFSCBFids_len, CallBackArray->AFSCBs_len, 
+			(tcon->peer ? tcon->peer->host : 0)));
+	    errorCode = EINVAL;
+	    goto Bad_GiveUpCallBacks;
+	}
 
-    errorCode = GetClient(tcon, &client);
-    if (!errorCode) {
-       for (i=0; i < FidArray->AFSCBFids_len; i++) {
-	  register struct AFSFid *fid = &(FidArray->AFSCBFids_val[i]);
-	  DeleteCallBack(client->host, fid);
-       }
+	errorCode = GetClient(tcon, &client);
+	if (!errorCode) {
+	    for (i=0; i < FidArray->AFSCBFids_len; i++) {
+		register struct AFSFid *fid = &(FidArray->AFSCBFids_val[i]);
+		DeleteCallBack(client->host, fid);
+	    }
+	}
     }
 
 Bad_GiveUpCallBacks:
@@ -5931,7 +5937,20 @@ Bad_GiveUpCallBacks:
 out:
     return errorCode;
 
+} /*common_GiveUpCallBacks*/
+
+
+afs_int32 SRXAFS_GiveUpCallBacks (struct rx_call *acall,
+				  struct AFSCBFids *FidArray,
+				  struct AFSCBs *CallBackArray)
+{
+    return common_GiveUpCallBacks(acall, FidArray, CallBackArray);
 } /*SRXAFS_GiveUpCallBacks*/
+
+afs_int32 SRXAFS_GiveUpAllCallBacks (struct rx_call *acall)
+{
+    return common_GiveUpCallBacks(acall, 0, 0);
+} /*SRXAFS_GiveUpAllCallBacks*/
 
 
 afs_int32 SRXAFS_NGetVolumeInfo (struct rx_call *acall,
