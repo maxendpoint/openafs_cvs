@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.22 2003/06/19 16:06:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.23 2003/06/19 17:35:53 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -874,7 +874,7 @@ void sigint_handler(int x)
 	fflush(STDOUT);
 
 	interrupt=1;
-	signal(SIGINT,sigint_handler);
+	(void) signal(SIGINT,sigint_handler);
 
 	return;
 }

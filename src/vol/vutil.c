@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.9 2003/06/02 14:37:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.10 2003/06/19 17:35:52 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -45,6 +45,7 @@ RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.9 2003/06/02 14:37:49 shadow Ex
 #include "lwp.h"
 #include <afs/afssyscalls.h>
 #include "ihandle.h"
+#include <afs/afsutil.h>
 #ifdef AFS_NT40_ENV
 #include "ntops.h"
 #include <io.h>
@@ -63,6 +64,7 @@ RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.9 2003/06/02 14:37:49 shadow Ex
 #else
 #include <strings.h>
 #endif
+
 
 /*@printflike@*/ extern void Log(const char *format, ...);
 
@@ -156,8 +158,9 @@ Volume *VCreateVolume_r(ec, partname, volumeId, parentId)
     vol.stamp.magic = VOLUMEINFOMAGIC;
     vol.stamp.version = VOLUMEINFOVERSION;
     vol.destroyMe = DESTROY_ME;
-    sprintf(headerName, VFORMAT, vol.id);
-    sprintf(volumePath, "%s/%s", VPartitionPath(partition), headerName);
+    (void) afs_snprintf(headerName, sizeof headerName, VFORMAT, vol.id);
+    (void) afs_snprintf(volumePath, sizeof volumePath,
+			"%s/%s", VPartitionPath(partition), headerName);
     fd = open(volumePath, O_CREAT|O_EXCL|O_WRONLY, 0600);
     if (fd == -1) {
         if (errno == EEXIST) {
@@ -251,18 +254,21 @@ Volume *VCreateVolume_r(ec, partname, volumeId, parentId)
     IH_INIT(handle, device, vol.parentId, tempHeader.volumeInfo);
     fdP = IH_OPEN(handle);
     if (fdP == NULL) {
-	Log("VCreateVolume:  Problem iopen inode %d (err=%d)\n", tempHeader.volumeInfo, errno);
+	Log("VCreateVolume:  Problem iopen inode %llu (err=%d)\n",
+	    (afs_uintmax_t)tempHeader.volumeInfo, errno);
 	unlink(volumePath);
 	goto bad;
        }
     if (FDH_SEEK(fdP, 0, SEEK_SET) < 0) {
-	Log("VCreateVolume:  Problem lseek inode %d (err=%d)\n", tempHeader.volumeInfo, errno);
+	Log("VCreateVolume:  Problem lseek inode %llu (err=%d)\n",
+	    (afs_uintmax_t)tempHeader.volumeInfo, errno);
 	FDH_REALLYCLOSE(fdP);
 	unlink(volumePath);
 	goto bad;
        }
     if (FDH_WRITE(fdP, (char*)&vol, sizeof(vol)) != sizeof(vol)) {
-	Log("VCreateVolume:  Problem writing to  inode %d (err=%d)\n", tempHeader.volumeInfo, errno);
+	Log("VCreateVolume:  Problem writing to  inode %llu (err=%d)\n",
+	    (afs_uintmax_t)tempHeader.volumeInfo, errno);
 	FDH_REALLYCLOSE(fdP);
 	unlink(volumePath);
 	goto bad;

@@ -38,7 +38,7 @@ static int newVLDB = 1;
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.18 2003/06/02 14:37:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.19 2003/06/19 17:35:52 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -272,7 +272,7 @@ static void FSYNC_sync() {
 #endif
 
 #ifndef AFS_NT40_ENV
-    signal(SIGPIPE, SIG_IGN);
+    (void) signal(SIGPIPE, SIG_IGN);
 #endif
 
 #ifdef AFS_PTHREAD_ENV

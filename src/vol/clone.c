@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.13 2003/06/02 14:37:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.14 2003/06/19 17:35:51 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -59,7 +59,7 @@ RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.13 2003/06/02 14:37:48 shadow E
 #include "partition.h"
 #include "viceinode.h"
 
-/*@printfline@*/ extern void Log(const char *format, ...);
+/*@printflike@*/ extern void Log(const char *format, ...);
 
 int (*vol_PollProc)() =	0;  /* someone must init this */
 
@@ -239,7 +239,7 @@ afs_int32 DoCloneIndex(Volume *rwvp, Volume *clvp,
 	    clinode = 0; /* already cloned - don't delete later */
 	 } else if (rwinode) {
 	     if (IH_INC(V_linkHandle(rwvp), rwinode, V_parentId(rwvp)) == -1) {
-		 Log("IH_INC failed: %x, %s, %d errno %d\n", 
+		 Log("IH_INC failed: %x, %s, %u errno %d\n", 
 		     V_linkHandle(rwvp), PrintInode(NULL, rwinode), 
 		     V_parentId(rwvp), errno);
 		 assert(0);
@@ -287,7 +287,7 @@ afs_int32 DoCloneIndex(Volume *rwvp, Volume *clvp,
 	 /* Couldn't clone, go back and decrement the inode's link count */
 	 if (inodeinced) {
 	     if (IH_DEC(V_linkHandle(rwvp), rwinode, V_parentId(rwvp)) == -1) {
-		 Log("IH_DEC failed: %x, %s, %d errno %d\n", 
+		 Log("IH_DEC failed: %x, %s, %u errno %d\n", 
 		     V_linkHandle(rwvp), PrintInode(NULL, rwinode), 
 		     V_parentId(rwvp), errno);
 		 assert(0);

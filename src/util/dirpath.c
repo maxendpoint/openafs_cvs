@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.12 2001/11/01 05:24:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.13 2003/06/19 17:35:49 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -61,16 +61,16 @@ static void initDirPathArray(void);
 /* Additional macros for ease of use */
 /* buf is expected to be atleast AFS_PATH_MAX bytes long */
 #define AFSDIR_SERVER_DIRPATH(buf, dir)  \
-            strcompose(buf, AFSDIR_PATH_MAX, serverPrefix, dir, NULL)
+            (void) strcompose(buf, AFSDIR_PATH_MAX, serverPrefix, dir, NULL)
 
 #define AFSDIR_SERVER_FILEPATH(buf, dir, file)  \
-            strcompose(buf, AFSDIR_PATH_MAX, serverPrefix, dir, "/", file,  NULL)
+            (void) strcompose(buf, AFSDIR_PATH_MAX, serverPrefix, dir, "/", file,  NULL)
 
 #define AFSDIR_CLIENT_DIRPATH(buf, dir)  \
-            strcompose(buf, AFSDIR_PATH_MAX, clientPrefix, dir, NULL)
+            (void) strcompose(buf, AFSDIR_PATH_MAX, clientPrefix, dir, NULL)
 
 #define AFSDIR_CLIENT_FILEPATH(buf, dir, file)  \
-            strcompose(buf, AFSDIR_PATH_MAX,  clientPrefix, dir, "/", file,  NULL)
+            (void) strcompose(buf, AFSDIR_PATH_MAX,  clientPrefix, dir, "/", file,  NULL)
 
 
 /* initAFSDirPath() -- External users call this function to initialize

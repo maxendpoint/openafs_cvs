@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/purge.c,v 1.7 2003/03/03 15:10:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/purge.c,v 1.8 2003/06/19 17:35:52 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -66,8 +66,9 @@ void VPurgeVolume_r(Error *ec, Volume *vp)
      * volume header. This routine can, under some circumstances, be called
      * when two volumes with the same id exist on different partitions.
      */
-    sprintf(purgePath, "%s/%s", VPartitionPath(vp->partition),
-	    VolumeExternalName(V_id(vp)));
+    (void) afs_snprintf(purgePath, sizeof purgePath,
+			"%s/%s", VPartitionPath(vp->partition),
+			VolumeExternalName(V_id(vp)));
     PurgeIndex_r(vp, vLarge);
     PurgeIndex_r(vp, vSmall);
     PurgeHeader_r(vp);

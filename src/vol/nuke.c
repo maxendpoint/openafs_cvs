@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.9 2003/06/02 14:37:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/nuke.c,v 1.10 2003/06/19 17:35:52 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -205,9 +205,11 @@ int nuke(char *aname, afs_int32 avolid)
 	 */
 	/* reuse devName buffer now */
 #ifdef AFS_NT40_ENV
-	sprintf(devName, "%c:\\%s", *lastDevComp , VolumeExternalName(avolid));
+	afs_snprintf(devName, sizeof devName,
+		     "%c:\\%s", *lastDevComp , VolumeExternalName(avolid));
 #else
-	sprintf(devName, "%s/%s", aname, VolumeExternalName(avolid));
+	afs_snprintf(devName, sizeof devName,
+		     "%s/%s", aname, VolumeExternalName(avolid));
 #endif /* AFS_NT40_ENV */
 	code = unlink(devName);
 	if (code) code = errno;
