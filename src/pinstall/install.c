@@ -49,7 +49,7 @@ Generic install command.  Options are:
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.11 2001/10/05 21:22:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.12 2002/01/01 18:57:30 shadow Exp $");
 
 #include <stdio.h>
 #include <pwd.h>
@@ -87,7 +87,7 @@ struct stat istat, ostat;
 
 extern int errno;
 extern int sys_nerr;
-#if !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_XBSD_ENV)
 extern char *sys_errlist[];
 #endif
 #if	defined(AFS_AIX_ENV) || defined(AFS_HPUX_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DECOSF_ENV) || defined(AFS_SGI_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
@@ -153,7 +153,7 @@ atoo(astr)
     return value;
     }
 
-#if	defined(AFS_HPUX_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DECOSF_ENV) || defined(AFS_SGI_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_OBSD_ENV)
+#if	defined(AFS_HPUX_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DECOSF_ENV) || defined(AFS_SGI_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_OBSD_ENV) || defined(AFS_NBSD_ENV)
 /*
  * Implementation lifted from that for AIX 3.1, since there didn't seem to be any
  * reason why it wouldn't work.
@@ -221,7 +221,7 @@ char *iname, *oname; {
 		strip[1] = oname;
 #ifdef	AFS_SUN5_ENV
 #define	STRIP_BIN	"/usr/ccs/bin/strip"
-#elif defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#elif defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #define STRIP_BIN	"/usr/bin/strip"
 #else
 #define	STRIP_BIN	"/bin/strip"
@@ -687,7 +687,7 @@ main (argc, argv)
 		continue;
 	    }
 	}
-#if	defined(AFS_AIX_ENV) || defined(AFS_HPUX_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DECOSF_ENV) || defined(AFS_SGI_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_OBSD_ENV)
+#if	defined(AFS_AIX_ENV) || defined(AFS_HPUX_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DECOSF_ENV) || defined(AFS_SGI_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_OBSD_ENV) || defined(AFS_NBSD_ENV)
 	stripcalled = 0;
 	if (strip == 1 ||
 	    ((strip == -1 && ((istat.st_mode & 0111) == 0111) && stripName(newNames[i])) && AIXobject(fnames[i])))

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/up.c,v 1.10 2001/08/08 00:04:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/up.c,v 1.11 2002/01/01 18:57:32 shadow Exp $");
 
 /* missing type from C language */
 #define Boolean short
@@ -49,7 +49,7 @@ RCSID("$Header: /cvs/openafs/src/venus/up.c,v 1.10 2001/08/08 00:04:18 shadow Ex
 
 #define MAXACL 400
 
-#if !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_FBSD_ENV)
+#if !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_XBSD_ENV)
 extern sys_nerr;
 extern char *sys_errlist[];
 #endif
