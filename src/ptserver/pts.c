@@ -23,7 +23,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.11 2003/11/23 04:53:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.12 2004/04/18 03:16:14 jaltman Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -872,6 +872,8 @@ SetFields(as)
 
     mask = 0;
     nusers = 0;
+    ngroups = 0;
+
     if (as->parms[1].items) {	/* privacy bits */
 	char *access = as->parms[1].items->data;
 	int new;
