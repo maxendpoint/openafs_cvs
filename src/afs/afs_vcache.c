@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.39 2002/08/27 22:18:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.40 2002/10/01 18:09:40 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -543,7 +543,7 @@ resume:
 
 		DGET(dentry);
 		list_del_init(&dentry->d_hash);		/* d_drop */
-		spin_unlock(&dcache_lock);
+		DUNLOCK();
 		dput(dentry);
 		DLOCK();
 		if (!--found)
