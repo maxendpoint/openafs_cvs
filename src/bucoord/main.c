@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/main.c,v 1.9 2002/08/22 18:12:19 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/main.c,v 1.10 2002/08/22 18:29:26 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -278,7 +278,7 @@ static int backupInit()
     /* setup status monitoring thread */
     initStatus();
     code = LWP_CreateProcess(statusWatcher, 20480, LWP_NORMAL_PRIORITY, 
-			     (void *)2, "statusWatcher", &watcherPid);
+			     2, "statusWatcher", &watcherPid);
     if ( code )
     {
 	com_err(whoami, code, "; Can't create status monitor task");

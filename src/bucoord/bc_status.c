@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.6 2002/08/22 18:21:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.7 2002/08/22 18:29:26 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -225,7 +225,7 @@ statusWatcher()
 	        printf("schedD> %s\n", cmdLine);
 
 		code = LWP_CreateProcess(cmdDispatch, 16384, 
-					 LWP_NORMAL_PRIORITY, (void *) 2,
+					 LWP_NORMAL_PRIORITY, 2,
 					 "cmdDispatch", &dispatchPid);
 		if ( code )
 		{

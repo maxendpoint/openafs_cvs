@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/dbs_dump.c,v 1.8 2002/08/22 18:12:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/dbs_dump.c,v 1.9 2002/08/22 18:29:27 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -153,7 +153,7 @@ afs_int32 DumpDB (call, firstcall, maxLength, charListPtr, done)
 	if (code) ERROR(errno);
  	
 	code = LWP_CreateProcess(setupDbDump, 16384, 1, 
-				 (void *) dumpSyncPtr->pipeFid[1],
+				 dumpSyncPtr->pipeFid[1],
 				 "Database Dumper", &dumperPid);
 	if (code) goto error_exit;
 

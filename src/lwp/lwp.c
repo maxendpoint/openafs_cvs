@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.18 2002/08/21 18:13:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.19 2002/08/22 18:29:24 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -255,7 +255,7 @@ char *reserveFromStack(register afs_int32 size)
 #endif
 
 int LWP_CreateProcess(int (*ep)(), int stacksize, int priority, 
-	char *parm, char *name, PROCESS *pid)
+	void *parm, char *name, PROCESS *pid)
 {
     PROCESS temp, temp2;
 #ifdef	AFS_AIX32_ENV
@@ -384,7 +384,7 @@ int LWP_CreateProcess(int (*ep)(), int stacksize, int priority,
 
 #ifdef	AFS_AIX32_ENV
 int LWP_CreateProcess2(int (*ep)(), int stacksize, int priority,
-        char *parm, char *name, PROCESS *pid)
+        void *parm, char *name, PROCESS *pid)
 {
     PROCESS temp, temp2;
     char *stackptr;
@@ -908,7 +908,7 @@ static void Free_PCB(PROCESS pid)
 }
 
 static void Initialize_PCB(PROCESS temp, int priority, char *stack, 
-	int stacksize, int (*ep)(), char *parm, char *name)
+	int stacksize, int (*ep)(), void *parm, char *name)
 {
     register int i = 0;
 
@@ -1248,7 +1248,7 @@ static int lwp_top_level(pthread_addr_t argp)
 }
 
 int LWP_CreateProcess(pthread_startroutine_t ep, int stacksize, int priority, 
-	char *parm, char *name, PROCESS *pid)
+	void *parm, char *name, PROCESS *pid)
 {
     int status;
     pthread_attr_t attr;

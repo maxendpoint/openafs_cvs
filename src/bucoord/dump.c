@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.7 2002/08/22 18:16:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.8 2002/08/22 18:29:26 shadow Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -303,7 +303,7 @@ bc_StartDmpRst(aconfig, adname, avname, avolsToDump, adestServer, adestPartition
         memset(&bc_dumpTasks[i].destServer, 0, sizeof(struct sockaddr_in));
  
     code = LWP_CreateProcess(bc_DmpRstStart, 20480, LWP_NORMAL_PRIORITY, 
-			     (void *)i, "helper", &junk);
+			     i, "helper", &junk);
     if (code)
     {
 	bc_HandleMisc(code);
