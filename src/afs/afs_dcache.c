@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.47 2005/01/25 20:55:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.48 2005/01/26 21:09:08 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -427,12 +427,11 @@ afs_GetDownD(int anumber, int *aneedSpace)
 		/* skip if dirty or already free */
 		continue;
 	    }
-	    tdc = afs_indexTable[i];
-	    if (tdc && (tdc->refCount != 0)) {
-		/* Referenced; can't use it! */
-		continue;
+	    if (tdc) {
+		if (tdc->refCount != 0)         /* Referenced; can't use it! */
+		    continue;
+                hset(tdc->atime, vtime);
 	    }
-	    hset(vtime, tdc->atime);
 
 	    /* if we've already looked at this one, skip it */
 	    if (afs_indexFlags[i] & IFFlag)
