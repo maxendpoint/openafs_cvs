@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.34 2003/12/07 22:49:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.35 2004/01/01 06:51:25 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -23,6 +23,7 @@ RCSID
 #include <sys/file.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #endif
 #include <sys/stat.h>
 #ifdef AFS_AIX_ENV
