@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.10 2001/09/17 19:43:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.11 2001/10/05 21:05:16 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -25,6 +25,13 @@ RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.10 2001/09/17 19:43:01 shadow
 #endif
 #include <errno.h>
 #include <lock.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <rx/rx_multi.h>
@@ -50,6 +57,7 @@ int (*ubik_CRXSecurityProc)();
 char *ubik_CRXSecurityRock;
 afs_int32 ubikSecIndex;
 struct rx_securityClass     *ubikSecClass;
+static verifyInterfaceAddress();
 
 
 /* Module responsible for both deciding if we're currently the sync site,
@@ -170,7 +178,7 @@ ubeacon_InitServerListCommon(ame, info, clones, aservers)
     struct ubik_server *magicServer;
 
     /* verify that the addresses passed in are correct */
-    if (code = verifyInterfaceAddress(&ame, info, aservers))
+    if ((code = verifyInterfaceAddress(&ame, info, aservers)))
 	return code;
 
     /* get the security index to use, if we can */
@@ -229,7 +237,7 @@ ubeacon_InitServerListCommon(ame, info, clones, aservers)
 	}
     } else {
         i = 0;
-        while (servAddr = *aservers++) {
+        while ((servAddr = *aservers++)) {
 	    if (i >= MAXSERVERS) return UNHOSTS;	    /* too many hosts */
 	    ts = (struct ubik_server *) malloc(sizeof(struct ubik_server));
 	    memset(ts, 0, sizeof(struct ubik_server));

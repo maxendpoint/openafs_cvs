@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.7 2001/08/08 00:04:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.8 2001/10/05 21:05:16 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -23,6 +23,13 @@ RCSID("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.7 2001/08/08 00:04:12 shado
 #endif
 #include <assert.h>
 #include <lock.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <errno.h>
@@ -365,7 +372,7 @@ urecovery_Initialize(adbase)
  */
 urecovery_Interact() {
     afs_int32 code, tcode;
-    struct ubik_server *bestServer;
+    struct ubik_server *bestServer = NULL;
     struct ubik_server *ts;
     int dbok, doingRPC, now;
     afs_int32 lastProbeTime, lastDBVCheck;
