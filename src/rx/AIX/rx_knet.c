@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.5 2001/08/08 00:03:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.6 2001/08/08 02:41:26 shadow Exp $");
 
 #ifdef AFS_AIX41_ENV
 #include "../rx/rx_kcommon.h"
@@ -416,7 +416,7 @@ int istack;
 		m_freem(top);	/* free mbuf chain */
 	    return 1;
 	}
-	memcpy(mtod(um, addr, caddr_t), sizeof(*addr));
+	memcpy(mtod(um, caddr_t), addr, sizeof(*addr));
 	um->m_len = sizeof(*addr);
 	um->m_pkthdr.len = sizeof(*addr);
 	um->m_flags |= M_PKTHDR;
