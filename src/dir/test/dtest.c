@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dir/test/dtest.c,v 1.7 2003/01/07 23:38:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dir/test/dtest.c,v 1.8 2003/03/28 09:35:55 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
@@ -202,7 +202,7 @@ CreateDir(name, dir)
 
 ReallyRead(dir, block, data)
     dirhandle *dir;
-    afs_size_t block;
+    int block;
     char *data;
 {
     int code;
@@ -218,7 +218,7 @@ ReallyRead(dir, block, data)
 
 ReallyWrite(dir, block, data)
     dirhandle *dir;
-    afs_size_t block;
+    int block;
     char *data;
 {
     int code;
