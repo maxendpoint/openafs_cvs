@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.10 2002/09/26 07:01:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.11 2002/10/03 00:42:43 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -207,16 +207,14 @@ afs_setpag (void)
 #endif
 
     afs_Trace1(afs_iclSetp, CM_TRACE_SETPAG, ICL_TYPE_INT32, code);
-#if	defined(AFS_SUN5_ENV) || defined(AFS_SGI_ENV) || defined(AFS_OSF_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(KERNEL_HAVE_UERROR)
+    if (!getuerror())
+	setuerror(code);
+#endif
 #if defined(AFS_SGI53_ENV) && defined(MP)
     AFS_GUNLOCK();
-#endif /* defined(AFS_SGI53_ENV) && defined(MP) */    
+#endif /* defined(AFS_SGI53_ENV) && defined(MP) */
     return (code);
-#else
-    if (!getuerror())
- 	setuerror(code);
-    return (code);
-#endif
 }
 
 #if defined(UKERNEL) && defined(AFS_WEB_ENHANCEMENTS)
@@ -300,16 +298,14 @@ afs_setpag_val (int pagval)
 #endif
 
     afs_Trace1(afs_iclSetp, CM_TRACE_SETPAG, ICL_TYPE_INT32, code);
-#if	defined(AFS_SUN5_ENV) || defined(AFS_SGI_ENV) || defined(AFS_OSF_ENV) || defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+#if defined(KERNEL_HAVE_UERROR)
+    if (!getuerror())
+	setuerror(code);
+#endif
 #if defined(AFS_SGI53_ENV) && defined(MP)
     AFS_GUNLOCK();
 #endif /* defined(AFS_SGI53_ENV) && defined(MP) */    
     return (code);
-#else
-    if (!getuerror())
- 	setuerror(code);
-    return (code);
-#endif
 }
 #endif /* UKERNEL && AFS_WEB_ENHANCEMENTS */
 

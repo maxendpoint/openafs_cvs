@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.8 2002/09/13 23:52:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.9 2002/10/03 00:42:43 kolya Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #ifndef	AFS_DEC_ENV
@@ -212,7 +212,7 @@ afs_int32 *pagparam;
 #endif
 	    if (au) afs_PutUser(au, READ_LOCK);
 /*	    ReleaseWriteLock(&afs_xnfsreq);		*/
-#if defined(KERNEL_HAVE_SETUERROR)
+#if defined(KERNEL_HAVE_UERROR)
 	    setuerror(code);
 #endif
 	    return (code);
@@ -228,7 +228,7 @@ afs_int32 *pagparam;
 #endif
 		afs_PutNfsClientPag(np);
 /*		ReleaseWriteLock(&afs_xnfsreq);	*/
-#if defined(KERNEL_HAVE_SETUERROR)
+#if defined(KERNEL_HAVE_UERROR)
 		setuerror(code);
 #endif
 		return (code);
@@ -245,7 +245,7 @@ afs_int32 *pagparam;
 		    afs_PutNfsClientPag(np);
 		    afs_PutUser(au, READ_LOCK);
 		    /*	    ReleaseWriteLock(&afs_xnfsreq);	*/
-#if defined(KERNEL_HAVE_SETUERROR)
+#if defined(KERNEL_HAVE_UERROR)
 		    setuerror(code);
 #endif
 		    return (code);
