@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.22 2004/08/19 00:22:38 kolya Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.23 2004/09/28 04:44:29 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1094,7 +1094,8 @@ VerifyDirPerms(char *path)
 int
 ListViceInodes(char *devname, char *mountedOn, char *resultFile,
 	       int (*judgeInode) (struct ViceInodeInfo * info, int vid),
-	       int singleVolumeNumber, int *forcep, int forceR, char *wpath)
+	       int singleVolumeNumber, int *forcep, int forceR, char *wpath, 
+	       void *rock)
 {
     FILE *fp = (FILE *) - 1;
     int ninodes;
@@ -1114,7 +1115,7 @@ ListViceInodes(char *devname, char *mountedOn, char *resultFile,
 
     ninodes =
 	namei_ListAFSFiles(mountedOn, WriteInodeInfo, fp, judgeInode,
-			   singleVolumeNumber);
+			   singleVolumeNumber, rock);
 
     if (!resultFile)
 	return ninodes;
@@ -1168,7 +1169,7 @@ namei_ListAFSFiles(char *dev,
 		   int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				    char *), FILE * fp,
 		   int (*judgeFun) (struct ViceInodeInfo *, int),
-		   int singleVolumeNumber)
+		   int singleVolumeNumber, void *rock)
 {
     IHandle_t ih;
     namei_t name;
@@ -1188,7 +1189,7 @@ namei_ListAFSFiles(char *dev,
 	namei_HandleToVolDir(&name, &ih);
 	ninodes =
 	    namei_ListAFSSubDirs(&ih, writeFun, fp, judgeFun,
-				 singleVolumeNumber);
+				 singleVolumeNumber, rock);
 	if (ninodes < 0)
 	    return ninodes;
     } else {
@@ -1212,7 +1213,7 @@ namei_ListAFSFiles(char *dev,
 		    if (!DecodeVolumeName(dp2->d_name, &ih.ih_vid)) {
 			ninodes +=
 			    namei_ListAFSSubDirs(&ih, writeFun, fp, judgeFun,
-						 0);
+						 0, rock);
 		    }
 		}
 		closedir(dirp2);
@@ -1240,7 +1241,7 @@ namei_ListAFSSubDirs(IHandle_t * dirIH,
 		     int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				      char *), FILE * fp,
 		     int (*judgeFun) (struct ViceInodeInfo *, int),
-		     int singleVolumeNumber)
+		     int singleVolumeNumber, void *rock)
 {
     IHandle_t myIH = *dirIH;
     namei_t name;
@@ -1283,7 +1284,7 @@ namei_ListAFSSubDirs(IHandle_t * dirIH,
 		info.linkCount =
 		    namei_GetLinkCount(&linkHandle, (Inode) 0, 0);
 	    }
-	    if (judgeFun && !(*judgeFun) (&info, singleVolumeNumber))
+	    if (judgeFun && !(*judgeFun) (&info, singleVolumeNumber, rock))
 		continue;
 
 	    if ((*writeFun) (fp, &info, path1, dp1->d_name) < 0) {
@@ -1345,7 +1346,7 @@ namei_ListAFSSubDirs(IHandle_t * dirIH,
 				continue;
 			    }
 			    if (judgeFun
-				&& !(*judgeFun) (&info, singleVolumeNumber))
+				&& !(*judgeFun) (&info, singleVolumeNumber, rock))
 				continue;
 
 			    if ((*writeFun) (fp, &info, path3, dp3->d_name) <

@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.42 2004/08/19 00:22:38 kolya Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.43 2004/09/28 04:44:29 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -1520,7 +1520,7 @@ CountVolumeInodes(register struct ViceInodeInfo *ip, int maxInodes,
 }
 
 int
-OnlyOneVolume(struct ViceInodeInfo *inodeinfo, VolumeId singleVolumeNumber)
+OnlyOneVolume(struct ViceInodeInfo *inodeinfo, VolumeId singleVolumeNumber, void *rock)
 {
     if (inodeinfo->u.vnode.vnodeNumber == INODESPECIAL)
 	return (inodeinfo->u.special.parentId == singleVolumeNumber);
@@ -1556,7 +1556,7 @@ GetInodeSummary(char *path, VolumeId singleVolumeNumber)
     if ((err =
 	 ListViceInodes(dev, fileSysPath, path,
 			singleVolumeNumber ? OnlyOneVolume : 0,
-			singleVolumeNumber, &forceSal, forceR, wpath)) < 0) {
+			singleVolumeNumber, &forceSal, forceR, wpath, NULL)) < 0) {
 	if (err == -2) {
 	    Log("*** I/O error %d when writing a tmp inode file %s; Not salvaged %s ***\nIncrease space on partition or use '-tmpdir'\n", errno, path, dev);
 	    return -1;

@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.7 2003/12/07 22:49:43 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/ntops.c,v 1.8 2004/09/28 04:44:29 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <stdio.h>
@@ -973,7 +973,8 @@ WriteInodeInfo(FILE * fp, struct ViceInodeInfo *info, char *dir, char *name)
 int
 ListViceInodes(char *devname, char *mountedOn, char *resultFile,
 	       int (*judgeInode) (struct ViceInodeInfo * info, int vid),
-	       int singleVolumeNumber, int *forcep, int forceR, char *wpath)
+	       int singleVolumeNumber, int *forcep, int forceR, char *wpath, 
+	       void *rock)
 {
     FILE *fp = (FILE *) - 1;
     int ninodes;
@@ -988,7 +989,7 @@ ListViceInodes(char *devname, char *mountedOn, char *resultFile,
     }
     ninodes =
 	nt_ListAFSFiles(wpath, WriteInodeInfo, fp, judgeInode,
-			singleVolumeNumber);
+			singleVolumeNumber, rock);
 
     if (!resultFile)
 	return ninodes;
@@ -1042,7 +1043,7 @@ nt_ListAFSFiles(char *dev,
 		int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				 char *), FILE * fp,
 		int (*judgeFun) (struct ViceInodeInfo *, int),
-		int singleVolumeNumber)
+		int singleVolumeNumber, void *rock)
 {
     IHandle_t h;
     char name[MAX_PATH];
@@ -1059,7 +1060,7 @@ nt_ListAFSFiles(char *dev,
 	if (!nt_HandleToVolDir(name, &h))
 	    return -1;
 	ninodes =
-	    nt_ListAFSSubDirs(&h, writeFun, fp, judgeFun, singleVolumeNumber);
+	    nt_ListAFSSubDirs(&h, writeFun, fp, judgeFun, singleVolumeNumber, rock);
 	if (ninodes < 0)
 	    return ninodes;
     } else {
@@ -1072,7 +1073,7 @@ nt_ListAFSFiles(char *dev,
 	    return -1;
 	while (dp = readdir(dirp)) {
 	    if (!DecodeVolumeName(dp->d_name, &h.ih_vid)) {
-		ninodes += nt_ListAFSSubDirs(&h, writeFun, fp, judgeFun, 0);
+		ninodes += nt_ListAFSSubDirs(&h, writeFun, fp, judgeFun, 0, rock);
 	    }
 	}
     }
@@ -1095,7 +1096,7 @@ nt_ListAFSSubDirs(IHandle_t * dirIH,
 		  int (*writeFun) (FILE *, struct ViceInodeInfo *, char *,
 				   char *), FILE * fp,
 		  int (*judgeFun) (struct ViceInodeInfo *, int),
-		  int singleVolumeNumber)
+		  int singleVolumeNumber, void *rock)
 {
     int i;
     IHandle_t myIH = *dirIH;
@@ -1179,7 +1180,7 @@ nt_ListAFSSubDirs(IHandle_t * dirIH,
 		    info.u.param[2] = data.ftCreationTime.dwHighDateTime;
 		    info.u.param[3] = data.ftCreationTime.dwLowDateTime;
 		}
-		if (judgeFun && !(*judgeFun) (&info, singleVolumeNumber))
+		if (judgeFun && !(*judgeFun) (&info, singleVolumeNumber, rock))
 		    goto next_file;
 		if ((*writeFun) (fp, &info, path, data.cFileName) < 0) {
 		    nt_close(linkHandle.fd_fd);
