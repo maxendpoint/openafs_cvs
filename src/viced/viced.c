@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.11 2001/08/08 00:04:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.12 2001/09/24 10:48:14 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -349,6 +349,11 @@ main(argc, argv)
     }
 #endif
     confDir = afsconf_Open(AFSDIR_SERVER_ETC_DIRPATH);
+    if (!confDir) {
+	fprintf(stderr, "Unable to open config directory %s\n",
+		AFSDIR_SERVER_ETC_DIRPATH);
+	exit(-1);
+    }
 
     NewParms(1);
 
