@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.49 2003/02/15 06:22:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.50 2003/02/15 14:17:15 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -462,13 +462,13 @@ CheckVnode(AFSFid *fid, Volume **volptr, Vnode **vptr, int lock)
 	    /* I'm not really worried about when we restarted, I'm   */
 	    /* just worried about when the first VBUSY was returned. */
 	    TM_GetTimeOfDay(&restartedat, 0);
-	    return(VBUSY);
+	    return(busyonrst?VBUSY:VRESTARTING);
 	  }
 	  else {
 	    struct timeval now;
 	    TM_GetTimeOfDay(&now, 0);
 	    if ((now.tv_sec - restartedat.tv_sec) < (11*60)) {
-	      return(VBUSY);
+	      return(busyonrst?VBUSY:VRESTARTING);
 	    }
 	    else {
 	      return (VRESTARTING);
