@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.17 2001/11/01 03:58:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/partition.c,v 1.18 2002/03/04 16:47:22 shadow Exp $");
 
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
@@ -299,7 +299,7 @@ int VCheckPartition(part, devname)
 	return -1;
 #endif
 
-#ifdef AFS_DUX40_ENV
+#if defined(AFS_DUX40_ENV) && !defined(AFS_NAMEI_ENV)
     if (status.st_ino != ROOTINO) {
 	Log("%s is not a mounted file system; ignored.\n", part);
 	return 0;
