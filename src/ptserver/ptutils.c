@@ -24,7 +24,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.17 2004/06/23 14:27:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.18 2004/06/23 15:01:04 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -62,6 +62,8 @@ extern int IDCmp();
 extern afs_int32 AddToEntry();
 static char *whoami = "ptserver";
 
+int prp_user_default = PRP_USER_DEFAULT;
+int prp_group_default = PRP_GROUP_DEFAULT;
 
 #if defined(SUPERGROUPS)
 
@@ -75,8 +77,6 @@ afs_int32 allocNextId(struct ubik_trans *, struct prentry *);
 
 struct map *sg_flagged;
 struct map *sg_found;
-int prp_user_default = PRP_USER_DEFAULT;
-int prp_group_default = PRP_GROUP_DEFAULT;
 
 #define NIL_MAP ((struct map *) 0)
 
