@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.17 2004/08/19 02:19:13 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.18 2004/09/15 03:54:28 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1041,6 +1041,12 @@ afs_TruncateAllSegments(register struct vcache *avc, afs_size_t alen,
 	    afs_CFileTruncate(tfile, newSize);
 	    afs_CFileClose(tfile);
 	    afs_AdjustSize(tdc, newSize);
+	    if (alen < tdc->validPos) {
+                if (alen < AFS_CHUNKTOBASE(tdc->f.chunk))
+                    tdc->validPos = 0;
+                else
+                    tdc->validPos = alen;
+            }
 	    ConvertWToSLock(&tdc->lock);
 	}
 	ReleaseSharedLock(&tdc->lock);
