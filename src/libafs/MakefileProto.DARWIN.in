@@ -1,5 +1,5 @@
 #/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
-# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.5 2001/08/29 19:17:22 shadow Exp $
+# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.6 2001/08/29 23:14:29 shadow Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
@@ -54,11 +54,11 @@ include Makefile.common
 
 setup:
 	-mkdir $(KOBJ)
-	-rm $(KOBJ)/Makefile $(KOBJ)/Makefile.common $(KOBJ)/config
+	-$(RM) $(KOBJ)/Makefile $(KOBJ)/Makefile.common $(KOBJ)/config
 	ln -s ../Makefile $(KOBJ)/Makefile
 	ln -s ../Makefile.common $(KOBJ)/Makefile.common
 	ln -s ../config $(KOBJ)/config
-	-rm -f  h net netinet rpc ufs nfs  machine sys vm mach kern
+	-$(RM) -f  h net netinet rpc ufs nfs  machine sys vm mach kern
 	-ln -s $(KROOT)/System/Library/Frameworks/Kernel.framework/Headers/net net
 	-ln -s $(KROOT)/System/Library/Frameworks/Kernel.framework/Headers/machine machine
 	-ln -s $(KROOT)/System/Library/Frameworks/Kernel.framework/Headers/netinet netinet
