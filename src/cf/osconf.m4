@@ -809,6 +809,7 @@ if test "x$enable_optimize_lwp" = "xno"; then
 fi
 
 AC_SUBST(CCXPG2)
+AC_SUBST(CCOBJ)
 AC_SUBST(AFSD_LIBS)
 AC_SUBST(AFSD_LDFLAGS)
 AC_SUBST(AIX64)
