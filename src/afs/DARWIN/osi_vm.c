@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.6 2002/03/25 17:11:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.7 2002/07/11 02:32:52 shadow Exp $");
 
 #include "../afs/sysincludes.h" /* Standard vendor system headers */
 #include "../afs/afsincludes.h" /* Afs-based standard headers */
@@ -193,7 +193,7 @@ void osi_VM_TryReclaim(avc, slept)
         return;
     }
 #ifdef AFS_DARWIN14_ENV
-    if (vp->v_ubcinfo->ui_refcount > 1) {
+    if (vp->v_ubcinfo->ui_refcount > 1 || vp->v_ubcinfo->ui_mapped) {
         simple_unlock(&vp->v_interlock);
         AFS_RELE(vp);
         return;
