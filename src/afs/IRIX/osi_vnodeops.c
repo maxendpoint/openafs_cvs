@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.10 2002/03/25 17:11:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.11 2002/08/22 22:44:56 kolya Exp $");
 
 #ifdef	AFS_SGI62_ENV
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -1269,7 +1269,7 @@ int afs_fid2(OSI_VC_DECL(avc), struct fid *fidp)
     afid->af_len = sizeof(afs_fid2_t) - sizeof(afid->af_len);
 
     tcell = afs_GetCell(avc->fid.Cell, READ_LOCK);
-    afid->af_cell = tcell->cellIndex & 0xffff;
+    afid->af_cell = tcell->index & 0xffff;
     afs_PutCell(tcell, READ_LOCK);
     
     afid->af_volid = avc->fid.Fid.Volume;

@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.11 2002/08/21 18:12:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.12 2002/08/22 22:44:55 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -293,7 +293,7 @@ int mp_afs_vptofh(struct vnode *avn, struct fid *fidp)
 	tcell = afs_GetCell(avc->fid.Cell, READ_LOCK);
 	Sfid.Volume = avc->fid.Fid.Volume;
 	fidp->fid_reserved = avc->fid.Fid.Vnode;
-	Sfid.CellAndUnique = ((tcell->cellIndex << 24) +
+	Sfid.CellAndUnique = ((tcell->index << 24) +
 			      (avc->fid.Fid.Unique & 0xffffff));
 	afs_PutCell(tcell, READ_LOCK);
 	if (avc->fid.Fid.Vnode > 0xffff)

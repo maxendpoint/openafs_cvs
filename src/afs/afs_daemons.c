@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.16 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.17 2002/08/22 22:44:53 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -262,36 +262,46 @@ void afs_Daemon(void)
 int afs_CheckRootVolume (void)
 {
     char rootVolName[32];
-    register struct volume *tvp;
+    struct volume *tvp = NULL;
     int usingDynroot = afs_GetDynrootEnable();
+    int localcell;
 
     AFS_STATCNT(afs_CheckRootVolume);
     if (*afs_rootVolumeName == 0) {
 	strcpy(rootVolName, "root.afs");
-    }
-    else {
+    } else {
 	strcpy(rootVolName, afs_rootVolumeName);
     }
+
+    if (!usingDynroot) {
+	struct cell *lc = afs_GetPrimaryCell(READ_LOCK);
+
+	if (!lc)
+	    return ENOENT;
+	localcell = lc->cellNum;
+	afs_PutCell(lc, READ_LOCK);
+    }
+
     if (usingDynroot) {
 	afs_GetDynrootFid(&afs_rootFid);
 	tvp = afs_GetVolume(&afs_rootFid, NULL, READ_LOCK);
     } else {
-	tvp = afs_GetVolumeByName(rootVolName, LOCALCELL, 1, NULL, READ_LOCK);
+	tvp = afs_GetVolumeByName(rootVolName, localcell, 1, NULL, READ_LOCK);
     }
-    if (!tvp) {
+    if (!tvp && !usingDynroot) {
 	char buf[128];
 	int len = strlen(rootVolName);
 
 	if ((len < 9) || strcmp(&rootVolName[len - 9], ".readonly")) {
 	    strcpy(buf, rootVolName);
 	    afs_strcat(buf, ".readonly");
-	    tvp = afs_GetVolumeByName(buf, LOCALCELL, 1, NULL, READ_LOCK);
+	    tvp = afs_GetVolumeByName(buf, localcell, 1, NULL, READ_LOCK);
 	}
     }
     if (tvp) {
 	if (!usingDynroot) {
 	    int volid = (tvp->roVol? tvp->roVol : tvp->volume);
-	    afs_rootFid.Cell = LOCALCELL;
+	    afs_rootFid.Cell = localcell;
 	    if (afs_rootFid.Fid.Volume && afs_rootFid.Fid.Volume != volid
 		&& afs_globalVp) {
 		/* If we had a root fid before and it changed location we reset
