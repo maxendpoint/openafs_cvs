@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.54 2003/08/27 21:43:16 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.55 2003/09/03 16:47:15 rees Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1408,7 +1408,7 @@ afs_SimpleVStat(register struct vcache *avc,
 #else
     if ((avc->execsOrWriters <= 0) && !afs_DirtyPages(avc)) {
 #endif
-#ifdef AFS_64BIT_ClIENT
+#ifdef AFS_64BIT_CLIENT
 	FillInt64(length, astat->Length_hi, astat->Length);
 #else /* AFS_64BIT_CLIENT */
 	length = astat->Length;

@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/export/cfgexport.c,v 1.10 2003/07/15 23:15:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/export/cfgexport.c,v 1.11 2003/09/03 16:47:16 rees Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -382,7 +382,7 @@ xlate_xtok(xp, kp, strp, szp)
      uint *szp;
 {
     register len;
-    static char *export_strings, *prev = "";
+    static char *export_strings = NULL, *prev = "";
     static left, offset, sz;
 
     if (!export_strings) {
