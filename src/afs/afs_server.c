@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.26 2003/07/15 23:14:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.27 2003/08/27 21:43:16 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -507,7 +507,7 @@ afs_CheckServers(int adown, struct cell *acellp)
     XSTATS_DECLS;
 
     AFS_STATCNT(afs_CheckServers);
-    if ((code = afs_InitReq(&treq, &afs_osi_cred)))
+    if ((code = afs_InitReq(&treq, afs_osi_credp)))
 	return;
     ObtainReadLock(&afs_xserver);	/* Necessary? */
     ObtainReadLock(&afs_xsrvAddr);

@@ -2,7 +2,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.15 2003/07/15 23:14:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.16 2003/08/27 21:43:17 rees Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -320,7 +320,7 @@ afs_vop_close(ap)
     if (ap->a_cred)
 	code = afs_close(avc, ap->a_fflag, ap->a_cred);
     else
-	code = afs_close(avc, ap->a_fflag, &afs_osi_cred);
+	code = afs_close(avc, ap->a_fflag, afs_osi_credp);
     afs_BozonLock(&avc->pvnLock, avc);
     osi_FlushPages(avc, ap->a_cred);	/* hold bozon lock, but not basic vnode lock */
     afs_BozonUnlock(&avc->pvnLock, avc);
@@ -695,7 +695,7 @@ afs_vop_fsync(ap)
     if (ap->a_cred)
 	error = afs_fsync(VTOAFS(vp), ap->a_cred);
     else
-	error = afs_fsync(VTOAFS(vp), &afs_osi_cred);
+	error = afs_fsync(VTOAFS(vp), afs_osi_credp);
     AFS_GUNLOCK();
     return error;
 }

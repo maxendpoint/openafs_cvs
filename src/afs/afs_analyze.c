@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.21 2003/07/15 23:14:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22 2003/08/27 21:43:16 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -323,7 +323,7 @@ VLDB_Same(struct VenusFid *afid, struct vrequest *areq)
     AFS_STATCNT(CheckVLDB);
     afs_FinalizeReq(areq);
 
-    if ((i = afs_InitReq(&treq, &afs_osi_cred)))
+    if ((i = afs_InitReq(&treq, afs_osi_credp)))
 	return DUNNO;
     v = afs_osi_Alloc(sizeof(*v));
     tcell = afs_GetCell(afid->Cell, READ_LOCK);

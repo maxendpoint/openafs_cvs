@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.36 2003/07/15 23:16:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.37 2003/08/27 21:43:19 rees Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -786,9 +786,8 @@ rxk_NewSocket(short aport)
 #elif defined(AFS_SGI65_ENV) || defined(AFS_OBSD_ENV)
     code = socreate(AF_INET, &newSocket, SOCK_DGRAM, IPPROTO_UDP);
 #elif defined(AFS_FBSD50_ENV)
-    code =
-	socreate(AF_INET, &newSocket, SOCK_DGRAM, IPPROTO_UDP, &afs_osi_cred,
-		 curthread);
+    code = socreate(AF_INET, &newSocket, SOCK_DGRAM, IPPROTO_UDP,
+		    afs_osi_credp, curthread);
 #elif defined(AFS_FBSD40_ENV)
     code = socreate(AF_INET, &newSocket, SOCK_DGRAM, IPPROTO_UDP, curproc);
 #else

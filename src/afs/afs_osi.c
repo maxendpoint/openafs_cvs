@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.37 2003/07/15 23:14:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.38 2003/08/27 21:43:16 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -39,6 +39,8 @@ lock_t afs_event_lock;
 #ifdef AFS_SGI64_ENV
 flid_t osi_flid;
 #endif
+
+struct AFS_UCRED *afs_osi_credp;
 
 void
 osi_Init(void)
@@ -70,17 +72,13 @@ osi_Init(void)
 #endif /* AFS_HPUX_ENV */
 
     if (!afs_osicred_initialized) {
-	memset(&afs_osi_cred, 0, sizeof(struct AFS_UCRED));
-#ifdef AFS_FBSD50_ENV
-	/*
-	 * We don't init the mutex.
-	 * This will be trouble if anyone tries to use change the refcount.
-	 * Proper fix would be to make afs_osi_cred into a pointer,
-	 * and crdup() it from curthread.
-	 */
-	afs_osi_cred.cr_ref = 1;
+#ifdef AFS_XBSD_ENV
+	/* Can't just invent one, must use crget() because of mutex */
+	afs_osi_credp = crdup(osi_curcred());
 #else
+	memset(&afs_osi_cred, 0, sizeof(struct AFS_UCRED));
 	crhold(&afs_osi_cred);	/* don't let it evaporate */
+	afs_osi_credp = &afs_osi_cred;
 #endif
 	afs_osicred_initialized = 1;
     }

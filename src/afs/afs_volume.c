@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.25 2003/08/08 21:54:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.26 2003/08/27 21:43:16 rees Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -603,7 +603,7 @@ afs_NewVolumeByName(char *aname, afs_int32 acell, int agood,
     tve = (struct vldbentry *)(tbuffer + 1024);
     ntve = (struct nvldbentry *)tve;
     utve = (struct uvldbentry *)tve;
-    afs_InitReq(&treq, &afs_osi_cred);	/* *must* be unauth for vldb */
+    afs_InitReq(&treq, afs_osi_credp);	/* *must* be unauth for vldb */
     do {
 	tconn =
 	    afs_ConnByMHosts(tcell->cellHosts, tcell->vlport, tcell->cellNum,
