@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/fs.c,v 1.16 2002/08/22 17:00:15 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/fs.c,v 1.17 2002/08/22 22:15:58 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -49,7 +49,6 @@ RCSID("$Header: /cvs/openafs/src/venus/fs.c,v 1.16 2002/08/22 17:00:15 kolya Exp
 #include <afs/volser.h>
 #include <afs/vlserver.h>
 #include <afs/cmd.h>
-#include <strings.h>
 #include <afs/afsutil.h>
 #include <stdlib.h>
 #include <assert.h>
