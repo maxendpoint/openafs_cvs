@@ -326,6 +326,10 @@ When installing under Terminal Server, you must execute the NSIS installer
 will result in AFS not running properly.  The AFS Server should not 
 be installed on a machine with Terminal Server installed.
 
+24. AFS is a Unix native file system.  As such the OpenAFS client attempts
+to treat the files stored in AFS as they would be on Unix.  File and directory
+names beginning with a "." are automatically given the Hidden attribute so
+they will not normally be displayed.
 
 ------------------------------------------------------------------------
 
