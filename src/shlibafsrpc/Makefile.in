@@ -134,9 +134,9 @@ ${LIBAFSRPC}: ${LIBOBJS}
 	rs_aix4*) \
 		${SHLIB_LINKER} -o ${LIBAFSRPC} ${LIBOBJS} -bE:afsrpc.exp ${MT_LIBS};; \
 	sun*_5*) \
-		${SHLIB_LINKER} -h ${LIBAFSRPC} -o ${LIBAFSRPC} ${MT_LIBS};; \
+		${SHLIB_LINKER} -h ${LIBAFSRPC} -o ${LIBAFSRPC} ${LIBOBJS} ${MT_LIBS};; \
 	*) \
-		${SHLIB_LINKER} -o ${LIBAFSRPC} ${MT_LIBS};; \
+		${SHLIB_LINKER} -o ${LIBAFSRPC} ${LIBOBJS} ${MT_LIBS};; \
 	esac
 
 rx_event.o: ${RX}/rx_event.c
@@ -254,7 +254,7 @@ xdr_afsuuid.o: ${RX}/xdr_afsuuid.c
 #
 #   $ what /opt/langtools/bin/pxdb32
 #   /opt/langtools/bin/pxdb32:
-#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.5 $
+#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.6 $
 #
 # The problem occurs when -g and -O are both used when compiling des.c.
 # The simplest way to work around the problem is to leave out either -g or -O.
