@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/client.c,v 1.7 2003/12/07 22:49:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/client.c,v 1.8 2003/12/12 23:37:37 shadow Exp $");
 
 #include "client.h"
 #include <afs/cellconfig.h>
@@ -37,6 +37,19 @@ RCSID
 #include <winsock2.h>
 #include <pthread.h>
 #endif
+
+/* These aren't coming from a header, currently, so they must stay here. 
+   Fix elsewhere, or leave alone. */
+extern int RXSTATS_RetrieveProcessRPCStats();
+extern int RXSTATS_RetrievePeerRPCStats();
+extern int RXSTATS_QueryProcessRPCStats();
+extern int RXSTATS_QueryPeerRPCStats();
+extern int RXSTATS_EnableProcessRPCStats();
+extern int RXSTATS_EnablePeerRPCStats();
+extern int RXSTATS_DisableProcessRPCStats();
+extern int RXSTATS_DisablePeerRPCStats();
+extern int RXSTATS_ClearProcessRPCStats();
+extern int RXSTATS_ClearPeerRPCStats();
 
 /*
  * This structure stores the client and server function lists.
