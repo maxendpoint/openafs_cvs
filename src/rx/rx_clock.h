@@ -43,11 +43,13 @@ struct clock {
 };
 
 #ifndef	KERNEL
+
+void	clock_GetTime(struct clock *cv);
+
 #if defined(AFS_USE_GETTIMEOFDAY) || defined(AFS_PTHREAD_ENV)
 #define clock_Init()
 #define clock_NewTime()
 #define clock_UpdateTime()
-#define clock_GetTime(cv) (gettimeofday((struct timeval *)cv, NULL))
 #define clock_Sec() (time(NULL))
 #define clock_haveCurrentTime 1
 #else /* AFS_USE_GETTIMEOFDAY || AFS_PTHREAD_ENV */
@@ -68,14 +70,6 @@ extern void clock_Init();
 
 /* Update the value to be returned by gettime */
 extern void clock_UpdateTime();
-
-/* Return the current clock time.  If the clock value has not been updated since the last call to clock_NewTime, it is updated now */
-#define	clock_GetTime(cv)				\
-    BEGIN						\
-	if (!clock_haveCurrentTime) clock_UpdateTime(); \
-	(cv)->sec = clock_now.sec;			\
-	(cv)->usec = clock_now.usec;			\
-    END
 
 /* Current clock time, truncated to seconds */
 #define	clock_Sec() ((!clock_haveCurrentTime)? clock_UpdateTime(), clock_now.sec:clock_now.sec)

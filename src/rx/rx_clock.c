@@ -17,7 +17,7 @@
 #endif
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_clock.c,v 1.6 2001/10/05 21:30:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_clock.c,v 1.7 2002/01/20 05:26:36 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -37,8 +37,32 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_clock.c,v 1.6 2001/10/05 21:30:12 shadow 
 #include "rx_clock.h"
 #endif
 
-#if	!defined(AFS_USE_GETTIMEOFDAY)
 /*use this package only if gettimeofday is much much costlier than getitime */
+
+#ifndef KERNEL
+
+void
+clock_GetTime(struct clock *cv) 
+{
+#ifdef AFS_USE_GETTIMEOFDAY
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	cv->sec  = (afs_int32)tv.tv_sec;
+	cv->usec = (afs_int32)tv.tv_usec;
+#else
+	if (!clock_haveCurrentTime)
+		clock_UpdateTime();
+	cv->sec = clock_now.sec;
+	cv->usec = clock_now.usec;
+#endif
+}
+
+
+#endif
+
+#ifndef AFS_USE_GETTIMEOFDAY
+
 
 #ifndef KERNEL
 
