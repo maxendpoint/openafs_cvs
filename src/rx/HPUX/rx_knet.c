@@ -8,6 +8,7 @@
 #include "../rx/rx_kcommon.h"
 #include "../h/user.h"
 #include "../h/tihdr.h"
+#include <xti.h>
 
 /* Define this here, used externally */
 #ifdef RX_ENABLE_LOCKS

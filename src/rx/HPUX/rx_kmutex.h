@@ -1,5 +1,8 @@
 #ifndef _RX_KMUTEX_H_
 #define _RX_KMUTEX_H_
+#include <sys/spinlock.h>
+#include <sys/sem_sync.h>
+
 #define RX_ENABLE_LOCKS         1
 extern lock_t*  rx_sleepLock;
 #define AFS_GLOBAL_RXLOCK_KERNEL
