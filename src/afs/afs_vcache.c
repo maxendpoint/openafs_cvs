@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.43 2002/11/08 21:59:23 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.44 2002/11/20 03:13:23 zacheiss Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -512,7 +512,7 @@ resume:
 		struct list_head *tmp = next;
 		struct dentry *dentry = list_entry(tmp, struct dentry, d_child);
 		next = tmp->next;
-		if (!atomic_read(&dentry->d_count)) {
+		if (!DCOUNT(dentry)) {
 			list_del(&dentry->d_lru);
 			list_add(&dentry->d_lru, afs_dentry_unused.prev);
 			found++;
@@ -542,15 +542,26 @@ resume:
 
 		if (tmp == &afs_dentry_unused)
 			break;
+#ifdef AFS_LINUX24_ENV
 		list_del_init(tmp);
+#else
+		list_del(tmp);
+		INIT_LIST_HEAD(tmp);
+#endif /* AFS_LINUX24_ENV */
 		dentry = list_entry(tmp, struct dentry, d_lru);
 
+#ifdef AFS_LINUX24_ENV
 		/* Unused dentry with a count? */
-		if (atomic_read(&dentry->d_count))
+		if (DCOUNT(dentry))
 			BUG();
-
+#endif
 		DGET(dentry);
+#ifdef AFS_LINUX24_ENV
 		list_del_init(&dentry->d_hash);		/* d_drop */
+#else
+		list_del(&dentry->d_hash);
+		INIT_LIST_HEAD(&dentry->d_hash);
+#endif /* AFS_LINUX24_ENV */
 		DUNLOCK();
 		dput(dentry);
 		DLOCK();
@@ -593,9 +604,14 @@ restart:
         if (!list_empty(&dentry->d_hash) && !list_empty(&dentry->d_subdirs))
 	    __shrink_dcache_parent(dentry);
 
-        if (!atomic_read(&dentry->d_count)) {
+        if (!DCOUNT(dentry)) {
 	    DGET(dentry);
+#ifdef AFS_LINUX24_ENV 
 	    list_del_init(&dentry->d_hash);     /* d_drop */
+#else
+	    list_del(&dentry->d_hash);
+	    INIT_LIST_HEAD(&dentry->d_hash);
+#endif /* AFS_LINUX24_ENV */
 	    DUNLOCK();
 	    dput(dentry);
 	    goto restart;
