@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.1 2004/12/07 06:12:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.2 2004/12/08 09:55:34 shadow Exp $");
 
 #include "h/module.h" /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -138,11 +138,12 @@ osi_UFSTruncate(register struct osi_file *afile, afs_int32 asize)
     down_write(&inode->i_alloc_sem);
 #endif
     down(&inode->i_sem);
-    inode->i_size = newattrs.ia_size = asize;
+    newattrs.ia_size = asize;
     newattrs.ia_valid = ATTR_SIZE | ATTR_CTIME;
 #if defined(AFS_LINUX24_ENV)
     newattrs.ia_ctime = CURRENT_TIME;
 
+    inode->i_size = asize;
     /* avoid notify_change() since it wants to update dentry->d_parent */
     lock_kernel();
     code = inode_change_ok(inode, &newattrs);
