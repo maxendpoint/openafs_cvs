@@ -1,5 +1,5 @@
 #/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
-# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.10 2001/09/20 20:10:08 shadow Exp $
+# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.11 2001/10/17 23:07:05 shadow Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
@@ -7,6 +7,9 @@ DEST=@DEST@
 TOP_INCDIR=@TOP_INCDIR@
 TOP_LIBDIR=@TOP_LIBDIR@
 TOP_SRCDIR=@TOP_SRCDIR@
+TOP_OBJDIR=@TOP_OBJDIR@
+srcdir=@srcdir@
+VPATH=${srcdir}
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 bindir=@bindir@
@@ -52,7 +55,7 @@ DEFINES= -D_KERNEL -DKERNEL -DKERNEL_PRIVATE -DDIAGNOSTIC -DUSE_SELECT -DMACH_US
 KOPTS=-no-precomp -static -fno-common -finline -fno-keep-inline-functions -force_cpusubtype_ALL -msoft-float -mlong-branch 
 #CFLAGS=-Werror-implicit-function-declaration -I. -I.. ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG}
 #CFLAGS=-framework Kernel -I. -I.. ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG}
-CFLAGS=-I. -I.. -I${TOP_SRCDIR}/config ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG} ${OPTMZ}
+CFLAGS=-I. -I.. -I${TOP_OBJDIR}/src/config ${KINCLUDES} $(DEFINES) $(KDEFS) $(KOPTS) ${DBUG} ${OPTMZ}
 
 
 # Name of directory to hold object files and libraries.

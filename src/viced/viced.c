@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.12 2001/09/24 10:48:14 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.13 2001/10/17 23:07:09 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1596,7 +1596,7 @@ InitVL() {
 				 AFSDIR_SERVER_NETINFO_FILEPATH,
 				 AFSDIR_SERVER_NETRESTRICT_FILEPATH);
       if (code < 0) {
-	ViceLog(0,("Can' register any valid addresses:%s\n",reason));
+	ViceLog(0,("Can't register any valid addresses: %s\n",reason));
 	exit(1);
       }
       FS_HostAddr_cnt = (afs_uint32) code;
