@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/display.c,v 1.6 2002/08/21 18:13:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/display.c,v 1.7 2003/01/15 04:30:25 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -120,13 +120,25 @@ int pr_PrintEntry (f, hostOrder, ea, e, indent)
 		 host(e->nextID), host(e->nextName),
 		 host(e->owner), host(e->creator));
 	fprintf (f, "%*s", indent, "");
+#if defined(SUPERGROUPS)
+	fprintf (f, "quota groups %d, foreign users %d.  Mem: %d, cntsg: %d\n",
+		host(e->ngroups), host(e->nusers),
+		host(e->count), host(e->instance));
+#else
 	fprintf (f, "quota groups %d, foreign users %d.  Mem: %d, inst: %d\n",
 		 host(e->ngroups), host(e->nusers),
 		 host(e->count), host(e->instance));
+#endif
 	fprintf (f, "%*s", indent, "");
+#if defined(SUPERGROUPS)
+	fprintf (f, "Owned chain %d, next owned %d, nextsg %d, sg (%d %d).\n",
+		host(e->owned), host(e->nextOwned),
+		host(e->parent), host(e->sibling), host(e->child));
+#else
 	fprintf (f, "Owned chain %d, next owned %d, inst ptrs(%d %d %d).\n",
 		 host(e->owned), host(e->nextOwned),
 		 host(e->parent), host(e->sibling), host(e->child));
+#endif
 	fprintf (f, "%*s", indent, "");
 	if (strlen (e->name) >= PR_MAXNAMELEN)
 	    fprintf (f, "NAME TOO LONG: ");
