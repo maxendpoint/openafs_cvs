@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/nuke.c,v 1.11 2003/07/15 23:17:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/nuke.c,v 1.12 2003/08/08 20:40:45 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -42,6 +42,12 @@ RCSID
 #include "viceinode.h"
 #include "salvage.h"
 #include "fssync.h"
+
+#ifdef O_LARGEFILE
+#define afs_stat	stat64
+#else /* !O_LARGEFILE */
+#define afs_stat	stat
+#endif /* !O_LARGEFILE */
 
 /*@printflike@*/ extern void Log(const char *format, ...);
 
@@ -106,7 +112,7 @@ int
 nuke(char *aname, afs_int32 avolid)
 {
     /* first process the partition containing this junk */
-    struct stat tstat;
+    struct afs_stat tstat;
     struct ilist *ti, *ni;
     register afs_int32 code;
     char *tfile;
@@ -125,7 +131,7 @@ nuke(char *aname, afs_int32 avolid)
 
     if (avolid == 0)
 	return EINVAL;
-    code = stat(aname, &tstat);
+    code = afs_stat(aname, &tstat);
     if (code) {
 	printf("volnuke: partition %s does not exist.\n", aname);
 	return code;

@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/physio.c,v 1.11 2003/07/15 23:17:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/physio.c,v 1.12 2003/08/08 20:40:45 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -66,7 +66,7 @@ ReallyRead(DirHandle * file, int block, char *data)
 	FDH_REALLYCLOSE(fdP);
 	return code;
     }
-    code = FDH_READ(fdP, data, AFS_PAGESIZE);
+    code = FDH_READ(fdP, data, (afs_fsize_t) AFS_PAGESIZE);
     if (code != AFS_PAGESIZE) {
 	if (code < 0)
 	    code = errno;
@@ -99,7 +99,7 @@ ReallyWrite(DirHandle * file, int block, char *data)
 	FDH_REALLYCLOSE(fdP);
 	return code;
     }
-    code = FDH_WRITE(fdP, data, AFS_PAGESIZE);
+    code = FDH_WRITE(fdP, data, (afs_fsize_t) AFS_PAGESIZE);
     if (code != AFS_PAGESIZE) {
 	if (code < 0)
 	    code = errno;

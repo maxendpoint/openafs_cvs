@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.14 2003/07/15 23:17:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.15 2003/08/08 20:40:45 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -51,6 +51,16 @@ RCSID
 #include "afs/assert.h"
 #endif /* AFS_PTHREAD_ENV */
 #include <limits.h>
+
+#ifndef AFS_NT40_ENV
+#ifdef O_LARGEFILE
+#define afs_stat	stat64
+#define afs_fstat	fstat64
+#else /* !O_LARGEFILE */
+#define	afs_stat	stat
+#define	afs_fstat	fstat
+#endif /* !O_LARGEFILE */
+#endif /* AFS_NT40_ENV */
 
 extern afs_int32 DErrno;
 
@@ -475,10 +485,11 @@ stream_open(const char *filename, const char *mode)
 }
 
 /* fread for buffered I/O handles */
-int
-stream_read(void *ptr, int size, int nitems, StreamHandle_t * streamP)
+afs_sfsize_t
+stream_read(void *ptr, afs_fsize_t size, afs_fsize_t nitems,
+	    StreamHandle_t * streamP)
 {
-    int nbytes, bytesRead, bytesToRead;
+    afs_fsize_t nbytes, bytesRead, bytesToRead;
     char *p;
 
     /* Need to seek before changing direction */
@@ -526,11 +537,13 @@ stream_read(void *ptr, int size, int nitems, StreamHandle_t * streamP)
 }
 
 /* fwrite for buffered I/O handles */
-int
-stream_write(void *ptr, int size, int nitems, StreamHandle_t * streamP)
+afs_sfsize_t
+stream_write(void *ptr, afs_fsize_t size, afs_fsize_t nitems,
+	     StreamHandle_t * streamP)
 {
     char *p;
-    int rc, nbytes, bytesWritten, bytesToWrite;
+    afs_sfsize_t rc;
+    afs_fsize_t nbytes, bytesWritten, bytesToWrite;
 
     /* Need to seek before changing direction */
     if (streamP->str_direction == STREAM_DIRECTION_NONE) {
@@ -574,7 +587,7 @@ stream_write(void *ptr, int size, int nitems, StreamHandle_t * streamP)
 
 /* fseek for buffered I/O handles */
 int
-stream_seek(StreamHandle_t * streamP, int offset, int whence)
+stream_seek(StreamHandle_t * streamP, afs_foff_t offset, int whence)
 {
     int rc;
     int retval = 0;
@@ -822,11 +835,11 @@ ih_icreate(IHandle_t * ih, int dev, char *part, Inode nI, int p1, int p2,
 
 
 #ifndef AFS_NT40_ENV
-int
+afs_sfsize_t
 ih_size(int fd)
 {
-    struct stat status;
-    if (fstat(fd, &status) < 0)
+    struct afs_stat status;
+    if (afs_fstat(fd, &status) < 0)
 	return -1;
     return status.st_size;
 }

@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/clone.c,v 1.16 2003/07/15 23:17:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/clone.c,v 1.17 2003/08/08 20:40:45 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -315,7 +315,7 @@ DoCloneIndex(Volume * rwvp, Volume * clvp, VnodeClass class, int reclone)
 	    if (dircloned) {
 		rwvnode->cloned = 0;
 		if (STREAM_SEEK(rwfile, offset, 0) != -1)
-		    STREAM_WRITE(rwvnode, vcp->diskSize, 1, rwfile);
+		    (void)STREAM_WRITE(rwvnode, vcp->diskSize, 1, rwfile);
 	    }
 	    ERROR_EXIT(EIO);
 	}
