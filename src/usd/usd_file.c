@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/usd/usd_file.c,v 1.13 2003/07/15 23:17:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/usd/usd_file.c,v 1.14 2004/03/03 22:41:05 rees Exp $");
 
 #include <errno.h>
 #include <fcntl.h>
@@ -306,17 +306,9 @@ usd_FileClose(usd_handle_t usd)
     if (usd->openFlags & (O_WRONLY | O_RDWR)) {
 	int mode;
 	code = usd_FileIoctl(usd, USD_IOCTL_GETTYPE, &mode);
-	if (code == 0) {
-	    if (S_ISBLK(mode)
-#ifndef AFS_AIX_ENV
-		/* on AIX3.1 can't fsync raw disk device */
-		|| S_ISCHR(mode)
-#endif
-		) {
-		code = fsync(fd);
-		if (code)
-		    code = errno;
-	    }
+	if (code == 0 && S_ISBLK(mode)) {
+	    if (fsync(fd) < 0)
+		code = errno;
 	}
     }
 
