@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/vol-dump.c,v 1.1 2003/08/24 21:22:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vol-dump.c,v 1.1 2003/08/28 03:16:34 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -48,7 +48,6 @@ RCSID
 #include "volume.h"
 #include "partition.h"
 #include "viceinode.h"
-#include "volinodes.h"
 #include <afs/afssyscalls.h>
 #include "acl.h"
 
