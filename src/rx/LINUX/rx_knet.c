@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.22 2004/07/29 02:46:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.23 2004/07/29 02:46:48 shadow Exp $");
 
 #include <linux/version.h>
 #ifdef AFS_LINUX22_ENV
@@ -47,7 +47,7 @@ rxk_NewSocketHost(afs_uint32 ahost, short aport)
 
     /* Bind socket */
     myaddr.sin_family = AF_INET;
-    myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    myaddr.sin_addr.s_addr = ahost;
     myaddr.sin_port = aport;
     code =
 	sockp->ops->bind(sockp, (struct sockaddr *)&myaddr, sizeof(myaddr));
