@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.7 2001/10/05 20:44:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.8 2002/01/23 18:48:20 shadow Exp $");
 
 #ifdef AFS_SUN5_ENV
 #include "../rx/rx_kcommon.h"
@@ -281,8 +281,10 @@ int osi_FreeSocket(asocket)
     vnode_t *vp = SOTOV(so);
 
     AFS_STATCNT(osi_FreeSocket);
-    if (rxk_ListenerPid)
+    if (rxk_ListenerPid) {
 	kill(rxk_ListenerPid, SIGUSR1);
+	afs_osi_Sleep(&rxk_ListenerPid);
+    }
     return 0;
 }
 
@@ -512,8 +514,10 @@ int osi_FreeSocket(asocket)
     TIUSER *udp_tiptr = (TIUSER *) asocket;    
     AFS_STATCNT(osi_FreeSocket);
 
-    if (rxk_ListenerPid)
+    if (rxk_ListenerPid) {
 	kill(rxk_ListenerPid, SIGUSR1);
+	afs_osi_Sleep(&rxk_ListenerPid);
+    }
     return 0;
 }
 
