@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.41 2003/03/28 09:35:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.42 2003/04/24 13:37:15 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -589,7 +589,7 @@ void ShutDownAndCore(int dopanic)
     }
 #endif
     DFlush();
-    PrintCounters();
+    if (!dopanic) PrintCounters();
 
     /* do not allows new reqests to be served from now on, all new requests
        are returned with an error code of RX_RESTARTING ( transient failure ) */
