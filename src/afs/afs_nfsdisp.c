@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.1 2001/10/11 07:36:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.2 2002/01/16 09:27:04 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h" /* Standard vendor system headers */
@@ -494,7 +494,7 @@ nfs3_to_afs_call(int which, caddr_t *args, nfs_fh3 **fhpp, nfs_fh3 **fh2pp)
         case NFSPROC3_LOOKUP: 
 	{
             LOOKUP3args *arg = (LOOKUP3args *)args;
-            fhp1 = (nfs_fh3 *) &arg->what.dir;
+            fhp1 = (nfs_fh3 *) &arg->what.dirp;
             break;
         } 
         case NFSPROC3_ACCESS: 
