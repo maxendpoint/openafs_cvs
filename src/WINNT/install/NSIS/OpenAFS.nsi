@@ -455,6 +455,14 @@ var REG_DATA_3
 Section "AFS Client" secClient
 
   SetShellVarContext all
+
+  ; Check for bad previous installation (if we are doing a new install)
+  Call IsAnyAFSInstalled
+  Pop $R0
+  StrCmp $R0 "0" +1 skipCheck
+  Call CheckPathForAFS
+  skipCheck:
+
   ; Stop any running services or we can't replace the files
   ; Stop the running processes
   GetTempFileName $R0
