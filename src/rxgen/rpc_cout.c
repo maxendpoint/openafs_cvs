@@ -36,16 +36,17 @@
 #include <afsconfig.h>
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#else
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
 #endif
 #include "rpc_util.h"
 #include "rpc_parse.h"
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_cout.c,v 1.2 2001/06/23 15:14:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_cout.c,v 1.3 2001/06/28 06:52:33 shadow Exp $");
 
 static print_header();
 static print_trailer();

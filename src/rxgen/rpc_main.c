@@ -39,11 +39,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#else
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
 #endif
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
@@ -55,7 +56,7 @@
 #include "rpc_parse.h"
 #include "rpc_scan.h"
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.6 2001/06/23 15:14:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.7 2001/06/28 06:52:33 shadow Exp $");
 
 #define EXTEND	1		/* alias for TRUE */
 

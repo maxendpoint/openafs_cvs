@@ -37,18 +37,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-#include <string.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#else
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
 #endif
 #include "rpc_util.h"
 #include "rpc_scan.h"
 #include "rpc_parse.h"
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.5 2001/06/23 15:20:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.6 2001/06/28 06:52:33 shadow Exp $");
 
 list *proc_defined[MAX_PACKAGES], *special_defined, *typedef_defined, *uniondef_defined;
 char *SplitStart = NULL;

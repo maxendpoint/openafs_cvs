@@ -37,16 +37,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#else
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
 #endif
 #include "rpc_scan.h"
 #include "rpc_util.h"
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_scan.c,v 1.2 2001/06/23 15:14:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_scan.c,v 1.3 2001/06/28 06:52:33 shadow Exp $");
 
 #define startcomment(where) (where[0] == '/' && where[1] == '*')
 #define endcomment(where) (where[-1] == '*' && where[0] == '/')
