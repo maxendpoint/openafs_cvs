@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.12 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.13 2002/06/24 15:03:35 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -125,7 +125,7 @@ afs_symlink
     tdc = afs_GetDCache(adp, (afs_size_t) 0, &treq, &offset, &len, 1);
     volp = afs_FindVolume(&adp->fid, READ_LOCK); /*parent is also in same vol*/
     ObtainWriteLock(&adp->lock,156);
-    ObtainWriteLock(&tdc->lock, 636);
+    if (tdc) ObtainWriteLock(&tdc->lock, 636);
     ObtainSharedLock(&afs_xvcache,17);  /* prevent others from creating this entry */
     /* XXX Pay attention to afs_xvcache around the whole thing!! XXX */
     do {

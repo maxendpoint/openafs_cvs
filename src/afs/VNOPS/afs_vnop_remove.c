@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.17 2002/04/22 16:05:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.18 2002/06/24 15:03:35 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -313,7 +313,7 @@ tagain:
 
     tdc	= afs_GetDCache(adp, (afs_size_t) 0,	&treq, &offset,	&len, 1);  /* test for error below */
     ObtainWriteLock(&adp->lock,142);
-    ObtainSharedLock(&tdc->lock, 638);
+    if (tdc) ObtainSharedLock(&tdc->lock, 638);
 
     /*
      * Make sure that the data in the cache is current. We may have

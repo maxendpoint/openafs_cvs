@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.11 2002/02/16 18:23:50 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.12 2002/06/24 15:03:34 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -258,7 +258,7 @@ tagain:
 		ReleaseReadLock(&avc->lock);
 		tdc = afs_GetDCache(avc, filePos, &treq, &offset, &len, 1);
 		ObtainReadLock(&avc->lock);
-		ObtainReadLock(&tdc->lock);
+		if (tdc) ObtainReadLock(&tdc->lock);
 	    }
 	}
 
@@ -801,7 +801,7 @@ tagain:
 		ReleaseReadLock(&avc->lock);
 		tdc = afs_GetDCache(avc, filePos, &treq, &offset, &len, 1);
 		ObtainReadLock(&avc->lock);
-		ObtainReadLock(&tdc->lock);
+		if (tdc) ObtainReadLock(&tdc->lock);
 	    }
 	}
 	
