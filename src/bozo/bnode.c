@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.8 2001/10/09 05:27:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.9 2001/10/12 00:24:22 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -33,6 +33,11 @@ RCSID("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.8 2001/10/09 05:27:13 shadow E
 #include <afs/afsutil.h>
 #include <afs/fileutil.h>
 #include "bnode.h"
+
+#ifdef AFS_AIX_ENV
+/* All known versions of AIX lack WCOREDUMP but this works */
+#define WCOREDUMP(x) ((x) & 0x80)
+#endif
 
 #define BNODE_LWP_STACKSIZE	(16 * 1024)
 
