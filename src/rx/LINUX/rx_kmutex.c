@@ -14,13 +14,13 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.4 2002/07/31 21:54:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.5 2002/10/16 03:58:58 shadow Exp $");
 
-#include "../rx/rx_kcommon.h"
-#include "../rx/rx_kmutex.h"
-#include "../rx/rx_kernel.h"
+#include "rx/rx_kcommon.h"
+#include "rx_kmutex.h"
+#include "rx/rx_kernel.h"
 
 #ifdef CONFIG_SMP
 

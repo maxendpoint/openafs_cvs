@@ -16,13 +16,13 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_groups.c,v 1.7 2002/10/03 00:42:47 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_groups.c,v 1.8 2002/10/16 03:58:20 shadow Exp $");
 
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/afs_stats.h"  /* statistics */
 
 
 static int

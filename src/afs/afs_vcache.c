@@ -36,15 +36,15 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.41 2002/10/09 18:25:55 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.42 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h" /*Standard vendor system headers*/
-#include "../afs/afsincludes.h" /*AFS-based standard headers*/
-#include "../afs/afs_stats.h"
-#include "../afs/afs_cbqueue.h"
-#include "../afs/afs_osidnlc.h"
+#include "afs/sysincludes.h" /*Standard vendor system headers*/
+#include "afsincludes.h" /*AFS-based standard headers*/
+#include "afs/afs_stats.h"
+#include "afs/afs_cbqueue.h"
+#include "afs/afs_osidnlc.h"
 
 #ifdef AFS_OSF_ENV
 afs_int32 afs_maxvcount = 0;		/* max number of vcache entries */

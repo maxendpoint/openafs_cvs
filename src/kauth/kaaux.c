@@ -10,11 +10,11 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kaaux.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kaaux.c,v 1.5 2002/10/16 03:58:41 shadow Exp $");
 
 #if defined(UKERNEL)
-#include "../rx/xdr.h"
-#include "../afsint/kauth.h"
+#include "rx/xdr.h"
+#include "afs/kauth.h"
 #else /* defined(UKERNEL) */
 #include <rx/xdr.h>
 #include "kauth.h"

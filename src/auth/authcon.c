@@ -9,25 +9,25 @@
 
 #include <afsconfig.h>
 #if defined(UKERNEL)
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.8 2002/08/21 18:12:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.9 2002/10/16 03:58:30 shadow Exp $");
 
 #if defined(UKERNEL)
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/stds.h"
-#include "../afs/pthread_glock.h"
-#include "../des/des.h"
-#include "../rx/rxkad.h"
-#include "../rx/rx.h"
-#include "../afs/cellconfig.h"
-#include "../afs/keys.h"
-#include "../afs/auth.h"
-#include "../afs/pthread_glock.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/stds.h"
+#include "afs/pthread_glock.h"
+#include "des/des.h"
+#include "rx/rxkad.h"
+#include "rx/rx.h"
+#include "afs/cellconfig.h"
+#include "afs/keys.h"
+#include "afs/auth.h"
+#include "afs/pthread_glock.h"
 #else /* defined(UKERNEL) */
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>

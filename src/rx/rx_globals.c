@@ -11,12 +11,12 @@
 
 #include <afsconfig.h>
 #ifdef KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.4 2001/07/12 19:58:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.5 2002/10/16 03:58:49 shadow Exp $");
 
 /* Enable data initialization when the header file is included */
 #define INIT(stuff) = stuff
@@ -28,9 +28,9 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.4 2001/07/12 19:58:56 shado
 
 #ifdef KERNEL
 #ifndef UKERNEL
-#include "../h/types.h"
+#include "h/types.h"
 #else /* !UKERNEL */
-#include	"../afs/sysincludes.h"
+#include	"afs/sysincludes.h"
 #endif /* UKERNEL */
 #endif /* KERNEL */
 

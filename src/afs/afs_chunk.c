@@ -8,14 +8,14 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_chunk.c,v 1.4 2001/07/12 19:58:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_chunk.c,v 1.5 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/stds.h"
-#include "../afs/sysincludes.h" /* Standard vendor system headers */
-#include "../afs/afsincludes.h" /* Afs-based standard headers */
-#include "../afs/afs_stats.h"
+#include "afs/stds.h"
+#include "afs/sysincludes.h" /* Standard vendor system headers */
+#include "afsincludes.h" /* Afs-based standard headers */
+#include "afs/afs_stats.h"
 
 /*
  * Chunk module.

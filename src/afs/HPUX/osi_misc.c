@@ -13,12 +13,12 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_misc.c,v 1.4 2001/07/12 19:58:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_misc.c,v 1.5 2002/10/16 03:58:19 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
 
 /*
  * afs_suser() returns true if the caller is superuser, false otherwise.

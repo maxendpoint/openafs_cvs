@@ -10,11 +10,11 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_multi.c,v 1.5 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_multi.c,v 1.6 2002/10/16 03:58:49 shadow Exp $");
 
 #ifdef	KERNEL
-#include "../rx/rx_kernel.h"
-#include "../rx/rx_multi.h"
+#include "rx/rx_kernel.h"
+#include "rx/rx_multi.h"
 #else /* KERNEL */
 # include "rx_user.h"
 # include "rx_multi.h"

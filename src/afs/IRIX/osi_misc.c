@@ -11,14 +11,14 @@
  * Implementation of miscellaneous Irix routines.
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_misc.c,v 1.5 2001/10/17 21:53:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_misc.c,v 1.6 2002/10/16 03:58:20 shadow Exp $");
 
 #ifdef	AFS_SGI62_ENV
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"  /* statistics */
 
 
 

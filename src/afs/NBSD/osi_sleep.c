@@ -9,13 +9,13 @@
 
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_sleep.c,v 1.4 2002/10/09 00:46:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_sleep.c,v 1.5 2002/10/16 03:58:22 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* afs statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* afs statistics */
 
 
 

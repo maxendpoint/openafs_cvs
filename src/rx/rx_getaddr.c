@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.13 2002/09/26 07:01:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.14 2002/10/16 03:58:49 shadow Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -35,9 +35,9 @@ RCSID("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.13 2002/09/26 07:01:26 shad
 #endif
 #else	/* KERNEL */
 #ifdef UKERNEL
-#include "../rx/rx_kcommon.h"
+#include "rx/rx_kcommon.h"
 #else /* UKERNEL */
-#include "../rx/rx.h"
+#include "rx/rx.h"
 #endif /* UKERNEL */
 #endif	/* KERNEL */
 

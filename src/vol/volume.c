@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.17 2002/10/03 21:24:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.18 2002/10/16 03:59:26 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -82,7 +82,7 @@ RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.17 2002/10/03 21:24:08 shadow 
 #ifdef AFS_SGI_EFS_IOPS_ENV
 #define ROOTINO EFS_ROOTINO
 #include <sys/fs/efs.h>
-#include "../sgiefs/efs.h" /* until 5.1 release */ 
+#include "sgiefs/efs.h" /* until 5.1 release */ 
 #endif
 
 

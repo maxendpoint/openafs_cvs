@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/test/testserver.c,v 1.4 2001/07/12 19:59:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/test/testserver.c,v 1.5 2002/10/16 03:59:04 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -29,10 +29,10 @@ RCSID("$Header: /cvs/openafs/src/rx/test/testserver.c,v 1.4 2001/07/12 19:59:08 
 #endif
 #include <signal.h>
 #include <sys/stat.h>
-#include "../rx_clock.h"
-#include "../rx.h"
-#include "../rx_globals.h"
-#include "../rx_null.h"
+#include "rx_clock.h"
+#include "rx.h"
+#include "rx_globals.h"
+#include "rx_null.h"
 
 int error;  /* Return this error number on a call */
 int print = 0, eventlog = 0, rxlog = 0;

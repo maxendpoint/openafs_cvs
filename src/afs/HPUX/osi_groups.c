@@ -14,13 +14,13 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_groups.c,v 1.4 2001/07/12 19:58:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_groups.c,v 1.5 2002/10/16 03:58:19 shadow Exp $");
 
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/afs_stats.h"  /* statistics */
 
 static int
 afs_getgroups(

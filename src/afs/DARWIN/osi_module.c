@@ -1,14 +1,14 @@
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_module.c,v 1.8 2002/08/21 20:50:45 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_module.c,v 1.9 2002/10/16 03:58:17 shadow Exp $");
 
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
 #ifdef AFS_DARWIN60_ENV /* not in Kernel.framework anymore !?! */
 #include <sys/syscall.h>
 #else
-#include "../sys/syscall.h"
+#include "sys/syscall.h"
 #endif
 #include <mach/kmod.h>
 

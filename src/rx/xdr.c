@@ -29,12 +29,12 @@
 
 #include <afsconfig.h>
 #ifdef KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr.c,v 1.6 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr.c,v 1.7 2002/10/16 03:58:50 shadow Exp $");
 
 /*
  * xdr.c, Generic XDR routines implementation.

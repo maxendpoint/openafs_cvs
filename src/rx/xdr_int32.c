@@ -29,12 +29,12 @@
 
 #include <afsconfig.h>
 #ifdef KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_int32.c,v 1.3 2002/08/22 20:59:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_int32.c,v 1.4 2002/10/16 03:58:50 shadow Exp $");
 
 #ifndef	NeXT
 

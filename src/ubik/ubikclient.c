@@ -9,23 +9,23 @@
 
 #include <afsconfig.h>
 #if defined(UKERNEL)
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/ubik/ubikclient.c,v 1.6 2001/09/18 04:27:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/ubikclient.c,v 1.7 2002/10/16 03:59:16 shadow Exp $");
 
 #if defined(UKERNEL)
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/stds.h"
-#include "../rx/xdr.h"
-#include "../rx/rx.h"
-#include "../afs/lock.h"
-#include "../afs/rxgen_consts.h"
-#include "../afs/ubik.h"
-#include "../afs/pthread_glock.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/stds.h"
+#include "rx/xdr.h"
+#include "rx/rx.h"
+#include "afs/lock.h"
+#include "afs/rxgen_consts.h"
+#include "ubik.h"
+#include "afs/pthread_glock.h"
 #else /* defined(UKERNEL) */
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>

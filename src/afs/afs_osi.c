@@ -8,13 +8,13 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.26 2002/10/10 22:45:14 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.27 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* afs statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* afs statistics */
 #ifdef AFS_AIX_ENV
 #include <sys/adspace.h>	/* for vm_att(), vm_det() */
 #endif

@@ -8,13 +8,13 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.9 2002/08/21 20:50:45 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.10 2002/10/16 03:58:17 shadow Exp $");
 
-#include "../afs/sysincludes.h" /* Standard vendor system headers */
-#include "../afs/afsincludes.h" /* Afs-based standard headers */
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h" /* Standard vendor system headers */
+#include "afsincludes.h" /* Afs-based standard headers */
+#include "afs/afs_stats.h"  /* statistics */
 #include <sys/ubc.h>
 
 /* Try to discard pages, in order to recycle a vcache entry.

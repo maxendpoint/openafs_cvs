@@ -72,16 +72,16 @@
  * granted with a shorter expiration time.
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.7 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.8 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h" /*Standard vendor system headers*/
-#include "../afs/afsincludes.h" /*AFS-based standard headers*/
-#include "../afs/afs_cbqueue.h"
+#include "afs/sysincludes.h" /*Standard vendor system headers*/
+#include "afsincludes.h" /*AFS-based standard headers*/
+#include "afs/afs_cbqueue.h"
 #include "afs/afs.h"
-#include "../afs/lock.h"
-#include "../afs/afs_stats.h"
+#include "afs/lock.h"
+#include "afs/afs_stats.h"
 
 static unsigned int base = 0;
 static unsigned int basetime = 0;

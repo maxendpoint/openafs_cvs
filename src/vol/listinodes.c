@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.10 2002/08/21 19:19:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.11 2002/10/16 03:59:26 shadow Exp $");
 
 #ifndef AFS_NAMEI_ENV
 #if defined(AFS_LINUX20_ENV) || defined(AFS_SUN4_ENV)
@@ -429,7 +429,7 @@ ginode(inum) {
 #define	__ASSERT_H__
 
 #ifdef AFS_SGI_EFS_IOPS_ENV
-#include "../sgiefs/libefs.h"
+#include "sgiefs/libefs.h"
 extern int Log();
 
 /* afs_efs_figet() replaces the SGI library routine because we are malloc'ing

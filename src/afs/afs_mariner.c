@@ -14,13 +14,13 @@
  * Implements:
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_mariner.c,v 1.6 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_mariner.c,v 1.7 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h" /*Standard vendor system headers*/
-#include "../afs/afsincludes.h" /*AFS-based standard headers*/
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h" /*Standard vendor system headers*/
+#include "afsincludes.h" /*AFS-based standard headers*/
+#include "afs/afs_stats.h"  /* statistics */
 
 /* Exported variables */
 struct rx_service *afs_server;

@@ -8,13 +8,13 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vnodeops.c,v 1.5 2002/03/25 17:11:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vnodeops.c,v 1.6 2002/10/16 03:58:24 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"  /* statistics */
 
 extern int afs_noop();
 extern int afs_badop();

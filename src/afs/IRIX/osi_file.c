@@ -8,13 +8,13 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_file.c,v 1.8 2002/08/22 22:35:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_file.c,v 1.9 2002/10/16 03:58:20 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"  /* afs statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"  /* afs statistics */
 
 int afs_osicred_initialized=0;
 afs_lock_t afs_xosi;		/* lock is for tvattr */

@@ -11,15 +11,15 @@
  * --------------------- Required definitions ---------------------
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.13 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.14 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h" /*Standard vendor system headers*/
-#include "../afs/afsincludes.h" /*AFS-based standard headers*/
-#include "../afs/afs_stats.h"  /* statistics */
-#include "../afs/afs_cbqueue.h"
-#include "../afs/afs_osidnlc.h"
+#include "afs/sysincludes.h" /*Standard vendor system headers*/
+#include "afsincludes.h" /*AFS-based standard headers*/
+#include "afs/afs_stats.h"  /* statistics */
+#include "afs/afs_cbqueue.h"
+#include "afs/afs_osidnlc.h"
 
 afs_uint32 afs_stampValue=0;
 

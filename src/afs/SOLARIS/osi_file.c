@@ -8,14 +8,14 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_file.c,v 1.10 2002/10/01 03:32:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_file.c,v 1.11 2002/10/16 03:58:23 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"  /* afs statistics */
-#include "../afs/osi_inode.h"
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"  /* afs statistics */
+#include "afs/osi_inode.h"
 
 
 int afs_osicred_initialized=0;

@@ -8,32 +8,32 @@
  * Implements:
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.11 2002/10/16 03:00:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.12 2002/10/16 03:58:16 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
-#include "../afs/stds.h"
-#include "../afs/sysincludes.h" /* Standard vendor system headers */
+#include "afs/stds.h"
+#include "afs/sysincludes.h" /* Standard vendor system headers */
 #if defined(AFS_SUN55_ENV) && !defined(AFS_NONFSTRANS) 
-#include "../rpc/types.h"
-#include "../rpc/auth.h"
-#include "../rpc/auth_unix.h"
-#include "../rpc/auth_des.h"
+#include "rpc/types.h"
+#include "rpc/auth.h"
+#include "rpc/auth_unix.h"
+#include "rpc/auth_des.h"
 #if !defined(AFS_SUN58_ENV)
-#include "../rpc/auth_kerb.h"
+#include "rpc/auth_kerb.h"
 #endif
-#include "../sys/tiuser.h"
-#include "../rpc/xdr.h"
-#include "../rpc/svc.h"
-#include "../nfs/nfs.h"
-#include "../nfs/export.h"
-#include "../nfs/nfs_clnt.h"
-#include "../nfs/nfs_acl.h"
-#include "../afs/afsincludes.h"	
-#include "../afs/afs_stats.h"   
-#include "../afs/exporter.h"
+#include "sys/tiuser.h"
+#include "rpc/xdr.h"
+#include "rpc/svc.h"
+#include "nfs/nfs.h"
+#include "nfs/export.h"
+#include "nfs/nfs_clnt.h"
+#include "nfs/nfs_acl.h"
+#include "afs/afsincludes.h"	
+#include "afs/afs_stats.h"   
+#include "afs/exporter.h"
 
 static int xlatorinit_v2_done=0;
 static int xlatorinit_v3_done=0;

@@ -12,24 +12,24 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.16 2002/10/09 01:02:50 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.17 2002/10/16 03:58:23 shadow Exp $");
 
 
 #ifdef	UKERNEL
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include <net/if.h>
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_usrops.h"
-#include "../afs/afs_stats.h"
-#include "../afs/auth.h"
-#include "../afs/cellconfig.h"
-#include "../afs/vice.h"
-#include "../afs/kautils.h"
-#include "../afs/afsutil.h"
-#include "../rx/rx_globals.h"
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs_usrops.h"
+#include "afs/afs_stats.h"
+#include "afs/auth.h"
+#include "afs/cellconfig.h"
+#include "afs/vice.h"
+#include "afs/kautils.h"
+#include "afs/afsutil.h"
+#include "rx/rx_globals.h"
 
 #define VFS 1
 #undef	VIRTUE

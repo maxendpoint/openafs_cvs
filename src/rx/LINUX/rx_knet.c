@@ -13,14 +13,14 @@
  * Linux implementation.
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.12 2002/10/10 21:22:48 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.13 2002/10/16 03:58:58 shadow Exp $");
 
 #ifdef AFS_LINUX22_ENV
-#include "../rx/rx_kcommon.h"
+#include "rx/rx_kcommon.h"
 #if defined(AFS_LINUX24_ENV)
-#include "../h/smp_lock.h"
+#include "h/smp_lock.h"
 #endif
 #include <asm/uaccess.h>
 

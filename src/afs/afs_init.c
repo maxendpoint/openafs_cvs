@@ -14,14 +14,14 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.21 2002/10/09 18:25:54 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.22 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/stds.h"
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* afs statistics */
+#include "afs/stds.h"
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* afs statistics */
 
 /* Exported variables */
 struct osi_dev cacheDev;           /*Cache device*/

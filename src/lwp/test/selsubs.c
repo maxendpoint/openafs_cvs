@@ -28,10 +28,10 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/test/selsubs.c,v 1.5 2001/08/08 00:03:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/test/selsubs.c,v 1.6 2002/10/16 03:58:47 shadow Exp $");
 
 
-#include "../lwp.h"
+#include "lwp.h"
 #include "seltest.h"
 
 #ifdef NEEDS_ALLOCFDSET

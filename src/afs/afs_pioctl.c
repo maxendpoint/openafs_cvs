@@ -8,15 +8,15 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.49 2002/10/11 00:50:40 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.50 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* afs statistics */
-#include "../afs/vice.h"
-#include "../rx/rx_globals.h"
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* afs statistics */
+#include "afs/vice.h"
+#include "rx/rx_globals.h"
 
 struct VenusFid afs_rootFid;
 afs_int32 afs_waitForever=0;

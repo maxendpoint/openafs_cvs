@@ -11,13 +11,13 @@
  * osi_vfsops.c for DUX
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.13 2002/08/23 03:31:38 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.14 2002/10/16 03:58:18 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* statistics stuff */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* statistics stuff */
 #include <sys/types.h>
 #include <kern/mach_param.h>
 #include <sys/sysconfig.h>

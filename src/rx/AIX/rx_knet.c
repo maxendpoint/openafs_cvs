@@ -8,12 +8,12 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.8 2002/10/10 21:22:45 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.9 2002/10/16 03:58:51 shadow Exp $");
 
 #ifdef AFS_AIX41_ENV
-#include "../rx/rx_kcommon.h"
+#include "rx/rx_kcommon.h"
 
 static struct protosw parent_proto;	/* udp proto switch */
 

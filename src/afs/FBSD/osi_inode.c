@@ -14,14 +14,14 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_inode.c,v 1.5 2002/08/21 18:12:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/FBSD/osi_inode.c,v 1.6 2002/10/16 03:58:19 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/osi_inode.h"
-#include "../afs/afs_stats.h" /* statistics stuff */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/osi_inode.h"
+#include "afs/afs_stats.h" /* statistics stuff */
 #include <sys/queue.h>
 #include <sys/lock.h>
 #include <ufs/ufsmount.h>

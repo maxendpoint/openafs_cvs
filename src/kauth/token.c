@@ -13,25 +13,25 @@
 
 #include <afsconfig.h>
 #if defined(UKERNEL)
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/kauth/token.c,v 1.7 2002/08/21 18:13:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/token.c,v 1.8 2002/10/16 03:58:41 shadow Exp $");
 
 #if defined(UKERNEL)
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/stds.h"
-#include "../rx/xdr.h"
-#include "../afs/pthread_glock.h"
-#include "../afs/lock.h"
-#include "../afs/ubik.h"
-#include "../afsint/kauth.h"
-#include "../afs/kautils.h"
-#include "../afs/auth.h"
-#include "../afs/pthread_glock.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/stds.h"
+#include "rx/xdr.h"
+#include "afs/pthread_glock.h"
+#include "afs/lock.h"
+#include "ubik.h"
+#include "afs/kauth.h"
+#include "afs/kautils.h"
+#include "afs/auth.h"
+#include "afs/pthread_glock.h"
 #else /* defined(UKERNEL) */
 #include <afs/stds.h>
 #include <sys/types.h>

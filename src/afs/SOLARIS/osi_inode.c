@@ -14,14 +14,14 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_inode.c,v 1.12 2002/08/21 18:12:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_inode.c,v 1.13 2002/10/16 03:58:23 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/osi_inode.h"
-#include "../afs/afs_stats.h" /* statistics stuff */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/osi_inode.h"
+#include "afs/afs_stats.h" /* statistics stuff */
 
 extern int (*ufs_iallocp)(), (*ufs_iupdatp)(), (*ufs_igetp)(),
            (*ufs_itimes_nolockp)();

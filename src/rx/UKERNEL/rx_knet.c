@@ -8,11 +8,11 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.6 2002/10/10 21:22:49 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.7 2002/10/16 03:59:02 shadow Exp $");
 
-#include "../rx/rx_kcommon.h"
+#include "rx/rx_kcommon.h"
 
 
 #define SECONDS_TO_SLEEP	0

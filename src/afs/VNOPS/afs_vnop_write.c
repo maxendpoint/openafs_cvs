@@ -18,16 +18,16 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.28 2002/10/14 15:48:41 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.29 2002/10/16 03:58:24 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h" /* statistics */
-#include "../afs/afs_cbqueue.h"
-#include "../afs/nfsclient.h"
-#include "../afs/afs_osidnlc.h"
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h" /* statistics */
+#include "afs/afs_cbqueue.h"
+#include "afs/nfsclient.h"
+#include "afs/afs_osidnlc.h"
 
 
 extern unsigned char *afs_indexFlags;

@@ -11,7 +11,7 @@
 /* See rx_clock.h for calling conventions */
 
 #ifdef	KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
@@ -21,18 +21,18 @@
 #include <sys/time_impl.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_clock.c,v 1.10 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_clock.c,v 1.11 2002/10/16 03:58:49 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
-#include "../rx/rx_clock.h"
-#include "../h/types.h"
-#include "../h/time.h"
+#include "rx/rx_clock.h"
+#include "h/types.h"
+#include "h/time.h"
 #else /* !UKERNEL */
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../rx/rx.h"
-#include "../rx/rx_clock.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "rx/rx.h"
+#include "rx/rx_clock.h"
 #endif /* !UKERNEL */
 #else /* KERNEL */
 #include <sys/time.h>

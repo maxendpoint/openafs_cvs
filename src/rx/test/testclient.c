@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/test/testclient.c,v 1.5 2001/08/08 00:04:04 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/test/testclient.c,v 1.6 2002/10/16 03:59:04 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -28,10 +28,10 @@ RCSID("$Header: /cvs/openafs/src/rx/test/testclient.c,v 1.5 2001/08/08 00:04:04 
 #endif
 #include <sys/stat.h>
 #include <signal.h>
-#include "../rx_clock.h"
-#include "../rx.h"
-#include "../rx_globals.h"
-#include "../rx_null.h"
+#include "rx_clock.h"
+#include "rx.h"
+#include "rx_globals.h"
+#include "rx_null.h"
 #include <errno.h>
 #include <afs/afsutil.h>
 

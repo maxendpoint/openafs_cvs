@@ -8,13 +8,13 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.18 2002/10/09 00:46:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.19 2002/10/16 03:58:21 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* afs statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* afs statistics */
 
 static int osi_TimedSleep(char *event, afs_int32 ams, int aintok);
 

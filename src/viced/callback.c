@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.19 2002/10/09 15:54:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.20 2002/10/16 03:59:23 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -108,7 +108,7 @@ RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.19 2002/10/09 15:54:48 sha
 #include <afs/nfs.h>   /* yuck.  This is an abomination. */
 #include <lwp.h>
 #include <rx/rx.h>
-#include <afs/afscbint.h>
+#include <afscbint.h>
 #include <afs/afsutil.h>
 #include <lock.h>
 #include <afs/ihandle.h>

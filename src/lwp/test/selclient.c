@@ -53,10 +53,10 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/test/selclient.c,v 1.4 2001/07/12 19:58:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/test/selclient.c,v 1.5 2002/10/16 03:58:47 shadow Exp $");
 
 
-#include "../lwp.h"
+#include "lwp.h"
 #include "seltest.h"
 
 /* Put this in lwp.h? */

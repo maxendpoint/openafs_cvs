@@ -12,13 +12,13 @@
  * setpag (aliased to use_setpag in sysincludes.h)
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_groups.c,v 1.5 2002/08/21 18:12:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/osi_groups.c,v 1.6 2002/10/16 03:58:24 shadow Exp $");
 
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/afs_stats.h"  /* statistics */
 
 
 int afs_xsetgroups()

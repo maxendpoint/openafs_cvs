@@ -13,22 +13,22 @@
 
 #include <afsconfig.h>
 #ifdef KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/domestic/crypt_conn.c,v 1.9 2002/08/21 18:14:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/domestic/crypt_conn.c,v 1.10 2002/10/16 03:59:09 shadow Exp $");
 
 #ifdef KERNEL
-#include "../afs/stds.h"
+#include "afs/stds.h"
 #ifndef UKERNEL
-#include "../h/types.h"
-#include "../rx/rx.h"
-#include "../netinet/in.h"
+#include "h/types.h"
+#include "rx/rx.h"
+#include "netinet/in.h"
 #else /* !UKERNEL */
-#include "../afs/sysincludes.h"
-#include "../rx/rx.h"
+#include "afs/sysincludes.h"
+#include "rx/rx.h"
 #endif /* !UKERNEL */
 #else /* !KERNEL */
 #include <afs/stds.h>

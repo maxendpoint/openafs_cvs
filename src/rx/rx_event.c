@@ -9,7 +9,7 @@
 
 #include <afsconfig.h>
 #ifdef	KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
@@ -18,30 +18,30 @@
 #include <sys/time_impl.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.10 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.11 2002/10/16 03:58:49 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
-#include "../afs/afs_osi.h"
+#include "afs/afs_osi.h"
 #else /* !UKERNEL */
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
 #endif /* !UKERNEL */
-#include "../rx/rx_clock.h"
-#include "../rx/rx_queue.h"
-#include "../rx/rx_event.h"
-#include "../rx/rx_kernel.h"
-#include "../rx/rx_kmutex.h"
+#include "rx/rx_clock.h"
+#include "rx/rx_queue.h"
+#include "rx/rx_event.h"
+#include "rx/rx_kernel.h"
+#include "rx_kmutex.h"
 #ifdef RX_ENABLE_LOCKS
-#include "../rx/rx.h"
+#include "rx/rx.h"
 #endif /* RX_ENABLE_LOCKS */
-#include "../rx/rx_globals.h"
+#include "rx/rx_globals.h"
 #if defined(AFS_SGI_ENV)
-#include "../sys/debug.h"
+#include "sys/debug.h"
 /* These are necessary to get curproc (used by GLOCK asserts) to work. */
-#include "../h/proc.h"
+#include "h/proc.h"
 #if !defined(AFS_SGI64_ENV) && !defined(UKERNEL)
-#include "../h/user.h"
+#include "h/user.h"
 #endif
 extern void *osi_Alloc();
 #endif

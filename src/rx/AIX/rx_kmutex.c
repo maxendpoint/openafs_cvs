@@ -14,9 +14,9 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_kmutex.c,v 1.1 2002/02/01 20:30:23 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_kmutex.c,v 1.2 2002/10/16 03:58:51 shadow Exp $");
 
 /*
  * Currently everything is implemented in rx_kmutex.h

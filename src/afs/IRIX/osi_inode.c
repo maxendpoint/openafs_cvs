@@ -40,14 +40,14 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_inode.c,v 1.9 2002/08/21 18:12:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_inode.c,v 1.10 2002/10/16 03:58:20 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/osi_inode.h"
-#include "../afs/afs_stats.h" /* statistics stuff */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/osi_inode.h"
+#include "afs/afs_stats.h" /* statistics stuff */
 
 #define BAD_IGET	-1000
 

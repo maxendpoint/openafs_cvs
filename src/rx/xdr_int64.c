@@ -6,11 +6,11 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.5 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.6 2002/10/16 03:58:50 shadow Exp $");
 
 #if defined(KERNEL) && !defined(UKERNEL)
 #ifdef AFS_LINUX20_ENV
-#include "../h/string.h"
+#include "h/string.h"
 #else
 #include <sys/param.h>
 #include <sys/systm.h>

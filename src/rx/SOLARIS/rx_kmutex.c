@@ -14,15 +14,15 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_kmutex.c,v 1.2 2002/02/02 18:33:49 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_kmutex.c,v 1.3 2002/10/16 03:59:00 shadow Exp $");
 
 #if defined(AFS_SUN5_ENV) && defined(KERNEL) 
 
-#include "../rx/rx_kcommon.h"
-#include "../rx/rx_kmutex.h"
-#include "../rx/rx_kernel.h"
+#include "rx/rx_kcommon.h"
+#include "rx_kmutex.h"
+#include "rx/rx_kernel.h"
 
 #include <errno.h>
 #include <sys/tiuser.h>

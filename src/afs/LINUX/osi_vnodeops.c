@@ -21,18 +21,18 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.57 2002/10/09 22:36:54 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.58 2002/10/16 03:58:21 shadow Exp $");
 
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/afs_stats.h"
-#include "../afs/afs_osidnlc.h"
-#include "../h/mm.h"
-#include "../h/pagemap.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/afs_stats.h"
+#include "afs/afs_osidnlc.h"
+#include "h/mm.h"
+#include "h/pagemap.h"
 #if defined(AFS_LINUX24_ENV)
-#include "../h/smp_lock.h"
+#include "h/smp_lock.h"
 #endif
 
 #ifdef pgoff2loff

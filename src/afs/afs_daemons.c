@@ -8,14 +8,14 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.21 2002/10/09 18:25:54 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.22 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* statistics gathering code */
-#include "../afs/afs_cbqueue.h" 
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* statistics gathering code */
+#include "afs/afs_cbqueue.h" 
 #ifdef AFS_AIX_ENV
 #include <sys/adspace.h>	/* for vm_att(), vm_det() */
 #endif

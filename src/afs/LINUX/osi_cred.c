@@ -12,12 +12,12 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_cred.c,v 1.6 2001/07/12 19:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_cred.c,v 1.7 2002/10/16 03:58:21 shadow Exp $");
 
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
 
 /* Setup a pool for creds. Allocate several at a time. */
 #define CRED_ALLOC_STEP 29 /* at 140 bytes/cred = 4060 bytes. */

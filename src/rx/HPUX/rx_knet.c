@@ -3,15 +3,15 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/HPUX/rx_knet.c,v 1.9 2002/08/21 18:13:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/HPUX/rx_knet.c,v 1.10 2002/10/16 03:58:56 shadow Exp $");
 
-#include "../h/types.h"
-#include "../h/param.h"
-#include "../rx/rx_kcommon.h"
-#include "../h/user.h"
-#include "../h/tihdr.h"
+#include "h/types.h"
+#include "h/param.h"
+#include "rx/rx_kcommon.h"
+#include "h/user.h"
+#include "h/tihdr.h"
 #include <xti.h>
 
 /* Define this here, used externally */

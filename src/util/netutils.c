@@ -14,12 +14,12 @@
 
 #include <afsconfig.h>
 #ifdef KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/util/netutils.c,v 1.11 2002/08/21 18:14:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/netutils.c,v 1.12 2002/10/16 03:59:18 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -32,8 +32,8 @@ RCSID("$Header: /cvs/openafs/src/util/netutils.c,v 1.11 2002/08/21 18:14:25 shad
 #endif
 #include <ctype.h>
 #ifdef KERNEL
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
 #else
 #ifdef __FreeBSD__
 #include <sys/types.h>

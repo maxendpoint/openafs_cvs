@@ -21,12 +21,12 @@
 */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.8 2002/10/10 21:22:47 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.9 2002/10/16 03:58:54 shadow Exp $");
 
 #ifdef AFS_FBSD40_ENV
-#include "../rx/rx_kcommon.h"
+#include "rx/rx_kcommon.h"
 
 
 #ifdef RXK_LISTENER_ENV

@@ -11,23 +11,23 @@
 
 #include <afsconfig.h>
 #if defined(UKERNEL)
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.10 2002/08/22 22:26:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/ktc.c,v 1.11 2002/10/16 03:58:30 shadow Exp $");
 
 #if defined(UKERNEL)
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/stds.h"
-#include "../afs/pthread_glock.h"
-#include "../afs/vice.h"
-#include "../afs/auth.h"
-#include "../afs/venus.h"
-#include "../afs/pthread_glock.h"
-#include "../afs/dirpath.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/stds.h"
+#include "afs/pthread_glock.h"
+#include "afs/vice.h"
+#include "afs/auth.h"
+#include "afs/venus.h"
+#include "afs/pthread_glock.h"
+#include "afs/dirpath.h"
 
 #if !defined(min)
 #define min(a,b) ((a)<(b)?(a):(b))

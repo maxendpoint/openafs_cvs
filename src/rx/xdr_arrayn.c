@@ -29,7 +29,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_arrayn.c,v 1.6 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_arrayn.c,v 1.7 2002/10/16 03:58:50 shadow Exp $");
 
 #if !defined(NeXT)
 
@@ -45,7 +45,7 @@ RCSID("$Header: /cvs/openafs/src/rx/xdr_arrayn.c,v 1.6 2002/08/21 18:13:51 shado
 #if defined(KERNEL) && !defined(UKERNEL)
 #include <sys/param.h>
 #ifdef AFS_LINUX20_ENV
-#include "../h/string.h"
+#include "h/string.h"
 #if 0
 #define bzero(A,C) memset((A), 0, (C))
 #endif

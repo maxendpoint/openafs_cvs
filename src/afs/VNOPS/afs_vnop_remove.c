@@ -20,16 +20,16 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.21 2002/10/11 21:43:14 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.22 2002/10/16 03:58:24 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h" /* statistics */
-#include "../afs/afs_cbqueue.h"
-#include "../afs/nfsclient.h"
-#include "../afs/afs_osidnlc.h"
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h" /* statistics */
+#include "afs/afs_cbqueue.h"
+#include "afs/nfsclient.h"
+#include "afs/afs_osidnlc.h"
 
 
 extern afs_rwlock_t afs_xvcache;

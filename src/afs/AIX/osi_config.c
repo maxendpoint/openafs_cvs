@@ -34,9 +34,9 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_config.c,v 1.5 2002/09/26 07:01:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_config.c,v 1.6 2002/10/16 03:58:16 shadow Exp $");
 
 #include "sys/limits.h"
 #include "sys/types.h"

@@ -8,15 +8,15 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.6 2002/08/27 22:18:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.7 2002/10/16 03:58:16 shadow Exp $");
 
 
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* afs statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* afs statistics */
 
 #ifdef AFS_AIX41_ENV
 #include "sys/lockl.h"

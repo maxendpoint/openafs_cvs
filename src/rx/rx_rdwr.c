@@ -9,52 +9,52 @@
 
 #include <afsconfig.h>
 #ifdef KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.16 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.17 2002/10/16 03:58:50 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
 #if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
-#include "../afs/sysincludes.h"
+#include "afs/sysincludes.h"
 #else
-#include "../h/types.h"
-#include "../h/time.h"
-#include "../h/stat.h"
+#include "h/types.h"
+#include "h/time.h"
+#include "h/stat.h"
 #ifdef	AFS_OSF_ENV
 #include <net/net_globals.h>
 #endif	/* AFS_OSF_ENV */
 #ifdef AFS_LINUX20_ENV
-#include "../h/socket.h"
+#include "h/socket.h"
 #endif
-#include "../netinet/in.h"
+#include "netinet/in.h"
 #if defined(AFS_SGI_ENV)
-#include "../afs/sysincludes.h"
+#include "afs/sysincludes.h"
 #endif
 #endif
-#include "../afs/afs_args.h"
-#include "../afs/afs_osi.h"
+#include "afs/afs_args.h"
+#include "afs/afs_osi.h"
 #if	(defined(AFS_AUX_ENV) || defined(AFS_AIX_ENV))
-#include "../h/systm.h"
+#include "h/systm.h"
 #endif
 #else /* !UKERNEL */
-#include "../afs/sysincludes.h"
+#include "afs/sysincludes.h"
 #endif /* !UKERNEL */
 #ifdef RXDEBUG
 #undef RXDEBUG	    /* turn off debugging */
 #endif /* RXDEBUG */
 
-#include "../rx/rx_kmutex.h"
-#include "../rx/rx_kernel.h"
-#include "../rx/rx_clock.h"
-#include "../rx/rx_queue.h"
-#include "../rx/rx.h"
-#include "../rx/rx_globals.h"
-#include "../afs/lock.h"
-#include "../afsint/afsint.h"
+#include "rx_kmutex.h"
+#include "rx/rx_kernel.h"
+#include "rx/rx_clock.h"
+#include "rx/rx_queue.h"
+#include "rx/rx.h"
+#include "rx/rx_globals.h"
+#include "afs/lock.h"
+#include "afsint.h"
 #ifdef  AFS_ALPHA_ENV
 #undef kmem_alloc
 #undef kmem_free

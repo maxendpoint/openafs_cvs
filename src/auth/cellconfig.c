@@ -10,13 +10,13 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.27 2002/08/21 19:19:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.28 2002/10/16 03:58:30 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
 #ifdef UKERNEL
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
 #else /* UKERNEL */
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV

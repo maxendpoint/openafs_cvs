@@ -15,11 +15,15 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.5 2002/08/21 18:13:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/libuafs/linktest.c,v 1.6 2002/10/16 03:58:45 shadow Exp $");
 
+#include <sys/socket.h>
+#include <sys/stat.h>
 #include <sys/types.h>
+
 #include <rx/rx.h>
-#include <afs/afs_usrops.h>
+#include <afs/sysincludes.h>
+#include <afs_usrops.h>
 
 void uafs_Shutdown(void);
 

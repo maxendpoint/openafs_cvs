@@ -10,11 +10,11 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.10 2002/08/21 18:13:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.11 2002/10/16 03:58:49 shadow Exp $");
 
 #ifdef	KERNEL
 #include <afs/sysincludes.h>
-#include <afs/afsincludes.h>
+#include <afsincludes.h>
 #else
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

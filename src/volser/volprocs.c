@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.13 2002/09/26 07:01:33 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.14 2002/10/16 03:59:29 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -62,6 +62,9 @@ RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.13 2002/09/26 07:01:33 sh
 
 #include "volser.h"
 #include "volint.h"
+
+#include <volser_prototypes.h>
+
 extern int DoLogging;
 extern struct volser_trans *FindTrans(), *NewTrans(),*TransList();
 extern struct afsconf_dir *tdir;

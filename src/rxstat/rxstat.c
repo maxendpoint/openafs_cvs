@@ -8,24 +8,24 @@
  */
 
 #ifdef UKERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/rxstat/rxstat.c,v 1.3 2001/07/05 15:20:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxstat/rxstat.c,v 1.4 2002/10/16 03:59:10 shadow Exp $");
 
 #ifdef UKERNEL
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "rxstat.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "rxstat/rxstat.h"
 #else /* UKERNEL */
 #include <afs/stds.h>
 #include <rx/rx.h>
-#include "rxstat.h"
+#include "rxstat/rxstat.h"
 #ifdef KERNEL
-#include "../sys/errno.h"
+#include "sys/errno.h"
 #else /* KERNEL */
 #include <errno.h>
 #endif /* KERNEL */

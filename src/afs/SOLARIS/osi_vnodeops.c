@@ -8,9 +8,9 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.16 2002/08/21 18:12:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.17 2002/10/16 03:58:23 shadow Exp $");
 
 #if	defined(AFS_SUN_ENV) || defined(AFS_SUN5_ENV)
 /*
@@ -32,10 +32,10 @@ RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.16 2002/08/21 18
  * Variables: Afs_vnodeops
  *
  */
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"  /* statistics */
-#include "../afs/nfsclient.h"  
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"  /* statistics */
+#include "afs/nfsclient.h"  
 
 
 #include <sys/mman.h>

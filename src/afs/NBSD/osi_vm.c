@@ -19,13 +19,13 @@
  */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_vm.c,v 1.2 2002/08/21 18:12:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_vm.c,v 1.3 2002/10/16 03:58:22 shadow Exp $");
 
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"  /* statistics */
 /* #include <vm/vm_ubc.h> */
 #include <limits.h>
 #include <float.h>

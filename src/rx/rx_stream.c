@@ -13,17 +13,17 @@ This file is now obsolete.
 
 #include <afsconfig.h>
 #ifdef KERNEL
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/Attic/rx_stream.c,v 1.5 2001/08/08 00:03:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/Attic/rx_stream.c,v 1.6 2002/10/16 03:58:50 shadow Exp $");
 
 #ifdef	KERNEL
-#include "../h/types.h"
-#include "../h/uio.h"
-#include "../rx/rx_stream.h"
+#include "h/types.h"
+#include "h/uio.h"
+#include "rx/rx_stream.h"
 #else /* KERNEL */
 #include "rx_stream.h"
 #endif /* KERNEL */

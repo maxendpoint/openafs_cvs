@@ -10,12 +10,12 @@
 /* statistics-gathering package */
 
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_stat.c,v 1.7 2002/10/09 18:25:55 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_stat.c,v 1.8 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/sysincludes.h" /*Standard vendor system headers*/
-#include "../afs/afsincludes.h" /*AFS-based standard headers*/
+#include "afs/sysincludes.h" /*Standard vendor system headers*/
+#include "afsincludes.h" /*AFS-based standard headers*/
 #include "afs_stats.h"
 
 struct afs_CMStats afs_cmstats;

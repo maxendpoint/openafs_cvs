@@ -30,19 +30,19 @@
  * 
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.22 2002/10/09 18:25:55 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.23 2002/10/16 03:58:16 shadow Exp $");
 
-#include "../afs/stds.h"
-#include "../afs/sysincludes.h"	/* Standard vendor system headers */
+#include "afs/stds.h"
+#include "afs/sysincludes.h"	/* Standard vendor system headers */
 
 #if !defined(UKERNEL)
 #include <net/if.h>
 #include <netinet/in.h>
 
 #ifdef AFS_SGI62_ENV
-#include "../h/hashing.h"
+#include "h/hashing.h"
 #endif
 #if !defined(AFS_HPUX110_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN60_ENV)
 #include <netinet/in_var.h>
@@ -52,8 +52,8 @@ RCSID("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.22 2002/10/09 18:25:55 ree
 #endif
 #endif /* !defined(UKERNEL) */
 
-#include "../afs/afsincludes.h"	/* Afs-based standard headers */
-#include "../afs/afs_stats.h"   /* afs statistics */
+#include "afsincludes.h"	/* Afs-based standard headers */
+#include "afs/afs_stats.h"   /* afs statistics */
 
 #if	defined(AFS_SUN56_ENV)
 #include <inet/led.h>

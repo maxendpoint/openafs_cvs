@@ -9,25 +9,25 @@
 
 #include <afsconfig.h>
 #if defined(UKERNEL)
-#include "../afs/param.h"
+#include "afs/param.h"
 #else
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/kauth/client.c,v 1.10 2002/04/23 03:03:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/client.c,v 1.11 2002/10/16 03:58:41 shadow Exp $");
 
 #if defined(UKERNEL)
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/stds.h"
-#include "../afs/pthread_glock.h"
-#include "../afs/cellconfig.h"
-#include "../afs/afsutil.h"
-#include "../afs/auth.h"
-#include "../afsint/kauth.h"
-#include "../afs/kautils.h"
-#include "../afs/pthread_glock.h"
-#include "../des/des.h"
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/stds.h"
+#include "afs/pthread_glock.h"
+#include "afs/cellconfig.h"
+#include "afs/afsutil.h"
+#include "afs/auth.h"
+#include "afs/kauth.h"
+#include "afs/kautils.h"
+#include "afs/pthread_glock.h"
+#include "des/des.h"
 
 #else /* defined(UKERNEL) */
 #include <afs/stds.h>

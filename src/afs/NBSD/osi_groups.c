@@ -16,13 +16,13 @@
  *
  */
 #include <afsconfig.h>
-#include "../afs/param.h"
+#include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_groups.c,v 1.1 2002/01/01 19:32:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/NBSD/osi_groups.c,v 1.2 2002/10/16 03:58:22 shadow Exp $");
 
-#include "../afs/sysincludes.h"
-#include "../afs/afsincludes.h"
-#include "../afs/afs_stats.h"  /* statistics */
+#include "afs/sysincludes.h"
+#include "afsincludes.h"
+#include "afs/afs_stats.h"  /* statistics */
 
 #define NOCRED  ((struct ucred *) -1)
 #define NOUID   ((uid_t) -1)

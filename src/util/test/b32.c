@@ -10,14 +10,14 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/test/b32.c,v 1.4 2001/07/12 19:59:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/test/b32.c,v 1.5 2002/10/16 03:59:19 shadow Exp $");
 
 #include <stdio.h>
 #if !defined(AFS_NT40_ENV)
 main() { printf("b32 not required for this operating system.\n"); exit(1); }
 #else
 
-#include "../afsutil.h"
+#include "afsutil.h"
 
 char *prog = "b32";
 
