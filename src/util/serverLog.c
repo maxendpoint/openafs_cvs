@@ -81,13 +81,8 @@ void WriteLogBuffer(buf,len)
     afs_uint32 len;
 {
     LOCK_SERVERLOG();
-#ifndef AFS_NT40_ENV
-    if ( serverLogSyslog ){
-	syslog(LOG_INFO, "%s", info);
-    } else 
-#endif
-	if (serverLogFD > 0)
-	    write(serverLogFD, tbuffer, len);
+    if (serverLogFD > 0)
+      write(serverLogFD, tbuffer, len);
     UNLOCK_SERVERLOG();
 }
 
@@ -121,8 +116,13 @@ void FSLog (const char *format, ...)
 
     len = strlen(tbuffer);
     LOCK_SERVERLOG();
-    if (serverLogFD > 0)
-	write(serverLogFD, tbuffer, len);
+#ifndef AFS_NT40_ENV
+    if ( serverLogSyslog ){
+	syslog(LOG_INFO, "%s", info);
+    } else 
+#endif
+	if (serverLogFD > 0)
+	    write(serverLogFD, tbuffer, len);
     UNLOCK_SERVERLOG();
 
 #if !defined(AFS_PTHREAD_ENV)
