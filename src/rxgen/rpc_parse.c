@@ -35,7 +35,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.11 2001/09/17 19:42:58 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.12 2002/02/13 04:09:14 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -780,7 +780,11 @@ int noname;
     }
     if (tok.kind  == TOK_SPLIT) {
 	proc_split = 1;
+	defp->pc.split_flag = 1;
 	scan2(TOK_EQUAL, TOK_SEMICOLON, &tok);
+    }
+    else {
+	    defp->pc.split_flag = 0;
     }
     if (tok.kind == TOK_EQUAL) {
 	if (opcodesnotallowed[PackageIndex])
