@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.11 2002/01/23 19:15:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.12 2002/01/24 10:09:13 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -294,8 +294,6 @@ void afs_osi_MaskSignals(){
 void afs_osi_Invisible() {
 #ifdef AFS_LINUX22_ENV
     afs_osi_MaskSignals();
-    
-    daemonize();
 #endif 
 #ifdef AFS_DEC_ENV
     u.u_procp->p_type |= SSYS;
