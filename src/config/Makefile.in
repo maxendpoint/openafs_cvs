@@ -140,7 +140,7 @@ install: config \
 	${DESTDIR}/include/afs/venus.h \
 	${DESTDIR}/include/afs/debug.h \
 	ukinstall \
-	kinstall \
+	kinstall 
 
 kinstall: \
 	$(KDIRS) \
