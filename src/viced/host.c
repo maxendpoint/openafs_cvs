@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.26 2003/01/17 06:21:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.27 2003/01/17 07:39:28 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1426,8 +1426,15 @@ int GetClient(struct rx_connection * tcon, struct client **cp)
     H_LOCK
 
     *cp = client = (struct client *) rx_GetSpecific(tcon, rxcon_client_key);
-    /* XXXX debug */
-    assert(client && client->tcon && rxr_CidOf(client->tcon) == client->sid);
+    if (!(client && client->tcon && rxr_CidOf(client->tcon) == client->sid)) {
+	if (!client)
+	    ViceLog(0, ("GetClient: no client in conn %x\n", tcon));
+	else
+	    ViceLog(0, ("GetClient: tcon %x tcon sid %d client sid %d\n", 
+			client->tcon, client->tcon ? rxr_CidOf(client->tcon)
+			: -1, client->sid));
+	assert(0);
+    }
     if (client &&
 	client->LastCall > client->expTime && client->expTime) {
 	char hoststr[16];
