@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.9 2001/08/08 00:03:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.10 2002/02/01 20:30:11 kolya Exp $");
 
 
 #ifdef	UKERNEL
@@ -485,6 +485,13 @@ caddr_t x;
     if (rxGlockOwner) {
 	AFS_RXGLOCK();
     }
+}
+
+int afs_osi_SleepSig(x)
+    caddr_t x;
+{
+    afs_osi_Sleep(x);
+    return 0;
 }
 
 int afs_osi_Wakeup(x)

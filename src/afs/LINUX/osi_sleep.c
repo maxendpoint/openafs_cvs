@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.11 2002/01/29 17:36:20 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.12 2002/02/01 20:30:08 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -203,12 +203,15 @@ static void afs_addevent(char *event)
 /* Release the specified event */
 #define relevent(evp) ((evp)->refcount--)
 
-/* afs_osi_Sleep -- waits for an event to be notified. */
-
-void afs_osi_Sleep(char *event)
+/* afs_osi_SleepSig
+ *
+ * Waits for an event to be notified, returning early if a signal
+ * is received.  Returns EINTR if signaled, and 0 otherwise.
+ */
+int afs_osi_SleepSig(char *event)
 {
     struct afs_event *evp;
-    int seq;
+    int seq, retval;
 
     evp = afs_getevent(event);
     if (!evp) {
@@ -217,31 +220,43 @@ void afs_osi_Sleep(char *event)
          * allocator then return immediately.  We'll find the new event next
          * time around without dropping the GLOCK. */
         afs_addevent(event);
-        return;
+        return 0;
     }
 
     seq = evp->seq;
+    retval = 0;
 
     while (seq == evp->seq) {
-	sigset_t saved_set;
-
 	AFS_ASSERT_GLOCK();
 	AFS_GUNLOCK();
-	spin_lock_irq(&current->sigmask_lock);
-	saved_set = current->blocked;
-	sigfillset(&current->blocked);
-	recalc_sigpending(current);
-	spin_unlock_irq(&current->sigmask_lock);
-
 	interruptible_sleep_on(&evp->cond);
-
-	spin_lock_irq(&current->sigmask_lock);
-	current->blocked = saved_set;
-	recalc_sigpending(current);
-	spin_unlock_irq(&current->sigmask_lock);
 	AFS_GLOCK();
+	if (signal_pending(current)) {
+	    retval = EINTR;
+	    break;
+	}
     }
     relevent(evp);
+    return retval;
+}
+
+/* afs_osi_Sleep -- waits for an event to be notified, ignoring signals. */
+void afs_osi_Sleep(char *event)
+{
+    sigset_t saved_set;
+
+    spin_lock_irq(&current->sigmask_lock);
+    saved_set = current->blocked;
+    sigfillset(&current->blocked);
+    recalc_sigpending(current);
+    spin_unlock_irq(&current->sigmask_lock);
+
+    afs_osi_SleepSig(event);
+
+    spin_lock_irq(&current->sigmask_lock);
+    current->blocked = saved_set;
+    recalc_sigpending(current);
+    spin_unlock_irq(&current->sigmask_lock);
 }
 
 /* osi_TimedSleep

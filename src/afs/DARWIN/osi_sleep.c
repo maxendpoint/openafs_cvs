@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_sleep.c,v 1.4 2001/11/10 23:20:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_sleep.c,v 1.5 2002/02/01 20:30:01 kolya Exp $");
 
 #include "../afs/sysincludes.h" /* Standard vendor system headers */
 #include "../afs/afsincludes.h" /* Afs-based standard headers */
@@ -142,6 +142,12 @@ void afs_osi_Sleep(char *event)
 	AFS_GLOCK();
     }
     relevent(evp);
+}
+
+int afs_osi_SleepSig(char *event)
+{
+    afs_osi_Sleep(event);
+    return 0;
 }
 
 /* osi_TimedSleep
