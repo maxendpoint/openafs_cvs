@@ -1237,7 +1237,7 @@ static int afs_UFSCacheStoreProc(acall, afile, alen, avc, shouldWake,
 	tlen = (alen > AFS_LRALLOCSIZ ? AFS_LRALLOCSIZ : alen);
 	got = afs_osi_Read(afile, -1, tbuffer, tlen);
 	if ((got < 0) 
-#if	!defined(AFS_SUN5_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_SGI64_ENV) && !defined(AFS_LINUX20_ENV) !defined(AFS_DARWIN_ENV)
+#if	!defined(AFS_SUN5_ENV) && !defined(AFS_OSF_ENV) && !defined(AFS_SGI64_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV)
 	    || (got != tlen && getuerror())
 #endif
 	    ) {
