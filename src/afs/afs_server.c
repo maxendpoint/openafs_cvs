@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.28 2003/11/10 02:04:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.29 2004/05/08 04:23:56 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -1704,5 +1704,33 @@ void afs_ActivateServer(struct srvAddr *sap) {
 	    upDownP->numUpRecords++;
 	    upDownP->numRecordsNeverDown++;
 	}
+    }
+}
+
+
+void shutdown_server()
+{
+    int i;
+
+    for (i = 0; i < NSERVERS; i++) {
+	struct server *ts, *next;
+
+        ts = afs_servers[i];
+        while(ts) {
+	    next = ts->next;
+	    afs_osi_Free(ts, sizeof(struct server));
+	    ts = next;
+        }
+    }
+
+    for (i = 0; i < NSERVERS; i++) {
+	struct srvAddr *sa, *next;
+
+        sa = afs_srvAddrs[i];
+        while(sa) {
+	    next = sa->next_bkt;
+	    afs_osi_Free(sa, sizeof(struct srvAddr));
+	    sa = next;
+        }
     }
 }
