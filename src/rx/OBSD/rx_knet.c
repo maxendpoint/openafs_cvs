@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/OBSD/rx_knet.c,v 1.2 2002/11/05 22:37:53 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/OBSD/rx_knet.c,v 1.3 2002/11/07 22:55:27 rees Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -46,8 +46,10 @@ int osi_NetReceive(osi_socket asocket, struct sockaddr_in *addr, struct iovec *d
     if (haveGlock)
         AFS_GLOCK();
 
-    if (code)
+    if (code && afs_termState != AFSOP_STOP_RXK_LISTENER) {
+	afs_osi_Sleep(&afs_termState);
 	return code;
+    }
 
     *alength -= u.uio_resid;
     if (addr && nam) {

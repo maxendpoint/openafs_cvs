@@ -19,7 +19,7 @@ NONINFRINGEMENT.
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.1 2002/10/28 21:28:27 rees Exp $
+ * $Id: osi_vnodeops.c,v 1.2 2002/11/07 22:55:27 rees Exp $
  */
 
 /*
@@ -68,7 +68,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.1 2002/10/28 21:28:27 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.2 2002/11/07 22:55:27 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -81,7 +81,7 @@ RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.1 2002/10/28 21:28:
 #include "afs/nfsclient.h"
 #include "afs/afs_osidnlc.h"
 
-#ifdef DISCONN
+#ifdef AFS_DISCON_ENV
 extern int afs_FlushVS(struct vcache *tvc);
 #endif
 
@@ -817,7 +817,7 @@ afs_nbsd_reclaim(ap)
     vnode_pager_uncache(vp);
 #endif
 
-#ifndef DISCONN
+#ifndef AFS_DISCON_ENV
     error = afs_FlushVCache(avc, &slept); /* tosses our stuff from vnode */
 #else
     /* reclaim the vnode and the in-memory vcache, but keep the on-disk vcache */
@@ -878,7 +878,7 @@ afs_nbsd_bmap(ap)
 
     AFS_STATCNT(afs_bmap);
     if (ap->a_bnp)
-	ap->a_bnp = ap->a_bn * (8192 / DEV_BSIZE);
+	ap->a_bnp = (daddr_t *) (ap->a_bn * (8192 / DEV_BSIZE));
     if (ap->a_vpp)
 	*ap->a_vpp = (vcp) ? AFSTOV(vcp) : NULL;
     return 0;
@@ -980,6 +980,9 @@ afs_nbsd_pathconf(ap)
     }
     return 0;
 }
+
+extern int
+afs_lockctl(struct vcache *avc, struct AFS_FLOCK *af, int acmd, struct AFS_UCRED *acred, pid_t clid);
 
 /*
  * Advisory record locking support (fcntl() POSIX style)
