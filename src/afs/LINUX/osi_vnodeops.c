@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.33 2002/01/16 02:08:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.34 2002/03/10 19:23:38 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -1015,10 +1015,10 @@ int afs_linux_lookup(struct inode *dip, struct dentry *dp)
 	else if (S_ISLNK(ip->i_mode))
 	    ip->i_op = &afs_symlink_iops;
 #endif
+    } 
     dp->d_time = jiffies;
     dp->d_op = afs_dops;
     d_add(dp, (struct inode*)vcp);
-    } 
 
     AFS_GUNLOCK();
     crfree(credp);
