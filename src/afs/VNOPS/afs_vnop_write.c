@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.27 2002/10/11 21:43:14 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.28 2002/10/14 15:48:41 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -103,7 +103,6 @@ int afs_MemWrite(register struct vcache *avc, struct uio *auio, int aio,
     afs_int32 error;
     struct uio tuio;
     struct iovec *tvec;  /* again, should have define */
-    char *tfile;
     register afs_int32 code;
     struct vrequest treq;
 
@@ -347,7 +346,6 @@ int afs_UFSWrite(register struct vcache *avc, struct uio *auio,
     struct iovec *tvec;  /* again, should have define */
     struct osi_file *tfile;
     register afs_int32 code;
-    struct vnode *vp;
     struct vrequest treq;
 
     AFS_STATCNT(afs_UFSWrite);
@@ -419,7 +417,7 @@ int afs_UFSWrite(register struct vcache *avc, struct uio *auio,
      * high-level write op.
      */
     if (avc->execsOrWriters <= 0) {
-	printf("WARNING: afs_ufswr vp=%x, exOrW=%d\n", avc, avc->execsOrWriters);
+	printf("WARNING: afs_ufswr vcp=%x, exOrW=%d\n", avc, avc->execsOrWriters);
     }
 #else
     afs_FakeOpen(avc);

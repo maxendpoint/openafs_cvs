@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.14 2002/08/21 18:12:47 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.15 2002/10/14 15:48:41 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -283,15 +283,15 @@ int afs_UFSHandleLink(register struct vcache *avc, struct vrequest *areq)
 {
     register struct dcache *tdc;
     register char *tp, *rbuf;
-    char *tfile;
+    void *tfile;
     afs_size_t offset, len;
     afs_int32 tlen, alen;
     register afs_int32 code;
 
-    /* two different formats, one for links protected 644, have a "." at the end
-	of the file name, which we turn into a null.  Others, protected 755,
-	we add a null to the end of */
-   AFS_STATCNT(afs_UFSHandleLink);
+    /* two different formats, one for links protected 644, have a "." at the
+       end of the file name, which we turn into a null.  Others, protected
+       755, we add a null to the end of */
+    AFS_STATCNT(afs_UFSHandleLink);
     if (!avc->linkData) {
 	tdc = afs_GetDCache(avc, (afs_size_t) 0, areq, &offset, &len, 0);
 	afs_Trace3(afs_iclSetp, CM_TRACE_UFSLINK, ICL_TYPE_POINTER, avc,

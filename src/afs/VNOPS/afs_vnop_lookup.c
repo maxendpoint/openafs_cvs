@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.39 2002/10/11 21:43:14 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.40 2002/10/14 15:48:40 rees Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -408,41 +408,40 @@ int afs_ENameOK(register char *aname)
 int afs_getsysname(register struct vrequest *areq, register struct vcache *adp, 
 	register char *bufp)
 {
-    static char sysname[MAXSYSNAME];
     register struct unixuser *au;
     register afs_int32 error;
 
     if (!afs_nfsexporter) {
-      strcpy(bufp, afs_sysname);
-      return 0;
+	strcpy(bufp, afs_sysname);
+	return 0;
     }
     AFS_STATCNT(getsysname);
     au = afs_GetUser(areq->uid, adp->fid.Cell, 0);
     afs_PutUser(au, 0);	
     if (au->exporter) {
-      error = EXP_SYSNAME(au->exporter, NULL, bufp);
-      if (error) 
-	strcpy(bufp, "@sys");
-      return -1;
+	error = EXP_SYSNAME(au->exporter, NULL, bufp);
+	if (error) 
+	    strcpy(bufp, "@sys");
+	return -1;
     } else {
-      strcpy(bufp, afs_sysname);
-      return 0;
+	strcpy(bufp, afs_sysname);
+	return 0;
     }
 }
 
-int Check_AtSys(register struct vcache *avc, const char *aname, 
+void Check_AtSys(register struct vcache *avc, const char *aname, 
 	struct sysname_info *state, struct vrequest *areq)
 {
     if (AFS_EQ_ATSYS(aname)) {
-      state->offset = 0;
-      state->name = (char *) osi_AllocLargeSpace(AFS_SMALLOCSIZ);
-      state->allocked = 1;
-      state->index = afs_getsysname(areq, avc, state->name);
+	state->offset = 0;
+	state->name = (char *) osi_AllocLargeSpace(AFS_SMALLOCSIZ);
+	state->allocked = 1;
+	state->index = afs_getsysname(areq, avc, state->name);
     } else {
-      state->offset = -1;
-      state->allocked = 0;
-      state->index = 0;
-      state->name = aname;
+	state->offset = -1;
+	state->allocked = 0;
+	state->index = 0;
+	state->name = aname;
     }
 }
 
@@ -647,7 +646,7 @@ tagain:
 
 	/* dont copy more than we have room for */
 	if (fidIndex >= nentries) {
-	  DRelease((char *) dirEntryp, 0);
+	  DRelease((struct buffer *) dirEntryp, 0);
 	  break;
 	}
 
@@ -727,7 +726,7 @@ tagain:
 	 * used by this dir entry.
 	 */
 	temp = afs_dir_NameBlobs(dirEntryp->name) << 5;
-	DRelease((char *) dirEntryp, 0);
+	DRelease((struct buffer *) dirEntryp, 0);
 	if (temp <= 0) break;
 	dirCookie += temp;
     }	/* while loop over all dir entries */

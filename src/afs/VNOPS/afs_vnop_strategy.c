@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.12 2002/10/11 21:43:14 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.13 2002/10/14 15:48:41 rees Exp $");
 
 #if !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV)
 
@@ -46,9 +46,6 @@ afs_ustrategy(abp)
 #else
     struct AFS_UCRED *credp = u.u_cred;
 #endif
-#endif
-#if	defined(AFS_SUN_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
-    int async = abp->b_flags & B_ASYNC;
 #endif
     struct iovec tiovec[1];
 
