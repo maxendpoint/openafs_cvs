@@ -115,7 +115,7 @@
 #define AFS_EVENT_LOCK  1	/* osi_Sleep/osi_Wakeup use spinlock. */
 #define AFS_SGI_DUAL_FS_CACHE 1	/* implies supports EFS or XFS cache */
 
-#ifdef IRIX_HAS_MEM_FUNCS
+#ifndef IRIX_HAS_MEM_FUNCS
 #define memset(A, B, S) bzero(A, S)
 #define memcpy(B, A, S) bcopy(A, B, S)
 #define memcmp(A, B, S) bcmp(A, B, S)
