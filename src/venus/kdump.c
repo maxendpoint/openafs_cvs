@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.14 2001/08/29 17:36:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/kdump.c,v 1.15 2001/10/17 22:17:56 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>	/* for malloc() */
@@ -263,7 +263,7 @@ typedef struct timeval {
 #endif
 #include <linux/version.h>
 #include <linux/fs.h>
-#include <afs/osi_vfs.h>
+#include <osi_vfs.h>
 #else /* AFS_LINUX20_ENV */
 #ifdef AFS_HPUX110_ENV
 #define	KERNEL
