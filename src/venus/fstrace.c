@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.8 2001/11/01 04:02:31 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.9 2002/03/25 18:35:07 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1596,6 +1596,11 @@ tryagain:
     {
 	if (!failed) {
 	    failed = 1;
+#if defined(AFS_OSF_ENV) && !defined(AFS_OSF20_ENV)
+	    catclose1 (catd);
+#else
+	    catclose (catd);
+#endif
 	    goto tryagain;
 	}
         sprintf ((char *) error_text, "status %08x (%s / %s)", 
