@@ -10,14 +10,13 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_file.c,v 1.7 2002/08/21 18:12:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_file.c,v 1.8 2002/08/22 22:35:12 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
 #include "../afs/afs_stats.h"  /* afs statistics */
 
 int afs_osicred_initialized=0;
-struct  AFS_UCRED afs_osi_cred;
 afs_lock_t afs_xosi;		/* lock is for tvattr */
 extern struct osi_dev cacheDev;
 extern struct vfs *afs_cacheVfsp;
