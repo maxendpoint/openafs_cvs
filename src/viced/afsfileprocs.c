@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.50 2003/02/15 14:17:15 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.51 2003/02/19 02:21:35 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -349,11 +349,13 @@ retry:
 		afs_inet_ntoa_r(thost->host, hoststr)));
 	if ( MultiProbeAlternateAddress_r (thost) ) {
 	    ViceLog(0, ("MultiProbe failed to find new address for host %s:%d\n",
-			afs_inet_ntoa_r(thost->host, hoststr), thost->port));
+			afs_inet_ntoa_r(thost->host, hoststr), 
+			ntohs(thost->port)));
 	    code = -1;
 	} else {
 	    ViceLog(0, ("MultiProbe found new address for host %s:%d\n",
-			afs_inet_ntoa_r(thost->host, hoststr), thost->port));
+			afs_inet_ntoa_r(thost->host, hoststr), 
+			ntohs(thost->port)));
 	    if (BreakDelayedCallBacks_r(thost)) {
 		ViceLog(0,("BreakDelayedCallbacks FAILED AGAIN for host %s which IS UP.  Possible network or routing failure.\n",
 			afs_inet_ntoa_r(thost->host, hoststr)));
