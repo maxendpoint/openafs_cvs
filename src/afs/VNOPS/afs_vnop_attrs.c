@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.24 2003/07/01 18:37:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.25 2003/07/01 22:02:58 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -450,10 +450,17 @@ int afs_setattr(OSI_VC_DECL(avc), register struct vattr *attrs, struct AFS_UCRED
     OSI_VC_CONVERT(avc)
 
     AFS_STATCNT(afs_setattr);
+#if defined(AFS_SUN5_ENV) || defined(AFS_SGI_ENV) || defined(AFS_LINUX22_ENV)
     afs_Trace4(afs_iclSetp, CM_TRACE_SETATTR, ICL_TYPE_POINTER, avc, 
 		ICL_TYPE_INT32, attrs->va_mask,
 		ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(attrs->va_size),
 	       ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(avc->m.Length));
+#else
+    afs_Trace4(afs_iclSetp, CM_TRACE_SETATTR, ICL_TYPE_POINTER, avc, 
+		ICL_TYPE_INT32, attrs->va_mode,
+		ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(attrs->va_size),
+	       ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(avc->m.Length));
+#endif
     if ((code = afs_InitReq(&treq, acred))) return code;
  
     afs_InitFakeStat(&fakestate);
