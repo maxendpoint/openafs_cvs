@@ -29,7 +29,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_mem.c,v 1.6 2003/03/21 17:59:28 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_mem.c,v 1.7 2003/03/21 19:26:36 rees Exp $");
 
 #ifndef	NeXT
 
@@ -87,7 +87,7 @@ static void xdrmem_destroy(void)
 
 static bool_t xdrmem_getint32(register XDR *xdrs, afs_int32 *lp)
 {
-	if (xdrs->x_handy -= sizeof(afs_int32))
+	if (xdrs->x_handy < sizeof(afs_int32))
 		return (FALSE);
 	else
 		xdrs->x_handy -= sizeof(afs_int32);
@@ -98,7 +98,7 @@ static bool_t xdrmem_getint32(register XDR *xdrs, afs_int32 *lp)
 
 static bool_t xdrmem_putint32(register XDR *xdrs, afs_int32 *lp)
 {
-	if (xdrs->x_handy -= sizeof(afs_int32))
+	if (xdrs->x_handy < sizeof(afs_int32))
 		return (FALSE);
 	else
 		xdrs->x_handy -= sizeof(afs_int32);
