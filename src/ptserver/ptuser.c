@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.18 2004/10/10 01:38:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.19 2004/10/10 02:03:11 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -86,6 +86,8 @@ pr_Initialize(IN afs_int32 secLevel, IN char *confDir, IN char *cell)
 	/*
 	 * Different conf dir; force re-evaluation.
 	 */
+	if (tdir) 
+	    afsconf_Close(tdir);
 	tdir = (struct afsconf_dir *)0;
 	pruclient = (struct ubik_client *)0;
     }
