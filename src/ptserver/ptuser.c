@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.14 2003/12/08 01:45:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.15 2003/12/11 19:06:16 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -102,9 +102,10 @@ pr_Initialize(secLevel, confDir, cell)
 #else /* defined(UKERNEL) */
 	tdir = afsconf_Open(confDir);
 	if (!tdir) {
-	    fprintf(stderr,
-		    "libprot: Could not open configuration directory: %s.\n",
-		    confDir);
+	    if (confDir && strcmp(confDir, ""))
+		fprintf(stderr,
+			"libprot: Could not open configuration directory: %s.\n",
+			confDir);
 	    return -1;
 	}
 
