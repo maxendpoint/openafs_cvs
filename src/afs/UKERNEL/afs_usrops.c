@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.25 2004/04/16 00:34:38 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.26 2004/05/10 13:51:16 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -1448,7 +1448,8 @@ ConfigCellAlias(aca, arock, adir)
 	char *arock;
 	struct afsconf_dir *adir;
 {
-	call_syscall(AFSOP_ADDCELLALIAS, aca->aliasName, aca->realName, 0, 0, 0);
+	call_syscall(AFSOP_ADDCELLALIAS, (long)aca->aliasName, 
+		     (long)aca->realName, 0, 0, 0);
 	return 0;
 }
 
@@ -1786,7 +1787,8 @@ uafs_Init(char *rn, char *mountDirParam, char *confDirParam,
 	call_syscall(AFSCALL_CALL, AFSOP_CACHEINFO, (long)fullpn_DCacheFile,
 		     0, 0, 0);
 
-    call_syscall(AFSCALL_CALL, AFSOP_CELLINFO, fullpn_CellInfoFile, 0, 0, 0);
+    call_syscall(AFSCALL_CALL, AFSOP_CELLINFO, (long)fullpn_CellInfoFile, 0,
+		 0, 0);
 
     /*
      * Pass the kernel the name of the workstation cache file holding the
