@@ -61,7 +61,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rxkad/ticket5.c,v 1.4 2002/12/23 23:53:26 zacheiss Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/ticket5.c,v 1.5 2003/03/25 21:10:40 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -236,10 +236,13 @@ int tkt_DecodeTicket5(char *ticket, afs_int32 ticket_len,
 	    goto cleanup;
     }
 
-    /* Find the real service key version number */
-    if (t5.enc_part.kvno == NULL)
-	goto bad_ticket;
-    v5_serv_kvno = *t5.enc_part.kvno;
+    /* If kvno is null, it's probably not included because it was kvno==0 
+       in the ticket */
+    if (t5.enc_part.kvno == NULL ) { 
+       v5_serv_kvno = 0;
+    } else { 
+       v5_serv_kvno = *t5.enc_part.kvno;
+    }
     
 
     code = (*get_key)(get_key_rock, v5_serv_kvno, &serv_key);
