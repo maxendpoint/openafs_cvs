@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.12 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.13 2002/05/16 13:47:28 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -97,7 +97,7 @@ afs_CopyOutAttrs(avc, attrs)
     attrs->va_nlink = fakedir ? 100 : avc->m.LinkCount;
     attrs->va_size = fakedir ? 4096 : avc->m.Length;
     attrs->va_atime.tv_sec = attrs->va_mtime.tv_sec = attrs->va_ctime.tv_sec =
-	fakedir ? 0 : avc->m.Date;
+	fakedir ? 0 : (int)avc->m.Date;
     /* set microseconds to be dataversion # so that we approximate NFS-style
      * use of mtime as a dataversion #.  We take it mod 512K because
      * microseconds *must* be less than a million, and 512K is the biggest
