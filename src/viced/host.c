@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.9 2001/10/05 21:25:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.10 2001/10/08 22:42:13 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -270,13 +270,17 @@ int h_Release_r(host)
     register struct host *host;
 {	
     
-    if (!((host)->holds[h_holdSlot()] &= ~h_holdbit()) ) {
+    if (!((host)->holds[h_holdSlot()] & ~h_holdbit()) ) {
 	if (! h_OtherHolds_r(host) ) {
+	    /* must avoid masking this until after h_OtherHolds_r runs
+	       but it should be run before h_TossStuff_r */
+	    (host)->holds[h_holdSlot()] &= ~h_holdbit();
 	    if ( (host->hostFlags & HOSTDELETED) || 
 		(host->hostFlags & CLIENTDELETED) ) {
 		h_TossStuff_r(host);
 	    }		
-	}
+	} else 
+	    (host)->holds[h_holdSlot()] &= ~h_holdbit();
     }
     return 0;
 }
