@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.14 2002/10/16 03:59:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.15 2003/04/14 15:45:54 shadow Exp $");
 
 #ifdef AFS_SUN5_ENV
 #include "rx/rx_kcommon.h"
@@ -296,7 +296,7 @@ int osi_FreeSocket(register struct osi_socket *asocket)
     AFS_STATCNT(osi_FreeSocket);
 
     taddr.sin_family = AF_INET;
-    taddr.sin_port = htons(rx_port);
+    taddr.sin_port = rx_port;
     taddr.sin_addr.s_addr = htonl(0x7f000001);
 
     dvec.iov_base = &c;
