@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.64 2004/10/12 20:51:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.65 2004/10/15 06:01:35 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -817,15 +817,16 @@ rxi_CleanupConnection(struct rx_connection *conn)
      * idle (refCount == 0) after rx_idlePeerTime (60 seconds) have passed.
      */
     MUTEX_ENTER(&rx_peerHashTable_lock);
-    if (--conn->peer->refCount <= 0) {
+    if (conn->peer->refCount < 2) {
 	conn->peer->idleWhen = clock_Sec();
-	if (conn->peer->refCount < 0) {
-	    conn->peer->refCount = 0;
+	if (conn->peer->refCount < 1) {
+	    conn->peer->refCount = 1;
 	    MUTEX_ENTER(&rx_stats_mutex);
 	    rxi_lowPeerRefCount++;
 	    MUTEX_EXIT(&rx_stats_mutex);
 	}
     }
+    conn->peer->refCount--;
     MUTEX_EXIT(&rx_peerHashTable_lock);
 
     MUTEX_ENTER(&rx_stats_mutex);
