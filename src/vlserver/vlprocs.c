@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.11 2003/10/10 14:08:32 rees Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.12 2003/11/12 14:23:30 rees Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -1441,7 +1441,7 @@ SVL_ListAttributesN2(rxcall, attributes, name, startindex, nentries,
 	if (name && (strcmp(name, ".*") != 0) && (strcmp(name, "") != 0)) {
 	    sprintf(volumename, "^%s$", name);
 #ifdef HAVE_POSIX_REGEX
-	    if (regcomp(&re, volumename, REG_BASIC | REG_NOSUB) != 0) {
+	    if (regcomp(&re, volumename, REG_NOSUB) != 0) {
 		errorcode = VL_BADNAME;
 		goto done;
 	    }
