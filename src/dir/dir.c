@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.20 2004/01/23 16:53:35 rees Exp $");
+    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.21 2004/03/11 05:40:31 shadow Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -90,6 +90,12 @@ extern void *DNew();
 #else /* !defined(UKERNEL) */
 #include "afs/stds.h"
 #include "afs/sysincludes.h"
+
+/* afs_buffer.c */
+/* These are needed because afs_prototypes.h is not included here */
+extern void *DRead();
+extern void *DNew();
+
 #endif /* !defined(UKERNEL) */
 #include "afs/afs_osi.h"
 
