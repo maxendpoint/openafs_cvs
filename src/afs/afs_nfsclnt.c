@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.7 2002/08/27 21:42:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.8 2002/09/13 23:52:57 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #ifndef	AFS_DEC_ENV
@@ -425,7 +425,9 @@ void afs_iauth_unregister()
 
 
 shutdown_nfsclnt() {
+#if 0
     extern int afs_allnfsreqs, afs_nfscalls;
+#endif
 
 #if defined(AFS_SGIMP_ENV)
     osi_Assert(ISAFS_GLOCK());
@@ -436,8 +438,10 @@ shutdown_nfsclnt() {
 #endif
     afs_nfsclient_GC(afs_nfsexporter, -1);
     init_nfsexporter = 0;
+#if 0
     /* The following are for the nfs/afs server */
     afs_allnfsreqs = afs_nfscalls = 0;
+#endif
 }
 #endif /* AFS_DEC_ENV */
 #endif /* AFS_NONFSTRANS */
