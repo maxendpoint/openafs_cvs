@@ -91,7 +91,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.21 2003/01/07 23:38:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.22 2003/01/12 02:02:48 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -496,7 +496,13 @@ static handleit(as)
         }
     }
     if (!seenany) {
-      printf("Exiting immediately without salvage. Look into the FileLog to find volumes which really need to be salvaged!\n");
+	char *msg = "Exiting immediately without salvage. Look into the FileLog to find volumes which really need to be salvaged!";
+
+	if ( useSyslog )
+	  Log(msg);
+        else
+          printf("%s\n", msg);
+
       Exit(0);
     }
 #endif /* FAST_RESTART */
@@ -588,8 +594,12 @@ static handleit(as)
 
 #ifdef FAST_RESTART
     if (ti = as->parms[18].items) {  /* -DontSalvage */
-      printf("Exiting immediately without salvage. Look into the FileLog");
-      printf(" to find volumes which really need to be salvaged!\n");
+	char *msg = "Exiting immediately without salvage. Look into the FileLog to find volumes which really need to be salvaged!";
+
+	if ( useSyslog )
+	  Log(msg);
+        else
+          printf("%s\n", msg);
       Exit(0);
     }
 #endif /* FAST_RESTART */ 
