@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.40 2002/11/23 01:51:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.41 2002/12/02 13:39:46 rees Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -107,6 +107,7 @@ RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.40 2002/11/23 01:51:43
 #include <signal.h>
 #include <afs/partition.h>
 #include "viced.h"
+#include "viced_prototypes.h"
 #include "host.h"
 #include <afs/audit.h>
 #include <afs/afsutil.h>
