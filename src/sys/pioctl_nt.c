@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.18.2.3 2004/11/05 19:21:58 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.18.2.4 2004/12/07 06:03:40 shadow Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -210,7 +210,8 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
                                (va_list *) NULL
                                ) )
             {
-                fprintf(stderr,"pioctl CreateFile(%s) failed: [%s]\r\n",tbuffer,buf);
+                fprintf(stderr,"pioctl CreateFile(%s) failed: 0x%8X\r\n\t[%s]\r\n",
+                        tbuffer,gle,buf);
             }
         }
         if (gle != ERROR_DOWNGRADE_DETECTED)
@@ -262,7 +263,8 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
                                     (va_list *) NULL
                                     ) )
                 {
-                    fprintf(stderr,"pioctl CreateFile(%s) failed: [%s]\r\n",tbuffer,buf);
+                    fprintf(stderr,"pioctl CreateFile(%s) failed: 0x%8X\r\n\t[%s]\r\n",
+                             tbuffer,gle,buf);
                 }
             }
             return -1;
