@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.25 2002/09/30 18:38:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.26 2002/09/30 20:01:40 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -2033,7 +2033,7 @@ RetryLookup:
 		       ICL_TYPE_POINTER, tdc,
 		       ICL_TYPE_INT32, tdc->dflags);
 #else
-	    afs_osi_Wakeup(&adc->validPos);
+	    afs_osi_Wakeup(&tdc->validPos);
 #endif
 	}
 	tsmall = (struct tlocal1 *) osi_AllocLargeSpace(sizeof(struct tlocal1));
