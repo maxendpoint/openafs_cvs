@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.31 2003/05/14 15:15:07 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.32 2003/05/21 14:45:05 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -524,6 +524,7 @@ static int afsconf_OpenInternal(register struct afsconf_dir *adir,
 	adir->alias_entries = curAlias;
     }
 
+    if (tf != NULL) fclose(tf);
     /* now read the fs keys, if possible */
     adir->keystr = (struct afsconf_keys *) 0;
     afsconf_IntGetKeys(adir);
