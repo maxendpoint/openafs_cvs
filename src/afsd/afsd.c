@@ -56,7 +56,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.44 2004/12/07 18:24:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.45 2005/01/13 23:37:21 shadow Exp $");
 
 #define VFS 1
 
@@ -1932,7 +1932,9 @@ mainproc(as, arock)
     if (afsd_debug)
 	printf("%s: Calling AFSOP_VOLUMEINFO: volume info file is '%s'\n", rn,
 	       fullpn_VolInfoFile);
-    call_syscall(AFSOP_VOLUMEINFO, fullpn_VolInfoFile);
+    /* once again, meaningless for a memory-based cache. */
+    if (!(cacheFlags & AFSCALL_INIT_MEMCACHE)) 
+	call_syscall(AFSOP_VOLUMEINFO, fullpn_VolInfoFile);
 
     /*
      * Pass the kernel the name of the afs logging file holding the volume
