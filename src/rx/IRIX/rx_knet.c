@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.6 2001/08/08 06:29:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/IRIX/rx_knet.c,v 1.7 2001/10/11 18:39:32 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 #include "../h/tcp-param.h"
@@ -314,7 +314,7 @@ static int rxi_MatchIfnet(struct hashbucket *h, caddr_t key, caddr_t arg1,
 	}
     }
     *(int*)arg1 = match_value;
-    return 0;
+    return (match_value ? 1 : 0);
 }
 
     
