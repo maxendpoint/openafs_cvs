@@ -14,14 +14,13 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.18 2002/06/13 19:35:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.19 2002/07/16 20:58:59 shadow Exp $");
 
 #include "../rx/rx_kcommon.h"
 
 #ifdef AFS_HPUX110_ENV
 #include "../h/tihdr.h"
 #include <xti.h>
-#include "../afs/hpux_110.h"
 #endif
 #include "../afsint/afsint.h"
 
