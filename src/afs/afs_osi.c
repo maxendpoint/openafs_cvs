@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.16 2002/06/25 15:25:43 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.17 2002/07/31 22:29:38 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -444,7 +444,7 @@ void *afs_osi_Alloc(size_t x)
     AFS_STATS(afs_stats_cmperf.OutStandingAllocs++);
     AFS_STATS(afs_stats_cmperf.OutStandingMemUsage += x);
 #ifdef AFS_LINUX20_ENV
-    return osi_linux_alloc(x);
+    return osi_linux_alloc(x, 1);
 #else
     size = x;
     tm = (struct osimem *) AFS_KALLOC(size);

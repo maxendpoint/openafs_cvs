@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.15 2002/07/31 21:54:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.16 2002/07/31 22:29:42 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -139,7 +139,7 @@ static void afs_addevent(char *event)
     
     AFS_ASSERT_GLOCK();
     hashcode = afs_evhash(event);
-    newp = osi_AllocSmallSpace(sizeof(afs_event_t));
+    newp = osi_linux_alloc(sizeof(afs_event_t), 0);
     afs_evhashcnt++;
     newp->next = afs_evhasht[hashcode];
     afs_evhasht[hashcode] = newp;
