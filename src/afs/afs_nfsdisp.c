@@ -10,8 +10,10 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.4 2002/04/04 19:03:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.5 2002/07/26 20:55:13 shadow Exp $");
 
+/* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
+#define __XDR_INCLUDE__
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h" /* Standard vendor system headers */
 #if defined(AFS_SUN55_ENV) && !defined(AFS_NONFSTRANS) 
