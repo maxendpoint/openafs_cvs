@@ -24,7 +24,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe_callback.c,v 1.9 2002/08/22 22:45:07 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/fsprobe/fsprobe_callback.c,v 1.10 2003/03/04 16:19:49 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>			/*Standard I/O stuff*/
@@ -752,3 +752,38 @@ afs_int32 SRXAFSCB_GetCacheConfig(
 {
     return RXGEN_OPCODE;
 }
+
+afs_int32 SRXAFSCB_TellMeAboutYourself(struct rx_call *rxcall,
+                                       struct interfaceAddr *addr,
+                                       Capabilities *capabilities)
+{
+    int i;
+    int code = 0;
+    int         count;
+
+#if FSPROBE_CALLBACK_VERBOSE
+    static char rn[] = "SRXAFSCB_TellMeAboutYourself";  /*Routine name*/
+    char hostName[256];                                 /*Host name buffer*/
+    char *hostNameResult;                               /*Ptr to static*/
+
+    if (rxcall != (struct rx_call *)0) {
+      hostNameResult =
+          hostutil_GetNameByINet((afs_int32)(rxcall->conn->peer->host));
+      strcpy(hostName, hostNameResult);
+      fprintf(stderr, "[%s:%s] Called from host %s, port %d\n",
+              mn, rn, hostName, rxcall->conn->peer->port);
+    } /*Valid rxcall param*/
+#endif /* FSPROBE_CALLBACK_VERBOSE */
+
+    if ( rxcall && addr )
+    {
+        if (!afs_cb_inited) init_afs_cb();
+        *addr = afs_cb_interface;
+    }
+
+    /*
+     * Return successfully.
+     */
+    return(0);
+}
+

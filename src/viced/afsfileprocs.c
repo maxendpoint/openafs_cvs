@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.55 2003/03/04 15:42:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.56 2003/03/04 16:19:50 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -5979,6 +5979,19 @@ afs_int32 SRXAFS_Lookup(struct rx_call *call_p,
     return EINVAL;
 }
 
+
+afs_int32 SRXAFS_GetCapabilities(struct rx_call *acall,
+				 Capabilities *capabilities)
+{
+    afs_int32 *dataBuffP;               
+    afs_int32 dataBytes;   
+
+    dataBuffP = (afs_int32 *)malloc(dataBytes);
+    memcpy((char *)dataBuffP, "1", dataBytes);
+    capabilities->Capabilities_len = dataBytes/sizeof(afs_int32);
+    capabilities->Capabilities_val = dataBuffP;
+    return 0;
+} 
 
 afs_int32 SRXAFS_FlushCPS(struct rx_call *acall,
 			  struct ViceIds *vids,

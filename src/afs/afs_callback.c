@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.22 2002/12/10 15:52:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.23 2003/03/04 16:19:46 shadow Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -1436,3 +1436,38 @@ int SRXAFSCB_GetCellByNum(struct rx_call *a_call, afs_int32 a_cellnum,
     return 0;
 }
  
+int SRXAFSCB_TellMeAboutYourself(struct rx_call *a_call, 
+                                 struct interfaceAddr *addr, 
+                                 Capabilities *capabilities)
+{
+    int i;
+    int code = 0;
+    afs_int32 *dataBuffP;               
+    afs_int32 dataBytes;                
+
+    RX_AFS_GLOCK();
+
+    AFS_STATCNT(SRXAFSCB_WhoAreYou);
+
+    ObtainReadLock(&afs_xinterface);
+
+    /* return all network interface addresses */
+    addr->numberOfInterfaces = afs_cb_interface.numberOfInterfaces;
+    addr->uuid = afs_cb_interface.uuid;
+    for ( i=0; i < afs_cb_interface.numberOfInterfaces; i++) {
+	addr->addr_in[i] = ntohl(afs_cb_interface.addr_in[i]);
+	addr->subnetmask[i] = ntohl(afs_cb_interface.subnetmask[i]);
+	addr->mtu[i] = ntohl(afs_cb_interface.mtu[i]);
+    }
+
+    ReleaseReadLock(&afs_xinterface);
+    
+    RX_AFS_GUNLOCK();
+    
+    dataBuffP = (afs_int32 *)afs_osi_Alloc(dataBytes);
+    memcpy((char *)dataBuffP, "1", dataBytes);
+    capabilities->Capabilities_len = dataBytes/sizeof(afs_int32);
+    capabilities->Capabilities_val = dataBuffP;
+
+    return code;
+}
