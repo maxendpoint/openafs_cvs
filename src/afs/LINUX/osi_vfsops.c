@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.20 2002/10/16 03:58:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.21 2002/10/27 23:21:41 kolya Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -475,5 +475,5 @@ void vcache2fakeinode(struct vcache *rootvp, struct vcache *mpvp)
 
     VATTR_NULL(&vattr);
     afs_CopyOutAttrs(rootvp, &vattr);
-    vattr2inode(AFSTOV(mpvp), &vattr);
+    vattr2inode(AFSTOI(mpvp), &vattr);
 }
