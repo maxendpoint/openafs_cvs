@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.12 2002/03/17 17:53:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.13 2002/03/18 02:51:13 kolya Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -1200,6 +1200,7 @@ int SRXAFSCB_GetCellServDB(
 	    a_hosts[j] = ntohl(tcell->cellHosts[j]->addr->sa_ip);
 	}
 	i = strlen(p_name);
+	afs_PutCell(tcell, READ_LOCK);
     }
 
     t_name = (char *)rxi_Alloc(i+1);
