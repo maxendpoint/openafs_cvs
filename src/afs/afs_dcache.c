@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.14 2001/11/13 14:47:11 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.15 2001/11/19 16:58:02 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -2030,11 +2030,15 @@ struct dcache *afs_GetDCache(avc, abyte, areq, aoffset, alen, aflags)
 #ifdef RX_ENABLE_LOCKS
                         AFS_GLOCK();
 #endif /* RX_ENABLE_LOCKS */ 
+			afs_Trace2(afs_iclSetp, CM_TRACE_FETCH64CODE,
+				   ICL_TYPE_POINTER, avc, ICL_TYPE_INT32, code);
 		    } else {
 		        bytes = rx_Read(tcall, (char *)&length_hi, sizeof(afs_int32));
 #ifdef RX_ENABLE_LOCKS
                         AFS_GLOCK();
 #endif /* RX_ENABLE_LOCKS */ 
+			afs_Trace2(afs_iclSetp, CM_TRACE_FETCH64CODE,
+				   ICL_TYPE_POINTER, avc, ICL_TYPE_INT32, code);
 		        if (bytes == sizeof(afs_int32)) {
 			    length_hi = ntohl(length_hi);
 		        } else {
@@ -2047,14 +2051,12 @@ struct dcache *afs_GetDCache(avc, abyte, areq, aoffset, alen, aflags)
 #ifdef RX_ENABLE_LOCKS
                             AFS_GLOCK();
 #endif /* RX_ENABLE_LOCKS */ 
-		            afs_Trace2(afs_iclSetp, CM_TRACE_FETCH64CODE,
-			       ICL_TYPE_POINTER, avc, ICL_TYPE_INT32, code);
 			    tcall = (struct rx_call *) 0;
 			}
 		    }
 		}
 		if (code == RXGEN_OPCODE || afs_serverHasNo64Bit(tc)) {
-		    if (Position > 0xFFFFFFFF) {
+		    if (Position > 0x7FFFFFFF) {
 		        code = EFBIG;
 		    } else {
 		        afs_int32 pos;
