@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.40 2003/07/15 23:14:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.41 2004/05/08 04:28:35 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -3272,6 +3272,8 @@ shutdown_dcache(void)
 	afs_dchashTbl[i] = NULLIDX;
     }
 
+    afs_osi_Free(afs_dvhashTbl, afs_dhashsize * sizeof(afs_int32));
+    afs_osi_Free(afs_dchashTbl, afs_dhashsize * sizeof(afs_int32));
 
     afs_blocksUsed = afs_dcentries = 0;
     hzero(afs_indexCounter);
