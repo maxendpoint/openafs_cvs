@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.17 2002/10/09 02:58:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.18 2002/10/09 15:39:47 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1023,7 +1023,7 @@ extern afsUUID FS_HostUUID;
 int BreakDelayedCallBacks_r(struct host *host)
 {
     struct AFSFid fids[AFSCBMAX];
-    afs_uint32 thead[AFSCBMAX];
+    u_byte thead[AFSCBMAX]; /* This should match thead in struct Callback */
     int cbi, first, nfids;
     struct CallBack *cb;
     struct interfaceAddr interf;
