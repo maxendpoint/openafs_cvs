@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.9 2003/08/08 21:54:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.10 2003/11/19 21:43:29 rees Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -1636,7 +1636,7 @@ file_Seek(info, position)
 
 	w = USD_SEEK(p->fid, startOff, SEEK_SET, &stopOff);
 	if (w)
-	    info->error == w;
+	    info->error = w;
 	if (hcmp(startOff, stopOff) != 0)
 	    ERROR_EXIT(BUTM_POSITION);
 
@@ -1687,10 +1687,10 @@ file_SeekEODump(info, position)
 	p = (struct progress *)info->tmRock;
 	hset64(startOff, 0, 0);
 	w = USD_SEEK(p->fid, startOff, SEEK_END, &stopOff);
-	if (w)
-	    info->error == w;
-	if (w)
+	if (w) {
+	    info->error = w;
 	    ERROR_EXIT(BUTM_POSITION);
+	}
 
 	if (hgetlo(stopOff) % BUTM_BLOCKSIZE)
 	    ERROR_EXIT(BUTM_POSITION);
