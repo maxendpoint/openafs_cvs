@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.62 2004/09/24 15:42:32 rees Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.63 2004/10/11 18:35:51 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -1011,6 +1011,20 @@ rx_DestroyConnection(register struct rx_connection *conn)
     NETPRI;
     AFS_RXGLOCK();
     rxi_DestroyConnection(conn);
+    AFS_RXGUNLOCK();
+    USERPRI;
+}
+
+void
+rx_GetConnection(register struct rx_connection *conn)
+{
+    SPLVAR;
+
+    NETPRI;
+    AFS_RXGLOCK();
+    MUTEX_ENTER(&conn->conn_data_lock);
+    conn->refCount++;
+    MUTEX_EXIT(&conn->conn_data_lock);
     AFS_RXGUNLOCK();
     USERPRI;
 }
