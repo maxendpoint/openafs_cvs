@@ -3395,6 +3395,7 @@ done
 
 
 
+
 trap '' 1 2 15
 cat > confcache <<\EOF
 # This file is a shell script that caches the results of configure
@@ -3563,7 +3564,8 @@ s%@LINUX_KERNEL_PATH@%$LINUX_KERNEL_PATH%g
 s%@LINUX_VERSION@%$LINUX_VERSION%g
 s%@MKAFS_OSTYPE@%$MKAFS_OSTYPE%g
 s%@TOP_SRCDIR@%$TOP_SRCDIR%g
-s%@WITH_DEPRECATED@%$WITH_DEPRECATED%g
+s%@WITH_OBSOLETE@%$WITH_OBSOLETE%g
+s%@WITH_INSECURE@%$WITH_INSECURE%g
 
 CEOF
 EOF
