@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.41 2003/05/15 17:10:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.42 2003/06/02 14:35:59 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1639,19 +1639,19 @@ int DumpCallBackState(void)
 	ViceLog(0, ("Couldn't create callback dump file %s\n", AFSDIR_SERVER_CBKDUMP_FILEPATH));
 	return 0;
     }
-    write(fd, &magic, sizeof(magic));
-    write(fd, &now, sizeof(now));
-    write(fd, &cbstuff, sizeof(cbstuff));
-    write(fd, TimeOuts, sizeof(TimeOuts));
-    write(fd, timeout, sizeof(timeout));
-    write(fd, &tfirst, sizeof(tfirst));
+    (void) write(fd, &magic, sizeof(magic));
+    (void) write(fd, &now, sizeof(now));
+    (void) write(fd, &cbstuff, sizeof(cbstuff));
+    (void) write(fd, TimeOuts, sizeof(TimeOuts));
+    (void) write(fd, timeout, sizeof(timeout));
+    (void) write(fd, &tfirst, sizeof(tfirst));
     freelisthead = cbtoi((struct CallBack *) CBfree);
-    write(fd, &freelisthead, sizeof(freelisthead)); /* This is a pointer */
+    (void) write(fd, &freelisthead, sizeof(freelisthead)); /* This is a pointer */
     freelisthead = fetoi((struct FileEntry *) FEfree);
-    write(fd, &freelisthead, sizeof(freelisthead)); /* This is a pointer */
-    write(fd, HashTable, sizeof(HashTable));
-    write(fd, &CB[1], sizeof(CB[1])*cbstuff.nblks); /* CB stuff */
-    write(fd, &FE[1], sizeof(FE[1])*cbstuff.nblks); /* FE stuff */
+    (void) write(fd, &freelisthead, sizeof(freelisthead)); /* This is a pointer */
+    (void) write(fd, HashTable, sizeof(HashTable));
+    (void) write(fd, &CB[1], sizeof(CB[1])*cbstuff.nblks); /* CB stuff */
+    (void) write(fd, &FE[1], sizeof(FE[1])*cbstuff.nblks); /* FE stuff */
     close(fd);
 
     return 0;

@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.6 2002/08/21 18:14:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.7 2003/06/02 14:36:18 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -232,15 +232,15 @@ Lp_QTraverse(ahead)
     printf("traversing the internal queue, which groups all the related volumes on a per partition basis\n");
     while(count >  0) {
 	printf("---------------------------\n");
-	printf("%s RW-Id %u",old->name,old->ids[RWVOL]);
+	printf("%s RW-Id %lu",old->name,(unsigned long) old->ids[RWVOL]);
 	if(old->isValid[RWVOL])
 	    printf(" valid ");
 	else printf(" invalid ");
-	printf("RO-Id %u",old->ids[ROVOL]);
+	printf("RO-Id %lu",(unsigned long) old->ids[ROVOL]);
 	if(old->isValid[ROVOL])
 	    printf(" valid ");
 	else printf(" invalid ");
-	printf("BACKUP-Id %u",old->ids[BACKVOL]);
+	printf("BACKUP-Id %lu",(unsigned long) old->ids[BACKVOL]);
 	if(old->isValid[BACKVOL])
 	    printf(" valid ");
 	else printf(" invalid ");

@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.43 2003/05/15 16:28:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.44 2003/06/02 14:35:59 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -328,7 +328,7 @@ CheckAdminName()
 	strcpy(adminName, "System:Administrators");	/* use the default name */
     }
     else {
-	read(fd, adminName, status.st_size);	/* use name from the file */
+	(void)read(fd, adminName, status.st_size); /* use name from the file */
     }
     if (fd)
 	close(fd);	/* close fd if it was opened */

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsutils.c,v 1.13 2003/02/07 22:16:46 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsutils.c,v 1.14 2003/06/02 14:36:19 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef AFS_NT40_ENV
@@ -583,7 +583,7 @@ char *astring; {
     str = astring;
     ptr = astring;
     tryname = 0;
-    while (curval = *str++){
+    while ((curval = *str++)){
 	if(curval < '0' || curval > '9')
 	    tryname = 1;
     }
@@ -605,7 +605,7 @@ char *astring; {
     }
 
     value = 0;
-    while (tc = *astring++) {
+    while ((tc = *astring++)) {
 	if (tc & 0x80) {
 	    if(!tryname) fprintf(STDERR,"goofed in volid \n");
 	    else {fprintf(STDERR,"Could not get entry from vldb for %s\n",ptr);PrintError("",vcode);}

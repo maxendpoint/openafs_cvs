@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.7 2001/09/17 19:43:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/vutil.c,v 1.8 2003/06/02 14:36:16 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -76,7 +76,7 @@ void ClearVolumeStats_r();
    volume header ON:  this means that the volumes will not be attached by the
    file server and WILL BE DESTROYED the next time a system salvage is performed */
 
-static void RemoveInodes(Device dev, int vid)
+static void RemoveInodes(Device dev, VolumeId vid)
 {
     register int i;
     IHandle_t *handle;

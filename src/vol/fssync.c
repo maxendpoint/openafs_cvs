@@ -38,7 +38,7 @@ static int newVLDB = 1;
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.16 2003/03/14 20:09:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.17 2003/06/02 14:36:16 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -147,8 +147,8 @@ int FSYNC_clientInit(void)
 {
     struct sockaddr_in addr;
     /* I can't believe the following is needed for localhost connections!! */
-    static backoff[] = {3,3,3,5,5,5,7,15,16,24,32,40,48,0};
-    int *timeout = &backoff[0];
+    static time_t backoff[] = {3,3,3,5,5,5,7,15,16,24,32,40,48,0};
+    time_t *timeout = &backoff[0];
 
     for (;;) {
         FS_sd = getport(&addr);
@@ -221,7 +221,7 @@ int FSYNC_askfs(VolumeId volume, char *partName, int com, int reason)
     }
 #endif
     if (response == 0) {
-	printf("FSYNC_askfs: negative response from file server; volume %u, command %d\n", command.volume, command.command);
+	printf("FSYNC_askfs: negative response from file server; volume %u, command %d\n", command.volume, (int) command.command);
     }
 
     return response;
@@ -561,9 +561,9 @@ defect #2080 for details.
     VOL_UNLOCK
     VATTACH_UNLOCK
 #ifdef AFS_NT40_ENV
-    send(fd, &rc, 1, 0);
+    (void) send(fd, &rc, 1, 0);
 #else
-    write(fd, &rc, 1);
+    (void) write(fd, &rc, 1);
 #endif
 }
 

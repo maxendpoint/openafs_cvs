@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.48 2003/05/05 15:40:25 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.49 2003/06/02 14:35:59 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -2000,7 +2000,7 @@ int CheckHost(register struct host *host, int held)
 		    if ( code )
 		    {
 			char hoststr[16];
-			afs_inet_ntoa_r(host->host, hoststr);
+			(void) afs_inet_ntoa_r(host->host, hoststr);
                         ViceLog(0,
 				("CB: RCallBackConnectBack (host.c) failed for host %s:%d\n",
 				 hoststr, ntohs(host->port)));
@@ -2024,7 +2024,7 @@ int CheckHost(register struct host *host, int held)
 			if(code) {
 			    if ( MultiProbeAlternateAddress_r(host) ) {
 				char hoststr[16];
-				afs_inet_ntoa_r(host->host, hoststr);
+				(void) afs_inet_ntoa_r(host->host, hoststr);
                                 ViceLog(0,
 					("ProbeUuid failed for host %s:%d\n",
 					 hoststr, ntohs(host->port)));
@@ -2037,7 +2037,7 @@ int CheckHost(register struct host *host, int held)
 			H_LOCK
 			if (code) {
 			    char hoststr[16];
-			    afs_inet_ntoa_r(host->host, hoststr);
+			    (void) afs_inet_ntoa_r(host->host, hoststr);
 			    ViceLog(0, ("Probe failed for host %s:%d\n",
 					hoststr, ntohs(host->port)));
 			    host->hostFlags |= VENUSDOWN;

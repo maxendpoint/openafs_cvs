@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.11 2003/03/03 15:10:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/clone.c,v 1.12 2003/06/02 14:36:16 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -68,7 +68,7 @@ int (*vol_PollProc)() =	0;  /* someone must init this */
  */
 struct clone_rock {
     IHandle_t *h;
-    afs_int32 vol;
+    VolId vol;
 };
 
 #define CLONE_MAXITEMS	100

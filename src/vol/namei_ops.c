@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.14 2003/03/28 09:35:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.15 2003/06/02 14:36:16 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -212,7 +212,7 @@ int namei_ViceREADME(char *partition)
    sprintf(filename, "%s/%s/README", partition, INODEDIR);
    fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0444);
    if (fd >= 0) {
-      write(fd, VICE_README, strlen(VICE_README));
+      (void) write(fd, VICE_README, strlen(VICE_README));
       close(fd);
    }
    return(errno);
@@ -1448,7 +1448,7 @@ int namei_ConvertROtoRWvolume(IHandle_t * h, afs_uint32 vid)
         return EIO;
     }
 
-    while (dp = readdir(dirp)) {
+    while ((dp = readdir(dirp))) {
         /* struct ViceInodeInfo info; */
 
         if (*dp->d_name == '.') continue;

@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.11 2003/03/28 09:35:57 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.12 2003/06/02 14:36:16 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -41,8 +41,8 @@ RCSID("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.11 2003/03/28 09:35:57 shadow
 #include <afs/afsint.h>
 #include <errno.h>
 #include <afs/afssyscalls.h>
-#include "ihandle.h"
 #include "nfs.h"
+#include "ihandle.h"
 #include "viceinode.h"
 #ifdef AFS_PTHREAD_ENV
 #include <assert.h>
@@ -136,8 +136,10 @@ void ih_Initialize() {
     /* Avoid problems with "UFSOpen: igetinode failed" panics on HPUX 11.0 */
     fdMaxCacheSize = 0;
 #else
-    fdMaxCacheSize = MAX(sysconf(_SC_OPEN_MAX)-FD_HANDLE_SETASIDE, 0);
-    fdMaxCacheSize = MIN(fdMaxCacheSize, FD_MAX_CACHESIZE);
+    {
+	long	fdMax = MAX(sysconf(_SC_OPEN_MAX)-FD_HANDLE_SETASIDE, 0);
+	fdMaxCacheSize = (int) MIN(fdMax, FD_MAX_CACHESIZE);
+    }
 #endif
     fdCacheSize = MIN(fdMaxCacheSize, FD_DEFAULT_CACHESIZE);
 }
@@ -277,7 +279,7 @@ FdHandle_t *ih_open(IHandle_t *ihP)
 	    DLL_DELETE(fdP, fdLruHead, fdLruTail, fd_next, fd_prev);
 	    ihP->ih_refcnt++;
 	    IH_UNLOCK
-	    FDH_SEEK(fdP, 0, SEEK_SET);
+	    (void) FDH_SEEK(fdP, 0, SEEK_SET);
 	    return fdP;
 	}
     }
