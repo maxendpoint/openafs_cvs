@@ -18,18 +18,19 @@
 #include <WINNT/afssw.h>
 #endif
 #include <stdio.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#else
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 #include <stdlib.h>
 
-RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.3 2001/06/23 16:31:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/utils.c,v 1.4 2001/06/28 15:45:45 shadow Exp $");
 
 int
 AddToList(ah, aname)
