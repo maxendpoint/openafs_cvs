@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.16.2.1 2004/08/25 07:03:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.16.2.2 2004/12/07 06:07:20 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/debug.h>
@@ -514,6 +514,7 @@ ka_islocked(char *name, char *instance, afs_uint32 * when)
 	code =
 	    ubik_CallIter(KAM_LockStatus, conn, UPUBIKONLY, &count, name,
 			  instance, &tempwhen, /*spares */ 0, 0, 0,
+			  0, 0, 0, 0, 0, 0, 0, 0,
 			  0);
 	if (code) {
 	    if (seriouserror(code))
