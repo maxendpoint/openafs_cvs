@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.12 2002/08/21 18:14:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.13 2002/10/10 21:22:48 rees Exp $");
 
 #ifdef AFS_SUN5_ENV
 #include "../rx/rx_kcommon.h"
@@ -312,8 +312,8 @@ int osi_FreeSocket(register struct osi_socket *asocket)
     return 0;
 }
 
-int osi_NetSend(struct osi_socket *asocket, struct sockaddr_in *addr, 
-	struct iovec dvec[], int nvecs, afs_int32 asize, int istack) 
+int osi_NetSend(osi_socket asocket, struct sockaddr_in *addr, 
+	struct iovec *dvec, int nvecs, afs_int32 asize, int istack) 
 {
     struct sonode *so = (struct sonode *)asocket;
     struct nmsghdr msg;
@@ -536,8 +536,8 @@ int osi_FreeSocket(register struct osi_socket *asocket)
 }
 
 
-int osi_NetSend(register struct osi_socket *asocket, struct sockaddr_in *addr, 
-	struct iovec dvec[], int nvecs, register afs_int32 asize, int istack) 
+int osi_NetSend(osi_socket asocket, struct sockaddr_in *addr, 
+		struct iovec *dvec, int nvecs, afs_int32 asize, int istack) 
 {
     int i;
     int code;

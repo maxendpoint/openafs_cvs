@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.5 2002/08/21 18:14:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.6 2002/10/10 21:22:49 rees Exp $");
 
 #include "../rx/rx_kcommon.h"
 
@@ -265,7 +265,7 @@ void osi_StopListener(void)
     rxk_FreeSocket((struct usr_socket *)rx_socket);
 }
 
-int osi_NetSend(struct osi_socket *sockp, struct sockaddr_in *addr, 
+int osi_NetSend(osi_socket sockp, struct sockaddr_in *addr, 
 	struct iovec *iov, int nio, afs_int32 size, int stack) 
 {
     int rc;

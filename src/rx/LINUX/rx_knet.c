@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.11 2002/08/21 18:14:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.12 2002/10/10 21:22:48 rees Exp $");
 
 #ifdef AFS_LINUX22_ENV
 #include "../rx/rx_kcommon.h"
@@ -71,8 +71,8 @@ int rxk_FreeSocket(register struct socket *asocket)
  * 0 = success
  * non-zero = failure
  */
-int osi_NetSend(struct socket *sop, struct sockaddr_in *to,
-		struct iovec *iov, int iovcnt, int size, int istack)
+int osi_NetSend(osi_socket sop, struct sockaddr_in *to,
+		struct iovec *iov, int iovcnt, afs_int32 size, int istack)
 {
     KERNEL_SPACE_DECL;
     struct msghdr msg;

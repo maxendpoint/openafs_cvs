@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.7 2002/08/21 18:13:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/AIX/rx_knet.c,v 1.8 2002/10/10 21:22:45 rees Exp $");
 
 #ifdef AFS_AIX41_ENV
 #include "../rx/rx_kcommon.h"
@@ -289,13 +289,9 @@ void shutdown_rxkernel(void)
  * and just queue those.  XXX
  */
 
-osi_NetSend(asocket, addr, dvec, nvec, asize, istack)
-register struct socket *asocket;
-struct iovec *dvec;
-int nvec;
-register afs_int32 asize;
-struct sockaddr_in *addr;
-int istack;
+int
+osi_NetSend(osi_socket asocket, struct sockaddr_in *addr,
+	    struct iovec *dvec, int nvec, afs_int32 asize, int istack)
 {
     register struct mbuf *tm, *um;
     register afs_int32 code;

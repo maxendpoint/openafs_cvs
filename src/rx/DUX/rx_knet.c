@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/rx/DUX/Attic/rx_knet.c,v 1.7 2002/08/21 18:13:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/DUX/Attic/rx_knet.c,v 1.8 2002/10/10 21:22:46 rees Exp $");
 
 #ifdef AFS_DUX40_ENV
 #include "../rx/rx_kcommon.h"
@@ -209,13 +209,8 @@ register struct sockbuf *sb; {
 }
 
 int 
-osi_NetSend(asocket, addr, dvec, nvec, asize, istack)
-     register struct socket *asocket;
-     struct iovec *dvec;
-     int nvec;
-     register afs_int32 asize;
-     struct sockaddr_in *addr;
-     int istack;
+osi_NetSend(osi_socket asocket, struct sockaddr_in *addr,
+	    struct iovec *dvec, int nvec, afs_int32 asize, int istack)
 {
     register struct mbuf *tm, *um;
     register afs_int32 code;
