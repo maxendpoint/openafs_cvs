@@ -359,8 +359,7 @@ install:
 
 uninstall:
 
-all: run-tests $(TEST_PROGRAMS) OS.pm ${TOP_LIBDIR}/libxfiles.a \
-	${TOP_LIBDIR}/libdumpscan.a \
+all: run-tests $(TEST_PROGRAMS) OS.pm libxfiles.a libdumpscan.a \
 	afsdump_scan afsdump_dirlist afsdump_extract dumptool
 
 clean:
