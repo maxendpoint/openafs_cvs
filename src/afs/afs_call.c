@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.36 2002/09/11 06:38:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.37 2002/09/11 06:44:16 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -337,7 +337,7 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 #endif
     }
     AFS_GLOCK();
-#if defined(AFS_LINUX24_ENV) && !defined(UKERNEL)
+#if defined(AFS_LINUX24_ENV) && defined(COMPLETION_H_EXISTS) && !defined(UKERNEL)
     if (parm < AFSOP_ADDCELL || parm == AFSOP_RXEVENT_DAEMON
          || parm == AFSOP_RXLISTENER_DAEMON) {
          afs_DaemonOp(parm,parm2,parm3,parm4,parm5,parm6);
