@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_osi_vget.c,v 1.5 2001/08/08 00:03:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_osi_vget.c,v 1.6 2001/11/01 05:24:35 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -55,7 +55,7 @@ int afs_osi_vget(struct vcache **avcpp, struct fid *afidp,
 	 */
 	struct cell *tcell;
 	cellindex = (Sfid.CellAndUnique >> 24) & 0xff;
-	tcell = afs_GetCellByIndex(cellindex, READ_LOCK);
+	tcell = afs_GetCellByIndex(cellindex, READ_LOCK, 0 /* don't refresh */);
 	if (!tcell) {
 	    return ENOENT;
         }

@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.20 2001/10/24 15:25:22 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.21 2001/11/01 05:24:37 shadow Exp $");
 
 #define VFS 1
 
@@ -1058,6 +1058,16 @@ struct afsconf_dir *adir; {
     return 0;
 }
 
+static ConfigCellAlias(aca, arock, adir)
+    register struct afsconf_cellalias *aca;
+    char *arock;
+    struct afsconf_dir *adir;
+{
+    /* push the alias into the kernel */
+    call_syscall(AFSOP_ADDCELLALIAS, aca->aliasName, aca->realName);
+    return 0;
+}
+
 #ifdef AFS_AFSDB_ENV
 static AfsdbLookupHandler()
 {
@@ -1612,6 +1622,7 @@ mainproc(as, arock)
     lookingForHomeCell = 1;
 
     afsconf_CellApply(cdir, ConfigCell, (char *) 0);
+    afsconf_CellAliasApply(cdir, ConfigCellAlias, (char *) 0);
 
     /*
      * If we're still looking for the home cell after the whole cell configuration database

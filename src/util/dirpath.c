@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.11 2001/09/20 20:10:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/dirpath.c,v 1.12 2001/11/01 05:24:38 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -357,12 +357,17 @@ static void initDirPathArray(void)
 	 "/NoUsrViceEtcThisCellFileOnWindows");
   sprintf(dirPathArray[AFSDIR_CLIENT_CELLSERVDB_FILEPATH_ID], "%s/%s",
 	  ntClientConfigDirShort, AFSDIR_CELLSERVDB_FILE_NTCLIENT);
+  strcpy(dirPathArray[AFSDIR_CLIENT_CELLALIAS_FILEPATH_ID],
+	 "/NoCellAliasOnWindows");
 #else
   pathp = dirPathArray[AFSDIR_CLIENT_THISCELL_FILEPATH_ID];
   AFSDIR_CLIENT_FILEPATH(pathp, AFSDIR_CLIENT_ETC_DIR, AFSDIR_THISCELL_FILE);
 
   pathp = dirPathArray[AFSDIR_CLIENT_CELLSERVDB_FILEPATH_ID]; 
   AFSDIR_CLIENT_FILEPATH(pathp, AFSDIR_CLIENT_ETC_DIR, AFSDIR_CELLSERVDB_FILE);
+
+  pathp = dirPathArray[AFSDIR_CLIENT_CELLALIAS_FILEPATH_ID]; 
+  AFSDIR_CLIENT_FILEPATH(pathp, AFSDIR_CLIENT_ETC_DIR, AFSDIR_CELLALIAS_FILE);
 #endif /* AFS_NT40_ENV */
 
   pathp = dirPathArray[AFSDIR_CLIENT_NETINFO_FILEPATH_ID];

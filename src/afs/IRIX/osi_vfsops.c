@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vfsops.c,v 1.5 2001/10/17 21:07:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/IRIX/osi_vfsops.c,v 1.6 2001/11/01 05:24:36 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -537,7 +537,7 @@ afs_vget(OSI_VFS_DECL(afsp), vnode_t **avcp, struct fid *fidp)
     afid2 = (afs_fid2_t*)fidp;
     if (afid2->af_len == sizeof(afs_fid2_t) - sizeof(afid2->af_len)) {
 	/* It's a checkpoint restart fid. */
-	tcell = afs_GetCellByIndex(afid2->af_cell, READ_LOCK);
+	tcell = afs_GetCellByIndex(afid2->af_cell, READ_LOCK, 0 /* !refresh */);
 	if (!tcell) {
 	    code = ENOENT;
 	    goto out;

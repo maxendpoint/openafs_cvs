@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.7 2001/11/01 04:40:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.8 2001/11/01 05:24:36 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -231,6 +231,10 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
     AFS_STATCNT(afs_remove);
     afs_Trace2(afs_iclSetp, CM_TRACE_REMOVE, ICL_TYPE_POINTER, adp,
 	       ICL_TYPE_STRING, aname);
+
+    /* Check if this is dynroot */
+    if (afs_IsDynroot(adp))
+	return afs_DynrootVOPRemove(adp, acred, aname);
 
     if (code = afs_InitReq(&treq, acred))
       return code;
