@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.52 2003/03/04 11:14:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.53 2003/03/04 12:51:47 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -5864,7 +5864,7 @@ static afs_int32 common_GiveUpCallBacks (struct rx_call *acall,
 					 struct AFSCBFids *FidArray,
 					 struct AFSCBs *CallBackArray)
 {
-    afs_int32 errorCode;
+    afs_int32 errorCode = 0;
     register int i;
     struct client *client;
     struct rx_connection *tcon;
@@ -5885,7 +5885,9 @@ static afs_int32 common_GiveUpCallBacks (struct rx_call *acall,
     TM_GetTimeOfDay(&opStartTime, 0);
 #endif /* FS_STATS_DETAILED */
 
-    ViceLog(1, ("SAFS_GiveUpCallBacks (Noffids=%d)\n", FidArray->AFSCBFids_len));
+    if (FidArray)
+	ViceLog(1, ("SAFS_GiveUpCallBacks (Noffids=%d)\n", FidArray->AFSCBFids_len));
+
     FS_LOCK
     AFSCallStats.GiveUpCallBacks++, AFSCallStats.TotalCalls++;
     FS_UNLOCK
@@ -5893,6 +5895,8 @@ static afs_int32 common_GiveUpCallBacks (struct rx_call *acall,
 	goto Bad_GiveUpCallBacks;
 
     if (!FidArray && !CallBackArray) {
+	ViceLog(1, "SAFS_GiveUpAllCallBacks: host=%x\n", 
+		(tcon->peer ? tcon->peer->host : 0));
 	errorCode = GetClient(tcon, &client);
         if (!errorCode) 
 	    DeleteAllCallBacks_r(client->host, 1);
