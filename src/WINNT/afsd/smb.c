@@ -1841,6 +1841,7 @@ smb_packet_t *smb_CopyPacket(smb_packet_t *pkt)
     tbp = GetPacket();
     memcpy(tbp, pkt, sizeof(smb_packet_t));
     tbp->wctp = tbp->data + ((unsigned int)pkt->wctp - (unsigned int)pkt->data);
+    smb_HoldVC(tbp->vcp);
     return tbp;
 }
 
