@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.15 2002/07/26 05:45:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vos.c,v 1.16 2002/08/05 22:07:12 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -3950,6 +3950,17 @@ register struct cmd_syndesc *as;
       printuuid=1;
   }
 
+  m_addrs.bulkaddrs_val = 0;
+  m_addrs.bulkaddrs_len = 0;
+
+  vcode = ubik_Call_New(VL_GetAddrs, cstruct, 0,
+                        0, 0, &m_unique, &nentries, &m_addrs);
+  if (vcode) {
+    fprintf(STDERR,"vos: could not list the server addresses\n");
+    PrintError("",vcode);
+    return( vcode );
+  }
+
   m_nentries            = 0;
   m_addrs.bulkaddrs_val = 0;
   m_addrs.bulkaddrs_len = 0;
@@ -3959,8 +3970,11 @@ register struct cmd_syndesc *as;
 
       vcode = ubik_Call_New(VL_GetAddrsU, cstruct, 0, &m_attrs, &m_uuid, 
 			&m_unique, &m_nentries, &m_addrs);
-      if(vcode == VL_NOENT)
-	  break;
+      if(vcode == VL_NOENT) {
+	  i++;
+          nentries++;
+          continue;
+      }
 
       if (vcode) {
 	  fprintf(STDERR,"vos: could not list the server addresses\n");
@@ -3971,7 +3985,7 @@ register struct cmd_syndesc *as;
       print_addrs(&m_addrs, &m_uuid, m_nentries, printuuid, noresolve);
       i++;
 
-      if ((as->parms[1].items)||(as->parms[0].items))
+      if ((as->parms[1].items)||(as->parms[0].items)||(i>nentries))
 	  break;
   }
     
