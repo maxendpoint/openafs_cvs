@@ -10,7 +10,7 @@
 #include <afs/param.h>
 #include <afsconfig.h>
 
-RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.5 2001/07/05 15:21:00 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/update/server.c,v 1.6 2001/07/05 15:56:54 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -176,7 +176,6 @@ int main (argc, argv)
     struct rx_securityClass *securityObjects[3];
     struct rx_service *service;
     extern struct rx_securityClass *rxnull_NewServerSecurityObject();
-    extern afs_int32 afsconf_GetKey();
 
     int a = 0;
     rxkad_level level;
