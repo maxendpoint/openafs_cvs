@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.12 2003/11/23 04:53:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.13 2003/11/24 22:09:19 rees Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -975,9 +975,10 @@ WorkerBee(as, arock)
     if (centralLogFile) {
 	struct stat sbuf;
 	afs_int32 statcode;
-#ifdef AFS_NT40_ENV
+#ifndef AFS_NT40_ENV
 	char path[AFSDIR_PATH_MAX];
 #endif
+
 	statcode = stat(centralLogFile, &sbuf);
 	centralLogIO = fopen(centralLogFile, "a");
 	if (!centralLogIO) {

@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.14 2003/11/23 04:53:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/admin_tools.c,v 1.15 2003/11/24 22:09:18 rees Exp $");
 
 #include <afs/stds.h>
 #include <afs/debug.h>
@@ -1348,8 +1348,8 @@ MyBeforeProc(struct cmd_syndesc *as, char *arock)
 	    }
 #else
 	    /* No explicit name provided: use Unix uid. */
-	    struct passwd pw = getpwuid(getuid());
-	    if (pw == 0) {
+	    struct passwd *pw = getpwuid(getuid());
+	    if (pw == NULL) {
 		printf("Can't figure out your name from your user id.\n");
 		return KABADCMD;
 	    }
