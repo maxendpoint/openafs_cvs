@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.1 2004/10/18 07:12:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.2 2004/10/27 19:36:52 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -855,7 +855,9 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
 	struct host *hp;
 	hp = cba[i].hp;
 	if (hp && xhost != hp) {
+	    H_UNLOCK;
 	    rx_PutConnection(hp->callback_rxcon);
+	    H_LOCK;
 	    h_Release_r(hp);
 	}
     }
