@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.67 2005/01/07 23:08:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.68 2005/01/14 03:03:27 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -2673,6 +2673,9 @@ rxi_ReceivePacket(register struct rx_packet *np, osi_socket socket,
 		MUTEX_ENTER(&conn->conn_data_lock);
 		conn->refCount--;
 		MUTEX_EXIT(&conn->conn_data_lock);
+		MUTEX_ENTER(&rx_stats_mutex);
+		rx_stats.nBusies++;
+		MUTEX_EXIT(&rx_stats_mutex);
 		return tp;
 	    }
 	    rxi_KeepAliveOn(call);
