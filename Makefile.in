@@ -23,8 +23,6 @@ afssrvbindir=@afssrvbindir@
 afssrvsbindir=@afssrvsbindir@
 afssrvlibexecdir=@afssrvlibexecdir@
 
-INSTALL=${TOP_SRCDIR}/pinstall/install
-
 # Systype-generic items
 SYS_NAME=@AFS_SYSNAME@
 MKAFS_OSTYPE=@MKAFS_OSTYPE@
