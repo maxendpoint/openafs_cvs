@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.21 2002/08/22 22:44:53 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.22 2002/08/22 23:26:22 shadow Exp $");
 
 #include "../afs/stds.h"
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
@@ -831,7 +831,7 @@ int afs_CellOrAliasExists(char *aname)
     return ret;
 }
 
-int afs_CellNumValid(int cellnum)
+int afs_CellNumValid(afs_int32 cellnum)
 {
     struct cell_name *cn;
 
