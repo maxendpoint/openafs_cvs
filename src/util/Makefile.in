@@ -12,7 +12,7 @@ HELPER_SPLINT=@HELPER_SPLINT@
 
 objects = assert.o base64.o casestrcpy.o ktime.o volparse.o hostparse.o \
 	 hputil.o kreltime.o isathing.o get_krbrlm.o uuid.o serverLog.o \
-	 dirpath.o fileutil.o netutils.o flipbase64.o uinit.o \
+	 dirpath.o fileutil.o netutils.o flipbase64.o \
 	 afs_atomlist.o afs_lhash.o snprintf.o strlcat.o strlcpy.o ${REGEX_OBJ}
 
 includes = \
@@ -72,9 +72,6 @@ hputil.o: ${srcdir}/hputil.c ${includes}
 
 flipbase64.o: ${srcdir}/flipbase64.c ${includes}
 	${CC} ${CFLAGS} -c ${srcdir}/flipbase64.c
-
-uinit.o: ${srcdir}/uinit.c ${includes}
-	${CC} ${CFLAGS} -c ${srcdir}/uinit.c
 
 volparse.o: ${srcdir}/volparse.c ${includes}
 	${CC} ${CFLAGS} -c ${srcdir}/volparse.c
@@ -385,4 +382,4 @@ check-splint:
 	    assert.c base64.c casestrcpy.c ktime.c volparse.c hostparse.c \
 	    hputil.c kreltime.c isathing.c get_krbrlm.c uuid.c serverLog.c \
 	    dirpath.c fileutil.c netutils.c flipbase64.c \
-	    afs_atomlist.c afs_lhash.c snprintf.c uinit.c
+	    afs_atomlist.c afs_lhash.c snprintf.c
