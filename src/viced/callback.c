@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.5 2005/01/31 04:10:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.6 2005/02/25 17:43:57 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -697,6 +697,7 @@ AddCallBack1_r(struct host *host, AFSFid * fid, afs_uint32 * thead, int type,
 	fe->vnode = fid->Vnode;
 	fe->unique = fid->Unique;
 	fe->ncbs = 0;
+	fe->status = 0;
 	hash = VHash(fid->Volume, fid->Unique);
 	fe->fnext = HashTable[hash];
 	HashTable[hash] = fetoi(fe);
