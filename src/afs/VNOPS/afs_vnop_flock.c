@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.14 2002/04/02 05:09:56 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.15 2002/04/09 18:08:10 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -508,7 +508,7 @@ struct AFS_UCRED *acred; {
     AFS_STATCNT(afs_lockctl);
     if (code = afs_InitReq(&treq, acred)) return code;
     afs_InitFakeStat(&fakestate);
-    code = afs_EvalFakeStat(&fakestate, &avc, &treq);
+    code = afs_EvalFakeStat(&avc, &fakestate, &treq);
     if (code) {
 	afs_PutFakeStat(&fakestate);
 	return code;
