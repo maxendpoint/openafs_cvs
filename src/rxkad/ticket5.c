@@ -62,7 +62,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/ticket5.c,v 1.6 2003/07/15 23:16:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/ticket5.c,v 1.7 2004/04/02 16:41:27 jaltman Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -413,7 +413,7 @@ krb5_des_decrypt(struct ktc_encryptionKey *key, int etype, void *in,
     des_key_schedule s;
     char cksum[24];
     size_t cksumsz;
-    int ret;
+    int ret = 1;	/* failure */
 
     cksum_func = NULL;
 
