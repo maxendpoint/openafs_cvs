@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.51 2003/07/01 18:37:20 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.52 2003/07/01 22:21:37 shadow Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -1087,6 +1087,9 @@ struct vcache *afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 	ip->i_mapping = &ip->i_data;
 #ifdef STRUCT_INODE_HAS_I_TRUNCATE_SEM
 	init_rwsem(&ip->i_truncate_sem);
+#endif
+#ifdef STRUCT_INODE_HAS_I_ALLOC_SEM
+	init_rwsem(&ip->i_alloc_sem);
 #endif
 #else
 	sema_init(&ip->i_atomic_write, 1);

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.15 2003/05/15 16:59:12 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.16 2003/07/01 22:21:38 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -122,6 +122,9 @@ int osi_UFSTruncate(register struct osi_file *afile, afs_int32 asize)
     if (code || tstat.size <= asize) return code;
     MObtainWriteLock(&afs_xosi,321);    
     AFS_GUNLOCK();
+#ifdef STRUCT_INODE_HAS_I_ALLOC_SEM
+    down_write(&inode->i_alloc_sem);
+#endif
     down(&inode->i_sem);
     inode->i_size = newattrs.ia_size = asize;
     newattrs.ia_valid = ATTR_SIZE | ATTR_CTIME;
@@ -152,6 +155,9 @@ int osi_UFSTruncate(register struct osi_file *afile, afs_int32 asize)
 #endif
     code = -code;
     up(&inode->i_sem);
+#ifdef STRUCT_INODE_HAS_I_ALLOC_SEM
+    up_write(&inode->i_alloc_sem);
+#endif
     AFS_GLOCK();
     MReleaseWriteLock(&afs_xosi);
     return code;
