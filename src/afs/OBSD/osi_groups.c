@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_groups.c,v 1.1 2002/10/28 21:28:27 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_groups.c,v 1.2 2003/04/17 22:14:30 rees Exp $");
 
 #include "afs/sysincludes.h"
 #include "afs/afsincludes.h"
@@ -85,7 +85,7 @@ setpag(struct proc *proc, struct ucred **cred, afs_uint32 pagvalue,
 
     AFS_STATCNT(setpag);
     ngroups = afs_getgroups(*cred, NGROUPS, gidset);
-    if (afs_get_pag_from_groups(gidset[0], gidset[1]) == NOPAG) {
+    if (afs_get_pag_from_groups(gidset[1], gidset[2]) == NOPAG) {
 	/* We will have to shift grouplist to make room for pag */
 	if (ngroups + 2 > NGROUPS) {
 	    return (E2BIG);
@@ -96,7 +96,7 @@ setpag(struct proc *proc, struct ucred **cred, afs_uint32 pagvalue,
 	ngroups += 2;
     }
     *newpag = (pagvalue == -1 ? genpag(): pagvalue);
-    afs_get_groups_from_pag(*newpag, &gidset[0], &gidset[1]);
+    afs_get_groups_from_pag(*newpag, &gidset[1], &gidset[2]);
     code = afs_setgroups(proc, cred, ngroups, gidset, change_parent);
     return code;
 }
