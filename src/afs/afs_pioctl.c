@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.10 2005/04/03 18:15:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.11 2005/04/03 19:49:20 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -3326,6 +3326,9 @@ HandleClientContext(struct afs_ioctl *ablob, int *com,
 	uid = afs_nobody;	/* NFS_NOBODY == -2 */
     }
     newcred = crget();
+#if defined(AFS_LINUX26_ENV)
+    newcred->cr_group_info = groups_alloc(0);
+#endif
 #ifdef	AFS_AIX41_ENV
     setuerror(0);
 #endif
