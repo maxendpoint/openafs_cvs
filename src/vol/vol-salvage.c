@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.38 2003/12/04 16:23:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.39 2003/12/04 17:02:38 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -1592,6 +1592,17 @@ GetInodeSummary(char *path, VolumeId singleVolumeNumber)
 	    unlink(summaryFileName);
 	    if (!singleVolumeNumber)	/* Remove the FORCESALVAGE file */
 		RemoveTheForce(fileSysPath);
+	    else {
+		struct VolumeSummary *vsp;
+		int i, j;
+
+		GetVolumeSummary(singleVolumeNumber);
+
+		for (i = 0,vsp = volumeSummaryp; i < nVolumes; i++) {
+		    if (vsp->fileName)
+			DeleteExtraVolumeHeaderFile(vsp);
+		}
+	    }
 	    Log("%s vice inodes on %s; not salvaged\n",
 		singleVolumeNumber ? "No applicable" : "No", dev);
 	    return -1;
