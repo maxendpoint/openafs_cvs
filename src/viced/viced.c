@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.26 2002/12/04 16:52:55 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.27 2003/01/04 05:20:55 kolya Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -317,6 +317,21 @@ CheckAdminName()
 	close(fd);	/* close fd if it was opened */
 
 } /*CheckAdminName*/
+
+
+#ifdef AFS_PTHREAD_ENV
+/* A special LWP that will receive signals, to avoid deadlock */
+static void SignalLWP()
+{
+    sigset_t nsigset;
+
+    sigfillset(&nsigset);
+    assert(AFS_SET_SIGMASK(SIG_UNBLOCK, &nsigset, NULL) == 0);
+
+    while (1)
+	sleep(60);
+}
+#endif
 
 
 /* This LWP does things roughly every 5 minutes */
@@ -1337,7 +1352,7 @@ main(int argc, char * argv[])
 #ifdef AFS_PTHREAD_ENV
     pthread_t parentPid, serverPid;
     pthread_attr_t tattr;
-    AFS_SIGSET_DECL;
+    sigset_t nsigset;
 #else /* AFS_PTHREAD_ENV */
     PROCESS parentPid, serverPid;
 #endif /* AFS_PTHREAD_ENV */
@@ -1609,12 +1624,14 @@ main(int argc, char * argv[])
 #ifdef AFS_PTHREAD_ENV
     assert(pthread_attr_init(&tattr) == 0);
     assert(pthread_attr_setdetachstate(&tattr, PTHREAD_CREATE_DETACHED) == 0);
-    /* Block signals in the threads */
-    AFS_SIGSET_CLEAR();
+    /* Block signals in this thread (and children), create a signal thread */
+    sigfillset(&nsigset);
+    assert(AFS_SET_SIGMASK(SIG_BLOCK, &nsigset, NULL) == 0);
+    assert(pthread_create(&serverPid, &tattr, (void *)SignalLWP, NULL) == 0);
+
     assert(pthread_create(&serverPid, &tattr, (void *)FiveMinuteCheckLWP, &fiveminutes) == 0);
     assert(pthread_create(&serverPid, &tattr, (void *)HostCheckLWP, &fiveminutes) == 0);
     assert(pthread_create(&serverPid, &tattr, (void *)FsyncCheckLWP, &fiveminutes) == 0);
-    AFS_SIGSET_RESTORE();
 #else /* AFS_PTHREAD_ENV */
     assert(LWP_CreateProcess(FiveMinuteCheckLWP, stack*1024, LWP_MAX_PRIORITY - 2,
 			     (void *) &fiveminutes, "FiveMinuteChecks", &serverPid) == LWP_SUCCESS);
