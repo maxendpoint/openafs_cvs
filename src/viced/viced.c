@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.22 2002/10/30 08:38:59 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.23 2002/10/30 08:40:38 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,6 +99,7 @@ extern afs_int32	BlocksSpare, PctSpare;
 void            ShutDown();
 static void	ClearXStatValues(), NewParms(), PrintCounters();
 static void     ResetCheckDescriptors(void), ResetCheckSignal(void);
+static void     CheckSignal(void);
 extern	int     GetKeysFromToken();
 extern int RXAFS_ExecuteRequest();
 extern int RXSTATS_ExecuteRequest();
