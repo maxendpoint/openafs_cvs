@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.2 2004/10/27 19:36:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.3 2004/10/28 18:09:04 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -855,12 +855,19 @@ MultiBreakCallBack_r(struct cbstruct cba[], int ncbas,
 	struct host *hp;
 	hp = cba[i].hp;
 	if (hp && xhost != hp) {
-	    H_UNLOCK;
-	    rx_PutConnection(hp->callback_rxcon);
-	    H_LOCK;
 	    h_Release_r(hp);
 	}
     }
+
+    /* H_UNLOCK around this so h_FreeConnection does not deadlock.
+       h_FreeConnection should *never* be called on a callback connection,
+       but on 10/27/04 a deadlock occurred where it was, when we know why,
+       this should be reverted. -- shadow */
+    H_UNLOCK;
+    for (i = 0; i < j; i++) {
+	rx_PutConnection(conns[i]);
+    }
+    H_LOCK;
 
     return;
 }
