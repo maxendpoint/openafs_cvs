@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.12 2002/01/01 18:34:05 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.13 2002/01/10 06:42:21 shadow Exp $");
 
 #if	defined(AFS_SUN_ENV) || defined(AFS_SUN5_ENV)
 /*
@@ -506,12 +506,10 @@ retry:
 #else
 	    ReleaseReadLock(&tdc->lock);
 	    ReleaseReadLock(&avc->lock);
-	    code = afs_ustrategy(buf, acred);	/* do the I/O */
-#endif
-#ifndef	AFS_SUN5_ENV    
+	    code = afs_ustrategy(buf);	/* do the I/O */
 	    ObtainReadLock(&avc->lock);
-#endif
 	    ObtainReadLock(&tdc->lock);
+#endif
 
 #ifdef	AFS_SUN5_ENV
 	    /* Before freeing unmap the buffer */
