@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.28 2003/01/07 23:38:28 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.29 2003/01/09 19:16:50 rees Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -973,7 +973,7 @@ static int ParseArgs(int argc, char *argv[])
 static void NewParms(int initializing)
 {
     static struct stat sbuf;
-    register afs_int64 i;
+    register afs_offs_t i;
     register int fd;
     char *parms;
     char *argv[MAXPARMS];
