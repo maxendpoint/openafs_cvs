@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.24 2004/04/15 23:49:13 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.25 2004/04/16 00:34:38 kolya Exp $");
 
 
 #ifdef	UKERNEL
@@ -1418,7 +1418,7 @@ ConfigCell(register struct afsconf_cell *aci, char *arock,
 {
     register int isHomeCell;
     register int i;
-    afs_int32 cellFlags;
+    afs_int32 cellFlags = 0;
     afs_int32 hosts[MAXHOSTSPERCELL];
 
     /* figure out if this is the home cell */
@@ -1684,7 +1684,7 @@ uafs_Init(char *rn, char *mountDirParam, char *confDirParam,
      */
     if (afsd_debug)
 	printf("%s: Calling AFSOP_RXLISTENER_DAEMON\n", rn);
-    fork_syscall(AFSCALL_CALL, AFSOP_RXLISTENER_DAEMON, FALSE);
+    fork_syscall(AFSCALL_CALL, AFSOP_RXLISTENER_DAEMON, FALSE, FALSE, FALSE);
 
     /*
      * Start the RX event handler.
@@ -1809,6 +1809,12 @@ uafs_Init(char *rn, char *mountDirParam, char *confDirParam,
 	call_syscall(AFSCALL_CALL, AFSOP_AFSLOG, (long)fullpn_AFSLogFile, 0,
 		     0, 0);
 
+    /*
+     * Tell the kernel about each cell in the configuration.
+     */
+    afsconf_CellApply(afs_cdir, ConfigCell, NULL);
+    afsconf_CellAliasApply(afs_cdir, ConfigCellAlias, NULL);
+
     if (afsd_verbose)
 	printf("%s: Forking AFS daemon.\n", rn);
     fork_syscall(AFSCALL_CALL, AFSOP_START_AFS);
@@ -1822,14 +1828,6 @@ uafs_Init(char *rn, char *mountDirParam, char *confDirParam,
     for (i = 0; i < nDaemons; i++) {
 	fork_syscall(AFSCALL_CALL, AFSOP_START_BKG);
     }
-
-    /*
-     * Tell the kernel about each cell in the configuration.
-     */
-    afsconf_CellApply(afs_cdir, ConfigCell, NULL);
-    afsconf_CellAliasApply(afs_cdir, ConfigCellAlias, NULL);
-
-    fork_syscall(AFSCALL_CALL, AFSOP_SET_THISCELL, afs_LclCellName);
 
     if (afsd_verbose)
 	printf("%s: Calling AFSOP_ROOTVOLUME with '%s'\n", rn, rootVolume);
