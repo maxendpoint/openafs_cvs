@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.8 2002/03/25 17:11:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DUX/Attic/osi_vfsops.c,v 1.9 2002/06/14 17:45:33 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -484,14 +484,16 @@ int mp_Afs_init(void)
     extern int Afs_xsetgroups(), afs_xioctl(), afs3_syscall();
     
     AFS_GLOCK();
-    sysent[AFS_SYSCALL].sy_call = afs3_syscall;
+    ((struct sysent *) (&sysent[AFS_SYSCALL]))->sy_call = afs3_syscall;
 #ifdef SY_NARG
-    sysent[AFS_SYSCALL].sy_info = 6;
+    ((struct sysent *) (&sysent[AFS_SYSCALL]))->sy_info = 6;
 #else
-    sysent[AFS_SYSCALL].sy_parallel = 0;
-    sysent[AFS_SYSCALL].sy_narg = 6;
+    ((struct sysent *) (&sysent[AFS_SYSCALL]))->sy_parallel = 0;
+    ((struct sysent *) (&sysent[AFS_SYSCALL]))->sy_narg = 6;
 #endif
-    sysent[SYS_setgroups].sy_call = Afs_xsetgroups;
+
+    ((struct sysent *) (&sysent[SYS_setgroups]))->sy_call =
+      Afs_xsetgroups;
     afs_xioctl_func = afsxioctl;    
     afs_xsetgroups_func = afsxsetgroups;
     afs_syscall_func = afssyscall;
