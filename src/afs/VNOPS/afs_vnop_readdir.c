@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.24.2.2 2004/10/18 17:43:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.24.2.3 2004/11/09 17:15:04 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -67,7 +67,7 @@ extern struct DirEntry *afs_dir_GetBlob();
     become static.
 */
 int
-BlobScan(struct fcache * afile, afs_int32 ablob)
+BlobScan(struct dcache * afile, afs_int32 ablob)
 {
     register afs_int32 relativeBlob;
     afs_int32 pageBlob;
@@ -641,8 +641,8 @@ afs_readdir(OSI_VC_ARG(avc), auio, acred)
 	origOffset = auio->afsio_offset;
 	/* scan for the next interesting entry scan for in-use blob otherwise up point at
 	 * this blob note that ode, if non-zero, also represents a held dir page */
-	if (!(us = BlobScan(&tdc->f, (origOffset >> 5)))
-	    || !(nde = (struct DirEntry *)afs_dir_GetBlob(&tdc->f, us))) {
+	if (!(us = BlobScan(tdc, (origOffset >> 5)))
+	    || !(nde = (struct DirEntry *)afs_dir_GetBlob(tdc, us))) {
 	    /* failed to setup nde, return what we've got, and release ode */
 	    if (len) {
 		/* something to hand over. */
@@ -932,8 +932,8 @@ afs1_readdir(avc, auio, acred)
 
 	/* scan for the next interesting entry scan for in-use blob otherwise up point at
 	 * this blob note that ode, if non-zero, also represents a held dir page */
-	if (!(us = BlobScan(&tdc->f, (origOffset >> 5)))
-	    || !(nde = (struct DirEntry *)afs_dir_GetBlob(&tdc->f, us))) {
+	if (!(us = BlobScan(tdc, (origOffset >> 5)))
+	    || !(nde = (struct DirEntry *)afs_dir_GetBlob(tdc, us))) {
 	    /* failed to setup nde, return what we've got, and release ode */
 	    if (len) {
 		/* something to hand over. */
