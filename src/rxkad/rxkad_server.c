@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.11 2002/10/28 01:18:39 jhutz Exp $");
+RCSID("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.12 2003/04/10 18:55:03 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -313,7 +313,7 @@ int rxkad_CheckResponse (struct rx_securityClass *aobj,
 				  kvno,
 				  client.name, client.instance, client.cell,
 				  &sessionkey, &host, &start, &end);
-	if (code) return RXKADBADTICKET;
+	if (code) return code;
     }
 
     /*
