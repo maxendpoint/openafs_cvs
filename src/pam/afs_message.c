@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_message.c,v 1.7 2001/09/07 04:36:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_message.c,v 1.8 2002/07/26 05:56:04 shadow Exp $");
 
 #include <sys/param.h>
 #include <afs/kautils.h>
@@ -85,6 +85,7 @@ static char *fallback_messages[] = {
     "ka error, code=%d",                        /* 44: KAERROR          */
     "Passwords are not equal",                  /* 45: NE_PASSWORD      */
     "AFS ignoring unregistered user %s\n"       /* 46: IGNORE_UNREG     */
+    "Alternate cell name: %s\n",		/* 47: OTHERCELL	*/
 };
 
 static int num_fallbacks = sizeof(fallback_messages)/sizeof(char *);

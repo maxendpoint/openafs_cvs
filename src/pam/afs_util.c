@@ -18,7 +18,7 @@
 #include <sys/wait.h>
 #include <limits.h>
 
-RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.8 2001/11/13 14:40:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.9 2002/07/26 05:56:04 shadow Exp $");
 
 #include "afs_util.h"
 
@@ -91,7 +91,7 @@ char *cv2string(ttp, aval)
     return tp;
 }
 
-int do_klog(const char* user, const char* password, const char* lifetime)
+int do_klog(const char* user, const char* password, const char* lifetime, const char* cell_name)
 {
 pid_t	pid;
 int	pipedes[2];
@@ -117,6 +117,10 @@ int	ret = 1;
    argv[argc++] = "klog";
 #endif
    argv[argc++] = (char*)user;
+   if (cell_name) {
+      argv[argc++] = "-cell";
+      argv[argc++] = (char*)cell_name;
+   }
    argv[argc++] = "-silent";
    argv[argc++] = "-pipe";
    if (lifetime != NULL) {
