@@ -73,6 +73,7 @@
 #define osi_AllocSmall afs_osi_Alloc
 #define osi_FreeSmall afs_osi_Free
 
+#define afs_suser() capable(CAP_SYS_ADMIN)
 #define afs_suser(x) capable(CAP_SYS_ADMIN)
 #define wakeup afs_osi_Wakeup
 
