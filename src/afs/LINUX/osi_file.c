@@ -11,9 +11,11 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.22 2004/12/08 17:21:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.23 2005/03/11 04:35:42 shadow Exp $");
 
+#ifdef AFS_LINUX24_ENV
 #include "h/module.h" /* early to avoid printf->printk mapping */
+#endif
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
 #include "afs/afs_stats.h"	/* afs statistics */

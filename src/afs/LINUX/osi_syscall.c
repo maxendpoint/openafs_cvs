@@ -15,9 +15,11 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_syscall.c,v 1.3 2005/03/03 16:56:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_syscall.c,v 1.4 2005/03/11 04:35:42 shadow Exp $");
 
+#ifdef AFS_LINUX24_ENV
 #include <linux/module.h> /* early to avoid printf->printk mapping */
+#endif
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
 #include "h/unistd.h"		/* For syscall numbers. */
