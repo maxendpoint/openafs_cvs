@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.14 2004/04/02 10:54:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.15 2004/04/02 11:12:01 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -538,8 +538,12 @@ ktc_GetToken(struct ktc_principal *server, struct ktc_token *token,
 
     /* user name is here */
 
-    /* check that ticket will fit */
-    if (MAXKTCTICKETLEN < ticketLen)
+    /* check that ticket will fit 
+	 * this compares the size of the ktc_token allocated by the app
+	 * which might be smaller than the current definition of MAXKTCTICKETLEN
+	 */
+	maxLen = tokenLen - sizeof(struct ktc_token) + MAXKTCTICKETLEN;
+	if (maxLen < ticketLen)
 		return KTC_TOOBIG;
 
     /* set return values */
