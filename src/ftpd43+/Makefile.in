@@ -39,12 +39,11 @@ SYS_NAME=@AFS_SYSNAME@
 include ../config/Makefile.version
 include ../config/Makefile.${SYS_NAME}
 
-LIBDIR=${TOP_LIBDIR}/
-AFSLIBS=${LIBDIR}/afs/libkauth.a ${LIBDIR}/afs/libprot.a ${LIBDIR}/libubik.a \
-	  ${LIBDIR}/afs/libauth.a ${TOP_LIBDIR}/librxkad.a ${LIBDIR}/afs/libsys.a \
+AFSLIBS=${TOP_LIBDIR}/libkauth.a ${TOP_LIBDIR}/libprot.a ${LIBDIR}/libubik.a \
+	  ${TOP_LIBDIR}/libauth.a ${TOP_LIBDIR}/librxkad.a ${TOP_LIBDIR}/libsys.a \
 	  ${TOP_LIBDIR}/libdes.a ${LIBDIR}/librx.a ${LIBDIR}/liblwp.a \
-          ${LIBDIR}/afs/libcmd.a ${LIBDIR}/afs/libcom_err.a ${LIBDIR}/afs/util.a \
-          ${LIBDIR}/afs/libaudit.a
+          ${TOP_LIBDIR}/libcmd.a ${TOP_LIBDIR}/libcom_err.a ${TOP_LIBDIR}/util.a \
+          ${TOP_LIBDIR}/libaudit.a
 
 LIBS = ${AFSLIBS} 
 CFLAGS=${OPTMZ} -I${TOP_INCDIR} ${XCFLAGS}
