@@ -10,13 +10,14 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.6 2001/11/10 22:36:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.7 2001/11/13 04:52:29 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #ifndef AFS_NT40_ENV
 #include <unistd.h>
 #endif
