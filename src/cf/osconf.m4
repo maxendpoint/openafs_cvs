@@ -427,6 +427,7 @@ case $AFS_SYSNAME in
 		XCFLAGS="-K -D_NO_PROTO -D_NONSTD_TYPES -D_MBI=void"
 		XLIBS="${LIB_AFSDB} -ldl"
 		SHLIB_LINKER="${MT_CC} -bM:SRE -berok"
+		AIX64="#"
 		;;
 
 	rs_aix51)
@@ -441,6 +442,7 @@ case $AFS_SYSNAME in
 		XCFLAGS="-K -D_NO_PROTO -D_NONSTD_TYPES -D_MBI=void"
 		XLIBS="${LIB_AFSDB} -ldl"
 		SHLIB_LINKER="${MT_CC} -bM:SRE -berok"
+		AIX64=""
 		;;
 
 	s390_linux22)
