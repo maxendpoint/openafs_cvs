@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.23 2002/10/30 08:40:38 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.24 2002/10/30 17:44:29 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -96,7 +96,7 @@ extern int      BreakVolumeCallBacks(), InitCallBack();
 extern	int     LogLevel, etext;
 extern afs_int32	BlocksSpare, PctSpare;
 
-void            ShutDown();
+void            ShutDown(void);
 static void	ClearXStatValues(), NewParms(), PrintCounters();
 static void     ResetCheckDescriptors(void), ResetCheckSignal(void);
 static void     CheckSignal(void);
@@ -208,9 +208,9 @@ static void CheckDescriptors()
 
 
 #ifdef AFS_PTHREAD_ENV
-void CheckSignal_Signal(x)       {CheckSignal(0);}
-void ShutDown_Signal(x)          {ShutDown(0);}
-void CheckDescriptors_Signal(x)  {CheckDescriptors(0);}
+void CheckSignal_Signal(x)       {CheckSignal();}
+void ShutDown_Signal(x)          {ShutDown();}
+void CheckDescriptors_Signal(x)  {CheckDescriptors();}
 #else /* AFS_PTHREAD_ENV */
 void CheckSignal_Signal(x)       {IOMGR_SoftSig(CheckSignal, 0);}
 void ShutDown_Signal(x)          {IOMGR_SoftSig(ShutDown, 0);}
@@ -538,7 +538,7 @@ void ShutDownAndCore(int dopanic)
 
 } /*ShutDown*/
 
-void ShutDown() /* backward compatibility */
+void ShutDown(void) /* backward compatibility */
 {
   ShutDownAndCore(DONTPANIC);
 }
