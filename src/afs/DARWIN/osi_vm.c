@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.12 2004/06/13 18:25:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vm.c,v 1.13 2004/06/14 08:36:09 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -60,6 +60,30 @@ osi_VM_FlushVCache(struct vcache *avc, int *slept)
 	ubc_uncache(vp);
 	ubc_release(vp);
 	ubc_info_free(vp);
+    }
+#else
+    /* This is literally clean_up_name_parent_ptrs() */
+    /* Critical to clean up any state attached to the vnode here since it's
+       being recycled, and we're not letting refcnt drop to 0 to trigger
+       normal recycling. */
+    if (VNAME(vp) || VPARENT(vp)) {
+	char *tmp1;
+	struct vnode *tmp2;
+
+	/* do it this way so we don't block before clearing 
+	   these fields. */
+	tmp1 = VNAME(vp);
+	tmp2 = VPARENT(vp);
+	VNAME(vp) = NULL;
+	VPARENT(vp) = NULL;
+            
+	if (tmp1) {
+	    remove_name(tmp1);
+	}
+            
+	if (tmp2) {
+	    vrele(tmp2);
+	}
     }
 #endif
 
