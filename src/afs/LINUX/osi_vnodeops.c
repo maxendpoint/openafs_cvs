@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.8 2004/12/17 14:43:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.9 2005/01/31 04:16:40 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1333,6 +1333,8 @@ afs_linux_rename(struct inode *oldip, struct dentry *olddp,
     const char *newname = newdp->d_name.name;
 
 #if defined(AFS_LINUX26_ENV)
+    struct dentry *rehash = NULL;
+
     lock_kernel();
 #endif
     /* Remove old and new entries from name hash. New one will change below.
@@ -1341,10 +1343,17 @@ afs_linux_rename(struct inode *oldip, struct dentry *olddp,
      * cases. Let another lookup put things right, if need be.
      */
 #if defined(AFS_LINUX26_ENV)
-    if (!d_unhashed(olddp))
-	d_drop(olddp);
-    if (!d_unhashed(newdp))
+    if (!d_unhashed(newdp)) {
 	d_drop(newdp);
+	rehash = newdp;
+    }
+
+#ifdef maybe
+    if (atomic_read(&olddp->d_count) > 1) {
+	printk("afs_linux_rename::shrink_dcache_parent()\n");
+	shrink_dcache_parent(olddp);
+    }
+#endif
 #else
     if (!list_empty(&olddp->d_hash))
 	d_drop(olddp);
@@ -1355,13 +1364,11 @@ afs_linux_rename(struct inode *oldip, struct dentry *olddp,
     code = afs_rename(ITOAFS(oldip), oldname, ITOAFS(newip), newname, credp);
     AFS_GUNLOCK();
 
-    if (!code) {
-	/* update time so it doesn't expire immediately */
-	newdp->d_time = jiffies;
-	d_move(olddp, newdp);
-    }
 
 #if defined(AFS_LINUX26_ENV)
+    if (rehash)
+	d_rehash(rehash);
+
     unlock_kernel();
 #endif
 
