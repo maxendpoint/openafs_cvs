@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/des/test/testit.c,v 1.5 2001/07/12 19:58:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/des/test/testit.c,v 1.6 2002/01/20 05:19:11 shadow Exp $");
 
 
 #define MIN_ARGC	0	/* min # args, not incl flags */
@@ -61,12 +61,6 @@ main(argc,argv)
     long in_length;
 
     progname=argv[0];		    /* salt away invoking program */
-
-    /* Assume a long is four bytes */
-    if (sizeof(long) != 4) {
-	fprintf(stdout,"\nERROR,  size of long is %d",sizeof(long));
-	exit(-1);
-    }
 
     while (--argc > 0 && (*++argv)[0] == '-')
 	for (i=1; argv[0][i] != '\0'; i++) {
