@@ -485,7 +485,7 @@ force:
 
 TARGET=finale
 build: force
-	$(MAKE) $(TARGET)
+	$(MAKE) $(TARGET) DEST=$(DEST) COMPILE_PART2B=$(COMPILE_PART2B) DESTDIR=$(DESTDIR)
 
 kupdate: updatekdir libafs_setup libuafs_setup
 
