@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.47 2003/03/23 06:44:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.48 2003/03/23 19:43:47 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -507,8 +507,10 @@ long parm, parm2, parm3, parm4, parm5, parm6;
 	char *tbuffer1 = osi_AllocSmallSpace(AFS_SMALLOCSIZ);
 	int cflags = parm4;
 
-	/* wait for basic init */
+#if 0
+	/* wait for basic init - XXX can't find any reason we need this? */
 	while (afs_initState < AFSOP_START_BKG) afs_osi_Sleep(&afs_initState);
+#endif
 
 	AFS_COPYIN((char *)parm2, (char *)tcell.hosts, sizeof(tcell.hosts), code);
 	if (!code) {

@@ -55,7 +55,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.31 2002/11/22 20:07:27 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.32 2003/03/23 19:43:49 shadow Exp $");
 
 #define VFS 1
 
@@ -1703,6 +1703,17 @@ mainproc(as, arock)
 	    printf("%s: Error enabling fakestat support.\n", rn);
     }
 
+    /*
+     * Tell the kernel about each cell in the configuration.
+     */
+    afsconf_CellApply(cdir, ConfigCell, NULL);
+    afsconf_CellAliasApply(cdir, ConfigCellAlias, NULL);
+
+    /*
+     * Set the primary cell name.
+     */
+    call_syscall(AFSOP_SET_THISCELL, LclCellName);
+
     /* Initialize AFS daemon threads. */
     if (afsd_verbose)
 	printf("%s: Forking AFS daemon.\n", rn);
@@ -1757,17 +1768,6 @@ mainproc(as, arock)
 	}
     }
 #endif
-
-    /*
-     * Tell the kernel about each cell in the configuration.
-     */
-    afsconf_CellApply(cdir, ConfigCell, NULL);
-    afsconf_CellAliasApply(cdir, ConfigCellAlias, NULL);
-
-    /*
-     * Set the primary cell name.
-     */
-    call_syscall(AFSOP_SET_THISCELL, LclCellName);
 
     /*
      * If the root volume has been explicitly set, tell the kernel.
