@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.75 2004/06/02 07:43:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.76 2004/06/02 19:40:34 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -852,13 +852,15 @@ afs_linux_dentry_revalidate(struct dentry *dp)
     struct vcache *lookupvcp = NULL;
     int code, bad_dentry = 1;
     struct sysname_info sysState;
-    struct vcache *vcp = ITOAFS(dp->d_inode);
-    struct vcache *parentvcp = ITOAFS(dp->d_parent->d_inode);
+    struct vcache *vcp, *parentvcp;
+
+    sysState.allocked = 0;
 
     AFS_GLOCK();
     lock_kernel();
 
-    sysState.allocked = 0;
+    vcp = ITOAFS(dp->d_inode);
+    parentvcp = ITOAFS(dp->d_parent->d_inode);
 
     /* If it's a negative dentry, then there's nothing to do. */
     if (!vcp || !parentvcp)
@@ -909,14 +911,14 @@ afs_linux_dentry_revalidate(struct dentry *dp)
     if (sysState.allocked)
 	osi_FreeLargeSpace(name);
 
-    AFS_GUNLOCK();
-    crfree(credp);
-
     if (bad_dentry) {
 	shrink_dcache_parent(dp);
 	d_drop(dp);
     }
+
     unlock_kernel();
+    AFS_GUNLOCK();
+    crfree(credp);
 
     return !bad_dentry;
 }
