@@ -12,9 +12,9 @@ include @TOP_OBJDIR@/src/config/Makefile.config
 
 
 CC=${MT_CC}
-INCLUDES=-I. -I${srcdir} -I${TOP_INCDIR} -I.. -I${srcdir}/../rx -I${srcdir}../des -I../des \
-	-I../rxkad -I${srcdir}/../rxkad -I../rxstat -I../fsint
-CFLAGS = ${OPTMZ} ${DBG} ${INCLUDES} -DRXDEBUG ${MT_CFLAGS} -I${TOP_OBJDIR}/src/config
+CFLAGS = ${COMMON_CFLAGS} -I${srcdir}/../des -I../des -I../rxkad -I${srcdir}/../rxkad \
+	-I../fsint -DRXDEBUG ${MT_CFLAGS}
+
 SFLAGS=-P -I${TOP_INCDIR}
 RX = ../rx
 CCRULE = ${CC} ${CFLAGS} -c $?
@@ -254,7 +254,7 @@ xdr_afsuuid.o: ${RX}/xdr_afsuuid.c
 #
 #   $ what /opt/langtools/bin/pxdb32
 #   /opt/langtools/bin/pxdb32:
-#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.18 $
+#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.19 $
 #
 # The problem occurs when -g and -O are both used when compiling des.c.
 # The simplest way to work around the problem is to leave out either -g or -O.
