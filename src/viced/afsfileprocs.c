@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.61 2003/03/17 17:26:22 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.62 2003/03/18 14:30:48 rees Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7171,7 +7171,6 @@ void init_sys_error_to_et(void) {
     sys2et[ENOTEMPTY] = UAENOTEMPTY;
     sys2et[ELOOP] = UAELOOP;
     sys2et[EWOULDBLOCK] = UAEWOULDBLOCK;
-#ifdef __linux__
     sys2et[ENOMSG] = UAENOMSG;
     sys2et[EIDRM] = UAEIDRM;
     sys2et[ECHRNG] = UAECHRNG;
@@ -7255,7 +7254,6 @@ void init_sys_error_to_et(void) {
     sys2et[EDQUOT] = UAEDQUOT;
     sys2et[ENOMEDIUM] = UAENOMEDIUM;
     sys2et[EMEDIUMTYPE] = UAEMEDIUMTYPE;
-#endif
 }
 
 afs_int32 sys_error_to_et(afs_int32 in) {
