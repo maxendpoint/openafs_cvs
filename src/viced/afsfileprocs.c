@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.37 2002/10/30 06:59:49 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.38 2002/10/30 07:06:46 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -923,7 +923,7 @@ Bad_FetchStatus:
 } /*SAFSS_FetchStatus*/
 
 
-afs_int32 SRXAFS_BulkStatus(struct rx_call *acall;
+afs_int32 SRXAFS_BulkStatus(struct rx_call *acall,
 			    struct AFSCBFids *Fids,
 			    struct AFSBulkStats *OutStats,
 			    struct AFSCBs *CallBacks,
