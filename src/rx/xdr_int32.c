@@ -34,11 +34,11 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/rx/xdr_int32.c,v 1.2 2002/08/21 18:52:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/xdr_int32.c,v 1.3 2002/08/22 20:59:47 shadow Exp $");
 
 #ifndef	NeXT
 
-#ifdef	KERNEL
+#if defined(KERNEL) && !defined(UKERNEL)
 #include <sys/param.h>
 #else
 #include <stdio.h>
