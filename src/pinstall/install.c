@@ -49,7 +49,7 @@ Generic install command.  Options are:
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.12 2002/01/01 18:57:30 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.13 2002/01/01 20:24:31 shadow Exp $");
 
 #include <stdio.h>
 #include <pwd.h>
@@ -205,7 +205,7 @@ char *iname, *oname; {
 		return -1;
 	}
 
-#ifndef AFS_OBSD_ENV
+#if !defined(AFS_OBSD_ENV) && !defined(AFS_NBSD_ENV)
 	/*
 	 * done the copy, now strip if desired.
 	 */
@@ -221,7 +221,7 @@ char *iname, *oname; {
 		strip[1] = oname;
 #ifdef	AFS_SUN5_ENV
 #define	STRIP_BIN	"/usr/ccs/bin/strip"
-#elif defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
+#elif defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
 #define STRIP_BIN	"/usr/bin/strip"
 #else
 #define	STRIP_BIN	"/bin/strip"
