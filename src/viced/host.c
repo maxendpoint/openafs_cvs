@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.15 2002/04/22 17:16:16 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.16 2002/05/24 22:05:47 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -987,7 +987,7 @@ retry:
 	code = RXAFSCB_WhoAreYou(host->callback_rxcon, &interf);
 	H_LOCK
 	if ( code == RXGEN_OPCODE ) {
-		identP = (struct Identity *)malloc(1);
+		identP = (struct Identity *)malloc(sizeof(struct Identity));
 		identP->valid = 0;
 		rx_SetSpecific(tcon, rxcon_ident_key, identP);
 		/* The host on this connection was unable to respond to 
@@ -1072,7 +1072,7 @@ retry:
 		code = RXAFSCB_WhoAreYou(host->callback_rxcon, &interf);
 		H_LOCK
 		if ( code == RXGEN_OPCODE ) {
-		    identP = (struct Identity *)malloc(1);
+		  identP = (struct Identity *)malloc(sizeof(struct Identity));
 		    identP->valid = 0;
 		    rx_SetSpecific(tcon, rxcon_ident_key, identP);
 		    ViceLog(25,
