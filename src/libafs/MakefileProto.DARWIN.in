@@ -1,5 +1,5 @@
 #/* Copyright (C) 1995, 1989 Transarc Corporation - All rights reserved */
-# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.7 2001/09/07 23:35:19 shadow Exp $
+# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.8 2001/09/10 20:21:10 shadow Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
@@ -139,8 +139,8 @@ osi_vnodeops.o: $(AFS)/osi_vnodeops.c
 osi_module.o: $(AFS)/osi_module.c
 	$(CRULE1)
 xdr.o: $(RX)/xdr.c
-	$(CRULE1);
+	$(CRULE1)
 xdr_array.o: $(RX)/xdr_array.c
-	$(CRULE1);
+	$(CRULE1)
 xdr_int64.o: $(RX)/xdr_int64.c
-	$(CRULE1);
+	$(CRULE1)
