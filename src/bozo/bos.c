@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.17 2003/07/15 23:14:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.18 2003/08/08 20:27:58 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -1716,7 +1716,7 @@ SalvageCmd(as)
 	} else {
 	    printf
 		("bos: can't initialize volume system client (code %d), trying anyway.\n",
-		 as->parms[2].items->data, code);
+		 code);
 	    strncpy(tname, as->parms[2].items->data, sizeof(tname));
 	}
 	if (volutil_GetPartitionID(as->parms[1].items->data) < 0) {
@@ -1802,7 +1802,7 @@ DoStat(aname, aconn, aint32p, firstTime)
 	printf("bos: failed to get status for instance '%s' (%s)\n", aname,
 	       em(code));
     else {
-	printf("currently ", aname);
+	printf("currently ");
 	if (temp == BSTAT_NORMAL)
 	    printf("running normally.\n");
 	else if (temp == BSTAT_SHUTDOWN)
