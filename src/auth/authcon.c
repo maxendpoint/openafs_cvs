@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.10 2002/10/16 17:48:48 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/auth/authcon.c,v 1.11 2002/10/16 19:42:38 rees Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -132,10 +132,10 @@ rxkad_level enclevel; {
 }
 
 /* build a fake ticket for 'afs' using keys from adir, returning an
- * appropriate security class and index.
- * astr is really a struct rx_securityClass.
+ * appropriate security class and index
  */
-afs_int32 afsconf_ClientAuth(struct afsconf_dir *adir, void *astr, afs_int32 *aindex)
+afs_int32 afsconf_ClientAuth(struct afsconf_dir *adir, 
+	struct rx_securityClass **astr, afs_int32 *aindex)
 {
     afs_int32 rc;
 
