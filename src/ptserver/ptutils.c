@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.10 2001/10/05 21:07:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.11 2002/05/21 05:30:27 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -180,7 +180,9 @@ int AccessOK (ut, cid, tentry, mem, any)
 	if ((flags & mem) && IsAMemberOf (ut, cid, aid)) return 1;
     }
     /* Allow members of SYSVIEWERID to get membership and status only */
-    if (((mem == PRP_STATUS_MEM)||(mem == PRP_MEMBER_MEM))&&(IsAMemberOf (ut, cid, SYSVIEWERID))) return 1;
+    if (((mem == PRP_STATUS_MEM)||(mem == PRP_MEMBER_MEM)||
+	 (any == PRP_OWNED_ANY))&&(IsAMemberOf (ut, cid, SYSVIEWERID))) 
+	return 1;
     if (IsAMemberOf (ut, cid, SYSADMINID)) return 1;
     return 0;				/* no access */
 }
