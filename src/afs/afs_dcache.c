@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.34 2002/11/15 17:19:40 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.35 2002/12/27 03:51:51 kolya Exp $");
 
 #include "afs/sysincludes.h" /*Standard vendor system headers*/
 #include "afsincludes.h" /*AFS-based standard headers*/
@@ -3062,12 +3062,17 @@ void afs_dcacheInit(int afiles, int ablocks, int aDentries, int achunk,
 	/*
 	 * Use a memory cache instead of a disk cache
 	 */
+	afs_int64 cachebytes;
+
 	cacheDiskType = AFS_FCACHE_TYPE_MEM;
 	afs_cacheType = &afs_MemCacheOps;
 	afiles = (afiles < aDentries) ? afiles : aDentries; /* min */
 	ablocks = afiles * (AFS_FIRSTCSIZE/1024);
 	/* ablocks is reported in 1K blocks */
-	code = afs_InitMemCache(afiles * AFS_FIRSTCSIZE, AFS_FIRSTCSIZE, aflags);
+
+	cachebytes = afiles;
+	cachebytes *= AFS_FIRSTCSIZE;
+	code = afs_InitMemCache(cachebytes, AFS_FIRSTCSIZE, aflags);
 	if (code != 0) {
 	    printf("afsd: memory cache too large for available memory.\n");
 	    printf("afsd: AFS files cannot be accessed.\n\n");

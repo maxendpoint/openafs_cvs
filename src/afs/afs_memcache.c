@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.11 2002/10/16 03:58:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.12 2002/12/27 03:51:51 kolya Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifndef AFS_LINUX22_ENV
@@ -34,7 +34,7 @@ static int memAllocMaySleep = 0;
 
 extern int cacheDiskType;
 
-int afs_InitMemCache(int size, int blkSize, int flags)
+int afs_InitMemCache(afs_int64 size, int blkSize, int flags)
   {
       int index;
 
