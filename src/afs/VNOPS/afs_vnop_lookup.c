@@ -22,7 +22,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.35 2002/08/22 22:44:58 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.36 2002/09/10 04:00:52 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -105,7 +105,7 @@ int EvalMountPoint(register struct vcache *avc, struct vcache *advc,
     struct VenusFid tfid;
     struct cell *tcell;
     char   *cpos, *volnamep;
-    char   type, buf[128];
+    char   type, *buf;
     afs_int32  prefetchRO;          /* 1=>No  2=>Yes */
     afs_int32  mtptCell, assocCell, hac=0;
     afs_int32  samecell, roname, len;
@@ -174,15 +174,18 @@ int EvalMountPoint(register struct vcache *avc, struct vcache *advc,
      * Don't know why we do this. Would have still found it in above call - jpm.
      */
     if (!tvp && (prefetchRO == 2)) {
-       strcpy(buf, volnamep);
-       afs_strcat(buf, ".readonly");
+	buf = (char *)osi_AllocSmallSpace(strlen(volnamep)+10);
 
-       tvp = afs_GetVolumeByName(buf, mtptCell, 1, areq, WRITE_LOCK);
+	strcpy(buf, volnamep);
+	afs_strcat(buf, ".readonly");
 
-       /* Try the associated linked cell if failed */
-       if (!tvp && hac && areq->volumeError) {
-	  tvp = afs_GetVolumeByName(buf, assocCell, 1, areq, WRITE_LOCK);
-       }
+	tvp = afs_GetVolumeByName(buf, mtptCell, 1, areq, WRITE_LOCK);
+       
+	/* Try the associated linked cell if failed */
+	if (!tvp && hac && areq->volumeError) {
+	    tvp = afs_GetVolumeByName(buf, assocCell, 1, areq, WRITE_LOCK);
+	}
+	osi_FreeSmallSpace(buf);
     }
   
     if (!tvp) return ENODEV;       /* Couldn't find the volume */
