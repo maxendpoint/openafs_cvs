@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.8 2002/07/31 22:35:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.9 2002/08/12 21:31:03 kolya Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -53,7 +53,7 @@ static long rx_pthread_n_event_wakeups;
  */
 static int rx_pthread_event_rescheduled = 0;
 
-static void rx_ListenerProc(void *);
+static void *rx_ListenerProc(void *);
 
 /*
  * We supply an event handling thread for Rx's event processing.
@@ -204,7 +204,7 @@ int sock;
 int *tnop;
 struct rx_call **newcallp;
 {
-    u_long host;
+    unsigned int host;
     u_short port;
     register struct rx_packet *p = (struct rx_packet *)0;
 
@@ -245,7 +245,7 @@ struct rx_call **newcallp;
 /* This is the listener process request loop. The listener process loop
  * becomes a server thread when rxi_ListenerProc returns, and stays
  * server thread until rxi_ServerProc returns. */
-static void rx_ListenerProc(void *argp)
+static void *rx_ListenerProc(void *argp)
 {
     int threadID;
     int sock = (int) argp;
