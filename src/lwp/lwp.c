@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.20 2002/09/09 23:43:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.21 2002/11/07 23:10:46 kolya Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -330,7 +330,7 @@ int LWP_CreateProcess(int (*ep)(), int stacksize, int priority,
 	}
 	stackptr -= stacksize;
 #else
-	if ((stackptr = (char *) malloc(stacksize)) == NULL) {
+	if ((stackptr = (char *) malloc(stacksize + 7)) == NULL) {
 	    Set_LWP_RC();
 	    return LWP_ENOMEM;
 	}

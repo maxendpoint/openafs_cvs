@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsutils.c,v 1.10 2002/08/21 18:14:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsutils.c,v 1.11 2002/11/07 23:10:51 kolya Exp $");
 
 #include <afs/stds.h>
 #ifdef AFS_NT40_ENV
@@ -500,6 +500,8 @@ afs_int32 vsu_ClientInit(noAuthFlag, confDir, cellName, sauth, uclientp, secproc
             break;
         }
     }
+
+    afsconf_Close(tdir);
 
     if (secproc)     /* tell UV module about default authentication */
         (*secproc) (sc, scIndex);
