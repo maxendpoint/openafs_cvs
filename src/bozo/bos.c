@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bozo/bos.c,v 1.11 2001/09/17 19:42:52 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bozo/bos.c,v 1.12 2001/09/18 04:26:58 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -1792,8 +1792,8 @@ main(argc, argv)
     afsconf_SawCell = 0;	/* Reset it */
     /* don't check error code, since fails sometimes when we're setting up a
      * system */
-    initialize_cmd_error_table();
-    initialize_bz_error_table();
+    initialize_CMD_error_table();
+    initialize_BZ_error_table();
 
     ts = cmd_CreateSyntax("start", StartServer, 0, "start running a server");
     cmd_AddParm(ts, "-server", CMD_SINGLE, 0, "machine name");

@@ -18,7 +18,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/uss.c,v 1.4 2001/07/12 19:59:23 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/uss.c,v 1.5 2001/09/18 04:27:26 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -1782,14 +1782,14 @@ void InitETTables()
      * In order to get error code -> error message translations to work,
      * we have to initialize all error tables.
      */
-    initialize_cmd_error_table();
-    initialize_rxk_error_table();
-    initialize_ktc_error_table();
-    initialize_ka_error_table();
-    initialize_acfg_error_table();
-    initialize_vl_error_table();
-    initialize_pt_error_table();
-    initialize_u_error_table();
+    initialize_CMD_error_table();
+    initialize_RXK_error_table();
+    initialize_KTC_error_table();
+    initialize_KA_error_table();
+    initialize_ACFG_error_table();
+    initialize_VL_error_table();
+    initialize_PT_error_table();
+    initialize_U_error_table();
 
 } /*InitETTables*/
 

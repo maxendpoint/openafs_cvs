@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/budb/server.c,v 1.6 2001/08/08 00:03:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/budb/server.c,v 1.7 2001/09/18 04:27:00 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -339,7 +339,7 @@ main(argc, argv)
 #endif
     osi_audit(BUDB_StartEvent, 0, AUD_END);
 
-    initialize_budb_error_table();
+    initialize_BUDB_error_table();
     initializeArgHandler();
 
     /* Initialize dirpaths */

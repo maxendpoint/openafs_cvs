@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/ubik/ubikclient.c,v 1.5 2001/07/12 19:59:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/ubikclient.c,v 1.6 2001/09/18 04:27:25 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -200,7 +200,7 @@ int ubik_ClientInit(
     int offset;
     register struct ubik_client *tc;
 
-    initialize_u_error_table();
+    initialize_U_error_table();
 
     if ( *aclient ) { 	/* the application is doing a re-initialization*/
 	LOCK_UBIK_CLIENT((*aclient))

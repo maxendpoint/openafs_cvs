@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.8 2001/09/17 21:37:21 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.9 2001/09/18 04:27:29 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -232,12 +232,12 @@ PrintError(msg, errcode)
 
 		afs_int32 offset;
 
-		initialize_ka_error_table();
-		initialize_rxk_error_table();
-		initialize_ktc_error_table();
-		initialize_acfg_error_table();
-		initialize_cmd_error_table();
-		initialize_vl_error_table();
+		initialize_KA_error_table();
+		initialize_RXK_error_table();
+		initialize_KTC_error_table();
+		initialize_ACFG_error_table();
+		initialize_CMD_error_table();
+		initialize_VL_error_table();
 		
 		offset = errcode & ((1<<ERRCODE_RANGE)-1);
 		fprintf(STDERR,"%s: %s\n",error_table_name (errcode), error_message (errcode));

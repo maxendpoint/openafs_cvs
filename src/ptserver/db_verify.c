@@ -12,7 +12,7 @@ extern int errno;
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.7 2001/09/17 19:42:56 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.8 2001/09/18 04:27:18 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -1044,8 +1044,8 @@ WorkerBee (as, arock)
     char *recreateFile;
     struct misc_data misc;		/* info & statistics */
 
-    initialize_pt_error_table();
-    initialize_u_error_table();
+    initialize_PT_error_table();
+    initialize_U_error_table();
     
     pr_dbaseName = AFSDIR_SERVER_PRDB_FILEPATH;
     memset(&misc, 0, sizeof(misc));

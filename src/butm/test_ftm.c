@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.5 2001/08/08 00:03:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butm/test_ftm.c,v 1.6 2001/09/18 04:27:03 shadow Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -114,7 +114,7 @@ main (argc, argv)
     TestInfo ti;
 
     whoami = argv[0];
-    initialize_butm_error_table();
+    initialize_BUTM_error_table();
     if (argc < 2) 
       goto usage;
 

@@ -1,4 +1,4 @@
-/* $Id: pt_util.c,v 1.3 2001/07/12 19:58:54 shadow Exp $ */
+/* $Id: pt_util.c,v 1.4 2001/09/18 04:27:18 shadow Exp $ */
 
 /*
  *
@@ -21,7 +21,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.3 2001/07/12 19:58:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.4 2001/09/18 04:27:18 shadow Exp $");
 
 #include <lock.h>
 #include <netinet/in.h>
@@ -193,7 +193,7 @@ char **argv;
     }
 
     Initdb();
-    initialize_pt_error_table();
+    initialize_PT_error_table();
 
     if (wflag) {
 	struct usr_list *u;

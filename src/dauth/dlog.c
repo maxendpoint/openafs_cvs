@@ -71,7 +71,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/dauth/Attic/dlog.c,v 1.6 2001/08/08 00:03:41 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/dauth/Attic/dlog.c,v 1.7 2001/09/18 04:27:10 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -400,9 +400,9 @@ main (argc, argv)
     zero_argc = argc;
     zero_argv = argv;
 
-    initialize_u_error_table();
-    initialize_ktc_error_table();
-    initialize_acfg_error_table();
+    initialize_U_error_table();
+    initialize_KTC_error_table();
+    initialize_ACFG_error_table();
 
     ts = cmd_CreateSyntax((char *) 0, CommandProc, 0, "obtain Kerberos authentication");
 

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/decode_ticket.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/decode_ticket.c,v 1.5 2001/09/18 04:27:13 shadow Exp $");
 
 #include <des.h>
 #include <afs/com_err.h>
@@ -35,8 +35,8 @@ int main (
     char bob[KA_TIMESTR_LEN];
 
     whoami = argv[0];
-    initialize_rxk_error_table();
-    initialize_ka_error_table();
+    initialize_RXK_error_table();
+    initialize_KA_error_table();
 
     if (argc != 3) {
 	printf ("Usage is %s key ticket\n", whoami);

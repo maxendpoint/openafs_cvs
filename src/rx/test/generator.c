@@ -52,7 +52,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/rx/test/generator.c,v 1.5 2001/07/12 19:59:08 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/rx/test/generator.c,v 1.6 2001/09/18 04:27:20 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -880,7 +880,7 @@ PRIVATE void WriteCltTrailer(char *serverName, int first, int last, FILE *itl_h)
     fprintf(itl_h,
 	    "int main (int argc, char *argv[]) {\n"
 	    "\tint code;\n\n"
-	    "\tinitialize_cmd_error_table();\n"
+	    "\tinitialize_CMD_error_table();\n"
 	    "\tSetupRunCmd();\n"
 	    "\tcode = cmd_Dispatch(argc, argv);\n\n"
 	    "\treturn(code);\n"
@@ -1334,7 +1334,7 @@ PRIVATE void WriteServTrailer(FILE *srv_h) {
 
 	    "int main(int argc, char **argv) {\n"
 	    "\tint code;\n"
-	    "\tinitialize_cmd_error_table();\n"
+	    "\tinitialize_CMD_error_table();\n"
 	    "\tSetupRunCmd();\n"
 	    "\tcode = cmd_Dispatch(argc, argv);\n"
 	    "\treturn(code);\n"

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.5 2001/08/08 00:03:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.6 2001/09/18 04:27:18 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -184,7 +184,7 @@ char **argv;
 #endif
     whoami = argv[0];
 
-    initialize_pt_error_table();
+    initialize_PT_error_table();
 
     strcpy(confdir, AFSDIR_CLIENT_ETC_DIRPATH);
     cell = 0;

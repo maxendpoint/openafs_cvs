@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.5 2001/07/12 19:58:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.6 2001/09/18 04:27:12 shadow Exp $");
 
 #include <afs/com_err.h>
 #include <rx/rxkad.h>
@@ -55,16 +55,16 @@ main (argc, argv)
     nsa.sa_flags = SA_FULLDUMP;
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
-    initialize_ka_error_table();
-    initialize_rxk_error_table();
-    initialize_ktc_error_table();
-    initialize_acfg_error_table();
-    initialize_cmd_error_table();
-    initialize_vl_error_table();
-    initialize_pt_error_table();
-    initialize_bz_error_table();
-    initialize_u_error_table();
-    initialize_vols_error_table();
+    initialize_KA_error_table();
+    initialize_RXK_error_table();
+    initialize_KTC_error_table();
+    initialize_ACFG_error_table();
+    initialize_CMD_error_table();
+    initialize_VL_error_table();
+    initialize_PT_error_table();
+    initialize_BZ_error_table();
+    initialize_U_error_table();
+    initialize_VOLS_error_table();
 
     if (argc < 2) {
 	fprintf (stderr, "Usage is: %s [<code>]+\n", argv[0]);
