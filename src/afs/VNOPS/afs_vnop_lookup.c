@@ -1162,6 +1162,12 @@ afs_lookup(adp, aname, avcp, acred)
 	    ObtainWriteLock(&tvc->lock,133);
 	    code = EvalMountPoint(tvc, adp, &tvolp, &treq);
 	    ReleaseWriteLock(&tvc->lock);
+
+	    if (code) {
+		if (tvolp) afs_PutVolume(tvolp, WRITE_LOCK);
+		goto done;
+	    }
+
 	    /* next, we want to continue using the target of the mt point */
 	    if (tvc->mvid && (tvc->states & CMValid)) {
 	      struct vcache *uvc;
