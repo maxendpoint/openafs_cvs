@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.26 2004/07/08 05:11:34 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.27 2004/07/28 20:59:58 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -237,7 +237,7 @@ LWP_QWait(void)
 {
     register PROCESS tp;
     (tp = lwp_cpptr)->status = QWAITING;
-    move(tp, &runnable[tp->priority], qwaiting);
+    move(tp, &runnable[tp->priority], &qwaiting);
     Set_LWP_RC();
     return LWP_SUCCESS;
 }
@@ -248,7 +248,7 @@ LWP_QSignal(pid)
 {
     if (pid->status == QWAITING) {
 	pid->status = READY;
-	move(pid, qwaiting, &runnable[pid->priority]);
+	move(pid, &qwaiting, &runnable[pid->priority]);
 	return LWP_SUCCESS;
     } else
 	return LWP_ENOWAIT;
