@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/fs.c,v 1.13 2001/11/01 05:24:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/fs.c,v 1.14 2002/03/10 19:08:03 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -64,7 +64,6 @@ static int RxStatProcCmd(), RxStatPeerCmd();
 
 extern char *hostutil_GetNameByINet();
 extern struct hostent *hostutil_GetHostByName();
-extern afs_int32 VL_GetEntryByNameO();
 
 extern int errno;
 extern struct cmd_syndesc *cmd_CreateSyntax();

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.11 2001/10/05 21:05:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.12 2002/03/10 19:08:01 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -411,7 +411,7 @@ ubeacon_Interact() {
 	/* now call our own voter module to see if we'll vote for ourself.  Note that
 	    the same restrictions apply for our voting for ourself as for our voting
 	    for anyone else. */
-	i = SVOTE_Beacon((struct rx_connection *) 0, ubeacon_AmSyncSite(), startTime, &ubik_dbase->version, &ttid);
+	i = SVOTE_Beacon((struct rx_call *) 0, ubeacon_AmSyncSite(), startTime, &ubik_dbase->version, &ttid);
 	if (i) {
 	    yesVotes += 2;
 	    if (amIMagic) yesVotes++;	/* extra epsilon */

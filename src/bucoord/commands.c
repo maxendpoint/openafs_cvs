@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.7 2002/02/16 18:23:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.8 2002/03/10 19:07:58 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -2288,7 +2288,6 @@ bc_dbVerifyCmd(as, arock)
     afs_int32 code = 0;
 
     extern struct udbHandleS udbHandle;
-    extern afs_int32 BUDB_DbVerify();
     
     detail = (as->parms[0].items ? 1 : 0);       /* print more details */
 

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.10 2001/10/11 21:51:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.11 2002/03/10 19:08:08 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1286,7 +1286,7 @@ afs_int32 fromDate;
  */
 afs_int32 SAFSVolRestore (acid, atrans, aflags,cookie)
 struct rx_call *acid;
-int aflags;
+afs_int32 aflags;
 afs_int32 atrans; 
 struct restoreCookie *cookie;
 {

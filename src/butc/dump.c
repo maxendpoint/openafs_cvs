@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/dump.c,v 1.7 2002/02/16 18:23:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/dump.c,v 1.8 2002/03/10 19:07:59 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -1501,7 +1501,6 @@ getDumpTape(dparamsPtr, interactiveFlag, append)
 
     extern struct tapeConfig globalTapeConfig;
     extern struct udbHandleS udbHandle;
-    extern afs_int32 BUDB_DeleteDump();
 
     askForTape = interactiveFlag;
     dparamsPtr->wroteLabel = 0;

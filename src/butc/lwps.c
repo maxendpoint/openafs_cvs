@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/butc/lwps.c,v 1.5 2001/08/08 00:03:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/butc/lwps.c,v 1.6 2002/03/10 19:07:59 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -2029,7 +2029,6 @@ updateTapeLabel(labelIfPtr, tapeInfoPtr, newLabelPtr)
     afs_uint32 taskId;
     int tapeIsLabeled = 0;
     int interactiveFlag;
-    extern afs_int32 BUDB_DeleteDump();
     int tapecount = 1;
 
     interactiveFlag = autoQuery;

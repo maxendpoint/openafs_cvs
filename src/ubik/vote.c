@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.10 2001/10/05 21:05:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/ubik/vote.c,v 1.11 2002/03/10 19:08:01 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -171,7 +171,7 @@ afs_int32 uvote_GetSyncSite() {
  * not voting for this sync site, or the time we actually voted yes, if
  * non-zero.
  */
-SVOTE_Beacon(rxcall, astate, astart, avers, atid)
+afs_int32 SVOTE_Beacon(rxcall, astate, astart, avers, atid)
     register struct rx_call *rxcall;
     afs_int32 astate;
     struct ubik_version *avers;
@@ -324,7 +324,7 @@ SVOTE_Beacon(rxcall, astate, astart, avers, atid)
 
 /* handle per-server debug command, where 0 is the first server.  Basic network
    debugging hooks. */
-SVOTE_SDebug(rxcall, awhich, aparm)
+afs_int32 SVOTE_SDebug(rxcall, awhich, aparm)
     struct rx_call *rxcall;
     afs_int32 awhich;
     register struct ubik_sdebug *aparm;
@@ -334,7 +334,7 @@ SVOTE_SDebug(rxcall, awhich, aparm)
     return code;
 }
 
-SVOTE_XSDebug(rxcall, awhich, aparm, isclone)
+afs_int32 SVOTE_XSDebug(rxcall, awhich, aparm, isclone)
     afs_int32 *isclone;
     struct rx_call *rxcall;
     afs_int32 awhich;
@@ -362,7 +362,7 @@ SVOTE_XSDebug(rxcall, awhich, aparm, isclone)
     return 2;
 }
 
-SVOTE_XDebug(rxcall, aparm, isclone)
+afs_int32 SVOTE_XDebug(rxcall, aparm, isclone)
     struct rx_call *rxcall;
     register struct ubik_debug *aparm;
     afs_int32 *isclone;
@@ -375,7 +375,7 @@ SVOTE_XDebug(rxcall, aparm, isclone)
 }
 
 /* handle basic network debug command.  This is the global state dumper */
-SVOTE_Debug(rxcall, aparm)
+afs_int32 SVOTE_Debug(rxcall, aparm)
     struct rx_call *rxcall;
     register struct ubik_debug *aparm; {
     int  i;
@@ -432,7 +432,7 @@ SVOTE_Debug(rxcall, aparm)
     return 0;
 }
 
-SVOTE_SDebugOld(rxcall, awhich, aparm)
+afs_int32 SVOTE_SDebugOld(rxcall, awhich, aparm)
     struct rx_call *rxcall;
     afs_int32 awhich;
     register struct ubik_sdebug_old *aparm; {
@@ -457,7 +457,7 @@ SVOTE_SDebugOld(rxcall, awhich, aparm)
 
 
 /* handle basic network debug command.  This is the global state dumper */
-SVOTE_DebugOld(rxcall, aparm)
+afs_int32 SVOTE_DebugOld(rxcall, aparm)
     struct rx_call *rxcall;
     register struct ubik_debug_old *aparm; {
 
@@ -512,7 +512,7 @@ SVOTE_DebugOld(rxcall, aparm)
 
 
 /* get the sync site; called by remote servers to find where they should go */
-SVOTE_GetSyncSite(rxcall, ahost)
+afs_int32 SVOTE_GetSyncSite(rxcall, ahost)
     register struct rx_call *rxcall;
     register afs_int32 *ahost; {
     register afs_int32 temp;
