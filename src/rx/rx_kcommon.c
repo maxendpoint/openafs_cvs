@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.37 2003/08/27 21:43:19 rees Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.38 2003/11/24 22:41:28 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -767,6 +767,8 @@ rxk_NewSocket(short aport)
     extern MBLKP allocb_wait(int, int);
     MBLKP bindnam;
     int addrsize = sizeof(struct sockaddr_in);
+    struct file *fp;
+    extern struct fileops socketops;
 #endif
 #ifdef AFS_SGI65_ENV
     bhv_desc_t bhv;
@@ -778,6 +780,17 @@ rxk_NewSocket(short aport)
 #endif
 #if	defined(AFS_HPUX102_ENV)
 #if     defined(AFS_HPUX110_ENV)
+    /* we need a file associated with the socket so sosend in NetSend 
+       will not fail */
+    fp = falloc();
+    if (!fp) goto bad;
+    fp->f_flag = FREAD | FWRITE;
+    fp->f_type = DTYPE_SOCKET;
+    fp->f_ops  = &socketops;
+
+    fp->f_data = (void *) newSocket;
+    newSocket->so_fp = (void *)fp;
+
     /* blocking socket */
     code = socreate(AF_INET, &newSocket, SOCK_DGRAM, 0, 0);
 #else /* AFS_HPUX110_ENV */
@@ -896,6 +909,13 @@ rxk_FreeSocket(register struct socket *asocket)
 #if defined(AFS_DARWIN_ENV) && defined(KERNEL_FUNNEL)
     thread_funnel_switch(KERNEL_FUNNEL, NETWORK_FUNNEL);
 #endif
+#ifdef AFS_HPUX110_ENV
+    if (asocket->so_fp) {
+	struct file * fp = asocket->so_fp;
+	FPENTRYFREE(fp);
+	asocket->so_fp = NULL;
+    }
+#endif /* AFS_HPUX110_ENV */
     soclose(asocket);
 #if defined(AFS_DARWIN_ENV) && defined(KERNEL_FUNNEL)
     thread_funnel_switch(NETWORK_FUNNEL, KERNEL_FUNNEL);
