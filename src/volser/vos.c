@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.39 2004/07/29 03:44:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.40 2004/07/29 18:51:20 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -2246,7 +2246,7 @@ ShadowVolume(as)
     MapPartIdIntoName(frompart, fromPartName);
     fprintf(STDOUT, "Volume %lu shadowed from %s %s to %s %s \n",
 	    (unsigned long)volid, as->parms[1].items->data, fromPartName,
-	    as->parms[4].items->data, toPartName);
+	    as->parms[3].items->data, toPartName);
 
     return 0;
 }
