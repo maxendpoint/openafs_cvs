@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.18 2004/01/01 07:55:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.19 2004/01/01 07:58:38 shadow Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -81,6 +81,10 @@ RCSID
 #ifndef AFS_LINUX20_ENV
 #include "netinet/in.h"
 #endif
+
+/* Irix needs this */
+struct DirEntry *DRead();
+
 #else /* !defined(UKERNEL) */
 #include "afs/stds.h"
 #include "afs/sysincludes.h"
@@ -129,9 +133,6 @@ RCSID
 #endif /* KERNEL */
 
 afs_int32 DErrno;
-
-/* Irix needs this */
-struct DirEntry *DRead();
 
 /* Local static prototypes */
 static struct DirEntry *FindItem(void *dir, char *ename,
