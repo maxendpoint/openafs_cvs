@@ -94,7 +94,8 @@ static struct mbuf *rxk_input (register struct mbuf *am, struct ifnet *aif)
     struct sockaddr_in taddr;
     int tlen;
     short port;
-    int data_len, comp_sum;
+    int data_len;
+    unsigned int comp_sum;
 
     SPLVAR;
     NETPRI;
