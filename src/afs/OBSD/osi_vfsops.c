@@ -19,7 +19,7 @@ NONINFRINGEMENT.
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vfsops.c,v 1.1 2002/10/28 21:28:27 rees Exp $
+ * $Id: osi_vfsops.c,v 1.2 2002/11/04 23:35:37 rees Exp $
  */
 
 /*
@@ -63,7 +63,7 @@ NONINFRINGEMENT.
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.1 2002/10/28 21:28:27 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/OBSD/osi_vfsops.c,v 1.2 2002/11/04 23:35:37 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -300,11 +300,40 @@ int
 afs_root(struct mount *mp,
 	      struct vnode **vpp)
 {
-    int error;
-    error = afs_root(mp, vpp);
-    if (!error)
-	vn_lock(*vpp, LK_EXCLUSIVE | LK_RETRY, curproc);		/* return it locked */
-    return error;
+    struct vrequest treq;
+    struct vcache *tvp;
+    int code;
+
+    AFS_STATCNT(afs_root);
+
+#ifdef  AFS_GLOBAL_SUNLOCK
+    mutex_enter(&afs_global_lock);
+#endif
+    if (!(code = afs_InitReq(&treq, osi_curcred())) &&
+	!(code = afs_CheckInit())) {
+	tvp = afs_GetVCache(&afs_rootFid, &treq, NULL, NULL);
+	if (tvp) {
+	    /* There is really no reason to over-hold this bugger--it's held
+	       by the root filesystem reference. */
+	    if (afs_globalVp != tvp) {
+		if (afs_globalVp)
+		    AFS_RELE(AFSTOV(afs_globalVp));
+		afs_globalVp = tvp;
+		AFS_HOLD(AFSTOV(afs_globalVp));
+	    }
+	    AFSTOV(tvp)->v_flag |= VROOT;
+	    afs_globalVFS = mp;
+	    *vpp = AFSTOV(tvp);
+	} else
+	    code = ENOENT;
+    }
+#ifdef  AFS_GLOBAL_SUNLOCK
+    mutex_exit(&afs_global_lock);
+#endif
+
+    if (!code)
+	vn_lock(*vpp, LK_EXCLUSIVE | LK_RETRY, curproc); /* return it locked */
+    return code;
 }
 
 int
@@ -424,7 +453,7 @@ afs_vfs_load(struct lkm_table *lkmtp,
     if (memname[M_AFSBUFFER] == NULL)
 	memname[M_AFSBUFFER] = afsbfrmem;
     lkmid = lkmtp->id;
-    printf("OpenAFS ($Revision: 1.1 $) lkm loaded\n");
+    printf("OpenAFS ($Revision: 1.2 $) lkm loaded\n");
     return 0;
 }
 
