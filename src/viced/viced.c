@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.32 2003/02/15 14:17:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/viced.c,v 1.33 2003/02/27 17:27:38 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -243,10 +243,12 @@ static void ResetCheckSignal(void)
 
 #if defined(AFS_HPUX_ENV)
     signo = SIGPOLL;
-#elsif defined(AFS_NT40_ENV)
+#else
+#if defined(AFS_NT40_ENV)
     signo = SIGUSR2;
 #else
     signo = SIGXCPU;
+#endif
 #endif
 
 #if defined(AFS_PTHREAD_ENV)

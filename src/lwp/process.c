@@ -12,7 +12,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/process.c,v 1.16 2002/09/09 23:43:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/process.c,v 1.17 2003/02/27 17:27:36 shadow Exp $");
 
 #include <stdio.h>
 #include <assert.h>
@@ -37,6 +37,12 @@ char*	newsp;
 {
 #if defined(AFS_IA64_LINUX20_ENV)
 	register unsigned long sp __asm__("r12");
+#elif defined(AFS_HPUX1122_ENV)
+/* don't need anything special, will use
+ * ucontext.uc_stack.ss_sp as it matches r12.
+ * This should also work for Linux,
+ * but dont have system to test DEE
+ */
 #else
 #error	"You need to update stack pointer register for this platform"
 #endif
@@ -45,7 +51,11 @@ char*	newsp;
 
 	savearea->state = 0;
 	getcontext(&savearea->ucontext);
+#if defined(AFS_HPUX1122_ENV)
+    savearea->topstack = savearea->ucontext.uc_stack.ss_sp;
+#else
 	savearea->topstack = sp;
+#endif
 	switch (savearea->state)
 	{
 		case 0:

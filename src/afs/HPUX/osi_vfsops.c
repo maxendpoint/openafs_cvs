@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_vfsops.c,v 1.9 2003/02/13 23:44:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/HPUX/osi_vfsops.c,v 1.10 2003/02/27 17:27:31 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -208,8 +208,13 @@ osi_InitGlock()
     if ( !afs_Starting ) {
 	afs_Starting = 1;
 	SPINUNLOCK_USAV(sched_lock, context);
+#if defined(AFS_HPUX1122_ENV)
 	b_initsema(&afs_global_sema, 1,  NFS_LOCK_ORDER2, "AFS GLOCK");
         /* afsHash(64); */	/* 64 buckets */
+#else
+    initsema(&afs_global_sema, 1, FILESYS_SEMA_PRI, FILESYS_SEMA_ORDER);
+          afsHash(64);  /* 64 buckets */
+#endif
     } else {
 	SPINUNLOCK_USAV(sched_lock, context);
     }
