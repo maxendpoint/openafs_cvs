@@ -9,6 +9,13 @@
 
 /* RX:  Globals for internal use, basically */
 
+/* This controls the size of an fd_set; it must be defined early before
+ * the system headers define that type and the macros that operate on it.
+ * Its value should be as large as the maximum file descriptor limit we
+ * are likely to run into on any platform.  Right now, that is 65536
+ * which is the default hard fd limit on Solaris 9 */
+#define FD_SETSIZE 65536
+
 #include <afsconfig.h>
 #ifdef KERNEL
 #include "afs/param.h"
@@ -17,7 +24,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.6 2003/07/15 23:16:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.7 2004/07/08 05:16:58 shadow Exp $");
 
 /* Enable data initialization when the header file is included */
 #define INIT(stuff) = stuff
