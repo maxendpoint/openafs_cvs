@@ -158,7 +158,7 @@ libinstall: \
 	${DESTDIR}${includedir}/afs/vl_opcodes.h \
 	${DESTDIR}${includedir}/afs/vlserver.h \
 	${DESTDIR}${includedir}/afs/vldbint.h \
-	${DESTDIR}${includedir}/afs/cnvldb.h \
+	${DESTDIR}${includedir}/afs/cnvldb.h 
 
 ${DESTDIR}${afssrvlibexecdir}/vlserver: vlserver
 	${INSTALL} $? $@
