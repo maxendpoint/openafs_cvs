@@ -32,7 +32,7 @@ $(LIBFILE): $(LIBOBJS)
 rxstat.cs.c rxstat.ss.c rxstat.xdr.c rxstat.h: rxstat.xg
 	$(RXGEN) -x $**
 
-copyheader:
+copyheader: rxstat.h
    $(COPY) rxstat.h $(INCFILEDIR)\rx\rxstat.h
 
 install: copyheader $(LIBFILE) $(INCFILES)
@@ -45,4 +45,3 @@ clean::
 
 
 mkdir:
-	
