@@ -82,7 +82,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.36 2003/03/04 10:40:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/callback.c,v 1.37 2003/03/10 16:11:49 shadow Exp $");
 
 #include <stdio.h> 
 #include <stdlib.h>      /* for malloc() */
@@ -1761,7 +1761,7 @@ int main(int argc, char **argv)
     }
     if (err || argc != 1) {
 	fprintf(stderr,
-		"Usage: cbd [-host cbid] [-fid volume vnode] [-stats] callbackdumpfile\n");
+		"Usage: cbd [-host cbid] [-fid volume vnode] [-stats] [-all] callbackdumpfile\n");
 	fprintf(stderr, "[cbid is shown for each host in the hosts.dump file]\n");
 	exit(1);
     }
