@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.10 2002/07/31 13:43:17 kolya Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.11 2002/07/31 18:43:31 kolya Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -32,9 +32,9 @@ extern afs_rwlock_t afs_xcbhash;
 
 #ifdef	AFS_OSF_ENV
 afs_link(avc, ndp)
-    register struct vcache *avc;
+    struct vcache *avc;
     struct nameidata *ndp; {
-    register struct vcache *adp = VTOAFS(ndp->ni_dvp);
+    struct vcache *adp = VTOAFS(ndp->ni_dvp);
     char *aname = ndp->ni_dent.d_name;
     struct ucred *acred = ndp->ni_cred;
 #else	/* AFS_OSF_ENV */
@@ -44,7 +44,7 @@ afs_link(OSI_VC_ARG(adp), avc, aname, acred)
 afs_link(avc, OSI_VC_ARG(adp), aname, acred)
 #endif
     OSI_VC_DECL(adp);
-    register struct vcache *avc;
+    struct vcache *avc;
     char *aname;
     struct AFS_UCRED *acred;
 {
