@@ -14,14 +14,22 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kaauxdb.c,v 1.6 2001/09/17 19:42:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kaauxdb.c,v 1.7 2001/10/05 21:17:18 shadow Exp $");
 
-#include <fcntl.h>
 #ifdef AFS_NT40_ENV
-#include <fcntl.h>
 #include <io.h>
 #else
 #include <sys/file.h>
+#endif
+#ifdef HAVE_FCNTL_H
+#include <fcntl.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <rx/rxkad.h>
 #include "ubik_int.h"

@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.7 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.8 2001/10/05 21:17:18 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -27,6 +27,13 @@ RCSID("$Header: /cvs/openafs/src/kauth/kpasswd.c,v 1.7 2001/08/08 00:03:46 shado
 #include <stdio.h>
 #ifndef AFS_NT40_ENV
 #include <pwd.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <signal.h>
 #include <afs/com_err.h>

@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.8 2001/09/17 19:42:54 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.9 2001/10/05 21:17:18 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -21,6 +21,13 @@ RCSID("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.8 2001/09/17 19:42:54 shado
 #else
 #include <sys/file.h>
 #include <netinet/in.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <stdio.h>
 #include <errno.h>

@@ -10,13 +10,20 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/klog.c,v 1.5 2001/08/08 00:03:46 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/klog.c,v 1.6 2001/10/05 21:17:18 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <rx/xdr.h>
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 
 #include <lock.h>

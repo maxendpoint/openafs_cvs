@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kas.c,v 1.5 2001/09/18 04:27:13 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kas.c,v 1.6 2001/10/05 21:17:18 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -27,6 +27,13 @@ RCSID("$Header: /cvs/openafs/src/kauth/kas.c,v 1.5 2001/09/18 04:27:13 shadow Ex
 #include <pwd.h>
 #else
 #include <WINNT/afsevent.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <afs/cellconfig.h>
 #include <afs/com_err.h>

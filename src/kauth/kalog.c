@@ -19,14 +19,20 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/kalog.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kalog.c,v 1.5 2001/10/05 21:17:18 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/afsutil.h>
-#ifndef AFS_NT40_ENV
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
 #include <strings.h>
 #endif
+#endif
+#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
 #include <sys/types.h>
 #include <time.h>
 #include <signal.h>

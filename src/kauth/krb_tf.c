@@ -47,13 +47,22 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/krb_tf.c,v 1.4 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/krb_tf.c,v 1.5 2001/10/05 21:17:18 shadow Exp $");
 
-#ifdef AFS_NT40_ENV
+#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
+#ifdef AFS_NT40_ENV
 #include <io.h>
 #else
 #include <sys/file.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <sys/types.h>
 #include <rx/xdr.h>

@@ -14,7 +14,7 @@
 #include <afs/param.h>
 #endif
 
-RCSID("$Header: /cvs/openafs/src/kauth/kalocalcell.c,v 1.5 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/kalocalcell.c,v 1.6 2001/10/05 21:17:18 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/pthread_glock.h"
@@ -35,6 +35,13 @@ RCSID("$Header: /cvs/openafs/src/kauth/kalocalcell.c,v 1.5 2001/07/12 19:58:40 s
 #include <winsock2.h>
 #else
 #include <netinet/in.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <afs/cellconfig.h>
 #include <rx/xdr.h>
