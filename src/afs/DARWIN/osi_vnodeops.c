@@ -1,7 +1,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.10 2002/10/16 03:58:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.11 2003/01/07 23:03:35 shadow Exp $");
 
 #include <afs/sysincludes.h>            /* Standard vendor system headers */
 #include <afsincludes.h>            /* Afs-based standard headers */
@@ -467,6 +467,11 @@ afs_vop_pagein(ap)
     }
     afs_BozonUnlock(&tvc->pvnLock, tvc);
     AFS_GUNLOCK();
+
+    /* Zero out rest of last page if there wasn't enough data in the file */
+    if (code == 0 && auio.uio_resid > 0)
+	memset(aiov.iov_base, 0, auio.uio_resid);
+
     kernel_upl_unmap(kernel_map, pl);
     if (!nocommit) {
       if (code)
