@@ -14,11 +14,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.18 2005/01/14 17:31:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fstrace.c,v 1.19 2005/03/26 00:44:49 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
-#if !defined(AFS_SUN3_ENV) && !defined(sys_vax_ul43) && !defined(AFS_DARWIN_ENV)
+#if !defined(AFS_SUN3_ENV) && !defined(sys_vax_ul43) 
 #include <time.h>
 /*#ifdef	AFS_AIX_ENV*/
 #include <sys/time.h>
