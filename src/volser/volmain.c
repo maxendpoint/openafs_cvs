@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.15 2003/11/15 04:59:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.16 2003/11/22 02:43:22 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -107,14 +107,18 @@ int Testing = 0;		/* for ListViceInodes */
 static
 MyBeforeProc(struct rx_call *acall)
 {
+    VTRANS_LOCK;
     runningCalls++;
+    VTRANS_UNLOCK;
     return 0;
 }
 
 static
 MyAfterProc(struct rx_call *acall, afs_int32 code)
 {
+    VTRANS_LOCK;
     runningCalls--;
+    VTRANS_UNLOCK;
     return 0;
 }
 
@@ -126,9 +130,12 @@ TryUnlock()
 {
     /* if there are no running calls, and there are no active transactions, then
      * it should be safe to release any partition locks we've accumulated */
+    VTRANS_LOCK;
     if (runningCalls == 0 && TransList() == (struct volser_trans *)0) {
+        VTRANS_UNLOCK;
 	VPFullUnlock();		/* in volprocs.c */
-    }
+    } else
+        VTRANS_UNLOCK;
 }
 
 /* background daemon for timing out transactions */
@@ -170,6 +177,7 @@ BKGSleep()
 #else /* AFS_PTHREAD_ENV */
 	    IOMGR_Sleep(TTrun);
 #endif
+	    VTRANS_LOCK;
 	    for (tt = TransList(); tt; tt = tt->next) {
 		if ((strcmp(tt->lastProcName, "DeleteVolume") == 0)
 		    || (strcmp(tt->lastProcName, "Clone") == 0)
@@ -180,8 +188,10 @@ BKGSleep()
 		    break;
 	    }
 	    if (tt) {
+	        VTRANS_UNLOCK;
 		sleep(TTsleep);
-	    }
+	    } else
+	        VTRANS_UNLOCK;
 	}
     }
 }

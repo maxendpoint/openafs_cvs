@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.8 2003/07/15 23:17:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.9 2003/11/22 02:43:22 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
@@ -53,25 +53,30 @@ NewTrans(avol, apart)
     struct timeval tp;
     struct timezone tzp;
 
+    VTRANS_LOCK;
     /* don't allow the same volume to be attached twice */
     for (tt = allTrans; tt; tt = tt->next) {
 	if ((tt->volid == avol) && (tt->partition == apart)) {
+	    VTRANS_UNLOCK;
 	    return (struct volser_trans *)0;	/* volume busy */
 	}
     }
+    VTRANS_UNLOCK;
     tt = (struct volser_trans *)malloc(sizeof(struct volser_trans));
     memset(tt, 0, sizeof(struct volser_trans));
     tt->volid = avol;
     tt->partition = apart;
-    tt->next = allTrans;
-    tt->tid = transCounter++;
     tt->refCount = 1;
     tt->rxCallPtr = (struct rx_call *)0;
     strcpy(tt->lastProcName, "");
     gettimeofday(&tp, &tzp);
     tt->creationTime = tp.tv_sec;
-    allTrans = tt;
     tt->time = FT_ApproxTime();
+    VTRANS_LOCK;
+    tt->tid = transCounter++;
+    tt->next = allTrans;
+    allTrans = tt;
+    VTRANS_UNLOCK;
     return tt;
 }
 
@@ -81,13 +86,16 @@ FindTrans(atrans)
      register afs_int32 atrans;
 {
     register struct volser_trans *tt;
+    VTRANS_LOCK;
     for (tt = allTrans; tt; tt = tt->next) {
 	if (tt->tid == atrans) {
 	    tt->time = FT_ApproxTime();
 	    tt->refCount++;
+	    VTRANS_UNLOCK;
 	    return tt;
 	}
     }
+    VTRANS_UNLOCK;
     return (struct volser_trans *)0;
 }
 
@@ -104,7 +112,9 @@ DeleteTrans(atrans)
 	atrans->tflags |= TTDeleted;
 	return 0;
     }
+
     /* otherwise we zap it ourselves */
+    VTRANS_LOCK;
     lt = &allTrans;
     for (tt = *lt; tt; lt = &tt->next, tt = *lt) {
 	if (tt == atrans) {
@@ -113,9 +123,11 @@ DeleteTrans(atrans)
 	    tt->volume = NULL;
 	    *lt = tt->next;
 	    free(tt);
+	    VTRANS_UNLOCK;
 	    return 0;
 	}
     }
+    VTRANS_UNLOCK;
     return -1;			/* failed to find the transaction in the generic list */
 }
 
@@ -151,6 +163,7 @@ GCTrans()
 
     now = FT_ApproxTime();
 
+    VTRANS_LOCK;
     for (tt = allTrans; tt; tt = nt) {
 	nt = tt->next;		/* remember in case we zap it */
 	if (tt->time + OLDTRANSWARN < now) {
@@ -168,6 +181,7 @@ GCTrans()
 	    GCDeletes++;
 	}
     }
+    VTRANS_UNLOCK;
     return 0;
 }
 
