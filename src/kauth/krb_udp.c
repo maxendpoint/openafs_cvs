@@ -15,7 +15,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.11 2001/07/12 19:58:40 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.12 2001/08/06 23:08:01 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -322,7 +322,7 @@ afs_int32 UDP_Authenticate (ksoc, client, name, inst, startTime, endTime, sname,
 			startTime + ntohl(tentry.max_ticket_lifetime));
 	if ((code = ka_LookupKey (tt, sname, sinst, &tgskvno, &tgskey)) ||
 	    (code = tkt_MakeTicket (ticket, &ticketLen, &tgskey,
-				    name, inst, "",
+				    name, inst, lrealm,
 				    startTime, endTime, &sessionKey,
 				    htonl(client->sin_addr.s_addr), sname, sinst)))
 	    goto abort;
