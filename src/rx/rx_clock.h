@@ -112,14 +112,14 @@ extern void clock_UpdateTime();
 #endif /* AFS_PTHREAD_ENV */
 
 /* Some comparison operators for clock values */
-#define	clock_Gt(a, b)	(int)((a)->sec>(b)->sec || ((a)->sec==(b)->sec && (a)->usec>(b)->usec))
-#define	clock_Ge(a, b)	(int)((a)->sec>(b)->sec || ((a)->sec==(b)->sec && (a)->usec>=(b)->usec))
-#define	clock_Eq(a, b)	(int)((a)->sec==(b)->sec && (a)->usec==(b)->usec)
-#define	clock_Le(a, b)	(int)((a)->sec<(b)->sec || ((a)->sec==(b)->sec && (a)->usec<=(b)->usec))
-#define	clock_Lt(a, b)	(int)((a)->sec<(b)->sec || ((a)->sec==(b)->sec && (a)->usec<(b)->usec))
+#define	clock_Gt(a, b)	((a)->sec>(b)->sec || ((a)->sec==(b)->sec && (a)->usec>(b)->usec))
+#define	clock_Ge(a, b)	((a)->sec>(b)->sec || ((a)->sec==(b)->sec && (a)->usec>=(b)->usec))
+#define	clock_Eq(a, b)	((a)->sec==(b)->sec && (a)->usec==(b)->usec)
+#define	clock_Le(a, b)	((a)->sec<(b)->sec || ((a)->sec==(b)->sec && (a)->usec<=(b)->usec))
+#define	clock_Lt(a, b)	((a)->sec<(b)->sec || ((a)->sec==(b)->sec && (a)->usec<(b)->usec))
 
 /* Is the clock value zero? */
-#define	clock_IsZero(c)	(int)((c)->sec == 0 && (c)->usec == 0)
+#define	clock_IsZero(c)	((c)->sec == 0 && (c)->usec == 0)
 
 /* Set the clock value to zero */
 #define	clock_Zero(c)	((c)->sec = (c)->usec = 0)
