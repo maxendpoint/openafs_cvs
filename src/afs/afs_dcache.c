@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.30 2002/10/09 00:45:53 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.31 2002/10/09 18:25:54 rees Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -1478,7 +1478,10 @@ struct dcache *afs_GetDCache(register struct vcache *avc, afs_size_t abyte,
 	register struct vrequest *areq, afs_size_t *aoffset, afs_size_t *alen, 
 	int aflags)
 {
-    register afs_int32 i, code, code1=0, shortcut, adjustsize=0;
+    register afs_int32 i, code, code1=0, shortcut;
+#if	defined(AFS_AIX32_ENV) || defined(AFS_SGI_ENV)
+    register afs_int32 adjustsize = 0;
+#endif
     int setLocks;
     afs_int32 index;
     afs_int32 us;

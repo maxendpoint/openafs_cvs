@@ -16,7 +16,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.18 2002/10/02 21:48:49 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.19 2002/10/09 18:25:54 rees Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -1110,7 +1110,7 @@ int SRXAFSCB_GetServerPrefs(struct rx_call *a_call, afs_int32 a_index,
 int SRXAFSCB_GetCellServDB(struct rx_call *a_call, afs_int32 a_index,
     char **a_name, serverList *a_hosts)
 {
-    afs_int32 i, j;
+    afs_int32 i, j = 0;
     struct cell *tcell;
     char *t_name, *p_name = NULL;
 
