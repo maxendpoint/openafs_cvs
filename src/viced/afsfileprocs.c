@@ -28,7 +28,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.13 2001/09/25 15:44:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.14 2001/10/01 17:35:50 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2536,15 +2536,15 @@ SAFSS_Symlink (tcon, DirFid, Name, LinkContents, InStatus, OutFid, OutFidStatus,
     }
 
     /*
-     * If we're creating a mount point (owner mode bits sans x bit), we must
-     * have administer access to the directory, too.  Always allow sysadmins
+     * If we're creating a mount point (any x bits clear), we must have
+     * administer access to the directory, too.  Always allow sysadmins
      * to do this.
      */
-    if ((InStatus->Mask & AFS_SETMODE) && !(InStatus->UnixModeBits & 0100)) {
+    if ((InStatus->Mask & AFS_SETMODE) && !(InStatus->UnixModeBits & 0111)) {
 	/*
-	 * We have a symlink, 'cause we're trying to set the Unix mode bits
-	 * to something without the owner x bits (default mode bits if
-	 * AFS_SETMODE is false is 0777)
+	 * We have a mountpoint, 'cause we're trying to set the Unix mode
+	 * bits to something with some x bits missing (default mode bits
+	 * if AFS_SETMODE is false is 0777)
 	 */
 	if (VanillaUser(client) && !(rights & PRSFS_ADMINISTER)) {
 	    errorCode = EACCES;
