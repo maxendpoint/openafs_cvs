@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.35 2003/02/15 06:35:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/viced/host.c,v 1.36 2003/02/16 00:22:00 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -704,7 +704,7 @@ int h_TossStuff_r(register struct host *host)
 	    if (client->refCount) {
 		char hoststr[16];
 		ViceLog(0, ("Warning: Host %s:%d client %x refcount %d while deleting.\n",
-			    afs_inet_ntoa_r(host->host, hoststr), host->port
+			    afs_inet_ntoa_r(host->host, hoststr), host->port,
 		    client, client->refCount)); 
 	    }
 	    if ((client->ViceId != ANONYMOUSID) && client->CPS.prlist_val) {
