@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.60 2003/05/15 14:53:28 rees Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.61 2003/05/21 02:38:04 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -229,16 +229,18 @@ copyin_afs_ioctl(caddr_t cmarg, struct afs_ioctl *dst)
 	}
 #endif /* defined(AFS_SGI_ENV) && (_MIPS_SZLONG==64) */
 
-#if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV) && !defined(AFS_AMD64_LINUX20_ENV)
+#if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV)
 	struct afs_ioctl32 dst32;
 
 #ifdef AFS_SPARC64_LINUX24_ENV
         if (current->thread.flags & SPARC_FLAG_32BIT)
-#elif AFS_SPARC64_LINUX20_ENV
+#elif defined(AFS_SPARC64_LINUX20_ENV)
 	if (current->tss.flags & SPARC_FLAG_32BIT)
+#elif defined(AFS_AMD64_LINUX20_ENV)
+        if (current->thread.flags & IA32_THREAD)
 #else
 #error Not done for this linux type
-#endif /* AFS_SPARC64_LINUX20_ENV */
+#endif
 	  {
 		AFS_COPYIN(cmarg, (caddr_t) &dst32, sizeof dst32, code);
 		if (!code)
