@@ -24,7 +24,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.6 2001/09/17 19:43:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.7 2001/09/17 21:21:05 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -793,7 +793,7 @@ CheckIpAddrs(header)
 
 }
 
-void
+int
 WorkerBee(as, arock)
   struct cmd_syndesc *as;
   char *arock;
