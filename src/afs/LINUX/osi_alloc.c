@@ -14,7 +14,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.12 2002/02/15 14:00:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.13 2002/04/23 03:26:38 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -187,9 +187,15 @@ hash_verify(size_t index, unsigned key, void *data)
     int memtype;
 
     memtype = MEMTYPE(lmp->chunk);
+#ifdef AFS_SPARC64_LINUX24_ENV
+    if ((memtype == KM_TYPE) && (!VALID_PAGE(virt_to_page(lmp->chunk)))) {
+	printf("osi_linux_verify_alloced_memory: address 0x%x outside range, index=%d, key=%d\n", lmp->chunk, index, key);
+    }
+#else
     if ((memtype == KM_TYPE) && (AFS_LINUX_MAP_NR(lmp->chunk) > max_mapnr)) {
 	printf("osi_linux_verify_alloced_memory: address 0x%x outside range, index=%d, key=%d\n", lmp->chunk, index, key);
     }
+#endif
     
     if (memtype != KM_TYPE && memtype != VM_TYPE) {
 	printf("osi_linux_verify_alloced_memory: unknown type %d at 0x%x, index=%d\n",    memtype, lmp->chunk, index);
