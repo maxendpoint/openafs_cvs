@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.33 2002/07/25 20:45:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.34 2002/07/25 23:37:51 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -495,6 +495,7 @@ restart:
     cur = head;
     while ((cur = cur->next) != head) {
 	dentry = list_entry(cur, struct dentry, d_alias);
+#ifdef notdef
 	if (DCOUNT(dentry)) {
 	    this_parent = dentry;
 	repeat:
@@ -533,6 +534,7 @@ restart:
 		goto resume;
 	    }
 	}
+#endif
 
 	if (!DCOUNT(dentry)) {
 	    AFS_GUNLOCK();
