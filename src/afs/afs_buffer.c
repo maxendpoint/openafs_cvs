@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.8 2002/08/21 18:12:36 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.9 2002/08/22 00:05:23 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -34,7 +34,7 @@ RCSID("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.8 2002/08/21 18:12:36 shad
 #include "../h/buf.h"
 #endif /* !defined(UKERNEL) */
 
-#if !defined(UKERNEL) && !defined(AFS_SUN5_ENV)
+#if !defined(UKERNEL) && defined(AFS_LINUX20_ENV)
 #include "../afs/osi_vfs.h"
 #endif
 
