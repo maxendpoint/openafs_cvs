@@ -167,6 +167,9 @@ EXTRA_OBJS = err.o errx.o warn.o warnx.o vwarn.o vwarnx.o verr.o verrx.o warnerr
 OpenAFS/OS.pm: OpenAFS/OS-$(MKAFS_OSTYPE).pm
 	$(CP) OpenAFS/OS-$(MKAFS_OSTYPE).pm OpenAFS/OS.pm
 
+fsx: fsx.o $(EXTRA_OBJS)
+	$(CC) $(LDFLAGS) -o $@ fsx.o $(EXTRA_OBJS) $(LIBS)
+
 write-rand: write-rand.o $(EXTRA_OBJS)
 	$(CC) $(LDFLAGS) -o $@ write-rand.o $(EXTRA_OBJS) $(LIBS)
 

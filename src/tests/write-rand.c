@@ -47,7 +47,7 @@
 #include <err.h>
 
 #ifdef RCSID
-RCSID("$Id: write-rand.c,v 1.1 2002/01/14 07:49:18 shadow Exp $");
+RCSID("$Id: write-rand.c,v 1.2 2002/02/19 18:29:16 shadow Exp $");
 #endif
 
 static char *
@@ -84,7 +84,7 @@ int
 main (int argc, char **argv)
 {
     const char *file;
-    const size_t sz;
+    size_t sz;
     char *random_buf;
     char *read_buf1;
     char *read_buf2;
