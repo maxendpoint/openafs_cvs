@@ -12,7 +12,7 @@
 #include <afs/param.h>
 #include <afs/afsutil.h>
 
-RCSID("$Header: /cvs/openafs/src/comerr/compile_et.c,v 1.10 2002/08/21 18:13:02 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/comerr/compile_et.c,v 1.11 2002/09/26 07:01:16 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,7 +47,11 @@ int use_msf = 0;
 /* lex stuff */
 extern FILE *yyin;
 extern FILE *yyout;
+#ifdef AFS_AIX51_ENV
+int yylineno = 0;
+#else
 extern int yylineno;
+#endif
 
 char * xmalloc (unsigned int size)
 {

@@ -13,7 +13,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/export/cfgexport.c,v 1.5 2001/08/08 00:03:44 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/export/cfgexport.c,v 1.6 2002/09/26 07:01:22 shadow Exp $");
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -32,7 +32,7 @@ extern char    *malloc(), *optarg;
 extern int	errno;
 extern int	sysconfig(int cmd, void *arg, int len);
 
-int debug;
+int debug = 0 ;
 char *syms = "/unix";
 
 #include "AFS_component_version_number.c"

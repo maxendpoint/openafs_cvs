@@ -3,7 +3,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.11 2002/08/21 19:19:37 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/util/snprintf.c,v 1.12 2002/09/26 07:01:29 shadow Exp $");
 
 #if defined(AFS_OSF20_ENV) && !defined(AFS_DUX50_ENV) || defined(AFS_AIX32_ENV) || (defined(AFS_SUN55_ENV) && !defined(AFS_SUN56_ENV)) || !defined(HAVE_SNPRINTF)
 #include <sys/types.h>
@@ -118,7 +118,11 @@ static void mkint(char *buf, unsigned long val, int base, int uc, int prec)
  *       both '0' and ' ' are given, the ' ' flag will be ignored.
  *     + The '#' and '+' flags have no effect.
  */
+#ifdef AFS_AIX51_ENV
+static int  vsnprintf(char *p, size_t avail, const char *fmt, va_list ap)
+#else
 static void vsnprintf(char *p, unsigned int avail, char *fmt, va_list ap)
+#endif
 {
   unsigned int width, precision, haveprec, len;
   int ljust, plsign, spsign, altform, zfill;
@@ -382,7 +386,11 @@ static void vsnprintf(char *p, unsigned int avail, char *fmt, va_list ap)
 }
 
 
+#ifdef AFS_AIX51_ENV
+int snprintf(char *p, size_t avail, const char *fmt, ...)
+#else
 void snprintf(char *p, unsigned int avail, char *fmt, ...)
+#endif
 {
   va_list ap;
 

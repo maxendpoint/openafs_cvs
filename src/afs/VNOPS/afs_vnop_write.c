@@ -20,7 +20,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.23 2002/08/21 18:12:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.24 2002/09/26 07:01:13 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -427,6 +427,20 @@ int afs_UFSWrite(register struct vcache *avc, struct uio *auio,
     avc->states |= CDirty;
     tvec = (struct iovec *) osi_AllocSmallSpace(sizeof(struct iovec));
     while (totalLength > 0) {
+        /* 
+         *  The following lines are necessary because afs_GetDCache with
+	 *  flag == 4 expects the length field to be filled. It decides
+	 *  from this whether it's necessary to fetch data into the chunk
+	 *  before writing or not (when the whole chunk is overwritten!).
+	 */
+	len = totalLength;	/* write this amount by default */
+	offset = filePos - AFS_CHUNKTOBASE(tdc->f.chunk);
+	max = AFS_CHUNKTOSIZE(tdc->f.chunk);	/* max size of this chunk */
+	if (max	<= len + offset)	{   /*if we'd go past the end of this chunk */
+	    /* it won't all fit in this chunk, so write as much
+		as will fit */
+	    len = max - offset;
+	}
 	/* read the cached info */
 	if (noLock) {
 	    tdc = afs_FindDCache(avc, filePos);

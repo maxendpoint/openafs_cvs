@@ -19,7 +19,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.15 2002/08/21 19:19:39 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/vol/volume.c,v 1.16 2002/09/26 07:01:31 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -280,7 +280,7 @@ int VInitVolumePackage(ProgramType pt, int nLargeVnodes, int nSmallVnodes,
 		    Error error;
 		    Volume *vp;
 		    vp = VAttachVolumeByName(&error, diskP->name, dp->d_name,
-					     V_UPDATE);
+					     V_VOLUPD);
 		    (*(vp?&nAttached:&nUnattached))++;
 		    if (error == VOFFLINE)
 			Log("Volume %u stays offline (/vice/offline/%s exists)\n", 

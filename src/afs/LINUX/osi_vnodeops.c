@@ -23,7 +23,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.54 2002/08/21 18:12:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.55 2002/09/26 07:01:11 shadow Exp $");
 
 #include "../afs/sysincludes.h"
 #include "../afs/afsincludes.h"
@@ -105,6 +105,10 @@ static ssize_t afs_linux_read(struct file *fp, char *buf, size_t count,
             code = afs_read(vcp, &tuio, credp, 0, 0, 0);
 	    xfered += count - tuio.uio_resid;
 	    if (code != 0) {
+    		afs_Trace4(afs_iclSetp, CM_TRACE_READOP, ICL_TYPE_POINTER, vcp,
+	       		ICL_TYPE_OFFSET, offp,
+	       		ICL_TYPE_INT32, -1,
+	       		ICL_TYPE_INT32, code);
 		code = xfered;
 		*offp += count - tuio.uio_resid;
 	    } else {

@@ -36,7 +36,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_config.c,v 1.4 2001/07/12 19:58:18 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/AIX/osi_config.c,v 1.5 2002/09/26 07:01:09 shadow Exp $");
 
 #include "sys/limits.h"
 #include "sys/types.h"
@@ -260,7 +260,9 @@ struct k_var kvars[] = {
 	{ (void *) &vnodefops,		"vnodefops"		},
 	{ (void *) &ifnet,		"ifnet"			},
  	{ (void *) &jfs_icache_lock,	"jfs_icache_lock"	},
+#ifndef AFS_AIX51_ENV
  	{ (void *) &proc_tbl_lock,	"proc_tbl_lock"		},
+#endif
 	{ 0,				0			},
 };
 
