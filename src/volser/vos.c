@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.26 2003/07/15 23:17:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.27 2003/08/26 02:59:20 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -4805,7 +4805,11 @@ Sizes(as)
     fprintf(STDOUT, "Volume: %s\n", as->parms[0].items->data);
 
     if (as->parms[3].items) {	/* do the dump estimate */
+#ifdef AFS_64BIT_ENV
 	vol_size.dump_size = 0;
+#else
+   FillInt64(vol_size.dump_size,0, 1);
+#endif
 	code = UV_GetSize(avolid, aserver, apart, fromdate, &vol_size);
 	if (code) {
 	    PrintDiagnostics("size", code);
