@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.17 2002/08/21 18:12:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.18 2002/10/09 00:46:15 shadow Exp $");
 
 #include "../afs/sysincludes.h"	/* Standard vendor system headers */
 #include "../afs/afsincludes.h"	/* Afs-based standard headers */
@@ -271,17 +271,20 @@ static int osi_TimedSleep(char *event, afs_int32 ams, int aintok)
 }
 
 
-void afs_osi_Wakeup(void *event)
+int afs_osi_Wakeup(void *event)
 {
+    int ret=2;
     struct afs_event *evp;
 
     evp = afs_getevent(event);
     if (!evp)                          /* No sleepers */
-	return;
+	return 1;
 
     if (evp->refcount > 1) {
 	evp->seq++;    
 	wake_up(&evp->cond);
+	ret=0;
     }
     relevent(evp);
+    return ret;
 }
