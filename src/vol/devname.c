@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/devname.c,v 1.12 2003/07/15 23:17:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/devname.c,v 1.13 2003/12/08 07:31:57 shadow Exp $");
 
 #include <afs/param.h>
 #include <rx/xdr.h>
@@ -86,11 +86,6 @@ RCSID
 #include <sys/time.h>
 #endif /* ITIMER_REAL */
 #include "partition.h"
-#ifdef AFS_LINUX22_ENV
-#include <asm/types.h>
-#include <linux/ext2_fs.h>
-#define ROOTINO EXT2_ROOT_INO	/* Assuming we do this on ext2, of course. */
-#endif
 
 
 #ifdef HAVE_STRING_H
@@ -196,7 +191,7 @@ vol_DevName(dev_t adev, char *wpath)
 	if (stat(part, &status) == -1) {
 	    continue;
 	}
-#ifndef AFS_SGI_XFS_IOPS_ENV
+#if !defined(AFS_SGI_XFS_IOPS_ENV) && !defined(AFS_LINUX22_ENV)
 	if ((status.st_ino !=
 	     ROOTINO) /*|| ((status.st_mode & S_IFMT) != S_IFBLK) */ ) {
 	    continue;
