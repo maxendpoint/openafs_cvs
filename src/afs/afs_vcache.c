@@ -38,7 +38,7 @@
 #include <afsconfig.h>
 #include "../afs/param.h"
 
-RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.27 2002/04/05 18:13:32 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.28 2002/06/15 17:11:18 shadow Exp $");
 
 #include "../afs/sysincludes.h" /*Standard vendor system headers*/
 #include "../afs/afsincludes.h" /*AFS-based standard headers*/
@@ -491,7 +491,7 @@ restart:
 	repeat:
 	    next = this_parent->d_subdirs.next;
 	resume:
-	    while (next != &this_parent->d_subdirs) {
+	    while (next && next != &this_parent->d_subdirs) {
 		struct list_head *tmp = next;
 		struct dentry *dchld = list_entry(tmp, struct dentry, d_child);
 		
