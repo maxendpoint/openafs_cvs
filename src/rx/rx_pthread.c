@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.20 2005/04/04 04:26:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.21 2005/04/14 02:42:00 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -419,4 +419,13 @@ rxi_Sendmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 	fflush(stdout);
     }
     return 0;
+}
+
+struct rx_ts_info_t * rx_ts_info_init() {
+    register struct rx_ts_info_t * rx_ts_info;
+    rx_ts_info = (rx_ts_info_t *) malloc(sizeof(rx_ts_info_t));
+    assert(rx_ts_info != NULL && pthread_setspecific(rx_ts_info_key, rx_ts_info) == 0);
+    memset(rx_ts_info, 0, sizeof(rx_ts_info_t));
+    queue_Init(&rx_ts_info->_FPQ);
+    return rx_ts_info;
 }
