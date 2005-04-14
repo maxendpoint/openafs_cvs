@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.17 2005/03/08 21:58:04 shadow Exp $ */
+/* $Id: osi_machdep.h,v 1.18 2005/04/14 02:25:11 shadow Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -139,9 +139,6 @@ extern struct simplelock afs_global_lock;
 #define AFS_ASSERT_GLOCK()
 #define ISAFS_GLOCK() 1
 #endif
-#define AFS_RXGLOCK()
-#define AFS_RXGUNLOCK()
-#define ISAFS_RXGLOCK() 1
 
 #undef SPLVAR
 #define SPLVAR int splvar
