@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.47 2005/04/14 02:42:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.48 2005/04/14 04:22:24 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -463,14 +463,12 @@ rxi_MorePackets(int apackets)
 
     if (rx_ts_info->_FPQ.len > rx_TSFPQLocalMax) {
         NETPRI;
-	AFS_RXGLOCK();
 	MUTEX_ENTER(&rx_freePktQ_lock);
 
 	RX_TS_FPQ_LTOG(rx_ts_info);
 	rxi_NeedMorePackets = FALSE;
 	rxi_PacketsUnWait();
 
-	AFS_RXGUNLOCK();
 	MUTEX_EXIT(&rx_freePktQ_lock);
 	USERPRI;
     }
@@ -534,14 +532,12 @@ rxi_MorePacketsTSFPQ(int apackets, int flush_global, int num_keep_local)
     if (flush_global && 
         (num_keep_local < apackets)) {
         NETPRI;
-	AFS_RXGLOCK();
 	MUTEX_ENTER(&rx_freePktQ_lock);
 
 	RX_TS_FPQ_LTOG2(rx_ts_info, (apackets - num_keep_local));
 	rxi_NeedMorePackets = FALSE;
 	rxi_PacketsUnWait();
 
-	AFS_RXGUNLOCK();
 	MUTEX_EXIT(&rx_freePktQ_lock);
 	USERPRI;
     }
