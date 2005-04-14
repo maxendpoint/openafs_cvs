@@ -50,7 +50,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.27 2004/08/19 00:22:38 kolya Exp $");
+    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.28 2005/04/14 01:59:34 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -197,7 +197,6 @@ FSYNC_clientFinis(void)
     close(FS_sd);
 #endif
     FS_sd = -1;
-    Lock_Destroy(&FSYNC_handler_lock);
 }
 
 int
