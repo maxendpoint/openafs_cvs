@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.80 2005/04/03 20:40:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.81 2005/04/14 01:14:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -933,9 +933,13 @@ restart:
 #ifdef STRUCT_INODE_HAS_I_SB_LIST
 	list_add(&ip->i_sb_list, &ip->i_sb->s_inodes);
 #endif
-#ifdef STRUCT_INODE_HAS_INOTIFY_LOCK
+#if defined(STRUCT_INODE_HAS_INOTIFY_LOCK) || defined(STRUCT_INODE_HAS_INOTIFY_SEM)
 	INIT_LIST_HEAD(&ip->inotify_watches); 
+#if defined(STRUCT_INODE_HAS_INOTIFY_SEM) 
+	sema_init(&ip->inotify_sem); 
+#else
 	spin_lock_init(&ip->inotify_lock); 
+#endif 
 #endif 
     }
 #endif
