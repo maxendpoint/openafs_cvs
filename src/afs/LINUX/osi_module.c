@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.10 2005/04/03 18:21:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.11 2005/04/15 19:33:28 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -57,6 +57,74 @@ static int afs_ioctl(struct inode *, struct file *, unsigned int,
 static struct file_operations afs_syscall_fops = {
     .ioctl = afs_ioctl,
 };
+
+int
+csdbproc_info(char *buffer, char **start, off_t offset, int
+length)
+{
+    int len = 0;
+    off_t pos = 0;
+    int cnt;
+    struct afs_q *cq, *tq;
+    struct cell *tc;
+    char tbuffer[16];
+    /* 90 - 64 cellname, 10 for 32 bit num and index, plus
+       decor */
+    char temp[91];
+    afs_uint32 addr;
+    
+    ObtainReadLock(&afs_xcell);
+
+    for (cq = CellLRU.next; cq != &CellLRU; cq = tq) {
+        tc = QTOC(cq); tq = QNext(cq);
+
+        pos += 90;
+
+        if (pos <= offset) {
+            len = 0;
+        } else {
+            sprintf(temp, ">%s #(%d/%d)\n", tc->cellName, 
+                    tc->cellNum, tc->cellIndex);
+            sprintf(buffer + len, "%-89s\n", temp);
+            len += 90;
+            if (pos >= offset+length) {
+                ReleaseReadLock(&afs_xcell);
+                goto done;
+            }
+        }
+
+        for (cnt = 0; cnt < MAXCELLHOSTS; cnt++) {
+            if (!tc->cellHosts[cnt]) break;
+            pos += 90;
+            if (pos <= offset) {
+                len = 0;
+            } else {
+                addr = ntohl(tc->cellHosts[cnt]->addr->sa_ip);
+                sprintf(tbuffer, "%d.%d.%d.%d", 
+                        (int)((addr>>24) & 0xff),
+(int)((addr>>16) & 0xff),
+                        (int)((addr>>8)  & 0xff), (int)( addr & 0xff));
+                sprintf(temp, "%s #%s%s\n", tbuffer, tbuffer);
+                sprintf(buffer + len, "%-89s\n", temp);
+                len += 90;
+                if (pos >= offset+length) {
+                    ReleaseReadLock(&afs_xcell);
+                    goto done;
+                }
+            }
+        }
+    }
+
+    ReleaseReadLock(&afs_xcell);
+    
+done:
+    *start = buffer + len - (pos - offset);
+    len = pos - offset;
+    if (len > length)
+        len = length;
+    return len;
+}
+
 
 int
 csdbproc_read(char *buffer, char **start, off_t offset, int count,
@@ -116,7 +184,7 @@ afsproc_init(void)
 
     entry1->owner = THIS_MODULE;
 
-    entry2 = create_proc_read_entry(PROC_CELLSERVDB_NAME, (S_IFREG|S_IRUGO), openafs_procfs, csdbproc_read, NULL);
+    entry2 = create_proc_info_entry(PROC_CELLSERVDB_NAME, (S_IFREG|S_IRUGO), openafs_procfs, csdbproc_info);
 
 #if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV)
     if (register_ioctl32_conversion(VIOC_SYSCALL32, NULL) == 0) 
