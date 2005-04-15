@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.48 2005/04/03 20:20:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.49 2005/04/15 18:43:57 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -3138,7 +3138,7 @@ RestoreVolume(as)
 	    restoreflags |= RV_LUNEW;
 	    break;
 	default:
-	    restoreflags |= RV_LUKEEP;
+	    restoreflags |= RV_LUDUMP;
     }
 
     code =
