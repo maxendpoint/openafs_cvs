@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.77 2005/04/14 02:42:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.78 2005/04/19 05:04:03 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -662,6 +662,22 @@ rxi_StartServerProcs(int nExistingProcs)
     }
 }
 #endif /* KERNEL */
+
+#ifdef AFS_NT40_ENV
+/* This routine is only required on Windows */
+void
+rx_StartClientThread(void)
+{
+#ifdef AFS_PTHREAD_ENV
+    int pid;
+    pid = (int) pthread_self();
+#endif /* AFS_PTHREAD_ENV */
+#ifdef RX_ENABLE_TSFPQ
+    rx_TSFPQMaxProcs++;
+    RX_TS_FPQ_COMPUTE_LIMITS;
+#endif /* RX_ENABLE_TSFPQ */
+}
+#endif /* AFS_NT40_ENV */
 
 /* This routine must be called if any services are exported.  If the
  * donateMe flag is set, the calling process is donated to the server
