@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.4 2005/03/11 04:37:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.5 2005/04/19 16:03:40 shadow Exp $");
 
 #ifdef AFS_LINUX24_ENV
 #include "h/module.h" /* early to avoid printf->printk mapping */
@@ -65,6 +65,7 @@ osi_UFSOpen(afs_int32 ainode)
     filp->f_mapping = tip->i_mapping;
 #endif
 #if defined(AFS_LINUX24_ENV)
+    filp->f_mode = FMODE_READ|FMODE_WRITE;
     filp->f_op = fops_get(tip->i_fop);
 #else
     filp->f_op = tip->i_op->default_file_ops;
