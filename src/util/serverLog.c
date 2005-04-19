@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.26 2005/04/15 13:31:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.27 2005/04/19 05:04:35 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -67,6 +67,7 @@ static pthread_mutex_t serverLogMutex;
 
 #ifdef AFS_NT40_ENV
 #define F_OK 0
+#define O_NONBLOCK 0
 #endif
 
 char *(*threadNameProgram) ();
