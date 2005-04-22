@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.19 2005/04/20 16:35:45 rees Exp $ */
+/* $Id: osi_machdep.h,v 1.20 2005/04/22 14:57:11 rees Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -40,8 +40,6 @@ extern struct simplelock afs_rxglobal_lock;
 #define v_vfsp		v_mount
 
 /* vnode */
-#undef SetAfsVnode
-#define SetAfsVnode(vn)		/* nothing; done in getnewvnode() */
 #define VN_HOLD(vp)	afs_vget((vp), 0)
 #define VN_RELE(vp)	vrele(vp)
 #define osi_vnhold(avc, r) afs_vget(AFSTOV(avc), 0)
