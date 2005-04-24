@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.58 2005/03/26 07:10:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.59 2005/04/24 14:01:29 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1198,7 +1198,7 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 
     /* Check for read access as well.  We need read access in order to
      * stat files, but not to stat subdirectories. */
-    if (!afs_AccessOK(adp, PRSFS_LOOKUP, &treq, CHECK_MODE_BITS))
+    if (!afs_AccessOK(adp, PRSFS_READ, &treq, CHECK_MODE_BITS))
 	no_read_access = 1;
 
     /* special case lookup of ".".  Can we check for it sooner in this code,
