@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.13 2005/04/24 20:12:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.14 2005/04/24 23:53:44 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -195,7 +195,7 @@ afsproc_init(void)
 
     entry2 = create_proc_info_entry(PROC_CELLSERVDB_NAME, (S_IFREG|S_IRUGO), openafs_procfs, csdbproc_info);
 
-#if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV)
+#if defined(NEED_IOCTL32) && !defined(HAVE_COMPAT_IOCTL)
     if (register_ioctl32_conversion(VIOC_SYSCALL32, NULL) == 0) 
 	ioctl32_done = 1;
 #endif
