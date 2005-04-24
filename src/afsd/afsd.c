@@ -57,7 +57,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.48 2005/04/03 18:09:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.49 2005/04/24 14:16:24 shadow Exp $");
 
 #define VFS 1
 
@@ -1761,6 +1761,14 @@ mainproc(as, arock)
 	    printf("%s: Forking AFSDB lookup handler.\n", rn);
 	code = fork();
 	if (code == 0) {
+	    /* Since the AFSDB lookup handler runs as a user process, 
+	     * need to drop the controlling TTY, etc.
+	     */
+	    if (daemon(0, 0) == -1) {
+		printf("Error starting AFSDB lookup handler: %s\n",
+			strerror(errno));
+		exit(1);
+	    }
 	    AfsdbLookupHandler();
 	    exit(1);
 	}

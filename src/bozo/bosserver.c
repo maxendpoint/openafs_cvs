@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.24 2005/04/14 04:41:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.25 2005/04/24 14:16:26 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -580,6 +580,7 @@ tweak_config()
 }
 #endif
 
+#if 0
 /*
  * This routine causes the calling process to go into the background and
  * to lose its controlling tty.
@@ -701,6 +702,7 @@ background(void)
     }
 }
 #endif /* ! AFS_NT40_ENV */
+#endif
 
 /* start a process and monitor it */
 
@@ -857,11 +859,13 @@ main(int argc, char **argv, char **envp)
     fflush(stdout);
 #endif
 
-    /* go into the background and remove our controlling tty */
+    /* go into the background and remove our controlling tty, close open 
+       file desriptors
+     */
 
 #ifndef AFS_NT40_ENV
     if (!nofork)
-	background();
+	daemon(0, 0);
 #endif /* ! AFS_NT40_ENV */
 
     if ((!DoSyslog)
