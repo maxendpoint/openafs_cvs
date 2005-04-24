@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.11 2005/04/15 19:33:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.12 2005/04/24 00:58:37 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -104,7 +104,7 @@ length)
                         (int)((addr>>24) & 0xff),
 (int)((addr>>16) & 0xff),
                         (int)((addr>>8)  & 0xff), (int)( addr & 0xff));
-                sprintf(temp, "%s #%s%s\n", tbuffer, tbuffer);
+                sprintf(temp, "%s #%s\n", tbuffer, tbuffer);
                 sprintf(buffer + len, "%-89s\n", temp);
                 len += 90;
                 if (pos >= offset+length) {
