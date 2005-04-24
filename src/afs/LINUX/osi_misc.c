@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.40 2005/04/19 16:27:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.41 2005/04/24 01:02:54 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -141,7 +141,11 @@ osi_InitCacheInfo(char *aname)
 int
 osi_rdwr(struct osi_file *osifile, uio_t * uiop, int rw)
 {
+#ifdef AFS_LINUX24_ENV
+    struct file *filp = osifile->filp;
+#else
     struct file *filp = &osifile->file;
+#endif
     KERNEL_SPACE_DECL;
     int code = 0;
     struct iovec *iov;
