@@ -79,4 +79,3 @@ MUTEX_ISMINE(afs_kmutex_t * l)
 #define CV_BROADCAST(cv)	wake_up((struct wait_queue**)cv)
 #endif
 
-#endif /* RX_KMUTEX_H_ */
