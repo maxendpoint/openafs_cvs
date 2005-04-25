@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.102 2005/04/24 19:26:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.103 2005/04/25 14:54:54 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -920,9 +920,6 @@ afs_linux_dentry_revalidate(struct dentry *dp)
     bad_dentry = 0;
 
   done:
-    if (bad_dentry)
-	afs_Trace2(afs_iclSetp, CM_TRACE_BAD_DENTRY, ICL_TYPE_POINTER, dp->d_name.name, ICL_TYPE_INT32, bad_dentry);
-
     /* Clean up */
     AFS_GUNLOCK();
     if (bad_dentry) {
