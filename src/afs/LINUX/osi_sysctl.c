@@ -1,7 +1,7 @@
 /*
  * osi_sysctl.c: Linux sysctl interface to OpenAFS
  *
- * $Id: osi_sysctl.c,v 1.7 2003/08/08 19:55:05 shadow Exp $
+ * $Id: osi_sysctl.c,v 1.8 2005/04/27 12:37:56 shadow Exp $
  *
  * Written Jan 30, 2002 by Kris Van Hees (Sine Nomine Associates)
  */
@@ -20,6 +20,11 @@
 extern afs_int32 hm_retry_RO;
 extern afs_int32 hm_retry_RW;
 extern afs_int32 hm_retry_int;
+extern afs_int32 afs_blocksUsed_0;
+extern afs_int32 afs_blocksUsed_1;
+extern afs_int32 afs_blocksUsed_2;
+extern afs_int32 afs_pct1;
+extern afs_int32 afs_pct2;
 
 #ifdef CONFIG_SYSCTL
 static struct ctl_table_header *afs_sysctl = NULL;
@@ -47,6 +52,34 @@ static ctl_table afs_sysctl_table[] = {
     ,
     {6, "bkVolPref",
      &afs_bkvolpref, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {7, "afs_blocksUsed",
+     &afs_blocksUsed, sizeof(afs_int32), 0444, NULL,
+     &proc_dointvec}
+    ,
+    {8, "afs_blocksUsed_0",
+     &afs_blocksUsed_0, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {9, "afs_blocksUsed_1",
+     &afs_blocksUsed_1, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {10, "afs_blocksUsed_2",
+     &afs_blocksUsed_2, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {11, "afs_pct1",
+     &afs_pct1, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {12, "afs_pct2",
+     &afs_pct2, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {13, "afs_cacheBlocks",
+     &afs_cacheBlocks, sizeof(afs_int32), 0644, NULL,
      &proc_dointvec}
     ,
     {0}
