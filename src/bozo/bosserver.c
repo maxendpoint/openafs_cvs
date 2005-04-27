@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.23.2.2 2005/04/24 14:27:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.23.2.3 2005/04/27 01:37:04 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -865,7 +865,7 @@ main(int argc, char **argv, char **envp)
 
 #ifndef AFS_NT40_ENV
     if (!nofork)
-	daemon(0, 0);
+	daemon(1, 0);
 #endif /* ! AFS_NT40_ENV */
 
     if ((!DoSyslog)
