@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.22 2005/04/15 19:39:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.23 2005/04/27 01:49:48 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -67,6 +67,7 @@ RCSID
 #include <winsock2.h>
 #else
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #endif
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -77,6 +78,7 @@ RCSID
 #endif
 #include "ptserver.h"
 #include "pterror.h"
+#include "ptprototypes.h"
 #include "afs/audit.h"
 
 #ifdef AFS_ATHENA_STDENV
