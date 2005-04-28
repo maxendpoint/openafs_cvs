@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.54 2005/04/27 12:37:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.55 2005/04/28 22:14:57 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -238,6 +238,7 @@ afs_DCWhichBucket(afs_int32 phase, afs_int32 bucket)
 	return 1;
     if (afs_pct2 > afs_tpct2)
 	return 2;
+    return 0; /* unlikely */
 }
 
 
@@ -2991,8 +2992,6 @@ afs_UFSGetDSlot(register afs_int32 aslot, register struct dcache *tmpdc)
 	tdc->f.states &= ~(DRO|DBackup|DRW);
 	afs_DCMoveBucket(tdc, 0, 0);
     } else {
-	struct volume *tv;
-	
 	if (&tdc->f != 0) {
 	    if (tdc->f.states & DRO) {
 		afs_DCMoveBucket(tdc, 0, 2);
@@ -3001,7 +3000,6 @@ afs_UFSGetDSlot(register afs_int32 aslot, register struct dcache *tmpdc)
 	    } else {
 		afs_DCMoveBucket(tdc, 0, 1); 
 	    }
-	    
 	} 
     }
     tdc->refCount = 1;
