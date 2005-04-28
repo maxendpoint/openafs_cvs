@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.34.2.7 2005/04/24 20:12:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.34.2.8 2005/04/28 03:11:51 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -110,12 +110,12 @@ int
 osi_InitCacheInfo(char *aname)
 {
     int code;
-    struct dentry *dp,*dpp;
+    struct dentry *dp;
     extern ino_t cacheInode;
     extern struct osi_dev cacheDev;
     extern afs_int32 afs_fsfragsize;
     extern struct super_block *afs_cacheSBp;
-    extern struct vfsmnt *afs_cacheMnt;
+    extern struct vfsmount *afs_cacheMnt;
     code = osi_lookupname_internal(aname, 1, &afs_cacheMnt, &dp);
     if (code)
 	return ENOENT;
