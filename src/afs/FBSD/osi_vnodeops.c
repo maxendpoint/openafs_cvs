@@ -48,7 +48,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.21 2005/04/29 18:24:01 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.22 2005/04/29 21:55:58 rees Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -499,11 +499,11 @@ afs_vop_open(ap)
     if (AFSTOV(vc) != ap->a_vp)
 	panic("AFS open changed vnode!");
 #endif
+    AFS_GUNLOCK();
 #ifdef AFS_FBSD60_ENV
     vnode_create_vobject(ap->a_vp, vc->m.Length, ap->a_td);
 #endif
     osi_FlushPages(vc, ap->a_cred);
-    AFS_GUNLOCK();
     return error;
 }
 
@@ -1357,9 +1357,9 @@ afs_vop_reclaim(struct vop_reclaim_args *ap)
      */
     if (code)
 	printf("afs_vop_reclaim: afs_FlushVCache failed code %d\n", code);
-
 #ifdef AFS_FBSD60_ENV
-    vnode_destroy_vobject(vp);
+    else
+	vnode_destroy_vobject(vp);
 #endif
     return 0;
 }
