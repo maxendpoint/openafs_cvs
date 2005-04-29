@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.27 2005/04/14 05:46:46 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.28 2005/04/29 19:51:18 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -246,8 +246,9 @@ IsKrb5Available()
             hKrb5DLL = 0;
             return FALSE;
         }
+        return TRUE;
     }
-    return TRUE;
+    return FALSE;
 }
 
 static BOOL
