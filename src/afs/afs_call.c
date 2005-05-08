@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.82 2005/04/27 12:37:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.83 2005/05/08 05:55:45 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1167,7 +1167,9 @@ copyin_iparam(caddr_t cmarg, struct iparam *dst)
 #if defined(AFS_LINUX_64BIT_KERNEL) && !defined(AFS_ALPHA_LINUX20_ENV) && !defined(AFS_IA64_LINUX20_ENV)
     struct iparam32 dst32;
 
-#ifdef AFS_SPARC64_LINUX24_ENV
+#ifdef AFS_SPARC64_LINUX26_ENV
+    if (test_thread_flag(TIF_32BIT))
+#elif AFS_SPARC64_LINUX24_ENV
     if (current->thread.flags & SPARC_FLAG_32BIT)
 #elif defined(AFS_SPARC64_LINUX20_ENV)
     if (current->tss.flags & SPARC_FLAG_32BIT)
@@ -1345,7 +1347,12 @@ Afs_syscall()
 })
 
 
-	if (current->thread.flags & SPARC_FLAG_32BIT) {
+#ifdef AFS_SPARC64_LINUX26_ENV
+	if (test_thread_flag(TIF_32BIT))
+#else
+	if (current->thread.flags & SPARC_FLAG_32BIT)
+#endif
+	{
 	    AFS_COPYIN((char *)parm4, (char *)eparm32, sizeof(eparm32), code);
 	    eparm[0] = AA(eparm32[0]);
 	    eparm[1] = AA(eparm32[1]);
