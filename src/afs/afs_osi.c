@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.52 2005/04/03 18:09:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.53 2005/05/08 06:49:46 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -60,7 +60,9 @@ osi_Init(void)
 #elif defined(AFS_FBSD50_ENV)
     mtx_init(&afs_global_mtx, "AFS global lock", NULL, MTX_DEF);
 #elif defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
+#if !defined(AFS_DARWIN80_ENV)
     lockinit(&afs_global_lock, PLOCK, "afs global lock", 0, 0);
+#endif
     afs_global_owner = 0;
 #elif defined(AFS_AIX41_ENV)
     lock_alloc((void *)&afs_global_lock, LOCK_ALLOC_PIN, 1, 1);

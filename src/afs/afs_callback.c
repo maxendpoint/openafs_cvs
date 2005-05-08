@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.27 2004/06/24 16:56:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.28 2005/05/08 06:49:46 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -151,7 +151,11 @@ SRXAFSCB_GetCE(struct rx_call *a_call, afs_int32 a_index,
     a_result->DataVersion = hgetlo(tvc->m.DataVersion);
     a_result->callback = afs_data_pointer_to_int32(tvc->callback);	/* XXXX Now a pointer; change it XXXX */
     a_result->cbExpires = tvc->cbExpires;
+#ifdef AFS_DARWIN80_ENV
+    a_result->refCount = vnode_isinuse(AFSTOV(tvc))?1:0; /* XXX fix */
+#else
     a_result->refCount = VREFCOUNT(tvc);
+#endif
     a_result->opens = tvc->opens;
     a_result->writers = tvc->execsOrWriters;
     a_result->mvstat = tvc->mvstat;
@@ -230,7 +234,11 @@ SRXAFSCB_GetCE64(struct rx_call *a_call, afs_int32 a_index,
     a_result->DataVersion = hgetlo(tvc->m.DataVersion);
     a_result->callback = afs_data_pointer_to_int32(tvc->callback);	/* XXXX Now a pointer; change it XXXX */
     a_result->cbExpires = tvc->cbExpires;
+#ifdef AFS_DARWIN80_ENV
+    a_result->refCount = vnode_isinuse(AFSTOV(tvc))?1:0; /* XXX fix */
+#else
     a_result->refCount = VREFCOUNT(tvc);
+#endif
     a_result->opens = tvc->opens;
     a_result->writers = tvc->execsOrWriters;
     a_result->mvstat = tvc->mvstat;
