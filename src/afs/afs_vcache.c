@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.84 2005/05/08 06:49:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.85 2005/05/11 21:39:23 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -232,7 +232,7 @@ afs_FlushVCache(struct vcache *avc, int *slept)
     afs_vcount--;
     vSetType(avc, VREG);
 #ifdef AFS_DARWIN80_ENV
-    if (vnode_isinuse(AFSTOV(avc))) {
+    if (vnode_isinuse(AFSTOV(avc), 0)) {
 #else
     if (VREFCOUNT(avc) > 0) {
 #endif
@@ -620,14 +620,14 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 	    else if (QNext(uq) != tq)
 		refpanic("VLRU inconsistent");
 #ifdef AFS_DARWIN80_ENV
-	    else if (!vnode_isinuse(AFSTOV(tvc))) 
+	    else if (!vnode_isinuse(AFSTOV(tvc), 0)) 
 #else
 	    else if (VREFCOUNT(tvc) < 1)
 #endif
 		refpanic("refcnt 0 on VLRU");
 
 #ifdef AFS_DARWIN80_ENV
-	    if (vnode_isinuse(AFSTOV(tvc)) &&  
+	    if (vnode_isinuse(AFSTOV(tvc), 0) &&  
 #else
 	    if (VREFCOUNT(tvc) == 1 &&
 #endif
@@ -725,7 +725,7 @@ restart:
 #endif
 
 #ifdef AFS_DARWIN80_ENV
-	    if (!vnode_isinuse(AFSTOV(tvc)
+	    if (!vnode_isinuse(AFSTOV(tvc), 0
 #else
 	    if (((VREFCOUNT(tvc) == 0) 
 #if defined(AFS_DARWIN_ENV) && !defined(UKERNEL) 

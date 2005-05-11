@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.19 2005/05/08 06:49:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.20 2005/05/11 21:39:23 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -274,7 +274,7 @@ afs_CheckLocks(void)
 		if (VREFCOUNT(tvc) > 1)
 #else /* AFS_OSF_ENV */
 #ifdef AFS_DARWIN80_ENV
-		if (vnode_isinuse(AFSTOV(tvc)))
+		if (vnode_isinuse(AFSTOV(tvc), 0))
 #else
 		if (VREFCOUNT(tvc))
 #endif

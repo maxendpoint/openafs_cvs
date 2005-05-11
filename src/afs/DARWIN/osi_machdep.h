@@ -48,6 +48,16 @@ typedef unsigned short etap_event_t;
 /* vcexcl - used only by afs_create */
 enum vcexcl { EXCL, NONEXCL };
 
+#ifndef AFS_DARWIN80_ENV
+#define ifaddr_address_family(x) (x)->ifa_addr->sa_family
+#define ifaddr_address(x, y, z) memcpy(y, (x)->ifa_addr, z)
+#define ifaddr_netmask(x, y, z) memcpy(y, (x)->ifa_netmask, z)
+#define ifaddr_dstaddress(x, y, z) memcpy(y, (x)->ifa_dstaddr, z)
+#define ifaddr_ifnet(x) (x?(x)->ifa_ifp:0)
+#define ifnet_flags(x) (x?(x)->if_flags:0)
+#define ifnet_metric(x) (x?(x)->if_data.ifi_metric:0)
+#endif
+
 #ifdef AFS_DARWIN80_ENV
 #define vrele vnode_rele
 #define vput vnode_put

@@ -124,7 +124,6 @@ struct afs_osi_WaitHandle {
  * Vnode related macros
  */
 #if defined(AFS_DARWIN80_ENV)
-
 #define vType(vc)               vnode_vtype(AFSTOV(vc))
 #else
 #if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
@@ -147,6 +146,7 @@ extern int (**afs_vnodeop_p) ();
 extern struct vnodeops *afs_ops;
 #define	IsAfsVnode(v)	    ((v)->v_op == afs_ops)
 #define	SetAfsVnode(v)	    (v)->v_op = afs_ops
+#endif
 #endif
 #endif
 
