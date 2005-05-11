@@ -29,9 +29,9 @@ typedef unsigned short etap_event_t;
 #include <kern/locks.h>
 #else
 #include <sys/lock.h>
+#include <sys/user.h>
 #endif
 #include <kern/thread.h>
-#include <sys/user.h>
 
 #ifdef AFS_DARWIN80_ENV
 #define getpid()                proc_selfpid()
@@ -52,6 +52,21 @@ enum vcexcl { EXCL, NONEXCL };
 #define vrele vnode_rele
 #define vput vnode_put
 #define vref vnode_ref
+#define vattr vnode_attr
+
+#define SetAfsVnode(vn)         /* nothing; done in getnewvnode() */
+/* vnode_vfsfsprivate is not declared, so no macro for us */
+extern void * afs_fsprivate_data;
+static inline int IsAfsVnode(vnode_t vn) {
+   mount_t mp;
+   int res = 0;
+   mp = vnode_mount(vn);
+   if (mp) {
+      res = (vfs_fsprivate(mp) == &afs_fsprivate_data);
+      vfs_mountrelease(mp);
+   }
+   return res;
+}
 #endif
 
 /* 
@@ -60,7 +75,15 @@ enum vcexcl { EXCL, NONEXCL };
 #ifndef AFS_DARWIN60_ENV
 extern struct timeval time;
 #endif
+#ifdef AFS_DARWIN80_ENV
+static inline time_t osi_Time(void) {
+    struct timeval _now;
+    microtime(&_now);
+    return _now.tv_sec;
+}
+#else
 #define osi_Time() (time.tv_sec)
+#endif
 #define afs_hz      hz
 
 #define PAGESIZE 8192
@@ -133,8 +156,8 @@ extern struct lock__bsd__ afs_global_lock;
 #define AFS_APPL_UFS_CACHE 1
 #define AFS_APPL_HFS_CACHE 2
 
-extern ino_t VnodeToIno(vnode_t * vp);
-extern dev_t VnodeToDev(vnode_t * vp);
+extern ino_t VnodeToIno(struct vnode * vp);
+extern dev_t VnodeToDev(struct vnode * vp);
 
 #define osi_curproc() current_proc()
 
