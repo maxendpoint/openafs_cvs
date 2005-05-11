@@ -148,6 +148,7 @@ extern struct vnodeops *afs_ops;
 #define	IsAfsVnode(v)	    ((v)->v_op == afs_ops)
 #define	SetAfsVnode(v)	    (v)->v_op = afs_ops
 #endif
+#endif
 
 #ifdef AFS_SGI65_ENV
 #define	gop_lookupname(fnamep,segflg,followlink,compvpp) \
