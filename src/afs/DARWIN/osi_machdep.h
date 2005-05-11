@@ -164,6 +164,10 @@ extern dev_t VnodeToDev(struct vnode * vp);
 /* FIXME */
 #define osi_curcred() &afs_osi_cred 
 
+#ifdef AFS_DARWIN80_ENV
+uio_t afsio_darwin_partialcopy(uio_t auio, int size);
+#endif
+
 #endif /* KERNEL */
 
 #endif /* _OSI_MACHDEP_H_ */

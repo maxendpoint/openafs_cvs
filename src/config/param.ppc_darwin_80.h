@@ -66,10 +66,7 @@
 #define va_nodeid       va_fileid
 #define vfs_vnodecovered mnt_vnodecovered
 #define direct          dirent
-#define vnode_t         struct vnode
 
-//#define VN_RELE(vp)     vrele(((struct vnode *)(vp)))
-//#define VN_HOLD(vp)     VREF(((struct vnode *)(vp)))
 #define BIND_8_COMPAT
 
 #endif

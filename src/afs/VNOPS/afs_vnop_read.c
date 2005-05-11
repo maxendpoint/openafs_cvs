@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.29 2005/05/11 20:00:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.30 2005/05/11 20:14:22 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -510,9 +510,11 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
     }
 #endif
 
+#ifndef AFS_DARWIN80_ENV
     tvec = (struct iovec *)osi_AllocSmallSpace(sizeof(struct iovec));
-    totalLength = auio->afsio_resid;
-    filePos = auio->afsio_offset;
+#endif
+    totalLength = AFS_UIO_RESID(auio);
+    filePos = AFS_UIO_OFFSET(auio);
     afs_Trace4(afs_iclSetp, CM_TRACE_READ, ICL_TYPE_POINTER, avc,
 	       ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(filePos), ICL_TYPE_INT32,
 	       totalLength, ICL_TYPE_OFFSET,
@@ -713,10 +715,15 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 		len = tlen;
 	    if (len > AFS_ZEROS)
 		len = sizeof(afs_zeros);	/* and in 0 buffer */
+#ifdef AFS_DARWIN80_ENV
+	    trimlen = len;
+            tuiop = afsio_darwin_partialcopy(auio, trimlen);
+#else
 	    afsio_copy(auio, &tuio, tvec);
 	    trimlen = len;
 	    afsio_trim(&tuio, trimlen);
-	    AFS_UIOMOVE(afs_zeros, trimlen, UIO_READ, &tuio, code);
+#endif
+	    AFS_UIOMOVE(afs_zeros, trimlen, UIO_READ, tuiop, code);
 	    if (code) {
 		error = code;
 		break;
@@ -739,11 +746,18 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 #endif /* IHINT */
 
 		tfile = (struct osi_file *)osi_UFSOpen(tdc->f.inode);
+#ifdef AFS_DARWIN80_ENV
+	    trimlen = len;
+            tuiop = afsio_darwin_partialcopy(auio, trimlen);
+	    uio_setoffset(tuiop, offset);
+#else
 	    /* mung uio structure to be right for this transfer */
 	    afsio_copy(auio, &tuio, tvec);
 	    trimlen = len;
 	    afsio_trim(&tuio, trimlen);
 	    tuio.afsio_offset = offset;
+#endif
+
 #if defined(AFS_AIX41_ENV)
 	    AFS_GUNLOCK();
 	    code =
@@ -823,6 +837,10 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 	    code = VOP_READ(tfile->vnode, &tuio, 0, afs_osi_credp);
 	    VOP_UNLOCK(tfile->vnode, 0, current_proc());
 	    AFS_GLOCK();
+#elif defined(AFS_DARWIN80_ENV)
+	    AFS_GUNLOCK();
+	    code = VOP_READ(tfile->vnode, tuiop, 0, afs_osi_ctxp);
+	    AFS_GLOCK();
 #elif defined(AFS_DARWIN_ENV)
 	    AFS_GUNLOCK();
 	    VOP_LOCK(tfile->vnode, LK_EXCLUSIVE, current_proc());
@@ -859,7 +877,7 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 	    }
 	}
 	/* otherwise we've read some, fixup length, etc and continue with next seg */
-	len = len - tuio.afsio_resid;	/* compute amount really transferred */
+	len = len - AFS_UIO_RESID(tuiop);	/* compute amount really transferred */
 	trimlen = len;
 	afsio_skip(auio, trimlen);	/* update input uio structure */
 	totalLength -= len;
@@ -887,7 +905,11 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
     if (!noLock)
 	ReleaseReadLock(&avc->lock);
 
+#ifdef AFS_DARWIN80_ENV
+    uio_free(tuiop);
+#else
     osi_FreeSmallSpace(tvec);
+#endif
     error = afs_CheckCode(error, &treq, 13);
     return error;
 }
