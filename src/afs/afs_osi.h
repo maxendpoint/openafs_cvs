@@ -137,7 +137,7 @@ struct afs_osi_WaitHandle {
 #endif
 #endif
 
-#if !defined(AFS_OBSD_ENV) && !defined(AFS_DARWIN80_ENV)
+#if !defined(AFS_DARWIN80_ENV)
 #if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
 extern int (**afs_vnodeop_p) ();
 #define IsAfsVnode(v)      ((v)->v_op == afs_vnodeop_p)
