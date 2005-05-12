@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.30 2005/05/11 20:14:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.31 2005/05/12 20:06:59 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -474,7 +474,7 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
     uio_t tuiop;
 #else
     struct uio tuio;
-    struct uio *tuio = &tuio;
+    struct uio *tuiop = &tuio;
     struct iovec *tvec;
 #endif
     struct osi_file *tfile;
