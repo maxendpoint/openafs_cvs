@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.23 2005/05/08 06:49:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.24 2005/05/13 03:02:31 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -153,15 +153,16 @@ darwin_vn_hold(struct vnode *vp)
        ourselves during vop_inactive, except we also need to not reinst
        the ubc... so we just call VREF there now anyway. */
 
+    if (VREFCOUNT_GT(tvc, 0))
 #ifdef AFS_DARWIN80_ENV
-    if (vnode_isinuse(vp))
 	vnode_ref(vp);
+#else
+	VREF(((struct vnode *)(vp))); 
+#endif
     else
+#ifdef AFS_DARWIN80_ENV
 	vnode_get(vp);
 #else
-    if (VREFCOUNT(tvc) > 0)
-	VREF(((struct vnode *)(vp))); 
-    else
 	afs_vget(afs_globalVFS, 0, (vp));
 #endif
 

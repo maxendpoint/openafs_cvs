@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.60 2005/05/08 06:49:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.61 2005/05/13 03:02:32 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1177,15 +1177,9 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 	*avcp = tvc;
 	code = (tvc ? 0 : ENOENT);
 	hit = 1;
-#ifdef AFS_DARWIN80_ENV
-	if (tvc && !vnode_isinuse(AFSTOV(tvc))) {
+	if (tvc && !VREFCOUNT_GT(tvc, 0)) {
 	    osi_Panic("TT1");
 	}
-#else
-	if (tvc && !VREFCOUNT(tvc)) {
-	    osi_Panic("TT1");
-	}
-#endif
 	if (code) {
 	    /*printf("LOOKUP GETVCDOTDOT -> %d\n", code); */
 	}
@@ -1219,15 +1213,9 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 	code = 0;
 	*avcp = tvc = adp;
 	hit = 1;
-#ifdef AFS_DARWIN80_ENV
-	if (adp && !vnode_isinuse(AFSTOV(adp))) {
+	if (adp && !VREFCOUNT_GT(adp, 0)) {
 	    osi_Panic("TT2");
 	}
-#else
-	if (adp && !VREFCOUNT(adp)) {
-	    osi_Panic("TT2");
-	}
-#endif
 	goto done;
     }
 
@@ -1509,15 +1497,9 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 		}
 	    }
 	*avcp = tvc;
-#ifdef AFS_DARWIN80_ENV
-	if (tvc && !vnode_isinuse(AFSTOV(tvc))) {
+	if (tvc && !VREFCOUNT_GT(tvc, 0)) {
 	    osi_Panic("TT3");
 	}
-#else
-	if (tvc && !VREFCOUNT(tvc)) {
-	    osi_Panic("TT3");
-	}
-#endif
 	code = 0;
     } else {
 	/* if we get here, we found something in a directory that couldn't
