@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.41 2005/05/13 03:02:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.42 2005/05/13 20:50:06 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -377,13 +377,12 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	Ttvcr = VREFCOUNT(tvc);
 #endif
 #ifdef	AFS_AIX_ENV
-    if (tvc && (VREFCOUNT(tvc) > 2) && tvc->opens > 0
-	&& !(tvc->states & CUnlinked))
+    if (tvc && VREFCOUNT_GT(tvc, 2) && tvc->opens > 0
+	&& !(tvc->states & CUnlinked)) {
 #else
-    if (tvc && (VREFCOUNT_GT(tvc), 1) && tvc->opens > 0
-	&& !(tvc->states & CUnlinked))
+    if (tvc && VREFCOUNT_GT(tvc, 1) && tvc->opens > 0
+	&& !(tvc->states & CUnlinked)) {
 #endif
-    {
 	char *unlname = afs_newname();
 
 	ReleaseWriteLock(&adp->lock);

@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.20 2005/04/22 14:57:11 rees Exp $ */
+/* $Id: osi_machdep.h,v 1.21 2005/05/13 20:50:05 rees Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -63,7 +63,7 @@ extern struct simplelock afs_rxglobal_lock;
 #define	AFS_PROC	struct proc
 #define	AFS_UCRED	ucred
 #define afs_suser(x)	afs_osi_suser(osi_curcred())
-#define getpid()	curproc
+#define getpid()	(curproc->p_pid)
 #define osi_curcred()	(curproc->p_cred->pc_ucred)
 #define osi_curproc()	curproc
 #define p_rcred         p_ucred
