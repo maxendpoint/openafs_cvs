@@ -23,7 +23,7 @@
 #define INCLUDE_RXKAD_PRIVATE_DECLS
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.23 2005/03/11 05:38:42 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.24 2005/05/20 19:19:26 rees Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -32,7 +32,7 @@ RCSID
 #ifdef	AFS_AIX_ENV
 #include "h/systm.h"
 #endif
-#ifdef AFS_DARWIN60_ENV
+#if defined(AFS_DARWIN60_ENV) || defined(AFS_OBSD_ENV)
 #include "h/kernel.h"
 #endif
 #include "h/types.h"
