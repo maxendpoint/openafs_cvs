@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.13 2005/05/08 06:49:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.14 2005/05/23 21:04:06 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -156,11 +156,7 @@ afs_unmount(mp, flags, p)
 	    if (flags & MNT_FORCE) {
                 if (afs_globalVp) {
                     AFS_GUNLOCK();
-#ifdef AFS_DARWIN80_ENV
-                    vnode_rele(AFSTOV(afs_globalVp));
-#else
                     vrele(AFSTOV(afs_globalVp));
-#endif
                     AFS_GLOCK();
                 }
 		afs_globalVp = NULL;
@@ -252,11 +248,7 @@ afs_vget(mp, lfl, vp)
 	vprint("bad usecount", vp);
 	panic("afs_vget");
     }
-#ifdef AFS_DARWIN80_ENV
-    error = vnode_get(vp);
-#else
     error = vget(vp, lfl, current_proc());
-#endif
     if (!error)
 	insmntque(vp, mp);	/* take off free list */
     return error;

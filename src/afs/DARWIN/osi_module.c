@@ -2,7 +2,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_module.c,v 1.12 2005/05/08 06:49:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_module.c,v 1.13 2005/05/23 21:04:06 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -49,10 +49,6 @@ afs_modload(struct kmod_info *ki, void *data)
 #ifdef KERNEL_FUNNEL
     sysent[AFS_SYSCALL].sy_funnel = KERNEL_FUNNEL;
 #endif
-#ifdef AFS_DARWIN80_ENV
-    MUTEX_SETUP();
-    afs_global_lock = lck_mtx_alloc(openafs_lck_grp, 0);
-#endif
     return KERN_SUCCESS;
 }
 
@@ -71,10 +67,6 @@ afs_modunload(struct kmod_info * ki, void *data)
     /* give up the stolen syscall entry */
     sysent[AFS_SYSCALL].sy_narg = 0;
     sysent[AFS_SYSCALL].sy_call = nosys;
-#ifdef AFS_DARWIN80_ENV
-    MUTEX_FINISH();
-    lck_mtx_free(afs_global_lock);
-#endif
     return KERN_SUCCESS;
 }
 

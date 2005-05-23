@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vm.c,v 1.14 2005/05/13 03:02:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vm.c,v 1.15 2005/05/23 21:04:08 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -86,7 +86,7 @@ osi_VM_FlushVCache(struct vcache *avc, int *slept)
 {
     struct vm_object *obj;
     struct vnode *vp;
-    if (VREFCOUNT_GT(avc, 1))
+    if (VREFCOUNT(avc) > 1)
 	return EBUSY;
 
     if (avc->opens)
