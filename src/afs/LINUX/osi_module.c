@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.15 2005/05/08 06:05:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.52.2.16 2005/05/23 21:17:18 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -229,6 +229,7 @@ static int ioctl32_done;
 static int
 afsproc_init(void)
 {
+    struct proc_dir_entry *entry2;
     struct proc_dir_entry *entry1;
     struct proc_dir_entry *entry2;
 
