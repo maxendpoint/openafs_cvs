@@ -31,7 +31,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/key_sched.c,v 1.7 2004/08/19 01:07:45 kolya Exp $");
+    ("$Header: /cvs/openafs/src/des/key_sched.c,v 1.8 2005/05/30 04:55:12 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include "des_internal.h"
@@ -66,9 +66,7 @@ des_key_sched(register des_cblock k, des_key_schedule schedule)
     n = 0;
     p_char = k_char;
 
-    LOCK_RXKAD_STATS;
-    rxkad_stats.des_key_scheds++;
-    UNLOCK_RXKAD_STATS;
+    INC_RXKAD_STATS(des_key_scheds);
 #ifdef lint
     n = n;			/* fool it in case of VAXASM */
 #endif

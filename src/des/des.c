@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/des.c,v 1.16 2004/10/16 22:41:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/des/des.c,v 1.17 2005/05/30 04:55:12 shadow Exp $");
 
 #ifndef KERNEL
 #include <stdio.h>
@@ -64,10 +64,6 @@ RCSID
 #else
 #define DBG_PRINT(s)
 #endif
-
-#ifdef AFS_PTHREAD_ENV
-pthread_mutex_t rxkad_stats_mutex;
-#endif /* AFS_PTHREAD_ENV */
 
 /* encrypt == 0  ==> decrypt, else encrypt */
 
@@ -105,12 +101,10 @@ des_ecb_encrypt(void * clear, void * cipher,
 #ifdef DEBUG
     afs_uint32 dbg_tmp[2];
 #endif
-    LOCK_RXKAD_STATS;
     if (encrypt)
-	rxkad_stats.des_encrypts[DES_ENCRYPT]++;
+	INC_RXKAD_STATS(des_encrypts[DES_ENCRYPT]);
     else
-	rxkad_stats.des_encrypts[DES_DECRYPT]++;
-    UNLOCK_RXKAD_STATS;
+	INC_RXKAD_STATS(des_encrypts[DES_DECRYPT]);
     /*
      * Use L1,R1 and L2,R2 as two sets of "64-bit" registers always
      * work from L1,R1 input to L2,R2 output; initialize the cleartext
