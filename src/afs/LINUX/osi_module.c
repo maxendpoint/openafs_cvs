@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.68 2005/05/14 02:41:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.69 2005/05/30 04:07:56 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -737,6 +737,7 @@ cleanup_module(void)
 }
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
+MODULE_LICENSE("http://www.openafs.org/dl/license10.html");
 module_init(afs_init);
 module_exit(afs_cleanup);
 #endif
