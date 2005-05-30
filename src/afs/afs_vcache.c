@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.19 2005/05/24 23:09:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.20 2005/05/30 04:05:41 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -216,7 +216,6 @@ afs_FlushVCache(struct vcache *avc, int *slept)
     afs_DequeueCallback(avc);	/* remove it from queued callbacks list */
     avc->states &= ~(CStatd | CUnique);
     ReleaseWriteLock(&afs_xcbhash);
-    afs_symhint_inval(avc);
     if ((avc->states & CForeign) || (avc->fid.Fid.Vnode & 1))
 	osi_dnlc_purgedp(avc);	/* if it (could be) a directory */
     else
@@ -866,7 +865,6 @@ restart:
     tvc->fid = *afid;
     tvc->asynchrony = -1;
     tvc->vc_error = 0;
-    afs_symhint_inval(tvc);
 #ifdef AFS_TEXT_ENV
     tvc->flushDV.low = tvc->flushDV.high = AFS_MAXDV;
 #endif
@@ -1080,9 +1078,8 @@ restart:
     vn_initlist((struct vnlist *)&tvc->v);
     tvc->lastr = 0;
 #endif /* AFS_SGI_ENV */
-    tvc->h1.dchint = 0;
+    tvc->dchint = NULL;
     osi_dnlc_purgedp(tvc);	/* this may be overkill */
-    memset((char *)&(tvc->quick), 0, sizeof(struct vtodc));
     memset((char *)&(tvc->callsort), 0, sizeof(struct afs_q));
     tvc->slocks = NULL;
     i = VCHash(afid);
@@ -2239,8 +2236,7 @@ afs_FetchStatus(struct vcache * avc, struct VenusFid * afid,
     XSTATS_DECLS;
     do {
 	tc = afs_Conn(afid, areq, SHARED_LOCK);
-	avc->quick.stamp = 0;
-	avc->h1.dchint = NULL;	/* invalidate hints */
+	avc->dchint = NULL;	/* invalidate hints */
 	if (tc) {
 	    avc->callback = tc->srvr->server;
 	    start = osi_Time();
