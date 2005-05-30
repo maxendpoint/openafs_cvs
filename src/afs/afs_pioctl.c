@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.99 2005/05/24 23:06:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.100 2005/05/30 03:57:02 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1669,7 +1669,6 @@ DECL_PIOCTL(PFlush)
     /* now find the disk cache entries */
     afs_TryToSmush(avc, *acred, 1);
     osi_dnlc_purgedp(avc);
-    afs_symhint_inval(avc);
     if (avc->linkData && !(avc->states & CCore)) {
 	afs_osi_Free(avc->linkData, strlen(avc->linkData) + 1);
 	avc->linkData = NULL;
@@ -3561,7 +3560,6 @@ DECL_PIOCTL(PFlushMount)
     /* now find the disk cache entries */
     afs_TryToSmush(tvc, *acred, 1);
     osi_dnlc_purgedp(tvc);
-    afs_symhint_inval(tvc);
     if (tvc->linkData && !(tvc->states & CCore)) {
 	afs_osi_Free(tvc->linkData, strlen(tvc->linkData) + 1);
 	tvc->linkData = NULL;
