@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.35.2.4 2005/05/30 04:41:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.35.2.5 2005/05/30 05:23:30 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -397,9 +397,9 @@ VInitVolumePackageThread(void * args) {
     struct DiskPartition *diskP;
     struct vinitvolumepackage_thread_t * params;
     struct diskpartition_queue_t * dpq;
+    int nAttached = 0, nUnattached = 0;
 
     params = (vinitvolumepackage_thread_t *) args;
-
 
     VOL_LOCK;
     /* Attach all the volumes in this partition */
@@ -410,7 +410,6 @@ VInitVolumePackageThread(void * args) {
 	diskP = dpq->diskP;
 	free(dpq);
 
-        int nAttached = 0, nUnattached = 0;
 	Log("Partition %s: attaching volumes\n", diskP->name);
 	dirp = opendir(VPartitionPath(diskP));
 	assert(dirp);
