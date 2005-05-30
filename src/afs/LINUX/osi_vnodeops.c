@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.20 2005/05/23 21:09:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.21 2005/05/30 04:12:17 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -883,21 +883,14 @@ afs_linux_dentry_revalidate(struct dentry *dp)
 	goto done;
     }
 
-    /* parent's DataVersion changed? */
-    if (hgetlo(pvcp->m.DataVersion) > dp->d_time) {
-	bad_dentry = 11;
-	goto done;
-    }
-
-    /* If it's @sys, perhaps it has been changed */
-    if (!afs_ENameOK(dp->d_name.name)) {
-	bad_dentry = 10;
-	goto done;
-    }
-
     /* If it's the AFS root no chance it needs revalidating */
     if (vcp == afs_globalVp)
 	goto good_dentry;
+
+    /* parent's DataVersion changed? */
+    if (hgetlo(pvcp->m.DataVersion) > dp->d_time) {
+	vcp->states &= ~CStatd; /* force afs_VerifyVCache() to go to the server */
+    }
 
     /* Get a validated vcache entry */
     credp = crref();
