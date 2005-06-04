@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.33 2005/06/03 18:26:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.34 2005/06/04 17:08:55 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -287,14 +287,14 @@ afs_write_inode(struct inode *ip)
 #endif
 }
 
-
+#if defined(AFS_LINUX26_ENV)
 static void
 afs_drop_inode(struct inode *ip)
 {
 	generic_delete_inode(ip);
 	AFS_GUNLOCK();		/* locked by afs_delete_inode() */
 }
-
+#endif
 
 static void
 afs_destroy_inode(struct inode *ip)
