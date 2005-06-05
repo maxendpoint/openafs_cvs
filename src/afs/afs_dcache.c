@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.12 2005/05/30 04:05:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.13 2005/06/05 15:34:49 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -646,9 +646,9 @@ afs_GetDownD(int anumber, int *aneedSpace, afs_int32 buckethint)
 		if (tvc) {
 		    tchunkoffset = AFS_CHUNKTOBASE(tdc->f.chunk);
 		    chunkFlags = afs_indexFlags[tdc->index];
-		    if ((((phase / 2) & 1) == 0) && osi_Active(tvc))
+		    if (((phase & 1) == 0) && osi_Active(tvc))
                         skip = 1;
-		    if ((((phase / 2) & 1) == 1) && osi_Active(tvc)
+		    if (((phase & 1) == 1) && osi_Active(tvc)
                         && (tvc->states & CDCLock)
                         && (chunkFlags & IFAnyPages))
                         skip = 1;
@@ -794,7 +794,7 @@ afs_GetDownD(int anumber, int *aneedSpace, afs_int32 buckethint)
 	    }
 	} else {
 	    /* found no one in phases 0-5, we're hosed */
-	    if (victimPtr == 0)
+	    if (j == 0)
 		break;
 	}
     }				/* big while loop */
