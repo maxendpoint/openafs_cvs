@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.22 2005/05/30 03:57:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.23 2005/06/10 21:11:07 jaltman Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -358,7 +358,7 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 
 int
 #if defined(AFS_SGI_ENV)
-afs_rename(OSI_VC_DECL(aodp), char *aname1, struct vcache *andp, achar *name2, struct pathname *npnp, struct AFS_UCRED *acred)
+afs_rename(OSI_VC_DECL(aodp), char *aname1, struct vcache *andp, char *aname2, struct pathname *npnp, struct AFS_UCRED *acred)
 #else
 afs_rename(OSI_VC_DECL(aodp), char *aname1, struct vcache *andp, char *aname2, struct AFS_UCRED *acred)
 #endif
