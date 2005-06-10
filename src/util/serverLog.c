@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.27 2005/04/19 05:04:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.28 2005/06/10 21:34:08 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -241,7 +241,7 @@ OpenLog(const char *fileName)
     }
 
     /* Support named pipes as logs by not rotating them */
-    if ((fstat(fileName, &statbuf) == 0)  && (S_ISFIFO(statbuf.st_mode))) {
+    if ((lstat(fileName, &statbuf) == 0)  && (S_ISFIFO(statbuf.st_mode))) {
 	isfifo = 1;
     }
 #endif
@@ -314,7 +314,7 @@ ReOpenLog(const char *fileName)
     }
 
     /* Support named pipes as logs by not rotating them */
-    if ((fstat(fileName, &statbuf) == 0)  && (S_ISFIFO(statbuf.st_mode))) {
+    if ((lstat(fileName, &statbuf) == 0)  && (S_ISFIFO(statbuf.st_mode))) {
 	isfifo = 1;
     }
 #endif
