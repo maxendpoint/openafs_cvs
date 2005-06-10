@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.26 2005/04/27 01:36:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.27 2005/06/10 21:37:37 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -870,8 +870,8 @@ main(int argc, char **argv, char **envp)
 
     if ((!DoSyslog)
 #ifndef AFS_NT40_ENV
-	&& (!(fstat(AFSDIR_BOZLOG_FILE, &sb) == 0) && 
-	(S_ISFIFO(sb.st_mode)))
+	&& ((lstat(AFSDIR_BOZLOG_FILE, &sb) == 0) && 
+	!(S_ISFIFO(sb.st_mode)))
 #endif
 	) {
 	strcpy(namebuf, AFSDIR_BOZLOG_FILE);
