@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.6 2005/04/03 20:19:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.7 2005/06/10 21:07:48 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7249,8 +7249,7 @@ SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
 #ifndef __EXPERIMENTAL_CALLBACK_CONN_MOVING
     errorCode = 1;
 #else
-
-    H_LOCK
+    H_LOCK;
     tclient = h_FindClient_r(tcon);
     thost = tclient->host;
     
@@ -7283,9 +7282,9 @@ SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
 			     thost->port, 1, sc, 0);
     rx_SetConnDeadTime(conn, 2); 
     rx_SetConnHardDeadTime(conn, AFS_HARDDEADTIME); 
-    H_UNLOCK
+    H_UNLOCK;
     errorCode = RXAFSCB_Probe(conn);
-    H_LOCK
+    H_LOCK;
     if (!errorCode) {
 	if ( thost->callback_rxcon )
 	    rx_DestroyConnection(thost->callback_rxcon);
@@ -7299,10 +7298,10 @@ SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
     } else {
 	rx_DestroyConnection(conn);
     }	    
+  Bad_CallBackRxConnAddr:
+    H_UNLOCK;
 #endif
 
- Bad_CallBackRxConnAddr:
-    H_UNLOCK;
     errorCode = CallPostamble(tcon, errorCode);
  Bad_CallBackRxConnAddr1:
     return errorCode;          /* failure */
