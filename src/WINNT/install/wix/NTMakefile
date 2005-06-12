@@ -39,7 +39,7 @@ languages:
 
 lang:: lang_clean $(MSIFILE)
 
-uninstall:
+uninst: 
         $(CD) uninstall
         $(MAKE) /f NTMakefile /nologo install
         $(CD) ..
@@ -49,7 +49,7 @@ customactions:
 	$(MAKE) /f NTMakefile /nologo install
 	$(CD) ..
 
-install: customactions languages uninstall
+install: uninst customactions languages 
 
 $(MSIFILE): $(WIXOBJ)
 	light -nologo -out $(MSIFILE) \
