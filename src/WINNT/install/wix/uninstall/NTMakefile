@@ -22,5 +22,11 @@ $(UNINSTALL): $(OBJECTS) $(OUT)\uninstall.res
   $(EXECONLINK) msi.lib
   $(EXEPREP)
 
-install:  $(UNINSTALL)
+install: $(UNINSTALL)
 
+# Cleanup
+clean::
+        -$(DEL) AFS_component_version_number.h
+        -$(DEL) $(OUT)\uninstall.obj
+        -$(DEL) $(OUT)\uninstall.res
+        -$(DEL) $(UNINSTALL)
