@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.14 2005/04/27 01:36:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.15 2005/06/18 23:23:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -97,7 +97,8 @@ rxinfo(rxcall)
 	rxkad_GetServerInfo(rxcall->conn, NULL, &exp, tname, tinst, tcell,
 			    NULL);
     if (!code)
-	sprintf(rxinfo_str, "%s %s", inet_ntoa(hostAddr), tname);
+	sprintf(rxinfo_str, "%s %s%s%s%s%s", inet_ntoa(hostAddr), tname,
+		tinst?".":"", tinst?tinst:"", tcell?"@":"", tcell?tcell:"");
     else
 	sprintf(rxinfo_str, "%s noauth", inet_ntoa(hostAddr));
     return (rxinfo_str);
