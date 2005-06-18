@@ -31,7 +31,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/key_sched.c,v 1.9 2005/05/30 17:34:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/key_sched.c,v 1.10 2005/06/18 23:50:40 shadow Exp $");
 
 #include <mit-cpyright.h>
 #include "des_internal.h"
@@ -43,10 +43,6 @@ RCSID
 #include "des_prototypes.h"
 
 typedef char key[64];
-
-#ifndef AFS_PTHREAD_ENV 
-struct rxkad_stats rxkad_stats = { { 0 } }; 
-#endif
 
 /* the following are really void but cc86 doesnt allow it */
 static int make_key_sched();
