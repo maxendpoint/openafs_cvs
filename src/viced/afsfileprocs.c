@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.88 2005/06/10 21:07:05 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.89 2005/06/18 23:22:31 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -594,7 +594,10 @@ GetRights(struct client *client, struct acl_accessList *ACL,
 	*anyrights = 0;
     }
     *rights = 0;
+
+    ObtainWriteLock(&client->lock);
     acl_CheckRights(ACL, &client->CPS, rights);
+    ReleaseWriteLock(&client->lock);
 
     /* wait if somebody else is already doing the getCPS call */
     H_LOCK;
