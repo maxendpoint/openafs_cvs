@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/des/util.c,v 1.6 2003/07/15 23:15:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/des/util.c,v 1.7 2005/06/18 23:50:40 shadow Exp $");
 
 #include "mit-cpyright.h"
 #ifndef KERNEL
@@ -20,6 +20,10 @@ RCSID
 #include <sys/types.h>
 #include <des.h>
 #include "des_prototypes.h"
+
+#ifndef AFS_PTHREAD_ENV 
+struct rxkad_stats rxkad_stats = { { 0 } }; 
+#endif
 
 int
 des_cblock_print_file(des_cblock * x, FILE * fp)
