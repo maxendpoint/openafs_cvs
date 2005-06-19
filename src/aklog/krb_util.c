@@ -11,12 +11,13 @@
 
 #ifndef lint
 static char rcsid_send_to_kdc_c[] =
-"$Id: krb_util.c,v 1.1 2004/11/19 20:01:29 kenh Exp $";
+"$Id: krb_util.c,v 1.2 2005/06/19 01:06:21 kenh Exp $";
 #endif /* lint */
 
 #if 0
 #include <kerberosIV/mit-copyright.h>
 #endif
+#include <afs/stds.h>
 #include <krb5.h>
 #include <kerberosIV/krb.h> 
 

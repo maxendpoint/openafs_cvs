@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.1 2004/11/19 20:01:29 kenh Exp $
+ * $Id: aklog_main.c,v 1.2 2005/06/19 01:06:21 kenh Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.1 2004/11/19 20:01:29 kenh Exp $";
+	"$Id: aklog_main.c,v 1.2 2005/06/19 01:06:21 kenh Exp $";
 #endif /* lint || SABER */
 
 #include <stdio.h>
@@ -1608,3 +1608,15 @@ void aklog(argc, argv, a_params)
 
     params.exitprog(status);
 }
+
+#ifndef HAVE_ADD_TO_ERROR_TABLE
+#include <afs/error_table.h>
+
+void add_error_table (const struct error_table *);
+
+void
+add_to_error_table(struct et_list *new_table)
+{
+	add_error_table(new_table->table);
+}
+#endif /* HAVE_ADD_TO_ERROR_TABLE */

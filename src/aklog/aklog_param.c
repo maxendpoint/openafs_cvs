@@ -1,14 +1,15 @@
 /* 
- * $Id: aklog_param.c,v 1.1 2004/11/19 20:01:29 kenh Exp $
+ * $Id: aklog_param.c,v 1.2 2005/06/19 01:06:21 kenh Exp $
  * 
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
  */
 
 #if !defined(lint) && !defined(SABER)
-static char *rcsid = "$Id: aklog_param.c,v 1.1 2004/11/19 20:01:29 kenh Exp $";
+static char *rcsid = "$Id: aklog_param.c,v 1.2 2005/06/19 01:06:21 kenh Exp $";
 #endif /* lint || SABER */
 
+#include <afs/stds.h>
 #include "aklog.h"
 #include <stdio.h>
 #include <sys/types.h>
@@ -107,7 +108,7 @@ static int get_cred(context, name, inst, realm, c, creds)
     increds.client = client_principal;
     increds.times.endtime = 0;
 	/* Ask for DES since that is what V4 understands */
-    /* increds.keyblock.enctype = ENCTYPE_DES_CBC_CRC; */
+    increds.keyblock.enctype = ENCTYPE_DES_CBC_CRC;
 
     r = krb5_get_credentials(context, 0, _krb425_ccache, &increds, creds);
     if (r)
