@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.63 2005/05/30 04:40:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.64 2005/06/19 17:37:38 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,7 +88,6 @@ RCSID
 #include "host.h"
 #ifdef AFS_PTHREAD_ENV
 #include "softsig.h"
-char *(*threadNameProgram) ();
 #endif
 #if defined(AFS_SGI_ENV)
 #include "sys/schedctl.h"
@@ -1106,6 +1105,10 @@ ParseArgs(int argc, char *argv[])
 	    serverLogSyslogFacility = atoi(argv[i] + 8);
 	}
 #endif
+	else if (strcmp(argv[i], "-mrafslogs") == 0) {
+	    /* set syslog logging flag */
+	    mrafsStyleLogs = 1;
+	} 
 	else {
 	    return (-1);
 	}
@@ -1727,8 +1730,8 @@ main(int argc, char *argv[])
 	V_BreakVolumeCallbacks = BreakVolumeCallBacksLater;
     }
 
-#if defined(AFS_PTHREAD_ENV)
-    threadNameProgram = threadName;
+#ifdef AFS_PTHREAD_ENV
+    SetLogThreadNameProgram( threadName );
 #endif
 
     /* initialize libacl routines */
