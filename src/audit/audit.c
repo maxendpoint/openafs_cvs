@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.8 2003/07/15 23:14:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.8.2.1 2005/06/21 20:17:09 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -45,10 +45,8 @@ int osi_echo_trail = (-1);
 /* AIX requires a buffer filled with values to record with each audit event.
  * aixmakebuf creates that buffer from the variable list of values we are given.
  * ************************************************************************** */
-static
-aixmakebuf(audEvent, vaList)
-     char *audEvent;
-     char *vaList;
+static void
+aixmakebuf(char *audEvent, char *vaList)
 {
     int code;
     int vaEntry;
@@ -134,11 +132,8 @@ aixmakebuf(audEvent, vaList)
     }				/* end while */
 }
 
-static
-printbuf(audEvent, errCode, vaList)
-     char *audEvent;
-     afs_int32 errCode;
-     char *vaList;
+static void
+printbuf(char *audEvent, afs_int32 errCode, char *vaList)
 {
     int vaEntry;
     int vaInt;
@@ -215,7 +210,7 @@ printbuf(audEvent, errCode, vaList)
 	printf("\n");
 }
 #else
-static
+static void
 aixmakebuf(audEvent, vaList)
      char *audEvent;
      va_list vaList;
@@ -223,11 +218,8 @@ aixmakebuf(audEvent, vaList)
     return;
 }
 
-static
-printbuf(audEvent, errCode, vaList)
-     char *audEvent;
-     long errCode;
-     va_list vaList;
+static void
+printbuf(char *audEvent, long errCode, va_list vaList)
 {
     return;
 }
