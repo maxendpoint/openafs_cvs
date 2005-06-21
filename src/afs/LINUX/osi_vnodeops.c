@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.23 2005/05/31 21:12:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.24 2005/06/21 20:22:44 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -950,7 +950,7 @@ afs_linux_dentry_revalidate(struct dentry *dp)
     goto done;
 }
 
-#if !defined(AFS_LINUX26_ENV)
+#if !defined(AFS_LINUX24_ENV)
 /* afs_dentry_iput */
 static void
 afs_dentry_iput(struct dentry *dp, struct inode *ip)
@@ -971,7 +971,7 @@ afs_dentry_delete(struct dentry *dp)
 struct dentry_operations afs_dentry_operations = {
   .d_revalidate =	afs_linux_dentry_revalidate,
   .d_delete =		afs_dentry_delete,
-#if !defined(AFS_LINUX26_ENV)
+#if !defined(AFS_LINUX24_ENV)
   .d_iput =		afs_dentry_iput,
 #endif
 };
