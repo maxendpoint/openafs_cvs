@@ -1,14 +1,15 @@
 /* 
- * $Id: aklog.c,v 1.1.2.1 2004/12/07 05:51:24 shadow Exp $
+ * $Id: aklog.c,v 1.1.2.2 2005/06/21 20:20:26 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
  */
 
 #if !defined(lint) && !defined(SABER)
-static char *rcsid = "$Id: aklog.c,v 1.1.2.1 2004/12/07 05:51:24 shadow Exp $";
+static char *rcsid = "$Id: aklog.c,v 1.1.2.2 2005/06/21 20:20:26 shadow Exp $";
 #endif /* lint || SABER */
 
+#include <afs/stds.h>
 #include "aklog.h"
 
 #ifndef WINDOWS

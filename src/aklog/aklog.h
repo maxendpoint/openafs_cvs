@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog.h,v 1.1.2.1 2004/12/07 05:51:24 shadow Exp $
+ * $Id: aklog.h,v 1.1.2.2 2005/06/21 20:20:26 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -9,12 +9,13 @@
 #define __AKLOG_H__
 
 #if !defined(lint) && !defined(SABER)
-static char *rcsid_aklog_h = "$Id: aklog.h,v 1.1.2.1 2004/12/07 05:51:24 shadow Exp $";
+static char *rcsid_aklog_h = "$Id: aklog.h,v 1.1.2.2 2005/06/21 20:20:26 shadow Exp $";
 #endif /* lint || SABER */
 
 #include <krb5.h>
 #include <kerberosIV/krb.h>
 #include "linked_list.h"
+#include <afsconfig.h>
 
 #ifdef __STDC__
 #define ARGS(x) x
