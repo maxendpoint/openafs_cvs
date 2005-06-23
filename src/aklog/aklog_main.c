@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.2 2005/06/19 01:06:21 kenh Exp $
+ * $Id: aklog_main.c,v 1.3 2005/06/23 04:41:29 jaltman Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.2 2005/06/19 01:06:21 kenh Exp $";
+	"$Id: aklog_main.c,v 1.3 2005/06/23 04:41:29 jaltman Exp $";
 #endif /* lint || SABER */
 
 #include <stdio.h>
@@ -692,26 +692,6 @@ static int auth_to_cell(context, cell, realm)
 		sprintf(msgbuf, "About to resolve name %s to id in cell %s.\n", 
 			username, aserver.cell);
 		params.pstdout(msgbuf);
-	    }
-
-	    /*
-	     * Talk about DUMB!  It turns out that there is a bug in
-	     * pr_Initialize -- even if you give a different cell name
-	     * to it, it still uses a connection to a previous AFS server
-	     * if one exists.  The way to fix this is to change the
-	     * _filename_ argument to pr_Initialize - that forces it to
-	     * re-initialize the connection.  We do this by adding and
-	     * removing a "/" on the end of the configuration directory name.
-	     */
-
-	    if (lastcell[0] != '\0' && (strcmp(lastcell, aserver.cell) != 0)) {
-		int i = strlen(confname);
-		if (confname[i - 1] == '/') {
-		    confname[i - 1] = '\0';
-		} else {
-		    confname[i] = '/';
-		    confname[i + 1] = '\0';
-		}
 	    }
 
 	    strcpy(lastcell, aserver.cell);
