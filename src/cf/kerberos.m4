@@ -1,5 +1,5 @@
 dnl
-dnl $Id: kerberos.m4,v 1.2 2005/06/21 22:14:17 shadow Exp $
+dnl $Id: kerberos.m4,v 1.3 2005/06/24 03:57:39 kenh Exp $
 dnl
 dnl Kerberos autoconf glue
 dnl
@@ -10,7 +10,7 @@ dnl AC_ARG_VAR(KRB5CFLAGS, [C flags to compile Kerberos 5 programs])
 dnl AC_ARG_VAR(KRB5LIBS, [Libraries and flags to compile Kerberos 5 programs])
 dnl AC_ARG_VAR(KRB5_CONFIG, [Location of krb5-config script])
 
-AC_ARG_WITH([krb5-conf],[--with-krb5-config[=krb5-config-location]    Use a krb5-config script to configure Kerberos])
+AC_ARG_WITH([krb5-conf],[--with-krb5-conf[=krb5-config-location]    Use a krb5-config script to configure Kerberos])
 if test X$with_krb5_conf != X; then
 		conf_krb5=YES
 		if test X$with_krb5_conf = Xyes; then
@@ -63,4 +63,6 @@ if test X$conf_krb5 = XYES; then
 	LIBS="$save_LIBS"
 fi
 AC_SUBST(BUILD_KRB5)
+AC_SUBST(KRB5CFLAGS)
+AC_SUBST(KRB5LIBS)
 ])dnl
