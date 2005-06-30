@@ -1,12 +1,12 @@
 /* 
- * $Id: aklog.c,v 1.3 2005/06/23 23:43:48 kenh Exp $
+ * $Id: aklog.c,v 1.4 2005/06/30 21:06:15 kenh Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
  */
 
 #if !defined(lint) && !defined(SABER)
-static char *rcsid = "$Id: aklog.c,v 1.3 2005/06/23 23:43:48 kenh Exp $";
+static char *rcsid = "$Id: aklog.c,v 1.4 2005/06/30 21:06:15 kenh Exp $";
 #endif /* lint || SABER */
 
 #include <afs/stds.h>
@@ -43,7 +43,6 @@ WinMain(HINSTANCE hinst, HINSTANCE hprevinstance, LPSTR cmdline, int noshow)
 
 	parse_cmdline(cmdline, &argv, &argc);
 
-    aklog_init_params(&params);
     aklog(argc, argv, &params);
 
 	return 0;
