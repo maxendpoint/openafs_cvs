@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.22.2.7 2005/06/21 20:22:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.22.2.8 2005/06/30 03:12:07 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -182,7 +182,7 @@ SetDebug_Signal(int signo)
 	LogLevel *= 5;
 
 #if defined(AFS_PTHREAD_ENV)
-        if (LogLevel > 999 && threadNameProgram != NULL && 
+        if (LogLevel > 1 && threadNameProgram != NULL && 
             threadIdLogs == 0) {
             threadIdLogs = 1;
         }
