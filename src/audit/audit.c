@@ -11,10 +11,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.11 2005/07/05 14:07:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.12 2005/07/05 14:11:23 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
+#include <string.h>
 #ifdef AFS_AIX32_ENV
 #include <sys/audit.h>
 #else
@@ -43,16 +44,19 @@ int osi_echo_trail = (-1);
 
 FILE *auditout = NULL;
 
+int osi_audit_check();
+
 static void
 audmakebuf(char *audEvent, va_list vaList)
 {
+#ifdef AFS_AIX32_ENV
     int code;
+#endif
     int vaEntry;
     int vaInt;
     afs_int32 vaLong;
     char *vaStr;
     char *vaLst;
-    char hname[20];
     struct AFSFid *vaFid;
 
     vaEntry = va_arg(vaList, int);
@@ -108,7 +112,6 @@ audmakebuf(char *audEvent, va_list vaList)
 		    memcpy(bufferPtr, Fids->AFSCBFids_val,
 			   sizeof(struct AFSFid));
 		} else {
-		    struct AFSFid dummy;
 		    *((u_int *) bufferPtr) = 0;
 		    bufferPtr += sizeof(u_int);
 		    memset(bufferPtr, 0, sizeof(struct AFSFid));
@@ -138,7 +141,6 @@ printbuf(FILE *out, int rec, char *audEvent, afs_int32 errCode, va_list vaList)
     afs_int32 vaLong;
     char *vaStr;
     char *vaLst;
-    char hname[20];
     struct AFSFid *vaFid;
     struct AFSCBFids *vaFids;
     int num = LogThreadNum();
@@ -158,7 +160,7 @@ printbuf(FILE *out, int rec, char *audEvent, afs_int32 errCode, va_list vaList)
 	    if (vaStr)
 		fprintf(out,  "%s ", vaStr);
 	    else
-		fprintf(out,  "<null>", vaStr);
+		fprintf(out,  "<null>");
 	    break;
 	case AUD_INT:		/* Integer */
 	    vaInt = va_arg(vaList, int);
@@ -216,8 +218,10 @@ osi_audit(char *audEvent,	/* Event name (15 chars or less) */
 	  afs_int32 errCode,	/* The error code */
 	  ...)
 {
+#ifdef AFS_AIX32_ENV
     afs_int32 code;
     afs_int32 err;
+#endif
     int result;
 
     va_list vaList;
@@ -235,7 +239,7 @@ osi_audit(char *audEvent,	/* Event name (15 chars or less) */
     if ((osi_audit_all < 0) || (osi_echo_trail < 0))
 	osi_audit_check();
     if (!osi_audit_all && !auditout)
-	return;
+	return 0;
 
     switch (errCode) {
     case 0:
@@ -319,7 +323,7 @@ osi_auditU(struct rx_call *call, char *audEvent, int errCode, ...)
     if (osi_audit_all < 0)
 	osi_audit_check();
     if (!osi_audit_all && !auditout)
-	return;
+	return 0;
 
     strcpy(afsName, "--Unknown--");
     hostId = 0;
