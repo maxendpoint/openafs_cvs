@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.65 2005/07/02 16:59:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.66 2005/07/05 14:03:49 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -127,7 +127,7 @@ FILE *debugFile;
 FILE *console = NULL;
 
 #ifdef AFS_PTHREAD_ENV
-pthread_mutex_t fsync_glock_mutex = PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP;
+pthread_mutex_t fsync_glock_mutex;
 pthread_cond_t fsync_cond;
 #else
 char fsync_wait[1];

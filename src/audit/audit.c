@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.10 2005/07/02 16:59:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.11 2005/07/05 14:07:53 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -297,6 +297,8 @@ osi_audit(char *audEvent,	/* Event name (15 chars or less) */
 	fflush(auditout);
     }
 #endif
+
+    return 0;
 }
 
 /* ************************************************************************** */
@@ -391,6 +393,8 @@ osi_auditU(struct rx_call *call, char *audEvent, int errCode, ...)
     va_start(vaList, errCode);
     osi_audit(audEvent, errCode, AUD_STR, afsName, AUD_HOST, hostId, AUD_LST,
 	      vaList, AUD_END);
+
+    return 0;
 }
 
 /* ************************************************************************** */
@@ -431,6 +435,8 @@ osi_audit_check()
 
     /* Now set whether we audit all events from here on out */
     osi_audit_all = onoff;
+
+    return 0;
 }
 
 int
