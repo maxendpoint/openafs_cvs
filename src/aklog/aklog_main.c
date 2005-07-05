@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.6 2005/07/01 04:40:52 kenh Exp $
+ * $Id: aklog_main.c,v 1.7 2005/07/05 15:06:08 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.6 2005/07/01 04:40:52 kenh Exp $";
+	"$Id: aklog_main.c,v 1.7 2005/07/05 15:06:08 shadow Exp $";
 #endif /* lint || SABER */
 
 #include <stdio.h>
@@ -622,7 +622,7 @@ static int auth_to_cell(context, cell, realm)
 	    strncpy(username, get_princ_str(context, v5cred->client, 0), len);
 	    username[len] = '\0';
 
-	    if (second_comp(context, v5cred->client) > 1) {
+	    if (second_comp(context, v5cred->client)) {
 	    	strcat(username, ".");
 		p = username + strlen(username);
 		len = min(get_princ_len(context, v5cred->client, 1),
