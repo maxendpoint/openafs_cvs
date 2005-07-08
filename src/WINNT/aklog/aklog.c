@@ -213,6 +213,7 @@ void ViceIDToUsername(char *username, char *realm_of_user, char *realm_of_cell,
             printf("Id %d\n", viceId);
     }       
 
+#ifdef COMMENT
     /*
      * This is a crock, but it is Transarc's crock, so
      * we have to play along in order to get the
@@ -374,6 +375,7 @@ static int get_v5cred(krb5_context context,
                                   0))) {
         return((int)r);
     }
+#endif
 
     if (!_krb425_ccache)
         krb5_cc_default(context, &_krb425_ccache);
