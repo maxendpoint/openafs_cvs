@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.22 2005/07/08 03:37:02 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.23 2005/07/08 12:23:04 jaltman Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -90,19 +90,23 @@ pr_Initialize(IN afs_int32 secLevel, IN char *confDir, IN char *cell)
         cell = afs_LclCellName;
     }
 #else /* defined(UKERNEL) */
-    if (!cell && tdir) {
-        code = afsconf_GetLocalCell(tdir, cellstr, sizeof(cellstr));
-        if (code) {
-            fprintf(stderr,
-                     "vos: can't get local cell name - check %s/%s\n",
-                     confDir, AFSDIR_THISCELL_FILE);
-            exit(1);
+    if (!cell) {
+        if (tdir) {
+            code = afsconf_GetLocalCell(tdir, cellstr, sizeof(cellstr));
+            if (code) {
+                fprintf(stderr,
+                         "vos: can't get local cell name - check %s/%s\n",
+                         confDir, AFSDIR_THISCELL_FILE);
+                exit(1);
+            }
+        } else {
+            cellstr[0] = '\0';
         }
         cell = cellstr;
     }
 #endif /* defined(UKERNEL) */
 
-    if (strcmp(confDir, tconfDir) || !cell || strcmp(cell, tcell)) {
+    if (strcmp(confDir, tconfDir) || !cell[0] || strcmp(cell, tcell)) {
 	/*
 	 * Different conf dir; force re-evaluation.
 	 */
