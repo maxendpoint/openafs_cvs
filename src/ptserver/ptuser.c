@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.21 2005/06/23 04:39:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.22 2005/07/08 03:37:02 jaltman Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -90,7 +90,7 @@ pr_Initialize(IN afs_int32 secLevel, IN char *confDir, IN char *cell)
         cell = afs_LclCellName;
     }
 #else /* defined(UKERNEL) */
-    if (!cell) {
+    if (!cell && tdir) {
         code = afsconf_GetLocalCell(tdir, cellstr, sizeof(cellstr));
         if (code) {
             fprintf(stderr,
@@ -102,7 +102,7 @@ pr_Initialize(IN afs_int32 secLevel, IN char *confDir, IN char *cell)
     }
 #endif /* defined(UKERNEL) */
 
-    if (strcmp(confDir, tconfDir) || strcmp(cell, tcell)) {
+    if (strcmp(confDir, tconfDir) || !cell || strcmp(cell, tcell)) {
 	/*
 	 * Different conf dir; force re-evaluation.
 	 */
