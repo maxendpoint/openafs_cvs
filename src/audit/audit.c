@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.13 2005/07/08 19:59:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.14 2005/07/09 14:20:38 jaltman Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -406,8 +406,8 @@ osi_auditU(struct rx_call *call, char *audEvent, int errCode, ...)
                             strcat(vname, tcell);
                         }
 #endif
-                        strcpy(afsName, vname);
                     }
+                    strcpy(afsName, vname);
                 }
 	    } else {		/* Unauthenticated & unknown */
 		osi_audit("AFS_Aud_UnknSec", (-1), AUD_STR, audEvent, AUD_END);
