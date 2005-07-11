@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.1.2.5 2005/07/11 19:07:00 shadow Exp $
+ * $Id: aklog_main.c,v 1.1.2.6 2005/07/11 19:07:24 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.1.2.5 2005/07/11 19:07:00 shadow Exp $";
+	"$Id: aklog_main.c,v 1.1.2.6 2005/07/11 19:07:24 shadow Exp $";
 #endif /* lint || SABER */
 
 #include <stdio.h>
@@ -194,7 +194,7 @@ static int get_user_realm(krb5_context, char *);
 #define get_creds_enctype(c) c->session.keytype
 
 #else
-#error "Must have either keyblock or session member of krb5_creds
+#error "Must have either keyblock or session member of krb5_creds"
 #endif
 
 #if !defined(HAVE_KRB5_524_CONVERT_CREDS) && defined(HAVE_KRB524_CONVERT_CREDS_KDC)
