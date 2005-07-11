@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/kdump.c,v 1.33.2.4 2005/07/11 19:29:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/kdump.c,v 1.33.2.5 2005/07/11 19:30:02 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -2885,7 +2885,7 @@ print_vcache(kmem, vep, ptr, pnt)
 	    printf("\n");
 #ifdef	AFS33
 	printf("%lx: refC=%d, pv=%d, pu=%d, flushDv=%d.%d, mapDV=%d.%d, ",
-	       ptr, vep->vrefCount, vep->parentVnode, vep->parentUnique,
+	       ptr, VREFCOUNT(vep), vep->parentVnode, vep->parentUnique,
 	       vep->flushDV.high, vep->flushDV.low, vep->mapDV.high,
 	       vep->mapDV.low);
 #ifdef AFS_64BIT_CLIENT
