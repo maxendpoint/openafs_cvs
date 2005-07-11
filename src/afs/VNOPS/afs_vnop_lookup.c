@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.62 2005/05/23 21:04:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.63 2005/07/11 18:45:51 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -30,10 +30,6 @@ RCSID
 
 
 extern struct DirEntry *afs_dir_GetBlob();
-
-#ifdef AFS_LINUX22_ENV
-extern struct inode_operations afs_symlink_iops, afs_dir_iops;
-#endif
 
 
 afs_int32 afs_bkvolpref = 0;
@@ -974,12 +970,8 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
 	 * We only do this if the entry looks clear.
 	 */
 	afs_ProcessFS(tvcp, &statsp[i], areqp);
-#ifdef AFS_LINUX22_ENV
-	/* overwrite the ops if it's a directory or symlink. */
-	if (vType(tvcp) == VDIR)
-	    tvcp->v.v_op = &afs_dir_iops;
-	else if (vType(tvcp) == VLNK)
-	    tvcp->v.v_op = &afs_symlink_iops;
+#if defined(AFS_LINUX22_ENV)
+	afs_fill_inode(AFSTOV(tvcp), NULL);	/* reset inode operations */
 #endif
 
 	/* do some accounting for bulk stats: mark this entry as
