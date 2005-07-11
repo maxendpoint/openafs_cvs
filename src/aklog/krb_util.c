@@ -11,15 +11,15 @@
 
 #ifndef lint
 static char rcsid_send_to_kdc_c[] =
-"$Id: krb_util.c,v 1.1.2.2 2005/06/21 20:20:26 shadow Exp $";
+"$Id: krb_util.c,v 1.1.2.3 2005/07/11 19:07:00 shadow Exp $";
 #endif /* lint */
 
 #if 0
 #include <kerberosIV/mit-copyright.h>
 #endif
 #include <afs/stds.h>
+#include "aklog.h"
 #include <krb5.h>
-#include <kerberosIV/krb.h> 
 
 #ifndef MAX_HSTNM
 #define MAX_HSTNM 100
