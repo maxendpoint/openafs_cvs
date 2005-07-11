@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.24.2.2 2005/05/08 06:18:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.24.2.3 2005/07/11 19:03:42 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -3420,7 +3420,7 @@ defect 3069
     cmd_AddParm(ts, "-crypt", CMD_SINGLE, 0, "on or off");
 
     ts = cmd_CreateSyntax("getcrypt", GetCryptCmd, 0,
-			  "set cache manager encryption flag");
+			  "get cache manager encryption flag");
 
     ts = cmd_CreateSyntax("rxstatproc", RxStatProcCmd, 0,
 			  "Manage per process RX statistics");
