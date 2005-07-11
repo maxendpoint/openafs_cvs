@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.21.2.4 2005/07/11 19:02:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.21.2.5 2005/07/11 19:06:48 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -1201,6 +1201,10 @@ getCPS(call, aid, alist, over, cid)
     if (code)
 	ABORT_WITH(tt, code);
 
+    code = WhoIsThis(call, tt, cid);
+    if (code)
+	ABORT_WITH(tt, PRPERM);
+
     temp = FindByID(tt, aid);
     if (!temp)
 	ABORT_WITH(tt, PRNOENT);
@@ -1523,7 +1527,7 @@ SPR_ListEntry(call, aid, aentry)
     afs_int32 code;
     afs_int32 cid = ANONYMOUSID;
 
-    code = listEntry(call, aid, aentry, cid);
+    code = listEntry(call, aid, aentry, &cid);
     osi_auditU(call, PTS_LstEntEvent, code, AUD_LONG, aid, AUD_END);
     ViceLog(125, ("PTS_ListEntry: code %d cid %d aid %d", code, cid, aid));
     return code;
