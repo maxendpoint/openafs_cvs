@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.31 2005/07/02 16:59:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.32 2005/07/11 03:22:23 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -228,7 +228,7 @@ ResetDebug_Signal(int signo)
 #if defined(AFS_PTHREAD_ENV)
     DebugOn(LogLevel);
 #else /* AFS_PTHREAD_ENV */
-    IOMGR_SoftSig(DebugOn, (void *)LogLevel);
+    IOMGR_SoftSig(DebugOn, LogLevel);
 #endif /* AFS_PTHREAD_ENV */
 
     (void)signal(signo, ResetDebug_Signal);	/* on some platforms,

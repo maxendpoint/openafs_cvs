@@ -15,9 +15,12 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/client.c,v 1.13 2004/08/19 01:07:47 kolya Exp $");
+    ("$Header: /cvs/openafs/src/kauth/client.c,v 1.14 2005/07/11 03:22:22 shadow Exp $");
 
 #if defined(UKERNEL)
+#ifdef HAVE_UNISTD_H
+#define __USE_XOPEN
+#endif
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
 #include "afs/stds.h"
