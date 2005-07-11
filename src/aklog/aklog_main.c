@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.1.2.7 2005/07/11 19:07:37 shadow Exp $
+ * $Id: aklog_main.c,v 1.1.2.8 2005/07/11 19:07:46 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.1.2.7 2005/07/11 19:07:37 shadow Exp $";
+	"$Id: aklog_main.c,v 1.1.2.8 2005/07/11 19:07:46 shadow Exp $";
 #endif /* lint || SABER */
 
 #include <stdio.h>
@@ -200,7 +200,7 @@ static int get_user_realm(krb5_context, char *);
 #if !defined(HAVE_KRB5_524_CONVERT_CREDS) && defined(HAVE_KRB524_CONVERT_CREDS_KDC)
 #define krb5_524_convert_creds krb524_convert_creds_kdc
 #elif !defined(HAVE_KRB5_524_CONVERT_CREDS) && !defined(HAVE_KRB524_CONVERT_CREDS_KDC)
-#error "You must have one of krb5_524_convert_creds or krb5_524_convert_creds_kdc available"
+#error "You must have one of krb5_524_convert_creds or krb524_convert_creds_kdc available"
 #endif
 
 #endif /* WINDOWS */
