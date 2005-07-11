@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.21.2.6 2005/07/11 19:29:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.21.2.7 2005/07/11 19:54:50 shadow Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -1209,10 +1209,6 @@ getCPS(call, aid, alist, over, cid)
     code = read_DbHeader(tt);
     if (code)
 	ABORT_WITH(tt, code);
-
-    code = WhoIsThis(call, tt, cid);
-    if (code)
-	ABORT_WITH(tt, PRPERM);
 
     temp = FindByID(tt, aid);
     if (!temp)
