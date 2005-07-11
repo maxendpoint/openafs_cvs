@@ -196,6 +196,28 @@ void ViceIDToUsername(char *username, char *realm_of_user, char *realm_of_cell,
     if (dflag)
         printf("About to resolve name %s to id\n", username);
 
+#ifdef COMMENT
+    /*
+    * Talk about DUMB!  It turns out that there is a bug in
+    * pr_Initialize -- even if you give a different cell name
+    * to it, it still uses a connection to a previous AFS server
+    * if one exists.  The way to fix this is to change the
+    * _filename_ argument to pr_Initialize - that forces it to
+    * re-initialize the connection.  We do this by adding and
+    * removing a "/" on the end of the configuration directory name.
+    */
+
+    if (lastcell[0] != '\0' && (strcmp(lastcell, aserver->cell) != 0)) {
+        int i = strlen(confname);
+        if (confname[i - 1] == '/') {
+            confname[i - 1] = '\0';
+        } else {
+            confname[i] = '/';
+            confname[i + 1] = '\0';
+        }
+    }
+#endif
+
     strcpy(lastcell, aserver->cell);
 
 	if (!pr_Initialize (0, confname, aserver->cell)) {
@@ -213,7 +235,6 @@ void ViceIDToUsername(char *username, char *realm_of_user, char *realm_of_cell,
             printf("Id %d\n", viceId);
     }       
 
-#ifdef COMMENT
     /*
      * This is a crock, but it is Transarc's crock, so
      * we have to play along in order to get the
@@ -224,7 +245,6 @@ void ViceIDToUsername(char *username, char *realm_of_user, char *realm_of_cell,
      * not work if you change %d to something else.
      */
 
-#ifdef COMMENT
     /*
      * This code is taken from cklog -- it lets people
      * automatically register with the ptserver in foreign cells
@@ -258,6 +278,13 @@ void ViceIDToUsername(char *username, char *realm_of_user, char *realm_of_cell,
                 *status = AKLOG_TOKEN;
                 return ;
             }
+
+            /*
+             * In case you're wondering, we don't need to change the
+             * filename here because we're still connecting to the
+             * same cell -- we're just using a different authentication
+             * level
+             */
 
             if ((*status = pr_Initialize(1L, confname, aserver->cell))) {
                 printf("Error %d\n", status);
@@ -376,7 +403,6 @@ static int get_v5cred(krb5_context context,
                                   0))) {
         return((int)r);
     }
-#endif
 
     if (!_krb425_ccache)
         krb5_cc_default(context, &_krb425_ccache);
@@ -552,7 +578,6 @@ static int auth_to_cell(krb5_context context, char *cell, char *realm)
             printf("Already authenticated to %s (or tried to)\n", cell);
         return(AKLOG_SUCCESS);
     }
-#endif
 
     memset(name, 0, sizeof(name));
     memset(instance, 0, sizeof(instance));
