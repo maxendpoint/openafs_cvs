@@ -1,12 +1,12 @@
 /* 
- * $Id: aklog.c,v 1.1.2.2 2005/06/21 20:20:26 shadow Exp $
+ * $Id: aklog.c,v 1.1.2.3 2005/07/11 19:03:25 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
  */
 
 #if !defined(lint) && !defined(SABER)
-static char *rcsid = "$Id: aklog.c,v 1.1.2.2 2005/06/21 20:20:26 shadow Exp $";
+static char *rcsid = "$Id: aklog.c,v 1.1.2.3 2005/07/11 19:03:25 shadow Exp $";
 #endif /* lint || SABER */
 
 #include <afs/stds.h>
@@ -22,10 +22,7 @@ main(argc, argv)
   char *argv[];
 #endif /* __STDC__ */
 {
-    aklog_params params;
-
-    aklog_init_params(&params);
-    aklog(argc, argv, &params);
+    aklog(argc, argv);
 }
 
 #else /* WINDOWS */
