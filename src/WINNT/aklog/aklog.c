@@ -224,6 +224,7 @@ void ViceIDToUsername(char *username, char *realm_of_user, char *realm_of_cell,
      * not work if you change %d to something else.
      */
 
+#ifdef COMMENT
     /*
      * This code is taken from cklog -- it lets people
      * automatically register with the ptserver in foreign cells
@@ -551,6 +552,7 @@ static int auth_to_cell(krb5_context context, char *cell, char *realm)
             printf("Already authenticated to %s (or tried to)\n", cell);
         return(AKLOG_SUCCESS);
     }
+#endif
 
     memset(name, 0, sizeof(name));
     memset(instance, 0, sizeof(instance));
