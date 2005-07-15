@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.25 2005/07/11 19:29:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.26 2005/07/15 19:19:35 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -793,7 +793,6 @@ check_bad_parent(struct dentry *dp)
     struct vcache *pvc = VTOAFS(dp->d_parent->d_inode);
 
     if (vcp->mvid->Fid.Volume != pvc->fid.Fid.Volume) {	/* bad parent */
-printk("check_bad_parent(%s): bad parent vcp->mvid->Fid.Volume != pvc->fid.Fid.Volume\n", dp->d_name.name);
 	credp = crref();
 
 	/* force a lookup, so vcp->mvid is fixed up */
