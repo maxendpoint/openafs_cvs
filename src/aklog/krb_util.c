@@ -11,7 +11,7 @@
 
 #ifndef lint
 static char rcsid_send_to_kdc_c[] =
-"$Id: krb_util.c,v 1.1.2.3 2005/07/11 19:07:00 shadow Exp $";
+"$Id: krb_util.c,v 1.1.2.4 2005/07/15 16:11:24 rra Exp $";
 #endif /* lint */
 
 #if 0
@@ -36,13 +36,12 @@ static char rcsid_send_to_kdc_c[] =
 
 #endif /* WINDOWS */
 
+#include <string.h>
+
 #define S_AD_SZ sizeof(struct sockaddr_in)
 
-char *afs_realm_of_cell(context, cellconfig)
-    krb5_context context;
-    struct afsconf_cell *cellconfig;
+char *afs_realm_of_cell(krb5_context context, struct afsconf_cell *cellconfig)
 {
-    char krbhst[MAX_HSTNM];
     static char krbrlm[REALM_SZ+1];
 	char **hrealms = 0;
 	krb5_error_code retval;
