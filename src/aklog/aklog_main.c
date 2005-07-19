@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.9 2005/07/15 01:19:27 rra Exp $
+ * $Id: aklog_main.c,v 1.10 2005/07/19 02:51:26 jaltman Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.9 2005/07/15 01:19:27 rra Exp $";
+	"$Id: aklog_main.c,v 1.10 2005/07/19 02:51:26 jaltman Exp $";
 #endif /* lint || SABER */
 
 #include <stdio.h>
@@ -948,8 +948,8 @@ static char *next_path(char *origpath)
 	    ? elast_comp - last_comp : strlen(last_comp);
 	strncat(pathtocheck, last_comp, len);
 	memset(linkbuf, 0, sizeof(linkbuf));
-	if ((link = readlink(pathtocheck, linkbuf, 
-				    sizeof(linkbuf))) > 0) {
+	if (link = (readlink(pathtocheck, linkbuf, 
+				    sizeof(linkbuf)) > 0)) {
 	    if (++symlinkcount > MAXSYMLINKS) {
 		fprintf(stderr, "%s: %s\n", progname, strerror(ELOOP));
 		exit(AKLOG_BADPATH);
