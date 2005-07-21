@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.9 2005/07/11 19:29:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.10 2005/07/21 04:49:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -432,7 +432,7 @@ Check_AtSys(register struct vcache *avc, const char *aname,
 	    struct sysname_info *state, struct vrequest *areq)
 {
     int num = 0;
-    char **sysnamelist[MAXSYSNAME];
+    char **sysnamelist[MAXNUMSYSNAMES];
 
     if (AFS_EQ_ATSYS(aname)) {
 	state->offset = 0;
@@ -453,7 +453,7 @@ Next_AtSys(register struct vcache *avc, struct vrequest *areq,
 	   struct sysname_info *state)
 {
     int num = afs_sysnamecount;
-    char **sysnamelist[MAXSYSNAME];
+    char **sysnamelist[MAXNUMSYSNAMES];
 
     if (state->index == -1)
 	return 0;		/* No list */
