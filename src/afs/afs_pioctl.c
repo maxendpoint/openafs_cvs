@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.100 2005/05/30 03:57:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.101 2005/07/21 04:46:51 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -2716,7 +2716,7 @@ DECL_PIOCTL(PSetSysName)
     register struct unixuser *au;
     register afs_int32 pag, error;
     int t, count, num = 0;
-    char **sysnamelist[MAXSYSNAME];
+    char **sysnamelist[MAXNUMSYSNAMES];
 
     AFS_STATCNT(PSetSysName);
     if (!afs_globalVFS) {
