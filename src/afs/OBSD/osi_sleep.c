@@ -1,5 +1,5 @@
 /*
- * $Id: osi_sleep.c,v 1.8 2005/01/18 16:15:36 rees Exp $
+ * $Id: osi_sleep.c,v 1.9 2005/07/26 15:25:43 rees Exp $
  */
 
 /*
@@ -45,7 +45,7 @@ such damages.
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.8 2005/01/18 16:15:36 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_sleep.c,v 1.9 2005/07/26 15:25:43 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -115,17 +115,14 @@ afs_osi_Sleep(void *event)
 {
     AFS_ASSERT_GLOCK();
     AFS_GUNLOCK();
-    tsleep(event, PVFS, "afs", 0);
+    tsleep(event, PVFS, "afsslp", 0);
     AFS_GLOCK();
 }
 
 int
 afs_osi_SleepSig(void *event)
 {
-    AFS_ASSERT_GLOCK();
-    AFS_GUNLOCK();
-    tsleep(event, PVFS, "afs", 0);
-    AFS_GLOCK();
+    afs_osi_Sleep(event);
     return 0;
 }
 
