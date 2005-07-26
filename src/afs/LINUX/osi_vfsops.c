@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.29.2.6 2005/07/11 19:29:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.29.2.7 2005/07/26 14:11:42 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -132,7 +132,11 @@ afs_read_super(struct super_block *sb, void *data, int silent)
     sb->s_magic = AFS_VFSMAGIC;
     sb->s_op = &afs_sops;	/* Super block (vfs) ops */
 #if defined(MAX_NON_LFS)
+#ifdef AFS_64BIT_CLIENT
+    sb->s_maxbytes = MAX_LFS_FILESIZE;
+#else
     sb->s_maxbytes = MAX_NON_LFS;
+#endif
 #endif
     code = afs_root(sb);
     if (code) {
