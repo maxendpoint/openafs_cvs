@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.58 2005/07/28 14:17:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.59 2005/07/28 14:39:54 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1082,7 +1082,7 @@ afs_MaybeFreeDiscardedDCache(void)
 
     AFS_STATCNT(afs_MaybeFreeDiscardedDCache);
 
-    while (afs_blocksDiscarded
+    while (afs_blocksDiscarded &&
 	   (afs_blocksUsed > PERCENT(CM_WAITFORDRAINPCT, afs_cacheBlocks))) {
 	afs_FreeDiscardedDCache();
     }
