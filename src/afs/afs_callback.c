@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.32 2005/05/30 03:57:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.33 2005/07/28 14:38:36 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -384,12 +384,15 @@ ClearCallBack(register struct rx_connection *a_conn,
      */
     if (a_fid->Volume != 0) {
 	if (a_fid->Vnode == 0) {
+		struct afs_q *tq, *uq;
 	    /*
 	     * Clear callback for the whole volume.  Zip through the
 	     * hash chain, nullifying entries whose volume ID matches.
 	     */
 		i = VCHashV(&localFid);
-		for (tvc = afs_vhashTV[i]; tvc; tvc = tvc->vhnext) {
+		for (tq = afs_vhashTV[i].prev; tq != &afs_vhashTV[i]; tq = uq) {
+		    uq = QPrev(tq);
+		    tvc = QTOVH(tq);      
 		    if (tvc->fid.Fid.Volume == a_fid->Volume) {
 			tvc->callback = NULL;
 			if (!localFid.Cell)

@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.90 2005/07/11 18:45:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.91 2005/07/28 14:38:36 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -71,7 +71,7 @@ struct afs_q VLRU;		/*vcache LRU */
 afs_int32 vcachegen = 0;
 unsigned int afs_paniconwarn = 0;
 struct vcache *afs_vhashT[VCSIZE];
-struct vcache *afs_vhashTV[VCSIZE];
+struct afs_q afs_vhashTV[VCSIZE];
 static struct afs_cbr *afs_cbrHashT[CBRSIZE];
 afs_int32 afs_bulkStatsLost;
 int afs_norefpanic = 0;
@@ -132,8 +132,8 @@ int
 afs_FlushVCache(struct vcache *avc, int *slept)
 {				/*afs_FlushVCache */
 
-    afs_int32 i, code, j;
-    struct vcache **uvc, *wvc, **uvc2, *wvc2;
+    afs_int32 i, code;
+    struct vcache **uvc, *wvc;
 
     *slept = 0;
     AFS_STATCNT(afs_FlushVCache);
@@ -181,17 +181,8 @@ afs_FlushVCache(struct vcache *avc, int *slept)
     }
 
     /* remove entry from the volume hash table */
-    j = VCHashV(&avc->fid);
-    uvc2 = &afs_vhashTV[j];
-    for (wvc2 = *uvc2; wvc2; uvc2 = &wvc2->vhnext, wvc2 = *uvc2) {
-        if (avc == wvc2) {
-            *uvc2 = avc->vhnext;
-            avc->vhnext = (struct vcache *)NULL;
-            break;
-        }
-    }
-    if (!wvc || !wvc2)
-	osi_Panic("flushvcache");	/* not in correct hash bucket */
+    QRemove(&avc->vhashq);
+
     if (avc->mvid)
 	osi_FreeSmallSpace(avc->mvid);
     avc->mvid = (struct VenusFid *)0;
@@ -603,7 +594,6 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 #ifdef	AFS_OSF_ENV
     struct vcache *nvc;
 #endif /* AFS_OSF_ENV */
-    struct afs_q *tq, *uq;
     int code, fv_slept;
 
     AFS_STATCNT(afs_NewVCache);
@@ -1038,8 +1028,8 @@ restart:
     j = VCHashV(afid);
 
     tvc->hnext = afs_vhashT[i];
-    tvc->vhnext = afs_vhashTV[j];
-    afs_vhashT[i] = afs_vhashTV[j] = tvc;
+    afs_vhashT[i] = tvc;
+    QAdd(&afs_vhashTV[i], &tvc->vhashq);
 
     if ((VLRU.next->prev != &VLRU) || (VLRU.prev->next != &VLRU)) {
 	refpanic("NewVCache VLRU inconsistent");
@@ -2724,10 +2714,9 @@ afs_vcacheInit(int astatSize)
 #endif /* AFS_SGI62_ENV */
     }
 #endif
-
     QInit(&VLRU);
-
-
+    for(i = 0; i < VCSIZE; ++i)
+	QInit(&afs_vhashTV[i]);
 }
 
 /*
@@ -2803,7 +2792,7 @@ shutdown_vcache(void)
 
 		afs_FreeAllAxs(&(tvc->Access));
 	    }
-	    afs_vhashT[i] = afs_vhashTV[i] = 0;
+	    afs_vhashT[i] = 0;
 	}
     }
     /*
@@ -2828,5 +2817,6 @@ shutdown_vcache(void)
     RWLOCK_INIT(&afs_xvcache, "afs_xvcache");
     LOCK_INIT(&afs_xvcb, "afs_xvcb");
     QInit(&VLRU);
-
+    for(i = 0; i < VCSIZE; ++i)
+	QInit(&afs_vhashTV[i]);
 }
