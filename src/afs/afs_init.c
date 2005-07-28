@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.34 2005/05/23 21:04:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.35 2005/07/28 14:17:47 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -174,7 +174,7 @@ afs_CacheInit(afs_int32 astatSize, afs_int32 afiles, afs_int32 ablocks,
 void
 afs_ComputeCacheParms(void)
 {
-    register afs_int32 i;
+    register afs_size_t i;
     afs_int32 afs_maxCacheDirty;
 
     /*
