@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.8.2.5 2005/07/26 18:14:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.8.2.6 2005/07/29 14:32:10 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -88,7 +88,7 @@ audmakebuf(char *audEvent, va_list vaList)
 	    bufferPtr += sizeof(vaLong);
 	    break;
 	case AUD_LST:		/* Ptr to another list */
-	    vaLst = (va_list)va_arg(vaList, va_list);
+	    vaLst = va_arg(vaList, va_list);
 	    audmakebuf(audEvent, vaLst);
 	    break;
 	case AUD_FID:		/* AFSFid - contains 3 entries */
