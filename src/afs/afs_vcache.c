@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.91 2005/07/28 14:38:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.92 2005/07/31 17:22:50 rees Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -594,6 +594,7 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 #ifdef	AFS_OSF_ENV
     struct vcache *nvc;
 #endif /* AFS_OSF_ENV */
+    struct afs_q *tq, *uq;
     int code, fv_slept;
 
     AFS_STATCNT(afs_NewVCache);
@@ -611,7 +612,6 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
     if (((3 * afs_vcount) > nvnode) || (afs_vcount >= afs_maxvcount))
 #endif
     {
-	struct afs_q *tq, *uq;
 	int i;
 	char *panicstr;
 
