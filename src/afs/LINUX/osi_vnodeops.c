@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.28 2005/07/26 17:40:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.29 2005/08/02 05:09:50 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1263,7 +1263,7 @@ afs_linux_readpage(struct file *fp, struct page *pp)
     cred_t *credp = crref();
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
     char *address;
-    afs_offs_t offset = pp->index << PAGE_CACHE_SHIFT;
+    afs_offs_t offset = page_offset(pp);
 #else
     ulong address = afs_linux_page_address(pp);
     afs_offs_t offset = pageoff(pp);
@@ -1359,7 +1359,7 @@ afs_linux_writepage_sync(struct inode *ip, struct page *pp,
     int f_flags = 0;
 
     buffer = kmap(pp) + offset;
-    base = (pp->index << PAGE_CACHE_SHIFT) + offset;
+    base = page_offset(pp) + offset;
 
     credp = crref();
     lock_kernel();
