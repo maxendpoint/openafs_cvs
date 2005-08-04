@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.15 2005/08/04 19:37:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.16 2005/08/04 20:45:14 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1816,7 +1816,7 @@ afs_GetDCache(register struct vcache *avc, afs_size_t abyte,
     if ((aflags & 4) && (hiszero(avc->m.DataVersion)))
 	doAdjustSize = 1;
     if ((AFS_CHUNKTOBASE(chunk) >= avc->m.Length) ||
-	 ((aflags & 4) && (abyte == Position) && (tlen >= size))))
+	 ((aflags & 4) && (abyte == Position) && (tlen >= size)))
 	overWriteWholeChunk = 1;
     if (doAdjustSize || overWriteWholeChunk) {
 #if	defined(AFS_AIX32_ENV) || defined(AFS_SGI_ENV)
