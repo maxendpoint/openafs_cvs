@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.50 2005/07/05 17:45:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.51 2005/08/09 18:39:26 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -448,8 +448,8 @@ DumpFunction(struct rx_call *call, char *filename)
 static char *
 vos_ctime(afs_int32 *timep)
 {
-    time_t *foo = timep;
-    return ctime(foo);
+    time_t foo = *timep;
+    return ctime(&foo);
 }
 #else
 #define vos_ctime ctime
