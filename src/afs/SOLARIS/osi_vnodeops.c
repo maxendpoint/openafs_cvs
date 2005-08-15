@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.22 2005/04/03 18:09:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.23 2005/08/15 15:39:55 shadow Exp $");
 
 /*
  * SOLARIS/osi_vnodeops.c
@@ -762,9 +762,9 @@ afs_nfsrdwr(avc, auio, arw, ioflag, acred)
      */
     afs_MaybeWakeupTruncateDaemon();
     while ((arw == UIO_WRITE)
-	   && (afs_blocksUsed > (CM_WAITFORDRAINPCT * afs_cacheBlocks) / 100)) {
+	   && (afs_blocksUsed > PERCENT(CM_WAITFORDRAINPCT, afs_cacheBlocks))) {
 	if (afs_blocksUsed - afs_blocksDiscarded >
-	    (CM_WAITFORDRAINPCT * afs_cacheBlocks) / 100) {
+	    PERCENT(CM_WAITFORDRAINPCT, afs_cacheBlocks)) {
 	    afs_WaitForCacheDrain = 1;
 	    afs_osi_Sleep(&afs_WaitForCacheDrain);
 	}
