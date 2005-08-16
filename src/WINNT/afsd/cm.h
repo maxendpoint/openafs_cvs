@@ -251,4 +251,5 @@ int RXAFS_Lookup (struct rx_connection *,
 #define CM_ERROR_TIDIPC                 (CM_ERROR_BASE+44)
 #define CM_ERROR_TOO_MANY_SYMLINKS      (CM_ERROR_BASE+45)
 #define CM_ERROR_PATH_NOT_COVERED       (CM_ERROR_BASE+46)
+#define CM_ERROR_LOCK_CONFLICT          (CM_ERROR_BASE+47)
 #endif /*  __CM_H_ENV__ */

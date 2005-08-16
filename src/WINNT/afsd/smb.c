@@ -2407,6 +2407,9 @@ void smb_MapNTError(long code, unsigned long *NTStatusp)
     else if (code == CM_ERROR_WOULDBLOCK) {
         NTStatus = 0xC0000055L;	/* Lock not granted */
     }
+    else if (code == CM_ERROR_LOCK_CONFLICT) {
+        NTStatus = 0xC0000054L; /* Lock conflict */
+    }
     else if (code == CM_ERROR_PARTIALWRITE) {
         NTStatus = 0xC000007FL;	/* Disk full */
     }
@@ -2593,6 +2596,10 @@ void smb_MapCoreError(long code, smb_vc_t *vcp, unsigned short *scodep,
     else if (code == CM_ERROR_WOULDBLOCK) {
         class = 1;
         error = 33;	/* lock conflict */
+    }
+    else if (code == CM_ERROR_LOCK_CONFLICT) {
+        class = 1;
+        error = 33;     /* lock conflict */
     }
     else if (code == CM_ERROR_NOFILES) {
         class = 1;
@@ -5422,7 +5429,7 @@ long smb_ReceiveCoreClose(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         code = 0;
 
     /* unlock any pending locks */
-    if (fidp->scp) {
+    if (!(fidp->flags & SMB_FID_IOCTL) && fidp->scp) {
         cm_key_t key;
         unsigned pid;
 

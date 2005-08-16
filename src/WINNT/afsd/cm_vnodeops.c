@@ -3058,7 +3058,7 @@ long cm_LockCheckRead(cm_scache_t *scp,
                     substract_ranges = TRUE;
                 } else {
                     if(fileLock->lockType != LockRead) {
-                        code = CM_ERROR_WOULDBLOCK;
+                        code = CM_ERROR_LOCK_CONFLICT;
                         break;
                     }
 
@@ -3079,11 +3079,11 @@ long cm_LockCheckRead(cm_scache_t *scp,
                       (fileLock->key == key || fileLock->lockType == LockWrite)
 #endif
                       ) {
-                code = CM_ERROR_WOULDBLOCK;
+                code = CM_ERROR_BADFD;
                 break;
             }
         } else if (IS_LOCK_LOST(fileLock)) {
-            code = CM_ERROR_WOULDBLOCK;
+            code = CM_ERROR_BADFD;
             break;
         }
     }
@@ -3153,19 +3153,19 @@ long cm_LockCheckWrite(cm_scache_t *scp,
                            is safe to substract ranges */
                         cm_LockRangeSubtract(&range, &fileLock->range);
                     } else {
-                        code = CM_ERROR_WOULDBLOCK;
+                        code = CM_ERROR_LOCK_CONFLICT;
                         break;
                     }
                 } else {
-                    code = CM_ERROR_WOULDBLOCK;
+                    code = CM_ERROR_LOCK_CONFLICT;
                     break;
                 }
             } else if(IS_LOCK_LOST(fileLock)) {
-                code = CM_ERROR_WOULDBLOCK;
+                code = CM_ERROR_BADFD;
                 break;
             }
         } else if (IS_LOCK_LOST(fileLock)) {
-            code = CM_ERROR_WOULDBLOCK;
+            code = CM_ERROR_BADFD;
             break;
         }
     }
@@ -3180,6 +3180,9 @@ long cm_LockCheckWrite(cm_scache_t *scp,
 
 #endif
 }
+
+/* Forward dcl. */
+static void cm_LockMarkSCacheLost(cm_scache_t * scp);
 
 /* called with scp->mx held */
 long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
@@ -3199,7 +3202,7 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
     cm_range_t range;
     int wait_unlock = FALSE;
 
-    osi_Log4(afsd_logp, "cm_Lock scp 0x%x type 0x%x offset %d length %d allowWait %d",
+    osi_Log4(afsd_logp, "cm_Lock scp 0x%x type 0x%x offset %d length %d",
              scp, sLockType, (unsigned long)LOffset.QuadPart, (unsigned long)LLength.QuadPart);
     osi_Log3(afsd_logp, "... allowWait %d key 0x%x:%x", allowWait, 
              (unsigned long)(key >> 32), (unsigned long)(key & 0xffffffff));
@@ -3268,21 +3271,55 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
                      scp->exclusiveLocks, scp->sharedLocks, (int)(signed char) scp->serverLock);
             code = CM_ERROR_WOULDBLOCK;
 
-        } else if (scp->serverLock == LockRead && Which == LockWrite) {
-            
-            /* We want to escalate the lock to a LockWrite.  But
-               unfortunately that's not really possible without
-               letting go of the current lock.  Doing so would have
-               side-effects that we are not going to deal with.*/
-
-            osi_Log0(afsd_logp, "   unable to escalate from LockRead to LockWrite.  Giving up.");
-            osi_Log3(afsd_logp, "   exclusives[%d], shared[%d], serverLock[%d]",
-                     scp->exclusiveLocks, scp->sharedLocks, (int)(signed char) scp->serverLock);
-
-            code = CM_ERROR_WOULDBLOCK;
         } else {
             cm_fid_t cfid;
             int newLock;
+
+            if (scp->serverLock == LockRead && Which == LockWrite) {
+            
+                /* We want to escalate the lock to a LockWrite.
+                   Unfortunately that's not really possible without
+                   letting go of the current lock.  But for now we do
+                   it anyway. */
+
+                osi_Log0(afsd_logp, "   attempting to UPGRADE from LockRead to LockWrite.");
+
+                tfid.Volume = scp->fid.volume;
+                tfid.Vnode = scp->fid.vnode;
+                tfid.Unique = scp->fid.unique;
+                cfid = scp->fid;
+
+                lock_ReleaseMutex(&scp->mx);
+
+                osi_Log1(afsd_logp, "CALL ReleaseLock scp 0x%x", (long) scp);
+
+                do {
+                    code = cm_Conn(&cfid, userp, reqp, &connp);
+                    if (code) 
+                        break;
+
+                    callp = cm_GetRxConn(connp);
+                    code = RXAFS_ReleaseLock(callp, &tfid, &volSync);
+                    rx_PutConnection(callp);
+
+                } while (cm_Analyze(connp, userp, reqp, &cfid, &volSync,
+                                    NULL, NULL, code));
+                code = cm_MapRPCError(code, reqp);
+
+                if (code)
+                    osi_Log1(afsd_logp, "CALL ReleaseLock FAILURE, code 0x%x", code);
+                else
+                    osi_Log0(afsd_logp, "CALL ReleaseLock SUCCESS");
+        
+                lock_ObtainMutex(&scp->mx);
+
+                if (code) {
+                    /* We couldn't release the lock */
+                    goto check_code;
+                } else {
+                    scp->serverLock = -1;
+                }
+            }
 
             /* We need to obtain a server lock of type Which in order
                to assert this file lock */
@@ -3291,7 +3328,7 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
             tfid.Unique = scp->fid.unique;
             cfid = scp->fid;
 
-#ifdef CONSERVATIVE_LOCKS
+#ifndef AGGRESSIVE_LOCKS
             newLock = Which;
 #else
             newLock = LockWrite;
@@ -3314,20 +3351,20 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
                                 NULL, NULL, code));
 
             code = cm_MapRPCError(code, reqp);
-
+            
             if (code) {
                 osi_Log1(afsd_logp, "CALL SetLock FAILURE, code 0x%x", code);
             } else {
                 osi_Log0(afsd_logp, "CALL SetLock SUCCESS");
             }
 
-            if (code != 0 && newLock != Which) {
+            if (code == CM_ERROR_WOULDBLOCK && newLock != Which) {
                 /* we wanted LockRead.  We tried LockWrite. Now try LockRead again */
                 newLock = Which;
 
                 /* am I sane? */
                 osi_assert(newLock == LockRead);
-
+                
                 osi_Log3(afsd_logp, "CALL SetLock AGAIN scp 0x%x from %d to %d", 
                          (long) scp, (int) scp->serverLock, newLock);
 
@@ -3347,7 +3384,7 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
                 code = cm_MapRPCError(code, reqp);                
 
                 if (code) {
-                    osi_Log1(afsd_logp, "CALL SetLock FAILURE, code 0x%x", code);
+                    osi_Log1(afsd_logp, "CALL SetLock FAILURE AGAIN, code 0x%x", code);
                 } else {
                     osi_Log0(afsd_logp, "CALL SetLock SUCCESS");
                 }
@@ -3357,8 +3394,17 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
 
             if(code == 0)
                 scp->serverLock = newLock;
+            else {
+                if ((scp->sharedLocks > 0 || scp->exclusiveLocks > 0) &&
+                    scp->serverLock == -1) {
+                    /* Oops. We lost the lock. */
+                    cm_LockMarkSCacheLost(scp);
+                }
+            }
         }
     }
+
+ check_code:
 
     if (code == 0 || (code == CM_ERROR_WOULDBLOCK && allowWait)) {
 
@@ -3488,12 +3534,48 @@ long cm_UnlockByKey(cm_scache_t * scp,
      */
 
     if (scp->serverLock == LockWrite && scp->exclusiveLocks == 0 && scp->sharedLocks > 0) {
-        /* Until we have a good FS call to downgrade a lock, we
-           don't. */
-#ifdef CONSERVATIVE_LOCKS
 
         cm_fid_t cfid;
+
         /* The serverLock should be downgraded to LockRead */
+        osi_Log0(afsd_logp, "  DOWNGRADE lock from LockWrite to LockRead");
+
+        tfid.Volume = scp->fid.volume;
+        tfid.Vnode = scp->fid.vnode;
+        tfid.Unique = scp->fid.unique;
+        cfid = scp->fid;
+
+        lock_ReleaseMutex(&scp->mx);
+
+        osi_Log1(afsd_logp, "CALL ReleaseLock scp 0x%x", (long) scp);
+
+        do {
+            code = cm_Conn(&cfid, userp, reqp, &connp);
+            if (code) 
+                break;
+
+            callp = cm_GetRxConn(connp);
+            code = RXAFS_ReleaseLock(callp, &tfid, &volSync);
+            rx_PutConnection(callp);
+            
+        } while (cm_Analyze(connp, userp, reqp, &cfid, &volSync,
+                            NULL, NULL, code));
+        code = cm_MapRPCError(code, reqp);
+
+        if (code)
+            osi_Log1(afsd_logp, "CALL ReleaseLock FAILURE, code 0x%x", code);
+        else
+            osi_Log0(afsd_logp, "CALL ReleaseLock SUCCESS");
+        
+        lock_ObtainMutex(&scp->mx);
+
+        if (code) {
+            /* so we couldn't release it.  Just let the lock be for now */
+            code = 0;
+            goto done;
+        } else {
+            scp->serverLock = -1;
+        }
 
         tfid.Volume = scp->fid.volume;
         tfid.Vnode = scp->fid.vnode;
@@ -3529,10 +3611,16 @@ long cm_UnlockByKey(cm_scache_t * scp,
         
         if(code == 0)
             scp->serverLock = LockRead;
+        else {
+            if ((scp->sharedLocks > 0 || scp->exclusiveLocks > 0) &&
+                (scp->serverLock == -1)) {
+                /* Oopsie */
+                cm_LockMarkSCacheLost(scp);
+            }
+        }
 
         /* failure here has no bearing on the return value of
            cm_Unlock() */
-#endif
         code = 0;
 
     } else if(scp->serverLock != (-1) && scp->exclusiveLocks == 0 && scp->sharedLocks == 0) {
@@ -3572,6 +3660,8 @@ long cm_UnlockByKey(cm_scache_t * scp,
         if (code == 0)
             scp->serverLock = (-1);
     }
+
+ done:
 
     osi_Log1(afsd_logp, "cm_UnlockByKey code 0x%x", code);
     osi_Log3(afsd_logp, "   Leaving scp with exclusives[%d], shared[%d], serverLock[%d]",
@@ -3663,12 +3753,47 @@ long cm_Unlock(cm_scache_t *scp,
 
     if (scp->serverLock == LockWrite && scp->exclusiveLocks == 0 && scp->sharedLocks > 0) {
 
-        /* Until we have a good FS call to safely downgrade a lock, we
-           don;t */
-
-#ifdef CONSERVATIVE_LOCKS
         cm_fid_t cfid;
+
         /* The serverLock should be downgraded to LockRead */
+        osi_Log0(afsd_logp, "  DOWNGRADE lock from LockWrite to LockRead");
+
+        tfid.Volume = scp->fid.volume;
+        tfid.Vnode = scp->fid.vnode;
+        tfid.Unique = scp->fid.unique;
+        cfid = scp->fid;
+
+        lock_ReleaseMutex(&scp->mx);
+
+        osi_Log1(afsd_logp, "CALL ReleaseLock scp 0x%x", (long) scp);
+
+        do {
+            code = cm_Conn(&cfid, userp, reqp, &connp);
+            if (code) 
+                break;
+
+            callp = cm_GetRxConn(connp);
+            code = RXAFS_ReleaseLock(callp, &tfid, &volSync);
+            rx_PutConnection(callp);
+            
+        } while (cm_Analyze(connp, userp, reqp, &cfid, &volSync,
+                            NULL, NULL, code));
+        code = cm_MapRPCError(code, reqp);
+
+        if (code)
+            osi_Log1(afsd_logp, "CALL ReleaseLock FAILURE, code 0x%x", code);
+        else
+            osi_Log0(afsd_logp, "CALL ReleaseLock SUCCESS");
+        
+        lock_ObtainMutex(&scp->mx);
+
+        if (code) {
+            /* so we couldn't release it.  Just let the lock be for now */
+            code = 0;
+            goto done;
+        } else {
+            scp->serverLock = -1;
+        }
 
         tfid.Volume = scp->fid.volume;
         tfid.Vnode = scp->fid.vnode;
@@ -3701,13 +3826,19 @@ long cm_Unlock(cm_scache_t *scp,
         }
 
         lock_ObtainMutex(&scp->mx);
-
+        
         if(code == 0)
             scp->serverLock = LockRead;
+        else {
+            if ((scp->sharedLocks > 0 || scp->exclusiveLocks > 0) &&
+                (scp->serverLock == -1)) {
+                /* Oopsie */
+                cm_LockMarkSCacheLost(scp);
+            }
+        }
 
         /* failure here has no bearing on the return value of
            cm_Unlock() */
-#endif
         code = 0;
 
     } else if(scp->serverLock != (-1) && scp->exclusiveLocks == 0 && scp->sharedLocks == 0) {
@@ -3751,6 +3882,8 @@ long cm_Unlock(cm_scache_t *scp,
 
     if (release_userp)
         cm_ReleaseUser(userp);
+
+ done:
 
     osi_Log1(afsd_logp, "cm_Unlock code 0x%x", code);
     osi_Log3(afsd_logp, "   Leaving scp with exclusives[%d], shared[%d], serverLock[%d]",
@@ -3800,6 +3933,8 @@ void cm_CheckLocks()
 
     cm_lockRefreshCycle++;
 
+    osi_Log1(afsd_logp, "cm_CheckLocks starting lock check cycle %d", cm_lockRefreshCycle);
+
     for(q = cm_allFileLocks; q; q = nq) {
         fileLock = (cm_file_lock_t *) q;
         scp = fileLock->scp;
@@ -3818,6 +3953,8 @@ void cm_CheckLocks()
             /* Server locks are extended once per scp per refresh
                cycle. */
             if (scp->lastRefreshCycle != cm_lockRefreshCycle) {
+
+                osi_Log1(afsd_logp, "cm_CheckLocks Updating scp 0x%x", scp);
 
                 lock_ReleaseWrite(&cm_scacheLock);
                 lock_ObtainMutex(&scp->mx);
