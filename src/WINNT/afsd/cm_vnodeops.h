@@ -145,18 +145,35 @@ extern long cm_CheckNTDelete(cm_scache_t *dscp, cm_scache_t *scp,
 extern long cm_EvaluateSymLink(cm_scache_t *dscp, cm_scache_t *linkScp,
 	cm_scache_t **outScpp, cm_user_t *userp, cm_req_t *reqp);
 
-extern long cm_Lock(cm_scache_t *scp, unsigned char LockType,
-	LARGE_INTEGER LOffset, LARGE_INTEGER LLength,
-	u_long Timeout, cm_user_t *userp, cm_req_t *reqp,
-	void **lockpp);
+extern long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
+        LARGE_INTEGER LOffset, LARGE_INTEGER LLength, cm_key_t key,
+	int allowWait, cm_user_t *userp, cm_req_t *reqp,
+	cm_file_lock_t **lockpp);
 
-extern long cm_Unlock(cm_scache_t *scp, unsigned char LockType,
-	LARGE_INTEGER LOffset, LARGE_INTEGER LLength,
+extern long cm_UnlockByKey(cm_scache_t * scp,
+        cm_key_t key,
+        cm_user_t * userp,
+        cm_req_t * reqp);
+
+extern long cm_Unlock(cm_scache_t *scp, unsigned char sLockType,
+        LARGE_INTEGER LOffset, LARGE_INTEGER LLength, cm_key_t key,
 	cm_user_t *userp, cm_req_t *reqp);
+
+extern long cm_LockCheckRead(cm_scache_t *scp, 
+        LARGE_INTEGER LOffset, 
+        LARGE_INTEGER LLength, 
+        cm_key_t key);
+
+extern long cm_LockCheckWrite(cm_scache_t *scp,
+        LARGE_INTEGER LOffset,
+        LARGE_INTEGER LLength,
+        cm_key_t key);
 
 extern void cm_CheckLocks();
 
-extern long cm_RetryLock(cm_file_lock_t *oldFileLock, int vcp_is_dead);
+extern long cm_RetryLock(cm_file_lock_t *oldFileLock, int client_is_dead);
+
+extern cm_key_t cm_GenerateKey(unsigned int session, unsigned long process_id, unsigned int file_id);
 
 #define MAX_SYMLINK_COUNT 16
 #endif /*  __CM_VNODEOPS_H_ENV__ */
