@@ -43,7 +43,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/IRIX/osi_inode.c,v 1.16 2005/08/17 19:14:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/IRIX/osi_inode.c,v 1.17 2005/08/17 19:25:29 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -456,7 +456,7 @@ xfs_icreatename64(struct vfs *vfsp, int datap, int datalen,
 	if (code) {
 	    if (code == EEXIST) {
 		/* someone beat us to it? */
-		code = gop_lookupname(path, AFS_UIOSYS, NOFOLLOW, &dvp);
+		code = gop_lookupname(path, AFS_UIOSYS, NO_FOLLOW, &dvp);
 	    }
 	    if (code) {
 		AFS_UNLOCK_VOL_CREATE();
