@@ -4193,12 +4193,6 @@ void cm_CheckLocks()
 
                     if (code) {
                         osi_Log1(afsd_logp, "CALL ExtendLock FAILURE, code 0x%x", code);
-
-#ifdef DEBUG
-                        /* NO DOT CHECKIN!! */
-                        osi_assert(FALSE);
-#endif
-
                         scp->serverLock = (-1);
                         cm_LockMarkSCacheLost(scp);
                     } else {
