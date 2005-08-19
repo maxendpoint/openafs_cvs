@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.15 2004/07/14 03:28:45 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.16 2005/08/19 19:34:34 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -641,7 +641,7 @@ ConstructLocalPath(const char *cpath, const char *relativeTo,
 int
 ConstructLocalBinPath(const char *cpath, char **fullPathBufp)
 {
-    return ConstructLocalPath(cpath, AFSDIR_CANONICAL_SERVER_BIN_DIRPATH,
+    return ConstructLocalPath(cpath, AFSDIR_SERVER_BIN_DIRPATH,
 			      fullPathBufp);
 }
 
@@ -654,6 +654,6 @@ ConstructLocalBinPath(const char *cpath, char **fullPathBufp)
 int
 ConstructLocalLogPath(const char *cpath, char **fullPathBufp)
 {
-    return ConstructLocalPath(cpath, AFSDIR_CANONICAL_SERVER_LOGS_DIRPATH,
+    return ConstructLocalPath(cpath, AFSDIR_SERVER_LOGS_DIRPATH,
 			      fullPathBufp);
 }
