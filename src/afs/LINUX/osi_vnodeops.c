@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.34 2005/08/18 04:12:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.35 2005/08/19 15:33:28 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1098,9 +1098,8 @@ afs_linux_rmdir(struct inode *dip, struct dentry *dp)
     cred_t *credp = crref();
     const char *name = dp->d_name.name;
 
-#if defined(AFS_LINUX26_ENV)
-    lock_kernel();
-#endif
+    /* locking kernel conflicts with glock? */
+
     AFS_GLOCK();
     code = afs_rmdir(VTOAFS(dip), name, credp);
     AFS_GUNLOCK();
@@ -1117,9 +1116,6 @@ afs_linux_rmdir(struct inode *dip, struct dentry *dp)
 	d_drop(dp);
     }
 
-#if defined(AFS_LINUX26_ENV)
-    unlock_kernel();
-#endif
     crfree(credp);
     return -code;
 }
