@@ -263,6 +263,46 @@ long cm_CheckOpen(cm_scache_t *scp, int openMode, int trunc, cm_user_t *userp,
     code = cm_SyncOp(scp, NULL, userp, reqp, rights,
                       CM_SCACHESYNC_GETSTATUS
                       | CM_SCACHESYNC_NEEDCALLBACK);
+
+    if (code == 0 && 
+        ((rights & PRSFS_WRITE) || (rights & PRSFS_READ)) &&
+        scp->fileType == CM_SCACHETYPE_FILE) {
+
+        cm_key_t key;
+        unsigned int sLockType;
+        LARGE_INTEGER LOffset, LLength;
+
+        /* Check if there's some sort of lock on the file at the
+           moment. */
+
+        key = cm_GenerateKey(CM_SESSION_CMINT,0,0);
+
+        if (rights & PRSFS_WRITE)
+            sLockType = 0;
+        else
+            sLockType = LOCKING_ANDX_SHARED_LOCK;
+
+        LOffset.HighPart = 1;
+        LOffset.LowPart = 0;
+        LLength.HighPart = 0;
+        LLength.LowPart = 1;
+
+        code = cm_Lock(scp, sLockType, LOffset, LLength, key, 0, userp, reqp, NULL);
+
+        if (code == 0) {
+            cm_Unlock(scp, sLockType, LOffset, LLength, key, userp, reqp);
+        } else {
+            /* In this case, we allow the file open to go through even
+               though we can't enforce mandatory locking on the
+               file. */
+            if (code == CM_ERROR_NOACCESS &&
+                !(rights & PRSFS_WRITE))
+                code = 0;
+            else
+                code = CM_ERROR_SHARING_VIOLATION;
+        }
+    }
+
     lock_ReleaseMutex(&scp->mx);
 
     return code;
@@ -293,7 +333,6 @@ long cm_CheckNTOpen(cm_scache_t *scp, unsigned int desiredAccess,
     code = cm_SyncOp(scp, NULL, userp, reqp, rights,
                       CM_SCACHESYNC_GETSTATUS
                       | CM_SCACHESYNC_NEEDCALLBACK);
-    lock_ReleaseMutex(&scp->mx);
 
     /*
      * If the open will fail because the volume is readonly, then we will
@@ -303,6 +342,43 @@ long cm_CheckNTOpen(cm_scache_t *scp, unsigned int desiredAccess,
      */
     if (code == CM_ERROR_READONLY)
         code = CM_ERROR_NOACCESS;
+    else if (code == 0 &&
+             ((rights & PRSFS_WRITE) || (rights & PRSFS_READ)) &&
+             scp->fileType == CM_SCACHETYPE_FILE) {
+        cm_key_t key;
+        unsigned int sLockType;
+        LARGE_INTEGER LOffset, LLength;
+
+        /* Check if there's some sort of lock on the file at the
+           moment. */
+
+        key = cm_GenerateKey(CM_SESSION_CMINT,0,0);
+        if (rights & PRSFS_WRITE)
+            sLockType = 0;
+        else
+            sLockType = LOCKING_ANDX_SHARED_LOCK;
+        LOffset.HighPart = 1;
+        LOffset.LowPart = 0;
+        LLength.HighPart = 0;
+        LLength.LowPart = 1;
+
+        code = cm_Lock(scp, sLockType, LOffset, LLength, key, 0, userp, reqp, NULL);
+
+        if (code == 0) {
+            cm_Unlock(scp, sLockType, LOffset, LLength, key, userp, reqp);
+        } else {
+            /* In this case, we allow the file open to go through even
+               though we can't enforce mandatory locking on the
+               file. */
+            if (code == CM_ERROR_NOACCESS &&
+                !(rights & PRSFS_WRITE))
+                code = 0;
+            else
+                code = CM_ERROR_SHARING_VIOLATION;
+        }
+    }
+
+    lock_ReleaseMutex(&scp->mx);
 
     return code;
 }
@@ -2969,6 +3045,8 @@ long cm_Rename(cm_scache_t *oldDscp, char *oldNamep, cm_scache_t *newDscp,
 
 #define IS_LOCK_EFFECTIVE(lockp)  (IS_LOCK_ACTIVE(lockp) || IS_LOCK_LOST(lockp))
 
+#define IS_LOCK_CLIENTONLY(lockp) (((lockp)->flags & CM_FILELOCK_FLAG_CLIENTONLY) == CM_FILELOCK_FLAG_CLIENTONLY)
+
 #define INTERSECT_RANGE(r1,r2) (((r2).offset+(r2).length) > (r1).offset && ((r1).offset +(r1).length) > (r2).offset)
 
 #define CONTAINS_RANGE(r1,r2) (((r2).offset+(r2).length) <= ((r1).offset+(r1).length) && (r1).offset <= (r2).offset)
@@ -3036,7 +3114,7 @@ long cm_LockCheckRead(cm_scache_t *scp,
 
     lock_ObtainRead(&cm_scacheLock);
 
-    for(q = scp->fileLocks; q && range.length > 0; q = osi_QNext(q)) {
+    for(q = scp->fileLocksH; q && range.length > 0; q = osi_QNext(q)) {
         fileLock = 
             (cm_file_lock_t *)((char *) q - offsetof(cm_file_lock_t, fileq));
 
@@ -3132,7 +3210,7 @@ long cm_LockCheckWrite(cm_scache_t *scp,
 
     lock_ObtainRead(&cm_scacheLock);
 
-    for(q = scp->fileLocks; q && range.length > 0; q = osi_QNext(q)) {
+    for(q = scp->fileLocksH; q && range.length > 0; q = osi_QNext(q)) {
         fileLock = 
             (cm_file_lock_t *)((char *) q - offsetof(cm_file_lock_t, fileq));
 
@@ -3184,6 +3262,28 @@ long cm_LockCheckWrite(cm_scache_t *scp,
 /* Forward dcl. */
 static void cm_LockMarkSCacheLost(cm_scache_t * scp);
 
+/* Called with cm_scacheLock write locked */
+static cm_file_lock_t * cm_GetFileLock(void) {
+    cm_file_lock_t * l;
+
+    l = (cm_file_lock_t *) cm_freeFileLocks;
+    if(l) {
+        osi_QRemove(&cm_freeFileLocks, &l->q);
+    } else {
+        l = malloc(sizeof(cm_file_lock_t));
+        osi_assert(l);
+    }
+
+    memset(l, 0, sizeof(cm_file_lock_t));
+
+    return l;
+}
+
+/* Called with cm_scacheLock write locked */
+static void cm_PutFileLock(cm_file_lock_t *l) {
+    osi_QAdd(&cm_freeFileLocks, &l->q);
+}
+
 /* called with scp->mx held */
 long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
              LARGE_INTEGER LOffset, LARGE_INTEGER LLength,
@@ -3228,7 +3328,7 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
 
     lock_ObtainRead(&cm_scacheLock);
 
-    for(q = scp->fileLocks; q; q = osi_QNext(q)) {
+    for(q = scp->fileLocksH; q; q = osi_QNext(q)) {
         fileLock = 
             (cm_file_lock_t *)((char *) q - offsetof(cm_file_lock_t, fileq));
 
@@ -3252,7 +3352,7 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
 
     lock_ReleaseRead(&cm_scacheLock);
 
-    if(code == 0) {
+    if(code == 0 && !(scp->flags & CM_SCACHEFLAG_RO)) {
         if(Which == scp->serverLock ||
            (Which == LockRead && scp->serverLock == LockWrite)) {
 
@@ -3402,13 +3502,31 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
                 }
             }
         }
+    } else if (scp->flags & CM_SCACHEFLAG_RO) {
+        osi_Log0(afsd_logp, "  Skipping server lock for RO scp");
     }
 
  check_code:
 
+    if (code != 0) {
+        /* Special case error translations */
+
+        /* We shouldn't actually need to handle this case since we
+           simulate locks for RO scps anyway. */
+        if (code == CM_ERROR_READONLY) {
+            osi_Log0(afsd_logp, "   Reinterpreting CM_ERROR_READONLY as CM_ERROR_NOACCESS");
+            code = CM_ERROR_NOACCESS;
+        }
+    }
+
     if (code == 0 || (code == CM_ERROR_WOULDBLOCK && allowWait)) {
 
-        fileLock = malloc(sizeof(cm_file_lock_t));
+        lock_ObtainWrite(&cm_scacheLock);
+        fileLock = cm_GetFileLock();
+        lock_ReleaseWrite(&cm_scacheLock);
+#ifdef DEBUG
+        fileLock->fid = scp->fid;
+#endif
         fileLock->key = key;
         fileLock->lockType = Which;
         cm_HoldUser(userp);
@@ -3418,9 +3536,12 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
                            ((wait_unlock)?
                             CM_FILELOCK_FLAG_WAITUNLOCK :
                             CM_FILELOCK_FLAG_WAITLOCK));
+        if (scp->flags & CM_SCACHEFLAG_RO)
+            fileLock->flags |= CM_FILELOCK_FLAG_CLIENTONLY;
+
         fileLock->lastUpdate = (code == 0) ? time(NULL) : 0;
 
-        osi_QAdd(&scp->fileLocks, &fileLock->fileq);
+        osi_QAddT(&scp->fileLocksH, &scp->fileLocksT, &fileLock->fileq);
 
         lock_ObtainWrite(&cm_scacheLock);
         cm_HoldSCacheNoLock(scp);
@@ -3447,9 +3568,12 @@ long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
     return code;
 }
 
+static int cm_KeyEquals(cm_key_t k1, cm_key_t k2, int flags);
+
 /* Called with scp->mx held */
 long cm_UnlockByKey(cm_scache_t * scp,
                     cm_key_t key,
+                    int flags,
                     cm_user_t * userp,
                     cm_req_t * reqp)
 {
@@ -3467,7 +3591,7 @@ long cm_UnlockByKey(cm_scache_t * scp,
 
     lock_ObtainWrite(&cm_scacheLock);
 
-    for(q = scp->fileLocks; q; q = qn) {
+    for(q = scp->fileLocksH; q; q = qn) {
         qn = osi_QNext(q);
 
         fileLock = (cm_file_lock_t *)
@@ -3481,16 +3605,33 @@ long cm_UnlockByKey(cm_scache_t * scp,
                  (unsigned long)(fileLock->key >> 32),
                  (unsigned long)(fileLock->key & 0xffffffff),
                  fileLock->flags);
+
+        if(cm_FidCmp(&fileLock->fid, &fileLock->scp->fid)) {
+            osi_Log0(afsd_logp, "!!fileLock->fid != scp->fid");
+            osi_Log4(afsd_logp, "  fileLock->fid(cell=[%d], volume=[%d], vnode=[%d], unique=[%d]",
+                     fileLock->fid.cell,
+                     fileLock->fid.volume,
+                     fileLock->fid.vnode,
+                     fileLock->fid.unique);
+            osi_Log4(afsd_logp, "  scp->fid(cell=[%d], volume=[%d], vnode=[%d], unique=[%d]",
+                     fileLock->scp->fid.cell,
+                     fileLock->scp->fid.volume,
+                     fileLock->scp->fid.vnode,
+                     fileLock->scp->fid.unique);
+            osi_assert(FALSE);
+        }
 #endif
 
         if (!IS_LOCK_DELETED(fileLock) &&
-            fileLock->key == key) {
+            cm_KeyEquals(fileLock->key, key, flags)) {
             osi_Log3(afsd_logp, "...Unlock range [%d,+%d] type %d",
                     fileLock->range.offset,
                     fileLock->range.length,
                     fileLock->lockType);
 
-            osi_QRemove(&scp->fileLocks,q);
+            if (scp->fileLocksT == q)
+                scp->fileLocksT = osi_QPrev(q);
+            osi_QRemove(&scp->fileLocksH,q);
 
             if(IS_LOCK_ACCEPTED(fileLock)) {
                 if(fileLock->lockType == LockRead)
@@ -3525,6 +3666,11 @@ long cm_UnlockByKey(cm_scache_t * scp,
 
     osi_assertx(scp->sharedLocks >= 0, "scp->sharedLocks < 0");
     osi_assertx(scp->exclusiveLocks >= 0, "scp->exclusiveLocks < 0");
+
+    if (scp->flags & CM_SCACHEFLAG_RO) {
+        osi_Log0(afsd_logp, "  Skipping server lock for RO scp");
+        goto done;
+    }
 
     /* Ideally we would go through the rest of the locks to determine
      * if one or more locks that were formerly in WAITUNLOCK can now
@@ -3694,10 +3840,26 @@ long cm_Unlock(cm_scache_t *scp,
 
     lock_ObtainRead(&cm_scacheLock);
 
-    for(q = scp->fileLocks; q; q = osi_QNext(q)) {
+    for(q = scp->fileLocksH; q; q = osi_QNext(q)) {
         fileLock = (cm_file_lock_t *)
             ((char *) q - offsetof(cm_file_lock_t, fileq));
 
+#ifdef DEBUG
+        if(cm_FidCmp(&fileLock->fid, &fileLock->scp->fid)) {
+            osi_Log0(afsd_logp, "!!fileLock->fid != scp->fid");
+            osi_Log3(afsd_logp, "  fileLock->fid(cell=[%d], volume=[%d], vnode=[%d], unique=[%d]",
+                     fileLock->fid.cell,
+                     fileLock->fid.volume,
+                     fileLock->fid.vnode,
+                     fileLock->fid.unique);
+            osi_Log4(afsd_logp, "  scp->fid(cell=[%d], volume=[%d], vnode=[%d], unique=[%d]",
+                     fileLock->scp->fid.cell,
+                     fileLock->scp->fid.volume,
+                     fileLock->scp->fid.vnode,
+                     fileLock->scp->fid.unique);
+            osi_assert(FALSE);
+        }
+#endif
         if (!IS_LOCK_DELETED(fileLock) &&
             fileLock->key == key &&
             fileLock->range.offset == LOffset.QuadPart &&
@@ -3715,7 +3877,9 @@ long cm_Unlock(cm_scache_t *scp,
     }
 
     /* discard lock record */
-    osi_QRemove(&scp->fileLocks, q);
+    if (scp->fileLocksT == q)
+        scp->fileLocksT = osi_QPrev(q);
+    osi_QRemove(&scp->fileLocksH, q);
 
     if(IS_LOCK_ACCEPTED(fileLock)) {
         if(fileLock->lockType == LockRead)
@@ -3743,6 +3907,11 @@ long cm_Unlock(cm_scache_t *scp,
     cm_ReleaseSCacheNoLock(scp);
     fileLock->scp = NULL;
     lock_ReleaseWrite(&cm_scacheLock);
+
+    if (scp->flags & CM_SCACHEFLAG_RO) {
+        osi_Log0(afsd_logp, "   Skipping server locks for RO scp");
+        goto done;
+    }
 
     /* Ideally we would go through the rest of the locks to determine
      * if one or more locks that were formerly in WAITUNLOCK can now
@@ -3902,7 +4071,7 @@ static void cm_LockMarkSCacheLost(cm_scache_t * scp)
        fileLock->flags */
     lock_ObtainWrite(&cm_scacheLock);
 
-    for(q = scp->fileLocks; q; q = osi_QNext(q)) {
+    for(q = scp->fileLocksH; q; q = osi_QNext(q)) {
         fileLock = 
             (cm_file_lock_t *)((char *) q - offsetof(cm_file_lock_t, fileq));
 
@@ -3927,8 +4096,6 @@ void cm_CheckLocks()
     struct rx_connection * callp;
     cm_scache_t * scp;
 
-    cm_InitReq(&req);
-
     lock_ObtainWrite(&cm_scacheLock);
 
     cm_lockRefreshCycle++;
@@ -3944,12 +4111,28 @@ void cm_CheckLocks()
         if (IS_LOCK_DELETED(fileLock)) {
 
             osi_QRemove(&cm_allFileLocks, q);
-            free(fileLock);
+            cm_PutFileLock(fileLock);
 
-        } else if (IS_LOCK_ACTIVE(fileLock)) {
+        } else if (IS_LOCK_ACTIVE(fileLock) && !IS_LOCK_CLIENTONLY(fileLock)) {
 
             osi_assert(scp != NULL);
 
+#ifdef DEBUG
+            if(cm_FidCmp(&fileLock->fid, &fileLock->scp->fid)) {
+                osi_Log0(afsd_logp, "!!fileLock->fid != scp->fid");
+                osi_Log4(afsd_logp, "  fileLock->fid(cell=[%d], volume=[%d], vnode=[%d], unique=[%d]",
+                         fileLock->fid.cell,
+                         fileLock->fid.volume,
+                         fileLock->fid.vnode,
+                         fileLock->fid.unique);
+                osi_Log4(afsd_logp, "  scp->fid(cell=[%d], volume=[%d], vnode=[%d], unique=[%d]",
+                         fileLock->scp->fid.cell,
+                         fileLock->scp->fid.volume,
+                         fileLock->scp->fid.vnode,
+                         fileLock->scp->fid.unique);
+                osi_assert(FALSE);
+            }
+#endif
             /* Server locks are extended once per scp per refresh
                cycle. */
             if (scp->lastRefreshCycle != cm_lockRefreshCycle) {
@@ -3959,13 +4142,26 @@ void cm_CheckLocks()
                 lock_ReleaseWrite(&cm_scacheLock);
                 lock_ObtainMutex(&scp->mx);
 
+                code = cm_SyncOp(scp, NULL, fileLock->userp, &req, 0,
+                                 CM_SCACHESYNC_NEEDCALLBACK
+                                 | CM_SCACHESYNC_GETSTATUS
+                                 | CM_SCACHESYNC_LOCK);
+                if (code) {
+                    osi_Log1(smb_logp, "cm_CheckLocks SyncOp failure code 0x%x", code);
+                    goto post_syncopdone;
+                }
+
                 if(scp->serverLock != -1) {
                     cm_fid_t cfid;
+                    cm_user_t * userp;
+
+                    cm_InitReq(&req);
 
                     tfid.Volume = scp->fid.volume;
                     tfid.Vnode = scp->fid.vnode;
                     tfid.Unique = scp->fid.unique;
                     cfid = scp->fid;
+                    userp = fileLock->userp;
                     
                     osi_Log3(afsd_logp, "CALL ExtendLock lock 0x%x for scp=0x%x with lock %d", 
                              (long) fileLock,
@@ -3975,7 +4171,7 @@ void cm_CheckLocks()
                     lock_ReleaseMutex(&scp->mx);
 
                     do {
-                        code = cm_Conn(&cfid, fileLock->userp,
+                        code = cm_Conn(&cfid, userp,
                                        &req, &connp);
                         if (code) 
                             break;
@@ -3985,19 +4181,26 @@ void cm_CheckLocks()
                                                 &volSync);
                         rx_PutConnection(callp);
 
-                    } while (cm_Analyze(connp, fileLock->userp, &req,
+                        osi_Log1(afsd_logp, "   ExtendLock returns %d", code);
+
+                    } while (cm_Analyze(connp, userp, &req,
                                         &cfid, &volSync, NULL, NULL,
                                         code));
 
                     code = cm_MapRPCError(code, &req);
 
+                    lock_ObtainMutex(&scp->mx);
+
                     if (code) {
                         osi_Log1(afsd_logp, "CALL ExtendLock FAILURE, code 0x%x", code);
 
-                        lock_ObtainMutex(&scp->mx);
+#ifdef DEBUG
+                        /* NO DOT CHECKIN!! */
+                        osi_assert(FALSE);
+#endif
+
                         scp->serverLock = (-1);
                         cm_LockMarkSCacheLost(scp);
-                        lock_ReleaseMutex(&scp->mx);
                     } else {
                         osi_Log0(afsd_logp, "CALL ExtendLock SUCCESS");
                     }
@@ -4010,21 +4213,27 @@ void cm_CheckLocks()
 #else
                     cm_LockMarkSCacheLost(scp);
 #endif
-                    lock_ReleaseMutex(&scp->mx);
                 }
+
+                cm_SyncOpDone(scp, NULL, CM_SCACHESYNC_LOCK);
+
+            post_syncopdone:
+                lock_ReleaseMutex(&scp->mx);
 
                 lock_ObtainWrite(&cm_scacheLock);
 
                 if (code == 0) {
                     fileLock->lastUpdate = time(NULL);
                 }
-
+                
                 scp->lastRefreshCycle = cm_lockRefreshCycle;
 
             } else {
                 /* we have already refreshed the locks on this scp */
                 fileLock->lastUpdate = time(NULL);
             }
+        } else if (IS_LOCK_ACTIVE(fileLock) && IS_LOCK_CLIENTONLY(fileLock)) {
+            /* TODO: Check callbacks */
         }
         q = nq;
     }
@@ -4092,7 +4301,7 @@ long cm_RetryLock(cm_file_lock_t *oldFileLock, int client_is_dead)
 
         /* check if the conflicting locks have dissappeared already */
 
-        for(q = scp->fileLocks; q; q = osi_QNext(q)) {
+        for(q = scp->fileLocksH; q; q = osi_QNext(q)) {
 
             fileLock = (cm_file_lock_t *)
                 ((char *) q - offsetof(cm_file_lock_t, fileq));
@@ -4162,6 +4371,16 @@ long cm_RetryLock(cm_file_lock_t *oldFileLock, int client_is_dead)
 
         cm_InitReq(&req);
 
+        code = cm_SyncOp(scp, NULL, oldFileLock->userp, &req, 0,
+                         CM_SCACHESYNC_NEEDCALLBACK
+			 | CM_SCACHESYNC_GETSTATUS
+			 | CM_SCACHESYNC_LOCK);
+        if (code) {
+            osi_Log1(smb_logp, "cm_RetryLock SyncOp failure code 0x%x", code);
+            lock_ReleaseWrite(&cm_scacheLock);
+            goto post_syncopdone;
+        }
+
         tfid.Volume = scp->fid.volume;
         tfid.Vnode = scp->fid.vnode;
         tfid.Unique = scp->fid.unique;
@@ -4199,18 +4418,23 @@ long cm_RetryLock(cm_file_lock_t *oldFileLock, int client_is_dead)
         } else {
             osi_Log0(afsd_logp, "CALL SetLock SUCCESS");
         }
+
+        lock_ObtainMutex(&scp->mx);
+
+        cm_SyncOpDone(scp, NULL, CM_SCACHESYNC_LOCK);
+    post_syncopdone:
+        ;
     }
 
   handleCode:
     if (code != 0 && code != CM_ERROR_WOULDBLOCK) {
-        lock_ObtainMutex(&scp->mx);
-        osi_QRemove(&scp->fileLocks, &oldFileLock->fileq);
-        lock_ReleaseMutex(&scp->mx);
+        if (scp->fileLocksT == &oldFileLock->fileq)
+            scp->fileLocksT = osi_QPrev(&oldFileLock->fileq);
+        osi_QRemove(&scp->fileLocksH, &oldFileLock->fileq);
     } else if (code == 0 && IS_LOCK_WAITLOCK(oldFileLock)) {
-        lock_ObtainMutex(&scp->mx);
         scp->serverLock = newLock;
-        lock_ReleaseMutex(&scp->mx);
     }
+    lock_ReleaseMutex(&scp->mx);
 
     lock_ObtainWrite(&cm_scacheLock);
     if (code == 0) {
@@ -4232,4 +4456,13 @@ cm_key_t cm_GenerateKey(unsigned int session_id, unsigned long process_id, unsig
     return (((cm_key_t) process_id) << 32) |
         (((cm_key_t) session_id) << 16) |
         (((cm_key_t) file_id));
+}
+
+static int cm_KeyEquals(cm_key_t k1, cm_key_t k2, int flags)
+{
+    if (flags & CM_UNLOCK_BY_FID) {
+        return ((k1 & 0xffffffff) == (k2 & 0xffffffff));
+    } else {
+        return (k1 == k2);
+    }
 }

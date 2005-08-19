@@ -28,6 +28,7 @@ extern osi_hyper_t hzero;
 
 /* File locks */
 osi_queue_t *cm_allFileLocks;
+osi_queue_t *cm_freeFileLocks;
 unsigned long cm_lockRefreshCycle;
 
 /* lock for globals */
@@ -135,7 +136,8 @@ cm_scache_t *cm_GetNewSCache(void)
             memset(&scp->dotdotFid, 0, sizeof(cm_fid_t));
 
             /* reset locking info */
-            scp->fileLocks = NULL;
+            scp->fileLocksH = NULL;
+            scp->fileLocksT = NULL;
             scp->serverLock = (-1);
             scp->exclusiveLocks = 0;
             scp->sharedLocks = 0;
@@ -203,7 +205,7 @@ void cm_fakeSCacheInit(int newFile)
         cm_data.fakeSCache.refCount = 1;
     }
     lock_InitializeMutex(&cm_data.fakeSCache.mx, "cm_scache_t mutex");
-}       
+}
 
 long
 cm_ValidateSCache(void)
@@ -355,7 +357,8 @@ void cm_InitSCache(int newFile, long maxSCaches)
 
                 scp->cbServerp = NULL;
                 scp->cbExpires = 0;
-                scp->fileLocks = NULL;
+                scp->fileLocksH = NULL;
+                scp->fileLocksT = NULL;
                 scp->serverLock = (-1);
                 scp->lastRefreshCycle = 0;
                 scp->exclusiveLocks = 0;
@@ -369,6 +372,7 @@ void cm_InitSCache(int newFile, long maxSCaches)
             }
         }
         cm_allFileLocks = NULL;
+        cm_freeFileLocks = NULL;
         cm_lockRefreshCycle = 0;
         cm_fakeSCacheInit(newFile);
         cm_dnlcInit(newFile);

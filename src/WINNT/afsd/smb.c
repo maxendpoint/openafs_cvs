@@ -860,6 +860,11 @@ smb_vc_t *smb_FindVC(unsigned short lsn, int flags, int lana)
         }
         else
             memset(vcp->encKey, 0, MSV1_0_CHALLENGE_LENGTH);
+
+        if (numVCs >= CM_SESSION_RESERVED) {
+            numVCs = 0;
+            osi_Log0(smb_logp, "WARNING: numVCs wrapping around");
+        }
     }
     lock_ReleaseWrite(&smb_rctLock);
     return vcp;
@@ -1173,6 +1178,7 @@ smb_fid_t *smb_FindFID(smb_vc_t *vcp, unsigned short fid, int flags)
             break;
         }
     }
+
     if (!fidp && (flags & SMB_FLAG_CREATE)) {
         char eventName[MAX_PATH];
         EVENT_HANDLE event;
@@ -1203,6 +1209,7 @@ smb_fid_t *smb_FindFID(smb_vc_t *vcp, unsigned short fid, int flags)
                 vcp->fidCounter = 1;
         }
     }
+
     lock_ReleaseWrite(&smb_rctLock);
     return fidp;
 }
@@ -2327,7 +2334,7 @@ void smb_MapNTError(long code, unsigned long *NTStatusp)
     }
     else if (code == CM_ERROR_READONLY) {
         NTStatus = 0xC00000A2L;	/* Write protected */
-    }	
+    }
     else if (code == CM_ERROR_NOSUCHFILE) {
         NTStatus = 0xC000000FL;	/* No such file */
     }
@@ -2406,6 +2413,9 @@ void smb_MapNTError(long code, unsigned long *NTStatusp)
     }
     else if (code == CM_ERROR_WOULDBLOCK) {
         NTStatus = 0xC0000055L;	/* Lock not granted */
+    }
+    else if (code == CM_ERROR_SHARING_VIOLATION) {
+        NTStatus = 0xC0000043L; /* Sharing violation */
     }
     else if (code == CM_ERROR_LOCK_CONFLICT) {
         NTStatus = 0xC0000054L; /* Lock conflict */
@@ -2598,6 +2608,10 @@ void smb_MapCoreError(long code, smb_vc_t *vcp, unsigned short *scodep,
         error = 33;	/* lock conflict */
     }
     else if (code == CM_ERROR_LOCK_CONFLICT) {
+        class = 1;
+        error = 33;     /* lock conflict */
+    }
+    else if (code == CM_ERROR_SHARING_VIOLATION) {
         class = 1;
         error = 33;     /* lock conflict */
     }
@@ -5429,7 +5443,8 @@ long smb_ReceiveCoreClose(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         code = 0;
 
     /* unlock any pending locks */
-    if (!(fidp->flags & SMB_FID_IOCTL) && fidp->scp) {
+    if (!(fidp->flags & SMB_FID_IOCTL) && fidp->scp &&
+        fidp->scp->fileType == CM_SCACHETYPE_FILE) {
         cm_key_t key;
         unsigned pid;
 
@@ -5437,7 +5452,7 @@ long smb_ReceiveCoreClose(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         key = cm_GenerateKey(vcp->vcID, pid, fid);
 
         lock_ObtainMutex(&fidp->scp->mx);
-        cm_UnlockByKey(fidp->scp, key, userp, &req);
+        cm_UnlockByKey(fidp->scp, key, CM_UNLOCK_BY_FID, userp, &req);
         lock_ReleaseMutex(&fidp->scp->mx);
     }
 

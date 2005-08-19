@@ -150,8 +150,11 @@ extern long cm_Lock(cm_scache_t *scp, unsigned char sLockType,
 	int allowWait, cm_user_t *userp, cm_req_t *reqp,
 	cm_file_lock_t **lockpp);
 
+#define CM_UNLOCK_BY_FID 1
+
 extern long cm_UnlockByKey(cm_scache_t * scp,
         cm_key_t key,
+        int flags,
         cm_user_t * userp,
         cm_req_t * reqp);
 
@@ -172,6 +175,11 @@ extern long cm_LockCheckWrite(cm_scache_t *scp,
 extern void cm_CheckLocks();
 
 extern long cm_RetryLock(cm_file_lock_t *oldFileLock, int client_is_dead);
+
+#define CM_SESSION_SMB      0xffff
+#define CM_SESSION_IFS      0xfffe
+#define CM_SESSION_CMINT    0xfffd
+#define CM_SESSION_RESERVED 0xfff0
 
 extern cm_key_t cm_GenerateKey(unsigned int session, unsigned long process_id, unsigned int file_id);
 

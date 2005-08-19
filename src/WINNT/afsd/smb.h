@@ -346,6 +346,14 @@ typedef struct smb_fid {
 #define SMB_FID_LOOKSLIKECOPY	(SMB_FID_LENGTHSETDONE | SMB_FID_MTIMESETDONE)
 #define SMB_FID_NTOPEN			0x100	/* have dscp and pathp */
 
+#define SMB_FID_SHARE_READ              0x1000
+#define SMB_FID_SHARE_WRITE             0x2000
+
+#define SMB_FID_QLOCK_HIGH              0x0fe00000
+#define SMB_FID_QLOCK_LOW               0x00000000
+#define SMB_FID_QLOCK_LENGTH            1
+#define SMB_FID_QLOCK_PID               0
+
 /*
  * SMB file attributes (32-bit)
  */

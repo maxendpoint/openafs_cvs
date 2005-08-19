@@ -448,6 +448,7 @@ cm_Analyze(cm_conn_t *connp, cm_user_t *userp, cm_req_t *reqp,
             case VRESTARTING       : s = "VRESTARTING";        break;
             case VREADONLY         : s = "VREADONLY";          break;
             case EAGAIN            : s = "EAGAIN";             break;
+            case EACCES            : s = "EACCES";             break;
             }
             osi_Log2(afsd_logp, "cm_Analyze: ignoring error code 0x%x (%s)", 
                      errorCode, s);

@@ -54,6 +54,9 @@ typedef struct cm_file_lock {
                                    to [immutable; held] */
     cm_scache_t *scp;           /* The scache to which this lock
                                    applies to [immutable; held] */
+#ifdef DEBUG
+    cm_fid_t   fid;
+#endif
 
     cm_range_t range;           /* Range for the lock [immutable] */
     cm_key_t key;               /* Key for the lock [immutable] */
@@ -71,6 +74,8 @@ typedef struct cm_file_lock {
 /* the following are mutually exclusive */
 #define CM_FILELOCK_FLAG_WAITLOCK        0x04
 #define CM_FILELOCK_FLAG_WAITUNLOCK      0x0C
+
+#define CM_FILELOCK_FLAG_CLIENTONLY      0x100
 
 typedef struct cm_prefetch {		/* last region scanned for prefetching */
 	osi_hyper_t base;		/* start of region */
@@ -150,7 +155,8 @@ typedef struct cm_scache {
                                  */
     unsigned long lastRefreshCycle; /* protected with cm_scacheLock
                                      * for all scaches. */
-    osi_queue_t *fileLocks;     /* queue of locks */
+    osi_queue_t *fileLocksH;    /* queue of locks (head) */
+    osi_queue_t *fileLocksT;    /* queue of locks (tail) */
     afs_uint32   sharedLocks;   /* number of shared locks on
                                  * ::fileLocks */
     afs_uint32   exclusiveLocks; /* number of exclusive locks on
@@ -303,6 +309,8 @@ extern cm_scache_t *cm_FindSCache(cm_fid_t *fidp);
 extern osi_rwlock_t cm_scacheLock;
 
 extern osi_queue_t *cm_allFileLocks;
+
+extern osi_queue_t *cm_freeFileLocks;
 
 extern unsigned long cm_lockRefreshCycle;
 

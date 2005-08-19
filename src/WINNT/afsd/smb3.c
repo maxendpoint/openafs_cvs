@@ -5311,6 +5311,7 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
     unsigned int extAttributes;
     unsigned int createDisp;
     unsigned int createOptions;
+    unsigned int shareAccess;
     int initialModeBits;
     unsigned short baseFid;
     smb_fid_t *baseFidp;
@@ -5355,6 +5356,8 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         | (smb_GetSMBOffsetParm(inp, 8, 1) << 16);
     extAttributes = smb_GetSMBOffsetParm(inp, 13, 1)
         | (smb_GetSMBOffsetParm(inp, 14, 1) << 16);
+    shareAccess = smb_GetSMBOffsetParm(inp, 15, 1)
+        | (smb_GetSMBOffsetParm(inp, 16, 1) << 16);
     createDisp = smb_GetSMBOffsetParm(inp, 17, 1)
         | (smb_GetSMBOffsetParm(inp, 18, 1) << 16);
     createOptions = smb_GetSMBOffsetParm(inp, 19, 1)
@@ -5391,7 +5394,7 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
 
     osi_Log1(smb_logp,"NTCreateX for [%s]",osi_LogSaveString(smb_logp,realPathp));
     osi_Log4(smb_logp,"... da=[%x] ea=[%x] cd=[%x] co=[%x]", desiredAccess, extAttributes, createDisp, createOptions);
-    osi_Log2(smb_logp,"... flags=[%x] lastNamep=[%s]", flags, osi_LogSaveString(smb_logp,(lastNamep?lastNamep:"null")));
+    osi_Log3(smb_logp,"... share=[%x] flags=[%x] lastNamep=[%s]", shareAccess, flags, osi_LogSaveString(smb_logp,(lastNamep?lastNamep:"null")));
 
     if (lastNamep && strcmp(lastNamep, SMB_IOCTL_FILENAME) == 0) {
         /* special case magic file name for receiving IOCTL requests
@@ -5439,6 +5442,7 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
     	free(hexp);
     }
 #endif
+
     userp = smb_GetUser(vcp, inp);
     if (!userp) {
     	osi_Log1(smb_logp, "NTCreateX Invalid user [%d]", ((smb_t *) inp)->uid);
@@ -5486,6 +5490,12 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         fidflags |= SMB_FID_OPENWRITE;
     if (createOptions & FILE_DELETE_ON_CLOSE)
         fidflags |= SMB_FID_DELONCLOSE;
+
+    /* and the share mode */
+    if (shareAccess & FILE_SHARE_READ)
+        fidflags |= SMB_FID_SHARE_READ;
+    if (shareAccess & FILE_SHARE_WRITE)
+        fidflags |= SMB_FID_SHARE_WRITE;
 
     code = 0;
 
@@ -5662,7 +5672,7 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         /* we have scp but not dscp */
         if (baseFid != 0) 
             smb_ReleaseFID(baseFidp);
-    }       
+    }
 
     /* if we get here, if code is 0, the file exists and is represented by
      * scp.  Otherwise, we have to create it.  The dir may be represented
@@ -5683,6 +5693,7 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
 
         if ( createDisp == FILE_OVERWRITE || 
              createDisp == FILE_OVERWRITE_IF) {
+
             setAttr.mask = CM_ATTRMASK_LENGTH;
             setAttr.length.LowPart = 0;
             setAttr.length.HighPart = 0;
@@ -5907,6 +5918,46 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
     /* open the file itself */
     fidp = smb_FindFID(vcp, 0, SMB_FLAG_CREATE);
     osi_assert(fidp);
+
+    /* If we are restricting sharing, we should do so with a suitable
+       share lock. */
+    if (scp->fileType == CM_SCACHETYPE_FILE &&
+        !(fidflags & SMB_FID_SHARE_WRITE)) {
+        cm_key_t key;
+        LARGE_INTEGER LOffset, LLength;
+        int sLockType;
+
+        LOffset.HighPart = SMB_FID_QLOCK_HIGH;
+        LOffset.LowPart = SMB_FID_QLOCK_LOW;
+        LLength.HighPart = 0;
+        LLength.LowPart = SMB_FID_QLOCK_LENGTH;
+
+        if (fidflags & SMB_FID_SHARE_READ) {
+            sLockType = LOCKING_ANDX_SHARED_LOCK;
+        } else {
+            sLockType = 0;
+        }
+
+        key = cm_GenerateKey(vcp->vcID, SMB_FID_QLOCK_PID, fidp->fid);
+        
+        lock_ObtainMutex(&scp->mx);
+        code = cm_Lock(scp, sLockType, LOffset, LLength, key, 0, userp, &req, NULL);
+        lock_ReleaseMutex(&scp->mx);
+
+        if (code) {
+            fidp->flags = SMB_FID_DELETE;
+            smb_ReleaseFID(fidp);
+
+            cm_ReleaseSCache(scp);
+            if (dscp)
+                cm_ReleaseSCache(dscp);
+            cm_ReleaseUser(userp);
+            free(realPathp);
+            
+            return CM_ERROR_SHARING_VIOLATION;
+        }
+    }
+
     /* save a pointer to the vnode */
     fidp->scp = scp;    /* Hold transfered to fidp->scp and no longer needed */
 
@@ -5926,6 +5977,7 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         cm_ReleaseSCache(dscp);
         dscp = NULL;
     }
+
     cm_Open(scp, 0, userp);
 
     /* set inp->fid so that later read calls in same msg can find fid */
@@ -5960,7 +6012,8 @@ long smb_ReceiveNTCreateX(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
 
     cm_ReleaseUser(userp);
 
-    /* Can't free realPathp if we get here since fidp->NTopen_wholepathp is pointing there */
+    /* Can't free realPathp if we get here since
+       fidp->NTopen_wholepathp is pointing there */
 
     /* leave scp held since we put it in fidp->scp */
     return 0;
@@ -5991,8 +6044,8 @@ long smb_ReceiveNTTranCreate(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *out
     unsigned int desiredAccess;
 #ifdef DEBUG_VERBOSE    
     unsigned int allocSize;
-    unsigned int shareAccess;
 #endif
+    unsigned int shareAccess;
     unsigned int extAttributes;
     unsigned int createDisp;
 #ifdef DEBUG_VERBOSE
@@ -6044,9 +6097,7 @@ long smb_ReceiveNTTranCreate(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *out
     allocSize = lparmp[3];
 #endif /* DEBUG_VERSOSE */
     extAttributes = lparmp[5];
-#ifdef DEBUG_VEROSE
     shareAccess = lparmp[6];
-#endif
     createDisp = lparmp[7];
     createOptions = lparmp[8];
 #ifdef DEBUG_VERBOSE
@@ -6149,6 +6200,12 @@ long smb_ReceiveNTTranCreate(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *out
         fidflags |= SMB_FID_OPENWRITE;
     if (createOptions & FILE_DELETE_ON_CLOSE)
         fidflags |= SMB_FID_DELONCLOSE;
+
+    /* And the share mode */
+    if (shareAccess & FILE_SHARE_READ)
+        fidflags |= SMB_FID_SHARE_READ;
+    if (shareAccess & FILE_SHARE_WRITE)
+        fidflags |= SMB_FID_SHARE_WRITE;
 
     dscp = NULL;
     code = 0;
@@ -6449,6 +6506,43 @@ long smb_ReceiveNTTranCreate(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *out
     /* open the file itself */
     fidp = smb_FindFID(vcp, 0, SMB_FLAG_CREATE);
     osi_assert(fidp);
+
+    /* If we are restricting sharing, we should do so with a suitable
+       share lock. */
+    if (scp->fileType == CM_SCACHETYPE_FILE &&
+        !(fidflags & SMB_FID_SHARE_WRITE)) {
+        cm_key_t key;
+        LARGE_INTEGER LOffset, LLength;
+        int sLockType;
+
+        LOffset.HighPart = SMB_FID_QLOCK_HIGH;
+        LOffset.LowPart = SMB_FID_QLOCK_LOW;
+        LLength.HighPart = 0;
+        LLength.LowPart = SMB_FID_QLOCK_LENGTH;
+
+        if (fidflags & SMB_FID_SHARE_READ) {
+            sLockType = LOCKING_ANDX_SHARED_LOCK;
+        } else {
+            sLockType = 0;
+        }
+
+        key = cm_GenerateKey(vcp->vcID, SMB_FID_QLOCK_PID, fidp->fid);
+        
+        lock_ObtainMutex(&scp->mx);
+        code = cm_Lock(scp, sLockType, LOffset, LLength, key, 0, userp, &req, NULL);
+        lock_ReleaseMutex(&scp->mx);
+
+        if (code) {
+            fidp->flags = SMB_FID_DELETE;
+            smb_ReleaseFID(fidp);
+
+            cm_ReleaseSCache(scp);
+            cm_ReleaseUser(userp);
+            free(realPathp);
+            
+            return CM_ERROR_SHARING_VIOLATION;
+        }
+    }
 
     /* save a pointer to the vnode */
     fidp->scp = scp;
