@@ -5447,13 +5447,35 @@ long smb_ReceiveCoreClose(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
         fidp->scp->fileType == CM_SCACHETYPE_FILE) {
         cm_key_t key;
         unsigned pid;
+        cm_scache_t * scp;
+        long tcode;
 
         pid = ((smb_t *) inp)->pid;
         key = cm_GenerateKey(vcp->vcID, pid, fid);
+        cm_HoldSCache(scp);
+        scp = fidp->scp;
 
-        lock_ObtainMutex(&fidp->scp->mx);
-        cm_UnlockByKey(fidp->scp, key, CM_UNLOCK_BY_FID, userp, &req);
-        lock_ReleaseMutex(&fidp->scp->mx);
+        lock_ObtainMutex(&scp->mx);
+
+        tcode = cm_SyncOp(scp, NULL, userp, &req, 0,
+                          CM_SCACHESYNC_NEEDCALLBACK
+                          | CM_SCACHESYNC_GETSTATUS
+                          | CM_SCACHESYNC_LOCK);
+
+        if (tcode) {
+            osi_Log1(smb_logp, "smb CoreClose SyncOp failure code 0x%x", tcode);
+            goto post_syncopdone;
+        }
+
+        cm_UnlockByKey(scp, key, CM_UNLOCK_BY_FID, userp, &req);
+
+        cm_SyncOpDone(scp, NULL, CM_SCACHESYNC_LOCK);
+
+    post_syncopdone:
+
+        lock_ReleaseMutex(&scp->mx);
+
+        cm_ReleaseSCache(scp);
     }
 
     if (fidp->flags & SMB_FID_DELONCLOSE) {
