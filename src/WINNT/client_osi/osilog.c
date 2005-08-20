@@ -37,6 +37,14 @@ osi_log_t *osi_allLogsp;	/* all logs known; for use during panic */
 unsigned long osi_logFreq;	/* 0, or frequency of high perf counter */
 unsigned long osi_logTixToMicros;	/* mult. correction factor */
 
+#define TRACE_OPTION_EVENT 2
+#define TRACE_OPTION_DEBUGLOG 4
+
+#define ISCLIENTTRACE(v) ( ((v) & TRACE_OPTION_EVENT)==TRACE_OPTION_EVENT)
+#define ISCLIENTDEBUGLOG(v) (((v) & TRACE_OPTION_DEBUGLOG)==TRACE_OPTION_DEBUGLOG)
+
+DWORD osi_TraceOption=0;
+
 osi_fdOps_t osi_logFDOps = {
 	osi_LogFDCreate,
 #ifndef DJGPP
@@ -94,9 +102,9 @@ osi_log_t *osi_LogCreate(char *namep, long size)
         logp->datap = malloc(size * sizeof(osi_logEntry_t));
 
 	/* init strings array */
-	logp->maxstringindex = size/5;
+	logp->maxstringindex = size/3;
 	logp->stringindex = 0;
-	logp->stringsp = malloc((size/5) * OSI_LOG_STRINGSIZE);
+	logp->stringsp = malloc(logp->maxstringindex * OSI_LOG_STRINGSIZE);
  
         /* and sync */
         thrd_InitCrit(&logp->cs);
@@ -213,6 +221,15 @@ void osi_LogAdd(osi_log_t *logp, char *formatp, long p0, long p1, long p2, long 
 		printf( "\n" );
 #endif
 
+        if(ISCLIENTDEBUGLOG(osi_TraceOption)) {
+            char debug_str[256];
+
+            snprintf(debug_str, sizeof(debug_str), formatp, p0, p1, p2, p3);
+            strcat(debug_str, "\n");
+
+            OutputDebugStringA(debug_str);
+        }
+
 	thrd_LeaveCrit(&logp->cs);
 }
 
@@ -251,9 +268,13 @@ void osi_LogPrint(osi_log_t *logp, FILE_HANDLE handle)
 
 char *osi_LogSaveString(osi_log_t *logp, char *s)
 {
-	char *saveplace = logp->stringsp[logp->stringindex];
+	char *saveplace;
 
 	if (s == NULL) return NULL;
+
+        thrd_EnterCrit(&logp->cs);
+
+        saveplace = logp->stringsp[logp->stringindex];
 
 	if (strlen(s) >= OSI_LOG_STRINGSIZE)
 		sprintf(saveplace, "...%s",
@@ -261,8 +282,11 @@ char *osi_LogSaveString(osi_log_t *logp, char *s)
 	else
 		strcpy(saveplace, s);
 	logp->stringindex++;
+
 	if (logp->stringindex >= logp->maxstringindex)
 	    logp->stringindex = 0;
+
+        thrd_LeaveCrit(&logp->cs);
 
 	return saveplace;
 }
@@ -341,11 +365,6 @@ void osi_LogDisable(osi_log_t *logp)
 	if (logp)
 		logp->enabled = 0;
 }
-
-#define TRACE_OPTION_EVENT 2
-#define ISCLIENTTRACE(v) ( ((v) & TRACE_OPTION_EVENT)==TRACE_OPTION_EVENT)
-
-DWORD osi_TraceOption=0;
 
 void osi_InitTraceOption()
 {
