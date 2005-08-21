@@ -5452,9 +5452,8 @@ long smb_ReceiveCoreClose(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
 
         pid = ((smb_t *) inp)->pid;
         key = cm_GenerateKey(vcp->vcID, pid, fid);
-        cm_HoldSCache(scp);
         scp = fidp->scp;
-
+        cm_HoldSCache(scp);
         lock_ObtainMutex(&scp->mx);
 
         tcode = cm_SyncOp(scp, NULL, userp, &req, 0,
@@ -5474,7 +5473,6 @@ long smb_ReceiveCoreClose(smb_vc_t *vcp, smb_packet_t *inp, smb_packet_t *outp)
     post_syncopdone:
 
         lock_ReleaseMutex(&scp->mx);
-
         cm_ReleaseSCache(scp);
     }
 
