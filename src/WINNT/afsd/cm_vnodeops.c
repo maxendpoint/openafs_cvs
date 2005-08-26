@@ -4085,6 +4085,7 @@ static void cm_LockMarkSCacheLost(cm_scache_t * scp)
         }
     }
 
+    scp->serverLock = -1;
     lock_ReleaseWrite(&cm_scacheLock);
 }
 
@@ -4211,8 +4212,6 @@ void cm_CheckLocks()
 
                     if (code) {
                         osi_Log1(afsd_logp, "CALL ExtendLock FAILURE, code 0x%x", code);
-
-                        scp->serverLock = (-1);
                         cm_LockMarkSCacheLost(scp);
                     } else {
                         osi_Log0(afsd_logp, "CALL ExtendLock SUCCESS");
@@ -4221,11 +4220,7 @@ void cm_CheckLocks()
                     /* interestingly, we have found an active lock
                        belonging to an scache that has no
                        serverLock */
-#ifdef DEBUG
-                    osi_assert(scp->serverLock != -1);
-#else
                     cm_LockMarkSCacheLost(scp);
-#endif
                 }
 
                 scp_done = TRUE;
