@@ -216,18 +216,20 @@ void osi_LogAdd(osi_log_t *logp, char *formatp, long p0, long p1, long p2, long 
         lep->parms[3] = p3;
 
 #ifdef NOTSERVICE
-		printf( "%9ld:", lep->micros );
-		printf( formatp, p0, p1, p2, p3);
-		printf( "\n" );
+        printf( "%9ld:", lep->micros );
+        printf( formatp, p0, p1, p2, p3);
+        printf( "\n" );
 #endif
 
         if(ISCLIENTDEBUGLOG(osi_TraceOption)) {
-            char debug_str[256];
+	    char wholemsg[1024], msg[1000];
 
-            snprintf(debug_str, sizeof(debug_str), formatp, p0, p1, p2, p3);
-            strcat(debug_str, "\n");
-
-            OutputDebugStringA(debug_str);
+	    snprintf(msg, sizeof(msg), formatp,
+		     p0, p1, p2, p3);
+	    snprintf(wholemsg, sizeof(wholemsg), 
+		     "tid[%d] %s\n",
+		     lep->tid, msg);
+            OutputDebugStringA(wholemsg);
         }
 
 	thrd_LeaveCrit(&logp->cs);
@@ -235,7 +237,7 @@ void osi_LogAdd(osi_log_t *logp, char *formatp, long p0, long p1, long p2, long 
 
 void osi_LogPrint(osi_log_t *logp, FILE_HANDLE handle)
 {
-	char wholemsg[1000], msg[1000];
+	char wholemsg[1024], msg[1000];
 	int i, ix, ioCount;
 	osi_logEntry_t *lep;
 
@@ -247,10 +249,11 @@ void osi_LogPrint(osi_log_t *logp, FILE_HANDLE handle)
 	     i < logp->nused;
 	     i++, ix++, (ix >= logp->alloc ? ix -= logp->alloc : 0)) {
 		lep = logp->datap + ix;		/* pointer arithmetic */
-		sprintf(msg, lep->formatp,
+		snprintf(msg, sizeof(msg), lep->formatp,
 			lep->parms[0], lep->parms[1],
 			lep->parms[2], lep->parms[3]);
-		sprintf(wholemsg, "time %d.%06d, pid %d %s\n",
+		snprintf(wholemsg, sizeof(wholemsg),
+			 "time %d.%06d, tid %d %s\n",
 			lep->micros / 1000000,
 			lep->micros % 1000000,
 			lep->tid, msg);
