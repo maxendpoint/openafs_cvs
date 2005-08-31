@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.38 2004/12/11 11:02:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.39 2005/08/31 21:35:40 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -2640,7 +2640,7 @@ SAFSVolSetIdsTypes(struct rx_call *acid, afs_int32 atid, char name[], afs_int32 
 
     code = VolSetIdsTypes(acid, atid, name, type, pId, cloneId, backupId);
     osi_auditU(acid, VS_SetIdTyEvent, code, AUD_LONG, atid, AUD_STR, name,
-	       AUD_STR, type, AUD_LONG, pId, AUD_LONG, cloneId, AUD_LONG,
+	       AUD_LONG, type, AUD_LONG, pId, AUD_LONG, cloneId, AUD_LONG,
 	       backupId, AUD_END);
     return code;
 }
