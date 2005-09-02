@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.21 2005/08/28 20:43:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.22 2005/09/02 22:50:59 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -1146,8 +1146,12 @@ rx_NewCall(register struct rx_connection *conn)
 
     /* Client is initially in send mode */
     call->state = RX_STATE_ACTIVE;
-    call->mode = RX_MODE_SENDING;
-
+    call->error = conn->error;
+    if (call->error)
+	call->mode = RX_MODE_ERROR;
+    else
+	call->mode = RX_MODE_SENDING;
+    
     /* remember start time for call in case we have hard dead time limit */
     call->queueTime = queueTime;
     clock_GetTime(&call->startTime);
