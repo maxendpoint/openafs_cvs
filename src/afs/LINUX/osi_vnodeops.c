@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.119 2005/08/19 15:32:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.120 2005/09/04 04:10:14 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -631,6 +631,7 @@ afs_linux_revalidate(struct dentry *dp)
 #endif
     AFS_GLOCK();
 
+#ifdef notyet
     /* Make this a fast path (no crref), since it's called so often. */
     if (vcp->states & CStatd) {
 
@@ -643,6 +644,7 @@ afs_linux_revalidate(struct dentry *dp)
 #endif
 	return 0;
     }
+#endif
 
     credp = crref();
     code = afs_getattr(vcp, &vattr, credp);
