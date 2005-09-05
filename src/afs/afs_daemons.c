@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.33 2005/04/03 18:13:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.34 2005/09/05 16:28:39 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -309,8 +309,12 @@ afs_CheckRootVolume(void)
 		 * count to zero and fs checkv is executed when the current
 		 * directory is /afs.
 		 */
+#ifdef AFS_LINUX20_ENV
+		printk("afs_CheckVolume():  afs_root changed.\n");
+#else
 		AFS_FAST_RELE(afs_globalVp);
 		afs_globalVp = 0;
+#endif
 	    }
 	    afs_rootFid.Fid.Volume = volid;
 	    afs_rootFid.Fid.Vnode = 1;
