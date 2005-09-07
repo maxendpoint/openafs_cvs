@@ -33,7 +33,7 @@ void smb_InitIoctl(void)
 {
         int i;
         for (i=0; i<SMB_IOCTL_MAXPROCS; i++)
-	    smb_ioctl_procsp[i] = NULL;
+	    smb_ioctlProcsp[i] = NULL;
 
 	smb_ioctlProcsp[VIOCGETAL] = cm_IoctlGetACL;
         smb_ioctlProcsp[VIOC_FILE_CELL_NAME] = cm_IoctlGetFileCellName;
