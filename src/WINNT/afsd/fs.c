@@ -1360,6 +1360,38 @@ FlushAllCmd(struct cmd_syndesc *as, char *arock)
 }
 
 static int
+FlushAllCmd(struct cmd_syndesc *as, char *arock)
+{
+    afs_int32 code;
+    struct ViceIoctl blob;
+    struct cmd_item *ti;
+
+    blob.in_size = blob.out_size = 0;
+    code = pioctl(NULL, VIOC_FLUSHALL, &blob, 0);
+    if (code) {
+	fprintf(stderr, "Error flushing all ");
+	return 1;
+    }
+    return 0;
+}
+
+static int
+FlushAllCmd(struct cmd_syndesc *as, char *arock)
+{
+    afs_int32 code;
+    struct ViceIoctl blob;
+    struct cmd_item *ti;
+
+    blob.in_size = blob.out_size = 0;
+    code = pioctl(NULL, VIOC_FLUSHALL, &blob, 0);
+    if (code) {
+	fprintf(stderr, "Error flushing all ");
+	return 1;
+    }
+    return 0;
+}
+
+static int
 FlushVolumeCmd(struct cmd_syndesc *as, char *arock)
 {
     afs_int32 code;
