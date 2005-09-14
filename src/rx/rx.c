@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.87 2005/09/14 05:07:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.88 2005/09/14 08:51:56 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -4444,12 +4444,13 @@ rxi_ResetCall(register struct rx_call *call, register int newcall)
 	    dpf(("rcall %x has %d waiters and flags %d\n", call, call->tqWaiters, call->flags));
 	}
 	call->flags = 0;
-	while (call->tqWaiters--) {
+	while (call->tqWaiters) {
 #ifdef RX_ENABLE_LOCKS
 	    CV_BROADCAST(&call->cv_tq);
 #else /* RX_ENABLE_LOCKS */
 	    osi_rxWakeup(&call->tq);
 #endif /* RX_ENABLE_LOCKS */
+	    call->tqWaiters--;
 	}
     }
     queue_Init(&call->rq);
