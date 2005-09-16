@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.21 2005/09/16 02:27:16 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.22 2005/09/16 18:14:01 jaltman Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -33,7 +33,8 @@ RCSID
  * the pthreads for solaris requires the socket call to be mapped.
  */
 #include "rx.h"
-#endif
+#include "rx_globals.h"
+#endif /* AFS_NT40_ENV */
 #else /* KERNEL */
 #ifdef UKERNEL
 #include "rx/rx_kcommon.h"
