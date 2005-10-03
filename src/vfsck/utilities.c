@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vfsck/utilities.c,v 1.7 2005/04/03 18:09:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vfsck/utilities.c,v 1.8 2005/10/03 02:44:56 shadow Exp $");
 
 #include <sys/param.h>
 #define VICE			/* allow us to put our changes in at will */
@@ -62,7 +62,11 @@ RCSID
 #include <sys/ino.h>
 #include <sys/signal.h>
 #define	DIRSIZ_MACRO
+#ifdef HAVE_USR_OLD_USR_INCLUDE_NDIR_H
+#include </usr/old/usr/include/ndir.h>
+#else
 #include <ndir.h>
+#endif
 #else
 #include <sys/dir.h>
 #endif
