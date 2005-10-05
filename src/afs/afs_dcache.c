@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.16 2005/08/04 20:45:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.17 2005/10/05 05:58:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -583,7 +583,7 @@ afs_GetDownD(int anumber, int *aneedSpace)
 			MReleaseWriteLock(&afs_xdcache);
 		    }
 
-		    AFS_FAST_RELE(tvc);
+		    afs_PutVCache(tvc); /*XXX was AFS_FAST_RELE?*/
 		    MObtainWriteLock(&afs_xdcache, 528);
 		    if (afs_indexFlags[tdc->index] &
 			(IFDataMod | IFDirtyPages | IFAnyPages))

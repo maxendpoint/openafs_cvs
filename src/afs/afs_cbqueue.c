@@ -75,7 +75,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.9.2.1 2005/05/30 04:05:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.9.2.2 2005/10/05 05:58:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -222,8 +222,9 @@ afs_CheckCallbacks(unsigned int secs)
 			    QRemove(tq);
 			    tq->prev = tq->next = NULL;
 			    tvc->states &= ~(CStatd | CMValid | CUnique);
-			    if ((tvc->fid.Fid.Vnode & 1)
-				|| (vType(tvc) == VDIR))
+                            if (!(tvc->states & CVInit) &&
+                                (tvc->fid.Fid.Vnode & 1 ||
+                                 (vType(tvc) == VDIR)))
 				osi_dnlc_purgedp(tvc);
 			    tvc->dchint = NULL;	/*invalidate em */
 			    afs_ResetVolumeInfo(tvp);
@@ -239,7 +240,8 @@ afs_CheckCallbacks(unsigned int secs)
 		QRemove(tq);
 		tq->prev = tq->next = NULL;
 		tvc->states &= ~(CStatd | CMValid | CUnique);
-		if ((tvc->fid.Fid.Vnode & 1) || (vType(tvc) == VDIR))
+                if (!(tvc->states & CVInit) &&
+                    (tvc->fid.Fid.Vnode & 1 || (vType(tvc) == VDIR)))
 		    osi_dnlc_purgedp(tvc);
 	    }
 	}
@@ -309,9 +311,10 @@ afs_FlushCBs(void)
 	    tvc->callback = 0;
 	    tvc->dchint = NULL;	/* invalidate hints */
 	    tvc->states &= ~(CStatd);
-	    if ((tvc->fid.Fid.Vnode & 1) || (vType(tvc) == VDIR))
-		osi_dnlc_purgedp(tvc);
 	    tvc->callsort.prev = tvc->callsort.next = NULL;
+	    if (!(tvc->states & CVInit) &&
+                ((tvc->fid.Fid.Vnode & 1) || (vType(tvc) == VDIR)))
+		osi_dnlc_purgedp(tvc);
 	}
 
     afs_InitCBQueue(0);
@@ -338,7 +341,8 @@ afs_FlushServerCBs(struct server *srvp)
 		tvc->callback = 0;
 		tvc->dchint = NULL;	/* invalidate hints */
 		tvc->states &= ~(CStatd);
-		if ((tvc->fid.Fid.Vnode & 1) || (vType(tvc) == VDIR)) {
+		if (!(tvc->states & CVInit) &&
+                    ((tvc->fid.Fid.Vnode & 1) || (vType(tvc) == VDIR))) {
 		    osi_dnlc_purgedp(tvc);
 		}
 		afs_DequeueCallback(tvc);
