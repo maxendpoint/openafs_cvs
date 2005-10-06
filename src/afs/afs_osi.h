@@ -140,7 +140,7 @@ extern int afs_vfs_typenum;
 #define	vSetVfsp(vc,vfsp)   (vc)->v.v_vfsp = (vfsp)
 #endif
 
-#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
+#if (defined(AFS_DARWIN_ENV) && !defined(AFS_DARWIN80_ENV)) || defined(AFS_XBSD_ENV)
 extern int (**afs_vnodeop_p) ();
 #define IsAfsVnode(v)      ((v)->v_op == afs_vnodeop_p)
 #define SetAfsVnode(v)     /* nothing; done in getnewvnode() */
