@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.11 2005/10/05 05:58:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.10.2.1 2005/10/07 19:26:34 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -249,7 +249,7 @@ afs_InitFakeStat(struct afs_fakestat_state *state)
  *
  * Only issues RPCs if canblock is non-zero.
  */
-static int
+int
 afs_EvalFakeStat_int(struct vcache **avcp, struct afs_fakestat_state *state,
 		     struct vrequest *areq, int canblock)
 {
@@ -305,14 +305,6 @@ afs_EvalFakeStat_int(struct vcache **avcp, struct afs_fakestat_state *state,
 	    code = canblock ? ENOENT : 0;
 	    goto done;
 	}
-#ifdef AFS_DARWIN80_ENV
-        root_vp->m.Type = VDIR;
-        AFS_GUNLOCK();
-        code = afs_darwin_finalizevnode(root_vp, NULL, NULL, 0);
-        AFS_GLOCK();
-        if (code) goto done;
-        vnode_ref(AFSTOV(root_vp));
-#endif
 	if (tvolp) {
 	    /* Is this always kosher?  Perhaps we should instead use
 	     * NBObtainWriteLock to avoid potential deadlock.
@@ -571,9 +563,6 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
     int flagIndex = 0;		/* First file with bulk fetch flag set */
     int inlinebulk = 0;		/* Did we use InlineBulk RPC or not? */
     XSTATS_DECLS;
-#ifdef AFS_DARWIN80_ENV
-    panic("bulkstatus doesn't work on AFS_DARWIN80_ENV. don't call it");
-#endif
     /* first compute some basic parameters.  We dont want to prefetch more
      * than a fraction of the cache in any given call, and we want to preserve
      * a portion of the LRU queue in any event, so as to avoid thrashing
@@ -719,15 +708,6 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
 	    if (!tvcp)
 		goto done;	/* can't happen at present, more's the pity */
 
-#ifdef AFS_DARWIN80_ENV
-            if (tvcp->states & CVInit) {
-                 /* XXX don't have status yet, so creating the vnode is
-                    not yet useful. we would get CDeadVnode set, and the
-                    upcoming PutVCache will cause the vcache to be flushed &
-                    freed, which in turn means the bulkstatus results won't 
-                    be used */
-            }
-#endif
 	    /* WARNING: afs_DoBulkStat uses the Length field to store a
 	     * sequence number for each bulk status request. Under no
 	     * circumstances should afs_DoBulkStat store a sequence number
@@ -889,9 +869,6 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
     ReleaseReadLock(&afs_xvcache);	/* could be read lock */
     if (retry)
 	goto reskip;
-#ifdef AFS_DARWIN80_ENV
-    vnode_get(AFSTOV(lruvcp));
-#endif
 
     /* otherwise, merge in the info.  We have to be quite careful here,
      * since we need to ensure that we don't merge old info over newer
@@ -1089,11 +1066,7 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
 }
 
 /* was: (AFS_DEC_ENV) || defined(AFS_OSF30_ENV) || defined(AFS_NCR_ENV) */
-#ifdef AFS_DARWIN80_ENV
-#define AFSDOBULK 0
-#else
 static int AFSDOBULK = 1;
-#endif
 
 int
 #ifdef AFS_OSF_ENV
@@ -1196,7 +1169,7 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 	*avcp = tvc;
 	code = (tvc ? 0 : ENOENT);
 	hit = 1;
-	if (tvc && !VREFCOUNT_GT(tvc, 0)) {
+	if (tvc && !VREFCOUNT(tvc)) {
 	    osi_Panic("TT1");
 	}
 	if (code) {
@@ -1229,13 +1202,10 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 	ObtainReadLock(&afs_xvcache);
 	osi_vnhold(adp, 0);
 	ReleaseReadLock(&afs_xvcache);
-#ifdef AFS_DARWIN80_ENV
-        vnode_get(AFSTOV(adp));
-#endif
 	code = 0;
 	*avcp = tvc = adp;
 	hit = 1;
-	if (adp && !VREFCOUNT_GT(adp, 0)) {
+	if (adp && !VREFCOUNT(adp)) {
 	    osi_Panic("TT2");
 	}
 	goto done;
@@ -1464,6 +1434,14 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 		ReleaseWriteLock(&tvc->lock);
 
 		if (code) {
+#if defined(AFS_SUN510_ENV)
+		    /* reset code and volumeError so afs_CheckCode will not change to ENODEV */
+		    /* Solaris 10 dogetcwd chokes on ENODEV, but not ENOENT */
+		    if (code == ENODEV && treq.volumeError == VOLMISSING ) {
+			treq.volumeError = 0;
+			code = ENOENT;
+		    }
+#endif
 		    afs_PutVCache(tvc);
 		    if (tvolp)
 			afs_PutVolume(tvolp, WRITE_LOCK);
@@ -1519,7 +1497,7 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 		}
 	    }
 	*avcp = tvc;
-	if (tvc && !VREFCOUNT_GT(tvc, 0)) {
+	if (tvc && !VREFCOUNT(tvc)) {
 	    osi_Panic("TT3");
 	}
 	code = 0;
