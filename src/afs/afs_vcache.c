@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.23 2005/10/06 17:44:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.24 2005/10/07 18:51:35 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -880,9 +880,6 @@ restart:
     tvc->fid = *afid;
     tvc->asynchrony = -1;
     tvc->vc_error = 0;
-#ifndef UKERNEL
-    afs_symhint_inval(tvc);
-#endif
 #ifdef AFS_TEXT_ENV
     tvc->flushDV.low = tvc->flushDV.high = AFS_MAXDV;
 #endif
