@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_uio.c,v 1.8.2.1 2005/10/05 05:58:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_uio.c,v 1.8.2.2 2005/10/12 06:17:25 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -104,7 +104,7 @@ afsio_skip(register struct uio *auio, register afs_int32 asize)
 	tv->iov_base = (char *)(tv->iov_base) + cnt;
 	tv->iov_len -= cnt;
 	auio->uio_resid -= cnt;
-	auio->uio_offset += cnt;
+	auio->afsio_offset += cnt;
 	asize -= cnt;
     }
 #endif
