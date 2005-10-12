@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.30 2005/10/03 02:44:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_readdir.c,v 1.31 2005/10/12 06:15:47 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -625,9 +625,11 @@ afs_readdir(OSI_VC_ARG(avc), auio, acred)
     if (eofp)
 	*eofp = 0;
 #endif
+#ifndef AFS_64BIT_CLIENT
     if (AfsLargeFileUio(auio)	/* file is large than 2 GB */
 	||AfsLargeFileSize(auio->uio_offset, auio->uio_resid))
 	return EFBIG;
+#endif
 
     if ((code = afs_InitReq(&treq, acred))) {
 #ifdef	AFS_HPUX_ENV
