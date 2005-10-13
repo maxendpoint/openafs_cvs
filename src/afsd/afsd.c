@@ -57,7 +57,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.56 2005/10/13 15:12:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.57 2005/10/13 20:59:13 shadow Exp $");
 
 #define VFS 1
 
@@ -78,6 +78,7 @@ RCSID
 #include <errno.h>
 #include <sys/time.h>
 #include <dirent.h>
+#include <sys/wait.h>
 
 
 #ifdef HAVE_SYS_PARAM_H
@@ -1821,6 +1822,9 @@ mainproc(struct cmd_syndesc *as, char *arock)
 		     enable_process_stats);
 	exit(1);
     }
+#ifdef AFS_SUN510_ENV
+    waitpid((pid_t) -1, NULL, 0);
+#endif
 #endif
     if (afsd_verbose)
 	printf("%s: Forking rx callback listener.\n", rn);
