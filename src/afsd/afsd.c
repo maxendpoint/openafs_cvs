@@ -57,7 +57,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.43.2.11 2005/10/05 05:58:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.43.2.12 2005/10/13 18:23:42 shadow Exp $");
 
 #define VFS 1
 
@@ -461,7 +461,7 @@ int PartSizeOverflow(char *path, int cs)
 	totalblks /= (1024 / bsize);
     }
 
-    mint = totalblks - ((totalblks * 5) / 100);
+    mint = totalblks / 100 * 95;
     if (cs > mint) {
 	printf
 	    ("Cache size (%d) must be less than 95%% of partition size (which is %d). Lower cache size\n",
