@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.20 2005/10/07 19:29:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.21 2005/10/13 18:25:05 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
@@ -63,7 +63,11 @@ struct afs_nfs2_resp {
 };
 
 #ifndef ACL2_NPROC
+#if defined(AFS_SUN510_ENV)
+#define ACL2_NPROC      6
+#else
 #define ACL2_NPROC      5
+#endif
 #endif
 struct afs_nfs_disp_tbl afs_rfs_disp_tbl[RFS_NPROC];
 struct afs_nfs_disp_tbl afs_acl_disp_tbl[ACL2_NPROC];
@@ -712,7 +716,7 @@ afs_acl2_getxattrdir(char *args, char *xp, char *exp, char *rp, char *crp)
 }
 #endif
 
-struct afs_nfs_disp_tbl afs_acl_disp_tbl[5] = {
+struct afs_nfs_disp_tbl afs_acl_disp_tbl[ACL2_NPROC] = {
     {afs_nfs2_null},
     {afs_acl2_getacl},
     {afs_acl2_setacl},
@@ -749,7 +753,11 @@ afs_xlatorinit_v2(struct rfs_disp_tbl *_rfs_tbl,
 #endif
 
 #ifndef ACL3_NPROC
+#if defined(AFS_SUN510_ENV)
+#define ACL3_NPROC      4
+#else
 #define ACL3_NPROC      3
+#endif
 #endif
 
 struct afs_nfs_disp_tbl afs_rfs3_disp_tbl[RFS3_NPROC];
@@ -1611,7 +1619,7 @@ afs_acl3_getxattrdir(char *args, char *xp, char *exp, char *rp, char *crp)
 }
 #endif
 
-struct afs_nfs_disp_tbl afs_acl3_disp_tbl[3] = {
+struct afs_nfs_disp_tbl afs_acl3_disp_tbl[ACL3_NPROC] = {
     {afs_nfs2_null},
     {afs_acl3_getacl},
     {afs_acl3_setacl},
