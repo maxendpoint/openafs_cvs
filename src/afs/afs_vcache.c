@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.96 2005/10/13 19:53:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.97 2005/10/13 19:55:35 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2579,7 +2579,7 @@ afs_FindVCache(struct VenusFid *afid, afs_int32 * retry, afs_int32 flag)
 	if (retry && *retry)
 	    return 0;
 #endif
-#ifdef AFS_DARWIN_ENV
+#if defined(AFS_DARWIN_ENV) && !defined(AFS_DARWIN80_ENV)
 	tvc->states |= CUBCinit;
 	AFS_GUNLOCK();
 	if (UBCINFOMISSING(AFSTOV(tvc)) ||
