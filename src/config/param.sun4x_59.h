@@ -170,7 +170,7 @@
 /*#define	AFS_USEBUFFERS	1*/
 #define	afsio_iov	uio_iov
 #define	afsio_iovcnt	uio_iovcnt
-#define	afsio_offset	uio_loffset
+#define	afsio_offset	uio_offset
 #define	afsio_seg	uio_segflg
 #define	afsio_fmode	uio_fmode
 #define	afsio_resid	uio_resid

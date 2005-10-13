@@ -144,9 +144,9 @@
 #define AFS_MOUNT_AFS	 1
 
 /* Machine / Operating system information */
-#define sys_sun4x_55	1
-#define SYS_NAME	"sun4x_55"
-#define SYS_NAME_ID	SYS_NAME_ID_sun4x_55
+#define sys_sunx86_57	1
+#define SYS_NAME	"sunx86_57"
+#define SYS_NAME_ID	SYS_NAME_ID_sunx86_57
 #define AFSLITTLE_ENDIAN	1
 #define AFS_HAVE_FFS            1	/* Use system's ffs. */
 #define AFS_HAVE_STATVFS      0	/* System doesn't support statvfs */
@@ -158,7 +158,7 @@
 /*#define	AFS_USEBUFFERS	1*/
 #define	afsio_iov	uio_iov
 #define	afsio_iovcnt	uio_iovcnt
-#define	afsio_offset	uio_loffset
+#define	afsio_offset	uio_offset
 #define	afsio_seg	uio_segflg
 #define	afsio_fmode	uio_fmode
 #define	afsio_resid	uio_resid
