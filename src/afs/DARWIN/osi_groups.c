@@ -18,8 +18,21 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_groups.c,v 1.5 2003/07/15 23:14:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_groups.c,v 1.6 2005/10/13 15:12:07 shadow Exp $");
 
+/* We should be doing something better anyway */
+#ifdef AFS_DARWIN80_ENV
+int
+setpag(proc, cred, pagvalue, newpag, change_parent)
+     struct proc *proc;
+     struct ucred **cred;
+     afs_uint32 pagvalue;
+     afs_uint32 *newpag;
+     afs_uint32 change_parent;
+{ 
+    return -1;
+}
+#else
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
 #include "afs/afs_stats.h"	/* statistics */
@@ -75,14 +88,6 @@ Afs_xsetgroups(p, args, retval)
 }
 
 
-int
-setpag(proc, cred, pagvalue, newpag, change_parent)
-     struct proc *proc;
-     struct ucred **cred;
-     afs_uint32 pagvalue;
-     afs_uint32 *newpag;
-     afs_uint32 change_parent;
-{
     gid_t gidset[NGROUPS];
     int ngroups, code;
     int j;
@@ -159,3 +164,4 @@ afs_setgroups(struct proc *proc, struct ucred **cred, int ngroups,
     crfree(oldcr);
     return (0);
 }
+#endif

@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.28 2005/05/23 21:04:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.29 2005/10/13 15:12:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -240,6 +240,12 @@ afs_setpag(void)
 	struct AFS_UCRED *credp = crref();
 	code = AddPag(genpag(), &credp);
 	crfree(credp);
+    }
+#elif defined(AFS_DARWIN80_ENV)
+    {
+	struct ucred *credp = kauth_cred_proc_ref(p);
+	code = AddPag(p, genpag(), &credp);
+	kauth_cred_rele(credp);
     }
 #elif defined(AFS_DARWIN_ENV)
     {
