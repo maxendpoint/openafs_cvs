@@ -114,6 +114,10 @@ proc TellMeAboutYourself(
 
 proc GetDE(
   IN  afs_int32 index,
-  OUT AFSDEntry *de
+  OUT afs_int32 addr,
+  OUT afs_int32 inode,
+  OUT afs_int32 flags,
+  OUT afs_int32 time,
+  OUT string fileName<AFSNAMEMAX>
 ) = 65539;
 
