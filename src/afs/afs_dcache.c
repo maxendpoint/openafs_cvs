@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.18 2005/10/13 18:23:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.42.2.19 2005/10/13 18:42:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -808,7 +808,7 @@ afs_FreeDCache(register struct dcache *adc)
 
     if (afs_WaitForCacheDrain) {
 	if ((afs_blocksUsed - afs_blocksDiscarded) <=
-	    PERCENT(CM_CACHESIZEDRAINEDPCT * afs_cacheBlocks)) {
+	    PERCENT(CM_CACHESIZEDRAINEDPCT, afs_cacheBlocks)) {
 	    afs_WaitForCacheDrain = 0;
 	    afs_osi_Wakeup(&afs_WaitForCacheDrain);
 	}
