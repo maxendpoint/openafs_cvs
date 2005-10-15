@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.16.2.6 2005/10/05 05:58:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.16.2.7 2005/10/15 14:24:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -500,9 +500,9 @@ afs_LocalHero(register struct vcache *avc, register struct dcache *adc,
 	hset(avc->m.DataVersion, avers);
 #ifdef AFS_64BIT_CLIENT
 	FillInt64(avc->m.Length, astat->Length_hi, astat->Length);
-#else /* AFS_64BIT_ENV */
+#else /* AFS_64BIT_CLIENT */
 	avc->m.Length = astat->Length;
-#endif /* AFS_64BIT_ENV */
+#endif /* AFS_64BIT_CLIENT */
 	avc->m.Date = astat->ClientModTime;
     }
     if (ok) {
