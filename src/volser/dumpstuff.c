@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.25 2003/11/23 04:53:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.26 2005/10/15 15:36:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -371,6 +371,10 @@ ReadVolumeHeader(register struct iod *iodp, VolumeDiskData * vol)
 	    if (!ReadInt32(iodp, (afs_uint32 *) & vol->dayUse))
 		return VOLSERREAD_DUMPERROR;
 	    break;
+	case 'V':
+	    if (!ReadInt32(iodp, (afs_uint32 *) & vol->volUpdateCounter))
+		return VOLSERREAD_DUMPERROR;
+	    break;
 	}
     }
     iod_ungetc(iodp, tag);
@@ -695,6 +699,8 @@ DumpVolumeHeader(register struct iod *iodp, register Volume * vp)
 	code = DumpInt32(iodp, 'D', V_dayUseDate(vp));
     if (!code)
 	code = DumpInt32(iodp, 'Z', V_dayUse(vp));
+    if (!code)
+	code = DumpInt32(iodp, 'V', V_volUpCounter(vp));
     return code;
 }
 
@@ -1448,6 +1454,9 @@ SizeDumpVolumeHeader(register struct iod *iodp, register Volume * vp,
     FillInt64(addvar,0, 5);
     AddUInt64(v_size->dump_size, addvar, &v_size->dump_size);
 /*     if (!code) code = DumpInt32(iodp, 'Z', V_dayUse(vp)); */
+    FillInt64(addvar,0, 5);
+    AddUInt64(v_size->dump_size, addvar, &v_size->dump_size);
+/*     if (!code) code = DumpInt32(iodp, 'V', V_volUpCounter(vp)); */
     FillInt64(addvar,0, 5);
     AddUInt64(v_size->dump_size, addvar, &v_size->dump_size);
     return code;

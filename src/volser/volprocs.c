@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.39 2005/08/31 21:35:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.40 2005/10/15 15:36:57 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1544,6 +1544,8 @@ VolSetInfo(struct rx_call *acid, afs_int32 atrans,
 	td->creationDate = astatus->creationDate;
     if (astatus->updateDate != -1)
 	td->updateDate = astatus->updateDate;
+    if (astatus->spare2 != -1)
+	td->volUpdateCounter = (unsigned int)astatus->spare2;
     VUpdateVolume(&error, tv);
     tt->rxCallPtr = (struct rx_call *)0;
     if (TRELE(tt))
@@ -1849,7 +1851,8 @@ VolListOneVolume(struct rx_call *acid, afs_int32 partid, afs_int32
 		(long)tv->header->diskstuff.weekUse[4] +
 		(long)tv->header->diskstuff.weekUse[5] +
 		(long)tv->header->diskstuff.weekUse[6];
-	    pntr->flags = pntr->spare2 = pntr->spare3 = (long)0;
+	    pntr->spare2 = V_volUpCounter(tv);
+	    pntr->flags = pntr->spare3 = (long)0;
 	    VDetachVolume(&error, tv);	/*free the volume */
 	    tv = (Volume *) 0;
 	    if (error) {
@@ -2224,7 +2227,8 @@ VolListVolumes(struct rx_call *acid, afs_int32 partid, afs_int32 flags,
 		(long)tv->header->diskstuff.weekUse[4] +
 		(long)tv->header->diskstuff.weekUse[5] +
 		(long)tv->header->diskstuff.weekUse[6];
-	    pntr->flags = pntr->spare2 = pntr->spare3 = (long)0;
+	    pntr->spare2 = V_volUpCounter(tv);
+	    pntr->flags = pntr->spare3 = (long)0;
 	    VDetachVolume(&error, tv);	/*free the volume */
 	    tv = (Volume *) 0;
 	    if (error) {

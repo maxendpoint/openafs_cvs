@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vol-dump.c,v 1.1 2003/08/28 03:16:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vol-dump.c,v 1.2 2005/10/15 15:36:57 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -508,6 +508,8 @@ DumpVolumeHeader(int dumpfd, register Volume * vp)
 	code = DumpInt32(dumpfd, 'D', V_dayUseDate(vp));
     if (!code)
 	code = DumpInt32(dumpfd, 'Z', V_dayUse(vp));
+    if (!code)
+	code = DumpInt32(dumpfd, 'V', V_volUpCounter(vp));
     return code;
 }
 
