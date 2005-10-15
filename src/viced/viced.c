@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.7 2005/07/11 19:08:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.8 2005/10/15 03:46:09 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -749,6 +749,7 @@ FlagMsg()
     strcat(buffer, "[-realm <Kerberos realm name>] ");
     strcat(buffer, "[-udpsize <size of socket buffer in bytes>] ");
     strcat(buffer, "[-sendsize <size of send buffer in bytes>] ");
+    strcat(buffer, "[-abortthreshold <abort threshold>] ");
 /*   strcat(buffer, "[-enable_peer_stats] "); */
 /*   strcat(buffer, "[-enable_process_stats] "); */
     strcat(buffer, "[-help]\n");
