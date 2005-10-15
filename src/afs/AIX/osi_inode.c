@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/AIX/osi_inode.c,v 1.9 2004/08/19 05:42:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/AIX/osi_inode.c,v 1.10 2005/10/15 14:23:20 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -144,7 +144,7 @@ devtovfs(dev_t dev)
 
     a.dev = dev;
     a.ans = NULL;
-    vfs_search(devtovfs_func, &a);
+    vfs_search(devtovfs_func, (caddr_t) &a);
     return a.ans;
 }
 
