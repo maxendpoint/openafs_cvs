@@ -36,7 +36,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.8 2005/10/15 01:18:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.9 2005/10/15 21:51:28 jaltman Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -270,7 +270,8 @@ psprocdef(definition * defp)
 	psproc1(defp, 0, "int", "", 0xFFFFFFFF);
     }
 
-    psproc1(defp, 1, "afs_int32", "S", 0xFFFFFFFF);
+    if (*ServerPrefix)
+	psproc1(defp, 1, "afs_int32", ServerPrefix, 0xFFFFFFFF);
 }
 
 
