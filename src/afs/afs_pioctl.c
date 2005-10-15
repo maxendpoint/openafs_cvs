@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.20 2005/10/13 18:08:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.21 2005/10/15 01:43:30 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -973,6 +973,19 @@ afs_syscall_pioctl(path, com, cmarg, follow)
     } else
 	vp = NULL;
 
+#if defined(AFS_SUN510_ENV)
+    if (vp && !IsAfsVnode(vp)) {
+	struct vnode *realvp;
+	
+	if (VOP_REALVP(vp, &realvp) == 0) {
+	    struct vnode *oldvp = vp;
+	    
+	    VN_HOLD(realvp);
+	    vp = realvp;
+	    AFS_RELE(oldvp);
+	}
+    }
+#endif
     /* now make the call if we were passed no file, or were passed an AFS file */
     if (!vp || IsAfsVnode(vp)) {
 #if defined(AFS_SUN5_ENV)
