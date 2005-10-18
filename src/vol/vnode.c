@@ -15,10 +15,12 @@
  */
 #include <afsconfig.h>
 #include <afs/param.h>
+#ifdef HAVE_VALUES_H
 #include <values.h>
+#endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.24 2005/10/15 15:36:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.25 2005/10/18 19:39:21 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
