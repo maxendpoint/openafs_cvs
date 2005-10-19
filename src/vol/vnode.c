@@ -15,12 +15,10 @@
  */
 #include <afsconfig.h>
 #include <afs/param.h>
-#ifdef HAVE_VALUES_H
-#include <values.h>
-#endif
+#define MAXINT     (~(1<<((sizeof(int)*8)-1)))
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.25 2005/10/18 19:39:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.26 2005/10/19 18:23:19 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
