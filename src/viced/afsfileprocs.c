@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.12 2005/10/07 19:31:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.13 2005/10/20 23:33:00 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -3708,6 +3708,8 @@ SRXAFS_CreateFile(struct rx_call * acall, struct AFSFid * DirFid, char *Name,
     TM_GetTimeOfDay(&opStartTime, 0);
 #endif /* FS_STATS_DETAILED */
 
+    memset(OutFid, 0, sizeof(struct AFSFid));
+
     if ((code = CallPreamble(acall, ACTIVECALL, &tcon)))
 	goto Bad_CreateFile;
 
@@ -3740,7 +3742,7 @@ SRXAFS_CreateFile(struct rx_call * acall, struct AFSFid * DirFid, char *Name,
 
     osi_auditU(acall, CreateFileEvent, code, 
                AUD_ID, t_client ? t_client->ViceId : 0,
-               AUD_FID, DirFid, AUD_STR, Name, AUD_END);
+               AUD_FID, DirFid, AUD_STR, Name, AUD_FID, OutFid, AUD_END);
     return code;
 
 }				/*SRXAFS_CreateFile */
