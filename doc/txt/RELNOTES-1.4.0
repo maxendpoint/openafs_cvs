@@ -5,49 +5,70 @@ All systems: Major bugfixes, new functionality.
 
 Changes under UNIX (tm) and *nix Operating Systems
 
-Increased Performance and Stability
-Addition of pthreading support on servers and threading optimization of
-RPC and RX libraries provide increased performance over the 1.2 release.
-Cache chunk locking has been refined, and system vnodes on Linux and
-MacOS X are now supported. Support for files larger than two Gigabytes
-in the AFS filesystem is now available to operating systems providing
-native support for large files. Ntp, rlogind, rsh and other unnecessary
-and potentially insecure services have been removed.
+* Increased Performance and Stability
+  - OpenAFS 1.4 servers now use POSIX threads on platforms where they
+    are available, and the Rx RPC subsystem now makes more efficient use
+    of threads, resulting in increased performance over the 1.2 release.
 
-Increased Server Efficiency in Handling Mobile Clients
-Multi-probing has been improved, reducing the time a server needs to
-timeout clients no longer accessible on the network. Callback Break
-Later functionality has been added, allowing servers to queue callback
-breaks for clients that have disappeared from the network until the
-client contacts the servers, reducing both server load and the chance of
-file corruption.
- 
-Improved Administration
-Audit logs are available for all servers, and named pipe logging
-supported, augmenting existing server monitoring and debugging tools.
-Groups of groups (aka Supergroups) can now be created on the protection
-server facilitating administration of user access, and tools for
-Kerberos 5 have been integrated into the AFS software, including aklog.
- 
-Improved Build and Installation
-Function prototypes have been added for improved compile time type
-checking, and Kerberos 5 availability (MIT/Heimdal) is automatically 
-detected, simplifying the configuration process. Also, the default 
-configuration of the installation has been updated to provide better 
-performance in modern network environments.
+  - Cache chunk locking has been refined
 
+  - The OpenAFS 1.4 client now uses the system vnode pool on Linux and
+    MacOS X, leading to improved stability, easier portability to new
+    operating system versions, and more efficient use of resources.
 
-Other New Features
-vos copy allows an administrator to create a new volume, and copy the
-contents of an existing volume, with one command.  This eliminates the
-need to peform a vos dump followed by a vos restore.
+  - The OpenAFS 1.4 client now supports files larger than 2GB on UNIX
+    operating system variants which support large files (large file 
+    support requires a large-file-enabled OpenAFS fileserver running
+    on an operating system with large file support).
 
-vos convertROtoRW lets an administrator convert an existing RO replica
-into a new RW site in the event the current RW site goes down.
+  - NTP, rlogind, rsh and other unnecessary and potentially insecure
+    components have been removed.
 
-the -vattachpar option to fileserver causes the fileserver to attach
-volumes from multiple vice partitions in parallel, thus improving
-fileserver startup time.
+* Increased Server Efficiency in Handling Mobile Clients
+  - Fileservers are now able to more efficiently probe nonresponsive
+    clients, reducing the time required for the server to determine
+    that a client is no longer on the network.
+
+  - OpenAFS 1.4 fileservers are now capable of notifying clients in
+    the background after a volume is moved or restored, freeing the
+    server to handle other administrative operations such as further
+    volume moves or restores.  This improves the speed and reliability
+    of volume maintenance operations.
+
+* Improved Administration
+  - All servers now include audit logging functionality and are capable
+    of loging directly to named pipes.  These features can be used to
+    improve the capabilities of existing online and offline server
+    monitoring and debugging tools.
+
+  - The OpenAFS 1.4 protection server allows groups to be members of
+    other groups, which introduces new levels of power and flexibility
+    to AFS's security and access control features.
+
+  - OpenAFS 1.4 includes additional tools for integration with existing
+    Kerberos 5 infrastructure, including the 'aklog' program and support
+    for larger tickets and additional encryption types.
+
+* Improved Build and Installation
+  - Function prototypes have been added for improved compile-time type
+    checking.
+
+  - The default settings for client cache manager tuning parameters,
+    have been updated to provide better performance in modern network
+    computing environments.
+
+* Other New Features
+  - The new 'vos copy' command allows an administrator to create a new
+    volume by making a direct copy of an existing one, without having
+    to copy the contents of the volume to his workstation and back.
+
+  - The new 'vos convertROtoRW' command allows an administrator to
+    "promote" an existing read-only volume replica to replace a
+    read/write volume located on a failed fileserver.
+
+  - The new '-vattachpar' fileserver option allows the fileserver to
+    attach volumes from multiple partitions in parallel, improving
+    fileserver startup time.
 
 
 
