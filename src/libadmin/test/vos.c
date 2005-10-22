@@ -16,7 +16,7 @@
 #include <netdb.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/vos.c,v 1.7 2005/10/15 15:36:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/vos.c,v 1.8 2005/10/22 06:04:39 shadow Exp $");
 
 #include "vos.h"
 
@@ -1613,14 +1613,15 @@ DoVosVolumeQuotaChange(struct cmd_syndesc *as, char *arock)
 
     return 0;
 }
+
 /*
  * Parse a server name/address and return the address in HOST BYTE order
  */
-afs_int32
+static afs_uint32
 GetServer(char *aname)
 {
     register struct hostent *th;
-    afs_int32 addr;
+    afs_uint32 addr;
     int b1, b2, b3, b4;
     register afs_int32 code;
     char hostname[MAXHOSTCHARS];
@@ -1649,72 +1650,34 @@ GetServer(char *aname)
     return (addr);
 }
 
-int
-DoVosVolumeGet2(struct cmd_syndesc *as, char *arock)
-{
-    typedef enum { SERVER, PARTITION, VOLUME } DoVosVolumeGet_parm_t;
-    afs_status_t st = 0;
-    void *vos_server = NULL;
-    unsigned int partition_id;
-    unsigned int volume_id;
-
-	volintInfo info;
-	memset(&info, 0, sizeof(struct volintInfo));
-
-    if (as->parms[SERVER].items) {
-	if (!vos_ServerOpen
-	    (cellHandle, as->parms[SERVER].items->data, &vos_server, &st)) {
-	    ERR_ST_EXT("vos_ServerOpen", st);
-	}
-    }
-
-    if (as->parms[PARTITION].items) {
-	partition_id =
-	    GetPartitionIdFromString(as->parms[PARTITION].items->data);
-    }
-
-    if (as->parms[VOLUME].items) {
-	const char *volume = as->parms[VOLUME].items->data;
-	volume_id = GetVolumeIdFromString(volume);
-    }
-    
-
-	if (!vos_VolumeGet2
-	(cellHandle, vos_server, 0, partition_id, volume_id, &info, &st)) {
-	ERR_ST_EXT("vos_VolumeGet2", st);
-    }
-
-
-    Print_vos_volintInfo(GetServer(as->parms[SERVER].items->data),partition_id,&info," ");
-
-    return 0;
-}
 static void
-Print_vos_volintInfo(long server, long partition,volintInfo* pinfo, const char *prefix)
+Print_vos_volintInfo(afs_uint32 server, afs_uint32 partition, volintInfo* pinfo, const char *prefix)
 {
-	static long server_cache = -1, partition_cache = -1;
+    static afs_uint32 server_cache;
+    static int cache_valid = 0;
     static char hostname[256], address[32];
 
-    if (server != server_cache) {
+    if (!cache_valid || server != server_cache) {
 	struct in_addr s;
 
 	s.s_addr = server;
 	strcpy(hostname, hostutil_GetNameByINet(server));
 	strcpy(address, inet_ntoa(s));
 	server_cache = server;
+	cache_valid = 1;
     }
     
     
-	printf("%sname\t\t%s\n",prefix, pinfo->name);
+    printf("%sname\t\t%s\n",prefix, pinfo->name);
     printf("%sid\t\t%lu\n",prefix, pinfo->volid);
     printf("%sserv\t\t%s\t%s\n",prefix, address,hostname);
     printf("%spart\t\t%u\n", prefix,partition);
     
     switch (pinfo->status) {
-    case 2://VOK
+    case 2: /* VOK */
 	printf("%sstatus\t\tOK\n",prefix);
 	break;
-    case 101://VBUSY
+    case 101: /* VBUSY */
 	printf("%sstatus\t\tBUSY\n",prefix);
 	return;
     default:
@@ -1757,6 +1720,47 @@ Print_vos_volintInfo(long server, long partition,volintInfo* pinfo, const char *
     printf("%sweekUse\t%lu\t(Optional)\n",prefix, pinfo->spare1);
     printf("%svolUpdateCounter\t\t%lu\t(Optional)\n",prefix, pinfo->spare2);
     printf("%sspare3\t\t%lu\t(Optional)\n",prefix, pinfo->spare3);
+}
+
+int
+DoVosVolumeGet2(struct cmd_syndesc *as, char *arock)
+{
+    typedef enum { SERVER, PARTITION, VOLUME } DoVosVolumeGet_parm_t;
+    afs_status_t st = 0;
+    void *vos_server = NULL;
+    afs_uint32 partition_id;
+    afs_uint32 volume_id;
+
+	volintInfo info;
+	memset(&info, 0, sizeof(struct volintInfo));
+
+    if (as->parms[SERVER].items) {
+	if (!vos_ServerOpen
+	    (cellHandle, as->parms[SERVER].items->data, &vos_server, &st)) {
+	    ERR_ST_EXT("vos_ServerOpen", st);
+	}
+    }
+
+    if (as->parms[PARTITION].items) {
+	partition_id =
+	    GetPartitionIdFromString(as->parms[PARTITION].items->data);
+    }
+
+    if (as->parms[VOLUME].items) {
+	const char *volume = as->parms[VOLUME].items->data;
+	volume_id = GetVolumeIdFromString(volume);
+    }
+    
+
+	if (!vos_VolumeGet2
+	(cellHandle, vos_server, 0, partition_id, volume_id, &info, &st)) {
+	ERR_ST_EXT("vos_VolumeGet2", st);
+    }
+
+
+    Print_vos_volintInfo(GetServer(as->parms[SERVER].items->data),partition_id,&info," ");
+
+    return 0;
 }
 
 
