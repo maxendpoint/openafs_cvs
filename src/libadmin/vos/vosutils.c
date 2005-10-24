@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/vosutils.c,v 1.10 2003/12/07 22:49:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/vosutils.c,v 1.11 2005/10/24 19:05:11 shadow Exp $");
 
 #include "vosutils.h"
 #include "vsprocs.h"
@@ -133,7 +133,7 @@ VLDB_CreateEntry(afs_cell_handle_p cellHandle, struct nvldbentry *entryp,
 }
 
 int
-VLDB_GetEntryByID(afs_cell_handle_p cellHandle, afs_int32 volid,
+aVLDB_GetEntryByID(afs_cell_handle_p cellHandle, afs_int32 volid,
 		  afs_int32 voltype, struct nvldbentry *entryp,
 		  afs_status_p st)
 {
@@ -412,7 +412,7 @@ GetVolumeInfo(afs_cell_handle_p cellHandle, unsigned int volid,
     afs_status_t tst;
     int i, index = -1;
 
-    if (!VLDB_GetEntryByID(cellHandle, volid, -1, rentry, &tst)) {
+    if (!aVLDB_GetEntryByID(cellHandle, volid, -1, rentry, &tst)) {
 	rc = 0;
 	goto fail_GetVolumeInfo;
     }
