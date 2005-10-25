@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/vosutils.c,v 1.10.2.1 2005/10/24 19:06:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/vosutils.c,v 1.10.2.2 2005/10/25 06:35:56 shadow Exp $");
 
 #include "vosutils.h"
 #include "vsprocs.h"
@@ -171,7 +171,7 @@ aVLDB_GetEntryByID(afs_cell_handle_p cellHandle, afs_int32 volid,
 }
 
 int
-VLDB_GetEntryByName(afs_cell_handle_p cellHandle, const char *namep,
+aVLDB_GetEntryByName(afs_cell_handle_p cellHandle, const char *namep,
 		    struct nvldbentry *entryp, afs_status_p st)
 {
     struct vldbentry oentry;
