@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.53 2005/10/13 15:12:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.54 2005/11/02 05:22:39 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -2548,7 +2548,7 @@ rxi_PrepareSendPacket(register struct rx_call *call,
 	queue_Init(&q);
 
 	/* Free any extra elements in the wirevec */
-	for (j = MAX(2, i), nb = j - p->niovecs; j < p->niovecs; j++) {
+	for (j = MAX(2, i), nb = p->niovecs - j; j < p->niovecs; j++) {
 	    queue_Append(&q,RX_CBUF_TO_PACKET(p->wirevec[j].iov_base, p));
 	}
 	if (nb)
