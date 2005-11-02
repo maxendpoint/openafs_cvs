@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.70 2005/07/11 18:45:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.71 2005/11/02 00:27:30 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -24,7 +24,7 @@ RCSID
 #include "h/mm.h"
 
 #ifdef AFS_AMD64_LINUX20_ENV
-#include "../asm/ia32_unistd.h"
+#include <asm/ia32_unistd.h>
 #endif
 
 #include <linux/proc_fs.h>
