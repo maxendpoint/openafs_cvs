@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.16 2005/10/25 01:51:21 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.17 2005/11/02 17:54:44 rees Exp $");
 
 
 #include <sys/types.h>
@@ -453,11 +453,15 @@ PrintCacheEntries(struct rx_connection *aconn, int aint32)
     register afs_int32 code;
     struct AFSDBCacheEntry64 centry64;
 
+#ifdef AFS_OBSD_ENV
+    return PrintCacheEntries32(aconn, aint32);
+#else
     code = RXAFSCB_GetCE64(aconn, 0, &centry64);
     if (code != RXGEN_OPCODE)
 	return PrintCacheEntries64(aconn, aint32);
     else
 	return PrintCacheEntries32(aconn, aint32);
+#endif
 }
 
 int
