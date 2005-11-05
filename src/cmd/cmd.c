@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/cmd/cmd.c,v 1.11 2003/11/29 22:08:09 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/cmd/cmd.c,v 1.12 2005/11/05 06:48:06 jaltman Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -56,8 +56,8 @@ SubString(register char *amain, register char *asub)
 {
     int mlen, slen;
     register int i, j;
-    mlen = strlen(amain);
-    slen = strlen(asub);
+    mlen = (int) strlen(amain);
+    slen = (int) strlen(asub);
     j = mlen - slen;
     if (j < 0)
 	return 0;		/* not a substring */

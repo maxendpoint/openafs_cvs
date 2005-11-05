@@ -413,7 +413,7 @@ void osi_TSignalForMLs(osi_turnstile_t *turnp, int stillHaveReaders, CRITICAL_SE
  * address (value).
  * Called with no locks held.
  */
-void osi_SleepSpin(long sleepValue, CRITICAL_SECTION *releasep)
+void osi_SleepSpin(LONG_PTR sleepValue, CRITICAL_SECTION *releasep)
 {
 	register int idx;
 	int code;
@@ -484,7 +484,7 @@ void osi_WakeupSpin(long sleepValue)
 	LeaveCriticalSection(csp);
 }
 
-void osi_Sleep(long sleepVal)
+void osi_Sleep(LONG_PTR sleepVal)
 {
 	CRITICAL_SECTION *csp;
         
@@ -494,7 +494,7 @@ void osi_Sleep(long sleepVal)
 	osi_SleepSpin(sleepVal, csp);
 }
 
-void osi_Wakeup(long sleepVal)
+void osi_Wakeup(LONG_PTR sleepVal)
 {
 	/* how do we do osi_Wakeup on a per-lock package type? */
 
@@ -675,28 +675,32 @@ void osi_panic(char *msgp, char *filep, long line)
 }
 
 /* get time in seconds since some relatively recent time */
-unsigned long osi_Time(void)
+time_t osi_Time(void)
 {
-	FILETIME fileTime;
-        SYSTEMTIME sysTime;
-        unsigned long remainder;
-        LARGE_INTEGER bootTime;
+    FILETIME fileTime;
+    SYSTEMTIME sysTime;
+    unsigned long remainder;
+    LARGE_INTEGER bootTime;
 
-	/* setup boot time values */
-        GetSystemTime(&sysTime);
-        SystemTimeToFileTime(&sysTime, &fileTime);
+    /* setup boot time values */
+    GetSystemTime(&sysTime);
+    SystemTimeToFileTime(&sysTime, &fileTime);
 
-	/* change the base of the time so it won't be negative for a long time */
-	fileTime.dwHighDateTime -= 28000000;
+    /* change the base of the time so it won't be negative for a long time */
+    fileTime.dwHighDateTime -= 28000000;
 
-        bootTime.HighPart = fileTime.dwHighDateTime;
-        bootTime.LowPart = fileTime.dwLowDateTime;
-        /* now, bootTime is in 100 nanosecond units, and we'd really rather
-         * have it in 1 second units, units 10,000,000 times bigger.
-         * So, we divide.
-         */
-        bootTime = ExtendedLargeIntegerDivide(bootTime, 10000000, &remainder);
-        return bootTime.LowPart;
+    bootTime.HighPart = fileTime.dwHighDateTime;
+    bootTime.LowPart = fileTime.dwLowDateTime;
+    /* now, bootTime is in 100 nanosecond units, and we'd really rather
+     * have it in 1 second units, units 10,000,000 times bigger.
+     * So, we divide.
+     */
+    bootTime = ExtendedLargeIntegerDivide(bootTime, 10000000, &remainder);
+#ifdef __WIN64
+    return bootTime.QuadPart;
+#else
+    return bootTime.LowPart;
+#endif
 }
 
 /* get time in seconds since some relatively recent time */

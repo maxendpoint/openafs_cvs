@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.23 2005/09/16 02:27:16 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.24 2005/11/05 06:48:18 jaltman Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -392,7 +392,7 @@ rxi_Listen(osi_socket sock)
  *
  */
 int
-rxi_Recvmsg(int socket, struct msghdr *msg_p, int flags)
+rxi_Recvmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 {
     int ret;
     ret = recvmsg(socket, msg_p, flags);

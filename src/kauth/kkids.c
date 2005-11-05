@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kkids.c,v 1.6 2003/07/15 23:15:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kkids.c,v 1.7 2005/11/05 06:48:11 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -353,7 +353,7 @@ kpwvalid_is(char *dir)
     struct stat statbuff;
     int len;
 
-    len = strlen(dir);
+    len = (int)strlen(dir);
     strcpy(dir + len, "/kpwvalid");
 
     if (stat(dir, &statbuff) < 0) {

@@ -86,7 +86,7 @@ $(RXOBJS): $(RX)\$$(@B).c
 	$(C2OBJ) -I$(RX) $**
 
 $(IDLFILES):afsrpc.idl
-	midl $(MIDL_FLAGS) /no_robust $(AFSDEV_AUXMIDLFLAGS) /app_config $?
+	midl $(MIDL_FLAGS) $(AFSDEV_AUXMIDLFLAGS) /app_config $?
 
 RPCOBJS = $(OUT)\ifs_rpc.obj
 
@@ -169,7 +169,6 @@ MIDL_FLAGS=/app_config \
 	   /Zp4 \
 	   /cpp_cmd $(cc) \
 	   /cpp_opt "-E" \
-	   /no_robust \
            /nologo
 
 .SUFFIXES: .h .idl

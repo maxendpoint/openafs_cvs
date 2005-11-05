@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.21 2005/04/03 05:32:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.22 2005/11/05 06:48:18 jaltman Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -87,7 +87,7 @@ MainCommand(as, arock)
      struct cmd_syndesc *as;
 {
     register int i;
-    int s;
+    osi_socket s;
     int j;
     struct sockaddr_in taddr;
     afs_int32 host;
@@ -579,6 +579,9 @@ main(argc, argv)
 {
     struct cmd_syndesc *ts;
 
+#ifdef RXDEBUG
+    rxi_DebugInit();
+#endif
 #ifdef AFS_NT40_ENV
     if (afs_winsockInit() < 0) {
 	printf("%s: Couldn't initialize winsock. Exiting...\n", argv[0]);

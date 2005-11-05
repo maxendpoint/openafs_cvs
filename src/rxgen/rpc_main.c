@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.22 2005/04/03 18:09:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.23 2005/11/05 06:48:20 jaltman Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -764,7 +764,7 @@ uppercase(char *str)
 {
     static char max_size[100];
     char *pnt;
-    int len = strlen(str);
+    int len = (int)strlen(str);
 
     for (pnt = max_size; len > 0; len--, str++) {
 	*pnt++ = (islower(*str) ? toupper(*str) : *str);

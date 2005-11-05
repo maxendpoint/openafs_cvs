@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.104 2005/10/15 01:42:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.105 2005/11/05 06:48:04 jaltman Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1205,7 +1205,7 @@ DECL_PIOCTL(PSetAcl)
     AFS_STATCNT(PSetAcl);
     if (!avc)
 	return EINVAL;
-    if ((acl.AFSOpaque_len = strlen(ain) + 1) > 1000)
+    if ((acl.AFSOpaque_len = strlen(ain) + 1) > 1024 /* AFSOPAQUEMAX */)
 	return EINVAL;
 
     acl.AFSOpaque_val = ain;

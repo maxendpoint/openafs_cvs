@@ -230,6 +230,7 @@ cm_ShutdownMappedMemory(void)
     hMemoryMappedFile = NULL;
 
     afsi_log("Memory Mapped File has been closed");
+    return 0;
 }
 
 int
@@ -381,7 +382,7 @@ cm_ValidateMappedMemory(char * cachePath)
     config_data_p = (cm_config_data_t *) baseAddress;
 
     fprintf(stderr,"AFS Cache data:\n");
-    fprintf(stderr,"  Base Address   = %lX\n",baseAddress);
+    fprintf(stderr,"  Base Address   = %p\n",baseAddress);
     fprintf(stderr,"  stats          = %d\n", config_data_p->stats);
     fprintf(stderr,"  chunkSize      = %d\n", config_data_p->chunkSize);
     fprintf(stderr,"  blockSize      = %d\n", config_data_p->blockSize);

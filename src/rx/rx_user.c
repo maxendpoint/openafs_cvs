@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.22 2005/04/03 18:13:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.23 2005/11/05 06:48:18 jaltman Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -229,8 +229,8 @@ osi_Panic(char *msg, int a1, int a2, int a3)
 void
 osi_AssertFailU(const char *expr, const char *file, int line)
 {
-    osi_Panic("assertion failed: %s, file: %s, line: %d\n", (int)expr,
-	      (int)file, line);
+    osi_Panic("assertion failed: %s, file: %s, line: %d\n", expr,
+	      file, line);
 }
 
 #if defined(AFS_AIX32_ENV) && !defined(KERNEL)

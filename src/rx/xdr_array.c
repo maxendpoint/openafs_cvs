@@ -30,7 +30,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_array.c,v 1.10 2004/12/01 23:36:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_array.c,v 1.11 2005/11/05 06:48:18 jaltman Exp $");
 
 #ifndef	NeXT
 
@@ -110,7 +110,7 @@ xdr_array(register XDR * xdrs, caddr_t * addrp, u_int * sizep, u_int maxsize,
 	case XDR_DECODE:
 	    if (c == 0)
 		return (TRUE);
-	    *addrp = target = osi_alloc(nodesize);
+	    *addrp = target = (caddr_t)osi_alloc(nodesize);
 	    if (target == NULL) {
 		return (FALSE);
 	    }

@@ -36,7 +36,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.19 2005/10/15 01:18:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.20 2005/11/05 06:48:21 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -851,7 +851,7 @@ InvalidConstant(char *name)
     int slen;
 
     map = LEGALNUMS;
-    slen = strlen(name);
+    slen = (int)strlen(name);
     return (slen != strspn(name, map));
 }
 

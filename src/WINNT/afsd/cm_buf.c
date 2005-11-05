@@ -455,18 +455,18 @@ void buf_WaitIO(cm_scache_t * scp, cm_buf_t *bp)
         if ( bp->flags & CM_BUF_WAITING ) {
             bp->waitCount++;
             bp->waitRequests++;
-            osi_Log1(afsd_logp, "buf_WaitIO CM_BUF_WAITING already set for 0x%x", bp);
+            osi_Log1(afsd_logp, "buf_WaitIO CM_BUF_WAITING already set for 0x%p", bp);
         } else {
-            osi_Log1(afsd_logp, "buf_WaitIO CM_BUF_WAITING set for 0x%x", bp);
+            osi_Log1(afsd_logp, "buf_WaitIO CM_BUF_WAITING set for 0x%p", bp);
             bp->flags |= CM_BUF_WAITING;
             bp->waitCount = bp->waitRequests = 1;
         }
-        osi_SleepM((long) bp, &bp->mx);
+        osi_SleepM((LONG_PTR)bp, &bp->mx);
         lock_ObtainMutex(&bp->mx);
-        osi_Log1(afsd_logp, "buf_WaitIO conflict wait done for 0x%x", bp);
+        osi_Log1(afsd_logp, "buf_WaitIO conflict wait done for 0x%p", bp);
         bp->waitCount--;
         if (bp->waitCount == 0) {
-            osi_Log1(afsd_logp, "buf_WaitIO CM_BUF_WAITING reset for 0x%x", bp);
+            osi_Log1(afsd_logp, "buf_WaitIO CM_BUF_WAITING reset for 0x%p", bp);
             bp->flags &= ~CM_BUF_WAITING;
             bp->waitRequests = 0;
         }
@@ -477,8 +477,8 @@ void buf_WaitIO(cm_scache_t * scp, cm_buf_t *bp)
         if ( scp ) {
             lock_ObtainMutex(&scp->mx);
             if (scp->flags & CM_SCACHEFLAG_WAITING) {
-                osi_Log1(afsd_logp, "buf_WaitIO waking scp 0x%x", scp);
-                osi_Wakeup((long)&scp->flags);
+                osi_Log1(afsd_logp, "buf_WaitIO waking scp 0x%p", scp);
+                osi_Wakeup((LONG_PTR)&scp->flags);
             }
 	    lock_ReleaseMutex(&scp->mx);
         }
@@ -488,10 +488,10 @@ void buf_WaitIO(cm_scache_t * scp, cm_buf_t *bp)
      * the I/O to complete.  Do so.
      */
     if (bp->flags & CM_BUF_WAITING) {
-        osi_Log1(afsd_logp, "buf_WaitIO Waking bp 0x%x", bp);
-        osi_Wakeup((long) bp);
+        osi_Log1(afsd_logp, "buf_WaitIO Waking bp 0x%p", bp);
+        osi_Wakeup((LONG_PTR) bp);
     }
-    osi_Log1(afsd_logp, "WaitIO finished wait for bp 0x%x", (long) bp);
+    osi_Log1(afsd_logp, "WaitIO finished wait for bp 0x%p", bp);
 }
 
 /* code to drop reference count while holding buf_globalLock */
@@ -563,11 +563,11 @@ void buf_LockedCleanAsync(cm_buf_t *bp, cm_req_t *reqp)
     while ((bp->flags & CM_BUF_DIRTY) == CM_BUF_DIRTY) {
         lock_ReleaseMutex(&bp->mx);
 
-	osi_Log1(afsd_logp, "buf_LockedCleanAsync starts I/O on 0x%x", bp);
+	osi_Log1(afsd_logp, "buf_LockedCleanAsync starts I/O on 0x%p", bp);
         code = (*cm_buf_opsp->Writep)(&bp->fid, &bp->offset,
                                        cm_data.buf_blockSize, 0, bp->userp,
                                        reqp);
-	osi_Log2(afsd_logp, "buf_LockedCleanAsync I/O on 0x%x, done=%d", bp, code);
+	osi_Log2(afsd_logp, "buf_LockedCleanAsync I/O on 0x%p, done=%d", bp, code);
                 
         lock_ObtainMutex(&bp->mx);
         if (code) 
@@ -587,8 +587,8 @@ void buf_LockedCleanAsync(cm_buf_t *bp, cm_req_t *reqp)
      */
     if (bp->flags & CM_BUF_WAITING) {
         /* turn off flags and wakeup users */
-        osi_Log1(buf_logp, "buf_WaitIO Waking bp 0x%x", bp);
-        osi_Wakeup((long) bp);
+        osi_Log1(buf_logp, "buf_WaitIO Waking bp 0x%p", bp);
+        osi_Wakeup((LONG_PTR) bp);
     }
 }
 
@@ -612,7 +612,7 @@ void buf_Recycle(cm_buf_t *bp)
      * have any lock conflicts, so we can grab the buffer lock out of
      * order in the locking hierarchy.
      */
-    osi_Log2( buf_logp, "buf_Recycle recycles 0x%x, off 0x%x",
+    osi_Log2( buf_logp, "buf_Recycle recycles 0x%p, off 0x%x",
               bp, bp->offset.LowPart);
 
     osi_assert(bp->refCount == 0);
@@ -885,8 +885,8 @@ long buf_GetNew(struct cm_scache *scp, osi_hyper_t *offsetp, cm_buf_t **bufpp)
      */
     lock_ReleaseMutex(&bp->mx);
     *bufpp = bp;
-    osi_Log3(buf_logp, "buf_GetNew returning bp 0x%x for file 0x%x, offset 0x%x",
-              bp, (long) scp, offsetp->LowPart);
+    osi_Log3(buf_logp, "buf_GetNew returning bp 0x%p for file 0x%p, offset 0x%x",
+              bp, scp, offsetp->LowPart);
     return 0;
 }
 
@@ -978,8 +978,8 @@ long buf_Get(struct cm_scache *scp, osi_hyper_t *offsetp, cm_buf_t **bufpp)
                 bp->flags |= CM_BUF_ERROR;
                 bp->flags &= ~CM_BUF_READING;
                 if (bp->flags & CM_BUF_WAITING) {
-                    osi_Log1(buf_logp, "buf_Get Waking bp 0x%x", bp);
-                    osi_Wakeup((long) bp);
+                    osi_Log1(buf_logp, "buf_Get Waking bp 0x%p", bp);
+                    osi_Wakeup((LONG_PTR) bp);
                 }
                 lock_ReleaseMutex(&bp->mx);
                 buf_Release(bp);
@@ -1001,8 +1001,8 @@ long buf_Get(struct cm_scache *scp, osi_hyper_t *offsetp, cm_buf_t **bufpp)
             }
             bp->flags &= ~CM_BUF_READING;
             if (bp->flags & CM_BUF_WAITING) {
-                osi_Log1(buf_logp, "buf_Get Waking bp 0x%x", bp);
-                osi_Wakeup((long) bp);
+                osi_Log1(buf_logp, "buf_Get Waking bp 0x%p", bp);
+                osi_Wakeup((LONG_PTR) bp);
             }
         }
 
@@ -1032,8 +1032,8 @@ long buf_Get(struct cm_scache *scp, osi_hyper_t *offsetp, cm_buf_t **bufpp)
     }
     lock_ReleaseWrite(&buf_globalLock);
 
-    osi_Log3(buf_logp, "buf_Get returning bp 0x%x for file 0x%x, offset 0x%x",
-              bp, (long) scp, offsetp->LowPart);
+    osi_Log3(buf_logp, "buf_Get returning bp 0x%p for file 0x%p, offset 0x%x",
+              bp, scp, offsetp->LowPart);
 #ifdef TESTING
     buf_ValidateBufQueues();
 #endif /* TESTING */
@@ -1096,7 +1096,7 @@ void buf_SetDirty(cm_buf_t *bp)
     osi_assert(bp->magic == CM_BUF_MAGIC);
     osi_assert(bp->refCount > 0);
 	
-    osi_Log1(buf_logp, "buf_SetDirty 0x%x", bp);
+    osi_Log1(buf_logp, "buf_SetDirty 0x%p", bp);
 
     /* set dirty bit */
     bp->flags |= CM_BUF_DIRTY;
@@ -1171,7 +1171,7 @@ void buf_ReserveBuffers(long nbuffers)
         if (cm_data.buf_reservedBufs + nbuffers > cm_data.buf_maxReservedBufs) {
             cm_data.buf_reserveWaiting = 1;
             osi_Log1(buf_logp, "buf_ReserveBuffers waiting for %d bufs", nbuffers);
-            osi_SleepW((long) &cm_data.buf_reservedBufs, &buf_globalLock);
+            osi_SleepW((LONG_PTR) &cm_data.buf_reservedBufs, &buf_globalLock);
             lock_ObtainWrite(&buf_globalLock);
         }
         else {
@@ -1207,7 +1207,7 @@ void buf_UnreserveBuffers(long nbuffers)
     cm_data.buf_reservedBufs -= nbuffers;
     if (cm_data.buf_reserveWaiting) {
         cm_data.buf_reserveWaiting = 0;
-        osi_Wakeup((long) &cm_data.buf_reservedBufs);
+        osi_Wakeup((LONG_PTR) &cm_data.buf_reservedBufs);
     }
     lock_ReleaseWrite(&buf_globalLock);
 }       
@@ -1513,7 +1513,7 @@ int cm_DumpBufHashTable(FILE *outputFile, char *cookie, int lock)
   
     StringCbPrintfA(output, sizeof(output), "%s - dumping buf_HashTable - buf_hashSize=%d\n", 
                     cookie, cm_data.buf_hashSize);
-    WriteFile(outputFile, output, strlen(output), &zilch, NULL);
+    WriteFile(outputFile, output, (DWORD)strlen(output), &zilch, NULL);
   
     for (i = 0; i < cm_data.buf_hashSize; i++)
     {
@@ -1524,13 +1524,13 @@ int cm_DumpBufHashTable(FILE *outputFile, char *cookie, int lock)
                 StringCbPrintfA(output, sizeof(output), "vnode=%d, unique=%d), size=%d refCount=%d\n", 
                         cookie, (void *)bp, i, bp->fid.cell, bp->fid.volume, 
                         bp->fid.vnode, bp->fid.unique, bp->size, bp->refCount);
-                WriteFile(outputFile, output, strlen(output), &zilch, NULL);
+                WriteFile(outputFile, output, (DWORD)strlen(output), &zilch, NULL);
             }
         }
     }
   
     StringCbPrintfA(output, sizeof(output), "%s - Done dumping buf_HashTable.\n", cookie);
-    WriteFile(outputFile, output, strlen(output), &zilch, NULL);
+    WriteFile(outputFile, output, (DWORD)strlen(output), &zilch, NULL);
 
     if (lock)
         lock_ReleaseRead(&buf_globalLock);

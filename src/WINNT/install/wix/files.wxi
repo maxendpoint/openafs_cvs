@@ -813,7 +813,7 @@
                     </Component>
                     <Component Id="cmp_credsStartup" Guid="3F40BA8D-16A2-4990-A74F-35AF3012E3F8">
 						<Shortcut Id="scAfsCredsStart" Directory="StartupFolder" Name="AFSAuth.lnk" LongName="AFS Credentials.lnk" Description="$(loc.StrAfsCredsDesc)" Arguments="[CREDSAUTOINIT] [CREDSRENEWDRMAP] [CREDSIPCHDET] [CREDSQUIET] [CREDSSHOW]" Icon="ico_afscreds" IconIndex="0" Show="normal" WorkingDirectory="dirCommon" Target="[#fileafscreds_EXE]"/>
-						<Registry Root="HKLM" Key="SOFTWARE\OpenAFS\Client" Name="AutoStart" Type="integer" Value="1" Id="reg_CredsAutoStart" KeyPath="yes" />
+						<Registry Root="HKLM" Key="SOFTWARE\TransarcCorporation\AFS Client\CurrentVersion" Name="StartupShortcutInstalled" Type="integer" Value="1" Id="reg_CredsAutoStart" KeyPath="yes" />
                     </Component>
                     <Component Id="cmf_afs_shl_ext_DLL" Guid="E4C51111-F9ED-418D-9DE0-ED8777CED5C9">
                         <File Id="fileafs_shl_ext_DLL" Name="afsshext.dll" LongName="afs_shl_ext.dll" KeyPath="yes" DiskId="1">

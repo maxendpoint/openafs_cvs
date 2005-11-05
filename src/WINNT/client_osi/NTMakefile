@@ -111,7 +111,7 @@ $(EXEFILE) : $(EXEOBJS)
 # midl on dbrpc.idl
 
 dbrpc.h dbrpc_c.c dbrpc_s.c: dbrpc.idl
-	$(MIDL) $(AFSDEV_AUXMIDLFLAGS) -Zp4 -cpp_cmd $(cc) -cpp_opt "-E" /no_robust $**
+	$(MIDL) $(AFSDEV_AUXMIDLFLAGS) -Zp4 -cpp_cmd $(cc) -cpp_opt "-E" $**
 ############################################################################
 # generate versioninfo resources
 

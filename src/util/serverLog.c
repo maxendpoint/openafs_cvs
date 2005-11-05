@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.32 2005/07/11 03:22:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/serverLog.c,v 1.33 2005/11/05 06:48:27 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -120,8 +120,8 @@ vFSLog(const char *format, va_list args)
     char *timeStamp;
     char tbuffer[1024];
     char *info;
-    int len, num;
-    char *name;
+    size_t len;
+    int num;
 
     currenttime = time(0);
     timeStamp = afs_ctime(&currenttime, tbuffer, sizeof(tbuffer));

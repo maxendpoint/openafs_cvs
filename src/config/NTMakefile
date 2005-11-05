@@ -492,6 +492,9 @@ INCTOOLS = \
 
 $(INCTOOLS):$(OUT)\$$(@F)
 	$(COPY) $** $(DESTDIR)\bin\.
+!IF ("$(AFSVER_CL)"=="1400")
+	$(COPY) $**.manifest $(DESTDIR)\bin\.
+!ENDIF
 
 $(OUT)\mkvers.exe : $(OUT)\mkvers.obj
 	$(EXECONLINK)
@@ -515,8 +518,8 @@ clean_version:
 
 clean::
 	$(DEL) $(DESTDIR)\LIB\*.DLL
-	$(DEL) $(DESTDIR)\bin\mkver.exe
-	$(DEL) $(DESTDIR)\bin\touch.exe
-	$(DEL) $(OUT)\util_cr.exe
-	$(DEL) $(OUT)\mkver.exe
-	$(DEL) $(OUT)\touch.exe
+	$(DEL) $(DESTDIR)\bin\mkver.exe*
+	$(DEL) $(DESTDIR)\bin\touch.exe*
+	$(DEL) $(OUT)\util_cr.exe*
+	$(DEL) $(OUT)\mkver.exe*
+	$(DEL) $(OUT)\touch.exe*

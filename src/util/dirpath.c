@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.16 2005/08/19 19:34:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.17 2005/11/05 06:48:27 jaltman Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -450,7 +450,7 @@ LocalizePathHead(const char **path, const char **relativeTo)
 {
     struct canonmapping *current;
     for (current = CanonicalTranslations; current->local != NULL; current++) {
-	int canonlength = strlen(current->canonical);
+	size_t canonlength = strlen(current->canonical);
 	if (strncmp(*path, current->canonical, canonlength) == 0) {
 	    (*path) += canonlength;
 	    if (**path == '/')

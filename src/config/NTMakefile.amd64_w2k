@@ -164,12 +164,8 @@ OUT=$(OJT)\$(RELDIR)
 # WIN32.MAK, and this nmake file, are targeted to the MSVC compiler;
 # port this nmake file if additional compiler support is required.
 
-# !IF ("$(AFSVER_CL)"=="1300")
-# afslflags = $(afslflags) /DEBUG
-# !ENDIF
-
 !IF ("$(APPVER)" == "")
-APPVER=5.0
+APPVER=5.02
 !ENDIF
 
 
@@ -212,11 +208,11 @@ afscdefs =\
 	-DSTRICT \
 	-D_WIN32_IE=0x0500 \
 	-D_WIN32_WINNT=0x0500 \
-    -DWINVER=0x0500 \
-    -DREGISTER_POWER_NOTIFICATIONS \
-    -DAFS_AFSDB_ENV \
-    -DAFS_FREELANCE_CLIENT \
-    -DAFS_64BIT_ENV \
+    	-DWINVER=0x0500 \
+    	-DREGISTER_POWER_NOTIFICATIONS \
+    	-DAFS_AFSDB_ENV \
+    	-DAFS_FREELANCE_CLIENT \
+    	-DAFS_64BIT_ENV \
 	-DAFS_64BIT_CLIENT \
 	 $(AFSDEV_AUXCDEFINES)
 
@@ -352,8 +348,13 @@ RC = $(rc) $(rcvars) $(rcflags) $(AFSDEV_AUXRCFLAGS) /d "AFSPRODUCT_VERSION=\"$(
 
 #################### Link optional build flags set ###########
 
-afslflags =\
+afslflags = $(afslflags) \
 	/FIXED:NO /VERBOSE:LIB
+
+!IF ("$(AFSVER_CL)"=="1400")
+afslflags = $(afslflags) /MANIFEST
+!ENDIF
+
 
 mfclflags = $(guilflags)
 mfclflags = $(mfclflags:/NODEFAULTLIB=)
@@ -432,7 +433,7 @@ EXECONLINK = $(link) /OUT:$@ $(ldebug) $(conlflags) $(afslflags) $(conlibsdll) A
 DLLMFCLINK = $(link) /OUT:$@ $(ldebug) $(mfcdlllflags) $(afslflags) $(mfclibsdll) $**
 
 # DLL link macro for resource-only DLLs
-DLLRESLINK = $(link) /OUT:$@ $(dlllflags:-entry:_DllMainCRTStartup@12=-noentry) $(afslflags) $**
+DLLRESLINK = $(link) /OUT:$@ $(dlllflags:-entry:_DllMainCRTStartup=-noentry) $(afslflags) $**
 
 # Library archive macro
 LIBARCH = $(implib) /NOLOGO /OUT:$@ $**
@@ -442,8 +443,9 @@ NTLANG = $(DESTDIR)\bin\NTLang.bat
 
 ######### MIDL FLAGS
 
+AFSDEV_AUXMIDLFLAGS=/env x64 /x64
 !IFDEF OSISXP
-AFSDEV_AUXMIDLFLAGS=/Oi
+AFSDEV_AUXMIDLFLAGS=$(AFSDEV_AUXMIDLFLAGS) /Oi
 !ENDIF
 
 # Lex/Yacc macros
