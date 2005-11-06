@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.16 2005/05/30 04:55:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.17 2005/11/06 09:29:44 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -94,7 +94,7 @@ init_random_int32(void)
 
     gettimeofday(&key, NULL);
     LOCK_RM;
-    fc_keysched(&key, random_int32_schedule);
+    fc_keysched((struct ktc_encryptionKey*)&key, random_int32_schedule);
     UNLOCK_RM;
 }
 

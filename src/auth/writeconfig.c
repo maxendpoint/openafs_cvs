@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.11 2004/08/19 01:07:40 kolya Exp $");
+    ("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.12 2005/11/06 09:29:41 jaltman Exp $");
 
 #include <afs/pthread_glock.h>
 #include <afs/afsutil.h>
@@ -124,7 +124,7 @@ afsconf_SetExtendedCellInfo(adir, apath, acellInfo, clones)
 	UNLOCK_GLOBAL_MUTEX;
 	return errno;
     }
-    i = strlen(acellInfo->name);
+    i = (int)strlen(acellInfo->name);
     code = write(fd, acellInfo->name, i);
     if (code != i) {
 	UNLOCK_GLOBAL_MUTEX;

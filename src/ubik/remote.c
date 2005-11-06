@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.14 2005/02/04 21:09:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.15 2005/11/06 09:29:46 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -456,7 +456,7 @@ SDISK_GetFile(rxcall, file, version)
     }
     length = ubikstat.size;
     tlen = htonl(length);
-    code = rx_Write(rxcall, &tlen, sizeof(afs_int32));
+    code = rx_Write(rxcall, (char *)&tlen, sizeof(afs_int32));
     if (code != sizeof(afs_int32)) {
 	DBRELE(dbase);
 	return BULK_ERROR;

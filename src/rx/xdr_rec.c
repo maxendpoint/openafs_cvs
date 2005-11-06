@@ -47,7 +47,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_rec.c,v 1.7 2005/11/05 06:48:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_rec.c,v 1.8 2005/11/06 09:29:43 jaltman Exp $");
 
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
@@ -201,7 +201,7 @@ xdrrec_getint32(XDR * xdrs, afs_int32 * lp)
 
     /* first try the inline, fast case */
     if ((rstrm->fbtbc >= sizeof(afs_int32))
-	&& (((int)((caddr_t)rstrm->in_boundry - buflp)) >= sizeof(afs_int32))) {
+	&& (((int)((char *)rstrm->in_boundry - (char *)buflp)) >= sizeof(afs_int32))) {
 	*lp = ntohl(*buflp);
 	rstrm->fbtbc -= sizeof(afs_int32);
 	rstrm->in_finger += sizeof(afs_int32);
