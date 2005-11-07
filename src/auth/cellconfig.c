@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.40.2.4 2005/10/15 14:55:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.40.2.5 2005/11/07 19:54:10 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -1125,14 +1125,15 @@ afsconf_IntGetKeys(struct afsconf_dir *adir)
 	return 0;
     }
 
+    /* convert key structure to host order */
+    tstr->nkeys = ntohl(tstr->nkeys);
+
     if (code < sizeof(afs_int32) + (tstr->nkeys*sizeof(struct afsconf_key))) {
 	tstr->nkeys = 0;
 	UNLOCK_GLOBAL_MUTEX;
 	return 0;
     }
 
-    /* convert key structure to host order */
-    tstr->nkeys = ntohl(tstr->nkeys);
     for (fd = 0; fd < tstr->nkeys; fd++)
 	tstr->key[fd].kvno = ntohl(tstr->key[fd].kvno);
 
