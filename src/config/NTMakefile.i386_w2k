@@ -231,9 +231,11 @@ afscdefs =\
 # /Gy   enable function-level linking
 # /GX   enable C++ exceptions (assumes extern C funcs never throw exceptions)
 # /Os   favor small (over fast) code; seems to avoid 64-bit bugs in VC compiler
+# /Wp64 enable 64-bit porting warnings (conflicts with warnings as errors
+#         due to SDK mapping of Get/SetWindowLongPtr to Get/SetWindowLong
 
 afscflags =\
-    /Oy- \
+	/Oy- \
 	/GF \
 	/Gd \
 	/Gy \
@@ -441,10 +443,7 @@ NTLANG = $(DESTDIR)\bin\NTLang.bat
 
 ######### MIDL FLAGS
 
-AFSDEV_AUXMIDLFLAGS=/env win32 /win32 /no_robust
-!IFDEF OSISXP
-AFSDEV_AUXMIDLFLAGS=$(AFSDEV_AUXMIDLFLAGS) /Oi
-!ENDIF
+AFSDEV_AUXMIDLFLAGS=/env win32 /win32 /no_robust /Oicf 
 
 # Lex/Yacc macros
 LEX = flex -l

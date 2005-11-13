@@ -23,7 +23,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/assert.c,v 1.12 2005/11/05 06:48:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/assert.c,v 1.13 2005/11/13 14:16:25 jaltman Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"
@@ -32,9 +32,7 @@ RCSID
 void
 afs_NTAbort(void)
 {
-#if defined(_X86_)
-    _asm int 3h;		/* always trap. */
-#endif
+    DebugBreak();
 }
 #endif
 

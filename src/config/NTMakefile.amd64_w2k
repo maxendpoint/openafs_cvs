@@ -227,15 +227,13 @@ afscdefs =\
 # /Gy   enable function-level linking
 # /GX   enable C++ exceptions (assumes extern C funcs never throw exceptions)
 # /Os   favor small (over fast) code; seems to avoid 64-bit bugs in VC compiler
-# /Wp64 64-bit porting warnings
 
 afscflags =\
         /Oy- \
 	/GF \
 	/Gd \
 	/Gy \
-	/Os \
-        /Wp64
+	/Os
 
 !IF ("$(AFSVER_CL)"=="1400")
 afscflags = $(afscflags) /EHsc /wd4996
@@ -444,10 +442,7 @@ NTLANG = $(DESTDIR)\bin\NTLang.bat
 
 ######### MIDL FLAGS
 
-AFSDEV_AUXMIDLFLAGS=/env x64 /x64
-!IFDEF OSISXP
-AFSDEV_AUXMIDLFLAGS=$(AFSDEV_AUXMIDLFLAGS) /Oi
-!ENDIF
+AFSDEV_AUXMIDLFLAGS=/env x64 /x64 /Oicf
 
 # Lex/Yacc macros
 LEX = flex -l
