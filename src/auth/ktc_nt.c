@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.19 2005/11/06 09:29:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/ktc_nt.c,v 1.20 2005/11/14 05:46:23 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
@@ -271,7 +271,7 @@ ktc_SetToken(struct ktc_principal *server, struct ktc_token *token,
 
     /* ticket length */
     memcpy(tp, &token->ticketLen, sizeof(token->ticketLen));
-    tp += sizeof(&token->ticketLen);
+    tp += sizeof(token->ticketLen);
 
     /* ticket */
     memcpy(tp, token->ticket, token->ticketLen);

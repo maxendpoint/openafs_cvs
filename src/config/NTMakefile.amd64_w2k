@@ -37,6 +37,10 @@
 
 #sanity checks 
 
+!IF ("$(CPU)" != "AMD64")
+!ERROR Platform SDK not configured for AMD64
+!ENDIF
+
 !IF EXISTS("TOOLS.INI")
 !MESSAGE ************CAUTION TOOLS.INI IN EFFECT**********
 !ENDIF

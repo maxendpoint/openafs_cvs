@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/hostparse.c,v 1.14 2005/11/05 06:48:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/hostparse.c,v 1.15 2005/11/14 05:46:29 jaltman Exp $");
 
 #ifdef UKERNEL
 #include "afs/sysincludes.h"
@@ -331,7 +331,7 @@ gettmpdir(void)
 	 * previously installed buffer, if any, in case it is in use.
 	 */
 #ifdef _WIN64
-	InterlockedExchange64((LONGLONG) & saveTmpDir, (LONGLONG) dirp);
+	InterlockedExchange64((LONGLONG)(INT_PTR)&saveTmpDir, (LONGLONG) dirp);
 #else
 	InterlockedExchange((LONG) & saveTmpDir, (LONG) dirp);
 #endif
