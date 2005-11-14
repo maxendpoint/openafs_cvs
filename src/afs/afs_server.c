@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.42 2005/10/13 15:12:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.43 2005/11/14 06:00:38 jaltman Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -1654,11 +1654,7 @@ struct server *afs_GetServer(afs_uint32 * aserverp, afs_int32 nservers,
 
 	/* Compute preference values and resort */
 	if (!newsa->sa_iprank) {
-	    if (aport == fsport) {
-		afs_SetServerPrefs(newsa);	/* new fileserver rank */
-	    } else {
-		newsa->sa_iprank = 10000 + afs_randomMod127();	/* new vlserver rank */
-	    }
+	    afs_SetServerPrefs(newsa);	/* new server rank */
 	}
     }
     afs_SortOneServer(newts);	/* Sort by rank */
