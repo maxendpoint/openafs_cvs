@@ -16,7 +16,7 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.23 2005/05/23 21:04:09 shadow Exp $ */
+/* $Id: osi_machdep.h,v 1.24 2005/11/15 18:43:15 rees Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
@@ -127,7 +127,7 @@ extern struct lock afs_global_lock;
     } while(0)
 #define ISAFS_GLOCK() (afs_global_owner == curproc && curproc)
 #else
-extern struct simplelock afs_global_lock;
+extern struct lock afs_global_lock;
 #define AFS_GLOCK()
 #define AFS_GUNLOCK()
 #define AFS_ASSERT_GLOCK()
