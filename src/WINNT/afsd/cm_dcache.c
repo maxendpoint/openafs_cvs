@@ -359,7 +359,7 @@ long cm_ShutdownDCache(void)
     return 0;
 }
 
-int cm_InitDCache(int newFile, long chunkSize, long nbuffers)
+int cm_InitDCache(int newFile, long chunkSize, afs_uint64 nbuffers)
 {
     lock_InitializeMutex(&cm_bufGetMutex, "buf_Get mutex");
     return buf_Init(newFile, &cm_bufOps, nbuffers);

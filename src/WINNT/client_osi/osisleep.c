@@ -269,7 +269,7 @@ void osi_TWait(osi_turnstile_t *turnp, int waitFor, void *patchp, CRITICAL_SECTI
 		sp->states = 0;
 	sp->refCount = 0;
         sp->waitFor = waitFor;
-        sp->value = (long) patchp;
+        sp->value = (LONG_PTR) patchp;
         osi_QAdd((osi_queue_t **) &turnp->firstp, &sp->q);
         if (!turnp->lastp) turnp->lastp = sp;
         LeaveCriticalSection(releasep);
@@ -465,7 +465,7 @@ void osi_SleepSpin(LONG_PTR sleepValue, CRITICAL_SECTION *releasep)
 }
 
 /* utility function to wakeup someone sleeping in SleepSched */
-void osi_WakeupSpin(long sleepValue)
+void osi_WakeupSpin(LONG_PTR sleepValue)
 {
 	register int idx;
 	register CRITICAL_SECTION *csp;

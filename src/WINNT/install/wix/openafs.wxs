@@ -34,11 +34,11 @@
          Comments="$(var.PackageComments)"
          Compressed="yes"
          Description="$(var.ProductName)"
-         InstallerVersion="110"
+         InstallerVersion="$(var.InstallerVersion)"
          Keywords="Installer,OpenAFS,$(var.Manufacturer)"
          Languages="$(var.Languages)"
          Manufacturer="$(var.Manufacturer)"
-         Platforms="Intel"
+         Platforms="$(var.Platform)"
          ShortNames="no"
          SummaryCodepage="1252"
          />

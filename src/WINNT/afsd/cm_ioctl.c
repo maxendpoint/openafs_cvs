@@ -1083,7 +1083,7 @@ long cm_IoctlCheckVolumes(struct smb_ioctl *ioctlp, struct cm_user *userp)
 
 long cm_IoctlSetCacheSize(struct smb_ioctl *ioctlp, struct cm_user *userp)
 {
-    long temp;
+    afs_uint64 temp;
     long code;
 
     cm_SkipIoctlPath(ioctlp);

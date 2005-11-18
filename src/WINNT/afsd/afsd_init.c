@@ -531,7 +531,7 @@ static void afsd_InitServerPreferences(void)
 int afsd_InitCM(char **reasonP)
 {
     osi_uid_t debugID;
-    DWORD cacheBlocks;
+    afs_uint64 cacheBlocks;
     DWORD cacheSize;
     long logChunkSize;
     DWORD stats;
@@ -1038,7 +1038,7 @@ int afsd_InitCM(char **reasonP)
         osi_panic(buf, __FILE__, __LINE__);
     }
 
-    cacheBlocks = (cacheSize * 1024) / CM_CONFIGDEFAULT_BLOCKSIZE;
+    cacheBlocks = ((afs_uint64)cacheSize * 1024) / CM_CONFIGDEFAULT_BLOCKSIZE;
         
     /* get network related info */
     cm_noIPAddr = CM_MAXINTERFACE_ADDR;
@@ -1057,7 +1057,7 @@ int afsd_InitCM(char **reasonP)
      */
     cm_initParams.nChunkFiles = 0;
     cm_initParams.nStatCaches = stats;
-    cm_initParams.nDataCaches = cacheBlocks;
+    cm_initParams.nDataCaches = (afs_uint32)(cacheBlocks > 0xFFFFFFFF ? 0xFFFFFFFF : cacheBlocks);
     cm_initParams.nVolumeCaches = stats/2;
     cm_initParams.firstChunkSize = cm_chunkSize;
     cm_initParams.otherChunkSize = cm_chunkSize;

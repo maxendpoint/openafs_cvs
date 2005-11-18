@@ -110,7 +110,7 @@ void buf_IncrSyncer(long parm)
     bp = cm_data.buf_allp;
     bp->refCount++;
     lock_ReleaseWrite(&buf_globalLock);
-    nAtOnce = (long)sqrt(cm_data.buf_nbuffers);
+    nAtOnce = (long)sqrt((double)cm_data.buf_nbuffers);
     while (buf_ShutdownFlag == 0) {
 #ifndef DJGPP
         i = SleepEx(5000, 1);
@@ -155,7 +155,7 @@ long
 buf_ValidateBuffers(void)
 {
     cm_buf_t * bp, *bpf, *bpa, *bpb;
-    afs_uint32 countb = 0, countf = 0, counta = 0;
+    afs_uint64 countb = 0, countf = 0, counta = 0;
 
     if (cm_data.buf_freeListp == NULL && cm_data.buf_freeListEndp != NULL ||
          cm_data.buf_freeListp != NULL && cm_data.buf_freeListEndp == NULL) {
@@ -235,7 +235,7 @@ void buf_Shutdown(void)
 /* initialize the buffer package; called with no locks
  * held during the initialization phase.
  */
-long buf_Init(int newFile, cm_buf_ops_t *opsp, long nbuffers)
+long buf_Init(int newFile, cm_buf_ops_t *opsp, afs_uint64 nbuffers)
 {
     static osi_once_t once;
     cm_buf_t *bp;
@@ -356,7 +356,7 @@ long buf_Init(int newFile, cm_buf_ops_t *opsp, long nbuffers)
 /* add nbuffers to the buffer pool, if possible.
  * Called with no locks held.
  */
-long buf_AddBuffers(long nbuffers)
+long buf_AddBuffers(afs_uint64 nbuffers)
 {
 #ifndef DJGPP
     /* The size of a virtual cache cannot be changed after it has
@@ -414,7 +414,7 @@ long buf_AddBuffers(long nbuffers)
 /* interface to set the number of buffers to an exact figure.
  * Called with no locks held.
  */
-long buf_SetNBuffers(long nbuffers)
+long buf_SetNBuffers(afs_uint64 nbuffers)
 {
     if (nbuffers < 10) 
         return CM_ERROR_INVAL;
@@ -1164,7 +1164,7 @@ long buf_CleanAndReset(void)
 /* called without global lock being held, reserves buffers for callers
  * that need more than one held (not locked) at once.
  */
-void buf_ReserveBuffers(long nbuffers)
+void buf_ReserveBuffers(afs_uint64 nbuffers)
 {
     lock_ObtainWrite(&buf_globalLock);
     while (1) {
@@ -1182,7 +1182,7 @@ void buf_ReserveBuffers(long nbuffers)
     lock_ReleaseWrite(&buf_globalLock);
 }
 
-int buf_TryReserveBuffers(long nbuffers)
+int buf_TryReserveBuffers(afs_uint64 nbuffers)
 {
     int code;
 
@@ -1201,7 +1201,7 @@ int buf_TryReserveBuffers(long nbuffers)
 /* called without global lock held, releases reservation held by
  * buf_ReserveBuffers.
  */
-void buf_UnreserveBuffers(long nbuffers)
+void buf_UnreserveBuffers(afs_uint64 nbuffers)
 {
     lock_ObtainWrite(&buf_globalLock);
     cm_data.buf_reservedBufs -= nbuffers;

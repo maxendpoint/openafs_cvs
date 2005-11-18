@@ -116,6 +116,20 @@
              <?define DebugSymHighLevel="130"?>
          <?endif?>
     <?endif?>
+
+    <!-- Build type specifications -->
+    <?ifndef env.CPU?>
+	<?error CPU is not set ?>
+    <?endif?>
+    <?if $(env.CPU) = "i386"?>
+	<?define InstallerVersion="110"?>
+	<?define Platform="Intel"?>
+    <?elseif $(env.CPU) = "x64"?>
+	<?define InstallerVersion="200"?>
+	<?define Platform="x64"?>
+    <?else?>
+        <?error Unknown build type?>
+    <?endif?>
     
     <!-- Use the afsloopback.dll instead of instloop.exe -->
     <?define UseDllLoopbackInstaller?>
