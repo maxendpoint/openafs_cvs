@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.68 2005/10/15 02:32:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.69 2005/11/19 04:33:00 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -291,7 +291,7 @@ afs_EvalFakeStat_int(struct vcache **avcp, struct afs_fakestat_state *state,
 	    do {
 		retry = 0;
 		ObtainWriteLock(&afs_xvcache, 597);
-		root_vp = afs_FindVCache(tvc->mvid, &retry, 0);
+		root_vp = afs_FindVCache(tvc->mvid, &retry, IS_WLOCK);
 		if (root_vp && retry) {
 		    ReleaseWriteLock(&afs_xvcache);
 		    afs_PutVCache(root_vp);
@@ -701,7 +701,7 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
 	    do {
 		retry = 0;
 		ObtainWriteLock(&afs_xvcache, 130);
-		tvcp = afs_FindVCache(&tfid, &retry, 0 /* no stats | LRU */ );
+		tvcp = afs_FindVCache(&tfid, &retry, IS_WLOCK /* no stats | LRU */ );
 		if (tvcp && retry) {
 		    ReleaseWriteLock(&afs_xvcache);
 		    afs_PutVCache(tvcp);
