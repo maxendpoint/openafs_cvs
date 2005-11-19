@@ -63,7 +63,7 @@ typedef struct osi_once {
 /* size of mutex hash table; should be a prime number; used for mutex and lock hashing */
 #define OSI_MUTEXHASHSIZE	251	/* prime number */
 
-#define osi_MUTEXHASH(x) ((unsigned short) (((unsigned long) x) % (intptr_t) OSI_MUTEXHASHSIZE))
+#define osi_MUTEXHASH(x) ((unsigned short) (((LONG_PTR) x) % (intptr_t) OSI_MUTEXHASHSIZE))
 
 /* size of sleep value hash table.  Must be power of 2 */
 #define OSI_SLEEPHASHSIZE	128
