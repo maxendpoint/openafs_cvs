@@ -1,4 +1,4 @@
-# rcsid : $Id: NTMakefile,v 1.4 2005/03/11 05:37:48 jaltman Exp $
+# rcsid : $Id: NTMakefile,v 1.5 2005/11/21 01:56:25 jaltman Exp $
 
 RELDIR=WINNT\install\loopback
 !INCLUDE ..\..\..\config\NTMakefile.$(SYS_NAME)
@@ -42,6 +42,7 @@ $(OUT)\wmi.obj: wmi.cpp
 
 $(DLLFILE): $(DLLOBJFILES)
 	$(LINK) -DLL $(DLLEXPORTS) -OUT:$@ $(DLLOBJFILES) $(DLLLIBFILES)
+        $(_VC_MANIFEST_EMBED_DLL)
 
 # instloop.exe
 
@@ -53,6 +54,7 @@ $(OUT)\instloop.obj: instloop.c
 
 $(EXEFILE): $(EXEOBJFILES)
       $(LINK) /OUT:$@ $(EXEOBJFILES) $(DLLLIBFILES)
+        $(_VC_MANIFEST_EMBED_EXE)
 
 install:  $(DLLFILE) $(EXEFILE)
 

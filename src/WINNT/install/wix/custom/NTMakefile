@@ -1,4 +1,4 @@
-# rcsid : $Id: NTMakefile,v 1.4 2005/03/11 05:37:52 jaltman Exp $
+# rcsid : $Id: NTMakefile,v 1.5 2005/11/21 01:56:28 jaltman Exp $
 
 RELDIR=WINNT\install\wix\custom
 !INCLUDE ..\..\..\..\config\NTMakefile.$(SYS_NAME)
@@ -31,6 +31,7 @@ $(OUT)\afscustom.obj: afscustom.cpp
 $(DLLFILE): $(OUT)\afscustom.obj
 	$(LINK) -DLL $(DLLEXPORTS) \
 	  -OUT:$@ $** $(DLLLIBFILES)
+        $(_VC_MANIFEST_EMBED_DLL)
 
 install: $(DLLFILE)
 

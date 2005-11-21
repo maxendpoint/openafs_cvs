@@ -145,6 +145,7 @@ afsclass_clean :
 
 $(EXEFILE) : $(EXEOBJS) $(EXELIBS)
 	$(EXECONLINK)  $(VCLIBS)
+        $(_VC_MANIFEST_EMBED_EXE)
 	$(EXEPREP) 
 
 install : \

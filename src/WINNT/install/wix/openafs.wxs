@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" ?>
+<?xml version="1.0" ?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>
 
     <!-- See config.wxi for the symbols that it defines/asserts -->
@@ -48,13 +48,22 @@
          <![CDATA[VersionNT >= 500]]>
         </Condition>
         <Condition Message="$(loc.AdminRequired)">Privileged</Condition>
-        
+    <?if $(var.Platform) = "x64" ?>
+        <Condition Message="$(loc.StrPlatform64)">
+         <![CDATA[VersionNT64]]>
+        </Condition>
+    <?else?>
+        <Condition Message="$(loc.StrPlatformNot64)">
+         <![CDATA[NOT VersionNT64]]>
+        </Condition>
+    <?endif?>
         
         <!-- Global Properties -->
         <?include property.wxi?>
         
         <!-- File system and registry settings -->
         <Directory Id="TARGETDIR" Name="SourceDir">
+            <?include platform.wxi?>
             <?include registry.wxi?>
             <?include files.wxi?>
         </Directory>

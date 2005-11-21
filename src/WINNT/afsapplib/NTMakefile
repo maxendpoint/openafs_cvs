@@ -127,6 +127,7 @@ primary : headers $(DLLFILE) lang
 
 $(DLLFILE) : $(DLLOBJS) $(DLLLIBS)
 	$(DLLGUILINK) $(LOCALLINKFLAGS) $(VCLIBS)
+        $(_VC_MANIFEST_EMBED_DLL)
 	$(DLLPREP)
 	$(COPY) $*.lib $(ILIBDIR)
 	$(DEL) $*.lib $*.exp
