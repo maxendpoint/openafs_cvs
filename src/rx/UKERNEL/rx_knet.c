@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.11 2005/04/15 18:33:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.12 2005/11/21 17:04:27 jaltman Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -331,7 +331,7 @@ rx_Finalize(void)
  *
  */
 int
-rxi_Recvmsg(int socket, struct msghdr *msg_p, int flags)
+rxi_Recvmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 {
     int ret;
     do {
