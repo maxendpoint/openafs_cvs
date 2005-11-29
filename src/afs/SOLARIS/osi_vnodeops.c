@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.20.2.6 2005/10/13 18:23:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.20.2.7 2005/11/29 04:13:29 shadow Exp $");
 
 /*
  * SOLARIS/osi_vnodeops.c
@@ -266,7 +266,7 @@ afs_GetOnePage(vp, off, alen, protp, pl, plsz, seg, addr, rw, acred)
     register struct dcache *tdc;
     int i, s, pexists;
     int slot;
-    afs_size_t offset = 0, nlen;
+    afs_size_t offset, nlen = 0;
     struct vrequest treq;
     afs_int32 mapForRead = 0, Code = 0;
     u_offset_t toffset;
