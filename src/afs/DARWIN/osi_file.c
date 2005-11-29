@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_file.c,v 1.8.2.1 2005/10/05 05:58:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_file.c,v 1.8.2.2 2005/11/29 05:02:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -116,7 +116,7 @@ VnodeToDev(vnode_t * avp)
 	return ip->i_dev;
     } else if (afs_CacheFSType == AFS_APPL_HFS_CACHE) {
 #endif
-#if defined(AFS_DARWIN80_ENV) || !defined(VTOH)
+#if defined(AFS_DARWIN80_ENV) 
 	struct vattr va;
         VATTR_INIT(&va);
         VATTR_WANTED(&va, va_fsid);
