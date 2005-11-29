@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.7 2005/11/29 05:02:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.8 2005/11/29 06:54:46 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1589,7 +1589,7 @@ afs_vop_inactive(ap)
     register struct vnode *vp = ap->a_vp;
     struct vcache *tvc = VTOAFS(vp);
 #ifndef AFS_DARWIN80_ENV
-    if (prtactive && vnode_isinuse(vp, 0) != 0)
+    if (prtactive && vp->v_usecount != 0)
 	vprint("afs_vop_inactive(): pushing active", vp);
 #endif
     if (tvc) {
