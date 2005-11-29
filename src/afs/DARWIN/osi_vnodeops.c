@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.27 2005/11/19 03:57:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.28 2005/11/29 04:58:49 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1620,8 +1620,16 @@ afs_vop_reclaim(ap)
        AFS_GLOCK();
        ObtainWriteLock(&afs_xvcache, 335);
        error = afs_FlushVCache(tvc, &sl);	/* toss our stuff from vnode */
-       if (tvc->states & (CVInit | CDeadVnode)) {
-          tvc->states &= ~(CVInit | CDeadVnode);
+       if (tvc->states & (CVInit
+#ifdef AFS_DARWIN80_ENV
+			  | CDeadVnode
+#endif
+			  )) {
+          tvc->states &= ~(CVInit
+#ifdef AFS_DARWIN80_ENV
+			   | CDeadVnode
+#endif
+			   );
           afs_osi_Wakeup(&tvc->states);
        }
        ReleaseWriteLock(&afs_xvcache);

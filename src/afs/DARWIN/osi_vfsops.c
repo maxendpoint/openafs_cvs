@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.15 2005/10/13 15:12:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.16 2005/11/29 04:58:49 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -84,7 +84,7 @@ afs_mount(mp, devvp, data, ctx)
      vfs_context_t ctx;
 #else
 int
-afs_mount(mp, path, data, ndp, p)
+afs_mount(mp, path, data, ndp, ctx)
      register struct mount *mp;
      char *path;
      caddr_t data;
@@ -252,10 +252,10 @@ afs_root(struct mount *mp, struct vnode **vpp)
 #else
     struct proc *p = current_proc();
     struct ucred _cr;
-    struct ucred *cr =&_cr;
+    struct ucred *cr = &_cr;
 
     pcred_readlock(p);
-    cr = *p->p_cred->pc_ucred;
+    _cr = *p->p_cred->pc_ucred;
     pcred_unlock(p);
 #endif
     AFS_GLOCK();
