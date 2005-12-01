@@ -58,7 +58,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.58 2005/10/15 15:22:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.59 2005/12/01 04:02:23 shadow Exp $");
 
 #define VFS 1
 
@@ -1483,7 +1483,7 @@ mainproc(struct cmd_syndesc *as, char *arock)
     if (as->parms[25].items) {
 	/* -files_per_subdir */
 	int res = atoi(as->parms[25].items->data);
-	if (res < 10 || res > 2 ^ 30) {
+	if (res < 10 || res > (1 << 30)) {
 	    printf
 		("afsd:invalid number of files per subdir, \"%s\". Ignored\n",
 		 as->parms[25].items->data);
