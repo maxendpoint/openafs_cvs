@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.99 2005/11/19 04:32:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.100 2005/12/01 05:09:32 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -877,10 +877,11 @@ restart:
 				 * request is lost */
 
     i = VCHash(afid);
+    j = VCHashV(afid);
 
     tvc->hnext = afs_vhashT[i];
     afs_vhashT[i] = tvc;
-    QAdd(&afs_vhashTV[i], &tvc->vhashq);
+    QAdd(&afs_vhashTV[j], &tvc->vhashq);
     
     if ((VLRU.next->prev != &VLRU) || (VLRU.prev->next != &VLRU)) {
         refpanic("NewVCache VLRU inconsistent");
