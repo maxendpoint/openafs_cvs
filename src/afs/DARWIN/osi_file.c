@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_file.c,v 1.8.2.2 2005/11/29 05:02:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_file.c,v 1.8.2.3 2005/12/01 07:37:21 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -63,11 +63,7 @@ afs_InitDualFSCacheOps(struct vnode *vp)
 }
 
 ino_t
-#ifdef AFS_DARWIN80_ENV
 VnodeToIno(vnode_t avp)
-#else
-VnodeToIno(vnode_t * avp)
-#endif
 {
     unsigned long ret;
 
@@ -104,11 +100,7 @@ VnodeToIno(vnode_t * avp)
 
 
 dev_t
-#ifdef AFS_DARWIN80_ENV
 VnodeToDev(vnode_t avp)
-#else
-VnodeToDev(vnode_t * avp)
-#endif
 {
 #ifndef AFS_DARWIN80_ENV
     if (afs_CacheFSType == AFS_APPL_UFS_CACHE) {
