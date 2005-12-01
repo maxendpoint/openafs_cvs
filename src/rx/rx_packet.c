@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.19 2005/11/02 05:23:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.20 2005/12/01 04:00:39 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -113,6 +113,9 @@ static int AllocPacketBufs(int class, int num_pkts, struct rx_queue *q);
 static void rxi_SendDebugPacket(struct rx_packet *apacket, osi_socket asocket,
 				afs_int32 ahost, short aport,
 				afs_int32 istack);
+
+static int rxi_FreeDataBufsToQueue(struct rx_packet *p, int first, 
+				   struct rx_queue * q);
 
 /* some rules about packets:
  * 1.  When a packet is allocated, the final iov_buf contains room for
@@ -381,14 +384,22 @@ rxi_FreePackets(int num_pkts, struct rx_queue * q)
     register struct rx_packet *c, *nc;
     SPLVAR;
 
+    osi_Assert(num_pkts >= 0);
+    RX_TS_INFO_GET(rx_ts_info);
+
     if (!num_pkts) {
-	queue_Count(q, c, nc, rx_packet, num_pkts);
-	if (!num_pkts)
-	    return 0;
+	for (queue_Scan(q, c, nc, rx_packet), num_pkts++) {
+	    rxi_FreeDataBufsTSFPQ(c, 1, 0);
+	}
+    } else {
+	for (queue_Scan(q, c, nc, rx_packet)) {
+	    rxi_FreeDataBufsTSFPQ(c, 1, 0);
+	}
     }
 
-    RX_TS_INFO_GET(rx_ts_info);
-    RX_TS_FPQ_CHECKIN2(rx_ts_info, num_pkts, q);
+    if (num_pkts) {
+	RX_TS_FPQ_CHECKIN2(rx_ts_info, num_pkts, q);
+    }
 
     if (rx_ts_info->_FPQ.len > rx_TSFPQLocalMax) {
         NETPRI;
@@ -410,26 +421,43 @@ rxi_FreePackets(int num_pkts, struct rx_queue * q)
 int
 rxi_FreePackets(int num_pkts, struct rx_queue *q)
 {
+    struct rx_queue cbs;
     register struct rx_packet *p, *np;
+    int qlen = 0;
     SPLVAR;
+
+    osi_Assert(num_pkts >= 0);
+    queue_Init(&cbs);
 
     if (!num_pkts) {
         for (queue_Scan(q, p, np, rx_packet), num_pkts++) {
+	    if (p->niovecs > 2) {
+		qlen += rxi_FreeDataBufsToQueue(p, 2, &cbs);
+	    }
             RX_FPQ_MARK_FREE(p);
 	}
 	if (!num_pkts)
 	    return 0;
     } else {
         for (queue_Scan(q, p, np, rx_packet)) {
+	    if (p->niovecs > 2) {
+		qlen += rxi_FreeDataBufsToQueue(p, 2, &cbs);
+	    }
             RX_FPQ_MARK_FREE(p);
 	}
     }
+
+    if (qlen) {
+	queue_SpliceAppend(q, &cbs);
+	qlen += num_pkts;
+    } else
+	qlen = num_pkts;
 
     NETPRI;
     MUTEX_ENTER(&rx_freePktQ_lock);
 
     queue_SpliceAppend(&rx_freePacketQueue, q);
-    rx_nFreePackets += num_pkts;
+    rx_nFreePackets += qlen;
 
     /* Wakeup anyone waiting for packets */
     rxi_PacketsUnWait();
@@ -776,6 +804,27 @@ rxi_FreePacketTSFPQ(struct rx_packet *p, int flush_global)
     }
 }
 #endif /* RX_ENABLE_TSFPQ */
+
+/* free continuation buffers off a packet into a queue of buffers */
+static int
+rxi_FreeDataBufsToQueue(struct rx_packet *p, int first, struct rx_queue * q)
+{
+    struct iovec *iov;
+    int count = 0;
+
+    if (first < 2)
+	first = 2;
+    for (; first < p->niovecs; first++, count++) {
+	iov = &p->wirevec[first];
+	if (!iov->iov_base)
+	    osi_Panic("rxi_PacketIOVToQueue: unexpected NULL iov");
+	queue_Append(q, RX_CBUF_TO_PACKET(iov->iov_base, p));
+    }
+    p->length = 0;
+    p->niovecs = 0;
+
+    return count;
+}
 
 int
 rxi_FreeDataBufsNoLock(struct rx_packet *p, int first)
