@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.17 2005/11/05 06:48:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.18 2005/12/08 01:13:41 jaltman Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -365,6 +365,8 @@ initDirPathArray(void)
     pathp = dirPathArray[AFSDIR_SERVER_MIGRATELOG_FILEPATH_ID];
     AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_MIGR_DIR, AFSDIR_MIGRATE_LOGNAME);
 
+    pathp = dirPathArray[AFSDIR_SERVER_KRB_EXCL_FILEPATH_ID];
+    AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_SERVER_ETC_DIR, AFSDIR_KRB_EXCL_FILE);
 
     /* client file paths */
 #ifdef AFS_NT40_ENV
