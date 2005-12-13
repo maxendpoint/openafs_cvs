@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.69 2005/12/08 01:01:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.70 2005/12/13 21:58:49 rees Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1956,6 +1956,9 @@ PrintCB(register struct CallBack *cb, afs_uint32 now)
 {
     struct FileEntry *fe = itofe(cb->fhead);
     time_t expires = TIndexToTime(cb->thead);
+
+    if (fe == NULL)
+	return;
 
     printf("vol=%u vn=%u cbs=%d hi=%d st=%d fest=%d, exp in %d secs at %s",
 	   fe->volid, fe->vnode, fe->ncbs, cb->hhead, cb->status, fe->status,
