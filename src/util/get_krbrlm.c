@@ -7,7 +7,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.7 2005/12/08 01:13:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.8 2005/12/15 05:51:24 jaltman Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"
@@ -89,7 +89,6 @@ afs_krb_exclusion(char * name)
 {
     char linebuf[2048];
     char excl_name[256] = "";
-    char *p;
     FILE *cnffile/*, *fopen()*/;
     int exclude = 0;
 
@@ -101,7 +100,7 @@ afs_krb_exclusion(char * name)
 	    goto cleanup;
 	}
 	linebuf[sizeof(linebuf)-1] = '\0';
-        p = parse_str(p, excl_name, sizeof(excl_name));
+        parse_str(linebuf, excl_name, sizeof(excl_name));
 
 	if (!strcmp(name,excl_name)) {
 	    exclude = 1;
