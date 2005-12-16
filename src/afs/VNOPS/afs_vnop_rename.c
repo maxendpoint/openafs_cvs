@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.25 2005/12/16 04:15:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.26 2005/12/16 04:39:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -116,12 +116,12 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	else
 	    code = ENOENT;
     } else {
-	if (andp->lock.pid_writer != MyPidxx) 
-	    ObtainWriteLock(&andp->lock, 150);	/* lock smaller one first */
+	if (aodp->lock.pid_writer != MyPidxx) 
+	    ObtainWriteLock(&aodp->lock, 150);	/* lock smaller one first */
 	else 
 	    whichLocked |= 1;
-	if (aodp->lock.pid_writer != MyPidxx) 
-	    ObtainWriteLock(&aodp->lock, 557);
+	if (andp->lock.pid_writer != MyPidxx) 
+	    ObtainWriteLock(&andp->lock, 557);
 	else 
 	    whichLocked |= 2;
 	tdc1 = afs_GetDCache(aodp, (afs_size_t) 0, areq, &offset, &len, 0);
