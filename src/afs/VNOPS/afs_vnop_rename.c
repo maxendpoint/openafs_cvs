@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.26 2005/12/16 04:39:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.27 2005/12/16 04:41:33 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -145,14 +145,14 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	if (!(aodp->states & CStatd)
 	    || !hsame(aodp->m.DataVersion, tdc1->f.versionNo)) {
 
-	    if ((whichLocked & 1) == 0)
+	    if ((whichLocked & 1) != 0)
 		ReleaseWriteLock(&aodp->lock);
 	    if (!oneDir) {
 		if (tdc2) {
 		    ReleaseWriteLock(&tdc2->lock);
 		    afs_PutDCache(tdc2);
 		}
-		if ((whichLocked & 2) == 0)
+		if ((whichLocked & 2) != 0)
 		    ReleaseWriteLock(&andp->lock);
 	    }
 	    ReleaseWriteLock(&tdc1->lock);
@@ -288,9 +288,9 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	afs_PutDCache(tdc2);
     }
 
-    if ((whichLocked & 1) == 0)
+    if ((whichLocked & 1) != 0)
 	ReleaseWriteLock(&aodp->lock);
-    if (!oneDir && ((whichLocked & 2) == 0))
+    if (!oneDir && ((whichLocked & 2) != 0))
 	ReleaseWriteLock(&andp->lock);
 
     if (returnCode) {
