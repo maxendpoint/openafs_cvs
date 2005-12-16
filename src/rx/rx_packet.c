@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.20 2005/12/01 04:00:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.21 2005/12/16 03:33:08 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -810,6 +810,7 @@ static int
 rxi_FreeDataBufsToQueue(struct rx_packet *p, int first, struct rx_queue * q)
 {
     struct iovec *iov;
+    struct rx_packet * cb;
     int count = 0;
 
     if (first < 2)
@@ -818,7 +819,9 @@ rxi_FreeDataBufsToQueue(struct rx_packet *p, int first, struct rx_queue * q)
 	iov = &p->wirevec[first];
 	if (!iov->iov_base)
 	    osi_Panic("rxi_PacketIOVToQueue: unexpected NULL iov");
-	queue_Append(q, RX_CBUF_TO_PACKET(iov->iov_base, p));
+	cb = RX_CBUF_TO_PACKET(iov->iov_base, p);
+	RX_FPQ_MARK_FREE(cb);
+	queue_Append(q, cb);
     }
     p->length = 0;
     p->niovecs = 0;
