@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.94 2005/10/20 23:32:40 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.95 2005/12/17 22:17:30 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6044,7 +6044,11 @@ SRXAFS_GetCapabilities(struct rx_call * acall, Capabilities * capabilities)
 
     dataBytes = 1 * sizeof(afs_int32);
     dataBuffP = (afs_int32 *) malloc(dataBytes);
-    dataBuffP[0] = CAPABILITY_ERRORTRANS;
+    dataBuffP[0] = VICED_CAPABILITY_ERRORTRANS;
+#if defined(AFS_64BIT_ENV) && defined(AFS_LARGEFILE_ENV)
+    dataBuffP[0] |= VICED_CAPABILITY_64BITFILES;
+#endif
+
     capabilities->Capabilities_len = dataBytes / sizeof(afs_int32);
     capabilities->Capabilities_val = dataBuffP;
 

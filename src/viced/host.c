@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.65 2005/12/08 01:13:47 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.66 2005/12/17 22:17:30 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1133,7 +1133,7 @@ h_GetHost_r(struct rx_connection *tcon)
 	    host->hostFlags |= VENUSDOWN;
 	}
 	if (caps.Capabilities_val
-	    && (caps.Capabilities_val[0] & CAPABILITY_ERRORTRANS))
+	    && (caps.Capabilities_val[0] & CLIENT_CAPABILITY_ERRORTRANS))
 	    host->hostFlags |= HERRORTRANS;
 	else
 	    host->hostFlags &= ~(HERRORTRANS);
@@ -1331,7 +1331,7 @@ h_GetHost_r(struct rx_connection *tcon)
 
 	}
 	if (caps.Capabilities_val
-	    && (caps.Capabilities_val[0] & CAPABILITY_ERRORTRANS))
+	    && (caps.Capabilities_val[0] & CLIENT_CAPABILITY_ERRORTRANS))
 	    host->hostFlags |= HERRORTRANS;
 	else
 	    host->hostFlags &= ~(HERRORTRANS);
