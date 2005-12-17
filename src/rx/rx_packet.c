@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.21 2005/12/16 03:33:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.22 2005/12/17 17:28:31 jaltman Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -1314,7 +1314,10 @@ rxi_AllocSendPacket(register struct rx_call *call, int want)
 }
 
 #ifndef KERNEL
-
+#ifdef AFS_NT40_ENV	 
+/* Windows does not use file descriptors. */
+#define CountFDs(amax) 0
+#else
 /* count the number of used FDs */
 static int
 CountFDs(register int amax)
@@ -1331,7 +1334,7 @@ CountFDs(register int amax)
     }
     return count;
 }
-
+#endif /* AFS_NT40_ENV */
 #else /* KERNEL */
 
 #define CountFDs(amax) amax
