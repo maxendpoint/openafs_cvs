@@ -16,11 +16,14 @@
 
 #define AFSREG_NULL_KEY  ((HKEY)0)
 
+/* Do not change AFSREG_{CLT,SVR}_SW_NAME unless the installation
+ * name in the installers is also changed to match
+ */
 #define AFSREG_SVR_SVC_NAME  "TransarcAFSServer"
-#define AFSREG_SVR_SW_NAME   "OpenAFS Server"
+#define AFSREG_SVR_SW_NAME   "AFS Server"
 
 #define AFSREG_CLT_SVC_NAME  "TransarcAFSDaemon"
-#define AFSREG_CLT_SW_NAME   "OpenAFS Client"
+#define AFSREG_CLT_SW_NAME   "AFS Client"
 
 
 
