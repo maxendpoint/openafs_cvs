@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.38 2005/12/16 03:37:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.39 2005/12/19 03:29:58 rra Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1412,7 +1412,11 @@ afs_linux_writepage(struct page *pp)
 
 #if defined(AFS_LINUX26_ENV)
     if (PageReclaim(pp)) {
+# if defined(WRITEPAGE_ACTIVATE)
 	return WRITEPAGE_ACTIVATE;
+# else 
+	return AOP_WRITEPAGE_ACTIVATE;
+# endif
     }
 #else
     if (PageLaunder(pp)) {
