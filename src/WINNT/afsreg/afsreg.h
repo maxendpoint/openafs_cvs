@@ -17,10 +17,10 @@
 #define AFSREG_NULL_KEY  ((HKEY)0)
 
 #define AFSREG_SVR_SVC_NAME  "TransarcAFSServer"
-#define AFSREG_SVR_SW_NAME   "AFS Server"
+#define AFSREG_SVR_SW_NAME   "OpenAFS Server"
 
 #define AFSREG_CLT_SVC_NAME  "TransarcAFSDaemon"
-#define AFSREG_CLT_SW_NAME   "AFS Client"
+#define AFSREG_CLT_SW_NAME   "OpenAFS Client"
 
 
 
@@ -71,9 +71,10 @@
 #define AFSREG_APPLOG_KEY "HKEY_LOCAL_MACHINE\\" AFSREG_APPLOG_SUBKEY
 
 /* AFS event source subkey and subkey values -- client and server services */
-#define AFSREG_SVR_APPLOG_SUBKEY         "AFS Service"
-#define AFSREG_SVR_APPLOG_MSGFILE_VALUE  "EventMessageFile"
-#define AFSREG_SVR_APPLOG_MSGTYPE_VALUE  "TypesSupported"
+#define AFSREG_SVR_APPLOG_SUBKEY         AFSREG_SVR_SW_NAME
+#define AFSREG_CLT_APPLOG_SUBKEY         AFSREG_CLT_SW_NAME
+#define AFSREG_APPLOG_MSGFILE_VALUE  "EventMessageFile"
+#define AFSREG_APPLOG_MSGTYPE_VALUE  "TypesSupported"
 
 
 
@@ -139,7 +140,7 @@
  *             DeviceName:REG_SZ:<device hosting device partition>
  */
 
-#define AFSREG_SVR_SVC_DISPLAYNAME_DATA  "IBM AFS Server"
+#define AFSREG_SVR_SVC_DISPLAYNAME_DATA  "OpenAFS Server"
 #define AFSREG_SVR_SVC_IMAGENAME_DATA "bosctlsvc.exe"
 
 #define AFSREG_SVR_SVC_SUBKEY "System\\CurrentControlSet\\Services\\" AFSREG_SVR_SVC_NAME
@@ -160,7 +161,7 @@
  *         Cell:REG_SZ:<client cell>
  */
 
-#define AFSREG_CLT_SVC_DISPLAYNAME_DATA  "IBM AFS Client"
+#define AFSREG_CLT_SVC_DISPLAYNAME_DATA  "OpenAFS Client"
 #define AFSREG_CLT_SVC_IMAGENAME_DATA "afsd_service.exe"
 
 #define AFSREG_CLT_SVC_SUBKEY "System\\CurrentControlSet\\Services\\" AFSREG_CLT_SVC_NAME
