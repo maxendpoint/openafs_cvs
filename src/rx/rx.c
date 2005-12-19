@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.93 2005/11/29 07:00:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.94 2005/12/19 12:35:15 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -6044,6 +6044,8 @@ rxi_DebugInit(void)
     DWORD TraceOption;
     long code;
 
+    rxdebug_active = 0;
+
     code = RegOpenKeyEx(HKEY_LOCAL_MACHINE, AFSREG_CLT_SVC_PARAM_SUBKEY,
                          0, KEY_QUERY_VALUE, &parmKey);
     if (code != ERROR_SUCCESS)
@@ -6058,6 +6060,14 @@ rxi_DebugInit(void)
     RegCloseKey (parmKey);
 #endif /* AFS_NT40_ENV */
 }
+
+#ifdef AFS_NT40_ENV
+void
+rx_DebugOnOff(int on)
+{
+    rxdebug_active = on;
+}
+#endif /* AFS_NT40_ENV */
 
 
 /* Don't call this debugging routine directly; use dpf */
