@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.16.2.10 2005/12/16 04:42:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.16.2.11 2005/12/24 00:21:45 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -39,7 +39,7 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
     register struct conn *tc;
     register afs_int32 code;
     afs_int32 returnCode;
-    int oneDir, doLocally, whichLocked = 0;
+    int oneDir, doLocally;
     afs_size_t offset, len;
     struct VenusFid unlinkFid, fileFid;
     struct vcache *tvc;
@@ -82,11 +82,7 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	    code = 0;
 	    goto done;
 	}
-	if (andp->lock.pid_writer != MyPidxx) 
-	    ObtainWriteLock(&andp->lock, 147);
-	else 
-	    whichLocked |= 1;
-
+	ObtainWriteLock(&andp->lock, 147);
 	tdc1 = afs_GetDCache(aodp, (afs_size_t) 0, areq, &offset, &len, 0);
 	if (!tdc1) {
 	    code = ENOENT;
@@ -99,14 +95,8 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	code = EROFS;
 	goto done;
     } else if (andp->fid.Fid.Vnode < aodp->fid.Fid.Vnode) {
-	if (andp->lock.pid_writer != MyPidxx) 
-	    ObtainWriteLock(&andp->lock, 148);	/* lock smaller one first */
-	else 
-	    whichLocked |= 1;
-	if (aodp->lock.pid_writer != MyPidxx) 
-	    ObtainWriteLock(&aodp->lock, 149);
-	else 
-	    whichLocked |= 2;
+	ObtainWriteLock(&andp->lock, 148);	/* lock smaller one first */
+	ObtainWriteLock(&aodp->lock, 149);
 	tdc2 = afs_FindDCache(andp, (afs_size_t) 0);
 	if (tdc2)
 	    ObtainWriteLock(&tdc2->lock, 644);
@@ -116,14 +106,8 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	else
 	    code = ENOENT;
     } else {
-	if (aodp->lock.pid_writer != MyPidxx) 
-	    ObtainWriteLock(&aodp->lock, 150);	/* lock smaller one first */
-	else 
-	    whichLocked |= 1;
-	if (andp->lock.pid_writer != MyPidxx) 
-	    ObtainWriteLock(&andp->lock, 557);
-	else 
-	    whichLocked |= 2;
+	ObtainWriteLock(&aodp->lock, 150);	/* lock smaller one first */
+	ObtainWriteLock(&andp->lock, 557);
 	tdc1 = afs_GetDCache(aodp, (afs_size_t) 0, areq, &offset, &len, 0);
 	if (tdc1)
 	    ObtainWriteLock(&tdc1->lock, 646);
@@ -145,15 +129,13 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	if (!(aodp->states & CStatd)
 	    || !hsame(aodp->m.DataVersion, tdc1->f.versionNo)) {
 
-	    if ((whichLocked & 1) != 0)
-		ReleaseWriteLock(&aodp->lock);
+	    ReleaseWriteLock(&aodp->lock);
 	    if (!oneDir) {
 		if (tdc2) {
 		    ReleaseWriteLock(&tdc2->lock);
 		    afs_PutDCache(tdc2);
 		}
-		if ((whichLocked & 2) != 0)
-		    ReleaseWriteLock(&andp->lock);
+		ReleaseWriteLock(&andp->lock);
 	    }
 	    ReleaseWriteLock(&tdc1->lock);
 	    afs_PutDCache(tdc1);
@@ -288,9 +270,8 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	afs_PutDCache(tdc2);
     }
 
-    if ((whichLocked & 1) != 0)
-	ReleaseWriteLock(&aodp->lock);
-    if (!oneDir && ((whichLocked & 2) != 0))
+    ReleaseWriteLock(&aodp->lock);
+    if (!oneDir)
 	ReleaseWriteLock(&andp->lock);
 
     if (returnCode) {
