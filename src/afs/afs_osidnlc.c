@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.9 2005/10/13 15:12:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.10 2005/12/24 00:28:10 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -367,6 +367,15 @@ osi_dnlc_purgedp(struct vcache *adp)
     int i;
     int writelocked;
 
+#ifdef AFS_DARWIN_ENV
+    if (!(adp->states & (CVInit | CVFlushed
+#ifdef AFS_DARWIN80_ENV
+                        | CDeadVnode
+#endif
+        )) && AFSTOV(adp))
+    cache_purge(AFSTOV(adp));
+#endif
+
     if (!afs_usednlc)
 	return 0;
 
@@ -396,6 +405,15 @@ osi_dnlc_purgevp(struct vcache *avc)
 {
     int i;
     int writelocked;
+
+#ifdef AFS_DARWIN_ENV
+    if (!(avc->states & (CVInit | CVFlushed
+#ifdef AFS_DARWIN80_ENV
+                        | CDeadVnode
+#endif
+        )) && AFSTOV(avc))
+    cache_purge(AFSTOV(avc));
+#endif
 
     if (!afs_usednlc)
 	return 0;
