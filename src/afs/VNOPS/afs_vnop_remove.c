@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.45 2005/10/13 15:12:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.46 2005/12/24 00:20:18 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -404,7 +404,7 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	code = afsremove(adp, tdc, tvc, aname, acred, &treq);
     }
     afs_PutFakeStat(&fakestate);
-    osi_Assert(!WriteLocked(&adp->lock) || !(adp->lock.pid_writer != MyPidxx));
+    osi_Assert(!WriteLocked(&adp->lock) || (adp->lock.pid_writer != MyPidxx));
     return code;
 }
 
