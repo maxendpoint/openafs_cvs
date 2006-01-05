@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.8 2005/11/29 06:54:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.9 2006/01/05 05:57:56 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -247,7 +247,16 @@ darwin_vn_hold(struct vnode *vp)
     if (haveGlock) AFS_GUNLOCK(); 
 
 #ifdef AFS_DARWIN80_ENV
-	vnode_get(vp);
+	if (vnode_get(vp)) {
+           /* being terminated. kernel won't give us a ref. Now what? our
+              callers don't expect us to fail */
+#if 1
+           panic("vn_hold on terminating vnode");
+#else           
+           if (haveGlock) AFS_GLOCK(); 
+           return;
+#endif
+        }
 	vnode_ref(vp);
 	vnode_put(vp);
 #else

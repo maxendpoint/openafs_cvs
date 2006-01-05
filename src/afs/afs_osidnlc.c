@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.8.2.2 2005/12/24 00:29:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.8.2.3 2006/01/05 05:57:55 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -243,7 +243,12 @@ osi_dnlc_lookup(struct vcache *adp, char *aname, int locktype)
 	VN_HOLD((vnode_t *) tvc);
 #else
 #ifdef AFS_DARWIN80_ENV
-        vnode_get(tvc->v);
+        if (vnode_get(tvc->v)) {
+	    ReleaseReadLock(&afs_xvcache);
+	    dnlcstats.misses++;
+            osi_dnlc_remove(adp, aname, tvc);
+            return 0;
+        }
 #endif
 	osi_vnhold(tvc, 0);
 #endif
