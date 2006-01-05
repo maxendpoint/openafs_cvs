@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.105 2005/11/05 06:48:04 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.106 2006/01/05 05:31:34 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -2586,6 +2586,10 @@ DECL_PIOCTL(PFlushVolumeData)
 		VN_HOLD(AFSTOV(tvc));
 #else
 #if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
+#ifdef AFS_DARWIN80_ENV
+                if (vnode_get(AFSTOV(tvc)))
+                    continue;
+#endif
 		osi_vnhold(tvc, 0);
 #else
 		VREFCOUNT_INC(tvc); /* AIX, apparently */
@@ -2610,6 +2614,7 @@ DECL_PIOCTL(PFlushVolumeData)
 #endif
 #ifdef AFS_DARWIN80_ENV
 		/* our tvc ptr is still good until now */
+                vnode_put(AFSTOV(tvc));
 		AFS_FAST_RELE(tvc);
 		ObtainReadLock(&afs_xvcache);
 #else

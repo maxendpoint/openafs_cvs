@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.28 2005/10/13 15:12:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.29 2006/01/05 05:31:34 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -318,6 +318,8 @@ loop:
 			afs_osi_Sleep(&tvc->states);
                         goto loop;
                     }
+                    if (vnode_get(AFSTOV(tvc)))
+                        continue;
 #endif
 		    AFS_FAST_HOLD(tvc);
 		    ReleaseReadLock(&afs_xvcache);
