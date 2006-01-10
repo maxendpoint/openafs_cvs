@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.46 2005/12/24 00:20:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.47 2006/01/10 15:03:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -356,7 +356,13 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	FetchWholeEnchilada(tvc, &treq);
 #endif
 	ReleaseWriteLock(&tvc->lock);
+	if (tdc) 
+	    ReleaseSharedLock(&tdc->lock);
 	ObtainWriteLock(&adp->lock, 144);
+	/* Technically I don't think we need this back, but let's hold it 
+	   anyway; The "got" reference should actually be sufficient. */
+	if (tdc) 
+	    ObtainSharedLock(&tdc->lock, 640);
     }
 
     osi_dnlc_remove(adp, aname, tvc);
