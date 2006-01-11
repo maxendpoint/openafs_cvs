@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.26.2.3 2006/01/05 05:57:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.26.2.4 2006/01/11 04:26:44 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -333,6 +333,7 @@ loop:
 			osi_dnlc_purgedp(tvc);
 
 #ifdef AFS_DARWIN80_ENV
+		    vnode_put(AFSTOV(tvc));
 		    /* our tvc ptr is still good until now */
 		    AFS_FAST_RELE(tvc);
 		    ObtainReadLock(&afs_xvcache);
