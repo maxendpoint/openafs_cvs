@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.10 2006/01/06 03:03:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.11 2006/01/11 04:24:39 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1643,12 +1643,12 @@ afs_vop_reclaim(ap)
 			   );
           afs_osi_Wakeup(&tvc->states);
        }
-       ReleaseWriteLock(&afs_xvcache);
-       AFS_GUNLOCK();
        if (!error && vnode_fsnode(vp))
 	   panic("afs_reclaim: vnode not cleaned");
        if (!error && (tvc->v != NULL)) 
            panic("afs_reclaim: vcache not cleaned");
+       ReleaseWriteLock(&afs_xvcache);
+       AFS_GUNLOCK();
     }
     return error;
 }
