@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.22 2005/12/17 17:28:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.23 2006/01/16 16:23:33 jaltman Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -2383,6 +2383,15 @@ rxi_SendPacketList(struct rx_call *call, struct rx_connection *conn,
 		clock_Addmsec(&(p->retryTime),
 			      10 + (((afs_uint32) p->backoff) << 8));
 	    }
+#ifdef AFS_NT40_ENV
+	    /* Windows is nice -- it can tell us right away that we cannot
+	     * reach this recipient by returning an WSAEHOSTUNREACH error
+	     * code.  So, when this happens let's "down" the host NOW so
+	     * we don't sit around waiting for this host to timeout later.
+	     */
+	    if (call && code == -1 && errno == WSAEHOSTUNREACH)
+		call->lastReceiveTime = 0;
+#endif
 #if defined(KERNEL) && defined(AFS_LINUX20_ENV)
 	    /* Linux is nice -- it can tell us right away that we cannot
 	     * reach this recipient by returning an ENETUNREACH error
