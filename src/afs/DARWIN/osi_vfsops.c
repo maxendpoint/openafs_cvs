@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.11.2.3 2005/11/29 05:02:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.11.2.4 2006/01/17 16:08:20 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -503,8 +503,23 @@ int afs_sysctl(int *name, u_int namelen, void *oldp, size_t *oldlenp,
 	    switch (name[2]) {
 	    case AFS_SC_DARWIN_ALL_REALMODES:
 #ifdef AFS_DARWIN80_ENV
-               newlen;
-               /* XXX complicated */
+		if (oldp != USER_ADDR_NULL && oldlenp == NULL)
+		    return (EFAULT);
+		if (oldp && *oldlenp < sizeof(u_int32_t))
+		    return (ENOMEM);
+		if (newp && newlen != sizeof(u_int32_t))
+		    return (EINVAL);
+		*oldlenp = sizeof(u_int32_t);
+		if (oldp) {
+		    if ((error = copyout(&afs_darwin_realmodes,
+					 oldp, sizeof(u_int32_t)))) {
+			return error;
+		    }
+		}
+		if (newp)
+		    return copyin(newp, &afs_darwin_realmodes,
+				  sizeof(u_int32_t));
+		return 0;
 #else
 	        return sysctl_int(oldp, oldlenp, newp, newlen,
 				  &afs_darwin_realmodes);
