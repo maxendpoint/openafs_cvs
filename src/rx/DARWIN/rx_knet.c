@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.10.2.1 2005/10/05 05:58:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.10.2.2 2006/01/17 17:09:48 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -145,9 +145,7 @@ osi_StopListener(void)
 #if defined(KERNEL_FUNNEL)
     thread_funnel_switch(NETWORK_FUNNEL, KERNEL_FUNNEL);
 #endif
-#ifdef AFS_DARWIN80_ENV
-    proc_signal(rxk_ListenerPid, SIGUSR1);
-#else
+#ifndef AFS_DARWIN80_ENV
     p = pfind(rxk_ListenerPid);
     if (p)
 	psignal(p, SIGUSR1);
