@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.69 2005/11/19 04:33:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.70 2006/01/17 04:59:11 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -723,8 +723,10 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
 	    }
 	    if (!tvcp)
 	    {
+		DRelease((struct buffer *)dirEntryp, 0);
 		ReleaseReadLock(&dcp->lock);
 		ReleaseReadLock(&adp->lock);
+		afs_PutDCache(dcp);
 		goto done;	/* can happen if afs_NewVCache fails */
 	    }
 
