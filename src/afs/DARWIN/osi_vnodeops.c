@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.32 2006/01/11 04:23:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.33 2006/01/17 17:05:31 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1727,7 +1727,9 @@ afs_vop_advlock(ap)
 #endif
     AFS_GLOCK();
     error =
-	afs_lockctl(VTOAFS(ap->a_vp), ap->a_fl, ap->a_op, tcr, (int)ap->a_id);
+	afs_lockctl(VTOAFS(ap->a_vp), ap->a_fl,
+		    ap->a_op == F_UNLCK ? F_SETLK : ap->a_op, tcr, 
+		    (int)ap->a_id);
     AFS_GUNLOCK();
     return error;
 }
