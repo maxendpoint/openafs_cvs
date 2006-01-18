@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.44.2.9 2005/10/15 14:24:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.44.2.10 2006/01/18 02:22:19 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -133,7 +133,8 @@ osi_Panic(msg, a1, a2, a3)
 
     dpf((msg, a1, a2, a3));
 #ifdef AFS_LINUX24_ENV
-    BUG();
+    printk("AFS BUG at %s\n", msg); 
+    * ((char *) 0) = 0; 
 #else
     panic(msg);
 #endif
