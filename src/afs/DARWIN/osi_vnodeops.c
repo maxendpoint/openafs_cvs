@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.33 2006/01/17 17:05:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.34 2006/01/20 05:19:47 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -299,11 +299,14 @@ afs_vop_lookup(ap)
     int wantparent;		/* 1 => wantparent or lockparent flag */
     struct proc *p;
 #ifdef AFS_DARWIN80_ENV
-    error = cache_lookup(ap->a_dvp, ap->a_vpp, ap->a_cnp);
-    if (error == -1) 
-       return 0;
-    if (error == ENOENT) 
-       return error;
+    vcp = VTOAFS(ap->a_dvp);
+    if (vcp->mvstat != 1) {
+	error = cache_lookup(ap->a_dvp, ap->a_vpp, ap->a_cnp);
+	if (error == -1) 
+	    return 0;
+	if (error == ENOENT) 
+	    return error;
+    }
 #endif
 
     GETNAME();
