@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.15.2.1 2005/10/25 01:58:06 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.15.2.2 2006/01/20 00:03:10 shadow Exp $");
 
 
 #include <sys/types.h>
@@ -306,7 +306,7 @@ PrintCacheEntries32(struct rx_connection *aconn, int aint32)
 	    PrintLock(&centry.lock);
 	    printf("\n");
 	}
-	printf("    %012d bytes  DV %012d  refcnt %05d\n", centry.Length,
+	printf("    %12d bytes  DV %12d  refcnt %5d\n", centry.Length,
 	       centry.DataVersion, centry.refCount);
 	printf("    callback %08x\texpires %u\n", centry.callback,
 	       centry.cbExpires);
