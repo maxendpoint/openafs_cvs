@@ -2454,6 +2454,7 @@ void smb_SendPacket(smb_vc_t *vcp, smb_packet_t *inp)
 	}
 	dead_vcp = vcp;
 	vcp->flags |= SMB_VCFLAG_ALREADYDEAD;
+	dead_sessions[vcp->session] = TRUE;
     }
 
     if (localNCB)
