@@ -8078,14 +8078,14 @@ void smb_Listener(void *parmp)
 	    /* Allocate slot in session arrays */
 	    /* Re-use dead session if possible, otherwise add one more */
 	    /* But don't look at session[0], it is reserved */
-	    for (i = 1; i < numSessions; i++) {
-		if (dead_sessions[i]) {
-		    osi_Log1(smb_logp, "connecting to dead session [ %d ]", i);
-		    dead_sessions[i] = FALSE;
+	    for (session = 1; session < numSessions; session++) {
+		if (dead_sessions[session]) {
+		    osi_Log1(smb_logp, "connecting to dead session [ %d ]", session);
+		    dead_sessions[session] = FALSE;
 		    break;
 		}
 	    }
- 	} else {
+	} else {
  	    /* We are re-using an existing VC because the lsn and lana 
  	     * were re-used */
  	    session = vcp->session;
