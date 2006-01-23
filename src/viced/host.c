@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.68 2006/01/21 21:22:47 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.69 2006/01/23 21:13:19 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -2218,9 +2218,9 @@ CheckHost(register struct host *host, int held)
     }
     if (host->LastCall < checktime) {
 	h_Lock_r(host);
-	cb_conn = host->callback_rxcon;
-	rx_GetConnection(cb_conn);
 	if (!(host->hostFlags & HOSTDELETED)) {
+	    cb_conn = host->callback_rxcon;
+	    rx_GetConnection(cb_conn);
 	    if (host->LastCall < clientdeletetime) {
 		host->hostFlags |= HOSTDELETED;
 		if (!(host->hostFlags & VENUSDOWN)) {
@@ -2285,11 +2285,11 @@ CheckHost(register struct host *host, int held)
 		    }
 		}
 	    }
+	    H_UNLOCK;
+	    rx_PutConnection(cb_conn);
+	    cb_conn=NULL;
+	    H_LOCK;
 	}
-	H_UNLOCK;
-	rx_PutConnection(cb_conn);
-	cb_conn=NULL;
-	H_LOCK;
 	h_Unlock_r(host);
     }
     H_UNLOCK;
