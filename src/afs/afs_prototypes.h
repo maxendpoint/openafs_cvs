@@ -812,6 +812,7 @@ extern afs_int32 afs_data_pointer_to_int32(const void *p);
 extern afs_int32 afs_maxvcount;
 extern afs_int32 afs_vcount;
 extern int afsvnumbers;
+extern afs_rwlock_t afs_xvreclaim;
 extern afs_rwlock_t afs_xvcache;
 extern afs_lock_t afs_xvcb;
 extern struct afs_q VLRU;

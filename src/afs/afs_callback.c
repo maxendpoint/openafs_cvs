@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.36 2005/12/17 22:17:29 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.37 2006/01/24 17:32:43 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -59,7 +59,9 @@ static struct ltable {
     "afs_xosi", (char *)&afs_xosi},
 #endif
     {
-    "afs_xsrvAddr", (char *)&afs_xsrvAddr}
+      "afs_xsrvAddr", (char *)&afs_xsrvAddr},
+    {
+    "afs_xvreclaim", (char *)&afs_xvreclaim}
 };
 unsigned long lastCallBack_vnode;
 unsigned int lastCallBack_dv;
