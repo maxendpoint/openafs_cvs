@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.28.2.9 2005/10/15 14:24:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.28.2.10 2006/01/24 17:34:15 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -175,6 +175,9 @@ afs_Daemon(void)
 	    /* things to do every minute */
 	    DFlush();		/* write out dir buffers */
 	    afs_WriteThroughDSlots();	/* write through cacheinfo entries */
+	    ObtainWriteLock(&afs_xvcache, 736);
+	    afs_FlushReclaimedVcaches();
+	    ReleaseWriteLock(&afs_xvcache);
 	    afs_FlushActiveVcaches(1);	/* keep flocks held & flush nfs writes */
 #ifdef AFS_DISCON_ENV
 	    afs_StoreDirtyVcaches();
