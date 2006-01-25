@@ -820,6 +820,7 @@ extern unsigned int afs_paniconwarn;
 extern struct afs_q afs_vhashTV[VCSIZE];
 extern afs_int32 afs_bulkStatsLost;
 extern int afs_norefpanic;
+extern struct vcache *ReclaimedVCList;
 
 void afs_vcacheInit(int astatSize);
 extern struct vcache *afs_FindVCache(struct VenusFid *afid, afs_int32 * retry,

@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.14 2006/01/24 17:34:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.15 2006/01/25 04:47:12 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1645,7 +1645,7 @@ afs_vop_reclaim(ap)
 	   tvc->states |= CVInit; /* also CDeadVnode? */
 	   tvc->nextfree = ReclaimedVCList;
 	   ReclaimedVCList = tvc;
-	   ReleaseWriteLock(&afs_xvreclaim, 176);
+	   ReleaseWriteLock(&afs_xvreclaim);
        } else {
 	   error = afs_FlushVCache(tvc, &sl);	/* toss our stuff from vnode */
 	   if (tvc->states & (CVInit
