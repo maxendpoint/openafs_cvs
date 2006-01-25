@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.104 2006/01/25 04:29:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.105 2006/01/25 04:45:00 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -66,7 +66,7 @@ afs_rwlock_t afs_xvreclaim;	/*Lock: entries reclaimed, not on free list */
 afs_lock_t afs_xvcb;		/*Lock: fids on which there are callbacks */
 #if !defined(AFS_LINUX22_ENV)
 static struct vcache *freeVCList;	/*Free list for stat cache entries */
-static struct vcache *ReclaimedVCList;	/*Reclaimed list for stat entries */
+struct vcache *ReclaimedVCList;	/*Reclaimed list for stat entries */
 static struct vcache *Initial_freeVCList;	/*Initial list for above */
 #endif
 struct afs_q VLRU;		/*vcache LRU */
@@ -579,10 +579,12 @@ afs_FlushReclaimedVcaches(void)
 {
 #if !defined(AFS_LINUX22_ENV)
     struct vcache *tvc;
+    int code, fv_slept;
+    struct vcache *tmpReclaimedVCList = NULL;	
 
     ObtainWriteLock(&afs_xvreclaim, 76);
     while (ReclaimedVCList) {
-	tvc = ReclaimVCList;	/* take from free list */
+	tvc = ReclaimedVCList;	/* take from free list */
 	ReclaimedVCList = tvc->nextfree;
 	tvc->nextfree = NULL;
 	code = afs_FlushVCache(tvc, &fv_slept);
@@ -633,7 +635,6 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
 #endif /* AFS_OSF_ENV */
     struct afs_q *tq, *uq;
     int code, fv_slept;
-    struct vcache *tmpReclaimedVCList = NULL;	
 
     AFS_STATCNT(afs_NewVCache);
 
