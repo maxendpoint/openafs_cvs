@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.103 2006/01/24 17:32:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.104 2006/01/25 04:29:13 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -578,6 +578,8 @@ void
 afs_FlushReclaimedVcaches(void)
 {
 #if !defined(AFS_LINUX22_ENV)
+    struct vcache *tvc;
+
     ObtainWriteLock(&afs_xvreclaim, 76);
     while (ReclaimedVCList) {
 	tvc = ReclaimVCList;	/* take from free list */
