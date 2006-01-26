@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.12 2005/11/21 17:04:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.13 2006/01/26 15:52:37 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -76,7 +76,7 @@ rxi_ListenerProc(osi_socket usockp, int *tnop, struct rx_call **newcallp)
     while (1) {
 	tp = rxi_AllocPacket(RX_PACKET_CLASS_RECEIVE);
 	usr_assert(tp != NULL);
-	rc = rxi_ReadPacket(usockp->sock, tp, &host, &port);
+	rc = rxi_ReadPacket(usockp, tp, &host, &port);
 	if (rc != 0) {
 	    tp = rxi_ReceivePacket(tp, usockp, host, port, tnop, newcallp);
 	    if (newcallp && *newcallp) {
@@ -335,7 +335,7 @@ rxi_Recvmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 {
     int ret;
     do {
-	ret = recvmsg(socket, msg_p, flags);
+	ret = recvmsg(socket->sock, msg_p, flags);
     } while (ret == -1 && errno == EAGAIN);
     return ret;
 }
