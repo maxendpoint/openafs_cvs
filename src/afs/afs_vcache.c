@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.107 2006/01/26 18:11:23 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.108 2006/01/26 18:13:06 rees Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2755,7 +2755,6 @@ afs_NFSFindVCache(struct vcache **avcp, struct VenusFid *afid)
 	    && ((tvc->fid.Fid.Unique & 0xffffff) == afid->Fid.Unique)
 	    && (tvc->fid.Cell == afid->Cell)) {
 	    if (tvc->states & CVInit) {
-		int lock;
 		ReleaseSharedLock(&afs_xvcache);
 		afs_osi_Sleep(&tvc->states);
 		goto loop;
