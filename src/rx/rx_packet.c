@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.23 2006/01/16 16:23:33 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.24 2006/01/26 20:58:47 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -71,6 +71,7 @@ RCSID
 #include <sys/socket.h>
 #include <netinet/in.h>
 #endif /* AFS_NT40_ENV */
+#include "rx_user.h"
 #include "rx_xmit_nt.h"
 #include <stdlib.h>
 #else
@@ -1349,7 +1350,7 @@ CountFDs(register int amax)
  * the data length of the packet is stored in the packet structure.
  * The header is decoded. */
 int
-rxi_ReadPacket(int socket, register struct rx_packet *p, afs_uint32 * host,
+rxi_ReadPacket(osi_socket socket, register struct rx_packet *p, afs_uint32 * host,
 	       u_short * port)
 {
     struct sockaddr_in from;
