@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.37 2006/01/25 04:47:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.38 2006/01/26 15:50:08 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -204,6 +204,10 @@ afs_FlushVCache(struct vcache *avc, int *slept)
 #endif
 	AFSTOV(avc) = NULL;             /* also drop the ptr to vnode */
     }
+#endif
+#ifdef AFS_SUN510_ENV
+    /* As we use private vnodes, cleanup is up to us */
+    vn_reinit(AFSTOV(avc));
 #endif
     afs_FreeAllAxs(&(avc->Access));
 
