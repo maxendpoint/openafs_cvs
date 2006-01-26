@@ -16,14 +16,12 @@
  * afs_osi.h.
  */
 
-/* $Id: osi_machdep.h,v 1.24 2005/11/15 18:43:15 rees Exp $ */
+/* $Id: osi_machdep.h,v 1.25 2006/01/26 16:00:42 shadow Exp $ */
 
 #ifndef _OSI_MACHDEP_H_
 #define _OSI_MACHDEP_H_
 
 #include <sys/lock.h>
-
-extern struct simplelock afs_rxglobal_lock;
 
 #define M_AFSFID	(M_TEMP-1)
 #define M_AFSBUFHDR	(M_TEMP-2)

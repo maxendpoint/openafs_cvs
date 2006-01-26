@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.85 2006/01/17 17:08:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86 2006/01/26 16:00:34 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -50,7 +50,6 @@ afs_uint32 rx_bindhost;
 
 #if defined(AFS_SUN5_ENV) || defined(AFS_SGI_ENV)
 kmutex_t afs_global_lock;
-kmutex_t afs_rxglobal_lock;
 #endif
 
 #if defined(AFS_SGI_ENV) && !defined(AFS_SGI64_ENV)
