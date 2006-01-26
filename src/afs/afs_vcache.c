@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.106 2006/01/26 15:49:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.107 2006/01/26 18:11:23 rees Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -600,7 +600,7 @@ afs_FlushReclaimedVcaches(void)
 	       We probably need a way to be smarter about this. */
 	    tvc->nextfree = tmpReclaimedVCList;
 	    tmpReclaimedVCList = tvc;
-	    printf("Reclaim list flush %x failed: %d\n", tvc, code);
+	    printf("Reclaim list flush %lx failed: %d\n", (unsigned long) tvc, code);
 	}
     }
     if (tmpReclaimedVCList) 
