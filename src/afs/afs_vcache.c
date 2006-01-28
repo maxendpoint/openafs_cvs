@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.39 2006/01/26 19:30:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.40 2006/01/28 18:04:04 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -601,6 +601,18 @@ afs_FlushReclaimedVcaches(void)
 	    tvc->nextfree = tmpReclaimedVCList;
 	    tmpReclaimedVCList = tvc;
 	    printf("Reclaim list flush %x failed: %d\n", tvc, code);
+	}
+        if (tvc->states & (CVInit
+#ifdef AFS_DARWIN80_ENV
+			  | CDeadVnode
+#endif
+           )) {
+	   tvc->states &= ~(CVInit
+#ifdef AFS_DARWIN80_ENV
+			    | CDeadVnode
+#endif
+	   );
+	   afs_osi_Wakeup(&tvc->states);
 	}
     }
     if (tmpReclaimedVCList) 
