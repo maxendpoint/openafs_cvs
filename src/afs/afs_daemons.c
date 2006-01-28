@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.38 2006/01/24 17:32:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.39 2006/01/28 19:20:44 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -35,6 +35,9 @@ short afs_brsDaemons = 0;	/* number of daemons waiting for brs requests */
 struct brequest afs_brs[NBRS];	/* request structures */
 struct afs_osi_WaitHandle AFS_WaitHandler, AFS_CSWaitHandler;
 static int afs_brs_count = 0;	/* request counter, to service reqs in order */
+#ifdef AFS_DISABLE_BKG
+extern int disable_bkg = AFS_DISABLE_BKG;
+#endif
 
 static int rxepoch_checked = 0;
 #define afs_CheckRXEpoch() {if (rxepoch_checked == 0 && rxkad_EpochWasSet) { \
@@ -563,6 +566,10 @@ int
 afs_BBusy(void)
 {
     AFS_STATCNT(afs_BBusy);
+#ifdef AFS_DISABLE_BKG
+    if (disable_bkg)
+	return 1;
+#endif
     if (afs_brsDaemons > 0)
 	return 0;
     return 1;
