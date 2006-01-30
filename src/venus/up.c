@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/up.c,v 1.15 2006/01/26 21:24:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/up.c,v 1.16 2006/01/30 22:11:40 kenh Exp $");
 
 /* missing type from C language */
 
@@ -82,6 +82,9 @@ struct OldAcl {
     int offset;
     char data[1];
 };
+
+void ScanArgs(int, char *[]);
+int Copy(char *, char *, short, int);
 
 /* ************************************************************ */
 /* 								 */
