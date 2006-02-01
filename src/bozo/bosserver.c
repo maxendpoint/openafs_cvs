@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.29 2006/01/19 16:57:07 rees Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.30 2006/02/01 16:09:15 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -743,6 +743,7 @@ main(int argc, char **argv, char **envp)
     sigaction(SIGSEGV, &nsa, NULL);
     sigaction(SIGABRT, &nsa, NULL);
 #endif
+    osi_audit_init();
 #ifdef BOS_RESTRICTED_MODE
     signal(SIGFPE, bozo_insecureme);
 #endif

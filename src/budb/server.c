@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.15 2005/07/02 16:59:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.16 2006/02/01 16:09:18 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -395,6 +395,7 @@ main(argc, argv)
     sigaction(SIGSEGV, &nsa, NULL);
     sigaction(SIGABRT, &nsa, NULL);
 #endif
+    osi_audit_init();
     osi_audit(BUDB_StartEvent, 0, AUD_END);
 
     initialize_BUDB_error_table();

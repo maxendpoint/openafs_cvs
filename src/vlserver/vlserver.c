@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.19 2005/07/05 13:57:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.20 2006/02/01 16:09:20 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -160,6 +160,8 @@ main(argc, argv)
     sigaction(SIGABRT, &nsa, NULL);
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
+    osi_audit_init();
+
     /* Parse command line */
     for (index = 1; index < argc; index++) {
 	if (strcmp(argv[index], "-noauth") == 0) {
