@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.36 2006/01/25 04:45:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.37 2006/02/05 18:21:51 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -2038,7 +2038,10 @@ afs_darwin_finalizevnode(struct vcache *avc, struct vnode *dvp, struct component
    par.vnfs_filesize = avc->m.Length;
    par.vnfs_fsnode = avc;
    par.vnfs_dvp = dvp;
-   par.vnfs_cnp = cnp;
+   if (cnp && (cnp->cn_flags & ISDOTDOT) == 0)
+       par.vnfs_cnp = cnp;
+   if (!dvp || !cnp || (cnp->cn_flags & MAKEENTRY) == 0)
+       par.vnfs_flags = VNFS_NOCACHE;
    if (isroot)
        par.vnfs_markroot = 1;
    error = vnode_create(VNCREATE_FLAVOR, VCREATESIZE, &par, &nvp);
