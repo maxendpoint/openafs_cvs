@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.15 2006/02/10 17:11:45 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.16 2006/02/10 17:12:25 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1306,7 +1306,7 @@ h_GetHost_r(struct rx_connection *tcon)
 
                     if (oldHost->interface) {
 			afsUUID uuid = oldHost->interface->uuid;
-                        cb_conn = host->callback_rxcon;
+                        cb_conn = oldHost->callback_rxcon;
                         rx_GetConnection(cb_conn);
 			H_UNLOCK;
 			code = RXAFSCB_ProbeUuid(cb_conn, &uuid);
