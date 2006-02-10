@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.14 2006/02/10 16:50:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.15 2006/02/10 17:11:45 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1031,7 +1031,7 @@ removeInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
     assert(host);
     assert(host->interface);
 
-    ViceLog(125, ("removeInterfaceAddr : host %s:d addr %s:%d\n", 
+    ViceLog(125, ("removeInterfaceAddr : host %s:%d addr %s:%d\n", 
 		   afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port), 
 		   afs_inet_ntoa_r(addr, hoststr2), ntohs(port)));
 
