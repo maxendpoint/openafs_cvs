@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.13 2006/02/07 07:47:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.14 2006/02/10 16:50:40 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1812,7 +1812,7 @@ GetClient(struct rx_connection *tcon, struct client **cp)
     if (client == NULL || client->tcon == NULL) {
 	ViceLog(0,
 		("GetClient: no client in conn %x (host %x:%d), VBUSYING\n",
-		 tcon, rxr_HostOf(tcon),rxr_PortOf(tcon)));
+		 tcon, rxr_HostOf(tcon),ntohs(rxr_PortOf(tcon))));
 	H_UNLOCK;
 	return VBUSY;
     }
