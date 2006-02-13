@@ -112,7 +112,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.21.2.2 2005/07/11 19:08:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.21.2.3 2006/02/13 17:57:28 jaltman Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -243,6 +243,7 @@ main(int argc, char **argv)
     sigaction(SIGABRT, &nsa, NULL);
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
+    osi_audit_init();
     osi_audit(PTS_StartEvent, 0, AUD_END);
 
     /* Initialize dirpaths */

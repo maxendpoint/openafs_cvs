@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.18.2.2 2005/07/11 19:08:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.18.2.3 2006/02/13 17:57:32 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -259,6 +259,7 @@ main(int argc, char **argv)
     sigaction(SIGABRT, &nsa, NULL);
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
+    osi_audit_init();
     osi_audit(VS_StartEvent, 0, AUD_END);
 
     /* Initialize dirpaths */

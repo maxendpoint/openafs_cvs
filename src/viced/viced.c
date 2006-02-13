@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.8 2005/10/15 03:46:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.9 2006/02/13 17:57:29 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1628,6 +1628,7 @@ main(int argc, char *argv[])
     sigaction(SIGABRT, &nsa, NULL);
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
+    osi_audit_init();
 
     /* Initialize dirpaths */
     if (!(initAFSDirPath() & AFSDIR_SERVER_PATHS_OK)) {
