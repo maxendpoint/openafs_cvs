@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.20.2.7 2005/11/29 04:13:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.20.2.8 2006/02/13 18:39:11 shadow Exp $");
 
 /*
  * SOLARIS/osi_vnodeops.c
@@ -895,8 +895,9 @@ afs_nfsrdwr(avc, auio, arw, ioflag, acred)
 	 * call it with an offset based on blocks smaller than MAXBSIZE
 	 * (implying that it should be named BSIZE, since it is clearly both a
 	 * max and a min). */
-	size = auio->afsio_resid;	/* transfer size */
-	fileBase = auio->afsio_offset;	/* start file position for xfr */
+	size = auio->afsio_resid;       /* transfer size */     
+	fileBase = ((arw == UIO_READ) && (origLength < auio->uio_offset)) ? 
+	    origLength : auio->afsio_offset;  /* start file position for xfr */
 	pageBase = fileBase & ~(MAXBSIZE - 1);	/* file position of the page */
 	pageOffset = fileBase & (MAXBSIZE - 1);	/* xfr start's offset within page */
 	tsize = MAXBSIZE - pageOffset;	/* how much more fits in this page */
