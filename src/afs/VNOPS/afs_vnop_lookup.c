@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.16 2006/01/17 05:00:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.17 2006/02/14 20:33:48 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1601,8 +1601,8 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
     }
     if (bulkcode)
 	code = bulkcode;
-    else
-	code = afs_CheckCode(code, &treq, 19);
+
+    code = afs_CheckCode(code, &treq, 19);
     if (code) {
 	/* If there is an error, make sure *avcp is null.
 	 * Alphas panic otherwise - defect 10719.
