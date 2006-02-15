@@ -1,5 +1,5 @@
 /*
- * $Id: asetkey.c,v 1.2 2005/12/21 18:41:47 rees Exp $
+ * $Id: asetkey.c,v 1.3 2006/02/15 16:38:33 shadow Exp $
  *
  * asetkey - Manipulates an AFS KeyFile
  *
@@ -22,9 +22,9 @@
 #endif /* HAVE_STRING_H */
 
 #include <krb5.h>
-#include <com_err.h>
 
 #include <afs/stds.h>
+#include <afs/com_err.h>
 #include <afs/cellconfig.h>
 #include <afs/keys.h>
 #include <afs/dirpath.h>
