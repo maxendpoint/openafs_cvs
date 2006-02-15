@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.37 2006/02/05 18:21:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.38 2006/02/15 07:01:40 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1430,8 +1430,10 @@ afs_vop_mkdir(ap)
     error = afs_mkdir(VTOAFS(dvp), name, vap, &vcp, vop_cn_cred);
     AFS_GUNLOCK();
     if (error) {
+#ifndef AFS_DARWIN80_ENV
 	VOP_ABORTOP(dvp, cnp);
 	vput(dvp);
+#endif
 	DROPNAME();
 	return (error);
     }
