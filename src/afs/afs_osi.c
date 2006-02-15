@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.48.2.5 2005/10/05 05:58:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.48.2.6 2006/02/15 20:55:11 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -581,6 +581,7 @@ shutdown_osi(void)
        afs_osi_ctxtp = NULL;
        afs_osi_ctxtp_initialized = 0;
     }
+    shutdown_osisleep();
 #endif
     if (afs_cold_shutdown) {
 	LOCK_INIT(&afs_ftf, "afs_ftf");
