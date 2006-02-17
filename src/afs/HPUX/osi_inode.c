@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/HPUX/osi_inode.c,v 1.8.2.1 2005/11/07 23:43:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/HPUX/osi_inode.c,v 1.8.2.2 2006/02/17 17:35:33 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -145,9 +145,7 @@ afs_syscall_iopen(dev, inode, usrmod)
 	iput(ip);
 	goto out;
     }
-#ifdef AFS_HPUX1111_ENV
     fd = u.u_r.r_val1;
-#endif
     iunlock(ip);
 
     fp->f_ops = &vnodefops;
@@ -179,9 +177,6 @@ afs_syscall_iopen(dev, inode, usrmod)
      * called by falloc(), which is called above.
      */
     if (is_multithreaded(u.u_procp)) {
-#ifndef AFS_HPUX1111_ENV
-	fd = (int)u.u_r.r_val1;
-#endif
 	putf(fd);
     }
 
