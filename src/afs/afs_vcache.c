@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.111 2006/01/28 18:06:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.112 2006/02/17 21:57:12 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -163,7 +163,6 @@ afs_FlushVCache(struct vcache *avc, int *slept)
     avc->states |= CVFlushed;
     /* pull the entry out of the lruq and put it on the free list */
     QRemove(&avc->vlruq);
-    avc->vlruq.prev = avc->vlruq.next = (struct afs_q *)0;
 
     /* keep track of # of files that we bulk stat'd, but never used
      * before they got recycled.
