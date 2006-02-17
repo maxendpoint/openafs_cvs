@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.100 2006/02/14 16:58:13 rees Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.101 2006/02/17 14:48:09 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -598,6 +598,7 @@ client_HasAsMember(struct client *client, afs_int32 id)
     ObtainReadLock(&client->lock);
     if (client->CPS.prlist_len > 0 && !client->deleted && 
 	client->host &&	!(client->host->hostFlags & HOSTDELETED))
+	code = acl_IsAMember(id, &client->CPS);
     ReleaseReadLock(&client->lock);
     return code;
 }
