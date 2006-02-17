@@ -1,11 +1,12 @@
 /*
- * $Id: asetkey.c,v 1.3 2006/02/15 16:38:33 shadow Exp $
+ * $Id: asetkey.c,v 1.4 2006/02/17 17:58:21 rees Exp $
  *
  * asetkey - Manipulates an AFS KeyFile
  *
  * Updated for Kerberos 5
  */
 
+#include <afsconfig.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -32,9 +33,6 @@
 int
 main(int argc, char *argv[])
 {
-#ifdef AFS_OBSD_ENV
-    fprintf(stderr, "asetkey not implemented. Use kadmin instead.\n");
-#else
     struct afsconf_dir *tdir;
     register long code;
     const char *confdir;
@@ -137,6 +135,5 @@ main(int argc, char *argv[])
 		"assistance\n", argv[0], argv[1], argv[0]);
 	exit(1);
     }
-#endif
     exit(0);
 }
