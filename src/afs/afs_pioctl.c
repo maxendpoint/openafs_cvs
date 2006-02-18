@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.23 2006/02/17 21:53:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.24 2006/02/18 04:09:33 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -2549,6 +2549,9 @@ DECL_PIOCTL(PFlushVolumeData)
     register struct volume *tv;
     afs_int32 cell, volume;
     struct afs_q *tq, *uq;
+#ifdef AFS_DARWIN80_ENV
+    vnode_t vp;
+#endif
 
     AFS_STATCNT(PFlushVolumeData);
     if (!avc)
@@ -2584,14 +2587,22 @@ DECL_PIOCTL(PFlushVolumeData)
 #if	defined(AFS_SGI_ENV) || defined(AFS_OSF_ENV)  || defined(AFS_SUN5_ENV)  || defined(AFS_HPUX_ENV) || defined(AFS_LINUX20_ENV) 
 		VN_HOLD(AFSTOV(tvc));
 #else
-#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #ifdef AFS_DARWIN80_ENV
-                if (vnode_get(AFSTOV(tvc)))
-                    continue;
-#endif
+		vp = AFSTOV(tvc);
+		if (vnode_get(vp))
+		    continue;
+		if (vnode_ref(vp)) {
+		    AFS_GUNLOCK();
+		    vnode_put(vp);
+		    AFS_GLOCK();
+		    continue;
+		}
+#else
+#if defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 		osi_vnhold(tvc, 0);
 #else
 		VREFCOUNT_INC(tvc); /* AIX, apparently */
+#endif
 #endif
 #endif
 		ReleaseReadLock(&afs_xvcache);

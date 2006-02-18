@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.17 2006/02/14 20:33:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.50.2.18 2006/02/18 04:09:36 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -900,9 +900,6 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
     ReleaseReadLock(&afs_xvcache);	/* could be read lock */
     if (retry)
 	goto reskip;
-#ifdef AFS_DARWIN80_ENV
-    vnode_get(AFSTOV(lruvcp));
-#endif
 
     /* otherwise, merge in the info.  We have to be quite careful here,
      * since we need to ensure that we don't merge old info over newer

@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.26.2.4 2006/01/11 04:26:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.26.2.5 2006/02/18 04:09:34 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -238,6 +238,9 @@ afs_CheckVolumeNames(int flags)
     unsigned int now;
     struct vcache *tvc;
     afs_int32 *volumeID, *cellID, vsize, nvols;
+#ifdef AFS_DARWIN80_ENV
+    vnode_t tvp;
+#endif
     AFS_STATCNT(afs_CheckVolumeNames);
 
     nvols = 0;
@@ -318,10 +321,19 @@ loop:
 			afs_osi_Sleep(&tvc->states);
                         goto loop;
                     }
-                    if (vnode_get(AFSTOV(tvc)))
-                        continue;
-#endif
+		    tvp = AFSTOV(tvc);
+		    if (vnode_get(tvp))
+			continue;
+		    if (vnode_ref(tvp)) {
+			AFS_GUNLOCK();
+			/* AFSTOV(tvc) may be NULL */
+			vnode_put(tvp);
+			AFS_GLOCK();
+			continue;
+		    }
+#else
 		    AFS_FAST_HOLD(tvc);
+#endif
 		    ReleaseReadLock(&afs_xvcache);
 
 		    ObtainWriteLock(&afs_xcbhash, 485);
