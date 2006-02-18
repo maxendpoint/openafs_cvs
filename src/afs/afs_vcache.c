@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.113 2006/02/18 04:08:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114 2006/02/18 04:53:34 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2156,7 +2156,7 @@ afs_GetRootVCache(struct VenusFid *afid, struct vrequest *areq,
 		afs_osi_Sleep(&tvc->states);
 		goto rootvc_loop;
             }
-	    tvp = AFSTOV(tvc));
+	    tvp = AFSTOV(tvc);
 	    if (vnode_get(tvp))       /* this bumps ref count */
 	        continue;
 	    if (vnode_ref(tvp)) {
