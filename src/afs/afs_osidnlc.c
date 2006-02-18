@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.12 2006/01/28 18:02:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.13 2006/02/18 04:08:04 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -197,6 +197,9 @@ osi_dnlc_lookup(struct vcache *adp, char *aname, int locktype)
     char *ts = aname;
     struct nc *tnc, *tnc1 = 0;
     int safety;
+#ifdef AFS_DARWIN80_ENV
+    vnode_t tvp;
+#endif
 
     if (!afs_usednlc)
 	return 0;
@@ -249,14 +252,25 @@ osi_dnlc_lookup(struct vcache *adp, char *aname, int locktype)
 	VN_HOLD((vnode_t *) tvc);
 #else
 #ifdef AFS_DARWIN80_ENV
-        if (vnode_get(tvc->v)) {
+	tvp = AFSTOV(tvc);
+	if (vnode_get(tvp)) {
 	    ReleaseReadLock(&afs_xvcache);
 	    dnlcstats.misses++;
-            osi_dnlc_remove(adp, aname, tvc);
-            return 0;
-        }
-#endif
+	    osi_dnlc_remove(adp, aname, tvc);
+	    return 0;
+	}
+	if (vnode_ref(tvp)) {
+	    ReleaseReadLock(&afs_xvcache);
+	    AFS_GUNLOCK();
+	    vnode_put(tvp);
+	    AFS_GLOCK();
+	    dnlcstats.misses++;
+	    osi_dnlc_remove(adp, aname, tvc);
+	    return 0;
+	}
+#else
 	osi_vnhold(tvc, 0);
+#endif
 #endif
 	ReleaseReadLock(&afs_xvcache);
 

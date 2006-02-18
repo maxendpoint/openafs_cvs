@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.38 2006/02/15 07:01:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.39 2006/02/18 04:08:15 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -240,9 +240,9 @@ darwin_vn_hold(struct vnode *vp)
     tvc->states |= CUBCinit;
 #endif
 #ifdef AFS_DARWIN80_ENV
+    osi_Assert((tvc->states & CVInit) == 0);
     if (tvc->states & CDeadVnode)
        osi_Assert(!vnode_isinuse(vp, 1));
-     osi_Assert((tvc->states & CVInit) == 0);
 #endif
     if (haveGlock) AFS_GUNLOCK(); 
 
@@ -257,7 +257,15 @@ darwin_vn_hold(struct vnode *vp)
            return;
 #endif
         }
-	vnode_ref(vp);
+	if (vnode_ref(vp)) {
+#if 1
+	    panic("vn_hold on terminating vnode");
+#else           
+	    vnode_put(vp);
+	    if (haveGlock) AFS_GLOCK(); 
+	    return;
+#endif
+	}
 	vnode_put(vp);
 #else
     /* vget needed for 0 ref'd vnode in GetVCache to not panic in vref.
