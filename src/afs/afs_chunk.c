@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_chunk.c,v 1.6.2.1 2005/10/13 18:46:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_chunk.c,v 1.6.2.2 2006/02/20 21:49:41 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -24,6 +24,6 @@ RCSID
 
 /* Place the defaults in afsd instead of all around the code, so
  * AFS_SETCHUNKSIZE() needs to be called before doing anything */
-afs_int32 afs_FirstCSize = 0;
-afs_int32 afs_OtherCSize = 0;
-afs_int32 afs_LogChunk = 0;
+afs_int32 afs_FirstCSize = AFS_DEFAULTCSIZE;
+afs_int32 afs_OtherCSize = AFS_DEFAULTCSIZE;
+afs_int32 afs_LogChunk = AFS_DEFAULTLSIZE;
