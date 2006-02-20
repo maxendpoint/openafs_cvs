@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.101 2006/02/17 14:48:09 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.102 2006/02/20 15:26:21 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6033,7 +6033,7 @@ SRXAFS_FlushCPS(struct rx_call * acall, struct ViceIds * vids,
     for (i = 0; i < nids; i++, vd++) {
 	if (!*vd)
 	    continue;
-	client = h_ID2Client(*vd);	/* returns client write locked, or NULL */
+	client = h_ID2Client(*vd);	/* returns write locked and refCounted, or NULL */
 	if (!client)
 	    continue;
 
@@ -6049,6 +6049,7 @@ SRXAFS_FlushCPS(struct rx_call * acall, struct ViceIds * vids,
 	    client->CPS.prlist_len = 0;
 	}
 	ReleaseWriteLock(&client->lock);
+	PutClient(&client);
     }
 
     addr = addrs->IPAddrs_val;
