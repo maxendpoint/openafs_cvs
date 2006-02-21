@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.33 2005/10/13 15:12:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.34 2006/02/21 04:45:10 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -353,6 +353,12 @@ afs_MemRead(register struct vcache *avc, struct uio *auio,
 
 	if (len <= 0)
 	    break;		/* surprise eof */
+#ifdef AFS_DARWIN80_ENV
+	if (tuiop) {
+	    uio_free(tuiop);
+	    tuiop = 0;
+	}
+#endif
     }				/* the whole while loop */
 
     /*
@@ -880,6 +886,12 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 	filePos += len;
 	if (len <= 0)
 	    break;		/* surprise eof */
+#ifdef AFS_DARWIN80_ENV
+	if (tuiop) {
+	    uio_free(tuiop);
+	    tuiop = 0;
+	}
+#endif
     }
 
     /* if we make it here with tdc non-zero, then it is the last chunk we

@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_file.c,v 1.11 2005/12/01 07:36:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_file.c,v 1.12 2006/02/21 04:45:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -247,7 +247,7 @@ osi_UFSTruncate(register struct osi_file *afile, afs_int32 asize)
 #ifdef AFS_DARWIN80_ENV
     VATTR_INIT(&tvattr);
     VATTR_SET(&tvattr, va_size, asize);
-    code = vnode_getattr(afile->vnode, &tvattr, afs_osi_ctxtp);
+    code = vnode_setattr(afile->vnode, &tvattr, afs_osi_ctxtp);
 #else
     VATTR_NULL(&tvattr);
     tvattr.va_size = asize;
