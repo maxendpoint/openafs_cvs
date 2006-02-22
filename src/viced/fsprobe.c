@@ -11,14 +11,15 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.11 2003/07/15 23:17:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.12 2006/02/22 20:29:01 rees Exp $");
 
 #include <afs/stds.h>
 #include <afs/afsint.h>
-#include <rx/rx_globals.h>
-#include <netdb.h>
 #include <sys/socket.h>
+#include <rx/rx_globals.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 #include <ubik.h>
 
 #ifdef HAVE_STRING_H
@@ -133,14 +134,14 @@ main(int argc, char **argv)
 	    exit(1);
 	}
     }
-    if (code = pxclient_Initialize(noAuth, host.sin_addr.s_addr)) {
+    if ((code = pxclient_Initialize(noAuth, host.sin_addr.s_addr)) != 0) {
 	printf("Couldn't initialize fs library (code=%d).\n", code);
 	exit(1);
     }
 
     code = ubik_Call(RXAFS_GetTime, cstruct, 0, &tv.tv_sec, &tv.tv_usec);
     if (!code)
-	printf("AFS_GetTime on %s sec=%d, usec=%d\n", av[0], tv.tv_sec,
+	printf("AFS_GetTime on %s sec=%ld, usec=%ld\n", av[0], tv.tv_sec,
 	       tv.tv_usec);
     else
 	printf("return code is %d\n", code);
