@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.10 2006/02/22 04:09:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.11 2006/02/22 05:02:04 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -337,8 +337,10 @@ get_key(char *arock, register afs_int32 akvno, char *akey)
 	return 1;
     }
     code = afsconf_GetKey(confDir, akvno, tkey.key);
-    if (code)
+    if (code) {
+	ViceLog(0, ("afsconf_GetKey failure: kvno %d code %d\n", akvno, code));
 	return code;
+    }
     memcpy(akey, tkey.key, sizeof(tkey.key));
     return 0;
 
