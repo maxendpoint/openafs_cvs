@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.17 2005/11/06 09:29:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.18 2006/02/22 05:07:48 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -325,8 +325,8 @@ rxkad_CheckResponse(struct rx_securityClass *aobj,
      * If the alternate decoder is not present, or returns -1, then
      * assume the ticket is of the default style.
      */
-    if (code == -1 && (kvno == RXKAD_TKT_TYPE_KERBEROS_V5)
-	|| (kvno == RXKAD_TKT_TYPE_KERBEROS_V5_ENCPART_ONLY)) {
+    if (code == -1 && ((kvno == RXKAD_TKT_TYPE_KERBEROS_V5)
+	|| (kvno == RXKAD_TKT_TYPE_KERBEROS_V5_ENCPART_ONLY))) {
 	code =
 	    tkt_DecodeTicket5(tix, tlen, tsp->get_key, tsp->get_key_rock,
 			      kvno, client.name, client.instance, client.cell,
