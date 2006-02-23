@@ -83,7 +83,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.75 2006/02/22 20:29:01 rees Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.76 2006/02/23 15:52:24 rees Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -309,7 +309,6 @@ static int ClearHostCallbacks_r(struct host *hp, int locked);
 #define FreeFE(fe) iFreeFE((struct FileEntry *)fe, &cbstuff.nFEs)
 
 /* Other protos - move out sometime */
-extern void ShutDown();
 void PrintCB(register struct CallBack *cb, afs_uint32 now);
 
 #define VHASH 512		/* Power of 2 */

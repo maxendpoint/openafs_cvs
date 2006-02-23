@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.78 2006/02/22 20:29:01 rees Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.79 2006/02/23 15:52:24 rees Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -49,6 +49,7 @@ RCSID
 #endif
 #include <afs/acl.h>
 #include <afs/ptclient.h>
+#include <afs/ptuser.h>
 #include <afs/prs_fs.h>
 #include <afs/auth.h>
 #include <afs/afsutil.h>
