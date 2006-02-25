@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.48 2006/01/10 15:09:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.49 2006/02/25 06:39:20 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -349,6 +349,8 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
     if (tvc && osi_Active(tvc)) {
 	/* about to delete whole file, prefetch it first */
 	ReleaseWriteLock(&adp->lock);
+	if (tdc)
+	    ReleaseSharedLock(&tdc->lock);
 	ObtainWriteLock(&tvc->lock, 143);
 #if	defined(AFS_OSF_ENV)
 	afs_Wire(tvc, &treq);
@@ -356,8 +358,6 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	FetchWholeEnchilada(tvc, &treq);
 #endif
 	ReleaseWriteLock(&tvc->lock);
-	if (tdc) 
-	    ReleaseSharedLock(&tdc->lock);
 	ObtainWriteLock(&adp->lock, 144);
 	/* Technically I don't think we need this back, but let's hold it 
 	   anyway; The "got" reference should actually be sufficient. */
