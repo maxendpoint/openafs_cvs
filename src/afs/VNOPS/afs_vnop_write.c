@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.48 2005/10/13 15:12:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.49 2006/02/27 20:36:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -106,7 +106,7 @@ afs_MemWrite(register struct vcache *avc, struct uio *auio, int aio,
 #endif
     afs_int32 error;
 #ifdef AFS_DARWIN80_ENV
-    uio_t tuiop;
+    uio_t tuiop = NULL;
 #else
     struct uio tuio;
     struct uio *tuiop = &tuio;
@@ -264,6 +264,8 @@ afs_MemWrite(register struct vcache *avc, struct uio *auio, int aio,
 	}
 
 #ifdef  AFS_DARWIN80_ENV
+        if (tuiop)
+	    uio_free(tuiop);
 	trimlen = len;
 	tuiop = afsio_darwin_partialcopy(auio, trimlen);
 #else
@@ -366,7 +368,7 @@ afs_UFSWrite(register struct vcache *avc, struct uio *auio, int aio,
 #endif
     afs_int32 error;
 #ifdef AFS_DARWIN80_ENV
-    uio_t tuiop;
+    uio_t tuiop = NULL;
 #else
     struct uio tuio;
     struct uio *tuiop = &tuio;
@@ -527,6 +529,8 @@ afs_UFSWrite(register struct vcache *avc, struct uio *auio, int aio,
 	}
 
 #ifdef  AFS_DARWIN80_ENV
+	if (tuiop)
+	    uio_free(tuiop);
 	trimlen = len;
 	tuiop = afsio_darwin_partialcopy(auio, trimlen);
 #else
