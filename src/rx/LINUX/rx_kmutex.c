@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.7.2.3 2005/09/14 05:12:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.7.2.4 2006/02/27 21:22:26 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 #include "rx_kmutex.h"
@@ -99,7 +99,22 @@ afs_cv_wait(afs_kcondvar_t * cv, afs_kmutex_t * l, int sigok)
 
     while(seq == cv->seq) {
 	schedule();
-	/* should we refrigerate? */
+#ifdef AFS_LINUX26_ENV
+#ifdef CONFIG_PM
+	if (
+#ifdef PF_FREEZE
+	    current->flags & PF_FREEZE
+#else
+	    !current->todo
+#endif
+	    )
+#ifdef LINUX_REFRIGERATOR_TAKES_PF_FREEZE
+	    refrigerator(PF_FREEZE);
+#else
+	    refrigerator();
+#endif
+#endif
+#endif
     }
 
     remove_wait_queue(&cv->waitq, &wait);
