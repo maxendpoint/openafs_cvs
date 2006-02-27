@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.18 2006/02/18 04:09:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.19 2006/02/27 20:35:11 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1743,7 +1743,10 @@ afs_vop_advlock(ap)
 {
     int error;
     struct ucred *tcr;
+    int clid;
+    int op;
 #ifdef AFS_DARWIN80_ENV
+    proc_t p;
     tcr=vop_cred;
 #else
     struct proc *p = current_proc();
@@ -1753,11 +1756,26 @@ afs_vop_advlock(ap)
     pcred_unlock(p);
     tcr=&cr;
 #endif
+    if (ap->a_flags & F_POSIX) {
+#ifdef AFS_DARWIN80_ENV
+	p = (proc_t) ap->a_id;
+	clid = proc_pid(p);
+#else
+	p = (struct proc *) ap->a_id;
+	clid = p->p_pid;
+#endif
+    } else {
+	clid = (int)ap->a_id;
+    }
+    if (ap->a_op == F_UNLCK) {
+	op = F_SETLK;
+    } else if (ap->a_op == F_SETLK && ap->a_flags & F_WAIT) {
+	op = F_SETLKW;
+    } else {
+	op = ap->a_op;
+    }
     AFS_GLOCK();
-    error =
-	afs_lockctl(VTOAFS(ap->a_vp), ap->a_fl,
-		    ap->a_op == F_UNLCK ? F_SETLK : ap->a_op, tcr, 
-		    (int)ap->a_id);
+    error = afs_lockctl(VTOAFS(ap->a_vp), ap->a_fl, op, tcr, clid);
     AFS_GUNLOCK();
     return error;
 }
