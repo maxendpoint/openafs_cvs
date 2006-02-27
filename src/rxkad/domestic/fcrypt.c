@@ -20,12 +20,15 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/domestic/fcrypt.c,v 1.16 2005/06/02 05:20:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/domestic/fcrypt.c,v 1.17 2006/02/27 20:56:52 shadow Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
 #ifndef UKERNEL
 #include "afs/stds.h"
+#ifndef AFS_LINUX22_ENV
+#include "h/systm.h"
+#endif
 #include "h/types.h"
 #if !defined(AFS_LINUX20_ENV) && !defined(AFS_OBSD_ENV)
 #include "netinet/in.h"

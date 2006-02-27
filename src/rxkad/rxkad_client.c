@@ -19,13 +19,16 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.20 2005/05/30 04:55:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.21 2006/02/27 20:56:49 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/stds.h"
 #ifndef UKERNEL
 #include "h/types.h"
 #include "h/time.h"
+#ifndef AFS_LINUX22_ENV
+#include "h/systm.h"
+#endif
 #ifdef AFS_LINUX20_ENV
 #include "h/socket.h"
 #endif

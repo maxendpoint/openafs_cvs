@@ -15,10 +15,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.18 2006/02/22 05:07:48 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.19 2006/02/27 20:56:49 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
+#include <sys/systm.h>
 #include <time.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
