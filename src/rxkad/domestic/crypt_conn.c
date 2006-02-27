@@ -19,12 +19,15 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/domestic/crypt_conn.c,v 1.11.2.2 2005/05/30 04:57:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/domestic/crypt_conn.c,v 1.11.2.3 2006/02/27 20:57:40 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/stds.h"
 #ifndef UKERNEL
 #include "h/types.h"
+#ifndef AFS_LINUX22_ENV
+#include "h/systm.h"
+#endif
 #include "rx/rx.h"
 #include "netinet/in.h"
 #else /* !UKERNEL */
