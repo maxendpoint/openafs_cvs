@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.79 2006/02/23 15:52:24 rees Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.80 2006/02/28 23:24:23 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -198,6 +198,11 @@ GetHTBlock()
     register struct HTBlock *block;
     register int i;
     static int index = 0;
+
+    if (HTBlocks == h_MAXHOSTTABLES) {
+	ViceLog(0, ("h_MAXHOSTTABLES reached\n"));
+	ShutDownAndCore(PANIC);
+    }
 
     block = (struct HTBlock *)malloc(sizeof(struct HTBlock));
     if (!block) {
