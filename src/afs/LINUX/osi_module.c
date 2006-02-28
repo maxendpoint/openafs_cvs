@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.72 2006/01/14 08:00:01 rra Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.73 2006/02/28 21:17:27 rra Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -634,6 +634,8 @@ afs_ioctl(struct inode *inode, struct file *file, unsigned int cmd,
 #ifdef AFS_LINUX26_ENV 
 #ifdef AFS_S390X_LINUX26_ENV
     if (test_thread_flag(TIF_31BIT))
+#elif AFS_AMD64_LINUX20_ENV
+    if (test_thread_flag(TIF_IA32))
 #else
     if (test_thread_flag(TIF_32BIT))
 #endif /* AFS_S390X_LINUX26_ENV */
