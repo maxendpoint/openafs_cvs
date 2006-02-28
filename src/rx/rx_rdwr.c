@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.28 2006/02/27 20:56:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.29 2006/02/28 00:17:52 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -28,7 +28,7 @@ RCSID
 #include "h/types.h"
 #include "h/time.h"
 #include "h/stat.h"
-#ifndef AFS_LINUX22_ENV
+#if defined(AFS_AIX_ENV) || defined(AFS_AUX_ENV) || defined(AFS_SUN5_ENV) 
 #include "h/systm.h"
 #endif
 #ifdef	AFS_OSF_ENV
