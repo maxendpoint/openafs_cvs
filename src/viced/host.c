@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.81 2006/03/01 06:42:46 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.82 2006/03/01 19:12:05 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -904,10 +904,10 @@ h_Enumerate_r(int (*proc) (), struct host *enumstart, char *param)
     if (enumstart && !(held = h_Held_r(enumstart)))
 	h_Hold_r(enumstart); 
     for (host = enumstart; host; host = next, held = nheld) {
-	held = (*proc) (host, held, param);
 	next = host->next;
 	if (next && !(nheld = h_Held_r(next)))
 	    h_Hold_r(next);
+	held = (*proc) (host, held, param);
 	if (!held)
 	    h_Release_r(host); /* this might free up the host */
     }
