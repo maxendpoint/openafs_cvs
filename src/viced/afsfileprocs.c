@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.20 2006/03/01 04:09:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.21 2006/03/01 05:04:32 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7473,6 +7473,8 @@ SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
 	thost->host           = addr;
 	rx_SetConnDeadTime(thost->callback_rxcon, 50);
 	rx_SetConnHardDeadTime(thost->callback_rxcon, AFS_HARDDEADTIME);
+	h_ReleaseClient_r(tclient);
+	/* The hold on thost will be released by CallPostamble */
 	H_UNLOCK;
 	errorCode = CallPostamble(tcon, errorCode);
 	return errorCode;
@@ -7480,6 +7482,8 @@ SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
 	rx_DestroyConnection(conn);
     }	    
   Bad_CallBackRxConnAddr:
+    h_ReleaseClient_r(tclient);
+    /* The hold on thost will be released by CallPostamble */
     H_UNLOCK;
 #endif
 
