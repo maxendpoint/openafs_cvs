@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.19 2006/02/20 15:27:06 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.20 2006/03/01 04:09:41 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -315,9 +315,11 @@ CallPreamble(register struct rx_call *acall, int activecall,
     H_LOCK;
   retry:
     tclient = h_FindClient_r(*tconn);
+    thost = tclient->host;
     if (tclient->prfail == 1) {	/* couldn't get the CPS */
 	if (!retry_flag) {
 	    h_ReleaseClient_r(tclient);
+	    h_Release_r(thost);
 	    ViceLog(0, ("CallPreamble: Couldn't get CPS. Fail\n"));
 	    H_UNLOCK;
 	    return -1001;
@@ -332,6 +334,7 @@ CallPreamble(register struct rx_call *acall, int activecall,
 	H_LOCK;
 	if (code) {
 	    h_ReleaseClient_r(tclient);
+	    h_Release_r(thost);
 	    H_UNLOCK;
 	    ViceLog(0, ("CallPreamble: couldn't reconnect to ptserver\n"));
 	    return -1001;
@@ -339,10 +342,10 @@ CallPreamble(register struct rx_call *acall, int activecall,
 
 	tclient->prfail = 2;	/* Means re-eval client's cps */
 	h_ReleaseClient_r(tclient);
+	h_Release_r(thost);
 	goto retry;
     }
 
-    thost = tclient->host;
     tclient->LastCall = thost->LastCall = FT_ApproxTime();
     if (activecall)		/* For all but "GetTime", "GetStats", and "GetCaps" calls */
 	thost->ActiveCall = thost->LastCall;
