@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.24 2006/02/18 04:09:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.25 2006/03/02 06:44:05 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -2570,6 +2570,7 @@ DECL_PIOCTL(PFlushVolumeData)
     ObtainReadLock(&afs_xvcache);
     i = VCHashV(&avc->fid);
     for (tq = afs_vhashTV[i].prev; tq != &afs_vhashTV[i]; tq = uq) {
+	    uq = QPrev(tq);
 	    tvc = QTOVH(tq);
 	    if (tvc->fid.Fid.Volume == volume && tvc->fid.Cell == cell) {
                 if (tvc->states & CVInit) {
@@ -2629,8 +2630,6 @@ DECL_PIOCTL(PFlushVolumeData)
 		uq = QPrev(tq);
 		/* our tvc ptr is still good until now */
 		AFS_FAST_RELE(tvc);
-	    } else {
-		uq = QPrev(tq);
 	    }
 	}
     ReleaseReadLock(&afs_xvcache);
