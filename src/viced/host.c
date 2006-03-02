@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.82 2006/03/01 19:12:05 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.83 2006/03/02 06:22:15 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1385,11 +1385,7 @@ h_GetHost_r(struct rx_connection *tcon)
 		    }
 		    host->hostFlags |= HOSTDELETED;
 		    h_Unlock_r(host);
-		    /* regardless of whether or not we obtained the hold on 
-		     * 'host', we are going to release it here because we 
-		     * are replacing it with 'oldHost' and when CallPostamble 
-		     * is called, the host that is obtained is going to be 
-		     * 'oldHost' and not 'host'. */
+		    /* release host because it was allocated by h_Alloc_r */
 		    h_Release_r(host);
 		    host = oldHost;
 		    /* the new host is held and locked */
