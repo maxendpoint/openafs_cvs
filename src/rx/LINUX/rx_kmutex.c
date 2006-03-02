@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.11 2006/02/27 21:21:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/LINUX/rx_kmutex.c,v 1.12 2006/03/02 06:39:45 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 #include "rx_kmutex.h"
@@ -113,6 +113,7 @@ afs_cv_wait(afs_kcondvar_t * cv, afs_kmutex_t * l, int sigok)
 #else
 	    refrigerator();
 #endif
+	    set_current_state(TASK_INTERRUPTIBLE);
 #endif
 #endif
     }
