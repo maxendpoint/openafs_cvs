@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.50 2006/03/02 06:21:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.51 2006/03/02 06:33:44 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -374,8 +374,8 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
     Ttvc = tvc;
     Tnam = aname;
     Tnam1 = 0;
-    if (tvc)
 #ifndef AFS_DARWIN80_ENV
+    if (tvc)
 	Ttvcr = VREFCOUNT(tvc);
 #endif
 #ifdef	AFS_AIX_ENV
