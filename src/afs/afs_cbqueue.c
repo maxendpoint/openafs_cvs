@@ -75,7 +75,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.12 2006/02/17 21:57:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_cbqueue.c,v 1.13 2006/03/02 06:42:47 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -220,7 +220,7 @@ afs_CheckCallbacks(unsigned int secs)
 			     * write locking tvc? */
 			    QRemove(tq);
 			    tvc->states &= ~(CStatd | CMValid | CUnique);
-                            if (!(tvc->states & CVInit) &&
+                            if (!(tvc->states & (CVInit|CVFlushed)) &&
                                 (tvc->fid.Fid.Vnode & 1 ||
                                  (vType(tvc) == VDIR)))
 				osi_dnlc_purgedp(tvc);
@@ -237,7 +237,7 @@ afs_CheckCallbacks(unsigned int secs)
 		 */
 		QRemove(tq);
 		tvc->states &= ~(CStatd | CMValid | CUnique);
-                if (!(tvc->states & CVInit) &&
+                if (!(tvc->states & (CVInit|CVFlushed)) &&
                     (tvc->fid.Fid.Vnode & 1 || (vType(tvc) == VDIR)))
 		    osi_dnlc_purgedp(tvc);
 	    }
@@ -310,7 +310,7 @@ afs_FlushCBs(void)
 	    tvc->states &= ~(CStatd);
 	    if (QPrev(&(tvc->callsort)))
 		QRemove(&(tvc->callsort));
-	    if (!(tvc->states & CVInit) &&
+	    if (!(tvc->states & (CVInit|CVFlushed)) &&
                 ((tvc->fid.Fid.Vnode & 1) || (vType(tvc) == VDIR)))
 		osi_dnlc_purgedp(tvc);
 	}
@@ -339,7 +339,7 @@ afs_FlushServerCBs(struct server *srvp)
 		tvc->callback = 0;
 		tvc->dchint = NULL;	/* invalidate hints */
 		tvc->states &= ~(CStatd);
-		if (!(tvc->states & CVInit) &&
+		if (!(tvc->states & (CVInit|CVFlushed)) &&
                     ((tvc->fid.Fid.Vnode & 1) || (vType(tvc) == VDIR))) {
 		    osi_dnlc_purgedp(tvc);
 		}
