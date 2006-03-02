@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.31.2.14 2006/02/25 06:40:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.31.2.15 2006/03/02 06:30:33 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -438,6 +438,12 @@ afs_remunlink(register struct vcache *avc, register int doit)
 
     if (NBObtainWriteLock(&avc->lock, 423))
 	return 0;
+#if defined(AFS_DARWIN80_ENV)
+    if (vnode_get(AFSTOV(avc))) {
+	ReleaseWriteLock(&avc->lock);
+	return 0;
+    }
+#endif
 
     if (avc->mvid && (doit || (avc->states & CUnlinkedDel))) {
 	if ((code = afs_InitReq(&treq, avc->uncred))) {
@@ -487,6 +493,9 @@ afs_remunlink(register struct vcache *avc, register int doit)
 	    crfree(cred);
 	}
     } else {
+#if defined(AFS_DARWIN80_ENV)
+	vnode_put(AFSTOV(avc));
+#endif
 	ReleaseWriteLock(&avc->lock);
     }
 
