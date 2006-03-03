@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.24 2005/07/08 19:58:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.25 2006/03/03 20:27:23 rees Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -66,7 +66,7 @@ static afs_int32 lastLevel;	/* security level pruclient, if any */
 static char *whoami = "libprot";
 
 afs_int32
-pr_Initialize(IN afs_int32 secLevel, IN char *confDir, IN char *cell)
+pr_Initialize(IN afs_int32 secLevel, IN const char *confDir, IN char *cell)
 {
     afs_int32 code;
     struct rx_connection *serverconns[MAXSERVERS];

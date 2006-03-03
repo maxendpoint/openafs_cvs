@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.73 2006/02/23 15:52:24 rees Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.74 2006/03/03 20:27:23 rees Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1344,7 +1344,7 @@ struct rx_connection *serverconns[MAXSERVERS];
 struct ubik_client *cstruct;
 
 afs_int32
-vl_Initialize(char *confDir)
+vl_Initialize(const char *confDir)
 {
     afs_int32 code, scIndex = 0, i;
     struct afsconf_dir *tdir;
