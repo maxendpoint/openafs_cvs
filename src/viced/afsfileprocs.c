@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.22 2006/03/02 06:17:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.23 2006/03/03 19:27:42 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7473,7 +7473,7 @@ SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
     Error errorCode = 0;
     struct host *thost;
     struct client *tclient;
-    struct client *tcallhost;
+    struct host *tcallhost;
     static struct rx_securityClass *sc = 0;
     int i,j;
     struct rx_connection *tcon;
