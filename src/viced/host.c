@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.83 2006/03/02 06:22:15 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.84 2006/03/05 05:36:40 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1086,8 +1086,8 @@ h_GetHost_r(struct rx_connection *tcon)
     struct interfaceAddr interf;
     int interfValid = 0;
     struct Identity *identP = NULL;
-    afs_int32 haddr;
-    afs_int16 hport;
+    afs_uint32 haddr;
+    afs_uint16 hport;
     char hoststr[16], hoststr2[16];
     Capabilities caps;
     struct rx_connection *cb_conn = NULL;
