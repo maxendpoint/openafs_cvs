@@ -48,7 +48,7 @@ $(LIBDIR)\afs_xstat_fs.lib: $(OUT)\xstat_fs.obj $(OUT)\xstat_fs_callback.obj $(O
 	$(LIBARCH)
 
 $(BINDIR)\xstat_fs_test.exe: $(OUT)\xstat_fs_test.obj $(LIBDIR)\afs_xstat_fs.lib $(LIBS)
-	$(EXECONLINK) 
+	$(EXECONLINK) rpcrt4.lib
 	$(_VC_MANIFEST_EMBED_EXE)
 	$(EXEPREP)
 
