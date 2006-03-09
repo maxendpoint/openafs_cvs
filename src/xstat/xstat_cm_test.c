@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.9 2005/04/27 12:38:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.10 2006/03/09 06:35:16 shadow Exp $");
 
 #include "xstat_cm.h"		/*Interface for xstat_cm module */
 #include <cmd.h>		/*Command line interpreter */
@@ -1308,7 +1308,11 @@ RunTheTest(a_s)
      */
     curr_item = a_s->parms[P_CM_NAMES].items;
     for (currCM = 0; currCM < numCMs; currCM++) {
+#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+	CMSktArray[currCM].sin_family = AF_INET;	/*Internet family */
+#else
 	CMSktArray[currCM].sin_family = htons(AF_INET);	/*Internet family */
+#endif
 	CMSktArray[currCM].sin_port = htons(7001);	/*Cache Manager port */
 	he = hostutil_GetHostByName(curr_item->data);
 	if (he == NULL) {

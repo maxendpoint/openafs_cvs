@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.10 2006/03/04 22:02:57 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.11 2006/03/09 06:35:16 shadow Exp $");
 
 #include "xstat_fs.h"		/*Interface for xstat_fs module */
 #include <cmd.h>		/*Command line interpreter */
@@ -688,7 +688,11 @@ RunTheTest(struct cmd_syndesc *a_s)
      */
     curr_item = a_s->parms[P_FS_NAMES].items;
     for (currFS = 0; currFS < numFSs; currFS++) {
+#if defined(AFS_DARWIN_ENV) || defined(AFS_FBSD_ENV)
+	FSSktArray[currFS].sin_family = AF_INET;	/*Internet family */
+#else
 	FSSktArray[currFS].sin_family = htons(AF_INET);	/*Internet family */
+#endif
 	FSSktArray[currFS].sin_port = htons(7000);	/*FileServer port */
 	he = hostutil_GetHostByName(curr_item->data);
 	if (he == NULL) {
