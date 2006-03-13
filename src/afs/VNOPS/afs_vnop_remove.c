@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.51 2006/03/02 06:33:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.52 2006/03/13 19:18:07 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -393,7 +393,7 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	code = afsrename(adp, aname, adp, unlname, acred, &treq);
 	Tnam1 = unlname;
 	if (!code) {
-	    char *oldmvid = NULL;
+	    struct VenusFid *oldmvid = NULL;
 	    if (tvc->mvid) 
 		oldmvid = tvc->mvid;
 	    tvc->mvid = (struct VenusFid *)unlname;
