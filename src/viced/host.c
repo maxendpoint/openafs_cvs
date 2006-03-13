@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.24 2006/03/09 21:50:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.25 2006/03/13 21:00:53 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -991,7 +991,7 @@ addInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
     assert(host);
     assert(host->interface);
 
-    ViceLog(125, ("addInterfaceAddr : host %s:d addr %s:%d\n", 
+    ViceLog(125, ("addInterfaceAddr : host %s:%d addr %s:%d\n", 
 		   afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port), 
 		   afs_inet_ntoa_r(addr, hoststr2), ntohs(port)));
 
