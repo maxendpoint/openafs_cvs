@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.85 2006/03/09 21:49:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.86 2006/03/13 15:09:47 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1511,7 +1511,7 @@ MapName_r(char *aname, char *acell, afs_int32 * aval)
 
     cnamelen = strlen(acell);
     if (cnamelen) {
-	if (afs_is_foreign_ticket_name(aname, "", acell, localcellname)) {
+	if (afs_is_foreign_ticket_name(aname, NULL, acell, localcellname)) {
 	    ViceLog(2,
 		    ("MapName: cell is foreign.  cell=%s, localcell=%s, localrealms={%s,%s,%s,%s}\n",
 		    acell, localcellname, local_realms[0],local_realms[1],local_realms[2],local_realms[3]));

@@ -7,7 +7,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.8 2005/12/15 05:51:24 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.9 2006/03/13 15:09:47 jaltman Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"
@@ -114,7 +114,7 @@ afs_krb_exclusion(char * name)
 }
 
 int 
-afs_is_foreign_ticket_name(char *tcell, char *tname, char *tinst, char *localrealm)
+afs_is_foreign_ticket_name(char *tname, char *tinst, char * tcell, char *localrealm)
 {
     int foreign = 0;
 
@@ -134,7 +134,7 @@ afs_is_foreign_ticket_name(char *tcell, char *tname, char *tinst, char *localrea
 		    break;
 	    }
 
-	    if (i=0 && localrealm) {
+	    if (i==0 && localrealm) {
 		strncpy(local_realms[0], localrealm, AFS_REALM_SZ);
 		num_lrealms = 1;
 	    } else {
@@ -154,7 +154,7 @@ afs_is_foreign_ticket_name(char *tcell, char *tname, char *tinst, char *localrea
 	/* If yes, then make sure that the name is not present in 
 	 * an exclusion list */
 	if (lrealm_match) {
-	    if (tinst[0])
+	    if (tinst && tinst[0])
 		snprintf(uname,sizeof(uname),"%s.%s@%s",tname,tinst,tcell);
 	    else
 		snprintf(uname,sizeof(uname),"%s@%s",tname,tcell);

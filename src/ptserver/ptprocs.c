@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.28 2005/12/08 01:13:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.29 2006/03/13 15:09:40 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -181,7 +181,7 @@ WhoIsThis(acall, at, aid)
 	    goto done;
 #endif
 	if (tcell[0])
-	    foreign = afs_is_foreign_ticket_name(tcell,name,inst,pr_realmName);
+	    foreign = afs_is_foreign_ticket_name(name,inst,tcell,pr_realmName);
 
 	strncpy(vname, name, sizeof(vname));
 	if (ilen = strlen(inst)) {
@@ -2324,7 +2324,7 @@ WhoIsThisWithName(acall, at, aid, aname)
 	    strcat(vname, inst);
 	}
 	if ((clen = strlen(tcell))) {
-	    int foreign = afs_is_foreign_ticket_name(tcell,name,inst,pr_realmName);
+	    int foreign = afs_is_foreign_ticket_name(name,inst,tcell,pr_realmName);
 
 	    if (foreign) {
 		if (strlen(vname) + 1 + clen >= sizeof(vname))
