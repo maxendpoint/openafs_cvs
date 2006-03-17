@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.26 2005/10/15 15:36:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.27 2006/03/17 19:54:56 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -51,6 +51,7 @@ RCSID
 #include <afs/volume.h>
 #include <afs/partition.h>
 #include "dump.h"
+#include <afs/daemon_com.h>
 #include <afs/fssync.h>
 #include <afs/acl.h>
 #include "volser.h"

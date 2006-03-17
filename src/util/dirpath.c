@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.18 2005/12/08 01:13:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.19 2006/03/17 19:54:46 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -292,9 +292,16 @@ initDirPathArray(void)
     pathp = dirPathArray[AFSDIR_SERVER_SLVGLOG_FILEPATH_ID];
     AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_LOGS_DIR, AFSDIR_SLVGLOG_FILE);
 
+    pathp = dirPathArray[AFSDIR_SERVER_SALSRVLOG_FILEPATH_ID];
+    AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_LOGS_DIR, AFSDIR_SALSRVLOG_FILE);
+
     pathp = dirPathArray[AFSDIR_SERVER_SALVAGER_FILEPATH_ID];
     AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_SERVER_BIN_DIR,
 			   AFSDIR_SALVAGER_FILE);
+
+    pathp = dirPathArray[AFSDIR_SERVER_SALSRV_FILEPATH_ID];
+    AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_SERVER_BIN_DIR,
+			   AFSDIR_SALSRV_FILE);
 
     pathp = dirPathArray[AFSDIR_SERVER_SLVGLOCK_FILEPATH_ID];
     AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_LOCAL_DIR, AFSDIR_SLVGLOCK_FILE);
@@ -367,6 +374,9 @@ initDirPathArray(void)
 
     pathp = dirPathArray[AFSDIR_SERVER_KRB_EXCL_FILEPATH_ID];
     AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_SERVER_ETC_DIR, AFSDIR_KRB_EXCL_FILE);
+
+    pathp = dirPathArray[AFSDIR_SERVER_FSSTATE_FILEPATH_ID];
+    AFSDIR_SERVER_FILEPATH(pathp, AFSDIR_LOCAL_DIR, AFSDIR_FSSTATE_FILE);
 
     /* client file paths */
 #ifdef AFS_NT40_ENV
