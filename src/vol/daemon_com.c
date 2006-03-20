@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.1 2006/03/18 04:20:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.2 2006/03/20 16:02:33 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -328,7 +328,7 @@ SYNC_ask_internal(SYNC_client_state * state, SYNC_command * com, SYNC_response *
 	goto done;
     }
 #ifdef AFS_NT40_ENV
-    memcpy(response->payload.buf, buf + sizeof(response->hdr), n - sizeof(response->hdr));
+    memcpy(res->payload.buf, buf + sizeof(res->hdr), n - sizeof(res->hdr));
 #endif
 
     if (res->hdr.response_len != n) {
