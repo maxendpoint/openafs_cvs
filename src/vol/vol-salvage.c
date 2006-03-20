@@ -87,7 +87,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.48 2006/03/17 19:54:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.49 2006/03/20 17:29:57 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -285,12 +285,6 @@ int nVolumes;			/* Number of volumes (read-write and read-only)
 				 * in volume summary */
 
 extern char * tmpdir = 0;
-
-
-#ifdef AFS_NT40_ENV
-/* Child job this process is running. */
-childJob_t myjob = { SALVAGER_MAGIC, NOT_CHILD, "" };
-#endif /* AFS_NT40_ENV */
 
 
 

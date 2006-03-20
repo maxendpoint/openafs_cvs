@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.14 2006/03/17 19:54:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.15 2006/03/20 17:29:52 jaltman Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -130,7 +130,7 @@ static int dafs_getparm(struct fsbnode *abnode, afs_int32 aindex,
 			char *abuffer, afs_int32 alen);
 
 #ifdef AFS_NT40_ENV
-static void AppendExecutableExtension(char *cmd)
+static void AppendExecutableExtension(char *cmd);
 #else
 #define AppendExecutableExtension(x)
 #endif

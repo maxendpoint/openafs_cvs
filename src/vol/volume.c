@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.42 2006/03/17 19:54:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43 2006/03/20 17:29:57 jaltman Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -135,8 +135,8 @@ RCSID
 #include "afs/assert.h"
 #endif /* AFS_PTHREAD_ENV */
 #include "vutils.h"
-#include <dir/dir.h>
 #ifndef AFS_NT40_ENV
+#include <dir/dir.h>
 #include <unistd.h>
 #endif
 
