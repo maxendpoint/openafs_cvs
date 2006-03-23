@@ -37,3 +37,4 @@ sparc|sparc64)
     echo "ERROR: unsupported architecture" >&2
     echo UNKNOWN
     exit 1
+esac
