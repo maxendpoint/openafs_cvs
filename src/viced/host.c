@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.91 2006/03/29 05:26:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.92 2006/03/30 16:27:52 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -464,7 +464,7 @@ h_gethostcps_r(register struct host *host, register afs_int32 now)
     host->cpsCall = slept ? (FT_ApproxTime()) : (now);
 
     H_UNLOCK;
-    code = pr_GetHostCPS(host->host, &host->hcps);
+    code = pr_GetHostCPS(ntohl(host->host), &host->hcps);
     H_LOCK;
     if (code) {
 	/*
