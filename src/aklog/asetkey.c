@@ -1,11 +1,12 @@
 /*
- * $Id: asetkey.c,v 1.4.2.3 2006/04/03 19:42:05 shadow Exp $
+ * $Id: asetkey.c,v 1.4.2.4 2006/04/03 19:45:26 shadow Exp $
  *
  * asetkey - Manipulates an AFS KeyFile
  *
  * Updated for Kerberos 5
  */
 
+#include <afsconfig.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <netinet/in.h>

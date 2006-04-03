@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.1.2.10 2005/07/19 02:51:53 jaltman Exp $
+ * $Id: aklog_main.c,v 1.1.2.11 2006/04/03 19:45:26 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,9 +7,10 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.1.2.10 2005/07/19 02:51:53 jaltman Exp $";
+	"$Id: aklog_main.c,v 1.1.2.11 2006/04/03 19:45:26 shadow Exp $";
 #endif /* lint || SABER */
 
+#include <afsconfig.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
