@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.124 2006/01/11 21:37:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.125 2006/04/04 01:41:12 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -463,6 +463,25 @@ afs_linux_lock(struct file *fp, int cmd, struct file_lock *flp)
     code = afs_lockctl(vcp, &flock, cmd, credp);
     AFS_GUNLOCK();
 
+#ifdef AFS_LINUX24_ENV
+    if (code == 0 && (cmd == F_SETLK || cmd == F_SETLKW)) {
+       struct file_lock flp2;
+       flp2 = *flp;
+#ifdef AFS_LINUX26_ENV
+       flp2.fl_flags &=~ FL_SLEEP;
+#endif
+       code = posix_lock_file(fp, &flp2);
+       osi_Assert(code != -EAGAIN); /* there should be no conflicts */
+       if (code) {
+           struct AFS_FLOCK flock2;
+           flock2 = flock;
+           flock2.l_type = F_UNLCK;
+           AFS_GLOCK();
+           afs_lockctl(vcp, &flock2, F_SETLK, credp);
+           AFS_GUNLOCK();
+       }
+    }
+#endif
     /* Convert flock back to Linux's file_lock */
     flp->fl_type = flock.l_type;
     flp->fl_pid = flock.l_pid;
