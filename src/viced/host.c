@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.92 2006/03/30 16:27:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93 2006/04/04 20:51:19 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -2007,8 +2007,10 @@ h_PrintClient(register struct host *host, int held, StreamHandle_t * file)
     char tmpStr[256];
     char tbuffer[32];
     char hoststr[16];
+    time_t LastCall, expTime;
 
     H_LOCK;
+    LastCall = host->LastCall;
     if (host->hostFlags & HOSTDELETED) {
 	H_UNLOCK;
 	return held;
@@ -2017,12 +2019,13 @@ h_PrintClient(register struct host *host, int held, StreamHandle_t * file)
 		       "Host %s:%d down = %d, LastCall %s",
 		       afs_inet_ntoa_r(host->host, hoststr),
 		       ntohs(host->port), (host->hostFlags & VENUSDOWN),
-		       afs_ctime((time_t *) & host->LastCall, tbuffer,
+		       afs_ctime(&LastCall, tbuffer,
 				 sizeof(tbuffer)));
     (void)STREAM_WRITE(tmpStr, strlen(tmpStr), 1, file);
     for (client = host->FirstClient; client; client = client->next) {
 	if (!client->deleted) {
 	    if (client->tcon) {
+		expTime = client->expTime;
 		(void)afs_snprintf(tmpStr, sizeof tmpStr,
 				   "    user id=%d,  name=%s, sl=%s till %s",
 				   client->ViceId, h_UserName(client),
@@ -2030,8 +2033,7 @@ h_PrintClient(register struct host *host, int held, StreamHandle_t * file)
 				   authClass ? "Authenticated" :
 				   "Not authenticated",
 				   client->
-				   authClass ? afs_ctime((time_t *) & client->
-							 expTime, tbuffer,
+				   authClass ? afs_ctime(&expTime, tbuffer,
 							 sizeof(tbuffer))
 				   : "No Limit\n");
 		(void)STREAM_WRITE(tmpStr, strlen(tmpStr), 1, file);

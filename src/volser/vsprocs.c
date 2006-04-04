@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.37 2006/01/25 03:49:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38 2006/04/04 20:51:23 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -3159,6 +3159,7 @@ UV_ReleaseVolume(afs_int32 afromvol, afs_int32 afromserver,
     afs_int32 clonetid = 0, onlinetid;
     afs_int32 fromtid = 0;
     afs_uint32 fromdate, thisdate;
+    time_t tmv;
     int s;
     manyDests tr;
     manyResults results;
@@ -3586,8 +3587,10 @@ UV_ReleaseVolume(afs_int32 afromvol, afs_int32 afromserver,
 
 	    if (fromdate == 0)
 		fprintf(STDOUT, " (full release)");
-	    else
-		fprintf(STDOUT, " (as of %.24s)", ctime((time_t *)&fromdate));
+	    else {
+		tmv = fromdate;
+		fprintf(STDOUT, " (as of %.24s)", ctime(&tmv));
+	    }
 	    fprintf(STDOUT, ".\n");
 	    fflush(STDOUT);
 	}
@@ -3838,6 +3841,7 @@ UV_DumpVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
     struct rx_call *fromcall = (struct rx_call *)0;
     afs_int32 fromtid = 0, rxError = 0, rcode = 0;
     afs_int32 code, error = 0;
+    time_t tmv = fromdate;
 
     if (setjmp(env))
 	ERROR_EXIT(EPIPE);
@@ -3850,7 +3854,7 @@ UV_DumpVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
 	VPRINT("Full Dump ...\n");
     } else {
 	VPRINT1("Incremental Dump (as of %.24s)...\n",
-		ctime((time_t *) & fromdate));
+		ctime(&tmv));
     }
 
     /* get connections to the servers */
@@ -3920,6 +3924,7 @@ UV_DumpClonedVolume(afs_int32 afromvol, afs_int32 afromserver,
     afs_int32 code = 0, vcode = 0, error = 0;
     afs_int32 clonevol = 0;
     char vname[64];
+    time_t tmv = fromdate;
 
     if (setjmp(env))
 	ERROR_EXIT(EPIPE);
@@ -3932,7 +3937,7 @@ UV_DumpClonedVolume(afs_int32 afromvol, afs_int32 afromserver,
 	VPRINT("Full Dump ...\n");
     } else {
 	VPRINT1("Incremental Dump (as of %.24s)...\n",
-		ctime((time_t *) & fromdate));
+		ctime(&tmv));
     }
 
     /* get connections to the servers */

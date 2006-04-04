@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.12 2006/03/20 13:38:36 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.13 2006/04/04 20:51:16 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -124,6 +124,9 @@ PrintEntry(index, entry)
     char Time[100];
     struct tm *tm_p;
     time_t tt;
+    time_t modification_time = entry->modification_time;
+    time_t change_password_time = entry->change_password_time;
+    time_t max_ticket_lifetime = entry->max_ticket_lifetime;
 
     printf("\n");
 
@@ -204,12 +207,12 @@ PrintEntry(index, entry)
 	   (!entry->pwsums[0] && !entry->pwsums[1]) ? "yes" : "no");
 
     printf("   Mod Time = %u: %s", entry->modification_time,
-	   ctime((time_t *) & entry->modification_time));
+	   ctime(&modification_time));
     printf("   Mod ID = %u\n", entry->modification_id);
     printf("   Change Password Time = %u: %s", entry->change_password_time,
-	   ctime((time_t *) & entry->change_password_time));
+	   ctime(&change_password_time));
     printf("   Ticket lifetime = %u: %s", entry->max_ticket_lifetime,
-	   ctime((time_t *) & entry->max_ticket_lifetime));
+	   ctime(&max_ticket_lifetime));
     printf("   Key Version = %d\n", entry->key_version);
 
     printf("   Key = ");
