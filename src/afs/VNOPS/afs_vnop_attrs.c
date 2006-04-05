@@ -24,7 +24,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.40 2005/10/23 06:27:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.41 2006/04/05 16:04:37 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -105,14 +105,17 @@ afs_CopyOutAttrs(register struct vcache *avc, register struct vattr *attrs)
 	/* The mount point's vnode. */
 	if (tvp) {
 	    attrs->va_nodeid =
-		tvp->mtpoint.Fid.Vnode + (tvp->mtpoint.Fid.Volume << 16);
+	      afs_calc_inum (tvp->mtpoint.Fid.Volume,
+			      tvp->mtpoint.Fid.Vnode);
 	    if (FidCmp(&afs_rootFid, &avc->fid) && !attrs->va_nodeid)
 		attrs->va_nodeid = 2;
 	    afs_PutVolume(tvp, READ_LOCK);
 	} else
 	    attrs->va_nodeid = 2;
     } else
-	attrs->va_nodeid = avc->fid.Fid.Vnode + (avc->fid.Fid.Volume << 16);
+	attrs->va_nodeid = 
+	      afs_calc_inum (avc->fid.Fid.Volume,
+			      avc->fid.Fid.Vnode);
     attrs->va_nodeid &= 0x7fffffff;	/* Saber C hates negative inode #s! */
     attrs->va_nlink = fakedir ? 100 : avc->m.LinkCount;
     attrs->va_size = fakedir ? 4096 : avc->m.Length;

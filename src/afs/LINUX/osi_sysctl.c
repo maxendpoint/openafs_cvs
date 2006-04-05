@@ -1,7 +1,7 @@
 /*
  * osi_sysctl.c: Linux sysctl interface to OpenAFS
  *
- * $Id: osi_sysctl.c,v 1.8 2005/04/27 12:37:56 shadow Exp $
+ * $Id: osi_sysctl.c,v 1.9 2006/04/05 16:04:34 shadow Exp $
  *
  * Written Jan 30, 2002 by Kris Van Hees (Sine Nomine Associates)
  */
@@ -15,6 +15,9 @@
 
 #include <linux/sysctl.h>
 #include <linux/config.h>
+
+/* From afs_util.c */
+extern afs_int32 afs_new_inum;
 
 /* From afs_analyze.c */
 extern afs_int32 hm_retry_RO;
@@ -80,6 +83,10 @@ static ctl_table afs_sysctl_table[] = {
     ,
     {13, "afs_cacheBlocks",
      &afs_cacheBlocks, sizeof(afs_int32), 0644, NULL,
+     &proc_dointvec}
+    ,
+    {7, "md5inum",
+     &afs_new_inum, sizeof(afs_int32), 0644, NULL,
      &proc_dointvec}
     ,
     {0}

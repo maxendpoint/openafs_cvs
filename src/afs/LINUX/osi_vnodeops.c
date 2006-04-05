@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.125 2006/04/04 01:41:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126 2006/04/05 16:04:34 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -50,8 +50,6 @@ RCSID
 #endif
 
 extern struct vcache *afs_globalVp;
-
-
 static ssize_t
 afs_linux_read(struct file *fp, char *buf, size_t count, loff_t * offp)
 {
@@ -229,8 +227,8 @@ afs_linux_readdir(struct file *fp, void *dirbuf, filldir_t filldir)
 	if (!de)
 	    break;
 
-	ino = (avc->fid.Fid.Volume << 16) + ntohl(de->fid.vnode);
-	ino &= 0x7fffffff;	/* Assumes 32 bit ino_t ..... */
+	ino = afs_calc_inum (avc->fid.Fid.Volume, ntohl(de->fid.vnode));
+
 	if (de->name)
 	    len = strlen(de->name);
 	else {
