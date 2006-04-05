@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.2 2006/03/20 16:02:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.3 2006/04/05 00:34:17 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -110,7 +110,7 @@ SYNC_connect(SYNC_client_state * state)
     return 0;
 }
 
-static int
+int
 SYNC_disconnect(SYNC_client_state * state)
 {
 #ifdef AFS_NT40_ENV
