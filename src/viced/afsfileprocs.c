@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.111 2006/04/07 05:34:26 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.112 2006/04/08 19:40:15 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -3051,6 +3051,10 @@ SRXAFS_StoreData(struct rx_call * acall, struct AFSFid * Fid,
 		 afs_uint32 Length, afs_uint32 FileLength,
 		 struct AFSFetchStatus * OutStatus, struct AFSVolSync * Sync)
 {
+    if (FileLength > 0x7fffffff || Pos > 0x7fffffff || 
+	(0x7fffffff - Pos) < Length)
+        return EFBIG;
+
     return common_StoreData64(acall, Fid, InStatus, Pos, Length, FileLength,
 	                      OutStatus, Sync);
 }				/*SRXAFS_StoreData */
