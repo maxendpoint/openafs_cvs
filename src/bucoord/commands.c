@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.17 2005/07/11 03:22:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.18 2006/04/11 19:27:03 shadow Exp $");
 
 #include <afs/stds.h>
 #if defined(AFS_LINUX24_ENV)
@@ -1964,7 +1964,7 @@ bc_DumpCmd(as, arock)
     code = bc_StartDmpRst(bc_globalConfig, dumpPath, vsName, volsToDump,
 			  /*destServer */ 0, /*destPartition */ 0,
 			  /*fromDate */ 0,
-			  /*newExt */ 0, /*oldFlag */ 0,
+			  /*newExt */ NULL, /*oldFlag */ 0,
 			  parent, level, bc_Dumper, portp, /*portCount */ 1,
 			  baseds, doAppend, dontExecute);
     if (code)
