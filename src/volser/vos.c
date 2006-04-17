@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.54 2005/12/16 04:25:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55 2006/04/17 14:59:04 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -5578,7 +5578,7 @@ Sizes(as)
 	code = ktime_DateToInt32(as->parms[4].items->data, &fromdate);
 	if (code) {
 	    fprintf(STDERR, "vos: failed to parse date '%s' (error=%d))\n",
-		    as->parms[1].items->data, code);
+		    as->parms[4].items->data, code);
 	    return code;
 	}
     }
