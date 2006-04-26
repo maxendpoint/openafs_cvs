@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.3 2006/02/22 04:09:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.4 2006/04/26 15:24:14 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -179,8 +179,8 @@ main(argc, argv)
 	} else if (strcmp(argv[index], "-nojumbo") == 0) {
 	    rxJumbograms = 0;
 
-	} else if (!strcmp(argv[i], "-rxmaxmtu")) {
-	    if ((i + 1) >= argc) {
+	} else if (!strcmp(argv[index], "-rxmaxmtu")) {
+	    if ((index + 1) >= argc) {
 		fprintf(stderr, "missing argument for -rxmaxmtu\n"); 
 		return -1; 
 	    }
