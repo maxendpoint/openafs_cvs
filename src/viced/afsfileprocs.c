@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113 2006/04/25 06:40:48 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.114 2006/05/04 04:54:19 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -660,10 +660,13 @@ GetRights(struct client *client, struct acl_accessList *ACL,
 #endif /* AFS_PTHREAD_ENV */
     }
 
-    if (client->host->hcps.prlist_len && !client->host->hcps.prlist_val) {
+    if (!client->host->hcps.prlist_len || !client->host->hcps.prlist_val) {
+	char hoststr[16];
 	ViceLog(0,
-		("CheckRights: len=%u, for host=0x%x\n",
-		 client->host->hcps.prlist_len, client->host->host));
+		("CheckRights: len=%u, for host=%s:%d\n",
+		 client->host->hcps.prlist_len, 
+		 afs_inet_ntoa_r(client->host->host, hoststr),
+		 ntohs(client->host->port)));
     } else
 	acl_CheckRights(ACL, &client->host->hcps, &hrights);
     H_UNLOCK;
