@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/server.c,v 1.5 2003/07/15 23:14:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/server.c,v 1.6 2006/05/04 21:23:17 kenh Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -32,6 +32,6 @@ BC_Print(acall, acode, aflags, amessage)
 
     tconn = rx_ConnectionOf(acall);
     tpeer = rx_PeerOf(tconn);
-    printf("From %08x: %s <%d>\n", tpeer->host, amessage, acode);
+    printf("From %s: %s <%d>\n", rx_AddrStringOf(tpeer), amessage, acode);
     return 0;
 }

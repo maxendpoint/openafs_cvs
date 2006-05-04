@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.24 2005/11/05 06:48:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.25 2006/05/04 21:23:20 kenh Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -201,8 +201,8 @@ rxi_ReScheduleEvents(void)
 static void
 rxi_ListenerProc(int sock, int *tnop, struct rx_call **newcallp)
 {
-    unsigned int host;
-    u_short port;
+    struct sockaddr_storage saddr;
+    int slen;
     register struct rx_packet *p = (struct rx_packet *)0;
 
     assert(pthread_mutex_lock(&listener_mutex) == 0);
@@ -225,9 +225,10 @@ rxi_ListenerProc(int sock, int *tnop, struct rx_call **newcallp)
 	    }
 	}
 
-	if (rxi_ReadPacket(sock, p, &host, &port)) {
+	slen = sizeof(saddr);
+	if (rxi_ReadPacket(sock, p, &saddr, &slen)) {
 	    clock_NewTime();
-	    p = rxi_ReceivePacket(p, sock, host, port, tnop, newcallp);
+	    p = rxi_ReceivePacket(p, sock, &saddr, slen, tnop, newcallp);
 	    if (newcallp && *newcallp) {
 		if (p)
 		    rxi_FreePacket(p);
