@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.29 2006/03/30 16:29:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.30 2006/05/05 16:28:55 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -2481,22 +2481,23 @@ initInterfaceAddr_r(struct host *host, struct interfaceAddr *interf)
     afs_uint16 myPort;
     int found;
     struct Interface *interface;
+    char hoststr[16];
 
     assert(host);
     assert(interf);
-
-    ViceLog(125,
-	    ("initInterfaceAddr : host %x numAddr %d\n", host->host,
-	     interf->numberOfInterfaces));
 
     number = interf->numberOfInterfaces;
     myAddr = host->host;	/* current interface address */
     myPort = host->port;	/* current port */
 
+    ViceLog(125,
+	    ("initInterfaceAddr : host %s:%d numAddr %d\n", 
+	      afs_inet_ntoa_r(myAddr, hoststr), ntohs(myPort), number));
+
     /* validation checks */
     if (number < 0 || number > AFS_MAX_INTERFACE_ADDR) {
 	ViceLog(0,
-		("Number of alternate addresses returned is %d\n", number));
+		("Invalid number of alternate addresses is %d\n", number));
 	return -1;
     }
 
@@ -2552,7 +2553,6 @@ initInterfaceAddr_r(struct host *host, struct interfaceAddr *interf)
     host->interface = interface;
 
     for (i = 0; i < host->interface->numberOfInterfaces; i++) {
-	char hoststr[16];
 	ViceLog(125, ("--- alt address %s:%d\n", 
 		       afs_inet_ntoa_r(host->interface->interface[i].addr, hoststr),
 		       ntohs(host->interface->interface[i].port)));
