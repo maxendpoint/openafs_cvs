@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.95 2006/05/05 16:27:21 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.96 2006/05/05 19:21:58 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -978,6 +978,12 @@ h_AddHostToHashTable_r(afs_uint32 addr, afs_uint16 port, struct host *host)
     /* hash into proper bucket */
     index = h_HashIndex(addr);
 
+    /* don't add the same entry multiple times */
+    for (chain = hostHashTable[index]; chain; chain = chain->next) {
+	if (chain->hostPtr == host && chain->addr == addr && chain->port == port)
+	    return;
+    }
+
     /* insert into beginning of list for this bucket */
     chain = (struct h_hashChain *)malloc(sizeof(struct h_hashChain));
     if (!chain) {
@@ -989,7 +995,6 @@ h_AddHostToHashTable_r(afs_uint32 addr, afs_uint16 port, struct host *host)
     chain->addr = addr;
     chain->port = port;
     hostHashTable[index] = chain;
-
 }
 
 /*
@@ -1358,28 +1363,19 @@ h_GetHost_r(struct rx_connection *tcon)
 			rx_SetConnHardDeadTime(cb_conn, AFS_HARDDEADTIME);
                         rx_PutConnection(cb_conn);
                         cb_conn=NULL;
-			if (code && MultiProbeAlternateAddress_r(oldHost)) {
+			if (code) {
+			    /* The primary address is either not responding or
+			     * is not the client we are looking for.  
+			     * MultiProbeAlternateAddress_r() will remove the
+			     * alternate interfaces that do not have the same
+			     * Uuid. */
+			    MultiProbeAlternateAddress_r(oldHost);
                             probefail = 1;
                         }
                     } else {
                         probefail = 1;
                     }
 
-                    if (probefail) {
-                        /* The old host is either does not have a Uuid,
-                         * is not responding to Probes, 
-                         * or does not have a matching Uuid. 
-                         * Delete it! */
-                        oldHost->hostFlags |= HOSTDELETED;
-                        h_Unlock_r(oldHost);
-			/* Let the holder be last release */
-			if (!oheld) {
-			    h_Release_r(oldHost);
-			}
-			oldHost = NULL;
-                    }
-                }
-		if (oldHost) {
 		    /* This is a new address for an existing host. Update
 		     * the list of interfaces for the existing host and
 		     * delete the host structure we just allocated. */
@@ -1390,8 +1386,13 @@ h_GetHost_r(struct rx_connection *tcon)
 				  ntohs(hport), 
 				  afs_inet_ntoa_r(oldHost->host, hoststr2),
 				  ntohs(oldHost->port)));
-			if (oldHost->host == haddr) {
-			    /* We have just been contacted by a client behind a NAT */
+			if (probefail || oldHost->host == haddr) {
+			    /* The probe failed which means that the old address is 
+			     * either unreachable or is not the same host we were just
+			     * contacted by.  We will also remove addresses if only
+			     * the port has changed because that indicates the client
+			     * is behind a NAT. 
+			     */
 			    removeInterfaceAddr_r(oldHost, oldHost->host, oldHost->port);
 			} else {
 			    int i, found;
