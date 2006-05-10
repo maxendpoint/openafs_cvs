@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.115 2006/05/04 21:23:24 kenh Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.116 2006/05/10 04:51:41 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6805,7 +6805,6 @@ FetchData_RXStyle(Volume * volptr, Vnode * targetptr,
 	errorCode = rx_WritevAlloc(Call, tiov, &tnio, RX_MAXIOVECS, wlen);
 	if (errorCode <= 0) {
 	    FDH_CLOSE(fdP);
-	    VTakeOffline(volptr);
 	    return EIO;
 	}
 	wlen = errorCode;
