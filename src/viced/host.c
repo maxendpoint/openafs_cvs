@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.97 2006/05/06 14:22:20 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.98 2006/05/13 14:22:20 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1371,8 +1371,8 @@ h_GetHost_r(struct rx_connection *tcon)
 			     * alternate interfaces that do not have the same
 			     * Uuid. */
 			    ViceLog(0,("CB: ProbeUuid for %s:%d failed %d\n",
-					 afs_inet_ntoa_r(haddr, hoststr),
-					 ntohs(hport),code2));
+					 afs_inet_ntoa_r(oldHost->host, hoststr),
+					 ntohs(oldHost->port),code2));
 			    MultiProbeAlternateAddress_r(oldHost);
                             probefail = 1;
                         }
