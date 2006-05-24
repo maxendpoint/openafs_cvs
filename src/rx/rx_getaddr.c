@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.15.2.8 2006/05/23 19:48:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.15.2.9 2006/05/24 15:49:26 shadow Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -333,6 +333,8 @@ rx_getAllAddr(afs_int32 buffer[], int maxSize)
     return rx_getAllAddr_internal(buffer, maxSize, 0);
 }
 /* this function returns the total number of interface addresses
+** the buffer has to be passed in by the caller
+*/
 #else
 static int
 rx_getAllAddr_internal(afs_int32 buffer[], int maxSize, int loopbacks)
