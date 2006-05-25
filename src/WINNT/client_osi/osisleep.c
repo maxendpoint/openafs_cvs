@@ -273,7 +273,7 @@ void osi_TWait(osi_turnstile_t *turnp, int waitFor, void *patchp, CRITICAL_SECTI
 	sp->refCount = 0;
         sp->waitFor = waitFor;
         sp->value = (long) patchp;
-        osi_QAddT((osi_queue_t **) &turnp->firstp, (osi_queue_t **) &turnp->headp, &sp->q);
+        osi_QAddT((osi_queue_t **) &turnp->firstp, (osi_queue_t **) &turnp->lastp, &sp->q);
         if (!turnp->lastp) 
 	  turnp->lastp = sp;
         LeaveCriticalSection(releasep);
