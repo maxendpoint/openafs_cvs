@@ -19,7 +19,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.23 2006/05/23 16:29:11 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.22.2.1 2006/06/01 15:38:59 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/stds.h"
