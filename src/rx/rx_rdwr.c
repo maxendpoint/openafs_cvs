@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.30 2006/05/23 04:47:29 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.29.2.1 2006/06/01 15:50:21 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
