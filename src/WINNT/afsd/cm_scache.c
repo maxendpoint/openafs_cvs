@@ -667,7 +667,7 @@ cm_scache_t * cm_FindSCacheParent(cm_scache_t * scp)
  * is to serialize all StoreData RPC's.  This is the reason we defined
  * CM_SCACHESYNC_STOREDATA_EXCL and CM_SCACHEFLAG_DATASTORING.
  */
-long cm_SyncOp(cm_scache_t *scp, cm_buf_t *bufp, cm_user_t *userp, cm_req_t *reqp,
+long cm_SyncOp(cm_scache_t *scp, cm_buf_t *bufp, cm_user_t *up, cm_req_t *reqp,
                afs_uint32 rights, afs_uint32 flags)
 {
     osi_queueData_t *qdp;
@@ -853,9 +853,8 @@ long cm_SyncOp(cm_scache_t *scp, cm_buf_t *bufp, cm_user_t *userp, cm_req_t *req
             if (!cm_HaveCallback(scp)) {
                 osi_Log1(afsd_logp, "CM SyncOp getting callback on scp 0x%p",
                           scp);
-                if (bufLocked) 
-		    lock_ReleaseMutex(&bufp->mx);
-                code = cm_GetCallback(scp, userp, reqp, 0);
+                if (bufLocked) lock_ReleaseMutex(&bufp->mx);
+                code = cm_GetCallback(scp, up, reqp, 0);
                 if (bufLocked) {
                     lock_ReleaseMutex(&scp->mx);
                     lock_ObtainMutex(&bufp->mx);
@@ -874,14 +873,14 @@ long cm_SyncOp(cm_scache_t *scp, cm_buf_t *bufp, cm_user_t *userp, cm_req_t *req
             if ((rights & PRSFS_WRITE) && (scp->flags & CM_SCACHEFLAG_RO))
                 return CM_ERROR_READONLY;
 
-            if (cm_HaveAccessRights(scp, userp, rights, &outRights)) {
+            if (cm_HaveAccessRights(scp, up, rights, &outRights)) {
                 if (~outRights & rights) 
 		    return CM_ERROR_NOACCESS;
             }
             else {
                 /* we don't know the required access rights */
                 if (bufLocked) lock_ReleaseMutex(&bufp->mx);
-                code = cm_GetAccessRights(scp, userp, reqp);
+                code = cm_GetAccessRights(scp, up, reqp);
                 if (code) 
                     return code;
                 if (bufLocked) {
@@ -918,9 +917,6 @@ long cm_SyncOp(cm_scache_t *scp, cm_buf_t *bufp, cm_user_t *userp, cm_req_t *req
         if (bufLocked) 
             lock_ReleaseMutex(&bufp->mx);
         osi_SleepM((LONG_PTR) &scp->flags, &scp->mx);
-
-	smb_UpdateServerPriority();
-
         if (bufLocked) 
             lock_ObtainMutex(&bufp->mx);
         lock_ObtainMutex(&scp->mx);
