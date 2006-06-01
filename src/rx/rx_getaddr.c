@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.27 2006/05/31 20:38:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.23.4.1 2006/06/01 15:39:18 shadow Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -199,7 +199,7 @@ rx_getAllAddr_internal(afs_int32 buffer[], int maxSize, int loopbacks)
 		      &info);
 	    if (info.rti_info[RTAX_IFA]->sa_family != AF_INET)
 		continue;
-	    a = (struct sockaddr_in *) info.rti_info[RTAX_IFA];
+	    a = info.rti_info[RTAX_IFA];
 
 	    if (count >= maxSize)	/* no more space */
 		dpf(("Too many interfaces..ignoring 0x%x\n",
@@ -231,7 +231,7 @@ rxi_getAllAddrMaskMtu(afs_int32 addrBuffer[], afs_int32 maskBuffer[],
     struct sockaddr_dl *sdl;
     struct rt_addrinfo info;
     char *buf, *lim, *next;
-    int count = 0, addrcount = 0, i;
+    int count = 0, addrcount = 0;
 
 #if !defined(AFS_USERSPACE_IP_ADDR)
     count = rx_getAllAddr_internal(addrBuffer, 1024, 0);
@@ -292,7 +292,7 @@ rxi_getAllAddrMaskMtu(afs_int32 addrBuffer[], afs_int32 maskBuffer[],
 		      &info);
 	    if (info.rti_info[RTAX_IFA]->sa_family != AF_INET)
 		continue;
-	    a = (struct sockaddr_in *) info.rti_info[RTAX_IFA];
+	    a = info.rti_info[RTAX_IFA];
 
 	    if (a->sin_addr.s_addr != htonl(0x7f000001) ) {
 		if (count >= maxSize) {	/* no more space */
@@ -302,7 +302,7 @@ rxi_getAllAddrMaskMtu(afs_int32 addrBuffer[], afs_int32 maskBuffer[],
 		    struct ifreq ifr;
 		    
 		    addrBuffer[count] = a->sin_addr.s_addr;
-		    a = (struct sockaddr_in *) info.rti_info[RTAX_NETMASK];
+		    a = info.rti_info[RTAX_NETMASK];
 		    if (a)
 			maskBuffer[count] = a->sin_addr.s_addr;
 		    else
