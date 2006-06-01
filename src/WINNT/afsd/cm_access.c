@@ -32,7 +32,7 @@
  * can't be locked.  Thus, this must always be called in a while loop to stabilize
  * things, since we can always lose the race condition getting to the parent vnode.
  */
-int cm_HaveAccessRights(struct cm_scache *scp, struct cm_user *userp, afs_uint32 rights,
+int cm_HaveAccessRights(struct cm_scache *scp, struct cm_user *up, afs_uint32 rights,
                         afs_uint32 *outRightsp)
 {
     cm_scache_t *aclScp;
@@ -82,7 +82,7 @@ int cm_HaveAccessRights(struct cm_scache *scp, struct cm_user *userp, afs_uint32
         *outRightsp = rights;
     } else {
         /* we have to check the specific rights info */
-        code = cm_FindACLCache(aclScp, userp, &trights);
+        code = cm_FindACLCache(aclScp, up, &trights);
         if (code) {
             code = 0;
             goto done;
@@ -107,35 +107,30 @@ int cm_HaveAccessRights(struct cm_scache *scp, struct cm_user *userp, afs_uint32
 }
 
 /* called with locked scp; ensures that we have an ACL cache entry for the
- * user specified by the parameter "userp."
+ * user specified by the parameter "up."
  * In pathological race conditions, this function may return success without
  * having loaded the entry properly (due to a racing callback revoke), so this
  * function must also be called in a while loop to make sure that we eventually
  * succeed.
  */
-long cm_GetAccessRights(struct cm_scache *scp, struct cm_user *userp,
+long cm_GetAccessRights(struct cm_scache *scp, struct cm_user *up,
                         struct cm_req *reqp)
 {
     long code;
     cm_fid_t tfid;
     cm_scache_t *aclScp;
-    int got_cb = 0;
 
     /* pretty easy: just force a pass through the fetch status code */
         
-    osi_Log2(afsd_logp, "GetAccess scp %x user %x", scp, userp);
+    osi_Log2(afsd_logp, "GetAccess scp %x user %x", scp, up);
 
     /* first, start by finding out whether we have a directory or something
      * else, so we can find what object's ACL we need.
      */
-    if (!cm_HaveCallback(scp)) {
-	code = cm_SyncOp(scp, NULL, userp, reqp, 0,
+    code = cm_SyncOp(scp, NULL, up, reqp, 0, 
 		      CM_SCACHESYNC_NEEDCALLBACK | CM_SCACHESYNC_GETSTATUS);
-	if (code) 
-	    return code;
-
-	got_cb = 1;
-    }
+    if (code) 
+        return code;
         
     if (scp->fileType != CM_SCACHETYPE_DIRECTORY) {
         /* not a dir, use parent dir's acl */
@@ -144,21 +139,19 @@ long cm_GetAccessRights(struct cm_scache *scp, struct cm_user *userp,
         tfid.vnode = scp->parentVnode;
         tfid.unique = scp->parentUnique;
         lock_ReleaseMutex(&scp->mx);
-        code = cm_GetSCache(&tfid, &aclScp, userp, reqp);
+        code = cm_GetSCache(&tfid, &aclScp, up, reqp);
         if (code) {
             lock_ObtainMutex(&scp->mx);
             return code;
         }       
                 
-        osi_Log1(afsd_logp, "GetAccess parent scp %x user %x", aclScp, userp);
+        osi_Log1(afsd_logp, "GetAccess parent scp %x user %x", aclScp, up);
         lock_ObtainMutex(&aclScp->mx);
-
-	code = cm_GetCallback(aclScp, userp, reqp, 1);
+	code = cm_SyncOp(aclScp, NULL, up, reqp, 0,
+ 		          CM_SCACHESYNC_NEEDCALLBACK | CM_SCACHESYNC_GETSTATUS);
         lock_ReleaseMutex(&aclScp->mx);
         cm_ReleaseSCache(aclScp);
         lock_ObtainMutex(&scp->mx);
-    } else if (!got_cb) {
-	code = cm_GetCallback(scp, userp, reqp, 1);
     }
 
     return code;
