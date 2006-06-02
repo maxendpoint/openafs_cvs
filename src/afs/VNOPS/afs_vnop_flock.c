@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.30 2006/06/01 16:02:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_flock.c,v 1.31 2006/06/02 21:12:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -24,6 +24,7 @@ RCSID
 #include "afs/afs_cbqueue.h"
 #include "afs/nfsclient.h"
 #include "afs/afs_osidnlc.h"
+#include "afs/unified_afs.h"
 
 /* Static prototypes */
 static int HandleGetLock(register struct vcache *avc,
