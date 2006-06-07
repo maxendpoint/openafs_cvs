@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.35 2006/06/07 04:41:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.36 2006/06/07 04:55:25 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1377,14 +1377,6 @@ h_GetHost_r(struct rx_connection *tcon)
 			     * destroying the connection.
 			     */
 			    client = rx_GetSpecific(rxconn, rxcon_client_key);
-			    if (client) {
-				if (client->tcon != rxconn) 
-				    ViceLog(0,("CB: client %x tcon %x didn't match rxconn %x\n", client, client->tcon, rxconn));
-				else {
-				    rx_PutConnection(client->tcon);
-				    client->tcon = NULL;
-				}
-			    }
 			    rx_SetSpecific(rxconn, rxcon_client_key, (void *)0);
 			    rx_DestroyConnection(rxconn);
 			}
