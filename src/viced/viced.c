@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.11 2006/02/22 05:02:04 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.12 2006/06/07 04:41:20 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1827,7 +1827,6 @@ main(int argc, char *argv[])
 		("Failed to initialize RX, probably two servers running.\n"));
 	exit(-1);
     }
-    rx_SetDestroyConnProc(tservice, (void (*)())h_FreeConnection);
     rx_SetMinProcs(tservice, 3);
     rx_SetMaxProcs(tservice, lwps);
     rx_SetCheckReach(tservice, 1);
