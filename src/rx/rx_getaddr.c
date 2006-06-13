@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.23.4.2 2006/06/01 15:41:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.23.4.3 2006/06/13 03:52:39 shadow Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -233,14 +233,6 @@ rxi_getAllAddrMaskMtu(afs_int32 addrBuffer[], afs_int32 maskBuffer[],
     char *buf, *lim, *next;
     int count = 0, addrcount = 0, i;
 
-#if !defined(AFS_USERSPACE_IP_ADDR)
-    count = rx_getAllAddr_internal(addrBuffer, 1024, 0);
-    for (i = 0; i < count; i++) {
-	maskBuffer[i] = htonl(0xffffffff);
-	mtuBuffer[i] = htonl(1500);
-    }
-    return count;
-#else /* AFS_USERSPACE_IP_ADDR */
     mib[0] = CTL_NET;
     mib[1] = PF_ROUTE;
     mib[2] = 0;
@@ -323,7 +315,6 @@ rxi_getAllAddrMaskMtu(afs_int32 addrBuffer[], afs_int32 maskBuffer[],
     }
     free(buf);
     return count;
-#endif
 }
 
 
