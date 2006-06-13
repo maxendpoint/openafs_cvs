@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28 2006/04/26 15:43:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.1 2006/06/13 00:01:51 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -695,16 +695,24 @@ namei_dec(IHandle_t * ih, Inode ino, int p1)
 		FDH_REALLYCLOSE(fdP);
 		return -1;
 	    }
+	} else {
+	    IHandle_t *th;
+	    IH_INIT(th, ih->ih_dev, ih->ih_vid, ino);
+	    Log("Warning: Lost ref on ihandle dev %d vid %d ino %lld\n",
+		th->ih_dev, th->ih_vid, (int64_t) th->ih_ino);
+	    IH_RELEASE(th);
+	  
+	    /* If we're less than 0, someone presumably unlinked;
+	       don't bother setting count to 0, but we need to drop a lock */
+	    if (namei_SetLinkCount(fdP, ino, 0, 1) < 0) {
+		FDH_REALLYCLOSE(fdP);
+		return -1;
+	    }
 	}
 	if (count == 0) {
 	    IHandle_t *th;
 	    IH_INIT(th, ih->ih_dev, ih->ih_vid, ino);
-#if 0
-	    /* This triggers in the fileserver on the volume index vnodes */
-	    if (th->ih_refcnt > 1)
-		Log("Warning: Leaked ref on ihandle dev %d vid %d ino %lld\n",
-		    th->ih_dev, th->ih_vid, (int64_t) th->ih_ino);
-#endif
+
 	    namei_HandleToName(&name, th);
 	    IH_RELEASE(th);
 	    code = unlink(name.n_path);
