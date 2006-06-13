@@ -112,7 +112,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.26 2006/06/12 21:50:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.27 2006/06/13 00:28:48 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -502,20 +502,6 @@ main(int argc, char **argv)
      * required. */
     ubik_nBuffers = 120 + /*fudge */ 40;
 
-    if (rxBind) {
-	afs_int32 ccode;
-	if (AFSDIR_SERVER_NETRESTRICT_FILEPATH || 
-	    AFSDIR_SERVER_NETINFO_FILEPATH) {
-	    char reason[1024];
-	    ccode = parseNetFiles(SHostAddrs, NULL, NULL,
-					   ADDRSPERSITE, reason,
-					   AFSDIR_SERVER_NETINFO_FILEPATH,
-					   AFSDIR_SERVER_NETRESTRICT_FILEPATH);
-	} else {
-	    ccode = rx_getAllAddr(SHostAddrs, ADDRSPERSITE);
-	}
-	if (ccode == 1) {
-	    host = SHostAddrs[0];
     if (rxBind) {
 	afs_int32 ccode;
 	if (AFSDIR_SERVER_NETRESTRICT_FILEPATH || 
