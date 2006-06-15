@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.15.2.11 2006/06/13 03:54:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.15.2.12 2006/06/15 15:13:33 shadow Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -204,11 +204,13 @@ rx_getAllAddr_internal(afs_int32 buffer[], int maxSize, int loopbacks)
 	    if (count >= maxSize)	/* no more space */
 		dpf(("Too many interfaces..ignoring 0x%x\n",
 		       a->sin_addr.s_addr));
-	    else if (!loopbacks && a->sin_addr.s_addr == htonl(0x7f000001)) 
+	    else if (!loopbacks && a->sin_addr.s_addr == htonl(0x7f000001)) {
+		addrcount--;
 		continue;	/* skip loopback address as well. */
-	    else if (loopbacks && ifm->ifm_flags & IFF_LOOPBACK) 
+	    } else if (loopbacks && ifm->ifm_flags & IFF_LOOPBACK) {
+		addrcount--;
 		continue;	/* skip aliased loopbacks as well. */
-	    else
+	    } else
 		buffer[count++] = a->sin_addr.s_addr;
 	    addrcount--;
 	    ifam = (struct ifa_msghdr *)((char *)ifam + ifam->ifam_msglen);
