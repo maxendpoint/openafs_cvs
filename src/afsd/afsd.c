@@ -58,7 +58,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60 2006/03/23 15:35:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60.2.1 2006/06/15 15:53:00 shadow Exp $");
 
 #define VFS 1
 
@@ -2396,7 +2396,7 @@ call_syscall(param1, param2, param3, param4, param5, param6, param7)
 		param5, param6, param7);
 #endif
 
-    if (afsd_verbose)
+    if (afsd_debug)
 	printf("SScall(%d, %d, %d)=%d ", AFS_SYSCALL, AFSCALL_CALL, param1,
 	       error);
     return (error);
