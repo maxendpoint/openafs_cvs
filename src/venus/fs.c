@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.31 2006/06/15 15:51:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.32 2006/06/16 19:08:29 rees Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -2047,6 +2047,9 @@ GetCacheParmsCmd(struct cmd_syndesc *as, char *arock)
     percentBlocks = ((double)parms[1]/parms[0]) * 100;
     printf("AFS using %5.0f%% of cache blocks (%d of %d 1k blocks)\n",
 	   percentBlocks, parms[1], parms[0]);
+
+    if (parms[2] == 0)
+	return 0;
 
     filesUsed = parms[2] - parms[3];
     percentFiles = ((double)filesUsed/parms[2]) * 100;
