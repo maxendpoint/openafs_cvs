@@ -85,7 +85,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77 2006/03/17 19:54:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.1 2006/06/20 22:10:53 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -2723,7 +2723,7 @@ ReadDump(char *file)
     return now;
 }
 
-#include "AFS_component_version_number.c"
+#include "AFS_component_version_number.h"
 
 int
 main(int argc, char **argv)
