@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.36 2006/06/07 04:55:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.37 2006/06/20 14:51:43 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1759,7 +1759,7 @@ h_FindClient_r(struct rx_connection *tcon)
      * the RPC from the other client structure's rock.
      */
     oldClient = (struct client *)rx_GetSpecific(tcon, rxcon_client_key);
-    if (oldClient && oldClient->sid == rxr_CidOf(tcon)
+    if (oldClient && oldClient != client && oldClient->sid == rxr_CidOf(tcon)
 	&& oldClient->VenusEpoch == rxr_GetEpoch(tcon)) {
 	char hoststr[16];
 	if (!oldClient->deleted) {
@@ -1782,8 +1782,10 @@ h_FindClient_r(struct rx_connection *tcon)
 		FreeCE(client);
 		created = 0;
 	    } 
-	    ObtainWriteLock(&oldClient->lock);
 	    oldClient->refCount++;
+	    H_UNLOCK;
+	    ObtainWriteLock(&oldClient->lock);
+	    H_LOCK;
 	    client = oldClient;
 	} else {
 	    ViceLog(0, ("FindClient: deleted client %x(%x) already had conn %x (host %s:%d), stolen by client %x(%x)\n", 
