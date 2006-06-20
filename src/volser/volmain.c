@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.18.2.5 2006/06/12 21:53:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.18.2.6 2006/06/20 20:35:01 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -435,6 +435,7 @@ main(int argc, char **argv)
 	rx_SetUdpBufSize(udpBufSize);	/* set the UDP buffer size for receive */
     if (rxBind) {
 	afs_int32 ccode;
+#ifndef AFS_NT40_ENV
         if (AFSDIR_SERVER_NETRESTRICT_FILEPATH || 
             AFSDIR_SERVER_NETINFO_FILEPATH) {
             char reason[1024];
@@ -442,7 +443,9 @@ main(int argc, char **argv)
                                            ADDRSPERSITE, reason,
                                            AFSDIR_SERVER_NETINFO_FILEPATH,
                                            AFSDIR_SERVER_NETRESTRICT_FILEPATH);
-        } else {
+        } else 
+#endif	
+	{
             ccode = rx_getAllAddr(SHostAddrs, ADDRSPERSITE);
         }
         if (ccode == 1) 

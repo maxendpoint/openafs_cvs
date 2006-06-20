@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.14.2.3 2006/06/12 21:53:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.14.2.4 2006/06/20 20:35:00 jaltman Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1048,6 +1048,7 @@ WorkerBee(as, arock)
 
     if (rxBind) {
         afs_int32 ccode;
+#ifndef AFS_NT40_ENV
         if (AFSDIR_SERVER_NETRESTRICT_FILEPATH || 
             AFSDIR_SERVER_NETINFO_FILEPATH) {
             char reason[1024];
@@ -1055,7 +1056,9 @@ WorkerBee(as, arock)
                                            ADDRSPERSITE, reason,
                                            AFSDIR_SERVER_NETINFO_FILEPATH,
                                            AFSDIR_SERVER_NETRESTRICT_FILEPATH);
-        } else {
+        } else 
+#endif	
+	{
             ccode = rx_getAllAddr(SHostAddrs, ADDRSPERSITE);
         }
         if (ccode == 1) 
