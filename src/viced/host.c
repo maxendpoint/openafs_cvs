@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.6 2006/06/20 14:53:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.7 2006/06/20 20:03:16 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1645,6 +1645,8 @@ h_FindClient_r(struct rx_connection *tcon)
 	H_UNLOCK;
 	ObtainWriteLock(&client->lock);	/* released at end */
 	H_LOCK;
+    } else {
+	client = NULL;
     }
 
     authClass = rx_SecurityClassOf((struct rx_connection *)tcon);
