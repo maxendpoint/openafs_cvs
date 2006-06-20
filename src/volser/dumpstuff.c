@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.25.2.1 2006/04/17 15:22:26 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.25.2.2 2006/06/20 21:40:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -519,9 +519,10 @@ DumpByteString(register struct iod *iodp, char tag, register byte * bs,
 static int
 DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
 {
-    int code = 0, lcode = 0, error = 0;
+    int code = 0, error = 0;
     afs_int32 pad = 0, offset;
     afs_sfsize_t n, nbytes, howMany, howBig;
+    afs_foff_t lcode;
     byte *p;
 #ifndef AFS_NT40_ENV
     struct afs_stat status;
@@ -529,7 +530,12 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
     afs_sfsize_t size;
 #ifdef	AFS_AIX_ENV
 #include <sys/statfs.h>
+#ifdef AFS_LARGEFILE_ENV
+    struct statfs64 tstatfs;
+#else /* !AFS_LARGEFILE_ENV */
     struct statfs tstatfs;
+#endif /* !AFS_LARGEFILE_ENV */
+    int statfs_code;
 #endif
 
 #ifdef AFS_NT40_ENV
@@ -544,8 +550,17 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
     /* Unfortunately in AIX valuable fields such as st_blksize are 
      * gone from the stat structure.
      */
-    fstatfs(handleP->fd_fd, &tstatfs);
+#ifdef AFS_LARGEFILE_ENV
+    statfs_code = fstatfs64(handleP->fd_fd, &tstatfs);
+#else /* !AFS_LARGEFILE_ENV */
+    statfs_code = fstatfs(handleP->fd_fd, &tstatfs);
+#endif /* !AFS_LARGEFILE_ENV */
+    if (statfs_code != 0) {
+        Log("DumpFile: fstatfs returned error code %d on descriptor %d\n", errno, handleP->fd_fd);
+	return VOLSERDUMPERROR;
+    }
     howMany = tstatfs.f_bsize;
+    Log("DumpFile: fstatfs returned block size of %lld; howMany=%lld", tstatfs.f_bsize, howMany);
 #else
     howMany = status.st_blksize;
 #endif /* AFS_AIX_ENV */
@@ -570,9 +585,9 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
 	return VOLSERDUMPERROR;
     }
 
-    p = (unsigned char *)malloc(howMany);
+    p = (unsigned char *)malloc((size_t)howMany);
     if (!p) {
-	Log("1 Volser: DumpFile: no memory");
+	Log("1 Volser: DumpFile: not enough memory to allocate %u bytes\n", howMany);
 	return VOLSERDUMPERROR;
     }
 
@@ -581,7 +596,7 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
 	    howMany = nbytes;
 
 	/* Read the data - unless we know we can't */
-	n = (lcode ? 0 : FDH_READ(handleP, p, howMany));
+	n = (lcode ? 0 : FDH_READ(handleP, p, (size_t)howMany));
 
 	/* If read any good data and we null padded previously, log the
 	 * amount that we had null padded.
@@ -615,7 +630,7 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
 	    /* Now seek over the data we could not get. An error here means we
 	     * can't do the next read.
 	     */
-	    lcode = FDH_SEEK(handleP, ((size - nbytes) + howMany), SEEK_SET);
+	    lcode = FDH_SEEK(handleP, (size_t)((size - nbytes) + howMany), SEEK_SET);
 	    if (lcode != ((size - nbytes) + howMany)) {
 		if (lcode < 0) {
 		    Log("1 Volser: DumpFile: Error %d seeking in inode %s for vnode %d\n", errno, PrintInode(NULL, handleP->fd_ih->ih_ino), vnode);
@@ -629,7 +644,7 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
 	}
 
 	/* Now write the data out */
-	if (iod_Write(iodp, (char *)p, howMany) != howMany)
+	if (iod_Write(iodp, (char *)p, (size_t)howMany) != howMany)
 	    error = VOLSERDUMPERROR;
 #ifndef AFS_PTHREAD_ENV
 	IOMGR_Poll();
