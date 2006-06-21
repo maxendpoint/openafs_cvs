@@ -87,7 +87,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.52 2006/06/20 21:39:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.53 2006/06/21 17:57:24 shadow Exp $");
 
 #ifndef AFS_NT40_ENV
 #include <sys/param.h>
@@ -2582,7 +2582,7 @@ DistilVnodeEssence(VolumeId rwVId, VnodeClass class, Inode ino, Unique * maxu)
     struct VnodeClassInfo *vcp = &VnodeClassInfo[class];
     char buf[SIZEOF_LARGEDISKVNODE];
     struct VnodeDiskObject *vnode = (struct VnodeDiskObject *)buf;
-    int size;
+    afs_sfsize_t size;
     StreamHandle_t *file;
     int vnodeIndex;
     int nVnodes;

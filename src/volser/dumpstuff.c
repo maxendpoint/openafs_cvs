@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.30 2006/06/20 21:39:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.31 2006/06/21 17:57:26 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -527,7 +527,7 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
     int code = 0, error = 0;
     afs_int32 pad = 0, offset;
     afs_sfsize_t n, nbytes, howMany, howBig;
-    afs_foff_t lcode;
+    afs_foff_t lcode = 0;
     byte *p;
 #ifndef AFS_NT40_ENV
     struct afs_stat status;
@@ -565,7 +565,6 @@ DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
 	return VOLSERDUMPERROR;
     }
     howMany = tstatfs.f_bsize;
-    Log("DumpFile: fstatfs returned block size of %lld; howMany=%lld", tstatfs.f_bsize, howMany);
 #else
     howMany = status.st_blksize;
 #endif /* AFS_AIX_ENV */
