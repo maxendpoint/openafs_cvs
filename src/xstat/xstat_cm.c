@@ -18,10 +18,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.10 2006/03/06 03:11:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.11 2006/06/24 05:47:09 rra Exp $");
 
 #include "xstat_cm.h"		/*Interface for this module */
 #include <lwp.h>		/*Lightweight process package */
+
+#include <afs/afsutil.h>
 
 #ifdef HAVE_STRING_H
 #include <string.h>
