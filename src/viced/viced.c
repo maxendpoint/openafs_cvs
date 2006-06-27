@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.77 2006/06/12 21:50:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.78 2006/06/27 03:16:46 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -202,6 +202,10 @@ int udpBufSize = 0;		/* UDP buffer size for receive */
 int sendBufSize = 16384;	/* send buffer size */
 
 struct timeval tp;
+
+#ifdef AFS_PTHREAD_ENV
+pthread_key_t viced_uclient_key;
+#endif
 
 /*
  * FileServer's name and IP address, both network byte order and
@@ -1519,6 +1523,11 @@ InitPR()
 		("Couldn't initialize protection library; code=%d.\n", code));
 	return code;
     }
+
+#ifdef AFS_PTHREAD_ENV
+    assert(pthread_key_create(&viced_uclient_key, NULL) == 0);
+#endif
+
     SystemId = SYSADMINID;
     SystemAnyUser = ANYUSERID;
     SystemAnyUserCPS.prlist_len = 0;
