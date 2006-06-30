@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.16.8.2 2006/06/20 20:37:11 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.16.8.3 2006/06/30 00:18:43 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1105,7 +1105,7 @@ WorkerBee(as, arock)
     }
 
     service =
-	rx_NewServiceHost, (host, 0, 1, "BUTC", securityObjects, 3, TC_ExecuteRequest);
+	rx_NewServiceHost(host, 0, 1, "BUTC", securityObjects, 3, TC_ExecuteRequest);
     if (!service) {
 	TLog(0, "rx_NewService");
 	exit(1);
