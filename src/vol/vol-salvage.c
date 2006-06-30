@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.41.2.7 2006/06/21 17:59:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.41.2.8 2006/06/30 13:59:10 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -3590,7 +3590,7 @@ ClearROInUseBit(struct VolumeSummary *summary)
     volHeader.inService = 1;
     volHeader.dontSalvage = DONT_SALVAGE;
     if (!Testing) {
-	nBytes = IH_IREAD(h, 0, (char *)&volHeader, sizeof(volHeader));
+	nBytes = IH_IWRITE(h, 0, (char *)&volHeader, sizeof(volHeader));
 	assert(nBytes == sizeof(volHeader));
     }
 }
