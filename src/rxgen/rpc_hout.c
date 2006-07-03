@@ -36,7 +36,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.10.4.1 2006/07/03 19:07:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.10.4.2 2006/07/03 19:38:36 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -227,7 +227,6 @@ psproc1(definition * defp, int callTconnF, char *type, char *prefix,
 	f_print(fout, "\t/*IN */ struct rx_call *z_call");
     } else if (callTconnF == 2) {
 	f_print(fout, "\tregister struct ubik_client *aclient, afs_int32 aflags");
-        register struct rx_connection *z_conn;
     } else {
 	f_print(fout, "\t/*IN */ struct rx_connection *z_conn");
     }
