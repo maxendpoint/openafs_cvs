@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.33 2006/06/12 21:53:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.34 2006/07/03 01:16:36 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -2020,6 +2020,10 @@ rx_Finalize(void)
 #endif /* RX_ENABLE_LOCKS */
     }
     rxi_flushtrace();
+
+#ifdef AFS_NT40_ENV
+    afs_winsockCleanup();
+#endif
 
     rxinit_status = 1;
     UNLOCK_RX_INIT;
