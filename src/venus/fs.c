@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.1 2006/06/15 15:53:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.2 2006/07/03 19:07:16 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -1714,7 +1714,7 @@ defect #3069
 	if (code == 0) {
 	    /* make the check.  Don't complain if there are problems with init */
 	    code =
-		ubik_Call(VL_GetEntryByNameO, uclient, 0, volName,
+		ubik_VL_GetEntryByNameO(uclient, 0, volName,
 			  &vldbEntry);
 	    if (code == VL_NOENT) {
 		fprintf(stderr,
