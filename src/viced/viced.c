@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.78 2006/06/27 03:16:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.79 2006/07/03 18:58:39 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -202,6 +202,10 @@ int udpBufSize = 0;		/* UDP buffer size for receive */
 int sendBufSize = 16384;	/* send buffer size */
 
 struct timeval tp;
+
+#ifdef AFS_PTHREAD_ENV
+pthread_key_t viced_uclient_key;
+#endif
 
 #ifdef AFS_PTHREAD_ENV
 pthread_key_t viced_uclient_key;
@@ -1763,7 +1767,7 @@ Do_VLRegisterRPC()
 	FS_HostAddrs_HBO[i] = ntohl(FS_HostAddrs[i]);
     addrs.bulkaddrs_len = FS_HostAddr_cnt;
     addrs.bulkaddrs_val = (afs_uint32 *) FS_HostAddrs_HBO;
-    code = ubik_Call(VL_RegisterAddrs, cstruct, 0, &FS_HostUUID, 0, &addrs);
+    code = ubik_VL_RegisterAddrs(cstruct, 0, &FS_HostUUID, 0, &addrs);
     if (code) {
 	if (code == VL_MULTIPADDR) {
 	    ViceLog(0,

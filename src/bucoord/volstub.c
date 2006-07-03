@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/volstub.c,v 1.6 2003/12/07 22:49:19 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/volstub.c,v 1.7 2006/07/03 18:58:37 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -45,7 +45,7 @@ bc_GetEntryByID(uclient, volID, volType, vldbEntryPtr)
     afs_int32 code = 0;
 
     code =
-	ubik_Call(VL_GetEntryByID, uclient, 0, volID, volType, vldbEntryPtr);
+	ubik_VL_GetEntryByID(uclient, 0, volID, volType, vldbEntryPtr);
     return (code);
 }
 
