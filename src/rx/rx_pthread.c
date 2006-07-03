@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.25 2006/05/04 21:23:20 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.24.4.1 2006/07/03 01:06:45 jaltman Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -87,7 +87,9 @@ rxi_Delay(int sec)
 void
 rxi_InitializeThreadSupport(void)
 {
-    listeners_started = 0;
+	/* listeners_started must only be reset if
+	 * the listener thread terminates */
+	/* listeners_started = 0; */
     clock_GetTime(&rxi_clockNow);
 }
 
@@ -201,8 +203,8 @@ rxi_ReScheduleEvents(void)
 static void
 rxi_ListenerProc(int sock, int *tnop, struct rx_call **newcallp)
 {
-    struct sockaddr_storage saddr;
-    int slen;
+    unsigned int host;
+    u_short port;
     register struct rx_packet *p = (struct rx_packet *)0;
 
     assert(pthread_mutex_lock(&listener_mutex) == 0);
@@ -225,10 +227,9 @@ rxi_ListenerProc(int sock, int *tnop, struct rx_call **newcallp)
 	    }
 	}
 
-	slen = sizeof(saddr);
-	if (rxi_ReadPacket(sock, p, &saddr, &slen)) {
+	if (rxi_ReadPacket(sock, p, &host, &port)) {
 	    clock_NewTime();
-	    p = rxi_ReceivePacket(p, sock, &saddr, slen, tnop, newcallp);
+	    p = rxi_ReceivePacket(p, sock, host, port, tnop, newcallp);
 	    if (newcallp && *newcallp) {
 		if (p)
 		    rxi_FreePacket(p);
@@ -322,6 +323,9 @@ rxi_StartListener(void)
 {
     pthread_attr_t tattr;
     AFS_SIGSET_DECL;
+
+	if (listeners_started)
+		return;
 
     if (pthread_attr_init(&tattr) != 0) {
 	dpf
