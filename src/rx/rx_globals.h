@@ -21,12 +21,19 @@
 
 #ifndef INIT
 #define INIT(x)
-#if defined(AFS_NT40_ENV) && defined(AFS_PTHREAD_ENV)
+#if defined(AFS_NT40_ENV)
+#if defined(AFS_PTHREAD_ENV)
 #define EXT __declspec(dllimport) extern
 #else
 #define	EXT extern
 #endif
+#define EXT2 __declspec(dllimport) extern
+#endif
 #endif /* !INIT */
+
+#ifndef EXT2
+#define EXT2 EXT
+#endif
 
 /* Basic socket for client requests; other sockets (for receiving server requests) are in the service structures */
 EXT osi_socket rx_socket;
@@ -487,9 +494,7 @@ EXT afs_kmutex_t rx_connHashTable_lock;
 
 #define CONN_HASH(host, port, cid, epoch, type) ((((cid)>>RX_CIDSHIFT)%rx_hashTableSize))
 
-#if 0
 #define PEER_HASH(host, port)  ((host ^ port) % rx_hashTableSize)
-#endif
 
 /* Forward definitions of internal procedures */
 #define	rxi_ChallengeOff(conn)	rxevent_Cancel((conn)->challengeEvent, (struct rx_call*)0, 0);
@@ -571,7 +576,7 @@ EXT int rxi_pthread_hinum INIT(0);
 EXT afs_kmutex_t rx_stats_mutex;	/* used to activate stats gathering */
 #endif
 
-EXT int rx_enable_stats INIT(0);
+EXT2 int rx_enable_stats INIT(0);
 
 /*
  * Set this flag to enable the listener thread to trade places with an idle
