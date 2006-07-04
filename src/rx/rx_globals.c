@@ -26,7 +26,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.9 2004/12/01 23:36:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.9.8.1 2006/07/04 17:05:40 shadow Exp $");
 
 /* Enable data initialization when the header file is included */
 #define INIT(stuff) = stuff
@@ -34,6 +34,7 @@ RCSID
 #define EXT __declspec(dllexport)
 #else
 #define EXT
+#define EXT2 
 #endif
 
 #ifdef KERNEL

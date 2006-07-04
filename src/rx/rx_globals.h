@@ -28,12 +28,11 @@
 #define	EXT extern
 #endif
 #define EXT2 __declspec(dllimport) extern
+#else
+#define EXT2 extern
+#define EXT extern
 #endif
 #endif /* !INIT */
-
-#ifndef EXT2
-#define EXT2 EXT
-#endif
 
 /* Basic socket for client requests; other sockets (for receiving server requests) are in the service structures */
 EXT osi_socket rx_socket;
