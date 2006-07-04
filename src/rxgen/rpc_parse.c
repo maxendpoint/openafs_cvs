@@ -36,7 +36,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.21 2006/07/03 18:58:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.22 2006/07/04 06:25:38 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -1812,7 +1812,10 @@ ucs_ProcTail_setup(definition * defp, int split_flag)
     proc1_list *plist;
 
     f_print(fout, "{\tafs_int32 rcode, code, newHost, thisHost, i, _ucount;\n");
-    f_print(fout, "\tint chaseCount, pass, needsync, inlist, j;\n");
+    f_print(fout, "\tint chaseCount, pass, needsync, inlist;\n");
+#if 0 /* goes with block below */
+    f_print(fout, "\tint j;\n");
+#endif
     f_print(fout, "\tstruct rx_connection *tc;\n");
     f_print(fout, "\tstruct rx_peer *rxp;\n");
     f_print(fout, "\tshort origLevel;\n\n");
