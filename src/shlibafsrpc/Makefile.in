@@ -1,7 +1,7 @@
 # API version. When something changes, increment as appropriate. 
 # Ignore at your own risk.
 LIBAFSRPCMAJOR=1
-LIBAFSRPCMINOR=0
+LIBAFSRPCMINOR=1
 
 # Copyright 2000, International Business Machines Corporation and others.
 # All Rights Reserved.
@@ -282,7 +282,7 @@ xdr_afsuuid.o: ${RX}/xdr_afsuuid.c
 #
 #   $ what /opt/langtools/bin/pxdb32
 #   /opt/langtools/bin/pxdb32:
-#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.22.4.1 $
+#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.22.4.2 $
 #
 # The problem occurs when -g and -O are both used when compiling des.c.
 # The simplest way to work around the problem is to leave out either -g or -O.
