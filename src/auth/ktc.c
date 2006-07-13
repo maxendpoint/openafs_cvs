@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/ktc.c,v 1.17 2006/07/13 17:08:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/ktc.c,v 1.18 2006/07/13 17:38:21 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -1442,7 +1442,7 @@ ktc_tkt_string(void)
 }
 
 char *
-ktc_tkt_string_uid(uid_t uid)
+ktc_tkt_string_uid(afs_uint32 uid)
 {
     char *env;
 
