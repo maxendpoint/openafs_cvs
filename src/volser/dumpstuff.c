@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.31 2006/06/21 17:57:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.32 2006/07/14 19:22:51 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -1321,6 +1321,7 @@ volser_WriteFile(int vn, struct iod *iodp, FdHandle_t * handleP, int tag,
 		 Error * status)
 {
     afs_int32 code;
+    afs_sfsize_t lcode;
     afs_fsize_t filesize;
     afs_fsize_t written = 0;
     register afs_uint32 size = 8192;
@@ -1366,11 +1367,11 @@ volser_WriteFile(int vn, struct iod *iodp, FdHandle_t * handleP, int tag,
 	    *status = 3;
 	    break;
 	}
-	code = FDH_WRITE(handleP, p, size);
-	if (code > 0)
-	    written += code;
-	if (code != size) {
-	    Log("1 Volser: WriteFile: Error creating file in volume; restore aborted\n");
+	lcode = FDH_WRITE(handleP, p, size);
+	if (lcode > 0)
+	    written += lcode;
+	if (lcode != size) {
+	    Log("1 Volser: WriteFile: Error writing (%d,%u) bytes to vnode %d; restore aborted\n", (int)(lcode>>32), (int)(lcode & 0xffffffff), vn);
 	    *status = 4;
 	    break;
 	}
