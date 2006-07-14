@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.111 2006/06/15 15:51:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.112 2006/07/14 17:48:18 rees Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -90,6 +90,7 @@ DECL_PIOCTL(PRxStatPeer);
 DECL_PIOCTL(PPrefetchFromTape);
 DECL_PIOCTL(PResidencyCmd);
 DECL_PIOCTL(PCallBackAddr);
+DECL_PIOCTL(PDiscon);
 
 /*
  * A macro that says whether we're going to need HandleClientContext().
@@ -192,6 +193,8 @@ static int (*(CpioctlSw[])) () = {
 	PNewAlias,		/* 1 -- create new cell alias */
 	PListAliases,		/* 2 -- list cell aliases */
 	PCallBackAddr,		/* 3 -- request addr for callback rxcon */
+	PBogus,			/* 4 */
+	PDiscon,		/* 5 -- get/set discon mode */
 };
 
 #define PSetClientContext 99	/*  Special pioctl to setup caller's creds  */
@@ -3966,4 +3969,27 @@ DECL_PIOCTL(PCallBackAddr)
     }				/* Outer loop over addrs */
 #endif /* UKERNEL */
     return 0;
+}
+
+DECL_PIOCTL(PDiscon)
+{
+#ifdef AFS_DISCON_ENV
+    static afs_int32 mode;
+
+    if (ainSize == sizeof(afs_int32)) {
+	memcpy(&mode, ain, sizeof(afs_int32));
+
+	/* 3 is magic, should be a #define. */
+	afs_SetCheckServerNATmode(mode == 3);
+    } else if (ainSize != 0) {
+	return EINVAL;
+    }
+
+    /* Return new mode */
+    memcpy(aout, &mode, sizeof(afs_int32));
+    *aoutSize = sizeof(struct VenusFid);
+    return 0;
+#else
+    return EINVAL;
+#endif
 }
