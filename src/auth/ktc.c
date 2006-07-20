@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/ktc.c,v 1.15.2.4 2006/07/19 21:15:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/ktc.c,v 1.15.2.5 2006/07/20 23:35:43 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -59,6 +59,9 @@ RCSID
 #include <afs/vice.h>
 #ifdef	AFS_AIX_ENV
 #include <sys/lockf.h>
+#ifdef AFS_AIX51_ENV
+#include <sys/cred.h>
+#endif
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -1615,7 +1618,7 @@ curpag()
 #if defined(AFS_AIX51_ENV)
     afs_int32 pag;
 
-    if (kcred_getpag(cred, PAG_AFS, &pag) < 0 || pag == 0)
+    if (get_pag(PAG_AFS, &pag) < 0 || pag == 0)
         pag = NOPAG;
     return pag;
 #else
