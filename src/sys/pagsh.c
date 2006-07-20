@@ -11,10 +11,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.10 2006/07/19 21:13:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.11 2006/07/20 23:27:22 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
+#ifdef AFS_AIX51_ENV
+#include <sys/cred.h>
+#endif
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -89,8 +92,8 @@ curpag(void)
 #if defined(AFS_AIX51_ENV)
     afs_int32 pag;
 
-    if (kcred_getpag(cred, PAG_AFS, &pag) < 0 || pag == 0)
-        pag = NOPAG;
+    if (get_pag(PAG_AFS, &pag) < 0 || pag == 0)
+        pag = -1;
     return pag;
 #else
     afs_uint32 groups[NGROUPS_MAX];
