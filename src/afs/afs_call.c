@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.3 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.4 2006/07/31 21:58:28 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -46,6 +46,7 @@ char afs_zeros[AFS_ZEROS];
 char afs_rootVolumeName[64] = "";
 afs_uint32 rx_bindhost;
 
+afs_int32 afs_initState = 0;
 afs_int32 afs_termState = 0;
 afs_int32 afs_setTime = 0;
 int afs_cold_shutdown = 0;
