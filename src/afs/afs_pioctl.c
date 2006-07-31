@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.113 2006/07/31 21:17:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.114 2006/07/31 21:31:51 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -91,6 +91,7 @@ DECL_PIOCTL(PPrefetchFromTape);
 DECL_PIOCTL(PResidencyCmd);
 DECL_PIOCTL(PCallBackAddr);
 DECL_PIOCTL(PDiscon);
+DECL_PIOCTL(PNFSNukeCreds);
 
 /*
  * A macro that says whether we're going to need HandleClientContext().
