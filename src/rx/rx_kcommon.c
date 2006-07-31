@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.57 2006/05/04 21:23:19 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.58 2006/07/31 15:07:49 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -1149,9 +1149,7 @@ rxk_ReadPacket(osi_socket so, struct rx_packet *p,
     if (!code) {
 	p->length = nbytes - RX_HEADER_SIZE;;
 	if ((nbytes > tlen) || (p->length & 0x8000)) {	/* Bogus packet */
-	    if (nbytes > 0)
-		rxi_MorePackets(rx_initSendWindow);
-	    else {
+	    if (nbytes <= 0) {
 		MUTEX_ENTER(&rx_stats_mutex);
 		rx_stats.bogusPacketOnRead++;
 		switch (rx_ssfamily(saddr)) {

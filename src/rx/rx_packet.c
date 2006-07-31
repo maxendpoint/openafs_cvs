@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.63 2006/05/04 21:23:20 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.64 2006/07/31 15:07:49 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -1394,13 +1394,11 @@ rxi_ReadPacket(osi_socket socket, register struct rx_packet *p,
 
     p->length = (nbytes - RX_HEADER_SIZE);
     if ((nbytes > tlen) || (p->length & 0x8000)) {	/* Bogus packet */
-	if (nbytes > 0)
-	    rxi_MorePackets(rx_initSendWindow);
-	else if (nbytes < 0 && errno == EWOULDBLOCK) {
+	if (nbytes < 0 && errno == EWOULDBLOCK) {
 	    MUTEX_ENTER(&rx_stats_mutex);
 	    rx_stats.noPacketOnRead++;
 	    MUTEX_EXIT(&rx_stats_mutex);
-	} else {
+	} else if (nbytes <= 0) {
 	    MUTEX_ENTER(&rx_stats_mutex);
 	    rx_stats.bogusPacketOnRead++;
 	    switch (rx_ssfamily(saddr)) {
