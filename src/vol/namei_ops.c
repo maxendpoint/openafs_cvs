@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.5 2006/06/13 00:00:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.6 2006/07/31 15:18:51 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1468,7 +1468,7 @@ convertVolumeInfo(fdr, fdw, vid)
 				 * the old RW volume around */
     p = strrchr(vd.name, '.');
     if (p && !strcmp(p, ".readonly")) {
-	bzero(p, 8);
+	memset(p, 0, 9);
     }
     if (write(fdw, &vd, sizeof(struct VolumeDiskData)) !=
 	sizeof(struct VolumeDiskData)) {
@@ -1582,7 +1582,7 @@ namei_ConvertROtoRWvolume(IHandle_t * h, afs_uint32 vid)
      * proceed.
      */
 
-    bzero(&t_ih, sizeof(t_ih));
+    memset(&t_ih, 0, sizeof(t_ih));
     t_ih.ih_dev = h->ih_dev;
     t_ih.ih_vid = h->ih_vid;
 
