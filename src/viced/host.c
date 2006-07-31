@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.40 2006/07/31 17:37:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.41 2006/07/31 17:40:53 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -391,7 +391,7 @@ hpr_GetHostCPS(afs_int32 host, prlist *CPS)
     }
 
     over = 0;
-    code = ubik_PR_GetHostCPS(uclient, 0, host, CPS, &over);
+    code = ubik_Call(PR_GetHostCPS, uclient, 0, host, CPS, &over);
     if (code != PRSUCCESS)
         return code;
     if (over) {
@@ -423,7 +423,7 @@ hpr_NameToId(namelist *names, idlist *ids)
 
     for (i = 0; i < names->namelist_len; i++)
         stolower(names->namelist_val[i]);
-    code = ubik_PR_NameToID(uclient, 0, names, ids);
+    code = ubik_Call(PR_NameToID, uclient, 0, names, ids);
     return code;
 #else
     return pr_NameToId(names, ids);
@@ -443,7 +443,7 @@ hpr_IdToName(idlist *ids, namelist *names)
         assert(pthread_setspecific(viced_uclient_key, (void *)uclient) == 0);
     }
 
-    code = ubik_PR_IDToName(uclient, 0, ids, names);
+    code = ubik_Call(PR_IDToName, uclient, 0, ids, names);
     return code;
 #else
     return pr_IdToName(ids, names);
@@ -465,7 +465,7 @@ hpr_GetCPS(afs_int32 id, prlist *CPS)
     }
 
     over = 0;
-    code = ubik_PR_GetCPS(uclient, 0, id, CPS, &over);
+    code = ubik_Call(PR_GetCPS, uclient, 0, id, CPS, &over);
     if (code != PRSUCCESS)
         return code;
     if (over) {
