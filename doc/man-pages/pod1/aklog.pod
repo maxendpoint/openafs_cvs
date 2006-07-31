@@ -7,11 +7,11 @@ aklog - Obtain tokens for authentication to AFS
 =for html
 <div class="synopsis">
 
-B<aklog> [B<-d>] [B<-hosts>] [B<-zsubs>] [B<-noprdb] [B<-noauth>] [B<-linked>]
+B<aklog> [B<-d>] [B<-hosts>] [B<-zsubs>] [B<-noprdb>] [B<-noauth>] [B<-linked>]
     [B<-force>] [B<-524>] [B<-setpag>]
     S<<< [[B<-cell> | B<-c>] <I<cell>> [B<-k> <I<Kerberos realm>>]]+ >>>
 
-B<aklog> [B<-d>] [B<-hosts>] [B<-zsubs>] [B<-noprdb] [B<-noauth>] [B<-linked>]
+B<aklog> [B<-d>] [B<-hosts>] [B<-zsubs>] [B<-noprdb>] [B<-noauth>] [B<-linked>]
     [B<-force>] [B<-524>] [B<-setpag>] [B<-path> | B<-p>] <I<path>>+
 
 =for html
