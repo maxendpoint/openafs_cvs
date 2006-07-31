@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.30 2005/04/14 02:25:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.31 2006/07/31 21:17:42 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -971,10 +971,9 @@ shutdown_osifile(void)
     return;
 }
 
-int
+void
 afs_nfsclient_init(void)
 {
-    return 0;
 }
 
 void
