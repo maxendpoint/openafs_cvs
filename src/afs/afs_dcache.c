@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.1 2006/07/31 21:13:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.2 2006/07/31 21:27:38 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2211,6 +2211,28 @@ afs_GetDCache(register struct vcache *avc, afs_size_t abyte,
 	    int dynrootLen;
 
 	    afs_GetDynroot(&dynrootDir, &dynrootLen, &tsmall->OutStatus);
+
+	    dynrootDir += Position;
+	    dynrootLen -= Position;
+	    if (size > dynrootLen)
+		size = dynrootLen;
+	    if (size < 0)
+		size = 0;
+	    code = afs_CFileWrite(file, 0, dynrootDir, size);
+	    afs_PutDynroot();
+
+	    if (code == size)
+		code = 0;
+	    else
+		code = -1;
+
+	    tdc->validPos = Position + size;
+	    afs_CFileTruncate(file, size);	/* prune it */
+        } else if (afs_IsDynrootMount(avc)) {
+	    char *dynrootDir;
+	    int dynrootLen;
+
+	    afs_GetDynrootMount(&dynrootDir, &dynrootLen, &tsmall->OutStatus);
 
 	    dynrootDir += Position;
 	    dynrootLen -= Position;
