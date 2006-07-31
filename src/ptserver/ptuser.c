@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.16.2.7 2006/07/31 17:07:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.16.2.8 2006/07/31 17:15:48 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -764,15 +764,4 @@ pr_SetFieldsEntry(afs_int32 id, afs_int32 mask, afs_int32 flags, afs_int32 ngrou
 	ubik_PR_SetFieldsEntry(pruclient, 0, id, mask, flags, ngroups,
 		  nusers, 0, 0);
     return code;
-}
-
-int
-stolower(char *s)
-{
-    while (*s) {
-	if (isupper(*s))
-	    *s = tolower(*s);
-	s++;
-    }
-    return 0;
 }
