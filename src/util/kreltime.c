@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/kreltime.c,v 1.8.2.2 2006/07/31 18:04:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/kreltime.c,v 1.8.2.3 2006/07/31 21:12:59 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -114,19 +114,26 @@ Int32To_ktimeRelDate(afs_int32 int32Date, struct ktime_date *kdptr)
 int
 ktimeDate_FromInt32(afs_int32 timeSecs, struct ktime_date *ktimePtr)
 {
-    struct tm timePtr;
     time_t     tt = timeSecs;
+    struct tm *timePtr;
+#ifndef AFS_NT40_ENV
+    struct tm timeP;
+
+    timePtr = &timeP;
 
     memset(&timePtr, 0, sizeof(timePtr));
     localtime_r(&tt, &timePtr);
+#else
+    timePtr = localtime(&tt);
+#endif
 
     /* copy the relevant fields */
-    ktimePtr->sec = timePtr.tm_sec;
-    ktimePtr->min = timePtr.tm_min;
-    ktimePtr->hour = timePtr.tm_hour;
-    ktimePtr->day = timePtr.tm_mday;
-    ktimePtr->month = timePtr.tm_mon + 1;
-    ktimePtr->year = timePtr.tm_year;
+    ktimePtr->sec = timePtr->tm_sec;
+    ktimePtr->min = timePtr->tm_min;
+    ktimePtr->hour = timePtr->tm_hour;
+    ktimePtr->day = timePtr->tm_mday;
+    ktimePtr->month = timePtr->tm_mon + 1;
+    ktimePtr->year = timePtr->tm_year;
 
     ktimePtr->mask =
 	KTIMEDATE_YEAR | KTIMEDATE_MONTH | KTIMEDATE_DAY | KTIMEDATE_HOUR |
