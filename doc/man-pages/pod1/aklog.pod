@@ -39,10 +39,10 @@ specified with B<-k>.  B<-k> cannot be used in B<-path> mode (see below).
 
 =item B<-524>
 
-Normally, B<aklog> uses the rxkad2b protocol to generate native K5 tokens.
-This flag tells B<aklog> to instead use the krb524 translation service to
-generate K4 tokens, which may be necessary for AFS cells that don't
-support rxkad2b.
+Normally, B<aklog> generates native K5 tokens.  This flag tells B<aklog>
+to instead use the krb524 translation service to generate K4 or rxkad2b
+tokens, which may be necessary for AFS cells that don't support native K5
+tokens.  Support for native K5 tokens were added in OpenAFS 1.2.8.
 
 =item B<-cell> <I<cell>>, B<-c> <I<cell>>
 
