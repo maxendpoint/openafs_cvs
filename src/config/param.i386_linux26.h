@@ -19,6 +19,7 @@
 #define AFS_I386_LINUX22_ENV   1
 #define AFS_I386_LINUX24_ENV   1
 #define AFS_I386_LINUX26_ENV   1
+#define AFS_NONFSTRANS 1
 
 #define AFS_MOUNT_AFS "afs"	/* The name of the filesystem type. */
 #define AFS_SYSCALL 137

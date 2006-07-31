@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.52.2.1 2006/07/31 21:13:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.52.2.2 2006/07/31 21:27:03 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -262,9 +262,6 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	afs_PutVCache(tvc);
 #endif
 	return code;
-    }
-    if (afs_IsDynrootMount(adp)) {
-	return ENOENT;
     }
 
     if (strlen(aname) > AFSNAMEMAX) {

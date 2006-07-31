@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.24.4.1 2006/07/31 21:13:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.24.4.2 2006/07/31 21:27:03 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -87,10 +87,6 @@ int afs_symlink
 
     if (afs_IsDynroot(adp)) {
 	code = afs_DynrootVOPSymlink(adp, acred, aname, atargetName);
-	goto done;
-    }
-    if (afs_IsDynrootMount(adp)) {
-	code = EROFS;
 	goto done;
     }
 
