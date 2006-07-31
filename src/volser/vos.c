@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.40.2.14 2006/04/17 15:00:46 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.40.2.15 2006/07/31 15:24:09 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -2174,7 +2174,6 @@ MoveVolume(as)
     if (code) {
 	fprintf(STDERR, "vos:cannot access volume %lu\n",
 		(unsigned long)volid);
-	free(p);
 	exit(1);
     }
     if (TESTM)
@@ -2327,7 +2326,6 @@ CopyVolume(as)
     if (code) {
 	fprintf(STDERR, "vos:cannot access volume %lu\n",
 		(unsigned long)volid);
-	free(p);
 	exit(1);
     }
 
