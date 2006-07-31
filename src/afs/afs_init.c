@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37 2005/10/13 15:12:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37.4.1 2006/07/31 21:13:38 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -39,6 +39,7 @@ char *afs_sysname = 0;		/* So that superuser may change the
 				 * local value of @sys */
 char *afs_sysnamelist[MAXNUMSYSNAMES];	/* For support of a list of sysname */
 int afs_sysnamecount = 0;
+int afs_sysnamegen = 0;
 struct volume *Initialafs_freeVolList;
 int afs_memvolumes = 0;
 #if defined(AFS_XBSD_ENV)
@@ -492,6 +493,7 @@ afs_ResourceInit(int preallocs)
 	afs_sysname = afs_sysnamelist[0];
 	strcpy(afs_sysname, SYS_NAME);
 	afs_sysnamecount = 1;
+	afs_sysnamegen++;
     }
 
     secobj = rxnull_NewServerSecurityObject();
