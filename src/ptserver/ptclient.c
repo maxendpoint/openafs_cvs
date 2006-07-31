@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.12.2.1 2006/07/31 17:07:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.12.2.2 2006/07/31 21:51:21 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -171,7 +171,7 @@ main(argc, argv)
     register afs_int32 code;
     char op[8];
     char name[PR_MAXNAMELEN];
-    afs_int32 id, oid, gid;
+    afs_int32 id, oid = ANONYMOUSID, gid;
     afs_int32 pos;
     int i;
     struct prentry entry;
@@ -539,7 +539,7 @@ main(argc, argv)
 	    if (GetString(name, sizeof(name)))
 		code = PRBADARG;
 	    else
-		code = ubik_PR_NewEntry(pruclient, 0, name, 1, &id);
+		code = ubik_PR_NewEntry(pruclient, 0, name, 1, oid, &id);
 	    if (CodeOk(code))
 		printf("%s\n", pr_ErrorMsg(code));
 	    if (code == PRSUCCESS)
