@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.14.2.5 2006/07/01 15:24:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.14.2.6 2006/07/31 16:36:32 shadow Exp $");
 
 #include <afs/stds.h>
 #if defined(AFS_LINUX24_ENV)
@@ -1564,7 +1564,7 @@ bc_VolsetRestoreCmd(as, arock)
 
     /* Perform the call to start the restore */
     code = bc_StartDmpRst(bc_globalConfig, "disk", "restore", volsToRestore,
-			  /*destserver */ 0, /*destpartition */ 0, fromDate,
+			  /*destserver */ NULL, /*destpartition */ 0, fromDate,
 			  newExt, oldFlag,
 			  /*parentDump */ 0, /*dumpLevel */ 0,
 			  bc_Restorer, ports, portCount,
