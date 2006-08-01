@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43 2006/03/20 17:29:57 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.44 2006/08/01 22:15:45 rra Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -5997,7 +5997,7 @@ DoubleToPrintable(double x, char * buf, int len)
     return buf;
 }
 
-static void
+void
 VPrintExtendedCacheStats_r(int flags)
 {
     int i, j;
