@@ -17,13 +17,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.17 2005/06/18 23:20:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.18 2006/08/01 21:32:00 shadow Exp $");
 
 
 #include "lwp.h"
 #include "preempt.h"
 
-#if defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV) || defined(AFS_DJGPP_ENV)
+#if defined(AFS_LINUX20_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV) 
 int PRE_Block = 0;
 
 

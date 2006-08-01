@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.106 2006/07/03 01:00:00 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.107 2006/08/01 21:32:05 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -422,10 +422,6 @@ int rx_InitAddrs(struct sockaddr_storage *saddrs, int *types, int *salens,
 #endif /* KERNEL */
     char *htable, *ptable;
     int tmp_status, i;
-
-#if defined(AFS_DJGPP_ENV) && !defined(DEBUG)
-    __djgpp_set_quiet_socket(1);
-#endif
 
     SPLVAR;
 

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.24 2006/06/20 20:33:01 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.25 2006/08/01 21:32:08 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -312,7 +312,7 @@ main(argc, argv)
     }
     memcpy(&myHost, th->h_addr, sizeof(afs_int32));
 
-#if !defined(AFS_HPUX_ENV) && !defined(AFS_NT40_ENV) && !defined(AFS_DJGPP_ENV)
+#if !defined(AFS_HPUX_ENV) && !defined(AFS_NT40_ENV)
     signal(SIGXCPU, CheckSignal_Signal);
 #endif
     /* get list of servers */

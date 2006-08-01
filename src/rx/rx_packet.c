@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.64 2006/07/31 15:07:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.65 2006/08/01 21:32:05 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -61,7 +61,7 @@ RCSID
 #include "sys/types.h"
 #include <sys/stat.h>
 #include <errno.h>
-#if defined(AFS_NT40_ENV) || defined(AFS_DJGPP_ENV)
+#if defined(AFS_NT40_ENV) 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #ifndef EWOULDBLOCK

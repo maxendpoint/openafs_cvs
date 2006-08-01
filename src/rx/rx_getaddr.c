@@ -11,9 +11,8 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.29 2006/06/15 15:12:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.30 2006/08/01 21:32:05 shadow Exp $");
 
-#ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
 #ifndef AFS_NT40_ENV
 #include <sys/types.h>
@@ -522,5 +521,3 @@ rxi_getAllAddrMaskMtu(afs_int32 addrBuffer[], afs_int32 maskBuffer[],
 
 #endif /* ! AFS_NT40_ENV */
 #endif /* !KERNEL || UKERNEL */
-
-#endif /* !AFS_DJGPP_ENV */
