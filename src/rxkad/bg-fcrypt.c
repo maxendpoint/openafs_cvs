@@ -38,7 +38,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.7 2005/05/30 04:55:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.8 2006/08/02 18:59:45 shadow Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
@@ -75,11 +75,6 @@ RCSID
 #include "fcrypt.h"
 #include "private_data.h"
 #include <des/stats.h>
-
-#undef WORDS_BIGENDIAN
-#ifdef AFSBIG_ENDIAN
-#define WORDS_BIGENDIAN 1
-#endif
 
 /*
  * Unrolling of the inner loops helps the most on pentium chips
