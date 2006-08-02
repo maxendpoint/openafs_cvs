@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.79 2006/07/03 18:58:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.80 2006/08/02 18:18:46 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -200,6 +200,7 @@ int busy_threshold = 600;
 int abort_threshold = 10;
 int udpBufSize = 0;		/* UDP buffer size for receive */
 int sendBufSize = 16384;	/* send buffer size */
+int saneacls = 0;		/* Sane ACLs Flag */
 
 struct timeval tp;
 
@@ -1385,6 +1386,9 @@ ParseArgs(int argc, char *argv[])
 	    /* set syslog logging flag */
 	    mrafsStyleLogs = 1;
 	} 
+	else if (strcmp(argv[i], "-saneacls") == 0) {
+	    saneacls = 1;
+	}
 	else {
 	    return (-1);
 	}
