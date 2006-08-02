@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tviced/serialize_state.c,v 1.1 2006/03/18 04:20:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/tviced/serialize_state.c,v 1.1.4.1 2006/08/02 19:01:23 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -990,7 +990,7 @@ fs_stateFillHeader(struct fs_state_header * hdr)
     hdr->timestamp = FT_ApproxTime();
     hdr->server_uuid = FS_HostUUID;
     hdr->valid = 1;
-#ifdef AFSBIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
     hdr->endianness = 1;
 #else
     hdr->endianness = 0;
@@ -1016,7 +1016,7 @@ fs_stateCheckHeader(struct fs_state_header * hdr)
 	ViceLog(0, ("fs_stateCheckHeader: dump was previously flagged invalid\n"));
 	ret = 1;
     }
-#ifdef AFSBIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
     else if (!hdr->endianness) {
 	ViceLog(0, ("fs_stateCheckHeader: wrong endianness\n"));
 	ret = 1;
