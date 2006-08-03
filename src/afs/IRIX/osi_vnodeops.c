@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.16 2004/11/05 04:21:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.17 2006/08/03 02:57:07 rra Exp $");
 
 #ifdef	AFS_SGI62_ENV
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -1911,19 +1911,6 @@ afs_InitDualFSCacheOps(struct vnode *vp)
     if (inited)
 	return;
     inited = 1;
-
-
-#ifdef AFS_SGI_EFS_IOPS_ENV
-    swp = vfs_getvfssw("efs");
-    if (swp) {
-	afs_efs_vnodeopsp = swp->vsw_vnodeops;
-	if (vp && vp->v_op == afs_efs_vnodeopsp) {
-	    afs_CacheFSType = AFS_SGI_EFS_CACHE;
-	    afs_IGetVnode = afs_EFSIGetVnode;
-	    found = 1;
-	}
-    }
-#endif /* AFS_SGI_EFS_IOPS_ENV */
 
     swp = vfs_getvfssw("xfs");
     if (swp) {
