@@ -4,12 +4,16 @@
 # This software has been released under the terms of the IBM Public
 # License.  For details, see the LICENSE file in the top-level source
 # directory or online at http://www.openafs.org/dl/license10.html
-# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.28 2006/08/01 19:43:30 rra Exp $
+# $Header: /cvs/openafs/src/libafs/MakefileProto.DARWIN.in,v 1.29 2006/08/03 02:37:31 rra Exp $
 # 
 # MakefileProto for Digital Unix systems
 #
 srcdir=@srcdir@
 include @TOP_OBJDIR@/src/config/Makefile.config
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
 
 
 # OS specific object files:
