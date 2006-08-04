@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_syscall.c,v 1.1 2006/07/31 21:20:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_syscall.c,v 1.2 2006/08/04 18:23:25 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -582,15 +582,9 @@ Afs_syscall()
     osi_InitGlock();
 #endif
     if (uap->syscall == AFSCALL_CALL) {
-#ifdef	AFS_SUN5_ENV
-	code =
-	    afs_syscall_call(uap->parm1, uap->parm2, uap->parm3, uap->parm4,
-			     uap->parm5, uap->parm6, rvp, CRED());
-#else
 	code =
 	    afs_syscall_call(uap->parm1, uap->parm2, uap->parm3, uap->parm4,
 			     uap->parm5, uap->parm6);
-#endif
     } else if (uap->syscall == AFSCALL_SETPAG) {
 #ifdef	AFS_SUN5_ENV
 	register proc_t *procp;
