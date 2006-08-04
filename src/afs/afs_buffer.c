@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.22 2006/01/24 17:40:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.23 2006/08/04 17:42:37 rra Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -43,7 +43,6 @@ RCSID
 #include "afs/dir.h"
 
 #include "afs/afs_stats.h"
-#include "afs/longc_procs.h"
 #include "afs/afs.h"
 
 #ifndef	BUF_TIME_MAX
