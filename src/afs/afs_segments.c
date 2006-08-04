@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.22 2005/02/12 19:47:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.23 2006/08/04 16:11:31 rra Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -145,7 +145,7 @@ unsigned int storeallmissing = 0;
  * Environment:
  *	Called with avc write-locked.
  */
-#if defined (AFS_HPUX_ENV) || defined(AFS_ULTRIX_ENV)
+#if defined (AFS_HPUX_ENV)
 int NCHUNKSATONCE = 3;
 #else
 int NCHUNKSATONCE = 64;
