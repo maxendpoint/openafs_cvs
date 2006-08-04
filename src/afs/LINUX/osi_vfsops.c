@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.4 2006/07/31 21:27:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.5 2006/08/04 15:56:34 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -52,7 +52,6 @@ static void iattr2vattr(struct vattr *vattrp, struct iattr *iattrp);
 static int afs_root(struct super_block *afsp);
 struct super_block *afs_read_super(struct super_block *sb, void *data, int silent);
 int afs_fill_super(struct super_block *sb, void *data, int silent);
-static struct super_block *afs_get_sb(struct file_system_type *fs_type, int flags, const char *dev_name, void *data);
 
 /* afs_file_system
  * VFS entry for Linux - installed in init_module
@@ -66,6 +65,29 @@ struct backing_dev_info afs_backing_dev_info = {
 	.ra_pages	= (VM_MAX_READAHEAD * 1024) / PAGE_CACHE_SIZE,
 	.state		= 0,
 };
+
+
+/* afs_read_super
+ * read the "super block" for AFS - roughly eguivalent to struct vfs.
+ * dev, covered, s_rd_only, s_dirt, and s_type will be set by read_super.
+ */
+#if defined(AFS_LINUX26_ENV)
+static struct super_block *
+#ifdef GET_SB_HAS_STRUCT_VFSMOUNT
+afs_get_sb(struct file_system_type *fs_type, int flags,
+	   const char *dev_name, void *data, struct vfsmount *mnt)
+#else
+afs_get_sb(struct file_system_type *fs_type, int flags,
+	   const char *dev_name, void *data)
+#endif
+{
+#ifdef GET_SB_HAS_STRUCT_VFSMOUNT
+    return get_sb_nodev(fs_type, flags, data, afs_fill_super, mnt);
+#else
+    return get_sb_nodev(fs_type, flags, data, afs_fill_super);
+#endif
+}
+
 
 struct file_system_type afs_fs_type = {
     .owner = THIS_MODULE,
@@ -86,16 +108,6 @@ struct file_system_type afs_fs_type = {
 };
 #endif
 
-/* afs_read_super
- * read the "super block" for AFS - roughly eguivalent to struct vfs.
- * dev, covered, s_rd_only, s_dirt, and s_type will be set by read_super.
- */
-#if defined(AFS_LINUX26_ENV)
-static struct super_block *
-afs_get_sb(struct file_system_type *fs_type, int flags, const char *dev_name, void *data)
-{
-    return get_sb_nodev(fs_type, flags, data, afs_fill_super);
-}
 
 int
 afs_fill_super(struct super_block *sb, void *data, int silent)
