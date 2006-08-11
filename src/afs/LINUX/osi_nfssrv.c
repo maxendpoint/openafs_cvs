@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_nfssrv.c,v 1.1 2006/07/31 21:20:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_nfssrv.c,v 1.2 2006/08/11 21:38:45 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -26,7 +26,11 @@ RCSID
 #include <linux/sunrpc/svcauth.h>
 
 static unsigned long authtab_addr = 0;
+#if defined(module_param)
+module_param(authtab_addr, long, 0);
+#else
 MODULE_PARM(authtab_addr, "l");
+#endif
 MODULE_PARM_DESC(authtab_addr, "Address of the authtab array.");
 
 extern struct auth_ops *authtab[] __attribute__((weak));
