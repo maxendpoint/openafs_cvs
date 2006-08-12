@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.2 2006/08/11 21:38:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.3 2006/08/12 16:50:37 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -55,7 +55,11 @@ MODULE_PARM(this_cell, "s");
 MODULE_PARM_DESC(this_cell, "Local cell name");
 
 #if defined(AFS_LINUX24_ENV)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
+DEFINE_MUTEX(afs_global_lock);
+#else
 DECLARE_MUTEX(afs_global_lock);
+#endif
 struct proc_dir_entry *openafs_procfs;
 #else
 struct semaphore afs_global_lock = MUTEX;

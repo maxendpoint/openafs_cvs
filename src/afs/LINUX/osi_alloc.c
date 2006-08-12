@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.23 2004/12/01 23:38:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.24 2006/08/12 16:50:37 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -282,7 +282,11 @@ get_hash_stats()
 /************** Linux memory allocator interface functions **********/
 
 #if defined(AFS_LINUX24_ENV)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
+DEFINE_MUTEX(afs_linux_alloc_sem);
+#else
 DECLARE_MUTEX(afs_linux_alloc_sem);
+#endif
 #else
 struct semaphore afs_linux_alloc_sem = MUTEX;
 #endif

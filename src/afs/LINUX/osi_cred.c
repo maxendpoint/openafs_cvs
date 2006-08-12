@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_cred.c,v 1.12 2005/04/03 19:48:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_cred.c,v 1.13 2006/08/12 16:50:37 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -33,7 +33,11 @@ int ncreds_inuse = 0;
  * test if no creds in pool before grabbing lock in crfree().
  */
 #if defined(AFS_LINUX24_ENV)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
+static DEFINE_MUTEX(linux_cred_pool_lock);
+#else
 static DECLARE_MUTEX(linux_cred_pool_lock);
+#endif
 #else
 static struct semaphore linux_cred_pool_lock = MUTEX;
 #endif
