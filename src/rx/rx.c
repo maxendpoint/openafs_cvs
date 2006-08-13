@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.3 2006/07/03 01:06:45 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.4 2006/08/13 16:43:28 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -3771,10 +3771,11 @@ rxi_ReceiveAckPacket(register struct rx_call *call, struct rx_packet *np,
 	 * be unable to accept packets of the size that prior AFS versions would
 	 * send without asking.  */
 	if (peer->maxMTU != tSize) {
+	    if (peer->maxMTU > tSize) /* possible cong., maxMTU decreased */
+		peer->congestSeq++;
 	    peer->maxMTU = tSize;
 	    peer->MTU = MIN(tSize, peer->MTU);
 	    call->MTU = MIN(call->MTU, tSize);
-	    peer->congestSeq++;
 	}
 
 	if (np->length == rx_AckDataSize(ap->nAcks) + 3 * sizeof(afs_int32)) {
