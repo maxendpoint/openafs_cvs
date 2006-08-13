@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.19 2006/02/01 16:20:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.19.2.1 2006/08/13 20:18:17 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -738,7 +738,9 @@ hdl_notifier(struct bnode_proc *tp)
 
 #if defined(AFS_HPUX_ENV) || defined(AFS_SUN5_ENV) || defined(AFS_SGI51_ENV)
 	ec = setsid();
-#elif defined(AFS_LINUX20_ENV) || defined(AFS_AIX_ENV)
+#elif defined(AFS_DARWIN90_ENV)
+	ec = setpgid(0, 0);
+#elif defined(AFS_LINUX20_ENV) || defined(AFS_AIX_ENV) 
 	ec = setpgrp();
 #else
 	ec = setpgrp(0, 0);
