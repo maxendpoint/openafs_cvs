@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.3 2006/08/12 16:50:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.4 2006/08/13 04:52:08 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -48,7 +48,7 @@ MODULE_PARM_DESC(nfs_server_addr,  "IP Address of NFS Server");
 
 static char *this_cell = 0;
 #if defined(module_param_array) && LINUX_VERSION_CODE > KERNEL_VERSION(2,6,9)
-module_param_array(this_cell, charp, 0);
+module_param(this_cell, charp, 0);
 #else
 MODULE_PARM(this_cell, "s");
 #endif
