@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.21.2.6 2006/08/14 22:09:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.21.2.7 2006/08/17 13:56:29 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -530,7 +530,7 @@ PagInCred(const struct AFS_UCRED *cred)
 #endif
     pag = (afs_int32) afs_get_pag_from_groups(g0, g1);
 out:
-#ifdef LINUX_KEYRING_SUPPORT
+#if defined(AFS_LINUX26_ENV) && defined(LINUX_KEYRING_SUPPORT)
     if (pag == NOPAG) {
 	struct key *key;
 	afs_uint32 pag, newpag;
