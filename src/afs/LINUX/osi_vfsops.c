@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.47 2006/08/13 16:53:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.48 2006/08/20 05:31:42 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -60,11 +60,6 @@ int afs_fill_super(struct super_block *sb, void *data, int silent);
  * 2) Mount call comes to us via do_mount -> read_super -> afs_read_super.
  *    We are expected to setup the super_block. See afs_read_super.
  */
-#if defined(AFS_LINUX26_ENV)
-struct backing_dev_info afs_backing_dev_info = {
-	.ra_pages	= (VM_MAX_READAHEAD * 1024) / PAGE_CACHE_SIZE,
-	.state		= 0,
-};
 
 
 /* afs_read_super
@@ -108,6 +103,11 @@ struct file_system_type afs_fs_type = {
 };
 #endif
 
+#if defined(AFS_LINUX26_ENV)
+struct backing_dev_info afs_backing_dev_info = {
+	.ra_pages	= (VM_MAX_READAHEAD * 1024) / PAGE_CACHE_SIZE,
+	.state		= 0,
+};
 
 int
 afs_fill_super(struct super_block *sb, void *data, int silent)
