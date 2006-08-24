@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.15 2006/07/31 17:15:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.16 2006/08/24 02:35:59 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -216,10 +216,6 @@ afs_uint32 FS_HostAddrs[ADDRSPERSITE], FS_HostAddr_cnt = 0, FS_registered = 0;
 afsUUID FS_HostUUID;
 
 static void FlagMsg();
-
-#ifdef AFS_PTHREAD_ENV
-pthread_key_t viced_uclient_key;
-#endif
 
 /*
  * Home for the performance statistics.
