@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.5 2006/08/02 18:21:16 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.6 2006/08/24 01:45:14 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -203,14 +203,6 @@ int sendBufSize = 16384;	/* send buffer size */
 int saneacls = 0;		/* Sane ACLs Flag */
 
 struct timeval tp;
-
-#ifdef AFS_PTHREAD_ENV
-pthread_key_t viced_uclient_key;
-#endif
-
-#ifdef AFS_PTHREAD_ENV
-pthread_key_t viced_uclient_key;
-#endif
 
 #ifdef AFS_PTHREAD_ENV
 pthread_key_t viced_uclient_key;
