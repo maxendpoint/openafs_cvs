@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43 2006/03/20 17:29:57 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.1 2006/08/24 16:42:26 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -207,6 +207,7 @@ int LogLevel;			/* Vice loglevel--not defined as extern so that it will be
 				 * defined when not linked with vice, XXXX */
 ProgramType programType;	/* The type of program using the package */
 
+extern struct Lock localLock;
 
 /* extended volume package statistics */
 VolPkgStats VStats;
@@ -466,6 +467,7 @@ VInitVolumePackage(ProgramType pt, afs_uint32 nLargeVnodes, afs_uint32 nSmallVno
     IOMGR_Initialize();
 #endif /* AFS_PTHREAD_ENV */
     Lock_Init(&vol_listLock);
+    Lock_Init(&localLock);
 
     srandom(time(0));		/* For VGetVolumeInfo */
     gettimeofday(&tv, &tz);
