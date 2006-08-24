@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.21.2.2 2006/07/31 17:07:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.21.2.3 2006/08/24 15:56:44 shadow Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -478,6 +478,7 @@ h_output(char *infile, char *define, int extend, char *outfile, int append)
     f_print(fout, "#ifndef	SOCK_DGRAM  /* XXXXX */\n");
     f_print(fout, "#include \"h/socket.h\"\n");
     f_print(fout, "#endif\n");
+    f_print(fout, "struct ubik_client;\n");
     f_print(fout, "#ifndef	DTYPE_SOCKET  /* XXXXX */\n");
     f_print(fout, "#ifndef AFS_LINUX22_ENV\n");
     f_print(fout, "#include \"h/file.h\"\n");
