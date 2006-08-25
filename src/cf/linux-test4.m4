@@ -619,8 +619,15 @@ AC_DEFUN([LINUX_LINUX_KEYRING_SUPPORT], [
 static int errno;
 static inline _syscall2(long, keyctl, int, option, void*, arg2);],
 [#ifdef CONFIG_KEYS
+--- src/cf/linux-test4.m4~ 2006-08-14 18:04:41.000000000 -0400
++++ src/cf/linux-test4.m4 2006-08-24 04:41:29.400150624 -0400
+@@ -621,6 +621,9 @@
+[#ifdef CONFIG_KEYS
 keyctl(KEYCTL_JOIN_SESSION_KEYRING, NULL);
 request_key(NULL, NULL, NULL);
+#if !defined(KEY_POS_VIEW) || !defined(KEY_POS_SEARCH)
+#error "Your linux/key.h does not contain KEY_POS_VIEW or KEY_POS_SEARCH"
+#endif
 #else
 #error rebuild your kernel with CONFIG_KEYS
 #endif],
