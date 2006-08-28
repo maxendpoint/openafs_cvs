@@ -7,15 +7,12 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "stdafx.h"
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
 extern "C" {
 #include <afs/param.h>
 #include <afs/stds.h>
 }
 
+#include "stdafx.h"
 #include "afs_shl_ext.h"
 #include <winsock2.h>
 #include "help.h"
@@ -63,7 +60,7 @@ HINSTANCE g_hInstance;
 BOOL CAfsShlExt::InitInstance()
 {
 	// Load our translated resources
-	TaLocale_LoadCorrespondingModule (m_hInstance);
+	TaLocale_LoadCorrespondingModuleByName (m_hInstance, TEXT("afs_shl_ext.dll"));
 
 	// Register all OLE server (factories) as running.  This enables the
 	//  OLE libraries to create objects from other applications.
