@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.6 2006/08/24 01:45:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.7 2006/09/03 05:53:14 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -154,8 +154,6 @@ prlist AnonCPS;			/* CPS for "Anonymous" */
 struct afsconf_dir *confDir;	/* Configuration dir object */
 
 int restartMode = RESTART_ORDINARY;
-
-int Testing = 0;		/* for ListViceInodes */
 
 /*
  * Home for the performance statistics.
