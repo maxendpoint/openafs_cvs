@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.122 2006/09/05 15:19:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.123 2006/09/05 16:30:33 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -443,7 +443,7 @@ CallPostamble(register struct rx_connection *aconn, afs_int32 ret,
     } else if (!ahost) {
 	char hoststr[16];	
 	ViceLog(0, ("CallPostamble: null ahost for thost %s:%d (%x)\n",
-		afs_inet_ntoa_r(thost->host, hoststr2), ntohs(thost->port),
+		afs_inet_ntoa_r(thost->host, hoststr), ntohs(thost->port),
 		thost));
     }
     H_UNLOCK;
