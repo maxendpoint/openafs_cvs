@@ -1,59 +1,45 @@
-Since 1.5.7:
+Since 1.4.2-rc2: (1.4.2-rc3 released 6 Sep 2006)
 
- * Return Invalid Parameter error for unknown InfoLevels in 
-   SMB Tran2 Search Directory.
+ * better handling of dot directory
 
- * Correctly use WSAStartup and WSACleanup within the RX library
+ * fs sq adn fs mkm now behave as on UNIX
 
- * Check that afsd_service.exe is running before performing
-   a pioctl call.
+ * another backconnections hostnames fix
 
- * Force AFS Shell Extension to load resource DLL using 
-   afs_shl_ext.dll as a base name.
+ * add license to installers
 
- * (Wix) install afs_shl_ext_XXXX.dll and afs_creds_XXXX.dll in 
-   OpenAFS\Client\Program
+Since 1.4.2-rc1: (1.4.2-rc2 released 30 Aug 2006)
 
- * Fix SMB_SET_FILE_END_OF_FILE_LENGTH
+ * Fix rx usage of WSAStartup/WSACleanup
+
+ * Correct afsauthent.dll export list.
+
+ * Fix renaming on Vista from Explorer.
+
+ * Allow the AFS Shell Extension to always find its resource library.
+
+ * Fix the code that writes the backconnectionhostnames value
+   to ensure that the data buffer is written with the correct 
+   length.
 
  * Do not panic if the maximum number of volume entries are in use
    and one of them can be recycled.
 
-Since 1.5.6:
-
- * Fix the code that reads the backconnnectionhostnames value
-   so that there is not an uninitialized variable
-
-Since 1.5.4/1.5.5:
+Since 1.4.2-beta3:  (1.4.2-rc1 released 22 Aug 2006)
 
  * integrated logon could cause winlogin.exe to blue screen windows
    if it was called with a domain that does not exist on the machine.
    this is possible during a sysprep.
+
+ * do not generate MessageBox dialogs on network errors.  they 
+   cause more trouble then they are worth.
 
  * corrections to cm_buf_t handling to ensure that buffers are
    removed from queues before they are freed and that holds are
    obtained on the next buffer in a chain before releasing the
    current one.
 
- * do not generate MessageBox dialogs on network errors.  they 
-   cause more trouble then they are worth.
-
- * move GlobalAutoMapper into a separate thread so that it does
-   not prevent service startup if the WNetAddConnection2 call
-   does not return.
-
- * restrict hard dead and connection timeouts to the CIFS Session
-   Timeout value.  This is being done to try to prevent virtual 
-   circuits from being destroyed prematurely.
-
- * Fix the code that writes the backconnectionhostnames value
-   to ensure that the data buffer is written with the correct 
-   length.
-
- (there were no windows specific changes between 1.5.4 and 1.5.5)
-
-Since 1.5.3:
-
+Since 1.4.2-beta2:
  * Corrections to the Integrated Logon functionality that permits
    Kerberos 5 TGTs to be communicated into the user session.  The
    transfer is now more secure and succeeds when the user does not
@@ -63,18 +49,7 @@ Since 1.5.3:
 
  * WiX installer updated to version 2.0.4221.0
 
- * Updates to the IFS functionality for 64-bit correctness and 
-   permit compilation.	 The IFS functionality works for pioctl()
-   operations but not much else at this point.
-
- * A major re-write of the OpenAFS implementation of the CIFS Tran2
-   query and set functions.  
-
- * Ignore the Windows CIFS client session timeout entirely.  Timeout
-   only after the AFS Hard Dead Timeout period expires.
-
-Since 1.5.2:
-
+Since 1.4.2-beta1: 
  * move headers, libraries, and samples from OpenAFS\Client to 
    OpenAFS\SDK
 
@@ -89,46 +64,23 @@ Since 1.5.2:
    continue to execute after the library is unloaded, the process
    will crash.
 
- * implement inline bulk status calls.  this will significantly
-   improve the performance of directory listings.
-
  * prevent a crash when evaluating mountpoints to volumes that do not
    exist
-
- * new command: fs uuid [-generate]
-   displays the current uuid and allows a new one to be generated
-   on the fly without restarting the afs client service.
-
- * fix the 64-bit installers to properly document the install 
-   location
-
- * move help files to the proper location so they can be located by
-   the system tray tool and the control panel.
 
  * "over quota" and "disk full" errors were not being reported to the 
    caller.
 
- * largefile support has been added.  Files greater than 31-bits can no
-   longer be written to file servers which do not support large files.
-   When file servers support large files, files up to 64-bits can be
-   read or written.
+ * move help files to the proper location so they can be located by
+   the system tray tool and the control panel.
 
- * cm_SyncOp could return with the input buffer unlocked upon error
-   which would result in a panic condition.  This bug was introduced
-   in 1.4.1.
+ * Prevent a panic caused by cm_SyncOp returning unlocked buffers.
 
- * vlserver failover when freelance mode did not work.  This prevented
-   the root.afs volume from being loaded if the first vlserver could
-   not be reached.
+ * Fix vlserver failover when mounting root.afs volume (Freelance
+   mode disabled)
 
-Since 1.5.1:
+ * Allow Freelance Scache entries to be recycled
 
- * A bug in the CIFS Standard Info response packet caused directories
-   to appear as standard files.  This prevented Microsoft Vista from
-   being able to walk the AFS directory tree.
-
- * Mount points must be reported as directories in response to 
-   Query Path Info operations.
+Since 1.4.1d: 1.4.2-beta1 released 14 June 2006
 
  * A deadlock was detected when performing "fs flushall" if the 
    file server reports VNOVNODE.   The scp->createBufferLock is 
@@ -157,6 +109,15 @@ Since 1.5.1:
  * In cm_GetNewSCache, do not allow Freelance SCache entries to be
    recycled.  Choose a new entry if cm_RecycleSCache fails.
 
+
+
+Since 1.4.1c:  1.4.1d (2 June 2006)
+
+ * Add a missing lock that was lost during the pullup
+   of patchs for 1.4.1c
+
+Since 1.4.1b:  1.4.1c (31 May 2006)
+ 
  * Speed up the performance of the cache manager by not 
    holding the smb_fid_t mutex across calls to cm_SyncOp 
    and AFS RPCs.
@@ -178,6 +139,9 @@ Since 1.5.1:
    being processed.  The priority is bumped one level
    for every 15 seconds of processing time.
 
+ * smb_SendPacket cannot release a vcp since it doesn't
+   own the reference.
+
  * The original openafs contribution mis-used the 
    cm_GetCallback function.  This function should only
    be called as a side effect of a call to
@@ -188,6 +152,8 @@ Since 1.5.1:
    synchronization of the threads that are calling 
    cm_SyncOp.  If nothing else this results in a 
    significant performance penalty.
+
+Since 1.4.1a: 1.4.1b (16 May 2006)
 
  * More changes to cleanup of smb_vc_t objects in
    order to prevent race conditions.
@@ -200,115 +166,30 @@ Since 1.5.1:
    enables the file server to recognize that the client
    has moved.
 
+Since 1.4.1: 1.4.1a (1 May 2006)
+
  * Remove a race condition and deadlock associated 
    with cleanup of smb_vc_t objects.
 
  * Fix the ANSI filename support.  One function that
    required it was missing the translations.
 
-Changes not present in 1.4.1 and since 1.5.0: 1.5.1 released 
-(24 April 2006)
+ * Fix the pthread library so that it can be loaded
+   and unloaded safely by an application.
 
- * Add a DllMain() function to afspthread.dll.  Perform
-   cleanup of thread local storage, rx queues, critical
-   sections, event handles, etc.  This was implemented
-   to avoid crashes in afspthread.dll when applications
-   which load/unload the dll attempt to terminate.
+Since 1.4.1 rc10: 1.4.1 released (9 April 2006)
 
- * Lock request behavior has been altered.  As of this 
-   release a locally allocated lock will be used whenever
-   the volume is RO or the requesting user's permissions 
-   are 'rl'.  This will allow end users to execute programs
-   from RW volumes when they do not have the 'k' privilege.
-
-   Note that a recent discovery indicates that the 'k' bit
-   is only supposed to control the ability to obtain read 
-   locks.  Write locks are to be controlled by the 'w' and 
-   'i' privilege bits.  
-
- * Code has been added to enable the cache manager to be
-   able to obtain the AFSID of the authenticated user.
-   This is required to be able to determine when "Insert"
-   privileges should apply.  AFS considers a file to be
-   a new file whenever the owner's AFSID matches the 
-   AFSID of the user.  The current implementation relies
-   on the name specified during the SetToken call to be
-   correct.  This will be replaced in the future with a 
-   new RPC that allows the AFSID of the authenticated 
-   user to be obtained.
-
- * A 32-bit-tools installer for use on 64-bit systems 
-   is now available.  These tools are for use with 32-bit
-   versions of Kerberos for Windows or JPSoftware's 4NT.
-
-Since 1.4.1 rc10: 1.4.1 final released (9 April 2006)
-
- * Remove the use of the "active_vcp" variable.  This variable
-   no longer serves any useful purpose and was the cause of
-   race conditions that produced under counts of the smb_vc_t
-   references.
+ * Add code to protect against an undercount of smb_vc_t 
+   references in the smb_allVCsp list.  This is a temporary
+   workaround until the cause of the undercount can be 
+   identified.
 
  * Change default minidump output to include data segments
 
- * restore access to cm_IoctlGetVolumeStatus and
+ * restore access to cm_IoctlGetVolumeStatus and 
    cm_IoctlSetVolumeStatus calls for AFS pioctl operations.
-   Still need to figure out why they are being called
+   Still need to figure out why they are being called 
    for SMB/CIFS IOCTL operations instead of Trans2GetFileInfo.
-
-Changes not present in 1.4.1: 1.5.0 released (16 Feb 2006)
-
- * Update build system to include the "sys_name" in the 
-   obj and dest paths.
-
- * optimize the number of calls to obtain the smb_user_t for a 
-   smb virtual circuit.
-
- * add logging of server addresses, status and capabilities when
-   pinging the server.
-
- * prevent multiple threads from pinging the same server simultaneously.
-   instead, threads block and then use the result of the ping that was
-   already taking place.
-
- * Add registry values to allow the defaults for daemon checks to be altered
-   at startup.  Log values to afsd_init.log.
-
-   daemonCheckDownInterval
-   daemonCheckUpInterval
-   daemonCheckVolInterval
-   daemonCheckCBInterval
-   daemonCheckLockInterval
-   daemonCheckTokenInterval
-
- * Add EventLog messages for transitions in fs crypt state.
-
- * Byte range locking (when locks will be obtained from the
-   is still under discussion)
-
- * 64-bit Windows operating systems now supported 
-   (XP SP2 64-bit, 2003 SP1 64-bit, 2003 R2 64-bit)
-   This is a native 64-bit implementation of OpenAFS for Windows.
-   There is currently no 64-bit version of KFW and therefore 
-   there is no (easy) method for obtaining AFS credentials.  
-   32-bit KFW 3.0 can be used with 32-bit OAFW libraries
-   to obtain AFS tokens but there is not for the feint of 
-   heart.
-
- * A faster implementation of the fcrypt algorithms improves 
-   performance.
-
- * The afsd_service.exe now supplies Event Log Message Text.
-   The event log no longer generates warning text due to lack
-   of message configuration.
-
- * When afs servers are unreachable and network stack returns
-   a WSAEHOSTUNREACHABLE error, the AFS client will immediately 
-   mark the attempted server as being down.   This allows for
-   very fast response to the calling application.  This change
-   has a pronounced improvement when the Windows Explorer is
-   used on disconnected mobile computers.
-
- * Added DebugOutputString debugging of the RX library
 
 Since 1.4.1 rc9:  1.4.1 rc10 released (10 March 2006)
 
@@ -404,7 +285,21 @@ Since 1.4.1 rc5: 1.4.1 rc6 released (2 Feb 2006)
    which must have been added for debugging because its used 
    was never thread safe and it truly served no purpose.
 
-Since 1.4.1 rc4: 1.4.1 rc5 released (18 Jan 2006)
+Since 1.4.1 rc4: 1.4.1 rc5 released (25 Jan 2006)
+				    
+ * Re-enabled LogoffTokenTransfer and LogoffTokenTransferTimeout
+   registry settings.  Default is ON and 120 seconds.  If set to
+   OFF, tokens will not be destroyed.
+
+ * Fixed a number of race conditions and reference count 
+   problems associated with global queues.
+
+ * Added a method to detect abandonded smb virtual circuits
+   so their associated file handles, locks, user tokens,
+   and smb session resources can be released.
+
+ * Added a mechanism to allow user tokens to be preserved 
+   during integrated login and be freed after logoff.
 
  * Check access permissions to the file before the file is 
    truncated.
@@ -424,10 +319,10 @@ Since 1.4.1 rc3: 1.4.1 rc4 released (11 Jan 2006)
  * smb_username_t and smb_user_t objects are now properly reference
    counted and freed as appropriate.
 
- * disable to use of AFS file locks.  byte range locking is still
+ * disable the use of AFS file locks.  Byte range locking is still
    implemented but all locks are managed locally.  This prevents
    multiple processes from editing the same file on the same 
-   machine but it does prevent multiple processes on separate 
+   machine but it does not prevent multiple processes on separate 
    machines from modifying the file.
 
 Since 1.4.1 rc2: 1.4.1 RC3 released (4 Jan 2006)
@@ -462,7 +357,7 @@ Since 1.4.1 rc1: 1.4.1 RC2 released (30 Nov 2005)
 
  * A down server should be marked up as long as it responds to the client.
    It doesn't matter if the server returned an error as long as the error
-   is something other than VRESTARTING.  If there is such an error, all
+   is something other than VRESTARTING.	 If there is such an error, all
    connections on that server should be marked for replacement.
 
  * Change the check "up" servers period from once per hour to once every
@@ -470,7 +365,7 @@ Since 1.4.1 rc1: 1.4.1 RC2 released (30 Nov 2005)
 
 Post 1.4.0 revisions: 1.4.1 RC1 released (21 Oct 2005)
  * Byte Range Locking support has been added.  Architectural documentation
-   is located within src/WINNT/afsd/cm_vnodeops.c.   Best efforts are
+   is located within src/WINNT/afsd/cm_vnodeops.c.   Best efforts are 
    made to enforce Windows mandatory locking model using locally managed
    byte range locks with full file locks obtained from the file server.
    Read-only volumes provide the user with an implied locking privilege.
@@ -481,7 +376,7 @@ Post 1.4.0 revisions: 1.4.1 RC1 released (21 Oct 2005)
 
  * Implement error translation functions to convert Universal Error Codes
    output by modern servers to local errno and winsock error values.
-   This fixes the error message problems using pioctl() calls from fs.exe
+   This fixes the error message problems using pioctl() calls from fs.exe 
    and the AFS Shell Extension.
 
 Since 1.4.0 rc8: 1.4.0 final tagged (20 Oct 2005); released (31 Oct 2005)
