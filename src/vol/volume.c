@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.2 2006/08/24 20:22:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.3 2006/09/06 21:05:59 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -3367,9 +3367,6 @@ VCheckOffline(register Volume * vp)
 	VUpdateVolume_r(&error, vp, 0);
 	VCloseVolumeHandles_r(vp);
 
-	/* invalidate the volume header cache entry */
-	FreeVolumeHeader(vp);
-
 	if (LogLevel) {
 	    Log("VOffline: Volume %u (%s) is now offline", V_id(vp),
 		V_name(vp));
@@ -3384,6 +3381,9 @@ VCheckOffline(register Volume * vp)
 	    VChangeState_r(vp, VOL_STATE_UNATTACHED);
 	}
 	VCancelReservation_r(vp);
+
+	/* invalidate the volume header cache entry */
+	FreeVolumeHeader(vp);
     }
     return ret;
 }
@@ -3403,7 +3403,6 @@ VCheckOffline(register Volume * vp)
 	V_inUse(vp) = 0;
 	VUpdateVolume_r(&error, vp, 0);
 	VCloseVolumeHandles_r(vp);
-	FreeVolumeHeader(vp);
 	if (LogLevel) {
 	    Log("VOffline: Volume %u (%s) is now offline", V_id(vp),
 		V_name(vp));
@@ -3411,6 +3410,7 @@ VCheckOffline(register Volume * vp)
 		Log(" (%s)", V_offlineMessage(vp));
 	    Log("\n");
 	}
+	FreeVolumeHeader(vp);
 #ifdef AFS_PTHREAD_ENV
 	assert(pthread_cond_broadcast(&vol_put_volume_cond) == 0);
 #else /* AFS_PTHREAD_ENV */
