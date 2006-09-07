@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.3 2006/09/06 21:05:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.4 2006/09/07 01:09:30 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -3375,15 +3375,16 @@ VCheckOffline(register Volume * vp)
 	    Log("\n");
 	}
 
+	/* invalidate the volume header cache entry */
+	FreeVolumeHeader(vp);
+
 	/* if nothing changed state to error or salvaging,
 	 * drop state to unattached */
 	if (!IsErrorState(V_attachState(vp))) {
 	    VChangeState_r(vp, VOL_STATE_UNATTACHED);
 	}
 	VCancelReservation_r(vp);
-
-	/* invalidate the volume header cache entry */
-	FreeVolumeHeader(vp);
+	/* no usage of vp is safe beyond this point */
     }
     return ret;
 }
