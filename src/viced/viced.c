@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.17 2006/09/03 05:51:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.18 2006/09/15 23:19:28 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1372,6 +1372,7 @@ vl_Initialize(char *confDir)
 			     info.hostAddr[i].sin_port, USER_SERVICE_ID, sc,
 			     scIndex);
     code = ubik_ClientInit(serverconns, &cstruct);
+    afsconf_Close(tdir);
     if (code) {
 	ViceLog(0, ("vl_Initialize: ubik client init failed.\n"));
 	return code;
