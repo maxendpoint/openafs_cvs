@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.13 2006/05/04 21:23:21 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.12.4.1 2006/09/16 00:11:55 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -20,12 +20,13 @@ RCSID
 #endif
  
 int
-osi_NetReceive(osi_socket so, struct sockaddr_storage *saddr, int *slen,
-	       struct iovec *dvec, int nvecs, int *alength)
+osi_NetReceive(osi_socket so, struct sockaddr_in *addr, struct iovec *dvec,
+	       int nvecs, int *alength)
 {
 #ifdef AFS_DARWIN80_ENV
     socket_t asocket = (socket_t)so;
     struct msghdr msg;
+    struct sockaddr_storage ss;
     int rlen;
     mbuf_t m;
 #else
@@ -55,9 +56,9 @@ osi_NetReceive(osi_socket so, struct sockaddr_storage *saddr, int *slen,
 #if 1
     resid = *alength;
     memset(&msg, 0, sizeof(struct msghdr));
-    msg.msg_name = saddr;
+    msg.msg_name = &ss;
     msg.msg_namelen = sizeof(struct sockaddr_storage);
-    sa =(struct sockaddr *) saddr;
+    sa =(struct sockaddr *) &ss;
     code = sock_receivembuf(asocket, &msg, &m, 0, alength);
     if (!code) {
         size_t offset=0,sz;
@@ -121,8 +122,14 @@ osi_NetReceive(osi_socket so, struct sockaddr_storage *saddr, int *slen,
 	return code;
     *alength -= resid;
     if (sa) {
-	*slen = sa->sa_len;
+	if (sa->sa_family == AF_INET) {
+	    if (addr)
+		*addr = *(struct sockaddr_in *)sa;
+	} else
+	    printf("Unknown socket family %d in NetReceive\n", sa->sa_family);
+#ifndef AFS_DARWIN80_ENV
 	FREE(sa, M_SONAME);
+#endif
     }
     return code;
 }
@@ -148,8 +155,8 @@ osi_StopListener(void)
 }
 
 int
-osi_NetSend(osi_socket so, struct sockaddr_storage *saddr, int salen,
-	    struct iovec *dvec, int nvecs, afs_int32 alength, int istack)
+osi_NetSend(osi_socket so, struct sockaddr_in *addr, struct iovec *dvec,
+	    int nvecs, afs_int32 alength, int istack)
 {
 #ifdef AFS_DARWIN80_ENV
     socket_t asocket = (socket_t)so;
@@ -171,8 +178,7 @@ osi_NetSend(osi_socket so, struct sockaddr_storage *saddr, int salen,
     for (i = 0; i < nvecs; i++)
 	iov[i] = dvec[i];
 
-    saddr->ss_len = saddr->ss_family == AF_INET6 ?
-		sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in);
+    addr->sin_len = sizeof(struct sockaddr_in);
 
     if (haveGlock)
 	AFS_GUNLOCK();
@@ -181,8 +187,8 @@ osi_NetSend(osi_socket so, struct sockaddr_storage *saddr, int salen,
 #endif
 #ifdef AFS_DARWIN80_ENV
     memset(&msg, 0, sizeof(struct msghdr));
-    msg.msg_name = saddr;
-    msg.msg_namelen = saddr->ss_len;
+    msg.msg_name = addr;
+    msg.msg_namelen = ((struct sockaddr *)addr)->sa_len;
     msg.msg_iov = &iov[0];
     msg.msg_iovlen = nvecs;
     code = sock_send(asocket, &msg, 0, &slen);
