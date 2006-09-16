@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.13 2006/05/04 21:23:21 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/DARWIN/rx_knet.c,v 1.14 2006/09/16 00:10:23 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -122,7 +122,9 @@ osi_NetReceive(osi_socket so, struct sockaddr_storage *saddr, int *slen,
     *alength -= resid;
     if (sa) {
 	*slen = sa->sa_len;
+#ifndef AFS_DARWIN80_ENV
 	FREE(sa, M_SONAME);
+#endif
     }
     return code;
 }
