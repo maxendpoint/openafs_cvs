@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.48 2006/09/16 19:20:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.49 2006/09/17 05:01:43 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -127,14 +127,14 @@ static int SaveKeys(struct afsconf_dir *adir);
 
 #define BUFFER 4096
 
-static struct iobuffer {
+struct afsconf_iobuffer {
     int _file;
     char *buffer;
     char *ptr;
     char *endptr;
 };
 
-typedef struct iobuffer afsconf_FILE;
+typedef struct afsconf_iobuffer afsconf_FILE;
 
 static afsconf_FILE *
 afsconf_fopen(const char *fname, const char *fmode)
@@ -146,7 +146,7 @@ afsconf_fopen(const char *fname, const char *fmode)
 	return NULL;
     }
     
-    iop = malloc(sizeof(struct iobuffer));
+    iop = malloc(sizeof(struct afsconf_iobuffer));
     if (iop == NULL) {
 	(void) close(fd);
 	errno = ENOMEM;
@@ -491,6 +491,10 @@ GetCellUnix(struct afsconf_dir *adir)
         sz = read(fd, tbuffer, 255);
         close(fd);
         if (sz > 0) {
+	    char *p = strchr(tbuffer, '\n');
+	    if (p)
+		*p = '\0';
+
             adir->cellName = (char *)malloc(sz + 1);
             strncpy(adir->cellName, tbuffer, sz);
         }
