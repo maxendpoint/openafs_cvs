@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.9 2006/09/13 04:28:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.10 2006/09/20 05:52:35 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -898,7 +898,6 @@ namei_GetLinkCount2(FdHandle_t * h, Inode ino, int lockit, int fixup, int nowrit
     ssize_t rc;
     int index;
 
-    if (!VALID_INO(ino)) return 0;
     /* there's no linktable yet. the salvager will create one later */
     if (h->fd_fd == -1 && fixup)
        return 1;
