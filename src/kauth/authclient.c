@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.19 2006/09/15 23:17:23 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/authclient.c,v 1.20 2006/09/21 11:38:04 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -145,7 +145,6 @@ ka_GetServers(char *cell, struct afsconf_cell * cellinfo)
 	}
     }
     code = myCellLookup(conf, cell, AFSCONF_KAUTHSERVICE, cellinfo);
-    afsconf_Close(conf);
     UNLOCK_GLOBAL_MUTEX;
     return code;
 }
