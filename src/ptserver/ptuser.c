@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.25.2.4 2006/09/16 19:42:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.25.2.5 2006/09/21 21:13:22 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -682,7 +682,7 @@ pr_ChangeEntry(char *oldname, char *newname, afs_int32 *newid, char *newowner)
 	if (oid == ANONYMOUSID)
 	    return PRNOENT;
     }
-    code = ubik_PR_ChangeEntry(pruclient, 0, id, newname, oid, newid);
+    code = ubik_PR_ChangeEntry(pruclient, 0, id, newname, oid, *newid);
     return code;
 }
 
