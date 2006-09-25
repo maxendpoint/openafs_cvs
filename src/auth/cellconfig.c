@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.40.2.8 2006/09/17 05:01:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.40.2.9 2006/09/25 15:05:30 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -496,7 +496,8 @@ GetCellUnix(struct afsconf_dir *adir)
 		*p = '\0';
 
             adir->cellName = (char *)malloc(sz + 1);
-            strncpy(adir->cellName, tbuffer, sz);
+            memset(adir->cellName, 0, sz+1);
+	    strncpy(adir->cellName, tbuffer, sz);
         }
     }
     return 0;
