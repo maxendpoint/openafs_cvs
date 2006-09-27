@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_gcpags.c,v 1.2 2006/09/22 11:16:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_gcpags.c,v 1.3 2006/09/27 20:01:10 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -226,11 +226,13 @@ afs_osi_TraverseProcTable(void)
 #endif
 
 #if defined(AFS_LINUX22_ENV)
-extern rwlock_t tasklist_lock __attribute__((weak));
 void
 afs_osi_TraverseProcTable()
 {
+#if !defined(LINUX_KEYRING_SUPPORT)
+    extern rwlock_t tasklist_lock __attribute__((weak));
     struct task_struct *p;
+ 
     if (&tasklist_lock)
        read_lock(&tasklist_lock);
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
@@ -266,6 +268,7 @@ afs_osi_TraverseProcTable()
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
     else
 	rcu_read_unlock();
+#endif
 #endif
 }
 #endif
