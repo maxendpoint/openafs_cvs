@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.43 2006/08/13 16:50:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.44 2006/10/06 13:30:56 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -75,7 +75,11 @@ afs_linux_read(struct file *fp, char *buf, size_t count, loff_t * offp)
     else {
 	    osi_FlushPages(vcp, credp);	/* ensure stale pages are gone */
 	    AFS_GUNLOCK();
+#ifdef DO_SYNC_READ
+	    code = do_sync_read(fp, buf, count, offp);
+#else
 	    code = generic_file_read(fp, buf, count, offp);
+#endif
 	    AFS_GLOCK();
     }
 
@@ -121,7 +125,11 @@ afs_linux_write(struct file *fp, const char *buf, size_t count, loff_t * offp)
 	code = -code;
     else {
 	    AFS_GUNLOCK();
+#ifdef DO_SYNC_READ
+	    code = do_sync_write(fp, buf, count, offp);
+#else
 	    code = generic_file_write(fp, buf, count, offp);
+#endif
 	    AFS_GLOCK();
     }
 
@@ -550,6 +558,10 @@ struct file_operations afs_dir_fops = {
   .read =	generic_read_dir,
 #endif
   .readdir =	afs_linux_readdir,
+#ifdef GENERIC_FILE_AIO_READ
+  .aio_read =	generic_file_aio_read,
+  .aio_write =	generic_file_aio_write,
+#endif
 #ifdef HAVE_UNLOCKED_IOCTL
   .unlocked_ioctl = afs_unlocked_xioctl,
 #else
