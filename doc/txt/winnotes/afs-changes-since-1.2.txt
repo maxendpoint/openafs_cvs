@@ -1,5 +1,8 @@
 Since 1.4.2-rc4 (1.4.2 released 7 Oct 2006)
 
+ * Disable DNS Registrations for the Loopback Adapter and make sure
+   that Netbios is turned on during installation.
+
  * Track thread id on read/write locks for debugging 
    purposes
  
