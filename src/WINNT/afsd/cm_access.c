@@ -150,11 +150,9 @@ long cm_GetAccessRights(struct cm_scache *scp, struct cm_user *up,
             return code;
         }       
         osi_Log1(afsd_logp, "GetAccess parent scp %x user %x", aclScp, up);
-	if (!cm_HaveCallback(aclScp)) {
-	    lock_ObtainMutex(&aclScp->mx);
-	    code = cm_GetCallback(aclScp, up, reqp, 1);
-	    lock_ReleaseMutex(&aclScp->mx);
-	}
+	lock_ObtainMutex(&aclScp->mx);
+	code = cm_GetCallback(aclScp, up, reqp, 1);
+	lock_ReleaseMutex(&aclScp->mx);
         cm_ReleaseSCache(aclScp);
         lock_ObtainMutex(&scp->mx);
     } else if (!got_cb) {
