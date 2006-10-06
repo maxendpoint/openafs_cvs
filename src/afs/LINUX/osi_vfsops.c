@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.48 2006/08/20 05:31:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.49 2006/10/06 13:27:46 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -318,8 +318,7 @@ afs_init_inodecache(void)
 void
 afs_destroy_inodecache(void)
 {
-    if (kmem_cache_destroy(afs_inode_cachep))
-	printk(KERN_INFO "afs_inode_cache: not all structures were freed\n");
+    (void) kmem_cache_destroy(afs_inode_cachep);
 }
 #else
 int
