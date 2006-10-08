@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.5 2006/10/06 13:29:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.6 2006/10/08 14:49:09 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -574,10 +574,6 @@ struct file_operations afs_dir_fops = {
   .read =	generic_read_dir,
 #endif
   .readdir =	afs_linux_readdir,
-#ifdef GENERIC_FILE_AIO_READ
-  .aio_read =	generic_file_aio_read,
-  .aio_write =	generic_file_aio_write,
-#endif
 #ifdef HAVE_UNLOCKED_IOCTL
   .unlocked_ioctl = afs_unlocked_xioctl,
 #else
@@ -593,6 +589,10 @@ struct file_operations afs_dir_fops = {
 struct file_operations afs_file_fops = {
   .read =	afs_linux_read,
   .write =	afs_linux_write,
+#ifdef GENERIC_FILE_AIO_READ
+  .aio_read =	generic_file_aio_read,
+  .aio_write =	generic_file_aio_write,
+#endif
 #ifdef HAVE_UNLOCKED_IOCTL
   .unlocked_ioctl = afs_unlocked_xioctl,
 #else
