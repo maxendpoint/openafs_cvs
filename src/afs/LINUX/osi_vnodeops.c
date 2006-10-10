@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.45 2006/10/08 14:52:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.46 2006/10/10 22:01:04 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -821,9 +821,7 @@ afs_dentry_iput(struct dentry *dp, struct inode *ip)
     struct vcache *vcp = VTOAFS(ip);
 
     AFS_GLOCK();
-    ObtainWriteLock(&vcp->lock, 537);
     (void) afs_InactiveVCache(vcp, NULL);
-    ReleaseWriteLock(&vcp->lock);
     AFS_GUNLOCK();
 
     iput(ip);
