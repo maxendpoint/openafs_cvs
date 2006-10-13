@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.16.2.11 2006/09/21 21:11:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.16.2.12 2006/10/13 12:46:02 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -625,7 +625,6 @@ pr_CheckEntryByName(char *name, afs_int32 *id, char *owner, char *creator)
     if (*id == ANONYMOUSID)
 	return PRNOENT;
     code = ubik_PR_ListEntry(pruclient, 0, *id, &aentry);
-      //code = ubik_PR_ListEntry(pruclient, 0, *id, &aentry);
     if (code)
 	return code;
     /* this should be done in one RPC, but I'm lazy. */
