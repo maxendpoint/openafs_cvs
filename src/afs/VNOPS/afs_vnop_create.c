@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.23 2005/10/15 14:23:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.24 2006/10/13 05:01:34 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -305,7 +305,7 @@ afs_create(OSI_VC_DECL(adp), char *aname, struct vattr *attrs,
 	     (tc, code, &adp->fid, &treq, AFS_STATS_FS_RPCIDX_CREATEFILE,
 	      SHARED_LOCK, NULL));
 
-    if (code == EEXIST &&
+    if ((code == EEXIST || code == UAEEXIST) &&
 #ifdef AFS_SGI64_ENV
     !(flags & VEXCL)
 #else /* AFS_SGI64_ENV */
