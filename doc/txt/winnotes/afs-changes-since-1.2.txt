@@ -26,6 +26,9 @@ Since 1.5.8:
  * do not permit dirty buffers that belong to deleted files
    to be written to the file server.  its a waste of bandwidth
 
+ * do not leak stat cache references when the file server
+   returns VNOVNODE
+
  * afscreds: do not permit an attempt to obtain tokens if the
    afs service could not be started.   this was causing stack
    overflows on Vista after resuming from a suspend
