@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 Massachusetts Institute of Technology
+ * Copyright (c) 2005,2006 Secure Endpoints Inc.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsnewcreds.h,v 1.1.2.2 2006/10/12 21:19:43 jaltman Exp $ */
+/* $Id: afsnewcreds.h,v 1.1.2.3 2006/10/16 13:55:35 jaltman Exp $ */
 
 #ifndef __AFS_NEWCREDS_H
 #define __AFS_NEWCREDS_H
