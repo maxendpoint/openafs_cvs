@@ -1,4 +1,5 @@
-/* Copyright (c) 2004 Massachusetts Institute of Technology
+/* 
+ * Copyright (c) 2005,2006 Secure Endpoints Inc.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -21,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: main.c,v 1.1 2006/10/10 17:33:35 jaltman Exp $ */
+/* $Id: main.c,v 1.2 2006/10/16 13:54:32 jaltman Exp $ */
 
 /* Disable the 'macro redefinition' warning which is getting
    triggerred by a redefinition of the ENCRYPT and DECRYPT macros. */

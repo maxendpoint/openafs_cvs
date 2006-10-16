@@ -177,6 +177,7 @@ $(OUT)\langres_$(LANG).res: lang\$(LANG)\langres.rc
 
 clean::
 	$(DEL) $(INCFILES)
+	$(DEL) *.pdb
 	$(CD) help
 	$(MAKECMD) /f NTMakefile clean
 	$(CD) ..
