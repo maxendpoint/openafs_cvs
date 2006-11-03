@@ -7,9 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
 extern "C" {
 #include <afs/param.h>
 #include <afs/stds.h>
@@ -34,7 +31,7 @@ extern "C" {
 #define ckCHUNK_MAX           1048576L
 
 #define cSTATS_MIN            256L
-#define cSTATS_MAX            10000L
+#define cSTATS_MAX            262144L
 
 
 /*
