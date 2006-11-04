@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.21 2006/04/14 13:12:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.21.2.1 2006/11/04 15:39:01 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -358,7 +358,7 @@ rxkad_CheckResponse(struct rx_securityClass *aobj,
     if (code == -1)
 	return RXKADEXPIRED;
     else if (code <= 0)
-	return RXKADNOAUTH;
+	return RXKADBADTICKET;
 
     code = fc_keysched(&sessionkey, sconn->keysched);
     if (code)
