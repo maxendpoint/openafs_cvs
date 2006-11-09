@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.3 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.4 2006/11/09 23:03:15 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -286,6 +286,7 @@ void
 afs_InactiveVCache(struct vcache *avc, struct AFS_UCRED *acred)
 {
     AFS_STATCNT(afs_inactive);
+    ObtainWriteLock(&avc->lock, 50);
     if (avc->states & CDirty) {
 	/* we can't keep trying to push back dirty data forever.  Give up. */
 	afs_InvalidateAllSegments(avc);	/* turns off dirty bit */
@@ -295,11 +296,16 @@ afs_InactiveVCache(struct vcache *avc, struct AFS_UCRED *acred)
     if (avc->states & CUnlinked) {
 	if (CheckLock(&afs_xvcache) || CheckLock(&afs_xdcache)) {
 	    avc->states |= CUnlinkedDel;
-	    return;
+	    goto unlock;
 	}
+	ReleaseWriteLock(&avc->lock);
 	afs_remunlink(avc, 1);	/* ignore any return code */
     }
+    return;
 
+ unlock:
+    ReleaseWriteLock(&avc->lock);
+    return;
 }
 #endif
 
