@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.7 2006/10/10 22:02:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.8 2006/11/10 00:11:06 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1347,7 +1347,7 @@ afs_linux_readpage(struct file *fp, struct page *pp)
     clear_bit(PG_error, &pp->flags);
 #endif
 
-    setup_uio(&tuio, &iovec, (char *)address, offset, PAGESIZE, UIO_READ,
+    setup_uio(&tuio, &iovec, (char *)address, offset, PAGE_SIZE, UIO_READ,
 	      AFS_UIOSYS);
 #ifdef AFS_LINUX24_ENV
     lock_kernel();
@@ -1365,7 +1365,7 @@ afs_linux_readpage(struct file *fp, struct page *pp)
 
     if (!code) {
 	if (tuio.uio_resid)	/* zero remainder of page */
-	    memset((void *)(address + (PAGESIZE - tuio.uio_resid)), 0,
+	    memset((void *)(address + (PAGE_SIZE - tuio.uio_resid)), 0,
 		   tuio.uio_resid);
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
 	flush_dcache_page(pp);

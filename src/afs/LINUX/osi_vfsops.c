@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.11 2006/11/09 23:43:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.12 2006/11/10 00:11:06 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -501,6 +501,9 @@ vattr2inode(struct inode *ip, struct vattr *vp)
     ip->i_ino = vp->va_nodeid;
     ip->i_nlink = vp->va_nlink;
     ip->i_blocks = vp->va_blocks;
+#ifdef STRUCT_INODE_HAS_I_BLKBITS
+    ip->i_blkbits = AFS_BLKBITS;
+#endif
 #ifdef STRUCT_INODE_HAS_I_BLKSIZE
     ip->i_blksize = vp->va_blocksize;
 #endif
