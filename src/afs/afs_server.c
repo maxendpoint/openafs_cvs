@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.43 2005/11/14 06:00:38 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.43.4.1 2006/11/10 00:20:19 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -1383,15 +1383,22 @@ static int afs_SetServerPrefs(struct srvAddr *sa) {
 #elif defined(AFS_DARWIN80_ENV)
     {
 	errno_t t;
-	int cnt=0;
-	ifaddr_t *addresses, address;
-	t = ifnet_get_address_list_family(NULL, &addresses, AF_INET);
-	if (t == 0) {
-	    while(addresses[cnt] != NULL) {
-		afsi_SetServerIPRank(sa, address);
-		cnt++;
+	unsigned int count;
+	int cnt=0, m, j;
+	ifaddr_t *ifads;
+	ifnet_t *ifn;
+
+	if (!ifnet_list_get(AF_INET, &ifn, &count)) {
+	    for (m = 0; m < count; m++) {
+		if (!ifnet_get_address_list(ifn[m], &ifads)) {
+		    for (j = 0; ifads[j] != NULL && cnt < ADDRSPERSITE; j++) {
+			afsi_SetServerIPRank(sa, ifads[j]);
+			cnt++;
+		    }
+		    ifnet_free_address_list(ifads);
+		}
 	    }
-	    ifnet_free_address_list(addresses);
+	    ifnet_list_free(ifn);
 	}
     }
 #elif defined(AFS_DARWIN60_ENV)

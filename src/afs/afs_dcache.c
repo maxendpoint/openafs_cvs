@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.2 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.3 2006/11/10 00:20:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2843,7 +2843,7 @@ afs_MemGetDSlot(register afs_int32 aslot, register struct dcache *tmpdc)
     if (CheckLock(&afs_xdcache) != -1)
 	osi_Panic("getdslot nolock");
     if (aslot < 0 || aslot >= afs_cacheFiles)
-	osi_Panic("getdslot slot");
+	osi_Panic("getdslot slot %d (of %d)", aslot, afs_cacheFiles);
     tdc = afs_indexTable[aslot];
     if (tdc) {
 	QRemove(&tdc->lruq);	/* move to queue head */
@@ -2935,7 +2935,7 @@ afs_UFSGetDSlot(register afs_int32 aslot, register struct dcache *tmpdc)
     if (CheckLock(&afs_xdcache) != -1)
 	osi_Panic("getdslot nolock");
     if (aslot < 0 || aslot >= afs_cacheFiles)
-	osi_Panic("getdslot slot");
+	osi_Panic("getdslot slot %d (of %d)", aslot, afs_cacheFiles);
     tdc = afs_indexTable[aslot];
     if (tdc) {
 	QRemove(&tdc->lruq);	/* move to queue head */
