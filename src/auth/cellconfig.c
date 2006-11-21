@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.53 2006/10/23 19:42:00 rees Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.54 2006/11/21 00:56:14 rra Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -476,7 +476,7 @@ GetCellUnix(struct afsconf_dir *adir)
 {
     char *rc;
     char tbuffer[256];
-    char *p;
+    char *start, *p;
     afsconf_FILE *fp;
     
     strcompose(tbuffer, 256, adir->name, "/", AFSDIR_THISCELL_FILE, NULL);
@@ -486,12 +486,20 @@ GetCellUnix(struct afsconf_dir *adir)
     }
     rc = fgets(tbuffer, 256, fp);
     fclose(fp);
+    if (rc == NULL)
+        return -1;
 
-    p = strchr(tbuffer, '\n');
-    if (p)
-	*p = '\0';
+    start = tbuffer;
+    while (*start != '\0' && isspace(*start))
+        start++;
+    p = start;
+    while (*p != '\0' && !isspace(*p))
+        p++;
+    *p = '\0';
+    if (*start == '\0')
+        return -1;
 
-    adir->cellName = strdup(tbuffer);
+    adir->cellName = strdup(start);
     return 0;
 }
 
