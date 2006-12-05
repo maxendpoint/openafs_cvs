@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.65 2006/08/01 21:32:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.66 2006/12/05 19:38:44 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -2629,7 +2629,7 @@ rxi_PrepareSendPacket(register struct rx_call *call,
 	osi_Panic("PrepareSendPacket 1\n");	/* MTUXXX */
     } else {
         struct rx_queue q;
-       int nb;
+	int nb;
 
 	queue_Init(&q);
 
@@ -2640,8 +2640,8 @@ rxi_PrepareSendPacket(register struct rx_call *call,
 	if (nb)
 	    rxi_FreePackets(nb, &q);
 
-	p->niovecs = i;
-	p->wirevec[i - 1].iov_len += len;
+	p->niovecs = MAX(2, i);
+	p->wirevec[MAX(2, i) - 1].iov_len += len;
     }
     RXS_PreparePacket(conn->securityObject, call, p);
 }
