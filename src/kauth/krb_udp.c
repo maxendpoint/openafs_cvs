@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.23 2003/12/07 22:49:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.24 2006/12/06 20:00:48 rra Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -399,6 +399,11 @@ UDP_Authenticate(ksoc, client, name, inst, startTime, endTime, sname, sinst)
     }
     KALOG(name, inst, sname, sinst, NULL, client->sin_addr.s_addr,
 	  LOG_AUTHENTICATE);
+
+    if (cipherLen != 0) {
+	KALOG(name, inst, sname, sinst, NULL, client->sin_addr.s_addr,
+	      LOG_TGTREQUEST);
+    }
     osi_audit(UDPAuthenticateEvent, 0, AUD_STR, name, AUD_STR, inst, AUD_END);
     return 0;
 

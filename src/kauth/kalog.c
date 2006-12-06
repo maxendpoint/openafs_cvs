@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kalog.c,v 1.7 2006/05/04 21:23:17 kenh Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kalog.c,v 1.8 2006/12/06 20:00:48 rra Exp $");
 
 #include <stdio.h>
 #include <afs/afsutil.h>
@@ -115,6 +115,9 @@ kalog_log(char *principal, char *instance, char *sprincipal, char *sinstance,
     case LOG_GETTICKET:
 	strcat(keybuf, ":gtck");
 	break;
+    case LOG_TGTREQUEST:
+	strcat(keybuf, ":tgtreq");
+	break;
     default:
 	break;
     }
@@ -187,6 +190,9 @@ ka_log(char *principal, char *instance, char *sprincipal, char *sinstance,
     case LOG_GETTICKET:
 	strcat(logbuf, ":gtck");
 	break;
+    case LOG_TGTREQUEST:
+        strcat(logbuf, ":tgtreq");
+        break;
     default:
 	break;
     }
