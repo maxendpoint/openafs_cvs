@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.4 2006/08/13 16:43:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.5 2006/12/17 01:23:30 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -7753,3 +7753,31 @@ rx_RxStatUserOk(struct rx_call *call)
 	return 0;
     return rxi_rxstat_userok(call);
 }
+
+#ifdef AFS_NT40_ENV
+/*
+ * DllMain() -- Entry-point function called by the DllMainCRTStartup()
+ *     function in the MSVC runtime DLL (msvcrt.dll).
+ *
+ *     Note: the system serializes calls to this function.
+ */
+BOOL WINAPI
+DllMain(HINSTANCE dllInstHandle,	/* instance handle for this DLL module */
+	DWORD reason,			/* reason function is being called */
+	LPVOID reserved)		/* reserved for future use */
+{
+    switch (reason) {
+    case DLL_PROCESS_ATTACH:
+	/* library is being attached to a process */
+	INIT_PTHREAD_LOCKS;
+	return TRUE;
+
+    case DLL_PROCESS_DETACH:
+    	return TRUE;
+
+    default:
+	return FALSE;
+    }
+}
+#endif
+
