@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.28 2006/12/17 01:21:57 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.29 2006/12/19 04:35:29 shadow Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -613,10 +613,8 @@ void
 rxi_InitPeerParams(struct rx_peer *pp)
 {
     afs_uint32 ppaddr;
-    u_short rxmtu;
+    u_short rxmtu, maxmtu = 0;
     int ix;
-
-
 
     LOCK_IF_INIT;
     if (!Inited) {
@@ -646,6 +644,8 @@ rxi_InitPeerParams(struct rx_peer *pp)
 
 	LOCK_IF;
 	for (ix = 0; ix < rxi_numNetAddrs; ++ix) {
+	    if (maxmtu < myNetMTUs[ix])
+		maxmtu = myNetMTUs[ix] - RX_IPUDP_SIZE;
 	    if ((rxi_NetAddrs[ix] & myNetMasks[ix]) ==
 		(ppaddr & myNetMasks[ix])) {
 #ifdef IFF_POINTOPOINT
@@ -655,14 +655,14 @@ rxi_InitPeerParams(struct rx_peer *pp)
 		rxmtu = myNetMTUs[ix] - RX_IPUDP_SIZE;
 		if (rxmtu < RX_MIN_PACKET_SIZE)
 		    rxmtu = RX_MIN_PACKET_SIZE;
-		if (pp->ifMTU < rxmtu)
-		    pp->ifMTU = MIN(rx_MyMaxSendSize, rxmtu);
 	    }
 	}
 	UNLOCK_IF;
+	if (rxmtu)
+	    pp->ifMTU = MIN(rx_MyMaxSendSize, rxmtu);
 	if (!pp->ifMTU) {		/* not local */
 	    pp->timeout.sec = 3;
-	    pp->ifMTU = MIN(rx_MyMaxSendSize, RX_REMOTE_PACKET_SIZE);
+	    pp->ifMTU = MIN(rx_MyMaxSendSize, maxmtu ? maxmtu : RX_REMOTE_PACKET_SIZE);
 	}
 	break;
 #ifdef AF_INET6
