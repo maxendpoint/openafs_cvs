@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.34.2.6 2006/11/28 09:34:20 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.34.2.7 2006/12/19 03:40:14 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1197,7 +1197,7 @@ SAFSVolForwardMultiple(struct rx_call *acid, afs_int32 fromTrans, afs_int32
     strcpy(tt->lastProcName, "ForwardMulti");
 
     /* (fromDate == 0) ==> full dump */
-    is_incremental = ((V_parentId(vp) == V_id(vp) && fromDate) ? 1 : 0);
+    is_incremental = (fromDate ? 1 : 0);
 
     i = results->manyResults_len = destinations->manyDests_len;
     results->manyResults_val = codes =
