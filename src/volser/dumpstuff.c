@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.25.2.7 2006/12/19 03:51:52 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.25.2.8 2006/12/19 04:51:08 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -1033,7 +1033,7 @@ RestoreVolume(register struct rx_call *call, Volume * avp, int incremental,
     iod_Init(iodp, call);
 
     vp = avp;
-    if (V_parentId(vp) == V_id(p))
+    if (V_parentId(vp) == V_id(vp))
       delo = incremental;
 
     if (!ReadDumpHeader(iodp, &header)) {
