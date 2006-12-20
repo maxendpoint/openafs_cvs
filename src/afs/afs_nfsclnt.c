@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.13.6.3 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.13.6.4 2006/12/20 20:08:32 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -198,7 +198,11 @@ afs_nfsclient_reqhandler(struct afs_exporter *exporter,
     }
 /*    ObtainWriteLock(&afs_xnfsreq); */
     pag = PagInCred(*cred);
+#if defined(AFS_SUN510_ENV)
+    uid = crgetuid(*cred);
+#else
     uid = (*cred)->cr_uid;
+#endif
     if ((afs_nfsexporter->exp_states & EXP_CLIPAGS) && pag != NOPAG) {
 	uid = pag;
     } else if (pag != NOPAG) {
