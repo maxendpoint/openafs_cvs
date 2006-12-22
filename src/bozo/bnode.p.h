@@ -131,7 +131,7 @@ extern int bnode_SetTimeout(register struct bnode *abnode, afs_int32 atimeout);
 extern int bnode_Init(void);
 extern int bnode_NewProc(struct bnode *abnode, char *aexecString, char *coreName, struct bnode_proc **aproc);
 extern int bnode_InitBnode(register struct bnode *abnode, struct bnode_ops *abnodeops, char *aname);
-extern afs_int32 afs_int32 bnode_Create(char *atype, char *ainstance, struct bnode ** abp, char *ap1, char *ap2, char *ap3, char *ap4, char *ap5, char *notifier, int fileGoal, int rewritefile)
+extern afs_int32 bnode_Create(char *atype, char *ainstance, struct bnode ** abp, char *ap1, char *ap2, char *ap3, char *ap4, char *ap5, char *notifier, int fileGoal, int rewritefile);
 extern struct bnode *bnode_FindInstance(register char *aname);
 extern int bnode_WaitStatus(register struct bnode *abnode, int astatus);
 extern int bnode_SetStat(register struct bnode *abnode, register int agoal);
