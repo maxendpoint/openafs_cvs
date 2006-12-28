@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.6 2006/11/21 00:56:56 rra Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.7 2006/12/28 20:37:21 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -866,6 +866,7 @@ afsconf_GetAfsdbInfo(char *acellName, char *aservice,
      * operations.
      */
 
+ retryafsdb:
     if ( ! strchr(acellName,'.') ) {
        cellnamelength=strlen(acellName);
        dotcellname=malloc(cellnamelength+2);
@@ -873,7 +874,7 @@ afsconf_GetAfsdbInfo(char *acellName, char *aservice,
        dotcellname[cellnamelength]='.';
        dotcellname[cellnamelength+1]=0;
        LOCK_GLOBAL_MUTEX;
-	    len = res_search(dotcellname, C_IN, T_AFSDB, answer, sizeof(answer));
+       len = res_search(dotcellname, C_IN, T_AFSDB, answer, sizeof(answer));
        if ( len < 0 ) {
           len = res_search(acellName, C_IN, T_AFSDB, answer, sizeof(answer));
        }
@@ -881,11 +882,17 @@ afsconf_GetAfsdbInfo(char *acellName, char *aservice,
        free(dotcellname);
     } else {
        LOCK_GLOBAL_MUTEX;
-	    len = res_search(acellName, C_IN, T_AFSDB, answer, sizeof(answer));
+       len = res_search(acellName, C_IN, T_AFSDB, answer, sizeof(answer));
        UNLOCK_GLOBAL_MUTEX;
     }
-    if (len < 0)
+    if (len < 0) {
+	if (try < 1) {
+	    try++;
+	    res_init();
+	    goto retryafsdb;
+	}
 	return AFSCONF_NOTFOUND;
+    }
 
     p = answer + sizeof(HEADER);	/* Skip header */
     code = dn_expand(answer, answer + len, p, host, sizeof(host));
