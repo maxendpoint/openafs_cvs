@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_mariner.c,v 1.10 2006/05/04 22:17:43 kenh Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_mariner.c,v 1.11 2006/12/28 23:11:49 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -99,8 +99,7 @@ afs_MarinerLogFetch(register struct vcache *avc, register afs_int32 off,
     dvec.iov_base = tp1;
     dvec.iov_len = len;
     AFS_GUNLOCK();
-    (void)osi_NetSend(afs_server->socket, (struct sockaddr_storage *) &taddr,
-		      sizeof(taddr), &dvec, 1, len, 0);
+    (void)osi_NetSend(afs_server->socket, &taddr, &dvec, 1, len, 0);
     AFS_GLOCK();
     osi_FreeSmallSpace(tp1);
 }				/*afs_MarinerLogFetch */
@@ -133,8 +132,7 @@ afs_MarinerLog(register char *astring, register struct vcache *avc)
     dvec.iov_base = buf;
     dvec.iov_len = tp - buf;
     AFS_GUNLOCK();
-    (void)osi_NetSend(afs_server->socket, (struct sockaddr_storage *) &taddr,
-		      sizeof(taddr), &dvec, 1, tp - buf, 0);
+    (void)osi_NetSend(afs_server->socket, &taddr, &dvec, 1, tp - buf, 0);
     AFS_GLOCK();
     osi_FreeSmallSpace(buf);
 }				/*afs_MarinerLog */

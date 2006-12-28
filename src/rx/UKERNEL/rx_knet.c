@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.15 2006/05/04 22:17:43 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.16 2006/12/28 23:11:58 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -280,8 +280,8 @@ osi_StopListener(void)
 }
 
 int
-osi_NetSend(osi_socket sockp, struct sockaddr_storage *addr, int addrlen,
-	    struct iovec *iov, int nio, afs_int32 size, int stack)
+osi_NetSend(osi_socket sockp, struct sockaddr_in *addr, struct iovec *iov,
+	    int nio, afs_int32 size, int stack)
 {
     int rc;
     int i;
@@ -301,7 +301,7 @@ osi_NetSend(osi_socket sockp, struct sockaddr_storage *addr, int addrlen,
 
     memset(&msg, 0, sizeof(msg));
     msg.msg_name = (void *)addr;
-    msg.msg_namelen = addrlen;
+    msg.msg_namelen = sizeof(struct sockaddr_in);
     msg.msg_iov = &tmpiov[0];
     msg.msg_iovlen = nio;
 
