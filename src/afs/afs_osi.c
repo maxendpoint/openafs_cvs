@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.3 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.4 2006/12/28 21:49:33 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -305,10 +305,12 @@ shutdown_osi(void)
 
 #ifndef AFS_OBSD_ENV
 int
-afs_osi_suser(void *credp)
+afs_osi_suser(void *cr)
 {
-#if defined(AFS_SUN5_ENV)
-    return afs_suser(credp);
+#if defined(AFS_SUN510_ENV)
+    return (priv_policy(cr, PRIV_SYS_SUSER_COMPAT, B_FALSE, EPERM, NULL) == 0);
+#elif defined(AFS_SUN5_ENV)
+    return afs_suser(cr);
 #else
     return afs_suser(NULL);
 #endif
