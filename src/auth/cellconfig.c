@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.55 2006/12/28 20:36:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.56 2006/12/30 16:55:02 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -855,6 +855,7 @@ afsconf_GetAfsdbInfo(char *acellName, char *aservice,
     char host[256];
     int server_num = 0;
     int minttl = 0;
+    int try_init = 0;
 
     /* The resolver isn't always MT-safe.. Perhaps this ought to be
      * replaced with a more fine-grained lock just for the resolver
@@ -881,8 +882,8 @@ afsconf_GetAfsdbInfo(char *acellName, char *aservice,
        UNLOCK_GLOBAL_MUTEX;
     }
     if (len < 0) {
-	if (try < 1) {
-	    try++;
+	if (try_init < 1) {
+	    try_init++;
 	    res_init();
 	    goto retryafsdb;
 	}
