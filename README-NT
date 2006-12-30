@@ -9,9 +9,8 @@ developer can build an OpenAFS installable package for Windows 2000/XP/2003.
 
 NOTE 1:
 As of the OpenAFS 1.3 release series, Windows platforms released
-prior to Windows 2000 are not being supported.  The InstallShield
-installer is still in the source tree but is no longer supported.
-A new open source installers based on NSIS 2.18 and WiX replace it.
+prior to Windows 2000 are no longer supported.	As of the OpenAFS 1.5
+series, the Windows 9x components are being removed from the source tree.
 
 NOTE 2:
 In this release, in addition to the production quality CIFS-AFS 
@@ -75,8 +74,7 @@ versions are supported:
 
 The following Microsoft SDK is required:
 
-    Microsoft Platform SDK for Windows XP SP2 or Server 2003
-    [Core, Data Access and Installer SDKs are required]
+    Microsoft Platform SDK for Windows XP SP2 or Server 2003 SP1 or Vista
       http://www.microsoft.com/msdownload/platformsdk/sdkupdate/downlevel.htm [IE required]
       http://www.microsoft.com/msdownload/platformsdk/sdkupdate/XPSP2FULLInstall.htm
 
@@ -146,7 +144,7 @@ base directory (aka %AFSROOT%):
     copy src\ntbuild.bat .
 
 
-The AFS base directory should look something like the following:
+The OpenAFS base directory should look something like the following:
 
   c:\OpenAFS\OpenAFS-1.3.74\
     NTMakefile
