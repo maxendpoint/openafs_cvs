@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.30 2006/12/28 23:11:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.31 2006/12/30 16:37:38 jaltman Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -98,6 +98,7 @@ rxi_GetHostUDPSocket(u_int ahost, u_short port)
 {
     int binds, code = 0;
     osi_socket socketFd = OSI_NULLSOCKET;
+    struct sockaddr_in taddr;
     char *name = "rxi_GetUDPSocket: ";
 #ifdef AFS_LINUX22_ENV
     int pmtu=IP_PMTUDISC_DONT;
