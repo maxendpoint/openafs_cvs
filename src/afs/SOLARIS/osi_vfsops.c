@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.18.14.2 2006/12/28 22:28:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.18.14.3 2007/01/02 07:34:46 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -43,15 +43,19 @@ afs_mount(struct vfs *afsp, struct vnode *amvp, struct mounta *uap,
 
     AFS_STATCNT(afs_mount);
 
-    if (!suser(credp)) {
+#if defined(AFS_SUN510_ENV)
+    if (secpolicy_fs_mount(credp, amvp, afsp) != 0) {
+#else
+    if (!afs_osi_suser(credp)) {
+#endif
 	AFS_GUNLOCK();
-	return EPERM;
+	return (EPERM);
     }
     afsp->vfs_fstype = afsfstype;
 
     if (afs_globalVFS) {	/* Don't allow remounts. */
 	AFS_GUNLOCK();
-	return EBUSY;
+	return (EBUSY);
     }
 
     afs_globalVFS = afsp;
@@ -75,9 +79,13 @@ afs_unmount(struct vfs *afsp, struct AFS_UCRED *credp)
     AFS_GLOCK();
     AFS_STATCNT(afs_unmount);
 
-    if (!suser(credp)) {
-	AFS_GUNLOCK();
-	return EPERM;
+#if defined(AFS_SUN510_ENV)
+    if (secpolicy_fs_unmount(credp, afsp) != 0) {
+#else
+    if (!afs_osi_suser(credp)) {
+#endif
+        AFS_GUNLOCK();
+        return (EPERM);
     }
     afs_globalVFS = 0;
     afs_shutdown();
