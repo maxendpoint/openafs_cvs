@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.77 2006/08/04 15:55:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.78 2007/01/02 15:40:37 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -83,7 +83,9 @@ init_module(void)
 
     osi_Init();
 #ifdef AFS_LINUX26_ENV
+#if !defined(AFS_NONFSTRANS)
     osi_linux_nfssrv_init();
+#endif
 #endif
 
 #ifndef LINUX_KEYRING_SUPPORT
@@ -122,7 +124,9 @@ cleanup_module(void)
 
     afs_destroy_inodecache();
 #ifdef AFS_LINUX26_ENV
+#if !defined(AFS_NONFSTRANS)
     osi_linux_nfssrv_shutdown();
+#endif
 #endif
     osi_linux_free_afs_memory();
 

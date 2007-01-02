@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.33 2006/12/20 20:07:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.34 2007/01/02 15:40:35 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -423,8 +423,10 @@ afs_InitReq(register struct vrequest *av, struct AFS_UCRED *acred)
 	return EIO;
 
 #ifdef AFS_LINUX26_ENV
+#if !defined(AFS_NONFSTRANS)
     if (osi_linux_nfs_initreq(av, acred, &code))
 	return code;
+#endif
 #endif
 
     av->uid = PagInCred(acred);
