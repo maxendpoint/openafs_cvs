@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.16 2006/12/28 23:11:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.17 2007/01/02 17:17:53 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -64,8 +64,7 @@ void
 rxi_ListenerProc(osi_socket usockp, int *tnop, struct rx_call **newcallp)
 {
     struct rx_packet *tp;
-    struct sockaddr_storage saddr;
-    int slen;
+    afs_uint32 host;
     u_short port;
     int rc;
 
@@ -77,9 +76,9 @@ rxi_ListenerProc(osi_socket usockp, int *tnop, struct rx_call **newcallp)
     while (1) {
 	tp = rxi_AllocPacket(RX_PACKET_CLASS_RECEIVE);
 	usr_assert(tp != NULL);
-	rc = rxi_ReadPacket(usockp, tp, &saddr, &slen);
+	rc = rxi_ReadPacket(usockp, tp, &host, &port);
 	if (rc != 0) {
-	    tp = rxi_ReceivePacket(tp, usockp, &saddr, slen, tnop, newcallp);
+	    tp = rxi_ReceivePacket(tp, usockp, host, port, tnop, newcallp);
 	    if (newcallp && *newcallp) {
 		if (tp) {
 		    rxi_FreePacket(tp);

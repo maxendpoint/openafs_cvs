@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.23 2006/12/28 23:11:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.24 2007/01/02 17:17:52 shadow Exp $");
 
 #ifdef AFS_SUN5_ENV
 #include "rx/rx_kcommon.h"
@@ -222,10 +222,11 @@ struct sockaddr_in rx_sockaddr;
 
 /* Allocate a new socket at specified port in network byte order. */
 osi_socket *
-rxk_NewSocketHost(struct sockaddr_storage *addr, int salen)
+rxk_NewSocketHost(afs_uint32 ahost, short aport)
 {
     vnode_t *accessvp;
     struct sonode *so;
+    struct sockaddr_in addr;
     int error;
     int len;
 
@@ -293,7 +294,11 @@ rxk_NewSocketHost(struct sockaddr_storage *addr, int salen)
 	return NULL;
     }
 
-    error = sockfs_sobind(so, (struct sockaddr *)addr, salen, 0, 0);
+    addr.sin_family = AF_INET;
+    addr.sin_port = aport;
+    addr.sin_addr.s_addr = ahost; /* I wonder what the odds are on
+				     needing to unbyteswap this */
+    error = sockfs_sobind(so, (struct sockaddr *)&addr, sizeof(addr), 0, 0);
     if (error != 0) {
 	return NULL;
     }
