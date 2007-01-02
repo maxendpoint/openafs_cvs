@@ -15,8 +15,9 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_nfssrv.c,v 1.1.2.3 2006/08/11 21:40:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_nfssrv.c,v 1.1.2.4 2007/01/02 15:41:41 shadow Exp $");
 
+#if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -253,3 +254,5 @@ void osi_linux_nfssrv_shutdown(void)
     ReleaseWriteLock(&afs_xnfssrv);
     AFS_GUNLOCK();
 }
+#endif /* AFS_NONFSTRANS */
+
