@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22 2003/08/27 21:43:16 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.2.1 2007/01/04 21:57:58 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -636,7 +636,10 @@ afs_Analyze(register struct conn *aconn, afs_int32 acode,
 
 	tu = afs_FindUser(areq->uid, tsp->cell->cellNum, READ_LOCK);
 	if (tu) {
-	    if ((acode == VICETOKENDEAD) || (acode == RXKADEXPIRED))
+	    if (acode == VICETOKENDEAD) {
+		aconn->forceConnectFS = 1;      /* don't check until new tokens set */
+		shouldRetry = 1;        /* Try again (as root). */
+	    } else if (acode == RXKADEXPIRED)
 		afs_warnuser
 		    ("afs: Tokens for user of AFS id %d for cell %s have expired\n",
 		     tu->vid, aconn->srvr->server->cell->cellName);
@@ -647,7 +650,10 @@ afs_Analyze(register struct conn *aconn, afs_int32 acode,
 	    afs_PutUser(tu, READ_LOCK);
 	} else {
 	    /* The else case shouldn't be possible and should probably be replaced by a panic? */
-	    if ((acode == VICETOKENDEAD) || (acode == RXKADEXPIRED))
+	    if (acode == VICETOKENDEAD) {
+		aconn->forceConnectFS = 1;      /* don't check until new tokens set */
+		shouldRetry = 1;        /* Try again (as root). */
+	    } else if (acode == RXKADEXPIRED)
 		afs_warnuser
 		    ("afs: Tokens for user %d for cell %s have expired\n",
 		     areq->uid, aconn->srvr->server->cell->cellName);
