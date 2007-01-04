@@ -11,13 +11,15 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.31 2006/12/28 21:29:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_sleep.c,v 1.32 2007/01/04 21:15:16 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
 #include "afs/afs_stats.h"	/* afs statistics */
 
+#if defined(FREEZER_H_EXISTS)
 #include <linux/freezer.h>
+#endif
 
 static int osi_TimedSleep(char *event, afs_int32 ams, int aintok);
 
