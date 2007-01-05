@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/userok.c,v 1.14 2005/12/08 01:13:28 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/userok.c,v 1.15 2007/01/05 23:05:15 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -448,7 +448,7 @@ afsconf_SuperUser(adir, acall, namep)
 		    break;
 	    }
 
-	    if (i=0) {
+	    if (i == 0) {
 		strncpy(lrealms[0], lcell, AFS_REALM_SZ);
 		num_lrealms = 1;
 	    } else {

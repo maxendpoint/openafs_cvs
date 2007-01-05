@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.110 2006/12/28 23:12:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.111 2007/01/05 23:05:16 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1698,7 +1698,7 @@ h_InitHostPackage()
 		break;
 	}
 
-	if (i=0) {
+	if (i == 0) {
 	    ViceLog(0,
 		    ("afs_krb_get_lrealm failed, using %s.\n",
 		     localcellname));
