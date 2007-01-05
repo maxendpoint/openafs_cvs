@@ -11,9 +11,8 @@
 #include <afs/stds.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.12 2007/01/05 03:26:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.13 2007/01/05 03:35:24 shadow Exp $");
 
-#include <afs/stds.h>
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
