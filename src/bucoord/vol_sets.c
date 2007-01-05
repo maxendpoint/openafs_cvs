@@ -11,11 +11,10 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.12 2006/07/03 18:58:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.13 2007/01/05 03:26:31 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
-#include <stdio.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else
