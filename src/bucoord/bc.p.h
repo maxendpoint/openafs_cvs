@@ -15,7 +15,7 @@
 #endif /* HAVE_STDIO_H */
 #if HAVE_STRING_H
 # include <string.h>
-#elif HAVE_STRINGS_H
+#elif defined(HAVE_STRINGS_H)
 # include <strings.h>
 #endif /* HAVE_STRING_H */
 
