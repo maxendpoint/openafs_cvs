@@ -12,17 +12,15 @@
  */
 
 #include <sys/types.h>
-#include <stdio.h>
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.9.6.1 2006/07/03 19:07:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.9.6.2 2007/01/05 03:32:24 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else
-#include <strings.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
