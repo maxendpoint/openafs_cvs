@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.68 2007/01/05 04:56:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.69 2007/01/05 23:14:21 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -388,13 +388,12 @@ rxi_FreePackets(int num_pkts, struct rx_queue * q)
     osi_Assert(num_pkts >= 0);
     RX_TS_INFO_GET(rx_ts_info);
 
-    if (!num_pkts) {
-	for (queue_Scan(q, c, nc, rx_packet), num_pkts++) {
-	    rxi_FreeDataBufsTSFPQ(c, 1, 0);
-	}
-    } else {
-	RX_TS_FPQ_CHECKIN2(rx_ts_info, num_pkts, q);
-    }
+    if (!num_pkts) 
+	queue_Count(q, c, nc, rx_packet, num_pkts);
+
+    if (num_pkts)
+        for (queue_Scan(q, c, nc, rx_packet)) 
+            RX_TS_FPQ_CHECKIN2(rx_ts_info, num_pkts, q);
 
     if (rx_ts_info->_FPQ.len > rx_TSFPQLocalMax) {
         NETPRI;
