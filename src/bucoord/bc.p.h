@@ -13,7 +13,7 @@
 #ifdef HAVE_STDIO_H
 #include <stdio.h>
 #endif /* HAVE_STDIO_H */
-#if HAVE_STRING_H
+#if defined(HAVE_STRING_H)
 # include <string.h>
 #elif defined(HAVE_STRINGS_H)
 # include <strings.h>
