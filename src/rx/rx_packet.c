@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.26 2006/12/05 19:40:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.27 2007/01/05 04:58:55 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -393,12 +393,6 @@ rxi_FreePackets(int num_pkts, struct rx_queue * q)
 	    rxi_FreeDataBufsTSFPQ(c, 1, 0);
 	}
     } else {
-	for (queue_Scan(q, c, nc, rx_packet)) {
-	    rxi_FreeDataBufsTSFPQ(c, 1, 0);
-	}
-    }
-
-    if (num_pkts) {
 	RX_TS_FPQ_CHECKIN2(rx_ts_info, num_pkts, q);
     }
 
