@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.6 2006/09/20 05:55:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.7 2007/01/05 03:40:34 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -604,8 +604,6 @@ namei_icreate(IHandle_t * lh, char *part, int p1, int p2, int p3, int p4)
 
     if (p2 == -1 && p3 == VI_LINKTABLE) {
 	/* hack at tmp to setup for set link count call. */
-	memset((void *)&tfd, 0, sizeof(FdHandle_t));	/* minimalistic still, but a little cleaner */
-	tfd.fd_ih = &tmp;
 	tfd.fd_fd = fd;
 	code = namei_SetLinkCount(&tfd, (Inode) 0, 1, 0);
     }
