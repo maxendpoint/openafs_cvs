@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.20.2.4 2006/10/13 19:43:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.20.2.5 2007/01/05 23:06:55 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -457,7 +457,7 @@ osi_auditU(struct rx_call *call, char *audEvent, int errCode, ...)
 				    break;
 			    }
 
-			    if (i=0)
+			    if (i == 0)
 				strncpy(local_realms[0], "UNKNOWN.LOCAL.REALM", AFS_REALM_SZ);
 			    num_lrealms = i;
                         }
