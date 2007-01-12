@@ -100,7 +100,7 @@ typedef tid_t afs_lock_tracker_t;
 extern tid_t thread_self();
 #define MyPidxx (thread_self())
 #define MyPidxx2Pid(x) ((afs_int32)(x))
-else /* AFS_AIX41_ENV */
+#else /* AFS_AIX41_ENV */
 #if defined(AFS_HPUX101_ENV)
 typedef struct proc * afs_lock_tracker_t;
 #define MyPidxx (u.u_procp)
