@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.8 2006/09/15 23:22:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.9 2007/01/12 05:20:33 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1669,16 +1669,22 @@ ReadSysIdFile()
 		 AFSDIR_SERVER_SYSID_FILEPATH, nentries));
 	return EIO;
     }
-    FS_HostAddr_cnt = nentries;
-    for (i = 0; i < nentries; i++) {
-	if (read(fd, (char *)&FS_HostAddrs[i], sizeof(afs_int32)) !=
-	    sizeof(afs_int32)) {
-	    ViceLog(0,
-		    ("%s: Read of addresses failed (%d)\n",
-		     AFSDIR_SERVER_SYSID_FILEPATH, errno));
-	    FS_HostAddr_cnt = 0;	/* reset it */
-	    return EIO;
+    if (FS_HostAddr_cnt == 0) {
+	FS_HostAddr_cnt = nentries;
+	for (i = 0; i < nentries; i++) {
+	    if (read(fd, (char *)&FS_HostAddrs[i], sizeof(afs_int32)) !=
+		sizeof(afs_int32)) {
+		ViceLog(0,
+			("%s: Read of addresses failed (%d)\n",
+			 AFSDIR_SERVER_SYSID_FILEPATH, errno));
+		FS_HostAddr_cnt = 0;	/* reset it */
+		return EIO;
+	    }
 	}
+    } else {
+	ViceLog(1,
+		("%s: address list ignored (NetInfo/NetRestrict override)\n",
+		 AFSDIR_SERVER_SYSID_FILEPATH));
     }
     close(fd);
     return 0;
