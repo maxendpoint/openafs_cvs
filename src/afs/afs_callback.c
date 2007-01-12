@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.39 2006/03/17 19:44:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.39.2.1 2007/01/12 03:24:36 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -328,9 +328,9 @@ SRXAFSCB_GetLock(struct rx_call *a_call, afs_int32 a_index,
 	    ((struct afs_lock *)(tl->addr))->num_waiting;
 #ifdef INSTRUMENT_LOCKS
 	a_result->lock.pid_last_reader =
-	    ((struct afs_lock *)(tl->addr))->pid_last_reader;
+	    MyPidxx2Pid(((struct afs_lock *)(tl->addr))->pid_last_reader);
 	a_result->lock.pid_writer =
-	    ((struct afs_lock *)(tl->addr))->pid_writer;
+	    MyPidxx2Pid(((struct afs_lock *)(tl->addr))->pid_writer);
 	a_result->lock.src_indicator =
 	    ((struct afs_lock *)(tl->addr))->src_indicator;
 #else
