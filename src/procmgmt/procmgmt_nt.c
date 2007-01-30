@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/procmgmt/procmgmt_nt.c,v 1.7 2005/12/27 16:17:11 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/procmgmt/procmgmt_nt.c,v 1.8 2007/01/30 12:04:22 jaltman Exp $");
 
 #include <afs/stds.h>
 
@@ -141,13 +141,11 @@ DefaultActionHandler(int signo)
     case SIGHUP:
     case SIGINT:
     case SIGKILL:
+    case SIGQUIT:
     case SIGTERM:
-    case SIGUSR1:
-    case SIGUSR2:
 	/* default action is "exit" */
 	ExitProcess(PMGT_SIGSTATUS_ENCODE(signo));
 	break;
-    case SIGQUIT:
     case SIGILL:
     case SIGABRT:
     case SIGFPE:
@@ -161,6 +159,8 @@ DefaultActionHandler(int signo)
 	RaiseException((DWORD) PMGT_SIGSTATUS_ENCODE(signo),
 		       EXCEPTION_NONCONTINUABLE, 0, NULL);
 	break;
+    case SIGUSR1:
+    case SIGUSR2:
     case SIGCHLD:
 	/* default action is "ignore" */
 	break;
