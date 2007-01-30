@@ -87,7 +87,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.51.2.6 2006/09/05 23:50:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.51.2.7 2007/01/30 12:17:28 jaltman Exp $");
 
 #ifndef AFS_NT40_ENV
 #include <sys/param.h>
@@ -317,14 +317,13 @@ BadError(register int aerror)
     return 0;			/* otherwise may be transient, e.g. EMFILE */
 }
 
-
 #define MAX_ARGS 128
 #ifdef AFS_NT40_ENV
 char *save_args[MAX_ARGS];
 int n_save_args = 0;
-pthread_t main_thread;
+extern pthread_t main_thread;
+childJob_t myjob = { SALVAGER_MAGIC, NOT_CHILD, "" };
 #endif
-
 
 /* Get the salvage lock if not already held. Hold until process exits. */
 void
