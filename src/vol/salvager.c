@@ -21,7 +21,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvager.c,v 1.1 2006/03/18 04:20:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvager.c,v 1.2 2007/01/30 12:14:49 jaltman Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -124,6 +124,7 @@ RCSID
 #include "vol-salvage.h"
 #ifdef AFS_NT40_ENV
 #include <pthread.h>
+pthread_t main_thread;
 #endif
 
 
@@ -349,12 +350,6 @@ handleit(struct cmd_syndesc *as)
 
 #ifndef AFS_NT40_ENV
 #include "AFS_component_version_number.c"
-#endif
-#define MAX_ARGS 128
-#ifdef AFS_NT40_ENV
-char *save_args[MAX_ARGS];
-int n_save_args = 0;
-pthread_t main_thread;
 #endif
 
 int
