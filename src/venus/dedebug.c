@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/dedebug.c,v 1.1 2005/11/03 04:00:26 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/dedebug.c,v 1.2 2007/02/01 13:23:45 jaltman Exp $");
 
 
 #include <sys/types.h>
@@ -23,6 +23,7 @@ RCSID("$Header: /cvs/openafs/src/venus/dedebug.c,v 1.1 2005/11/03 04:00:26 shado
 #endif
 #include <afs/afscbint.h>
 #include <afs/cmd.h>
+#include <afs/com_err.h>
 #include <rx/rx.h>
 #include <lock.h>
 
