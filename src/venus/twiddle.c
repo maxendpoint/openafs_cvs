@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/twiddle.c,v 1.7 2003/07/15 23:17:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/twiddle.c,v 1.7.14.1 2007/02/01 13:25:33 jaltman Exp $");
 
 #include <rx/xdr.h>
 #include <sys/ioctl.h>
@@ -36,7 +36,7 @@ RCSID
 #include <afs/cellconfig.h>
 #include <afs/cmd.h>
 #include <strings.h>
-
+#include <afs/com_err.h>
 
 #define	MAXSIZE	2048
 #define MAXINSIZE 1300		/* pioctl complains if data is larger than this */
