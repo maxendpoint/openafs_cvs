@@ -7,7 +7,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.9 2006/03/13 15:09:47 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.10 2007/02/01 12:32:23 jaltman Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"
@@ -122,7 +122,7 @@ afs_is_foreign_ticket_name(char *tname, char *tinst, char * tcell, char *localre
 	foreign = 1;
 
 #if	defined(AFS_ATHENA_STDENV) || defined(AFS_KERBREALM_ENV)
-    if (!foreign) {
+    if (foreign) {
 	static char local_realms[AFS_NUM_LREALMS][AFS_REALM_SZ];
 	static int  num_lrealms = -1;
 	int lrealm_match, i;
