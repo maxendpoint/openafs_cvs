@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.40 2007/01/12 03:23:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.41 2007/02/03 03:23:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -136,8 +136,8 @@ SRXAFSCB_GetCE(struct rx_call *a_call, afs_int32 a_index,
     a_result->lock.readersReading = tvc->lock.readers_reading;
     a_result->lock.numWaiting = tvc->lock.num_waiting;
 #if defined(INSTRUMENT_LOCKS)
-    a_result->lock.pid_last_reader = tvc->lock.pid_last_reader;
-    a_result->lock.pid_writer = tvc->lock.pid_writer;
+    a_result->lock.pid_last_reader = MyPidxx2Pid(tvc->lock.pid_last_reader);
+    a_result->lock.pid_writer = MyPidxx2Pid(tvc->lock.pid_writer);
     a_result->lock.src_indicator = tvc->lock.src_indicator;
 #else
     /* On osf20 , the vcache does not maintain these three fields */
@@ -222,8 +222,8 @@ SRXAFSCB_GetCE64(struct rx_call *a_call, afs_int32 a_index,
     a_result->lock.readersReading = tvc->lock.readers_reading;
     a_result->lock.numWaiting = tvc->lock.num_waiting;
 #if defined(INSTRUMENT_LOCKS)
-    a_result->lock.pid_last_reader = tvc->lock.pid_last_reader;
-    a_result->lock.pid_writer = tvc->lock.pid_writer;
+    a_result->lock.pid_last_reader = MyPidxx2Pid(tvc->lock.pid_last_reader);
+    a_result->lock.pid_writer = MyPidxx2Pid(tvc->lock.pid_writer);
     a_result->lock.src_indicator = tvc->lock.src_indicator;
 #else
     /* On osf20 , the vcache does not maintain these three fields */
