@@ -1414,7 +1414,8 @@ void cm_MergeStatus(cm_scache_t *scp, AFSFetchStatus *statusp, AFSVolSync *volp,
         cm_AddACLCache(scp, userp, statusp->CallerAccess);
     }
 
-    if (statusp->DataVersion - scp->dataVersion == 1) {
+    if ((flags & CM_MERGEFLAG_STOREDATA) &&
+	statusp->DataVersion - scp->dataVersion == 1) {
 	afs_uint32 i;
 	cm_buf_t *bp;
 

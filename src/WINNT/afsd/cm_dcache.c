@@ -420,7 +420,7 @@ long cm_StoreMini(cm_scache_t *scp, cm_user_t *userp, cm_req_t *reqp)
 
         if (LargeIntegerGreaterThanOrEqualTo(t, scp->length))
             scp->mask &= ~CM_SCACHEMASK_LENGTH;
-        cm_MergeStatus(scp, &outStatus, &volSync, userp, 0);
+        cm_MergeStatus(scp, &outStatus, &volSync, userp, CM_MERGEFLAG_STOREDATA);
     }
 
     return code;
