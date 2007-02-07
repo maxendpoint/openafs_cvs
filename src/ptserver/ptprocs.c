@@ -51,7 +51,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.30 2006/07/04 03:57:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptprocs.c,v 1.31 2007/02/07 04:52:18 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <ctype.h>
@@ -628,7 +628,24 @@ nameToID(call, aname, aid)
 	ABORT_WITH(tt, code);
 
     for (i = 0; i < aname->namelist_len; i++) {
-	code = NameToID(tt, aname->namelist_val[i], &aid->idlist_val[i]);
+	char vname[256];
+	char *nameinst, *cell;
+
+	strncpy(vname, aname->namelist_val[i], sizeof(vname));
+	vname[sizeof(vname)-1] ='\0';
+
+	nameinst = vname;
+	cell = strchr(vname, '@');
+	if (cell) {
+	    *cell = '\0';
+	    cell++;
+	}
+
+	if (cell && afs_is_foreign_ticket_name(nameinst,NULL,cell,pr_realmName))
+	    code = NameToID(tt, aname->namelist_val[i], &aid->idlist_val[i]);
+	else 
+	    code = NameToID(tt, nameinst, &aid->idlist_val[i]);
+
 	if (code != PRSUCCESS)
 	    aid->idlist_val[i] = ANONYMOUSID;
         osi_audit(PTS_NmToIdEvent, code, AUD_STR,
