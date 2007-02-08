@@ -48,9 +48,10 @@ static int newVLDB = 1;
 
 #include <afsconfig.h>
 #include <afs/param.h>
+#include <afs/afsutil.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.26.2.5 2007/02/08 23:27:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.26.2.6 2007/02/08 23:59:47 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
