@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.3.4.1 2007/02/08 23:16:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.3.4.2 2007/02/08 23:59:32 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -64,6 +64,7 @@ RCSID
 #include <rx/rx_queue.h>
 
 #ifdef USE_UNIX_SOCKETS
+#include <afs/afsutil.h>
 #include <sys/un.h>
 #endif
 

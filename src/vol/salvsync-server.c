@@ -27,7 +27,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1.4.1 2007/02/08 23:16:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1.4.2 2007/02/08 23:59:32 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -71,6 +71,12 @@ RCSID
 #if !defined(offsetof)
 #include <stddef.h>
 #endif
+
+#ifdef USE_UNIX_SOCKETS
+#include <afs/afsutil.h>
+#include <sys/un.h>
+#endif
+
 
 /*@printflike@*/ extern void Log(const char *format, ...);
 
