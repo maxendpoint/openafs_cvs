@@ -53,7 +53,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.1 2006/03/18 04:20:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.1.4.1 2007/02/08 23:16:49 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -98,6 +98,9 @@ RCSID
 #include "volume.h"
 #include "partition.h"
 
+#ifdef USE_UNIX_SOCKETS
+#include <sys/un.h>
+#endif /* USE_UNIX_SOCKETS */
 
 #ifdef FSSYNC_BUILD_SERVER
 
@@ -201,6 +204,23 @@ FSYNC_fsInit(void)
 
 static fd_set FSYNC_readfds;
 
+#ifdef USE_UNIX_SOCKETS
+static int
+getport(struct sockaddr_un *addr)
+{
+    int sd;
+    char tbuffer[AFSDIR_PATH_MAX]; 
+    
+    strcompose(tbuffer, AFSDIR_PATH_MAX, AFSDIR_SERVER_LOCAL_DIRPATH, "/",
+               "fssync.sock", NULL);
+    
+    memset(addr, 0, sizeof(*addr));
+    addr->sun_family = AF_UNIX;
+    strncpy(addr->sun_path, tbuffer, (sizeof(struct sockaddr_un) - sizeof(short)));
+    assert((sd = socket(AF_UNIX, SOCK_STREAM, 0)) >= 0);
+    return sd;
+}
+#else
 static int
 getport(struct sockaddr_in *addr)
 {
@@ -217,12 +237,18 @@ getport(struct sockaddr_in *addr)
 
     return sd;
 }
+#endif
 
 
 static void
 FSYNC_sync()
 {
+#ifdef USE_UNIX_SOCKETS
+    struct sockaddr_un addr;
+    char tbuffer[AFSDIR_PATH_MAX];
+#else  /* USE_UNIX_SOCKETS */
     struct sockaddr_in addr;
+#endif /* USE_UNIX_SOCKETS */
     int on = 1;
     extern int VInit;
     int code;
@@ -243,6 +269,14 @@ FSYNC_sync()
     pthread_setspecific(rx_thread_id_key, (void *)tid);
     Log("Set thread id %d for FSYNC_sync\n", tid);
 #endif /* AFS_PTHREAD_ENV */
+
+#ifdef USE_UNIX_SOCKETS
+    /* ignore errors */
+    strcompose(tbuffer, AFSDIR_PATH_MAX, AFSDIR_SERVER_LOCAL_DIRPATH, "/",
+	       "fssync.sock", NULL);
+
+    remove(tbuffer);
+#endif /* USE_UNIX_SOCKETS */
 
     while (!VInit) {
 	/* Let somebody else run until level > 0.  That doesn't mean that 
@@ -291,7 +325,11 @@ FSYNC_sync()
 static void
 FSYNC_newconnection(int afd)
 {
+#ifdef USE_UNIX_SOCKETS
+    struct sockaddr_un other;
+#else  /* USE_UNIX_SOCKETS */
     struct sockaddr_in other;
+#endif
     int junk, fd;
     junk = sizeof(other);
     fd = accept(afd, (struct sockaddr *)&other, &junk);

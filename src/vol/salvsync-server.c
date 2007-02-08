@@ -27,7 +27,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1 2006/03/18 04:20:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1.4.1 2007/02/08 23:16:49 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -267,6 +267,23 @@ SALVSYNC_salvInit(void)
     assert(pthread_create(&tid, &tattr, SALVSYNC_syncThread, NULL) == 0);
 }
 
+#ifdef USE_UNIX_SOCKETS
+static int
+getport(struct sockaddr_un *addr)
+{
+    int sd;
+    char tbuffer[AFSDIR_PATH_MAX]; 
+    
+    strcompose(tbuffer, AFSDIR_PATH_MAX, AFSDIR_SERVER_LOCAL_DIRPATH, "/",
+               "fssync.sock", NULL);
+    
+    memset(addr, 0, sizeof(*addr));
+    addr->sun_family = AF_UNIX;
+    strncpy(addr->sun_path, tbuffer, (sizeof(struct sockaddr_un) - sizeof(short)));
+    assert((sd = socket(AF_UNIX, SOCK_STREAM, 0)) >= 0);
+    return sd;
+}
+#else
 static int
 getport(struct sockaddr_in *addr)
 {
@@ -283,6 +300,7 @@ getport(struct sockaddr_in *addr)
 
     return sd;
 }
+#endif
 
 static fd_set SALVSYNC_readfds;
 
@@ -294,6 +312,9 @@ SALVSYNC_syncThread(void * args)
     int code;
     int numTries;
     int tid;
+#ifdef USE_UNIX_SOCKETS
+    char tbuffer[AFSDIR_PATH_MAX]; 
+#endif
 
 #ifndef AFS_NT40_ENV
     (void)signal(SIGPIPE, SIG_IGN);
@@ -305,6 +326,13 @@ SALVSYNC_syncThread(void * args)
     MUTEX_EXIT(&rx_stats_mutex);
     pthread_setspecific(rx_thread_id_key, (void *)tid);
     Log("Set thread id %d for SALVSYNC_syncThread\n", tid);
+
+#ifdef USE_UNIX_SOCKETS
+    strcompose(tbuffer, AFSDIR_PATH_MAX, AFSDIR_SERVER_LOCAL_DIRPATH, "/",
+               "fssync.sock", NULL);
+    /* ignore errors */
+    remove(tbuffer);
+#endif /* USE_UNIX_SOCKETS */
 
     AcceptSd = getport(&addr);
     /* Reuseaddr needed because system inexplicably leaves crud lying around */
@@ -343,7 +371,11 @@ SALVSYNC_syncThread(void * args)
 static void
 SALVSYNC_newconnection(int afd)
 {
+#ifdef USE_UNIX_SOCKETS
+    struct sockaddr_un other;
+#else  /* USE_UNIX_SOCKETS */
     struct sockaddr_in other;
+#endif
     int junk, fd;
     junk = sizeof(other);
     fd = accept(afd, (struct sockaddr *)&other, &junk);
