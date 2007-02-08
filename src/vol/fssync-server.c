@@ -53,7 +53,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.2 2007/02/08 23:15:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.3 2007/02/08 23:59:16 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -100,6 +100,7 @@ RCSID
 
 #ifdef USE_UNIX_SOCKETS
 #include <sys/un.h>
+#include <afs/afsutil.h>
 #endif /* USE_UNIX_SOCKETS */
 
 #ifdef FSSYNC_BUILD_SERVER
