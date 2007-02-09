@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.13 2006/12/28 21:30:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.14 2007/02/09 01:23:40 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -422,7 +422,8 @@ afs_statfs(struct super_block *sbp, struct statfs *__statp, int size)
 
     AFS_STATCNT(afs_statfs);
 
-    statp->f_type = 0;		/* Can we get a real type sometime? */
+    /* hardcode in case that which is giveth is taken away */
+    statp->f_type = 0x5346414F;
 #if defined(STATFS_TAKES_DENTRY)
     statp->f_bsize = dentry->d_sb->s_blocksize;
 #else
