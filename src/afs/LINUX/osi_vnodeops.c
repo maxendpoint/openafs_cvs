@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.48 2007/02/03 03:25:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.49 2007/02/09 01:07:55 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -101,7 +101,6 @@ static ssize_t
 afs_linux_write(struct file *fp, const char *buf, size_t count, loff_t * offp)
 {
     ssize_t code = 0;
-    int code2 = 0;
     struct vcache *vcp = VTOAFS(fp->f_dentry->d_inode);
     struct vrequest treq;
     cred_t *credp = crref();
