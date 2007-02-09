@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.44.2.14 2006/11/10 00:16:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.44.2.15 2007/02/09 00:20:28 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -524,7 +524,7 @@ shutdown_rxkernel(void)
 int
 rxi_GetcbiInfo(void)
 {
-    int i, j, different = 0;
+    int i, j, different = 0, num = ADDRSPERSITE;
     int rxmtu, maxmtu;
     afs_uint32 ifinaddr;
     afs_uint32 addrs[ADDRSPERSITE];
@@ -533,7 +533,9 @@ rxi_GetcbiInfo(void)
     memset((void *)addrs, 0, sizeof(addrs));
     memset((void *)mtus, 0, sizeof(mtus));
 
-    for (i = 0; i < afs_cb_interface.numberOfInterfaces; i++) {
+    if (afs_cb_interface.numberOfInterfaces < num)
+	num = afs_cb_interface.numberOfInterfaces;
+    for (i = 0; i < num; i++) {
 	if (!afs_cb_interface.mtu[i])
 	    afs_cb_interface.mtu[i] = htonl(1500);
 	rxmtu = (ntohl(afs_cb_interface.mtu[i]) - RX_IPUDP_SIZE);
