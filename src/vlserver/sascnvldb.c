@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/sascnvldb.c,v 1.7 2003/07/15 23:17:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/sascnvldb.c,v 1.8 2007/02/09 00:57:45 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -28,7 +28,6 @@ RCSID
 #undef VICE
 #include "afs/prs_fs.h"
 #include <afs/afsint.h>
-#include <afs/auth.h>
 #include <afs/cellconfig.h>
 #include <ubik.h>
 #endif

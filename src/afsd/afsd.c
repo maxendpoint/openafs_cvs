@@ -58,7 +58,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.62 2006/08/21 20:38:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.63 2007/02/09 00:57:39 shadow Exp $");
 
 #define VFS 1
 
@@ -133,7 +133,6 @@ RCSID
 #include <netinet/in.h>
 #include <afs/afs_args.h>
 #include <afs/cellconfig.h>
-#include <afs/auth.h>
 #include <ctype.h>
 #include <afs/afssyscalls.h>
 #include <afs/afsutil.h>

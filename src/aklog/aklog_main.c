@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.15 2006/10/26 16:34:31 rees Exp $
+ * $Id: aklog_main.c,v 1.16 2007/02/09 00:57:41 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.15 2006/10/26 16:34:31 rees Exp $";
+	"$Id: aklog_main.c,v 1.16 2007/02/09 00:57:41 shadow Exp $";
 #endif /* lint || SABER */
 
 #include <afsconfig.h>
@@ -66,7 +66,6 @@ u_long ntohl(u_long x)
 #ifdef WINDOWS
 
 #include <afs/auth.h>
-#include <rx/rxkad.h>
 #include <afs/dirpath.h>
 
 #else /* !WINDOWS */

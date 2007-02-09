@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.10 2003/07/15 23:17:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.11 2007/02/09 00:57:44 shadow Exp $");
 
 #include "uss_vol.h"		/*Interface to this module */
 #include "uss_common.h"		/*Common definitions */
@@ -41,7 +41,6 @@ RCSID
 #include <afs/vlserver.h>
 #include <afs/auth.h>
 #include <afs/cellconfig.h>
-#include <rx/rxkad.h>
 #include <rx/rx_globals.h>
 #include <afs/volser.h>
 #include <afs/volint.h>

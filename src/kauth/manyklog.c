@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/manyklog.c,v 1.7 2003/07/15 23:15:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/manyklog.c,v 1.8 2007/02/09 00:57:42 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -26,7 +26,6 @@ RCSID
 #include <stdio.h>
 #include <pwd.h>
 #include <afs/com_err.h>
-#include <afs/auth.h>
 #include <afs/cellconfig.h>
 #include <afs/cmd.h>
 #include "kauth.h"

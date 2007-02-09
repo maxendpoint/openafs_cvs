@@ -14,9 +14,8 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/test_budb.c,v 1.6 2006/07/03 18:58:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/test_budb.c,v 1.7 2007/02/09 00:57:42 shadow Exp $");
 
-#include <afs/auth.h>
 #include <afs/budb_client.h>
 #include <afs/budb.h>
 #include <rx/rx_globals.h>

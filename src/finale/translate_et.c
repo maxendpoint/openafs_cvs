@@ -11,12 +11,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.8 2003/07/15 23:15:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.9 2007/02/09 00:57:42 shadow Exp $");
 
 #include <afs/com_err.h>
 #include <rx/rxkad.h>
 #include <afs/kautils.h>
-#include <afs/auth.h>
 #include <afs/cellconfig.h>
 #include <afs/cmd.h>
 #include <afs/vlserver.h>

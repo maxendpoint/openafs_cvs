@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.18 2006/06/20 20:33:00 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.19 2007/02/09 00:57:41 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -45,7 +45,6 @@ RCSID
 #include <rx/rxkad.h>
 #include <rx/rx_globals.h>
 #include <afs/cellconfig.h>
-#include <afs/auth.h>
 #include <afs/bubasics.h>
 #include <afs/afsutil.h>
 #include <afs/com_err.h>

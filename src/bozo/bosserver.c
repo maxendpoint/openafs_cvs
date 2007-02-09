@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.36 2007/02/09 00:54:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.37 2007/02/09 00:57:41 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -37,7 +37,7 @@ RCSID
 #include <rx/rx_globals.h>
 #include "bosint.h"
 #include "bnode.h"
-#include <afs/auth.h>
+#include <rx/rxkad.h>
 #include <afs/keys.h>
 #include <afs/ktime.h>
 #include <afs/afsutil.h>
