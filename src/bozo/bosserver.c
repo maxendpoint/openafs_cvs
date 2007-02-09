@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.35 2006/12/21 23:12:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.36 2007/02/09 00:54:22 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -56,7 +56,7 @@ extern struct bnode_ops fsbnode_ops, dafsbnode_ops, ezbnode_ops, cronbnode_ops;
 void bozo_Log();
 
 struct afsconf_dir *bozo_confdir = 0;	/* bozo configuration dir */
-static char *bozo_pid;
+static PROCESS bozo_pid;
 struct rx_securityClass *bozo_rxsc[3];
 const char *bozo_fileName;
 FILE *bozo_logFile;
@@ -164,7 +164,7 @@ bozo_ReBozo()
 
 /* make sure a dir exists */
 static int
-MakeDir(register char *adir)
+MakeDir(const char *adir)
 {
     struct stat tstat;
     register afs_int32 code;
@@ -720,7 +720,6 @@ main(int argc, char **argv, char **envp)
     register afs_int32 code;
     struct afsconf_dir *tdir;
     int noAuth = 0;
-    struct ktc_encryptionKey tkey;
     int i;
     char namebuf[AFSDIR_PATH_MAX];
     int rxMaxMTU = -1;
@@ -1016,7 +1015,6 @@ main(int argc, char **argv, char **envp)
 
     /* opened the cell databse */
     bozo_confdir = tdir;
-    code = afsconf_GetKey(tdir, 999, &tkey);
 
     /* allow super users to manage RX statistics */
     rx_SetRxStatUserOk(bozo_rxstat_userok);
