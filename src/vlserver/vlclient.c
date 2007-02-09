@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.16 2006/04/04 20:51:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.16.2.1 2007/02/09 01:00:23 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -52,7 +52,6 @@ RCSID
 #include <rx/rx.h>
 #include <rx/rx_globals.h>
 #include <rx/rxkad.h>
-#include <afs/auth.h>
 #include <afs/cellconfig.h>
 #include <afs/keys.h>
 #include <afs/cmd.h>

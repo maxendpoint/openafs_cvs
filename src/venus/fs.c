@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.6 2007/02/01 13:25:33 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.7 2007/02/09 01:00:22 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -42,7 +42,6 @@ RCSID
 #undef VICE
 #include "afs/prs_fs.h"
 #include <afs/afsint.h>
-#include <afs/auth.h>
 #include <afs/cellconfig.h>
 #include <ubik.h>
 #include <rx/rxkad.h>

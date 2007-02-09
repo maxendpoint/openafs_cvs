@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.8 2003/11/23 04:53:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.8.14.1 2007/02/09 01:00:19 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -28,7 +28,6 @@ RCSID
 #include <sys/types.h>
 #include <afs/stds.h>
 #include <ubik.h>
-#include <afs/auth.h>
 #include <afs/bubasics.h>
 #include "budb_errs.h"
 #include "database.h"

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.7.8.1 2006/09/15 23:22:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/uinit.c,v 1.7.8.2 2007/02/09 01:00:22 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef AFS_NT40_ENV
@@ -48,7 +48,6 @@ RCSID
 #include <ubik.h>
 #include <afs/afsint.h>
 #include <afs/cmd.h>
-#include <rx/rxkad.h>
 
 /*
   Get the appropriate type of ubik client structure out from the system.

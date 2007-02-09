@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.11 2006/09/26 01:37:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.12 2007/02/09 01:00:22 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,7 +106,6 @@ RCSID
 #include <afs/cellconfig.h>
 #include <afs/keys.h>
 
-#include <afs/auth.h>
 #include <signal.h>
 #include <afs/partition.h>
 #include "viced_prototypes.h"

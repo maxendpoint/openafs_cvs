@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tviced/serialize_state.c,v 1.1.4.1 2006/08/02 19:01:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/tviced/serialize_state.c,v 1.1.4.2 2007/02/09 01:00:21 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -53,7 +53,6 @@ RCSID
 #include <afs/acl.h>
 #include <afs/ptclient.h>
 #include <afs/prs_fs.h>
-#include <afs/auth.h>
 #include <afs/afsutil.h>
 #include <rx/rx.h>
 #include <afs/cellconfig.h>

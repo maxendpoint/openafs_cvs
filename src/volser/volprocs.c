@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.2 2006/12/19 03:42:21 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.3 2007/02/09 01:00:23 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -49,7 +49,6 @@ RCSID
 #include <afs/nfs.h>
 #include <lwp.h>
 #include <lock.h>
-#include <afs/auth.h>
 #include <afs/cellconfig.h>
 #include <afs/keys.h>
 #include <ubik.h>

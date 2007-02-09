@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.23 2006/03/17 19:54:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bos.c,v 1.23.2.1 2007/02/09 01:00:19 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdlib.h>
@@ -39,7 +39,6 @@ RCSID
 #include <sys/stat.h>
 #include <rx/xdr.h>
 #include <afs/auth.h>
-#include <rx/rxkad.h>
 #include <afs/cellconfig.h>
 #include <stdio.h>
 #include <afs/cmd.h>
