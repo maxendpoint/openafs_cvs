@@ -247,9 +247,6 @@ extern asmlinkage long sys_exit (int) __attribute__((weak));
 extern asmlinkage long sys_open (const char *, int, int) __attribute__((weak));
 #endif
 extern asmlinkage long sys_ioctl(unsigned int, unsigned int, unsigned long) __attribute__((weak));
-#if defined(AFS_AMD64_LINUX20_ENV)
-extern const struct file_operations generic_ro_fops;
-#endif
 
 
 /* Structures used to control probing.  We put all the details of which
