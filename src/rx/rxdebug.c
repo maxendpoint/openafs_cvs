@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.22.4.1 2007/02/15 11:49:17 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/Attic/rxdebug.c,v 1.22.4.2 2007/02/15 18:14:08 jaltman Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
