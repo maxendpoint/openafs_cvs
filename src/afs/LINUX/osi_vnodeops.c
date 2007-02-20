@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.11 2007/02/09 01:36:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.12 2007/02/20 18:04:50 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1025,6 +1025,7 @@ afs_linux_lookup(struct inode *dip, struct dentry *dp)
 #if defined(AFS_LINUX26_ENV)
 		unlock_kernel();
 #endif
+		crfree(credp);
 		return alias;
 	    }
 	}
