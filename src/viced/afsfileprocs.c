@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.12 2007/02/09 01:00:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.13 2007/02/22 15:18:08 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7347,7 +7347,9 @@ init_sys_error_to_et(void)
     sys2et[EISCONN] = UAEISCONN;
     sys2et[ENOTCONN] = UAENOTCONN;
     sys2et[ESHUTDOWN] = UAESHUTDOWN;
+#if (ETOOMANYREFS != EIO)
     sys2et[ETOOMANYREFS] = UAETOOMANYREFS;
+#endif
     sys2et[ETIMEDOUT] = UAETIMEDOUT;
     sys2et[ECONNREFUSED] = UAECONNREFUSED;
     sys2et[EHOSTDOWN] = UAEHOSTDOWN;
