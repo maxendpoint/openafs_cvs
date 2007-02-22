@@ -1,7 +1,7 @@
 /*
  * osi_sysctl.c: Linux sysctl interface to OpenAFS
  *
- * $Id: osi_sysctl.c,v 1.9.2.1 2006/11/09 23:12:51 shadow Exp $
+ * $Id: osi_sysctl.c,v 1.9.2.2 2007/02/22 21:47:26 shadow Exp $
  *
  * Written Jan 30, 2002 by Kris Van Hees (Sine Nomine Associates)
  */
@@ -102,7 +102,11 @@ static ctl_table fs_sysctl_table[] = {
 int
 osi_sysctl_init()
 {
+#if defined(REGISTER_SYSCTL_TABLE_NOFLAG)
+    afs_sysctl = register_sysctl_table(fs_sysctl_table);
+#else
     afs_sysctl = register_sysctl_table(fs_sysctl_table, 0);
+#endif
     if (!afs_sysctl)
 	return -1;
 
