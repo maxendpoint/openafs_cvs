@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.32 2007/01/04 15:59:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.33 2007/02/23 00:42:46 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -662,8 +662,8 @@ afs_int32 afs_calc_inum (afs_int32 volume, afs_int32 vnode)
 	ino ^= (ino ^ vnode) & 1;
     } else {
 	ino = (volume << 16) + vnode;
-	ino &= 0x7fffffff;      /* Assumes 32 bit ino_t ..... */
     }
+    ino &= 0x7fffffff;      /* Assumes 32 bit ino_t ..... */
     return ino;
 }
 
