@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.14 2004/12/01 23:38:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.14.8.1 2007/02/26 22:14:58 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -338,14 +338,6 @@ ForceNewConnections(struct srvAddr *sap)
 
     if (!sap)
 	return;			/* defensive check */
-
-    /* if client is not multihomed, do nothing */
-    ObtainReadLock(&afs_xinterface);
-    if (afs_cb_interface.numberOfInterfaces <= 1) {
-	ReleaseReadLock(&afs_xinterface);
-	return;
-    }
-    ReleaseReadLock(&afs_xinterface);
 
     ObtainWriteLock(&afs_xconn, 413);
     for (tc = sap->conns; tc; tc = tc->next)
