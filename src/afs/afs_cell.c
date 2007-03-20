@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.34.4.3 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.34.4.4 2007/03/20 01:13:34 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -751,8 +751,7 @@ afs_NewCell(char *acellName, afs_int32 * acellHosts, int aflags,
 	AFS_MD5_String(tc->cellHandle, tc->cellName, strlen(tc->cellName));
 	RWLOCK_INIT(&tc->lock, "cell lock");
 	newc = 1;
-	if (afs_thiscell && !strcmp(acellName, afs_thiscell))
-	    aflags &= ~CNoSUID;
+	aflags |= CNoSUID;
     }
     ObtainWriteLock(&tc->lock, 688);
 
