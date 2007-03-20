@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.35 2007/02/26 17:55:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/LINUX/rx_knet.c,v 1.36 2007/03/20 18:46:00 shadow Exp $");
 
 #include <linux/version.h>
 #ifdef AFS_LINUX22_ENV
@@ -213,30 +213,34 @@ osi_StopListener(void)
     struct task_struct *listener;
     extern int rxk_ListenerPid;
 
-#ifdef EXPORTED_TASKLIST_LOCK
-    if (&tasklist_lock)
-      read_lock(&tasklist_lock);
-#endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
-#ifdef EXPORTED_TASKLIST_LOCK
-    else
-#endif
-      rcu_read_lock();
-#endif
-    listener = find_task_by_pid(rxk_ListenerPid);
-#ifdef EXPORTED_TASKLIST_LOCK
-    if (&tasklist_lock)
-       read_unlock(&tasklist_lock);
-#endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
-#ifdef EXPORTED_TASKLIST_LOCK
-    else
-#endif
-      rcu_read_unlock();
-#endif
     while (rxk_ListenerPid) {
-	flush_signals(listener);
-	force_sig(SIGKILL, listener);
+#ifdef EXPORTED_TASKLIST_LOCK
+	if (&tasklist_lock)
+	   read_lock(&tasklist_lock);
+#endif
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
+#ifdef EXPORTED_TASKLIST_LOCK
+	else
+#endif
+	   rcu_read_lock();
+#endif
+	listener = find_task_by_pid(rxk_ListenerPid);
+        if (listener) {
+	    flush_signals(listener);
+	    force_sig(SIGKILL, listener);
+	}
+#ifdef EXPORTED_TASKLIST_LOCK
+	if (&tasklist_lock)
+	    read_unlock(&tasklist_lock);
+#endif
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
+#ifdef EXPORTED_TASKLIST_LOCK
+	else
+#endif
+	   rcu_read_unlock();
+#endif
+	if (!listener)
+	    break;
 	afs_osi_Sleep(&rxk_ListenerPid);
     }
     sock_release(rx_socket);
