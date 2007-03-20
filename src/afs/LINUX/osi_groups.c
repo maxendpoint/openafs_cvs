@@ -20,7 +20,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.28.4.5 2007/01/15 15:51:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.28.4.6 2007/03/20 18:42:23 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -594,13 +594,18 @@ static void afs_pag_destroy(struct key *key)
 {
     afs_uint32 pag = key->payload.value;
     struct unixuser *pu;
+    int locked = ISAFS_GLOCK();
 
+    if (!locked)
+	AFS_GLOCK();
     pu = afs_FindUser(pag, -1, READ_LOCK);
     if (pu) {
 	pu->ct.EndTimestamp = 0;
 	pu->tokenTime = 0;
 	afs_PutUser(pu, READ_LOCK);
     }
+    if (!locked)
+	AFS_GUNLOCK();
 }
 
 struct key_type key_type_afs_pag =
