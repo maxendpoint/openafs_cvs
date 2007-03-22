@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.11.8.1 2007/02/09 01:00:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.11.8.2 2007/03/22 15:59:52 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
@@ -137,21 +137,24 @@ DeleteTrans(register struct volser_trans *atrans, afs_int32 lock)
     register struct volser_trans *tt, **lt;
     afs_int32 error;
 
+    if (lock) VTRANS_LOCK;
     if (atrans->refCount > 1) {
 	/* someone else is using it now */
 	atrans->refCount--;
 	atrans->tflags |= TTDeleted;
+	if (lock) VTRANS_UNLOCK;
 	return 0;
     }
 
     /* otherwise we zap it ourselves */
-    if (lock) VTRANS_LOCK;
     lt = &allTrans;
     for (tt = *lt; tt; lt = &tt->next, tt = *lt) {
 	if (tt == atrans) {
 	    if (tt->volume)
 		VDetachVolume(&error, tt->volume);
 	    tt->volume = NULL;
+	    if (tt->rxCallPtr)
+		rxi_CallError(tt->rxCallPtr, RX_CALL_DEAD);
 	    *lt = tt->next;
 	    free(tt);
 	    if (lock) VTRANS_UNLOCK;
@@ -168,18 +171,22 @@ DeleteTrans(register struct volser_trans *atrans, afs_int32 lock)
 afs_int32 
 TRELE(register struct volser_trans *at)
 {
+    VTRANS_LOCK;
     if (at->refCount == 0) {
 	Log("TRELE: bad refcount\n");
+	VTRANS_UNLOCK;
 	return VOLSERTRELE_ERROR;
     }
 
     at->time = FT_ApproxTime();	/* we're still using it */
     if (at->refCount == 1 && (at->tflags & TTDeleted)) {
-	DeleteTrans(at, 1);
+	DeleteTrans(at, 0);
+	VTRANS_UNLOCK;
 	return 0;
     }
     /* otherwise simply drop refcount */
     at->refCount--;
+    VTRANS_UNLOCK;
     return 0;
 }
 
