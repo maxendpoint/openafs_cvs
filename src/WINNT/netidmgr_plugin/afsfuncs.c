@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsfuncs.c,v 1.1.2.5 2007/03/28 22:19:57 jaltman Exp $ */
+/* $Id: afsfuncs.c,v 1.1.2.6 2007/03/31 12:53:49 jaltman Exp $ */
 
 /* Disable the 'macro redefinition' warning which is getting
    triggerred by a redefinition of the ENCRYPT and DECRYPT macros. */
@@ -880,7 +880,7 @@ afs_klog(khm_handle identity,
 	* and try again.  Perhaps there are two service tickets for the
 	* same service in the ccache.
 	*/
-	if (k5creds->times.endtime < time(NULL)) {
+	if (r == 0 && k5creds && k5creds->times.endtime < time(NULL)) {
 	    pkrb5_cc_remove_cred(context, k5cc, 0, k5creds);
 	    pkrb5_free_creds(context, k5creds);
 	    k5creds = NULL;
