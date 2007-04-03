@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: dynimport.h,v 1.1 2006/10/10 17:33:35 jaltman Exp $ */
+/* $Id: dynimport.h,v 1.2 2007/04/03 05:40:27 jaltman Exp $ */
 
 #ifndef __KHIMAIRA_DYNIMPORT_H
 #define __KHIMAIRA_DYNIMPORT_H
@@ -30,7 +30,23 @@
 /* Dynamic imports */
 #include<khdefs.h>
 #include<tlhelp32.h>
+
+#if defined(_WIN32_WINNT) 
+#  if (_WIN32_WINNT < 0x0501)
+#    define AFS_WIN32_WINNT _WIN32_WINNT
+#    undef _WIN32_WINNT
+#    define _WIN32_WINNT 0x0501
+#  endif
+#else 
+#  define _WIN32_WINNT 0x0501
+#endif
+
 #include<ntsecapi.h>
+#if defined(AFS_WIN32_WINNT)
+#undef _WIN32_WINNT
+#define _WIN32_WINNT AFS_WIN32_WINNT
+#undef AFS_WIN32_WINNT
+#endif
 
 #ifndef FAR
 #define FAR
