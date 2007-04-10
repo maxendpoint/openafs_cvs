@@ -10,7 +10,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/venus/dedebug.c,v 1.1.4.1 2007/02/01 13:25:33 jaltman Exp $");
+RCSID("$Header: /cvs/openafs/src/venus/dedebug.c,v 1.1.4.2 2007/04/10 18:39:56 shadow Exp $");
 
 
 #include <sys/types.h>
@@ -41,7 +41,7 @@ static PrintCacheEntries(struct rx_connection *aconn, int aint32)
 	if (code) {
 	    if (code == 1) break;
 	    printf("cmdebug: failed to get cache entry %d (%s)\n", i,
-		   error_message(code));
+		   afs_error_message(code));
 	    return code;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * $Id: asetkey.c,v 1.4.4.2 2007/01/05 03:21:45 shadow Exp $
+ * $Id: asetkey.c,v 1.4.4.3 2007/04/10 18:39:49 shadow Exp $
  *
  * asetkey - Manipulates an AFS KeyFile
  *
@@ -85,13 +85,13 @@ main(int argc, char *argv[])
 	kvno = atoi(argv[2]);
 	retval = krb5_parse_name(context, argv[4], &principal);
 	if (retval != 0) {
-		com_err(argv[0], retval, "while parsing AFS principal");
+		afs_com_err(argv[0], retval, "while parsing AFS principal");
 		exit(1);
 	}
 	retval = krb5_kt_read_service_key(context, argv[3], principal, kvno,
 					  ENCTYPE_DES_CBC_CRC, &key);
 	if (retval != 0) {
-		com_err(argv[0], retval, "while extracting AFS service key");
+		afs_com_err(argv[0], retval, "while extracting AFS service key");
 		exit(1);
 	}
 
