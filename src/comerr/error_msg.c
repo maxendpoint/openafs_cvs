@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/comerr/error_msg.c,v 1.8 2007/04/10 18:36:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/comerr/error_msg.c,v 1.9 2007/04/10 18:58:13 shadow Exp $");
 
 #include "internal.h"
 #include <stdio.h>
@@ -147,7 +147,7 @@ afs_error_message(afs_int32 code)
     UNLOCK_ET_LIST;
     strlcpy(buffer, "Unknown code ", sizeof buffer);
     if (table_num) {
-	strlcat(buffer, error_table_name(table_num), sizeof buffer);
+	strlcat(buffer, afs_error_table_name(table_num), sizeof buffer);
 	strlcat(buffer, " ", sizeof buffer);
     }
     for (cp = buffer; *cp; cp++);

@@ -8,7 +8,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/comerr/com_err.c,v 1.6 2007/04/10 18:36:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/comerr/com_err.c,v 1.7 2007/04/10 18:59:16 shadow Exp $");
 
 #include "internal.h"
 #include <stdio.h>
@@ -60,7 +60,7 @@ afs_com_err(const char *whoami, afs_int32 code, const char *fmt, ...)
 }
 
 errf
-set_com_err_hook(errf new_proc)
+afs_set_com_err_hook(errf new_proc)
 {
     errf x = com_err_hook;
     if (new_proc)
@@ -71,7 +71,7 @@ set_com_err_hook(errf new_proc)
 }
 
 errf
-reset_com_err_hook(void)
+afs_reset_com_err_hook(void)
 {
     errf x = com_err_hook;
     com_err_hook = default_com_err_proc;
