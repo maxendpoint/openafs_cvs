@@ -181,8 +181,8 @@ DECL_FUNC_PTR(krb_get_tf_realm);
 DECL_FUNC_PTR(krb_mk_req);
 
 // ComErr functions
-DECL_FUNC_PTR(afs_com_err);
-DECL_FUNC_PTR(afs_error_message);
+DECL_FUNC_PTR(com_err);
+DECL_FUNC_PTR(error_message);
 
 // Profile functions
 DECL_FUNC_PTR(profile_init);
@@ -331,8 +331,8 @@ FUNC_INFO profile_fi[] = {
 };
 
 FUNC_INFO ce_fi[] = {
-    MAKE_FUNC_INFO(afs_com_err),
-    MAKE_FUNC_INFO(afs_error_message),
+    MAKE_FUNC_INFO(com_err),
+    MAKE_FUNC_INFO(error_message),
     END_FUNC_INFO
 };
 
@@ -558,7 +558,7 @@ KRB5_error(krb5_error_code rc, LPCSTR FailedFunctionName,
     }
     */
         
-    errText = pafs_error_message(rc);   
+    errText = perror_message(rc);   
     _snprintf(message, sizeof(message), 
               "%s\n(Kerberos error %ld)\n\n%s failed", 
               errText, 
@@ -1358,7 +1358,7 @@ KFW_AFS_get_cred( char * username,
         pkrb5_cc_close(ctx, cc);
 
     if ( code && reasonP ) {
-        *reasonP = (char *)pafs_error_message(code);
+        *reasonP = (char *)perror_message(code);
     }
     return(code);
 }
