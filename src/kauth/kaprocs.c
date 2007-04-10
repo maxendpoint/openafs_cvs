@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaprocs.c,v 1.19 2006/12/28 23:11:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaprocs.c,v 1.20 2007/04/10 18:36:22 shadow Exp $");
 
 #include <afs/stds.h>
 #include <errno.h>
@@ -40,6 +40,7 @@ RCSID
 #include <des.h>
 #include <afs/cellconfig.h>
 #include <afs/auth.h>
+#include <afs/com_err.h>
 #include "kautils.h"
 #include "kaserver.h"
 #include "kalog.h"
@@ -176,7 +177,7 @@ get_time(timeP, tt, admin)
 		} else {
 		    es_Report
 			("in get_time: set_password failed because: %s\n",
-			 error_message(code));
+			 afs_error_message(code));
 		    return code;
 		}
 	    }

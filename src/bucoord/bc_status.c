@@ -11,7 +11,7 @@
 #include <afs/stds.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.13 2007/01/05 03:35:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/bc_status.c,v 1.14 2007/04/10 18:36:20 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -118,7 +118,7 @@ cmdDispatch()
 
     code = cmd_ParseLine(internalCmdLine, targv, &targc, MAXV);
     if (code) {
-	printf("Couldn't parse line: '%s'", error_message(code));
+	printf("Couldn't parse line: '%s'", afs_error_message(code));
 	return (1);
     }
     free(internalCmdLine);
@@ -266,8 +266,8 @@ statusWatcher()
 	if (localTaskFlags & ABORT_REQUEST) {
 	    code = TC_RequestAbort(tconn, taskId);
 	    if (code) {
-		com_err("statusWatcher", code, "; Can't post abort request");
-		com_err("statusWatcher", 0, "...Deleting job");
+		afs_com_err("statusWatcher", code, "; Can't post abort request");
+		afs_com_err("statusWatcher", 0, "...Deleting job");
 		if (localTaskFlags & NOREMOVE) {
 		    curPollPtr->flags |= (STARTING | TASK_ERROR);
 		    curPollPtr->scheduledDump = 0;

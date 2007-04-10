@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.9 2007/02/09 00:57:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/finale/translate_et.c,v 1.10 2007/04/10 18:36:21 shadow Exp $");
 
 #include <afs/com_err.h>
 #include <rx/rxkad.h>
@@ -73,8 +73,8 @@ main(int argc, char *argv[])
 	code = atoi(argv[i]);
 	offset = code & ((1 << ERRCODE_RANGE) - 1);
 
-	printf("%d (%s).%d = %s\n", (int)code, error_table_name(code),
-	       (int)offset, error_message(code));
+	printf("%d (%s).%d = %s\n", (int)code, afs_error_table_name(code),
+	       (int)offset, afs_error_message(code));
     }
     return 0;
 }

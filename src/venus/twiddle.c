@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/twiddle.c,v 1.9 2007/02/09 00:57:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/twiddle.c,v 1.10 2007/04/10 18:36:24 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <sys/ioctl.h>
@@ -205,6 +205,6 @@ Die(code, filename)
 	    fprintf(stderr, "%s:'%s'", pn, filename);
 	else
 	    fprintf(stderr, "%s", pn);
-	fprintf(stderr, ": %s\n", error_message(errno));
+	fprintf(stderr, ": %s\n", afs_error_message(errno));
     }
 }				/*Die */

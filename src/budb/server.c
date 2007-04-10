@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.19 2007/02/09 00:57:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.20 2007/04/10 18:36:20 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -409,7 +409,7 @@ main(argc, argv)
 #ifdef AFS_NT40_ENV
 	ReportErrorEventAlt(AFSEVT_SVR_NO_INSTALL_DIR, 0, argv[0], 0);
 #endif
-	com_err(whoami, errno, "; Unable to obtain AFS server directory.");
+	afs_com_err(whoami, errno, "; Unable to obtain AFS server directory.");
 	exit(2);
     }
 
@@ -467,7 +467,7 @@ main(argc, argv)
     BU_conf = afsconf_Open(globalConfPtr->cellConfigdir);
     if (BU_conf == 0) {
 	LogError(code, "Failed getting cell info\n");
-	com_err(whoami, code, "Failed getting cell info");
+	afs_com_err(whoami, code, "Failed getting cell info");
 	ERROR(BUDB_NOCELLS);
     }
 
@@ -550,7 +550,7 @@ main(argc, argv)
 
     if (code) {
 	LogError(code, "Ubik init failed\n");
-	com_err(whoami, code, "Ubik init failed");
+	afs_com_err(whoami, code, "Ubik init failed");
 	ERROR(code);
     }
 
@@ -677,8 +677,8 @@ LogError(code, a, b, c, d, e, f, g, h, i)
 	fprintf(globalConfPtr->log, "%s ", TimeStamp(now));
 
 	if (code)
-	    fprintf(globalConfPtr->log, "%s: %s\n", error_table_name(code),
-		    error_message(code));
+	    fprintf(globalConfPtr->log, "%s: %s\n", afs_error_table_name(code),
+		    afs_error_message(code));
 	fprintf(globalConfPtr->log, a, b, c, d, e, f, g, h, i);
 	fflush(globalConfPtr->log);
 	fclose(globalConfPtr->log);
