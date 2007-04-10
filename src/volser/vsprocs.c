@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.33.2.6 2006/01/25 03:49:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.33.2.7 2007/04/10 18:43:47 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -399,8 +399,8 @@ PrintError(char *msg, afs_int32 errcode)
 	    initialize_VL_error_table();
 
 	    offset = errcode & ((1 << ERRCODE_RANGE) - 1);
-	    fprintf(STDERR, "%s: %s\n", error_table_name(errcode),
-		    error_message(errcode));
+	    fprintf(STDERR, "%s: %s\n", afs_error_table_name(errcode),
+		    afs_error_message(errcode));
 	    break;
 	}
     }

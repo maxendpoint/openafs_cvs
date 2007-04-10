@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.24.2.5 2006/07/31 17:07:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.24.2.6 2007/04/10 18:43:46 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -3487,7 +3487,7 @@ Die(int errnum, char *filename)
 	    fprintf(stderr, "%s:'%s'", pn, filename);
 	else
 	    fprintf(stderr, "%s", pn);
-	fprintf(stderr, ": %s\n", error_message(errnum));
+	fprintf(stderr, ": %s\n", afs_error_message(errnum));
 	break;
     }
 }
