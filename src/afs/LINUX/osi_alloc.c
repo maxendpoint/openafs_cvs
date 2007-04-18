@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.23 2004/12/01 23:38:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.23.8.1 2007/04/18 18:02:47 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -98,7 +98,12 @@ linux_alloc(unsigned int asize, int drop_glock)
 	    if (new)		/* piggy back alloc type */
 		new = (void *)(KM_TYPE | (unsigned long)new);
 	} else {
+	    osi_Assert(drop_glock || !haveGlock);
+	    if (drop_glock && haveGlock)
+		AFS_GUNLOCK();
 	    new = (void *)vmalloc(asize);
+	    if (drop_glock && haveGlock)
+		AFS_GLOCK();
 	    if (new)		/* piggy back alloc type */
 		new = (void *)(VM_TYPE | (unsigned long)new);
 	}
