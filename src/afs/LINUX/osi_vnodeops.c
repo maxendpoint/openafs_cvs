@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.52 2007/04/18 18:27:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.53 2007/04/19 04:10:35 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1091,6 +1091,8 @@ afs_linux_unlink(struct inode *dip, struct dentry *dp)
             }
             tvc->uncred = credp;
 	    tvc->states |= CUnlinked;
+	} else {
+	    osi_FreeSmallSpace(__name);	
 	}
 	AFS_GUNLOCK();
 
