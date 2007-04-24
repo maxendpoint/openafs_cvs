@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.39 2007/02/26 18:52:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.40 2007/04/24 00:41:03 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1760,7 +1760,9 @@ HandleLocking(Vnode * targetptr, struct client *client, afs_int32 rights, ViceLo
 		0;
 	Time += AFS_LOCKWAIT;
 	if (LockingType == LockRead) {
-	    if ( !(rights & PRSFS_LOCK) )
+	    if ( !(rights & PRSFS_LOCK) &&
+                 !(rights & PRSFS_WRITE) &&
+                 !(OWNSp(client, targetptr) && (rights & PRSFS_INSERT)) )
 		return(EACCES);
  
 	    if (targetptr->disk.lock.lockCount >= 0) {
