@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.36 2007/02/15 17:11:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.37 2007/04/25 19:50:21 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -5547,6 +5547,7 @@ rxi_SendDelayedCallAbort(struct rxevent *event, register struct rx_call *call,
 			    (char *)&error, sizeof(error), 0);
 	rxi_FreePacket(packet);
     }
+    CALL_RELE(call, RX_CALL_REFCOUNT_ABORT);
     MUTEX_EXIT(&call->lock);
 }
 
