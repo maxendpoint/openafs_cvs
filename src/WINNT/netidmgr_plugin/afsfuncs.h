@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsfuncs.h,v 1.1.2.4 2007/02/09 20:12:38 jaltman Exp $ */
+/* $Id: afsfuncs.h,v 1.1.2.5 2007/05/05 21:14:48 jaltman Exp $ */
 
 #ifndef __KHIMAIRA_AFSFUNCS_H
 #define __KHIMAIRA_AFSFUNCS_H
@@ -73,8 +73,10 @@ ServiceControl(LPSTR lpszMachineName,
 
 void afs_report_error(LONG rc, LPCSTR FailedFunctionName);
 
+khm_boolean
+afs_check_for_cell_realm_match(khm_handle identity, char * cell);
+
 static char *afs_realm_of_cell(afs_conf_cell *, BOOL);
 static long afs_get_cellconfig_callback(void *, struct sockaddr_in *, char *);
 static int afs_get_cellconfig(char *, afs_conf_cell *, char *);
-
 #endif
