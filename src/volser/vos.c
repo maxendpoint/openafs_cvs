@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.2 2007/02/09 01:00:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.3 2007/05/10 00:16:57 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -2785,7 +2785,7 @@ DumpVolume(as)
 
 {
     afs_int32 avolid, aserver, apart, voltype, fromdate = 0, code, err, i;
-    char filename[NameLen];
+    char filename[MAXPATHLEN];
     struct nvldbentry entry;
 
     rx_SetRxDeadTime(60 * 10);
@@ -2885,7 +2885,7 @@ RestoreVolume(as)
     afs_int32 acreation = 0, alastupdate = 0;
     int restoreflags, readonly = 0, offline = 0, voltype = RWVOL;
     char prompt;
-    char afilename[NameLen], avolname[VOLSER_MAXVOLNAME + 1], apartName[10];
+    char afilename[MAXPATHLEN], avolname[VOLSER_MAXVOLNAME + 1], apartName[10];
     char volname[VOLSER_MAXVOLNAME + 1];
     struct nvldbentry entry;
 
