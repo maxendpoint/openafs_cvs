@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.67 2006/12/20 21:17:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.68 2007/05/14 21:32:32 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2559,17 +2559,19 @@ afs_GetDCache(register struct vcache *avc, afs_size_t abyte,
 	    afs_DCMoveBucket(tdc, 0, 0);
 	    ReleaseWriteLock(&tdc->lock);
 	    afs_PutDCache(tdc);
-	    ObtainWriteLock(&afs_xcbhash, 454);
-	    afs_DequeueCallback(avc);
-	    avc->states &= ~(CStatd | CUnique);
-	    ReleaseWriteLock(&afs_xcbhash);
-	    if (avc->fid.Fid.Vnode & 1 || (vType(avc) == VDIR))
-		osi_dnlc_purgedp(avc);
-	    /*
-	     * Locks held:
-	     * avc->lock(W); assert(!setLocks || slowPass)
-	     */
-	    osi_Assert(!setLocks || slowPass);
+	    if (!afs_IsDynroot(avc)) {
+		ObtainWriteLock(&afs_xcbhash, 454);
+		afs_DequeueCallback(avc);
+		avc->states &= ~(CStatd | CUnique);
+		ReleaseWriteLock(&afs_xcbhash);
+		if (avc->fid.Fid.Vnode & 1 || (vType(avc) == VDIR))
+		    osi_dnlc_purgedp(avc);
+		/*
+		 * Locks held:
+		 * avc->lock(W); assert(!setLocks || slowPass)
+		 */
+		osi_Assert(!setLocks || slowPass);
+	    }
 	    tdc->f.states &= ~(DRO|DBackup|DRW);
 	    afs_DCMoveBucket(tdc, 0, 0);
 	    tdc = NULL;
