@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.10 2006/09/20 05:52:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.11 2007/05/14 21:45:06 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1143,6 +1143,8 @@ ListViceInodes(char *devname, char *mountedOn, char *resultFile,
     FILE *fp = (FILE *) - 1;
     int ninodes;
     struct afs_stat status;
+
+    *forcep = 0; /* no need to salvage until further notice */
 
     if (resultFile) {
 	fp = afs_fopen(resultFile, "w");
