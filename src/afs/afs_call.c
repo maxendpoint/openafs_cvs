@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.7 2007/05/14 21:33:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.8 2007/05/14 21:37:51 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -836,9 +836,6 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
 #if	(!defined(AFS_NONFSTRANS)) || defined(AFS_AIX_IAUTH_ENV)
 	afs_nfsclient_init();
 #endif
-	if (afs_cb_interface.numberOfInterfaces < 1) 
-	  afs_uuid_create(&afs_cb_interface.uuid);
-
 	printf("found %d non-empty cache files (%d%%).\n",
 	       afs_stats_cmperf.cacheFilesReused,
 	       (100 * afs_stats_cmperf.cacheFilesReused) /
