@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/clone.c,v 1.23 2007/05/16 19:38:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/clone.c,v 1.24 2007/05/16 20:08:32 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -403,7 +403,7 @@ DoCloneIndex(Volume * rwvp, Volume * clvp, VnodeClass class, int reclone)
 }
 
 void
-CloneVolume(Error * error, Volume * original, Volume * new, Volume * old)
+CloneVolume(Error * rerror, Volume * original, Volume * new, Volume * old)
 {
     afs_int32 code, error = 0;
     afs_int32 reclone;
