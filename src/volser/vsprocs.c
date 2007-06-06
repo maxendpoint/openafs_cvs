@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.33.2.7 2007/04/10 18:43:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.33.2.8 2007/06/06 17:57:43 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -4379,9 +4379,10 @@ UV_RestoreVolume2(afs_int32 toserver, afs_int32 topart, afs_int32 tovolid,
 		same =
 		    VLDB_IsSameAddrs(toserver, entry.serverNumber[index],
 				     &errcode);
-		EPRINT2(errcode,
-			"Failed to get info about server's %d address(es) from vlserver (err=%d)\n",
-			toserver, errcode);
+		if (errcode)
+		    EPRINT2(errcode,
+			    "Failed to get info about server's %d address(es) from vlserver (err=%d)\n",
+			    toserver, errcode);
 		if ((!errcode && !same)
 		    || (entry.serverPartition[index] != topart)) {
 		    tempconn =
