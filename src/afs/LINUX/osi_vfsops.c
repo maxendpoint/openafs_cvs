@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.29.2.24 2007/06/10 05:40:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.29.2.25 2007/06/12 05:47:47 rra Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -292,8 +292,10 @@ init_once(void * foo, kmem_cache_t * cachep, unsigned long flags)
 {
     struct vcache *vcp = (struct vcache *) foo;
 
+#if defined(SLAB_CTOR_VERIFY)
     if ((flags & (SLAB_CTOR_VERIFY|SLAB_CTOR_CONSTRUCTOR)) ==
 	SLAB_CTOR_CONSTRUCTOR)
+#endif
 	inode_init_once(AFSTOV(vcp));
 }
 
