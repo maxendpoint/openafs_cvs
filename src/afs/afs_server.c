@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.33.2.8 2006/11/10 00:16:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.33.2.9 2007/06/12 19:20:10 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -487,6 +487,42 @@ afs_CountServers(void)
 
 }				/*afs_CountServers */
 
+
+void
+ForceAllNewConnections()
+{
+    int srvAddrCount;
+    struct srvAddr **addrs;
+    struct srvAddr *sa;
+    afs_int32 i, j;
+
+    ObtainReadLock(&afs_xserver);	/* Necessary? */
+    ObtainReadLock(&afs_xsrvAddr);
+
+    srvAddrCount = 0;
+    for (i = 0; i < NSERVERS; i++) {
+	for (sa = afs_srvAddrs[i]; sa; sa = sa->next_bkt) {
+	    srvAddrCount++;
+	}
+    }
+
+    addrs = afs_osi_Alloc(srvAddrCount * sizeof(*addrs));
+    j = 0;
+    for (i = 0; i < NSERVERS; i++) {
+	for (sa = afs_srvAddrs[i]; sa; sa = sa->next_bkt) {
+	    if (j >= srvAddrCount)
+		break;
+	    addrs[j++] = sa;
+	}
+    }
+
+    ReleaseReadLock(&afs_xsrvAddr);
+    ReleaseReadLock(&afs_xserver);
+    for (i = 0; i < j; i++) {
+        sa = addrs[i];
+	ForceNewConnections(sa);
+    }
+}
 
 /* check down servers (if adown), or running servers (if !adown) */
 void
