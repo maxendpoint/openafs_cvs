@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.5 2006/07/31 21:33:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.6 2007/06/12 19:14:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -91,6 +91,7 @@ DECL_PIOCTL(PPrefetchFromTape);
 DECL_PIOCTL(PResidencyCmd);
 DECL_PIOCTL(PCallBackAddr);
 DECL_PIOCTL(PNFSNukeCreds);
+DECL_PIOCTL(PNewUuid);
 
 /*
  * A macro that says whether we're going to need HandleClientContext().
@@ -193,6 +194,12 @@ static int (*(CpioctlSw[])) () = {
 	PNewAlias,		/* 1 -- create new cell alias */
 	PListAliases,		/* 2 -- list cell aliases */
 	PCallBackAddr,		/* 3 -- request addr for callback rxcon */
+    PBogus,			/* 4 */
+    PBogus,			/* 5 */
+    PBogus,			/* 6 */
+    PBogus,			/* 7 */
+    PBogus,			/* 8 */
+    PNewUUID,                   /* 9 */ 
 };
 
 static int (*(OpioctlSw[])) () = {
@@ -3807,6 +3814,21 @@ DECL_PIOCTL(PResidencyCmd)
 	*aoutSize = sizeof(struct ResidencyCmdOutputs);
     }
     return code;
+}
+
+DECL_PIOCTL(PNewUuid)
+{
+    /*AFS_STATCNT(PNewUuid); */
+    if (!afs_resourceinit_flag)	/* afs deamons havn't started yet */
+	return EIO;		/* Inappropriate ioctl for device */
+
+    if (!afs_osi_suser(acred))
+	return EACCES;
+
+    ObtainWriteLock(&afs_xinterface, 555);
+    afs_uuid_create(&afs_cb_interface.uuid);
+    ReleaseWriteLock(&afs_xinterface);
+    ForceAllNewConnections();
 }
 
 DECL_PIOCTL(PCallBackAddr)
