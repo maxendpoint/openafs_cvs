@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.16 2007/05/17 18:36:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.17 2007/06/12 18:34:18 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -575,7 +575,11 @@ afs_linux_flock(struct file *fp, int cmd, struct file_lock *flp) {
  * afs_StoreAllSegments() with AFS_LASTSTORE
  */
 static int
+#if defined(FOP_FLUSH_TAKES_FL_OWNER_T)
+afs_linux_flush(struct file *fp, fl_owner_t id)
+#else
 afs_linux_flush(struct file *fp)
+#endif
 {
     struct vrequest treq;
     struct vcache *vcp = VTOAFS(FILE_INODE(fp));
