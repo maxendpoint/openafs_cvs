@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.62.2.6 2007/01/12 03:49:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.62.2.7 2007/06/14 19:06:25 jaltman Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -2233,7 +2233,7 @@ rxi_SendPacket(struct rx_call *call, struct rx_connection *conn,
 	     * code.  So, when this happens let's "down" the host NOW so
 	     * we don't sit around waiting for this host to timeout later.
 	     */
-		if (call && code == -1 && errno == WSAEHOSTUNREACH)
+		if (call && code == -1 && WSAGetLastError() == WSAEHOSTUNREACH)
 			call->lastReceiveTime = 0;
 #endif
 #if defined(KERNEL) && defined(AFS_LINUX20_ENV)

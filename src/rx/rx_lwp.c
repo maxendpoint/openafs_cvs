@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.20 2006/05/04 21:23:20 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.19.4.1 2007/06/14 19:06:25 jaltman Exp $");
 
 # include <sys/types.h>		/* fd_set on older platforms */
 # include <errno.h>
@@ -163,8 +163,8 @@ rxi_StartListener(void)
 static void
 rxi_ListenerProc(fd_set * rfds, int *tnop, struct rx_call **newcallp)
 {
-    struct sockaddr_storage saddr;
-    int slen;
+    afs_uint32 host;
+    u_short port;
     register struct rx_packet *p = (struct rx_packet *)0;
     osi_socket socket;
     struct clock cv;
@@ -274,10 +274,9 @@ rxi_ListenerProc(fd_set * rfds, int *tnop, struct rx_call **newcallp)
 #ifdef AFS_NT40_ENV
 	    for (i = 0; p && i < rfds->fd_count; i++) {
 		socket = rfds->fd_array[i];
-		slen = sizeof(saddr);
-		if (rxi_ReadPacket(socket, p, &saddr, &slen)) {
+		if (rxi_ReadPacket(socket, p, &host, &port)) {
 		    *newcallp = NULL;
-		    p = rxi_ReceivePacket(p, socket, &saddr, slen, tnop,
+		    p = rxi_ReceivePacket(p, socket, host, port, tnop,
 					  newcallp);
 		    if (newcallp && *newcallp) {
 			if (p) {
@@ -296,9 +295,8 @@ rxi_ListenerProc(fd_set * rfds, int *tnop, struct rx_call **newcallp)
 		 p && socket <= rx_maxSocketNumber; socket++) {
 		if (!FD_ISSET(socket, rfds))
 		    continue;
-		slen = sizeof(saddr);
-		if (rxi_ReadPacket(socket, p, &saddr, &slen)) {
-		    p = rxi_ReceivePacket(p, socket, &saddr, slen, tnop,
+		if (rxi_ReadPacket(socket, p, &host, &port)) {
+		    p = rxi_ReceivePacket(p, socket, host, port, tnop,
 					  newcallp);
 		    if (newcallp && *newcallp) {
 			if (p) {
@@ -447,12 +445,12 @@ rxi_Sendmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 	    if (!(sfds = IOMGR_AllocFDSet())) {
 		(osi_Msg "rx failed to alloc fd_set: ");
 		perror("rx_sendmsg");
-		return 3;
+		return -1;
 	    }
 	    FD_SET(socket, sfds);
 	}
 #ifdef AFS_NT40_ENV
-	if (errno)
+	if (WSAGetLastError())
 #elif defined(AFS_LINUX22_ENV)
 	/* linux unfortunately returns ECONNREFUSED if the target port
 	 * is no longer in use */
@@ -465,7 +463,7 @@ rxi_Sendmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 	{
 	    (osi_Msg "rx failed to send packet: ");
 	    perror("rx_sendmsg");
-	    return 3;
+	    return -1;
 	}
 	while ((err = select(socket + 1, 0, sfds, 0, 0)) != 1) {
 	    if (err >= 0 || errno != EINTR)
