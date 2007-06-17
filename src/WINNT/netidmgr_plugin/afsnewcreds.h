@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsnewcreds.h,v 1.1.2.3 2006/10/16 13:55:35 jaltman Exp $ */
+/* $Id: afsnewcreds.h,v 1.1.2.4 2007/06/17 04:50:29 jaltman Exp $ */
 
 #ifndef __AFS_NEWCREDS_H
 #define __AFS_NEWCREDS_H
@@ -55,6 +55,10 @@ typedef struct tag_afs_cred_row {
 
 /* tokens for this cell exist and are expired */
 #define DLGROW_FLAG_EXPIRED  0x00000040
+
+/* this cell was added because it was listed in the identity
+   configuration */
+#define DLGROW_FLAG_CONFIG   0x00000080
 
 /* the subitem indexes for each data field */
 enum afs_ncwnd_subitems {

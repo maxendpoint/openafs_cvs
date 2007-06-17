@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsfuncs.c,v 1.1.2.9 2007/05/05 21:14:48 jaltman Exp $ */
+/* $Id: afsfuncs.c,v 1.1.2.10 2007/06/17 04:50:29 jaltman Exp $ */
 
 /* Disable the 'macro redefinition' warning which is getting
    triggerred by a redefinition of the ENCRYPT and DECRYPT macros. */
@@ -521,7 +521,7 @@ _no_krb5:
                                      &krb4_credtype_id);
             }
 
-            if (krb4_credtype_id > 0 &&
+            if (krb4_credtype_id >= 0 &&
                 KHM_SUCCEEDED(kcdb_credset_find_filtered(NULL, -1,
                                                          afs_filter_krb4_tkt,
                                                          (void *) cell,
