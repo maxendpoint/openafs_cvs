@@ -58,7 +58,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60.2.4 2007/06/18 18:18:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60.2.5 2007/06/18 18:49:49 shadow Exp $");
 
 #define VFS 1
 
@@ -350,7 +350,6 @@ afsd_sleep_callback(void * refCon, io_service_t service,
 		    natural_t messageType, void * messageArgument )
 {
     afs_int32 code;
-    struct ViceIoctl blob;
     
     switch (messageType) {
     case kIOMessageCanSystemSleep:
