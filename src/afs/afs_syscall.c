@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_syscall.c,v 1.1.2.4 2006/10/11 12:27:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_syscall.c,v 1.1.2.5 2007/06/18 17:06:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -705,7 +705,8 @@ Afs_syscall()
     }
 
 #if defined(AFS_DARWIN80_ENV)
-    put_vfs_context();
+    if (uap->syscall != AFSCALL_CALL)
+	put_vfs_context();
 #endif
 #ifdef AFS_LINUX20_ENV
     code = -code;
