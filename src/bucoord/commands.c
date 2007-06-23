@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.14.2.8 2007/04/10 18:43:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.14.2.9 2007/06/23 15:27:22 shadow Exp $");
 
 #include <afs/stds.h>
 #if defined(AFS_LINUX24_ENV)
@@ -1139,6 +1139,7 @@ bc_VolRestoreCmd(as, arock)
     afs_int32 code;
     int oldFlag;
     afs_int32 fromDate;
+    afs_int32 dumpID = 0;
     char *newExt, *timeString;
     afs_int32 i;
     afs_int32 *ports = NULL;
@@ -1233,13 +1234,20 @@ bc_VolRestoreCmd(as, arock)
 
     dontExecute = (as->parms[6].items ? 1 : 0);	/* -n */
 
+    if (as->parms[7].items)
+      {
+	dumpID = atoi(as->parms[7].items->data);
+	if (dumpID <= 0)
+	  dumpID = 0;
+      }
+    
     /*
      * Perform the call to start the restore.
      */
     code =
 	bc_StartDmpRst(bc_globalConfig, "volume", "restore", volsToRestore,
 		       &destServ, destPartition, fromDate, newExt, oldFlag,
-		       /*parentDump */ 0, /*dumpLevel */ 0,
+		       /*parentDump */ dumpID, /*dumpLevel */ 0,
 		       bc_Restorer, ports, portCount,
 		       /*dumpSched */ NULL, /*append */ 0, dontExecute);
     if (code)
