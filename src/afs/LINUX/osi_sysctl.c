@@ -1,7 +1,7 @@
 /*
  * osi_sysctl.c: Linux sysctl interface to OpenAFS
  *
- * $Id: osi_sysctl.c,v 1.9.2.3 2007/06/12 18:28:35 shadow Exp $
+ * $Id: osi_sysctl.c,v 1.9.2.4 2007/06/23 06:33:18 shadow Exp $
  *
  * Written Jan 30, 2002 by Kris Van Hees (Sine Nomine Associates)
  */
@@ -34,7 +34,7 @@ extern afs_int32 afs_pct2;
 #ifdef CONFIG_SYSCTL
 static struct ctl_table_header *afs_sysctl = NULL;
 
-static ctl_table afs_sysctl_table[] =
+static ctl_table afs_sysctl_table[] = {
     {
 	.ctl_name 	= 1, 
 	.procname 	= "hm_retry_RO",
