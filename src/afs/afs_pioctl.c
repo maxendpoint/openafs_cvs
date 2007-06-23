@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.6 2007/06/12 19:14:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.7 2007/06/23 06:23:12 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -199,7 +199,7 @@ static int (*(CpioctlSw[])) () = {
     PBogus,			/* 6 */
     PBogus,			/* 7 */
     PBogus,			/* 8 */
-    PNewUUID,                   /* 9 */ 
+    PNewUuid,                   /* 9 */ 
 };
 
 static int (*(OpioctlSw[])) () = {
