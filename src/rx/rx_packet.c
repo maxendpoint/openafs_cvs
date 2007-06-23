@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.32 2007/06/18 18:00:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.35.2.33 2007/06/23 06:27:22 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -2218,7 +2218,7 @@ rxi_SendPacket(struct rx_call *call, struct rx_connection *conn,
 #ifdef AFS_NT40_ENV
 		code == -1 && WSAGetLastError() == WSAEHOSTUNREACH
 #elif defined(AFS_LINUX20_ENV) && defined(KERNEL)
-		code == -ENETUNRECH
+		code == -ENETUNREACH
 #elif defined(AFS_DARWIN_ENV) && defined(KERNEL)
 		code == EHOSTUNREACH
 #else
@@ -2410,7 +2410,7 @@ rxi_SendPacketList(struct rx_call *call, struct rx_connection *conn,
 #ifdef AFS_NT40_ENV
 		code == -1 && WSAGetLastError() == WSAEHOSTUNREACH
 #elif defined(AFS_LINUX20_ENV) && defined(KERNEL)
-		code == -ENETUNRECH
+		code == -ENETUNREACH
 #elif defined(AFS_DARWIN_ENV) && defined(KERNEL)
 		code == EHOSTUNREACH
 #else
