@@ -58,7 +58,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60.2.5 2007/06/18 18:49:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60.2.6 2007/06/26 19:13:37 shadow Exp $");
 
 #define VFS 1
 
@@ -1476,7 +1476,9 @@ AfsdbLookupHandler()
 	    acellName[sizeof(acellName) - 1] = '\0';
 	}
     }
+#ifdef AFS_DARWIN_ENV
     kill(event_pid, SIGTERM);
+#endif
     exit(1);
 }
 #endif
