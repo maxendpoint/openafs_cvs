@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.8.2.6 2007/06/23 15:27:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/restore.c,v 1.8.2.7 2007/06/26 05:44:57 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -224,7 +224,7 @@ bc_Restorer(aindex)
 	    code = bcdb_FindDumpByID(dumpTaskPtr->parentDumpID, dumpDescr);
 	    if (code)
 	      {
-		com_err(whoami, "Couldn't look up info for dump %d\n",
+		afs_com_err(whoami, "Couldn't look up info for dump %d\n",
 			dumpTaskPtr->parentDumpID);
 		continue;
 	      }
