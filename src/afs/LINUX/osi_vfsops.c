@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.16 2007/06/12 05:44:05 rra Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.17 2007/06/26 05:42:05 jaltman Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -108,6 +108,7 @@ struct file_system_type afs_fs_type = {
 struct backing_dev_info afs_backing_dev_info = {
     .ra_pages		= 0, /* disable readahead, afs does prefetch */
 };
+#endif
 
 int
 afs_fill_super(struct super_block *sb, void *data, int silent)
@@ -456,6 +457,7 @@ struct super_operations afs_sops = {
   .notify_change =	afs_notify_change,
 #endif
 };
+#endif
 
 /************** Support routines ************************/
 
