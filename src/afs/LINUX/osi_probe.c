@@ -538,7 +538,7 @@ static probectl main_probe = {
     (unsigned long)(&init_mm),
     0x1fffff,
     0x30000,
-#elif defined(AFS_AMD64_LIUNX26_ENV)
+#elif defined(AFS_AMD64_LINUX26_ENV)
     (unsigned long)(&generic_ro_fops) - 0x30000,
     0,
     0x6000,
