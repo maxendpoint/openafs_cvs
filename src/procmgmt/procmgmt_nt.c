@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/procmgmt/procmgmt_nt.c,v 1.7.4.1 2007/01/30 12:07:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/procmgmt/procmgmt_nt.c,v 1.7.4.2 2007/06/29 23:52:54 jaltman Exp $");
 
 #include <afs/stds.h>
 
@@ -251,6 +251,7 @@ static DWORD WINAPI
 RemoteSignalListenerThread(LPVOID param)
 {
     HANDLE sigPipeHandle = (HANDLE) param;
+    HMODULE hLib = LoadLibrary("AFSPROCMGMT.DLL");
 
     while (1) {
 	/* wait for pipe client to connect */
@@ -296,6 +297,7 @@ RemoteSignalListenerThread(LPVOID param)
     }
 
     /* never reached */
+    FreeLibrary(hLib);
     return (0);
 }
 
