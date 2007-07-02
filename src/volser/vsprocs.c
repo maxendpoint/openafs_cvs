@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.3 2007/06/06 17:56:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.4 2007/07/02 17:08:03 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -2479,7 +2479,7 @@ cpincr:
 	VPRINT1("Recovery: Creating transaction on clone volume %u ...",
 		cloneVol);
 	code =
-	    AFSVolTransCreate(fromconn, newVol, afrompart, ITOffline,
+	    AFSVolTransCreate(fromconn, cloneVol, afrompart, ITOffline,
 			      &clonetid);
 	if (!code) {
 	    VDONE;
