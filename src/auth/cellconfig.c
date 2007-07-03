@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.8 2006/12/30 16:58:15 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.9 2007/07/03 00:35:14 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -534,7 +534,7 @@ afsconf_OpenInternal(register struct afsconf_dir *adir, char *cell,
     char tbuffer[256], tbuf1[256];
     struct stat tstat;
 
-    /* figure out the cell name */
+    /* figure out the local cell name */
 #ifdef AFS_NT40_ENV
     i = GetCellNT(adir);
 #else
