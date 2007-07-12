@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.10 2007/02/09 01:00:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.11 2007/07/12 08:29:34 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2185,6 +2185,7 @@ main(int argc, char *argv[])
 
 #ifdef AFS_PTHREAD_ENV
     ViceLog(5, ("Starting pthreads\n"));
+    FS_STATE_INIT;
     assert(pthread_attr_init(&tattr) == 0);
     assert(pthread_attr_setdetachstate(&tattr, PTHREAD_CREATE_DETACHED) == 0);
 
