@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.11 2007/06/18 18:18:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.12 2007/07/12 18:12:54 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -457,13 +457,13 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
 #endif /* AFS_SGI61_ENV */
 
     AFS_STATCNT(afs_syscall_call);
-    if (!afs_suser(
+    if (
 #ifdef	AFS_SUN5_ENV
-		   CRED()
+	!afs_suser(CRED())
 #else
-		   NULL
+	!afs_suser(NULL)
 #endif
-		   ) && (parm != AFSOP_GETMTU) && (parm != AFSOP_GETMASK)) {
+		    && (parm != AFSOP_GETMTU) && (parm != AFSOP_GETMASK)) {
 	/* only root can run this code */
 #if defined(AFS_OSF_ENV) || defined(AFS_SUN5_ENV) || defined(KERNEL_HAVE_UERROR)
 #if defined(KERNEL_HAVE_UERROR)
