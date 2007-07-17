@@ -38,7 +38,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.7.4.1 2006/08/02 19:01:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/bg-fcrypt.c,v 1.7.4.2 2007/07/17 12:08:18 shadow Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
@@ -550,7 +550,7 @@ fc_keysched(void *key_, fc_KeySchedule sched)
     const unsigned char *key = key_;
 
     /* Do we have 56 bit longs or even longer longs? */
-#if ((1ul << 31) << 1) && defined(ULONG_MAX) && ((ULONG_MAX >> 55) != 0) && ((1ul << 55) != 0)
+#ifdef AFS_64BIT_ENV
     unsigned long k;		/* k holds all 56 non parity bits */
 
     /* Compress out parity bits */
