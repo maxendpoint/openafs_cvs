@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/vsprocs.c,v 1.11.2.2 2007/07/16 00:00:38 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/vsprocs.c,v 1.11.2.3 2007/07/18 14:24:30 shadow Exp $");
 
 #include "vsprocs.h"
 #include "vosutils.h"
@@ -3554,9 +3554,8 @@ CheckVldb(afs_cell_handle_p cellHandle, struct nvldbentry *entry,
     if (islocked) {
 	vcode =
 	    ubik_VL_ReleaseLock(cellHandle->vos, 0,
-		      entry->volumeId[RWVOL], RWVOL,
-		      (LOCKREL_OPCODE | LOCKREL_AFSID | LOCKREL_TIMESTAMP),
-		      &tst);
+				entry->volumeId[RWVOL], RWVOL,
+				(LOCKREL_OPCODE | LOCKREL_AFSID | LOCKREL_TIMESTAMP));
 	if (vcode) {
 	    if (!tst)
 		tst = vcode;
