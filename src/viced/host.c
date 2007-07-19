@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.45 2007/04/10 18:43:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.46 2007/07/19 15:12:35 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -75,6 +75,7 @@ extern struct afsconf_dir *confDir;	/* config dir object */
 extern int lwps;		/* the max number of server threads */
 extern afsUUID FS_HostUUID;
 
+afsUUID nulluuid;
 int CEs = 0;			/* active clients */
 int CEBlocks = 0;		/* number of blocks of CEs */
 struct client *CEFree = 0;	/* first free client */
@@ -1330,7 +1331,8 @@ h_GetHost_r(struct rx_connection *tcon)
 	rx_PutConnection(cb_conn);
 	cb_conn=NULL;
 	H_LOCK;
-	if (code == RXGEN_OPCODE) {
+	if ((code == RXGEN_OPCODE) || 
+	    (afs_uuid_equal(&interf.uuid, &nulluuid))) {
 	    identP = (struct Identity *)malloc(sizeof(struct Identity));
 	    if (!identP) {
 		ViceLog(0, ("Failed malloc in h_GetHost_r\n"));
@@ -1453,7 +1455,8 @@ h_GetHost_r(struct rx_connection *tcon)
 	    rx_PutConnection(cb_conn);
 	    cb_conn=NULL;
 	    H_LOCK;
-	    if (code == RXGEN_OPCODE) {
+	    if ((code == RXGEN_OPCODE) || 
+		afs_uuid_equal(&interf.uuid, &nulluuid)) {
 		if (!identP)
 		    identP =
 			(struct Identity *)malloc(sizeof(struct Identity));
@@ -1663,6 +1666,7 @@ char local_realm[AFS_REALM_SZ] = "";
 void
 h_InitHostPackage()
 {
+    memset(&nulluuid, 0, sizeof(afsUUID));
     afsconf_GetLocalCell(confDir, localcellname, PR_MAXNAMELEN);
     if (!local_realm[0]) {
 	if (afs_krb_get_lrealm(local_realm, 0) != 0 /*KSUCCESS*/) {
