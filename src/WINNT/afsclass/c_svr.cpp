@@ -7,9 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
 extern "C" {
 #include <afs/param.h>
 #include <afs/stds.h>
@@ -786,8 +783,8 @@ DWORD WINAPI SERVER::CanTalkToServer_ThreadProc (PVOID lp)
    // the lpServer pointer won't have been freed.)
    // 
    PVOID hCell;
-   PVOID hBOS;
-   PVOID hVOS;
+   PVOID hBOS = NULL;
+   PVOID hVOS = NULL;
 
    TCHAR szServer[ cchNAME ];
 
