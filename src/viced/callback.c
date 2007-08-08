@@ -85,7 +85,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.2 2006/06/24 14:10:46 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.3 2007/08/08 15:56:28 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -3015,8 +3015,8 @@ MultiProbeAlternateAddress_r(struct host *host)
 
 	interfaces[j] = host->interface->interface[i];
 	conns[j] =
-	    rx_NewConnection(interfaces[i].addr, 
-			     interfaces[i].port, 1, sc, 0);
+	    rx_NewConnection(interfaces[j].addr, 
+			     interfaces[j].port, 1, sc, 0);
 	rx_SetConnDeadTime(conns[j], 2);
 	rx_SetConnHardDeadTime(conns[j], AFS_HARDDEADTIME);
 	j++;
