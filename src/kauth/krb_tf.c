@@ -48,7 +48,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/krb_tf.c,v 1.6 2003/07/15 23:15:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/krb_tf.c,v 1.6.14.1 2007/08/09 14:58:23 shadow Exp $");
 
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
@@ -84,6 +84,7 @@ krb_write_ticket_file(realm)
     char *tf_name;
     struct ktc_principal client, server;
     struct ktc_token token;
+    long mit_compat;	/* MIT Kerberos 5 with Krb4 uses a "long" for issue_date */
 
     if ((strlen(realm) >= sizeof(client.cell)))
 	return KABADNAME;
@@ -149,8 +150,9 @@ krb_write_ticket_file(realm)
     if (write(fd, (char *)(token.ticket), count) != count)
 	goto bad;
     /* Issue date */
-    if (write(fd, (char *)&token.startTime, sizeof(afs_int32))
-	!= sizeof(afs_int32))
+    mit_compat = token.startTime;
+    if (write(fd, (char *)&mit_compat, sizeof(mit_compat))
+	!= sizeof(mit_compat))
 	goto bad;
     close(fd);
     return 0;
