@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.18 2007/08/08 16:31:25 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.19 2007/08/10 04:13:04 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -2630,7 +2630,7 @@ h_stateVerifyAddrHash(struct fs_dump_state * state, struct host * h, afs_uint32 
 {
     int ret = 0, found = 0;
     struct host *host = NULL;
-    struct h_hashChain *chain;
+    struct h_AddrHashChain *chain;
     int index = h_HashIndex(addr);
     char tmp[16];
     int chain_len = 0;
@@ -2682,7 +2682,7 @@ h_stateVerifyUuidHash(struct fs_dump_state * state, struct host * h)
 {
     int ret = 0, found = 0;
     struct host *host = NULL;
-    struct h_hashChain *chain;
+    struct h_UuidHashChain *chain;
     afsUUID * uuidp = &h->interface->uuid;
     int index = h_UuidHashIndex(uuidp);
     char tmp[40];

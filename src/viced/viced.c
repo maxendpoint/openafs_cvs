@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.12 2007/07/17 17:05:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.13 2007/08/10 04:13:04 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -229,6 +229,11 @@ static void FlagMsg();
  * certain background threads before we are allowed to dump state to
  * disk
  */
+
+#if !defined(PTHREAD_RWLOCK_INITIALIZER) && defined(AFS_DARWIN80_ENV)
+#define PTHREAD_RWLOCK_INITIALIZER {0x2DA8B3B4, {0}}
+#endif
+
 struct fs_state fs_state = 
     { FS_MODE_NORMAL, 
       0, 
