@@ -7,23 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-/*
- *                      (3) add new pts commands:
- *
- *                          Interactive - allow the pts command
- *                                        to be run interactively.
- *                          Quit        - quit interactive mode.
- *                          Source      - allow input to come from a file(s).
- *                          Sleep       - pause for a specified number
- *                                        of seconds.
- *
- */
-
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.13.2.2 2007/04/10 18:43:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.13.2.3 2007/08/11 23:50:02 jaltman Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -52,17 +40,6 @@ RCSID
 
 char *whoami;
 int force = 0;
-
-#if defined(SUPERGROUPS)
-
-/*
- *  Add new pts commands:
- *
- *      Interactive - allow the pts command to be run interactively.
- *      Quit        - quit interactive mode.
- *      Source      - allow input to come from a file(s).
- *      Sleep       - pause for a specified number of seconds.
- */
 
 static int finished;
 static FILE *source;
@@ -125,6 +102,7 @@ Sleep(register struct cmd_syndesc *as)
     }
     delay = atoi(as->parms[0].items->data);
     IOMGR_Sleep(delay);
+    return 0;
 }
 
 int
@@ -140,8 +118,6 @@ popsource()
     free((char *)sp);
     return 1;
 }
-
-#endif /* SUPERGROUPS */
 
 int
 osi_audit()
@@ -188,7 +164,6 @@ GetGlobals(register struct cmd_syndesc *as)
 int
 CleanUp(register struct cmd_syndesc *as)
 {
-#if defined(SUPERGROUPS)
     if (as && !strcmp(as->name, "help"))
 	return 0;
     if (pruclient) {
@@ -196,14 +171,6 @@ CleanUp(register struct cmd_syndesc *as)
 	pr_End();
 	rx_Finalize();
     }
-#else
-    if (!strcmp(as->name, "help"))
-	return 0;
-    /* Need to shutdown the ubik_client & other connections */
-    pr_End();
-    rx_Finalize();
-#endif /* SUPERGROUPS */
-
     return 0;
 }
 
@@ -237,12 +204,12 @@ CreateGroup(register struct cmd_syndesc *as)
 			id);
 		return code;
 	    }
-#if defined(SUPERGROUPS)
-	    if (id == 0) {
+	    
+            if (id == 0) {
 		printf("0 isn't a valid user id; aborting\n");
 		return EINVAL;
 	    }
-#endif
+
 	    idi = idi->next;
 	} else
 	    id = 0;
@@ -1023,13 +990,13 @@ main(int argc, char **argv)
 {
     register afs_int32 code;
     register struct cmd_syndesc *ts;
-#if defined(SUPERGROUPS)
+
     char line[2048];
     char *cp, *lastp;
     int parsec;
     char *parsev[CMD_MAXPARMS];
     char *savec;
-#endif
+
 #ifdef WIN32
     WSADATA WSAjunk;
 #endif
@@ -1138,8 +1105,6 @@ main(int argc, char **argv)
     cmd_AddParm(ts, "-groups", CMD_FLAG, CMD_OPTIONAL, "list group entries");
     add_std_args(ts);
 
-#if defined(SUPERGROUPS)
-
     ts = cmd_CreateSyntax("interactive", Interactive, 0,
 			  "enter interactive mode");
     add_std_args(ts);
@@ -1156,11 +1121,8 @@ main(int argc, char **argv)
     cmd_AddParm(ts, "-delay", CMD_SINGLE, 0, "seconds");
     add_std_args(ts);
 
-#endif /* SUPERGROUPS */
-
     cmd_SetBeforeProc(GetGlobals, 0);
 
-#if defined(SUPERGROUPS)
     finished = 1;
     if (code = cmd_Dispatch(argc, argv)) {
 	CleanUp(0);
@@ -1200,11 +1162,5 @@ main(int argc, char **argv)
     }
     CleanUp(0);
     exit(0);
-
-#else /* SUPERGROUPS */
-
-    cmd_SetAfterProc(CleanUp, 0);
-    code = cmd_Dispatch(argc, argv);
-    exit(code != 0);
-#endif /* SUPERGROUPS */
 }
+

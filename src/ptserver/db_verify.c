@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.16.2.2 2007/05/16 19:45:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.16.2.3 2007/08/11 23:50:02 jaltman Exp $");
 
 /*
  *                      (3) Define a structure, idused, instead of an
@@ -1516,7 +1516,7 @@ void
 zeromap(struct idused *idmap)
 {
     while (idmap) {
-	bzero((char *)idmap->idcount, sizeof idmap->idcount);
+	memset((char *)idmap->idcount, 0, sizeof idmap->idcount);
 	idmap = idmap->idnext;
     }
 }
@@ -1541,7 +1541,7 @@ inccount(struct idused **idmapp, int id)
 	    perror("idmap");
 	    exit(1);
 	}
-	bzero((char *)idmap, sizeof idmap);
+	memset((char *)idmap, 0, sizeof idmap);
 	idmap->idstart = id & ~(IDCOUNT - 1);
 	idmap->idnext = *idmapp;
 	*idmapp = idmap;
