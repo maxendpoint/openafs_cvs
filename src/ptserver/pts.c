@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.13.2.3 2007/08/11 23:50:02 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.13.2.4 2007/08/11 23:54:04 jaltman Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -51,21 +51,21 @@ struct sourcestack {
 } *shead;
 
 int
-Interactive(register struct cmd_syndesc *as)
+pts_Interactive(register struct cmd_syndesc *as)
 {
     finished = 0;
     return 0;
 }
 
 int
-Quit(register struct cmd_syndesc *as)
+pts_Quit(register struct cmd_syndesc *as)
 {
     finished = 1;
     return 0;
 }
 
 int
-Source(register struct cmd_syndesc *as)
+pts_Source(register struct cmd_syndesc *as)
 {
     FILE *fd;
     struct sourcestack *sp;
@@ -93,7 +93,7 @@ Source(register struct cmd_syndesc *as)
 }
 
 int
-Sleep(register struct cmd_syndesc *as)
+pts_Sleep(register struct cmd_syndesc *as)
 {
     int delay;
     if (!as->parms[0].items) {
@@ -1105,19 +1105,19 @@ main(int argc, char **argv)
     cmd_AddParm(ts, "-groups", CMD_FLAG, CMD_OPTIONAL, "list group entries");
     add_std_args(ts);
 
-    ts = cmd_CreateSyntax("interactive", Interactive, 0,
+    ts = cmd_CreateSyntax("interactive", pts_Interactive, 0,
 			  "enter interactive mode");
     add_std_args(ts);
     cmd_CreateAlias(ts, "in");
 
-    ts = cmd_CreateSyntax("quit", Quit, 0, "exit program");
+    ts = cmd_CreateSyntax("quit", pts_Quit, 0, "exit program");
     add_std_args(ts);
 
-    ts = cmd_CreateSyntax("source", Source, 0, "read commands from file");
+    ts = cmd_CreateSyntax("source", pts_Source, 0, "read commands from file");
     cmd_AddParm(ts, "-file", CMD_SINGLE, 0, "filename");
     add_std_args(ts);
 
-    ts = cmd_CreateSyntax("sleep", Sleep, 0, "pause for a bit");
+    ts = cmd_CreateSyntax("sleep", pts_Sleep, 0, "pause for a bit");
     cmd_AddParm(ts, "-delay", CMD_SINGLE, 0, "seconds");
     add_std_args(ts);
 
