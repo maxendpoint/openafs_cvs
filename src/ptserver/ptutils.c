@@ -24,7 +24,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.19.6.2 2007/05/16 19:55:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.19.6.3 2007/08/11 23:41:37 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -848,7 +848,7 @@ RemoveFromSGEntry(register struct ubik_trans *at, register afs_int32 aid, regist
 	}			/* for all coentry slots */
 	hloc = nptr;
 	nptr = centry.next;
-	bcopy((char *)&centry, (char *)&hentry, sizeof(centry));
+	memcpy((char *)&centry, (char *)&hentry, sizeof(centry));
     }				/* while there are coentries */
     return PRNOENT;
 }

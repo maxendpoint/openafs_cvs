@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.12.14.3 2007/04/10 18:39:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptclient.c,v 1.12.14.4 2007/08/11 23:41:37 jaltman Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -648,7 +648,7 @@ main(argc, argv)
 	else if (!strcmp(op, "fih")) {
 	    char tname[128];
 	    struct PrUpdateEntry uentry;
-	    bzero(&uentry, sizeof(uentry));
+	    memset(&uentry, 0, sizeof(uentry));
 	    /* scanf("%s",name); */
 	    if (GetString(name, sizeof(name))) {
 		code = PRBADARG;
@@ -675,7 +675,7 @@ main(argc, argv)
 	} else if (!strcmp(op, "fnh")) {
 	    int tid;
 	    struct PrUpdateEntry uentry;
-	    bzero(&uentry, sizeof(uentry));
+	    memset(&uentry, 0, sizeof(uentry));
 	    /* scanf("%d", &id); */
 	    if (GetInt32(&id)) {
 		code = PRBADARG;
