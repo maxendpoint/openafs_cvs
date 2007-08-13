@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.13 2007/08/10 04:13:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.14 2007/08/13 02:26:41 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,6 +88,7 @@ RCSID
 #ifndef AFS_NT40_ENV
 #include <afs/netutils.h>
 #endif
+#include "viced_prototypes.h"
 #include "viced.h"
 #include "host.h"
 #ifdef AFS_PTHREAD_ENV
