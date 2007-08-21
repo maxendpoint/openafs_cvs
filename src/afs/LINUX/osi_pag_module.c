@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.1.2.6 2007/01/02 15:41:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.1.2.7 2007/08/21 21:28:45 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -40,7 +40,7 @@ RCSID
 #endif
 
 static unsigned long nfs_server_addr = 0;
-#if defined(module_param)
+#if defined(module_param) && LINUX_VERSION_CODE > KERNEL_VERSION(2,6,9)
 module_param(nfs_server_addr, long, 0);
 #else
 MODULE_PARM(nfs_server_addr,  "l");

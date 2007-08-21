@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.5 2007/05/14 21:33:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.6 2007/08/21 21:28:44 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1345,14 +1345,14 @@ afs_FindDCache(register struct vcache *avc, afs_size_t abyte)
 	}
 	index = afs_dcnextTbl[index];
     }
-    MReleaseWriteLock(&afs_xdcache);
     if (index != NULLIDX) {
 	hset(afs_indexTimes[tdc->index], afs_indexCounter);
 	hadd32(afs_indexCounter, 1);
+	MReleaseWriteLock(&afs_xdcache);
 	return tdc;
-    } else
-	return NULL;
-
+    } 
+    MReleaseWriteLock(&afs_xdcache);
+    return NULL;
 }				/*afs_FindDCache */
 
 
