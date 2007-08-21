@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.7 2007/06/23 06:23:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.8 2007/08/21 21:30:00 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -3465,6 +3465,8 @@ HandleClientContext(struct afs_ioctl *ablob, int *com,
     } else if (!code) {
 	EXP_RELE(outexporter);
     }
+    if (!code) 
+      *com = _VICEIOCTL(*com);
     return code;
 }
 #endif /* AFS_NEED_CLIENTCONTEXT */
