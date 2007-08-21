@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.42 2007/08/08 19:58:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.43 2007/08/21 08:28:37 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7573,11 +7573,9 @@ SRXAFS_CallBackRxConnAddr (struct rx_call * acall, afs_int32 *addr)
     if ( !thost->interface ) 
 	goto Bad_CallBackRxConnAddr;
     
-    assert(thost->interface->numberOfInterfaces > 0 );
-    
     /* the only address is the primary interface */
     /* can't change when there's only 1 address, anyway */
-    if ( thost->interface->numberOfInterfaces == 1 ) 
+    if ( thost->interface->numberOfInterfaces <= 1 ) 
 	goto Bad_CallBackRxConnAddr;
     
     /* initialise a security object only once */
