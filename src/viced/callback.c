@@ -85,7 +85,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.4 2007/08/08 16:31:25 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.5 2007/08/21 08:30:27 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -2991,11 +2991,9 @@ MultiProbeAlternateAddress_r(struct host *host)
     if (!host->interface)
 	return 1;		/* failure */
 
-    assert(host->interface->numberOfInterfaces > 0);
-
     /* the only address is the primary interface */
-    if (host->interface->numberOfInterfaces == 1)
-	return 1;		/* failure */
+    if (host->interface->numberOfInterfaces <= 1)
+        return 1;               /* failure */
 
     /* initialise a security object only once */
     if (!sc)
