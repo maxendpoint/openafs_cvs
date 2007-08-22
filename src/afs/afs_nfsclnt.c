@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.13.6.5 2007/03/20 19:21:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.13.6.6 2007/08/22 19:39:03 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -203,6 +203,12 @@ afs_nfsclient_reqhandler(struct afs_exporter *exporter,
 #else
     uid = (*cred)->cr_uid;
 #endif
+    /* Do this early, so pag management knows */
+#ifdef	AFS_OSF_ENV
+    (*cred)->cr_ruid = NFSXLATOR_CRED;	/* Identify it as nfs xlator call */
+#else
+    (*cred)->cr_rgid = NFSXLATOR_CRED;	/* Identify it as nfs xlator call */
+#endif
     if ((afs_nfsexporter->exp_states & EXP_CLIPAGS) && pag != NOPAG) {
 	uid = pag;
     } else if (pag != NOPAG) {
@@ -300,11 +306,6 @@ afs_nfsclient_reqhandler(struct afs_exporter *exporter,
     *pagparam = pag;
     *outexporter = (struct afs_exporter *)np;
     afs_PutUser(au, WRITE_LOCK);
-#ifdef	AFS_OSF_ENV
-    (*cred)->cr_ruid = NFSXLATOR_CRED;	/* Identify it as nfs xlator call */
-#else
-    (*cred)->cr_rgid = NFSXLATOR_CRED;	/* Identify it as nfs xlator call */
-#endif
 /*    ReleaseWriteLock(&afs_xnfsreq);	*/
     return 0;
 }

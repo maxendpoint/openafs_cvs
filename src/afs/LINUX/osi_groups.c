@@ -20,11 +20,12 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.28.4.7 2007/03/20 18:47:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.28.4.8 2007/08/22 19:39:03 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
 #include "afs/afs_stats.h"	/* statistics */
+#include "afs/nfsclient.h"
 #ifdef AFS_LINUX22_ENV
 #include "h/smp_lock.h"
 #endif
@@ -330,8 +331,7 @@ setpag(cred_t **cr, afs_uint32 pagvalue, afs_uint32 *newpag,
     code = __setpag(cr, pagvalue, newpag, change_parent);
 
 #ifdef LINUX_KEYRING_SUPPORT
-    if (code == 0) {
-
+    if (code == 0 && (*cr)->cr_rgid != NFSXLATOR_CRED) {
 	(void) install_session_keyring(current, NULL);
 
 	if (current->signal->session_keyring) {
