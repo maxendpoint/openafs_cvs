@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.8 2007/08/21 21:30:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.9 2007/08/22 02:13:42 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -3338,6 +3338,7 @@ HandleClientContext(struct afs_ioctl *ablob, int *com,
     struct afs_exporter *exporter, *outexporter;
     struct AFS_UCRED *newcred;
     struct unixuser *au;
+    afs_uint32 comp = *com & 0xff00;
 
 #if defined(AFS_SGIMP_ENV)
     osi_Assert(ISAFS_GLOCK());
@@ -3466,7 +3467,7 @@ HandleClientContext(struct afs_ioctl *ablob, int *com,
 	EXP_RELE(outexporter);
     }
     if (!code) 
-      *com = _VICEIOCTL(*com);
+      *com = (*com) | comp;
     return code;
 }
 #endif /* AFS_NEED_CLIENTCONTEXT */
