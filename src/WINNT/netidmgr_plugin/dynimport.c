@@ -22,7 +22,7 @@
 * SOFTWARE.
 */
 
-/* $Id: dynimport.c,v 1.1.2.3 2007/08/28 16:54:46 jaltman Exp $ */
+/* $Id: dynimport.c,v 1.1.2.4 2007/08/28 21:24:21 jaltman Exp $ */
 
 #include<windows.h>
 #include<khdefs.h>
@@ -380,10 +380,10 @@ khm_int32 init_imports(void) {
 
     imp_rv = LoadFuncs(SECUR32_DLL, lsa_fi, &hSecur32, 0, 1, 1, 1);
     CKRV;
-
+#ifndef _WIN64
     imp_rv = LoadFuncs(KRB524_DLL, k524_fi, &hKrb524, 0, 1, 1, 1);
     CKRV;
-
+#endif
     imp_rv = LoadFuncs(PROFILE_DLL, profile_fi, &hProfile, 0, 1, 0, 0);
     CKRV;
 
