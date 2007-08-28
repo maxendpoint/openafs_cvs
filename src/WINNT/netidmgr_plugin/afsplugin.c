@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsplugin.c,v 1.1.2.4 2007/02/15 21:52:24 jaltman Exp $ */
+/* $Id: afsplugin.c,v 1.1.2.5 2007/08/28 16:54:46 jaltman Exp $ */
 
 #include<afscred.h>
 #include<kcreddb.h>
@@ -844,7 +844,7 @@ afs_msg_act(khm_int32 msg_subtype,
     khm_int32 rv = KHM_ERROR_SUCCESS;
 
     if (msg_subtype == KMSG_ACT_ACTIVATE &&
-        uparam == action_id_afs_help) {
+        uparam == (khm_ui_4)action_id_afs_help) {
 
         khui_request_UI_callback(help_launcher, NULL);
 

@@ -22,7 +22,7 @@
 * SOFTWARE.
 */
 
-/* $Id: dynimport.c,v 1.1.2.2 2006/10/12 21:19:43 jaltman Exp $ */
+/* $Id: dynimport.c,v 1.1.2.3 2007/08/28 16:54:46 jaltman Exp $ */
 
 #include<windows.h>
 #include<khdefs.h>
@@ -453,6 +453,7 @@ int (*Lcom_err)(LPSTR,long,LPSTR,...);
 LPSTR (*Lerror_message)(long);
 LPSTR (*Lerror_table_name)(long);
 
+#pragma warning (disable: 4213)
 void Leash_load_com_err_callback(FARPROC ce,
                                  FARPROC em,
                                  FARPROC etn)

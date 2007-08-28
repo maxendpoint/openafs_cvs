@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: dynimport.h,v 1.1.2.3 2007/04/03 05:41:24 jaltman Exp $ */
+/* $Id: dynimport.h,v 1.1.2.4 2007/08/28 16:54:46 jaltman Exp $ */
 
 #ifndef __KHIMAIRA_DYNIMPORT_H
 #define __KHIMAIRA_DYNIMPORT_H
@@ -58,11 +58,15 @@ extern HINSTANCE hProfile;
 
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef _WIN64
+#define CCAPI_DLL     "krbcc64.dll"
+#define KRBCC32_DLL   "krbcc64.dll"
+#else
 #define CCAPI_DLL     "krbcc32.dll"
 #define KRBCC32_DLL   "krbcc32.dll"
+#endif
 #define SERVICE_DLL   "advapi32.dll"
 #define SECUR32_DLL   "secur32.dll"
-#define PROFILE_DLL   "xpprof32.dll"
 
 //////////////////////////////////////////////////////////////////////////////
 

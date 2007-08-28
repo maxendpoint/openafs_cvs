@@ -22,12 +22,15 @@
  * SOFTWARE.
  */
 
-/* $Id: afscred.h,v 1.1.2.4 2006/11/20 18:54:31 jaltman Exp $ */
+/* $Id: afscred.h,v 1.1.2.5 2007/08/28 16:54:46 jaltman Exp $ */
 
 #ifndef __KHIMAIRA_AFSCRED_H
 #define __KHIMAIRA_AFSCRED_H
 
+#ifndef _WIN64
 #define _USE_32BIT_TIME_T 1
+#endif
+
 #define _WINSOCKAPI_
 #include<windows.h>
 #include<time.h>
