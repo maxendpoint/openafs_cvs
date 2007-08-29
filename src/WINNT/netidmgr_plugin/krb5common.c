@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: krb5common.c,v 1.1.2.2 2006/10/12 21:19:43 jaltman Exp $ */
+/* $Id: krb5common.c,v 1.1.2.3 2007/08/29 05:32:34 jaltman Exp $ */
 
 #include<windows.h>
 #include<netidmgr.h>
@@ -93,7 +93,7 @@ khm_krb5_initialize(khm_handle ident,
     LPCSTR          functionName;
     int             freeContextFlag;
     krb5_error_code	rc = 0;
-    krb5_flags          flags = 0;
+    krb5_flags          flags = KRB5_TC_OPENCLOSE;
 
     if (pkrb5_init_context == NULL)
         return 1;
