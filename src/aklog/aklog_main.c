@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.1.2.17 2007/07/11 04:32:27 shadow Exp $
+ * $Id: aklog_main.c,v 1.1.2.18 2007/08/29 20:29:02 rees Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -7,7 +7,7 @@
 
 #if !defined(lint) && !defined(SABER)
 static char *rcsid =
-	"$Id: aklog_main.c,v 1.1.2.17 2007/07/11 04:32:27 shadow Exp $";
+	"$Id: aklog_main.c,v 1.1.2.18 2007/08/29 20:29:02 rees Exp $";
 #endif /* lint || SABER */
 
 #include <afsconfig.h>
@@ -244,17 +244,6 @@ static char *copy_cellinfo(cellinfo_t *cellinfo)
 	memcpy(new_cellinfo, cellinfo, sizeof(cellinfo_t));
     
     return ((char *)new_cellinfo);
-}
-
-
-static char *copy_string(char *string)    
-{
-    char *new_string;
-
-    if ((new_string = (char *)calloc(strlen(string) + 1, sizeof(char))))
-	(void) strcpy(new_string, string);
-
-    return (new_string);
 }
 
 
@@ -1404,8 +1393,8 @@ void aklog(int argc, char *argv[])
 	else if (pmode) {
 	    /* Add this path to list of paths */
 	    if ((cur_node = ll_add_node(&paths, ll_tail))) {
-		char *new_path; 
-		if ((new_path = copy_string(path)))
+		char *new_path;
+		if ((new_path = strdup(path)))
 		    ll_add_data(cur_node, new_path);
 		else {
 		    fprintf(stderr, "%s: failure copying path name.\n",
