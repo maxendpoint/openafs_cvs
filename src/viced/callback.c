@@ -85,7 +85,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.5 2007/08/21 08:30:27 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.6 2007/09/03 04:00:21 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -2352,8 +2352,8 @@ cb_stateSaveFE(struct fs_dump_state * state, struct FileEntry * fe)
 	    goto done;
 	}
 	cbdsk[idx].index = cbi;
-	iov[idx].iov_base = (char *)&cbdsk[idx];
-	len += iov[idx].iov_len = sizeof(struct CBDiskEntry);
+	iov[iovcnt].iov_base = (char *)&cbdsk[idx];
+	len += iov[iovcnt].iov_len = sizeof(struct CBDiskEntry);
 	iovcnt++;
 	if ((iovcnt == 16) || (!cb->cnext)) {
 	    if (fs_stateWriteV(state, iov, iovcnt)) {
