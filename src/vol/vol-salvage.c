@@ -87,7 +87,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.51.2.7 2007/01/30 12:17:28 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.51.2.8 2007/09/07 04:03:49 shadow Exp $");
 
 #ifndef AFS_NT40_ENV
 #include <sys/param.h>
@@ -2358,12 +2358,16 @@ CopyAndSalvage(register struct DirSummary *dir)
 		  vnodeIndexOffset(vcp, dir->vnodeNumber), (char *)&vnode,
 		  sizeof(vnode));
     assert(lcode == sizeof(vnode));
+#if 0
 #ifdef AFS_NT40_ENV
     nt_sync(fileSysDevice);
 #else
     sync();			/* this is slow, but hopefully rarely called.  We don't have
 				 * an open FD on the file itself to fsync.
 				 */
+#endif
+#else
+    vnodeInfo[vLarge].handle->ih_synced = 1;
 #endif
     code = IH_DEC(dir->ds_linkH, oldinode, dir->rwVid);
     assert(code == 0);
@@ -2828,6 +2832,11 @@ SalvageVolume(register struct InodeSummary *rwIsp, IHandle_t * alinkH)
 	SalvageDir(volHeader.name, vid, dirVnodeInfo, alinkH, i, &rootdir,
 		   &rootdirfound);
     }
+#ifdef AFS_NT40_ENV
+    nt_sync(fileSysDevice);
+#else
+    sync();				/* This used to be done lower level, for every dir */
+#endif
     if (Showmode) {
 	IH_RELEASE(h);
 	return 0;
