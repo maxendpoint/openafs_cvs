@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.18.2.2 2007/09/07 04:05:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.18.2.3 2007/09/10 21:55:58 jaltman Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -913,8 +913,10 @@ ih_sync_thread() {
 	IOMGR_Sleep(60);
 #endif /* AFS_PTHREAD_ENV */
 
-	sync();
-	ih_sync_all();
+#ifndef AFS_NT40_ENV
+        sync();
+#endif
+        ih_sync_all();
     }
 }
 
