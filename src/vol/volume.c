@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.7 2007/08/31 14:32:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.8 2007/09/12 18:27:29 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -6194,7 +6194,7 @@ VPrintExtendedCacheStats_r(int flags)
 	VOL_LOCK;
 
 	for (diskP = DiskPartitionList; diskP; diskP = diskP->next) {
-	    id = diskP->device;
+	    id = diskP->index;
 	    vol_count[id] = diskP->vol_list.len;
 	    part_exists[id] = 1;
 	}
