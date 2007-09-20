@@ -70,6 +70,14 @@ Since 1.5.24
  * For the build environment, support the generation of manifests
    when using the CL1310 (VS .NET 2003) compiler/linker.
 
+ * There was a bug in OutputDebugHexString() which could overflow
+   a stack buffer resulting in unexpected process termination
+   of afsd_service.exe if the input Security Token contained
+   many bytes equivalent to the '%' char.
+
+ * Add directory lookup statistics to "fs memdump" output.
+ 
+
 Since 1.5.23
  * Windows uses case-insensitive file name pattern matching
    but AFS is a case sensitive file system.  The AFS3 directory
