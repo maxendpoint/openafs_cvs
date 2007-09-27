@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.9 2007/09/20 04:09:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.10 2007/09/27 16:32:12 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -2761,12 +2761,14 @@ GetVolume(Error * ec, Error * client_ec, VolId volumeId, Volume * hint, int flag
 		}
 	    }
 	    *ec = VOFFLINE;
+	    ReleaseVolumeHeader(vp->header);
 	    vp = NULL;
 	    break;
 	}
 
 	if (V_attachState(vp) == VOL_STATE_UNATTACHED) {
 	    *ec = VOFFLINE;
+	    ReleaseVolumeHeader(vp->header);
 	    vp = NULL;
 	    break;
 	}
