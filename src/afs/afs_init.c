@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37.4.4 2007/10/10 17:01:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37.4.5 2007/10/10 17:40:30 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -424,7 +424,9 @@ afs_InitCacheInfo(register char *afile)
     afs_InitDualFSCacheOps(filevp);
 #endif
 #ifndef AFS_CACHE_VNODE_PATH
+#ifndef AFS_DARWIN80_ENV
     afs_cacheVfsp = filevp->v_vfsp;
+#endif
     cacheInode = afs_vnodeToInumber(filevp);
 #else
     cacheInode = AFS_CACHE_ITEMS_INODE;
