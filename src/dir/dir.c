@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.21.2.5 2007/10/11 14:08:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.21.2.6 2007/10/11 17:48:35 shadow Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -479,7 +479,7 @@ DirHash(register char *string)
     /* Hash a string to a number between 0 and NHASHENT. */
     register unsigned char tc;
     unsigned int hval;
-    register int tval, hval;
+    register int tval;
     hval = 0;
     while ((tc = (*string++))) {
 	hval *= 173;
