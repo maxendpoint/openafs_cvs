@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.5 2007/09/27 23:17:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.6 2007/10/15 14:15:56 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -2068,11 +2068,6 @@ VolXListOneVolume(struct rx_call *a_rxCidP, afs_int32 a_partID,
 	    xInfoP->accessDate = volDiskDataP->accessDate;
 	    xInfoP->updateDate = volDiskDataP->updateDate;
 	    xInfoP->backupDate = volDiskDataP->backupDate;
-	    now = FT_ApproxTime();
-	    if (now - volDiskDataP->dayUseDate > OneDay)
-		xInfoP->dayUse = 0;
-	    else
-		xInfoP->dayUse = volDiskDataP->dayUse;
 	    xInfoP->filecount = volDiskDataP->filecount;
 	    xInfoP->maxquota = volDiskDataP->maxquota;
 	    xInfoP->size = volDiskDataP->diskused;
@@ -2080,8 +2075,15 @@ VolXListOneVolume(struct rx_call *a_rxCidP, afs_int32 a_partID,
 	    /*
 	     * Copy out the stat fields in a single operation.
 	     */
-	    memcpy((char *)&(xInfoP->stat_reads[0]),
+	    now = FT_ApproxTime();
+	    if (now - volDiskDataP->dayUseDate > OneDay) {
+		xInfoP->dayUse = 0;
+		memset((char *)&(xInfoP->stat_reads[0]), 0, numStatBytes);
+	    } else {
+		xInfoP->dayUse = volDiskDataP->dayUse;
+		memcpy((char *)&(xInfoP->stat_reads[0]),
 		   (char *)&(volDiskDataP->stat_reads[0]), numStatBytes);
+	    }
 
 	    /*
 	     * We're done copying.  Detach the volume and iterate (at this
