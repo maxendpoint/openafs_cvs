@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.41.2.3 2007/07/28 14:33:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.41.2.4 2007/10/15 19:20:43 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -643,7 +643,8 @@ afs_vop_access(ap)
     if (code) {
         code= 0;               /* if access is ok */
     } else {
-        code = afs_CheckCode(EACCES, &treq, 57);        /* failure code */
+	/* In 10.4 cp will loop forever on EACCES */
+        code = afs_CheckCode(EPERM, &treq, 57);        /* failure code */
     }
 out:
      afs_PutFakeStat(&fakestate);
