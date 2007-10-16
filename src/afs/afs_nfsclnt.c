@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.13.6.6 2007/08/22 19:39:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_nfsclnt.c,v 1.13.6.7 2007/10/16 21:56:45 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -503,6 +503,8 @@ afs_nfsclient_sysname(register struct nfsclientpag *np, char *inname,
 	/* Don't touch our arguments when called recursively */
 	*outname = np->sysname;
 	*num = np->sysnamecount;
+	if (!np->sysname[0])
+	    return ENODEV; /* XXX */
     }
     return 0;
 }
