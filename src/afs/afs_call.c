@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.74.2.24 2007/10/16 21:28:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.74.2.25 2007/10/17 03:51:44 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -912,8 +912,8 @@ afs_syscall_call(parm, parm2, parm3, parm4, parm5, parm6)
 #ifdef AFS_DARWIN80_ENV
 	    put_vfs_context();
 #endif
-#endif
 	}
+#endif
 	/* the generic initialization calls come here.  One parameter: should we do the
 	 * set-time operation on this workstation */
 	if (afs_Go_Done)
