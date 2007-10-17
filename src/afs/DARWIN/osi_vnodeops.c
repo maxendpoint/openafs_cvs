@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.24 2007/10/15 19:22:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.18.2.25 2007/10/17 17:19:02 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -2061,12 +2061,13 @@ afs_darwin_getnewvnode(struct vcache *avc)
    Don't touch! */
 int 
 afs_darwin_finalizevnode(struct vcache *avc, struct vnode *dvp, struct componentname *cnp, int isroot) {
-   vnode_t ovp = AFSTOV(avc);
+   vnode_t ovp;
    vnode_t nvp;
    int error;
    struct vnode_fsparam par;
    AFS_GLOCK();
    ObtainWriteLock(&avc->lock,325);
+   ovp = AFSTOV(avc);
    if (!(avc->states & CDeadVnode) && vnode_vtype(ovp) != VNON) {
         ReleaseWriteLock(&avc->lock);
         AFS_GUNLOCK();
