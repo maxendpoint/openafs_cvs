@@ -1,4 +1,4 @@
-# Openafs Spec $Revision: 1.2.2.5 $
+# Openafs Spec $Revision: 1.2.2.6 $
 
 %define afsvers 1.4.5pre1
 %define pkgvers 1.4.5pre1
@@ -244,6 +244,7 @@ Source10: http://www.openafs.org/dl/openafs/%{afsvers}/RELNOTES-%{afsvers}
 Source11: http://www.openafs.org/dl/openafs/%{afsvers}/ChangeLog
 
 Source30: openafs-kernel-version.sh
+Source998: openafs-buildall.sh
 Source999: kmodtool
 
 Patch0:  openafs-1.4.0-kmodule26.patch
