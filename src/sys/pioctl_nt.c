@@ -35,7 +35,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.7 2007/07/18 13:03:44 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.8 2007/10/18 22:07:59 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -92,12 +92,14 @@ CMtoUNIXerror(int cm_code)
 	return EACCES;
     case CM_ERROR_NOSUCHFILE:
     case CM_ERROR_NOSUCHPATH:
+    case CM_ERROR_BPLUS_NOMATCH:
 	return ENOENT;
     case CM_ERROR_INVAL:
 	return EINVAL;
     case CM_ERROR_BADFD:
 	return EBADF;
     case CM_ERROR_EXISTS:
+    case CM_ERROR_INEXACT_MATCH:
 	return EEXIST;
     case CM_ERROR_CROSSDEVLINK:
 	return EXDEV;
