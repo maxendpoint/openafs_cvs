@@ -58,7 +58,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60.2.7 2007/10/10 17:01:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.60.2.8 2007/10/23 14:29:49 shadow Exp $");
 
 #define VFS 1
 
@@ -430,7 +430,7 @@ afsd_event_cleanup(int signo) {
 
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
     CFRelease (source);
-    IODeregisterForSystemPower(iterator);
+    IODeregisterForSystemPower(&iterator);
     IOServiceClose(root_port);
     IONotificationPortDestroy(notify);
 
