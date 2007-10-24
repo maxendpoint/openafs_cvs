@@ -85,7 +85,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.7 2007/10/02 00:16:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.8 2007/10/24 15:35:27 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -1079,7 +1079,7 @@ BreakDelayedCallBacks_r(struct host *host)
 
     cbstuff.nbreakers--;
     /* If we succeeded it's always ok to unset HFE_LATER */
-    if (!host->hostFlags & VENUSDOWN)
+    if (!(host->hostFlags & VENUSDOWN))
 	host->hostFlags &= ~HFE_LATER;
     return (host->hostFlags & VENUSDOWN);
 }
