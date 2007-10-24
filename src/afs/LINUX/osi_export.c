@@ -15,9 +15,13 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_export.c,v 1.1.2.2 2006/07/31 21:27:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_export.c,v 1.1.2.3 2007/10/24 15:45:04 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
+#include <linux/fs.h>
+#ifdef EXPORTFS_H_EXISTS
+#include <linux/exportfs.h>
+#endif
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
 #include "afs/afs_dynroot.h"
