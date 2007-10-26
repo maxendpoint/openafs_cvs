@@ -1,4 +1,4 @@
-# Openafs Spec $Revision: 1.2.2.7 $
+# Openafs Spec $Revision: 1.2.2.8 $
 
 %define afsvers 1.4.5pre1
 %define pkgvers 1.4.5pre1
@@ -1532,7 +1532,7 @@ fi
 %if %{hugemem_package}
 %files kernel-hugemem
 %defattr(-,root,root)
-%{kxmoddir}%{?hugemem_ext:%{hugemem_ext}}/kernel/fs/openafs/openafs.*
+%{kxmoddir}%{?hugemem_ext:%{hugemem_ext}}/fs/openafs/openafs.*
 %endif
 %endif
 
