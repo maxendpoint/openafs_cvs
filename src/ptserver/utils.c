@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.15 2004/06/23 14:27:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.15.14.1 2007/10/30 15:16:43 shadow Exp $");
 
 #include <sys/types.h>
 #include <lock.h>
@@ -23,13 +23,7 @@ RCSID
 #include <netinet/in.h>
 #include <netdb.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include "ptserver.h"
 #include "pterror.h"
 

@@ -11,19 +11,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/readpwd.c,v 1.9.14.1 2007/04/10 18:39:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/readpwd.c,v 1.9.14.2 2007/10/30 15:16:43 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
 #include <WINNT/afsevent.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <rx/rx.h>
 #include <rx/xdr.h>
 #include <afs/cellconfig.h>

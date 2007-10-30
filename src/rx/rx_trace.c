@@ -11,16 +11,10 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11 2003/07/15 23:16:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11.14.1 2007/10/30 15:16:45 shadow Exp $");
 
 #ifdef RXDEBUG
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
 #include <io.h>

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.19.2.4 2007/04/10 18:39:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.19.2.5 2007/10/30 15:16:39 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -26,13 +26,7 @@ RCSID
 #include "kalog.h"		/* for OpenLog() */
 #include <time.h>
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
 #endif

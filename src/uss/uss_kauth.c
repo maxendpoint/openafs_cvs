@@ -19,20 +19,14 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss_kauth.c,v 1.10.14.1 2007/04/10 18:39:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss_kauth.c,v 1.10.14.2 2007/10/30 15:16:48 shadow Exp $");
 
 #include "uss_kauth.h"		/*Module interface */
 #include "uss_common.h"		/*Common defs & operations */
 #include <errno.h>
 #include <pwd.h>
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include <afs/com_err.h>
 #include <afs/kautils.h> /*MAXKTCREALMLEN*/

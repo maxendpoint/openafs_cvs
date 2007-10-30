@@ -19,19 +19,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.8 2004/03/15 18:51:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.8.14.1 2007/10/30 15:16:48 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include "uss_common.h"		/*Common uss definitions, globals */
 #include "uss_procs.h"		/*Main uss operations */

@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/purge.c,v 1.12.2.2 2007/01/05 03:40:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/purge.c,v 1.12.2.3 2007/10/30 15:16:57 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -28,13 +28,7 @@ RCSID
 #include <sys/file.h>
 #include <sys/time.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <sys/stat.h>
 #include <afs/assert.h>
 

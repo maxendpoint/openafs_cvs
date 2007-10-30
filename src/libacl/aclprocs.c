@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.14 2006/02/23 15:52:23 rees Exp $");
+    ("$Header: /cvs/openafs/src/libacl/aclprocs.c,v 1.14.2.1 2007/10/30 15:16:40 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -25,9 +25,7 @@ RCSID
 #else
 #include <netinet/in.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <afs/ptclient.h>

@@ -17,17 +17,11 @@
 #include <afs/param.h>
 #include <sys/wait.h>
 #include <limits.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <stdlib.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.12.14.1 2006/07/19 21:17:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/pam/afs_util.c,v 1.12.14.2 2007/10/30 15:16:42 shadow Exp $");
 
 #include "afs_util.h"
 

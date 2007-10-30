@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/client.c,v 1.14 2005/07/11 03:22:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/client.c,v 1.14.4.1 2007/10/30 15:16:39 shadow Exp $");
 
 #if defined(UKERNEL)
 #ifdef HAVE_UNISTD_H
@@ -41,13 +41,7 @@ RCSID
 #include <winsock2.h>
 #include <crypt.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_UNISTD_H
 #define __USE_XOPEN
 #include <unistd.h>

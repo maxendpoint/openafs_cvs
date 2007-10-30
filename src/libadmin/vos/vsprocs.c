@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/vsprocs.c,v 1.13.4.2 2007/07/18 14:22:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/vsprocs.c,v 1.13.4.3 2007/10/30 15:16:41 shadow Exp $");
 
 #include "vsprocs.h"
 #include "vosutils.h"
@@ -30,13 +30,7 @@ RCSID
 #include "../adminutil/afs_AdminInternal.h"
 #include <afs/afs_AdminErrors.h>
 #include "afs_vosAdmin.h"
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif

@@ -19,11 +19,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.24.4.1 2006/07/03 01:06:45 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.24.4.2 2007/10/30 15:16:45 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
 #include <signal.h>
+#include <string.h>
 #ifndef AFS_NT40_ENV
 # include <sys/socket.h>
 # include <sys/file.h>

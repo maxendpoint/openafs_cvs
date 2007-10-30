@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.12 2005/11/06 09:29:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/writeconfig.c,v 1.12.4.1 2007/10/30 15:16:37 shadow Exp $");
 
 #include <afs/pthread_glock.h>
 #include <afs/afsutil.h>
@@ -28,13 +28,7 @@ RCSID
 #endif
 #include <stdio.h>
 #include <errno.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
 #endif

@@ -44,7 +44,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-client.c,v 1.1 2006/03/18 04:20:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-client.c,v 1.1.4.1 2007/10/30 15:16:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -65,15 +65,7 @@ RCSID
 #include <afs/assert.h>
 #endif /* AFS_PTHREAD_ENV */
 #include <signal.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>

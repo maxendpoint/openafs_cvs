@@ -17,18 +17,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.15 2006/04/10 15:42:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_fs_test.c,v 1.15.2.1 2007/10/30 15:16:59 shadow Exp $");
 
 #include "xstat_fs.h"		/*Interface for xstat_fs module */
 #include <cmd.h>		/*Command line interpreter */
 #include <time.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 /*
  * External routines that don't have explicit include file definitions.

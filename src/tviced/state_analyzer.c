@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tviced/state_analyzer.c,v 1.1.4.1 2007/02/09 01:00:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/tviced/state_analyzer.c,v 1.1.4.2 2007/10/30 15:16:47 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -26,14 +26,7 @@ RCSID
 #include <netdb.h>
 #include <netinet/in.h>
 #include <time.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include <afs/stds.h>
 #include <rx/xdr.h>

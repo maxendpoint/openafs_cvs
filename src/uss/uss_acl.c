@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss_acl.c,v 1.6.14.1 2007/04/10 18:39:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss_acl.c,v 1.6.14.2 2007/10/30 15:16:48 shadow Exp $");
 
 #include "uss_acl.h"
 #include "uss_common.h"
@@ -30,13 +30,7 @@ RCSID
 #include <netdb.h>
 #include <errno.h>
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #undef VIRTUE
 #undef VICE

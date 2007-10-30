@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vfsck/utilities.c,v 1.8 2005/10/03 02:44:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vfsck/utilities.c,v 1.8.4.1 2007/10/30 15:16:48 shadow Exp $");
 
 #include <sys/param.h>
 #define VICE			/* allow us to put our changes in at will */
@@ -75,6 +75,7 @@ RCSID
 #endif /* AFS_OSF_ENV */
 
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 #include "fsck.h"
 

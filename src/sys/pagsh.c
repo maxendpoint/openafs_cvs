@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.9.14.2 2007/07/10 20:29:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.9.14.3 2007/10/30 15:16:46 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -22,9 +22,7 @@ RCSID
 #ifndef AFS_NT40_ENV
 #include <unistd.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
 #include <pwd.h>
 #ifdef AFS_KERBEROS_ENV
 #include <sys/types.h>

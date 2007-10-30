@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.29.2.1 2006/06/01 15:50:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.29.2.2 2007/10/30 15:16:45 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -81,13 +81,7 @@ RCSID
 # include <sys/stat.h>
 # include <sys/time.h>
 #endif /* !AFS_NT40_ENV */
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif

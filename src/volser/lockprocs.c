@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.8 2003/07/15 23:17:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.8.14.1 2007/10/30 15:16:59 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -26,13 +26,7 @@ RCSID
 #else
 #include <netinet/in.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <afs/voldefs.h>
 #include <rx/xdr.h>
 #include <rx/rx.h>

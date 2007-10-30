@@ -11,16 +11,9 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/gtx/gtxtest.c,v 1.7 2005/07/11 03:22:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/gtx/gtxtest.c,v 1.7.4.1 2007/10/30 15:16:39 shadow Exp $");
 
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include "gtxwindows.h"
 #include "gtxobjects.h"

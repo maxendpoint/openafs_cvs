@@ -20,17 +20,11 @@
 #define MAXINT     (~(1<<((sizeof(int)*8)-1)))
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.27 2006/03/17 19:54:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.27.2.1 2007/10/30 15:16:58 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef AFS_PTHREAD_ENV
 #include <assert.h>
 #else /* AFS_PTHREAD_ENV */

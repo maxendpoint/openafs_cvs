@@ -43,7 +43,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.14 2005/10/15 15:36:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.14.4.1 2007/10/30 15:16:59 shadow Exp $");
 
 #include <afs/afsint.h>
 #include <afs/nfs.h>
@@ -64,14 +64,7 @@ RCSID
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <dirent.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 
 char rootdir[MAXPATHLEN];

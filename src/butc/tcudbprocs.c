@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.15.6.2 2007/02/09 01:00:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.15.6.3 2007/10/30 15:16:38 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -28,6 +28,7 @@ RCSID
 #include <rx/rx.h>
 #include <afs/afsint.h>
 #include <stdio.h>
+#include <string.h>
 #include <afs/procmgmt.h>
 #include <afs/assert.h>
 #include <afs/prs_fs.h>

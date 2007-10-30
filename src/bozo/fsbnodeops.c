@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.15 2006/03/20 17:29:52 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.15.2.1 2007/10/30 15:16:37 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -26,13 +26,7 @@ RCSID
 #else
 #include <sys/file.h>
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <stdlib.h>
 
 #endif /* AFS_NT40_ENV */

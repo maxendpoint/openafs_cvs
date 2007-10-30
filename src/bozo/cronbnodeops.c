@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.10 2003/12/07 22:49:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.10.14.1 2007/10/30 15:16:37 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -23,13 +23,7 @@ RCSID
 #include <io.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <stdlib.h>
 
 #include <afs/ktime.h>

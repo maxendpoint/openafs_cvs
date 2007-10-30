@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.21 2004/08/19 01:07:51 kolya Exp $");
+    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.21.8.1 2007/10/30 15:16:47 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -26,13 +26,7 @@ RCSID
 #endif
 #include <errno.h>
 #include <lock.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <rx/rx_multi.h>

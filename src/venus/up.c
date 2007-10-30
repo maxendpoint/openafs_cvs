@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/up.c,v 1.17.2.1 2007/05/07 17:24:34 rra Exp $");
+    ("$Header: /cvs/openafs/src/venus/up.c,v 1.17.2.2 2007/10/30 15:16:48 shadow Exp $");
 
 /* missing type from C language */
 
@@ -42,13 +42,7 @@ RCSID
 #include <netinet/in.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include <afs/venus.h>
 

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/database.c,v 1.7.14.2 2007/07/06 11:35:24 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/budb/database.c,v 1.7.14.3 2007/10/30 15:16:37 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -26,15 +26,7 @@ RCSID
 #include "database.h"
 #include "error_macros.h"
 #include "afs/audit.h"
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 
 int pollCount;
 struct memoryDB db;		/* really allocate it here */

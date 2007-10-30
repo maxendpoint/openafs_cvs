@@ -11,10 +11,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.6 2007/10/15 14:15:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.7 2007/10/30 15:16:59 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
+#include <string.h>
 #include <errno.h>
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
@@ -23,14 +24,6 @@ RCSID
 #include <sys/file.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#endif
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
 #endif
 
 #include <dirent.h>

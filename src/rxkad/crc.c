@@ -41,7 +41,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/crc.c,v 1.3 2003/07/15 23:16:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/crc.c,v 1.3.14.1 2007/10/30 15:16:46 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "../afs/sysincludes.h"
@@ -60,13 +60,7 @@ RCSID
 #else
 #include <netinet/in.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <des.h>

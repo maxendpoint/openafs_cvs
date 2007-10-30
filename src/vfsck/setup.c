@@ -19,9 +19,10 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vfsck/setup.c,v 1.13 2005/04/03 18:09:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vfsck/setup.c,v 1.13.6.1 2007/10/30 15:16:48 shadow Exp $");
 
 #include <stdio.h>
+#include <string.h>
 #define VICE
 
 #if	defined(AFS_SUN_ENV) || defined(AFS_OSF_ENV)

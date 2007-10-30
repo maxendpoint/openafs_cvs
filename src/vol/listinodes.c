@@ -20,8 +20,10 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
+#include <string.h>
+
 RCSID
-    ("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.16.4.1 2006/09/03 05:53:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.16.4.2 2007/10/30 15:16:57 shadow Exp $");
 
 #ifndef AFS_NAMEI_ENV
 #if defined(AFS_LINUX20_ENV) || defined(AFS_SUN4_ENV)

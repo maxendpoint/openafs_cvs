@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgclient.c,v 1.6 2003/07/15 23:15:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgclient.c,v 1.6.14.1 2007/10/30 15:16:40 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -23,15 +23,7 @@ RCSID
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 #include <pthread.h>
 
 #include <afs/afs_Admin.h>

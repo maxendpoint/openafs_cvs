@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.25.2.10 2007/04/10 18:39:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptuser.c,v 1.25.2.11 2007/10/30 15:16:43 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -40,13 +40,7 @@ RCSID
 #include <netinet/in.h>
 #endif
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <rx/rx.h>
 #include <rx/xdr.h>
 #include <afs/auth.h>

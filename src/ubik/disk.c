@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.15 2005/11/06 09:29:46 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.15.4.1 2007/10/30 15:16:47 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -21,13 +21,7 @@ RCSID
 #include <netinet/in.h>
 #endif
 #include <errno.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <lock.h>
 #include <rx/xdr.h>
 

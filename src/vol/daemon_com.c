@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.3.4.2 2007/02/08 23:59:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.3.4.3 2007/10/30 15:16:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -39,14 +39,7 @@ RCSID
 #include <errno.h>
 #include <assert.h>
 #include <signal.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 
 #include <rx/xdr.h>

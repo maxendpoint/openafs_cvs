@@ -85,24 +85,18 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.8 2007/10/24 15:35:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.9 2007/10/30 15:16:49 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
 #include <time.h>		/* ANSI standard location for time stuff */
+#include <string.h>
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
 #include <io.h>
 #else
 #include <sys/time.h>
 #include <sys/file.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
 #endif
 #include <afs/assert.h>
 

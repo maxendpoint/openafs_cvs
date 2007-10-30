@@ -22,11 +22,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.15 2007/10/05 03:31:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.16 2007/10/30 15:16:50 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 #include <sys/types.h>
 #include <afs/procmgmt.h>	/* signal(), kill(), wait(), etc. */
 #include <sys/stat.h>
@@ -40,14 +41,6 @@ RCSID
 #include <netinet/in.h>
 #include <netdb.h>
 #include <unistd.h>		/* sysconf() */
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #ifndef ITIMER_REAL
 #include <sys/time.h>

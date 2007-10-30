@@ -25,12 +25,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.11 2003/11/29 21:38:04 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.11.14.1 2007/10/30 15:16:56 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <string.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #include <WINNT/afsevent.h>
@@ -39,14 +40,6 @@ RCSID
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#endif
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
 #endif
 
 #include "vlserver.h"

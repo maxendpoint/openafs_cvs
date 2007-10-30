@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvsync-client.c,v 1.1 2006/03/18 04:20:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvsync-client.c,v 1.1.4.1 2007/10/30 15:16:58 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -35,15 +35,7 @@ RCSID
 #include <errno.h>
 #include <assert.h>
 #include <signal.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>

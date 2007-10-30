@@ -36,18 +36,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.20.4.2 2006/07/04 06:28:26 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.20.4.3 2007/10/30 15:16:45 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include "rpc_scan.h"
 #include "rpc_parse.h"
 #include "rpc_util.h"

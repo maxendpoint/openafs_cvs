@@ -24,7 +24,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.19.6.3 2007/08/11 23:41:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptutils.c,v 1.19.6.4 2007/10/30 15:16:43 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -34,13 +34,7 @@ RCSID
 #else
 #include <netinet/in.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <lock.h>
 #include <ubik.h>
 #include <rx/xdr.h>

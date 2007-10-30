@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.13.4.1 2006/07/01 05:02:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/recoverDb.c,v 1.13.4.2 2007/10/30 15:16:38 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -24,6 +24,7 @@ RCSID
 #include <strings.h>
 #endif
 #include <sys/types.h>
+#include <string.h>
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <lwp.h>

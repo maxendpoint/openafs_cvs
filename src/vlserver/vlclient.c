@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.16.2.1 2007/02/09 01:00:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.16.2.2 2007/10/30 15:16:56 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -38,14 +38,7 @@ RCSID
 #include <netinet/in.h>
 #endif
 #include <stdio.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include <afs/afsutil.h>
 #include <rx/xdr.h>

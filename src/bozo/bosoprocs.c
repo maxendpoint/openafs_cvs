@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.19.14.1 2006/12/21 23:14:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.19.14.2 2007/10/30 15:16:37 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -37,14 +37,7 @@ RCSID
 #include <afs/fileutil.h>
 #include <afs/ktime.h>
 #include <afs/audit.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include "bnode.h"
 #include "bosint.h"

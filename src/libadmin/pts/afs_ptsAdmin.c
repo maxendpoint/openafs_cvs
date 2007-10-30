@@ -11,18 +11,9 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.11.14.1 2007/07/16 00:02:17 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/pts/afs_ptsAdmin.c,v 1.11.14.2 2007/10/30 15:16:40 shadow Exp $");
 
 #include <stdio.h>
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 #include <afs/stds.h>
 #include "afs_ptsAdmin.h"
 #include "../adminutil/afs_AdminInternal.h"

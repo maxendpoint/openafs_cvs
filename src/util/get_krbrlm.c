@@ -7,9 +7,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.9.2.1 2007/02/07 04:53:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/util/get_krbrlm.c,v 1.9.2.2 2007/10/30 15:16:48 shadow Exp $");
 
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 #include "afsutil.h"
 
 /*

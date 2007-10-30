@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss_fs.c,v 1.8 2003/07/15 23:17:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss_fs.c,v 1.8.14.1 2007/10/30 15:16:48 shadow Exp $");
 
 #include "uss_fs.h"		/*Interface to this module */
 #include <sys/types.h>
@@ -30,13 +30,7 @@ RCSID
 #endif
 #include <netinet/in.h>
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include <afs/venus.h>
 #include "uss_common.h"

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.24.4.3 2007/10/11 17:46:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/dir/dir.c,v 1.24.4.4 2007/10/30 15:16:39 shadow Exp $");
 
 #ifdef KERNEL
 #if !defined(UKERNEL)
@@ -100,13 +100,7 @@ extern void *DNew();
 #include <netinet/in.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #endif /* KERNEL */
 
 afs_int32 DErrno;

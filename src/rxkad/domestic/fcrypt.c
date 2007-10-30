@@ -20,7 +20,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/domestic/fcrypt.c,v 1.18.2.1 2006/08/02 19:01:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/domestic/fcrypt.c,v 1.18.2.2 2007/10/30 15:16:46 shadow Exp $");
 
 #define DEBUG 0
 #ifdef KERNEL
@@ -47,6 +47,7 @@ RCSID
 
 #include <afs/stds.h>
 #include <sys/types.h>
+#include <string.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else

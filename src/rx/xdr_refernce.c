@@ -31,7 +31,7 @@
 #include "rx.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.7 2005/12/15 05:55:10 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.7.4.1 2007/10/30 15:16:45 shadow Exp $");
 
 #ifndef	NeXT
 
@@ -46,6 +46,7 @@ RCSID
 
 #include "xdr.h"
 #include <stdio.h>
+#include <string.h>
 #define LASTUNSIGNED	((u_int)0-1)
 
 /*

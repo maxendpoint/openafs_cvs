@@ -32,10 +32,11 @@
 #include "afs/param.h"
 #else
 #include <afs/param.h>
+#include <string.h>
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr.c,v 1.11 2005/10/13 15:12:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr.c,v 1.11.4.1 2007/10/30 15:16:45 shadow Exp $");
 
 /*
  * xdr.c, Generic XDR routines implementation.

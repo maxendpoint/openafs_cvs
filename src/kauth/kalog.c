@@ -20,17 +20,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kalog.c,v 1.7 2006/05/04 21:23:17 kenh Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kalog.c,v 1.6.14.1 2007/10/30 15:16:39 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/afsutil.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
 #endif
@@ -60,9 +54,9 @@ kalog_Init()
 }
 
 /* log a ticket usage */
-void
-kalog_log(char *principal, char *instance, char *sprincipal, char *sinstance,
-	  char *realm, int hostaddr, int type)
+kalog_log(principal, instance, sprincipal, sinstance, realm, hostaddr, type)
+     char *principal, *instance, *sprincipal, *sinstance, *realm;
+     int hostaddr, type;
 {
     char keybuf[512];		/* not random! 63 . 63 , 63 . 63 max key */
     datum key, data;
@@ -128,7 +122,7 @@ kalog_log(char *principal, char *instance, char *sprincipal, char *sinstance,
 
     dbm_store(kalog_db, key, data, DBM_REPLACE);
 
-    ViceLog(verbose_track, ("%s from %s\n", keybuf, afs_inet_ntoa(hostaddr)));
+    ViceLog(verbose_track, ("%s from %x\n", keybuf, hostaddr));
 }
 
 
@@ -191,5 +185,5 @@ ka_log(char *principal, char *instance, char *sprincipal, char *sinstance,
 	break;
     }
 
-    ViceLog(verbose_track, ("%s from %s\n", logbuf, afs_inet_ntoa(hostaddr)));
+    ViceLog(verbose_track, ("%s from %x\n", logbuf, hostaddr));
 }

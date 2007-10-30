@@ -30,7 +30,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/log/unlog.c,v 1.7 2005/06/18 23:20:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/log/unlog.c,v 1.7.4.1 2007/10/30 15:16:42 shadow Exp $");
 
 #include <stdio.h>
 #include <potpourri.h>
@@ -38,14 +38,7 @@ RCSID
 #include <signal.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>

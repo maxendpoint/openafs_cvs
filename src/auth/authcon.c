@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/authcon.c,v 1.14 2004/08/19 01:07:40 kolya Exp $");
+    ("$Header: /cvs/openafs/src/auth/authcon.c,v 1.14.8.1 2007/10/30 15:16:37 shadow Exp $");
 
 #if defined(UKERNEL)
 #include "afs/sysincludes.h"
@@ -41,6 +41,7 @@ RCSID
 #include <netinet/in.h>
 #include <netdb.h>
 #endif
+#include <string.h>
 #include <des.h>
 #include <rx/rxkad.h>
 #include <rx/rx.h>

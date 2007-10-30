@@ -11,17 +11,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/vos/afs_vosAdmin.c,v 1.11.4.1 2007/07/16 00:02:18 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/vos/afs_vosAdmin.c,v 1.11.4.2 2007/10/30 15:16:41 shadow Exp $");
 
 #include <afs/stds.h>
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <ctype.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>

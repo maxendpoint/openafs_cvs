@@ -16,24 +16,18 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tviced/serialize_state.c,v 1.1.4.3 2007/08/20 17:39:08 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/tviced/serialize_state.c,v 1.1.4.4 2007/10/30 15:16:47 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
 #include <time.h>		/* ANSI standard location for time stuff */
+#include <string.h>
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
 #include <io.h>
 #else
 #include <sys/time.h>
 #include <sys/file.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
 #endif
 #include <afs/assert.h>
 #include <sys/stat.h>

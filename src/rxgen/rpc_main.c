@@ -37,19 +37,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.23.4.3 2007/10/20 00:23:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.23.4.4 2007/10/30 15:16:45 shadow Exp $");
 
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif

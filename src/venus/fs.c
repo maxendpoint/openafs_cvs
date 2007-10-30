@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.10 2007/10/16 17:21:55 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.11 2007/10/30 15:16:48 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -30,13 +30,7 @@ RCSID
 #include <signal.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #undef VIRTUE
 #undef VICE
