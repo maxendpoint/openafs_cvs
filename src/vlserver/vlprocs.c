@@ -11,10 +11,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.13.2.2 2005/06/21 20:19:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlprocs.c,v 1.13.2.3 2007/10/30 15:24:11 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
+#include <string.h>
 #include <lock.h>
 #include <afs/afsutil.h>
 #include <ubik.h>
@@ -24,13 +25,6 @@ RCSID
 #include <winsock2.h>
 #else
 #include <netinet/in.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
 #endif
 #include <afs/keys.h>
 #include "vlserver.h"

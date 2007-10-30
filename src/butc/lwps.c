@@ -11,9 +11,10 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.12.2.3 2007/04/10 18:43:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.12.2.4 2007/10/30 15:23:50 shadow Exp $");
 
 #include <sys/types.h>
+#include <string.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #include <conio.h>

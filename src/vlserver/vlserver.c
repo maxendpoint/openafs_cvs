@@ -11,12 +11,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.6 2006/06/20 20:35:01 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.7 2007/10/30 15:24:11 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <signal.h>
 #include <sys/stat.h>
+#include <string.h>
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
 #endif
@@ -35,14 +36,6 @@ RCSID
 #include <netinet/in.h>
 #endif
 #include <stdio.h>
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include <rx/xdr.h>
 #include <rx/rx.h>

@@ -11,16 +11,10 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/lex.l,v 1.1 2003/06/19 16:55:10 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/lex.l,v 1.1.2.1 2007/10/30 15:24:09 shadow Exp $");
 
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include "y.tab.h"
 #include "uss_common.h"

@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.8 2003/07/15 23:15:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.8.2.1 2007/10/30 15:23:54 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/stds.h>
@@ -27,13 +27,7 @@ RCSID
 #include <netdb.h>
 #include <errno.h>
 #include <sys/ioctl.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <afs/vice.h>
 #include <afs/cmd.h>
 #include <afs/auth.h>

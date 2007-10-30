@@ -19,7 +19,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.18.2.5 2006/05/23 16:31:02 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_client.c,v 1.18.2.6 2007/10/30 15:24:05 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/stds.h"
@@ -47,13 +47,7 @@ RCSID
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <time.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #else

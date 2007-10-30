@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.14.2.5 2007/04/10 18:43:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.14.2.6 2007/10/30 15:23:50 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -24,15 +24,7 @@ RCSID
 #include <sys/time.h>
 #include <netdb.h>
 #endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <time.h>

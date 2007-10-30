@@ -4,12 +4,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.21.2.2 2004/10/18 17:44:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.21.2.3 2007/10/30 15:24:09 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #ifndef AFS_NT40_ENV
 #include <netinet/in.h>
 #include <netdb.h>
@@ -18,13 +19,6 @@ RCSID
 #endif
 #if defined(AFS_AIX32_ENV) || defined(AFS_SUN_ENV) || defined(AFS_XBSD_ENV) || defined(AFS_HPUX_ENV) || defined(AFS_SGI65_ENV)
 #include <sys/socket.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
 #endif
 
 #define MAXPREC 100

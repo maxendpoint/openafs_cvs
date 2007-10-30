@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.16.2.3 2007/08/11 23:50:02 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.16.2.4 2007/10/30 15:24:02 shadow Exp $");
 
 /*
  *                      (3) Define a structure, idused, instead of an
@@ -44,13 +44,7 @@ RCSID
 #include <sys/file.h>
 #endif
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <errno.h>
 #include <fcntl.h>
 #include <afs/cellconfig.h>

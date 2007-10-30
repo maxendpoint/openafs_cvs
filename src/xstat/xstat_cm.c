@@ -18,20 +18,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.9.2.2 2006/06/26 16:19:06 rra Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.9.2.3 2007/10/30 15:24:16 shadow Exp $");
 
 #include "xstat_cm.h"		/*Interface for this module */
 #include <lwp.h>		/*Lightweight process package */
 
 #include <afs/afsutil.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #define LWP_STACK_SIZE	(16 * 1024)
 

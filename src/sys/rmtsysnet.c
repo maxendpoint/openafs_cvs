@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/rmtsysnet.c,v 1.8 2003/11/10 22:25:28 rees Exp $");
+    ("$Header: /cvs/openafs/src/sys/rmtsysnet.c,v 1.8.2.1 2007/10/30 15:24:06 shadow Exp $");
 
 #include <errno.h>
 #include <sys/param.h>
@@ -26,13 +26,7 @@ RCSID
 #endif
 #include <sys/stat.h>
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <afs/afsint.h>
 #include <afs/venus.h>
 #include <rx/xdr.h>

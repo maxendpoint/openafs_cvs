@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.14.2.9 2007/06/10 14:22:49 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_server.c,v 1.14.2.10 2007/10/30 15:24:05 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -28,13 +28,7 @@ RCSID
 #else
 #include <netinet/in.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <rx/rx.h>
 #include <rx/xdr.h>
 #include <des.h>

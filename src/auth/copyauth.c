@@ -11,16 +11,9 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/copyauth.c,v 1.6 2003/07/15 23:14:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/copyauth.c,v 1.6.2.1 2007/10/30 15:23:49 shadow Exp $");
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 #include <sys/types.h>
 #include "auth.h"
 #ifdef AFS_NT40_ENV

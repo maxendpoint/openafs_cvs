@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/testpt.c,v 1.14.2.2 2007/08/11 23:50:02 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/testpt.c,v 1.14.2.3 2007/10/30 15:24:03 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -24,13 +24,7 @@ RCSID
 #include <netdb.h>
 #include <netinet/in.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
 #endif

@@ -15,19 +15,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/scout/scout.c,v 1.9.2.1 2006/03/09 06:42:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/scout/scout.c,v 1.9.2.2 2007/10/30 15:24:06 shadow Exp $");
 
 #undef	IN
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #undef IN
 #include <gtxwindows.h>		/*Generic window package */
 #include <gtxobjects.h>		/*Object definitions */

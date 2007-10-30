@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/ezbnodeops.c,v 1.8 2003/07/15 23:14:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/ezbnodeops.c,v 1.8.2.1 2007/10/30 15:23:50 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -21,13 +21,7 @@ RCSID
 #include <io.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <stdlib.h>
 
 #include <afs/afsutil.h>

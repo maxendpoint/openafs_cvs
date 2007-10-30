@@ -11,21 +11,14 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.9 2003/07/15 23:17:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.9.2.1 2007/10/30 15:24:11 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
 #include <errno.h>
 #include <stdio.h>
 #include <sys/file.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include "cnvldb.h"		/* CHANGEME! */
 #include <netinet/in.h>

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.11 2003/07/15 23:17:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.11.2.1 2007/10/30 15:24:10 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/afsint.h>
@@ -20,15 +20,7 @@ RCSID
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <ubik.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
-
 
 struct ubik_client *cstruct;
 struct rx_connection *serverconns[MAXSERVERS];

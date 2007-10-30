@@ -15,11 +15,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.18.2.3 2007/09/10 21:55:58 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.18.2.4 2007/10/30 15:24:11 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <string.h>
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
 #else
@@ -31,13 +32,7 @@ RCSID
 #include <sys/resource.h>
 #endif
 #endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
+
 #include <rx/xdr.h>
 #include <afs/afsint.h>
 #include <errno.h>

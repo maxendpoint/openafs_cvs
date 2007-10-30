@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.13 2003/12/08 02:41:22 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.13.2.1 2007/10/30 15:24:06 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -24,13 +24,7 @@ RCSID
 #endif
 #include <assert.h>
 #include <lock.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <rx/xdr.h>
 #include <rx/rx.h>
 #include <errno.h>

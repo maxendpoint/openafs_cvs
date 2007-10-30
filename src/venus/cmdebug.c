@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.15.2.6 2007/04/10 18:43:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.15.2.7 2007/10/30 15:24:09 shadow Exp $");
 
 
 #include <sys/types.h>
@@ -26,13 +26,7 @@ RCSID
 #include <netdb.h>
 #endif
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif

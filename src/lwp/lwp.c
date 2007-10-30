@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.27.2.8 2007/06/06 17:23:24 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.27.2.9 2007/10/30 15:23:59 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -39,13 +39,7 @@ int setlim(int limcon, uchar_t hard, int limit);
 extern char *getenv();
 #include <time.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #if	!defined(USE_PTHREADS) && !defined(USE_SOLARIS_THREADS)
 

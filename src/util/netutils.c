@@ -20,17 +20,11 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/netutils.c,v 1.13.2.2 2007/01/12 05:23:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/netutils.c,v 1.13.2.3 2007/10/30 15:24:09 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <ctype.h>
 #ifdef KERNEL
 #include "afs/sysincludes.h"

@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.43 2007/08/21 08:28:37 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.44 2007/10/30 15:24:10 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,14 +46,7 @@ RCSID
 #include <netdb.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #ifndef AFS_LINUX20_ENV
 #include <net/if.h>

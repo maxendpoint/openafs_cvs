@@ -17,17 +17,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.19.2.4 2005/07/28 21:11:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.19.2.5 2007/10/30 15:24:11 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #ifdef AFS_PTHREAD_ENV
 #include <assert.h>
 #else /* AFS_PTHREAD_ENV */

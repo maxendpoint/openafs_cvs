@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.17.2.5 2006/12/21 23:15:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.17.2.6 2007/10/30 15:23:50 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -28,14 +28,7 @@ RCSID
 #include <time.h>
 #endif
 #include <sys/stat.h>
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 #include <afs/procmgmt.h>	/* signal(), kill(), wait(), etc. */
 #include <lwp.h>

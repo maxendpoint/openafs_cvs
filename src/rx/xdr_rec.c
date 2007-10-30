@@ -47,7 +47,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_rec.c,v 1.6 2003/07/15 23:16:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_rec.c,v 1.6.2.1 2007/10/30 15:24:04 shadow Exp $");
 
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
@@ -59,13 +59,7 @@ RCSID
 #include <netinet/in.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 
 
 /*  * A record is composed of one or more record fragments.

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.5.2.1 2004/12/07 06:17:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.5.2.2 2007/10/30 15:24:05 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -32,13 +32,7 @@ RCSID
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#else
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#endif
 #include <sys/stat.h>
 #include <afs/stds.h>
 #include <afs/cmd.h>
