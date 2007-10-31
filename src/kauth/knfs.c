@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.8.14.1 2007/10/30 15:16:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.8.14.2 2007/10/31 04:09:30 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/stds.h>
@@ -32,9 +32,6 @@ RCSID
 #include <afs/cmd.h>
 #include <afs/auth.h>
 #include <afs/afsutil.h>
-
-
-extern struct cmd_syndesc *cmd_CreateSyntax();
 
 /*
 Modifications:
@@ -352,10 +349,8 @@ NFSCopyToken(ahost, auid)
     return code;
 }
 
-static
-cmdproc(as, arock)
-     register struct cmd_syndesc *as;
-     afs_int32 arock;
+static int
+cmdproc(register struct cmd_syndesc *as, void *arock)
 {
     register struct hostent *the;
     char *tp, *sysname = 0;
@@ -463,7 +458,7 @@ main(argc, argv)
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
 
-    ts = cmd_CreateSyntax(NULL, cmdproc, 0, "copy tickets for NFS");
+    ts = cmd_CreateSyntax(NULL, cmdproc, NULL, "copy tickets for NFS");
     cmd_AddParm(ts, "-host", CMD_SINGLE, CMD_REQUIRED, "host name");
     cmd_AddParm(ts, "-id", CMD_SINGLE, CMD_OPTIONAL, "user ID (decimal)");
     cmd_AddParm(ts, "-sysname", CMD_SINGLE, CMD_OPTIONAL,

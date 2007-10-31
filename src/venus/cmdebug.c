@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.19.4.4 2007/10/30 15:16:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.19.4.5 2007/10/31 04:09:39 shadow Exp $");
 
 
 #include <sys/types.h>
@@ -462,7 +462,7 @@ PrintCacheEntries(struct rx_connection *aconn, int aint32)
 }
 
 int
-CommandProc(struct cmd_syndesc *as, char *arock)
+CommandProc(struct cmd_syndesc *as, void *arock)
 {
     struct rx_connection *conn;
     register char *hostName;
@@ -552,7 +552,7 @@ main(int argc, char **argv)
 
     rx_Init(0);
 
-    ts = cmd_CreateSyntax(NULL, CommandProc, 0, "probe unik server");
+    ts = cmd_CreateSyntax(NULL, CommandProc, NULL, "probe unik server");
     cmd_AddParm(ts, "-servers", CMD_SINGLE, CMD_REQUIRED, "server machine");
     cmd_AddParm(ts, "-port", CMD_SINGLE, CMD_OPTIONAL, "IP port");
     cmd_AddParm(ts, "-long", CMD_FLAG, CMD_OPTIONAL, "print all info");

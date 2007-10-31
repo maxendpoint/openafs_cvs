@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.16.14.4 2007/10/30 15:16:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/db_verify.c,v 1.16.14.5 2007/10/31 04:09:32 shadow Exp $");
 
 /*
  *                      (3) Define a structure, idused, instead of an
@@ -1427,7 +1427,7 @@ CheckPrDatabase(struct misc_data *misc)	/* info & statistics */
 #include "AFS_component_version_number.c"
 
 int
-WorkerBee(struct cmd_syndesc *as, char *arock)
+WorkerBee(struct cmd_syndesc *as, void *arock)
 {
     afs_int32 code;
     char *recreateFile;

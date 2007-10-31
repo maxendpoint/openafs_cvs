@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.6.8.2 2007/10/30 15:16:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.6.8.3 2007/10/31 04:09:34 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -79,9 +79,7 @@ PortName(aname)
 }
 
 int
-MainCommand(as, arock)
-     char *arock;
-     struct cmd_syndesc *as;
+MainCommand(struct cmd_syndesc *as, void *arock)
 {
     register int i;
     osi_socket s;
@@ -598,7 +596,7 @@ main(argc, argv)
     }
 #endif
 
-    ts = cmd_CreateSyntax(NULL, MainCommand, 0, "probe RX server");
+    ts = cmd_CreateSyntax(NULL, MainCommand, NULL, "probe RX server");
     cmd_AddParm(ts, "-servers", CMD_SINGLE, CMD_REQUIRED, "server machine");
     cmd_AddParm(ts, "-port", CMD_SINGLE, CMD_OPTIONAL, "IP port");
     cmd_AddParm(ts, "-nodally", CMD_FLAG, CMD_OPTIONAL,

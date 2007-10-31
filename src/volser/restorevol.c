@@ -43,7 +43,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.14.4.1 2007/10/30 15:16:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.14.4.2 2007/10/31 04:09:46 shadow Exp $");
 
 #include <afs/afsint.h>
 #include <afs/nfs.h>
@@ -792,9 +792,8 @@ ReadVNode(count)
     return ((afs_int32) tag);
 }
 
-WorkerBee(as, arock)
-     struct cmd_syndesc *as;
-     char *arock;
+static int
+WorkerBee(struct cmd_syndesc *as, void *arock)
 {
     int code = 0, c, len;
     afs_int32 type, count, vcount;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.16.2.2 2007/10/30 15:16:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlclient.c,v 1.16.2.3 2007/10/31 04:09:43 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -184,9 +184,8 @@ GetServer(char *aname)
 }
 
 
-static
-handleit(as)
-     struct cmd_syndesc *as;
+static int
+handleit(struct cmd_syndesc *as, void *arock)
 {
     register struct cmd_item *ti;
     register afs_int32 code, server = 0, sawserver = 0;
@@ -1030,7 +1029,7 @@ main(argc, argv)
     afs_int32 code;
 
     strcpy(confdir, AFSDIR_CLIENT_ETC_DIRPATH);
-    ts = cmd_CreateSyntax("initcmd", handleit, 0, "initialize the program");
+    ts = cmd_CreateSyntax("initcmd", handleit, NULL, "initialize the program");
     cmd_AddParm(ts, "-cellpath", CMD_LIST, CMD_OPTIONAL,
 		"Cell configuration directory");
     cmd_AddParm(ts, "-server", CMD_LIST, CMD_OPTIONAL,

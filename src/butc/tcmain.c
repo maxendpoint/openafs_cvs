@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.16.8.5 2007/02/09 01:00:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcmain.c,v 1.16.8.6 2007/10/31 04:09:25 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -829,7 +829,7 @@ GetConfigParams(char *filename, afs_int32 port)
 }
 
 static int
-WorkerBee(struct cmd_syndesc *as, char *arock)
+WorkerBee(struct cmd_syndesc *as, void *arock)
 {
     register afs_int32 code;
     struct rx_securityClass *(securityObjects[3]);

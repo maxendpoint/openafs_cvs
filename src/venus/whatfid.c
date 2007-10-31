@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/whatfid.c,v 1.5.14.2 2007/04/10 18:39:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/whatfid.c,v 1.5.14.3 2007/10/31 04:09:41 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -49,8 +49,7 @@ void PioctlError();
 int WhatFidCmd_FileParm;
 int WhatFidCmd_FollowLinkParm;
 int
-WhatFidCmd(as)
-     register struct cmd_syndesc *as;
+WhatFidCmd(register struct cmd_syndesc *as, void *arock)
 {
     register afs_int32 code;
     struct ViceIoctl blob;
@@ -104,7 +103,7 @@ main(argc, argv)
 
     pn = argv[0];
 
-    ts = cmd_CreateSyntax("initcmd", WhatFidCmd, 0, "list fid for file(s)");
+    ts = cmd_CreateSyntax("initcmd", WhatFidCmd, NULL, "list fid for file(s)");
     WhatFidCmd_FileParm = cmd_AddParm(ts, "-path", CMD_LIST, 0, "pathnames");
     WhatFidCmd_FollowLinkParm =
 	cmd_AddParm(ts, "-link", CMD_FLAG, CMD_OPTIONAL,

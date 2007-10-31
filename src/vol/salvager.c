@@ -21,7 +21,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvager.c,v 1.1.4.1 2007/01/30 12:17:28 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvager.c,v 1.1.4.2 2007/10/31 04:09:45 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -137,7 +137,7 @@ static int get_salvage_lock = 0;
 
 
 static int
-handleit(struct cmd_syndesc *as)
+handleit(struct cmd_syndesc *as, void *arock)
 {
     register struct cmd_item *ti;
     char pname[100], *temp;
@@ -440,7 +440,7 @@ main(int argc, char **argv)
     }
 #endif
 
-    ts = cmd_CreateSyntax("initcmd", handleit, 0, "initialize the program");
+    ts = cmd_CreateSyntax("initcmd", handleit, NULL, "initialize the program");
     cmd_AddParm(ts, "-partition", CMD_SINGLE, CMD_OPTIONAL,
 		"Name of partition to salvage");
     cmd_AddParm(ts, "-volumeid", CMD_SINGLE, CMD_OPTIONAL,

@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/test/multiklog.c,v 1.7.14.2 2007/04/10 18:39:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/test/multiklog.c,v 1.7.14.3 2007/10/31 04:09:31 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -52,7 +52,7 @@ RCSID
        -repeat is the number of times to iterate over the authentication
  */
 
-int CommandProc();
+static int CommandProc(struct cmd_syndesc *, void *);
 
 static int zero_argc;
 static char **zero_argv;
@@ -75,7 +75,7 @@ main(argc, argv)
     zero_argc = argc;
     zero_argv = argv;
 
-    ts = cmd_CreateSyntax(NULL, CommandProc, 0,
+    ts = cmd_CreateSyntax(NULL, CommandProc, NULL,
 			  "obtain Kerberos authentication");
 
 #define aXFLAG 0
@@ -128,9 +128,8 @@ getpipepass()
     return gpbuf;
 }
 
-CommandProc(as, arock)
-     char *arock;
-     struct cmd_syndesc *as;
+static int
+CommandProc(struct cmd_syndesc *as, void *arock)
 {
     char name[MAXKTCNAMELEN];
     char instance[MAXKTCNAMELEN];

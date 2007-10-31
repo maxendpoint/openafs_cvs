@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.11.2.1 2007/10/30 15:16:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.11.2.2 2007/10/31 04:09:48 shadow Exp $");
 
 #include "xstat_cm.h"		/*Interface for xstat_cm module */
 #include <cmd.h>		/*Command line interpreter */
@@ -1232,9 +1232,7 @@ CountListItems(a_firstItem)
  *------------------------------------------------------------------------*/
 
 int
-RunTheTest(a_s)
-     struct cmd_syndesc *a_s;
-
+RunTheTest(struct cmd_syndesc *a_s, void *arock)
 {				/*RunTheTest */
 
     static char rn[] = "RunTheTest";	/*Routine name */
@@ -1442,7 +1440,7 @@ main(argc, argv)
     /*
      * Set up the commands we understand.
      */
-    ts = cmd_CreateSyntax("initcmd", RunTheTest, 0, "initialize the program");
+    ts = cmd_CreateSyntax("initcmd", RunTheTest, NULL, "initialize the program");
     cmd_AddParm(ts, "-cmname", CMD_LIST, CMD_REQUIRED,
 		"Cache Manager name(s) to monitor");
     cmd_AddParm(ts, "-collID", CMD_LIST, CMD_REQUIRED,
