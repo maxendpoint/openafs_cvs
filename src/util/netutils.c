@@ -19,8 +19,10 @@
 #include <afs/param.h>
 #endif
 
+#include <rx/rx.h>
+
 RCSID
-    ("$Header: /cvs/openafs/src/util/netutils.c,v 1.14.8.2 2007/10/30 15:16:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/netutils.c,v 1.14.8.3 2007/10/31 04:26:18 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -51,6 +53,9 @@ RCSID
 #define INADDR_LOOPBACK (afs_uint32)0x7f000001
 #endif
 
+int ParseNetInfoFile_int(afs_uint32 *, afs_uint32 *, afs_uint32 *,
+                         int, char reason[], const char *,
+                         int);
 /* 
  * The line parameter is a pointer to a buffer containing a string of 
  * bytes of the form 
