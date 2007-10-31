@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.7.2.1 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.7.2.2 2007/10/31 04:13:37 shadow Exp $");
 
 #include <afs/cmd.h>
 #include <lock.h>
@@ -382,9 +382,8 @@ writeData(data, size)
     return 0;
 }
 
-WorkerBee(as, arock)
-     struct cmd_syndesc *as;
-     char *arock;
+static int
+WorkerBee(struct cmd_syndesc *as, void *arock)
 {
     char *tapedev;
     struct tapeLabel *label;

@@ -30,7 +30,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/log/unlog.c,v 1.6.2.2 2007/10/30 15:23:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/log/unlog.c,v 1.6.2.3 2007/10/31 04:13:43 shadow Exp $");
 
 #include <stdio.h>
 #include <potpourri.h>
@@ -64,7 +64,7 @@ struct tokenInfo {
 
 
 int 
-CommandProc(struct cmd_syndesc *as, char *arock)
+CommandProc(struct cmd_syndesc *as, void *arock)
 {
 #define	MAXCELLS 20		/* XXX */
     struct cmd_item *itp;
@@ -115,7 +115,7 @@ main(int argc, char *argv[])
     sigaction(SIGSEGV, &nsa, NULL);
 #endif
 
-    ts = cmd_CreateSyntax(NULL, CommandProc, 0,
+    ts = cmd_CreateSyntax(NULL, CommandProc, NULL,
 			  "Release Kerberos authentication");
     cmd_AddParm(ts, "-cell", CMD_LIST, CMD_OPTIONAL, "cell name");
 

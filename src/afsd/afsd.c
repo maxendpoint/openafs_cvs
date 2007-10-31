@@ -58,7 +58,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.43.2.23 2007/10/23 14:31:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsd/afsd.c,v 1.43.2.24 2007/10/31 04:13:32 shadow Exp $");
 
 #define VFS 1
 
@@ -1513,7 +1513,7 @@ AfsdbLookupHandler()
 #endif
 #endif
 
-mainproc(struct cmd_syndesc *as, char *arock)
+mainproc(struct cmd_syndesc *as, void *arock)
 {
     static char rn[] = "afsd";	/*Name of this routine */
     afs_int32 code;		/*Result of fork() */

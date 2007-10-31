@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.11.2.3 2007/10/30 15:23:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.11.2.4 2007/10/31 04:13:39 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -397,9 +397,8 @@ readDB(offset, buffer, size)
 
 #include "AFS_component_version_number.c"
 
-WorkerBee(as, arock)
-     struct cmd_syndesc *as;
-     char *arock;
+static int
+WorkerBee(struct cmd_syndesc *as, void *arock)
 {
     afs_int32 code;
     char *dbFile;

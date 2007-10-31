@@ -1,4 +1,4 @@
-/* $Id: pt_util.c,v 1.9.2.3 2007/04/10 18:43:45 shadow Exp $ */
+/* $Id: pt_util.c,v 1.9.2.4 2007/10/31 04:13:43 shadow Exp $ */
 
 /*
  *
@@ -23,7 +23,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.9.2.3 2007/04/10 18:43:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.9.2.4 2007/10/31 04:13:43 shadow Exp $");
 
 #include <afs/cmd.h>		/*Command line parsing */
 #include <errno.h>
@@ -53,7 +53,7 @@ void fix_pre();
 char *checkin();
 char *check_core();
 char *id_to_name();
-int CommandProc(struct cmd_syndesc *);
+int CommandProc(struct cmd_syndesc *, void *);
 
 struct hash_entry {
     char h_name[PR_MAXNAMELEN];
@@ -105,7 +105,7 @@ main(int argc, char **argv)
     register struct cmd_syndesc *cs;	/*Command line syntax descriptor */
     register afs_int32 code;	/*Return code */
 
-    cs = cmd_CreateSyntax((char *)0, CommandProc, 0,
+    cs = cmd_CreateSyntax(NULL, CommandProc, NULL,
 			  "access protection database");
     cmd_AddParm(cs, "-w", CMD_FLAG, CMD_OPTIONAL,
 		"update prdb with contents of data file");
@@ -128,7 +128,7 @@ main(int argc, char **argv)
 }
 
 int
-CommandProc(register struct cmd_syndesc *a_as)
+CommandProc(register struct cmd_syndesc *a_as, void *arock)
 {
     register int i;
     register long code;

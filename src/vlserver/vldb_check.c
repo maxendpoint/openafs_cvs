@@ -33,7 +33,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.11.2.2 2007/10/30 15:24:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.11.2.3 2007/10/31 04:13:51 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1027,7 +1027,7 @@ FixBad(afs_uint32 idx, afs_uint32 addr, afs_uint32 type, afs_uint32 tmp,
 }
 
 int
-WorkerBee(struct cmd_syndesc *as, char *arock)
+WorkerBee(struct cmd_syndesc *as, void *arock)
 {
     char *dbfile;
     afs_int32 maxentries, type, tmp;
