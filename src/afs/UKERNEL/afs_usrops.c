@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.30.6.4 2006/11/10 04:05:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.30.6.5 2007/10/31 22:31:57 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -1389,8 +1389,8 @@ SweepAFSCache(int *vFilesFound)
     return (0);
 }
 
-static
-ConfigCell(register struct afsconf_cell *aci, char *arock,
+static int
+ConfigCell(register struct afsconf_cell *aci, void *arock,
 	   struct afsconf_dir *adir)
 {
     register int isHomeCell;
@@ -1420,10 +1420,7 @@ ConfigCell(register struct afsconf_cell *aci, char *arock,
 }
 
 static int
-ConfigCellAlias(aca, arock, adir)
-	struct afsconf_cellalias *aca;
-	char *arock;
-	struct afsconf_dir *adir;
+ConfigCellAlias(struct afsconf_cellalias *aca, void *arock, struct afsconf_dir *adir)
 {
 	call_syscall(AFSOP_ADDCELLALIAS, (long)aca->aliasName, 
 		     (long)aca->realName, 0, 0, 0);
