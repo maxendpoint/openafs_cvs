@@ -17,7 +17,7 @@
 #include <string.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/assert.c,v 1.11.2.1 2007/10/30 15:24:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/assert.c,v 1.11.2.2 2007/10/31 04:26:29 shadow Exp $");
 
 #include <stdio.h>
 #include "afsutil.h"
@@ -38,7 +38,7 @@ AssertionFailed(char *file, int line)
     time_t when;
 
     time(&when);
-    afs_ctime(&when, tdate, 25);
+    (void)afs_ctime(&when, tdate, 25);
     fprintf(stderr, "%s: Assertion failed! file %s, line %d.\n", tdate, file,
 	    line);
     fflush(stderr);
