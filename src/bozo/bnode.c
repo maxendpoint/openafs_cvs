@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.19.2.4 2007/10/30 15:16:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bnode.c,v 1.19.2.5 2007/10/31 04:21:14 shadow Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -36,6 +36,7 @@ RCSID
 #include <afs/afsutil.h>
 #include <afs/fileutil.h>
 #include "bnode.h"
+#include "bosprototypes.h"
 
 #if defined(AFS_AIX_ENV) || defined(AFS_SUN4_ENV)
 /* All known versions of AIX lack WCOREDUMP but this works */

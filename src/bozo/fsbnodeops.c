@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.15.2.1 2007/10/30 15:16:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.15.2.2 2007/10/31 04:21:14 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -34,7 +34,7 @@ RCSID
 #include <afs/procmgmt.h>	/* signal(), kill(), wait(), etc. */
 #include <afs/afsutil.h>
 #include "bnode.h"
-
+#include "bosprototypes.h"
 
 static int emergency = 0;
 
