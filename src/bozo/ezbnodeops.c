@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/ezbnodeops.c,v 1.8.2.1 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/ezbnodeops.c,v 1.8.2.2 2007/10/31 04:21:31 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -27,6 +27,7 @@ RCSID
 #include <afs/afsutil.h>
 #include <afs/procmgmt.h>	/* signal(), kill(), wait(), etc. */
 #include "bnode.h"
+#include "bosprototypes.h"
 
 static int ez_timeout(), ez_getstat(), ez_setstat(), ez_delete();
 static int ez_procexit(), ez_getstring(), ez_getparm(), ez_restartp();

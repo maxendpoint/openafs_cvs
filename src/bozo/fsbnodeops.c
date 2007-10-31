@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.13.2.1 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.13.2.2 2007/10/31 04:21:31 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -34,6 +34,7 @@ RCSID
 #include <afs/procmgmt.h>	/* signal(), kill(), wait(), etc. */
 #include <afs/afsutil.h>
 #include "bnode.h"
+#include "bosprototypes.h"
 
 static int fs_timeout(), fs_getstat(), fs_setstat(), fs_delete();
 static int fs_procexit(), fs_getstring(), fs_getparm(), fs_restartp();

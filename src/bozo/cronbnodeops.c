@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.10.2.1 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/cronbnodeops.c,v 1.10.2.2 2007/10/31 04:21:31 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -30,6 +30,7 @@ RCSID
 #include <afs/afsutil.h>
 #include <afs/procmgmt.h>	/* signal(), kill(), wait(), etc. */
 #include "bnode.h"
+#include "bosprototypes.h"
 
 static int cron_timeout(), cron_getstat(), cron_setstat(), cron_delete();
 static int cron_procexit(), cron_getstring(), cron_getparm(), cron_restartp();

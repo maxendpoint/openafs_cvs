@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.19.2.2 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.19.2.3 2007/10/31 04:21:31 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -41,7 +41,7 @@ RCSID
 
 #include "bnode.h"
 #include "bosint.h"
-
+#include "bosprototypes.h"
 
 extern struct ktime bozo_nextRestartKT, bozo_nextDayKT;
 
