@@ -14,13 +14,16 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.18.2.3 2007/01/02 07:36:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.18.2.4 2007/11/01 16:57:51 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
 #include "afs/afs_stats.h"	/* statistics stuff */
 #include "h/modctl.h"
 #include "h/syscall.h"
+#if defined(AFS_SUN511_ENV)
+#include <sys/vfs_opreg.h>
+#endif
 #include <sys/kobj.h>
 
 
@@ -245,7 +248,21 @@ afs_swapvp(struct vfs *afsp, struct vnode **avpp, char *nm)
 }
 
 
-#ifdef AFS_SUN510_ENV
+#if defined(AFS_SUN511_ENV)
+/* The following list must always be NULL-terminated */
+static const fs_operation_def_t afs_vfsops_template[] = {
+    VFSNAME_MOUNT,		{ .vfs_mount = afs_mount },
+    VFSNAME_UNMOUNT,		{ .vfs_unmount = afs_unmount },
+    VFSNAME_ROOT,		{ .vfs_root = afs_root },
+    VFSNAME_STATVFS,		{ .vfs_statvfs = afs_statvfs },
+    VFSNAME_SYNC,		{ .vfs_sync = afs_sync },
+    VFSNAME_VGET,		{ .vfs_vget = afs_vget },
+    VFSNAME_MOUNTROOT,  	{ .vfs_mountroot = afs_mountroot },
+    VFSNAME_FREEVFS,		{ .vfs_freevfs = fs_freevfs },
+    NULL,			NULL
+};
+struct vfsops *afs_vfsopsp;
+#elif defined(AFS_SUN510_ENV)
 /* The following list must always be NULL-terminated */
 const fs_operation_def_t afs_vfsops_template[] = {
     VFSNAME_MOUNT,		afs_mount,
@@ -256,7 +273,7 @@ const fs_operation_def_t afs_vfsops_template[] = {
     VFSNAME_VGET,		afs_vget,
     VFSNAME_MOUNTROOT,  	afs_mountroot,
     VFSNAME_FREEVFS,		fs_freevfs,
-    NULL,                     NULL
+    NULL,			NULL
 };
 struct vfsops *afs_vfsopsp;
 #else
