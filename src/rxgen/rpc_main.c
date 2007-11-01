@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.21.2.4 2007/10/30 15:24:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.21.2.5 2007/11/01 16:06:00 shadow Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -60,6 +60,7 @@ RCSID
 #define EXTEND	1		/* alias for TRUE */
 
 struct commandline {
+    int ansic_flag;
     int cflag;
     int hflag;
     int lflag;
@@ -87,6 +88,7 @@ int nincludes = 0;
 char *OutFileFlag = "";
 char OutFile[256];
 char Sflag = 0, Cflag = 0, hflag = 0, cflag = 0, kflag = 0, uflag = 0;
+char ansic_flag = 0;		/* If set, build ANSI C style prototypes */
 char zflag = 0;			/* If set, abort server stub if rpc call returns non-zero */
 char xflag = 0;			/* if set, add stats code to stubs */
 char yflag = 0;			/* if set, only emit function name arrays to xdr file */
@@ -802,6 +804,7 @@ parseargs(int argc, char *argv[], struct commandline *cmd)
 	    for (j = 1; argv[i][j] != 0; j++) {
 		c = argv[i][j];
 		switch (c) {
+		case 'A':
 		case 'c':
 		case 'h':
 		case 'l':
@@ -860,6 +863,7 @@ parseargs(int argc, char *argv[], struct commandline *cmd)
 	    ;
 	}
     }
+    cmd->ansic_flag = ansic_flag = flag['A'];
     cmd->cflag = cflag = flag['c'];
     cmd->hflag = hflag = flag['h'];
     cmd->sflag = flag['s'];
