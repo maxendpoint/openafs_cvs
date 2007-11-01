@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.10 2007/09/27 16:32:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.11 2007/11/01 15:00:03 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -3737,8 +3737,6 @@ VConnectSALV(void)
 int
 VConnectSALV_r(void)
 {
-    assert((programType != salvageServer) &&
-	   (programType != volumeUtility));
     return SALVSYNC_clientInit();
 }
 
@@ -3755,8 +3753,6 @@ VDisconnectSALV(void)
 int
 VDisconnectSALV_r(void)
 { 
-    assert((programType != salvageServer) &&
-	   (programType != volumeUtility));
     return SALVSYNC_clientFinis();
 }
 
@@ -3773,8 +3769,6 @@ VReconnectSALV(void)
 int
 VReconnectSALV_r(void)
 {
-    assert((programType != salvageServer) &&
-	   (programType != volumeUtility));
     return SALVSYNC_clientReconnect();
 }
 #endif /* SALVSYNC_BUILD_CLIENT */
@@ -3830,7 +3824,7 @@ VDisconnectFS(void)
     VOL_UNLOCK;
 }
 
-static int
+int
 VChildProcReconnectFS_r(void)
 {
     return FSYNC_clientChildProcReconnect();

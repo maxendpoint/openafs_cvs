@@ -44,7 +44,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-client.c,v 1.1.4.1 2007/10/30 15:16:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-client.c,v 1.1.4.2 2007/11/01 15:00:03 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -92,7 +92,14 @@ RCSID
 
 extern int LogLevel;
 
-static SYNC_client_state fssync_state = { -1, 2040, FSYNC_PROTO_VERSION, 5, 120 };
+static SYNC_client_state fssync_state = 
+    { -1,                    /* file descriptor */
+      2040,                  /* port number */
+      FSYNC_PROTO_VERSION,   /* protocol version */
+      5,                     /* connect retry limit */
+      120,                   /* hard timeout */
+      "FSSYNC",              /* protocol name string */
+    };
 
 #ifdef AFS_PTHREAD_ENV
 static pthread_mutex_t vol_fsync_mutex;
