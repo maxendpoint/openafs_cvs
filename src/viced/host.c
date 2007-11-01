@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.21 2007/10/30 15:16:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.22 2007/11/01 19:13:39 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1767,6 +1767,7 @@ h_GetHost_r(struct rx_connection *tcon)
 						   &FS_HostUUID);
 		    rx_PutConnection(cb_conn);
 		    cb_conn=NULL;
+		    H_LOCK;
 		    if (code == 0) {
 			ViceLog(25,
 				("InitCallBackState3 success on host %x (%s:%d)\n",
