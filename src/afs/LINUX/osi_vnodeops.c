@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.57 2007/10/15 12:42:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.58 2007/11/01 03:33:14 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -878,6 +878,15 @@ afs_dentry_iput(struct dentry *dp, struct inode *ip)
     AFS_GLOCK();
     (void) afs_InactiveVCache(vcp, NULL);
     AFS_GUNLOCK();
+#ifdef DCACHE_NFSFS_RENAMED
+#ifdef AFS_LINUX26_ENV
+    spin_lock(&dp->d_lock);
+#endif
+    dp->d_flags &= ~DCACHE_NFSFS_RENAMED;   
+#ifdef AFS_LINUX26_ENV
+    spin_unlock(&dp->d_lock);
+#endif
+#endif
 
     iput(ip);
 }
@@ -1095,6 +1104,15 @@ afs_linux_unlink(struct inode *dip, struct dentry *dp)
             }
             tvc->uncred = credp;
 	    tvc->states |= CUnlinked;
+#ifdef DCACHE_NFSFS_RENAMED
+#ifdef AFS_LINUX26_ENV
+	    spin_lock(&dp->d_lock);
+#endif
+	    dp->d_flags |= DCACHE_NFSFS_RENAMED;   
+#ifdef AFS_LINUX26_ENV
+	    spin_unlock(&dp->d_lock);
+#endif
+#endif
 	} else {
 	    osi_FreeSmallSpace(__name);	
 	}
