@@ -11,13 +11,15 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.12 2007/11/01 16:09:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.13 2007/11/02 17:45:14 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
 #ifdef UKERNEL
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
+#include "des/des.h"
+#include "rx/rxkad.h"
 #else /* UKERNEL */
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -51,6 +53,8 @@ RCSID
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <rx/rxkad.h>
+#include <rx/rx.h>
 #endif /* UKERNEL */
 #include <afs/afsutil.h>
 #include "cellconfig.h"
@@ -1282,7 +1286,7 @@ afsconf_GetKeys(struct afsconf_dir *adir, struct afsconf_keys *astr)
 /* get latest key */
 afs_int32
 afsconf_GetLatestKey(struct afsconf_dir * adir, afs_int32 * avno, 
-		     struct ktc_encryptionKey *akey)
+		     char akey[8])
 {
     register int i;
     int maxa;
@@ -1323,7 +1327,7 @@ afsconf_GetLatestKey(struct afsconf_dir * adir, afs_int32 * avno,
 
 /* get a particular key */
 int
-afsconf_GetKey(void *rock, int avno, struct ktc_encryptionKey *akey)
+afsconf_GetKey(void *rock, afs_int32 avno, char akey[8])
 {
     struct afsconf_dir *adir = (struct afsconf_dir *) rock;
     register int i, maxa;
