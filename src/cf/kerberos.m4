@@ -1,5 +1,5 @@
 dnl
-dnl $Id: kerberos.m4,v 1.7.2.3 2007/09/20 04:53:31 shadow Exp $
+dnl $Id: kerberos.m4,v 1.7.2.4 2007/11/05 22:10:49 shadow Exp $
 dnl
 dnl Kerberos autoconf glue
 dnl
@@ -58,7 +58,7 @@ if test X$conf_krb5 = XYES; then
 	CPPFLAGS="$CPPFLAGS $KRB5CFLAGS"
 	save_LIBS="$LIBS"
 	LIBS="$LIBS $KRB5LIBS"
-	AC_CHECK_FUNCS([add_to_error_table add_error_table krb5_princ_size krb5_principal_get_comp_string encode_krb5_enc_tkt_part encode_krb5_ticket])
+	AC_CHECK_FUNCS([add_to_error_table add_error_table krb5_princ_size krb5_principal_get_comp_string encode_krb5_enc_tkt_part encode_krb5_ticket krb5_c_encrypt krb5_c_encrypt_length])
 	AC_CHECK_FUNCS([krb5_524_convert_creds], ,
 	    [AC_CHECK_FUNCS([krb524_convert_creds_kdc], ,
 		[AC_CHECK_LIB([krb524], [krb524_convert_creds_kdc],
