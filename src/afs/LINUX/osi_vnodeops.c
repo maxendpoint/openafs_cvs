@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.58 2007/11/01 03:33:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.59 2007/11/06 18:35:32 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -642,6 +642,10 @@ struct file_operations afs_file_fops = {
   .flush =	afs_linux_flush,
 #if defined(AFS_LINUX26_ENV) && defined(STRUCT_FILE_OPERATIONS_HAS_SENDFILE)
   .sendfile =   generic_file_sendfile,
+#endif
+#if defined(AFS_LINUX26_ENV) && defined(STRUCT_FILE_OPERATIONS_HAS_SPLICE)
+  .splice_write = generic_file_splice_write,
+  .splice_read = generic_file_splice_read,
 #endif
   .release =	afs_linux_release,
   .fsync =	afs_linux_fsync,
