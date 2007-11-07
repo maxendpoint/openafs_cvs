@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.19 2007/10/05 03:10:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.20 2007/11/07 04:04:20 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -538,6 +538,7 @@ vattr2inode(struct inode *ip, struct vattr *vp)
     ip->i_size = vp->va_size;
 #if defined(AFS_LINUX26_ENV)
     ip->i_atime.tv_sec = vp->va_atime.tv_sec;
+    ip->i_atime.tv_nsec = 0;
     ip->i_mtime.tv_sec = vp->va_mtime.tv_sec;
     /* Set the mtime nanoseconds to the sysname generation number.
      * This convinces NFS clients that all directories have changed
@@ -545,6 +546,7 @@ vattr2inode(struct inode *ip, struct vattr *vp)
      */
     ip->i_mtime.tv_nsec = afs_sysnamegen;
     ip->i_ctime.tv_sec = vp->va_ctime.tv_sec;
+    ip->i_ctime.tv_nsec = 0;
 #else
     ip->i_atime = vp->va_atime.tv_sec;
     ip->i_mtime = vp->va_mtime.tv_sec;
