@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.17 2007/10/17 14:34:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.86.4.18 2007/11/07 04:33:59 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1272,6 +1272,7 @@ afs_shutdown(void)
     shutdown_rx();
     afs_shutdown_BKG();
 #endif
+    return;
     shutdown_bufferpackage();
     shutdown_cache();
     shutdown_osi();
