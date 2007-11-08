@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.29.4.10 2007/08/22 19:39:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.29.4.11 2007/11/08 14:23:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -554,11 +554,7 @@ PagInCred(const struct AFS_UCRED *cred)
     g0 = cred->cr_groups[1];
     g1 = cred->cr_groups[2];
 #else
-#if defined(AFS_AIX51_ENV)
-    if (kcred_getpag(cred, PAG_AFS, &pag) < 0 || pag == 0)
-	pag = NOPAG;
-    return pag;
-#elif defined(AFS_AIX_ENV)
+#if defined(AFS_AIX_ENV)
     if (cred->cr_ngrps < 2) {
 	return NOPAG;
     }
