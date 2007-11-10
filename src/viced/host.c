@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.50 2007/10/30 15:24:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.57.2.51 2007/11/10 00:35:10 jaltman Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1551,6 +1551,7 @@ h_GetHost_r(struct rx_connection *tcon)
 		     host->interface ? uuid2 : ""));
 
 	    /* The host in the cache is not the host for this connection */
+            h_Lock_r(host);
 	    host->hostFlags |= HOSTDELETED;
 	    host->hostFlags &= ~HWHO_INPROGRESS;
 	    h_Unlock_r(host);
