@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.19.4.5 2007/10/31 04:09:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/cmdebug.c,v 1.19.4.6 2007/11/10 00:19:20 jaltman Exp $");
 
 
 #include <sys/types.h>
@@ -39,6 +39,8 @@ RCSID
 #include <afs/com_err.h>
 
 extern struct hostent *hostutil_GetHostByName();
+
+static int print_ctime = 0;
 
 static int
 PrintCacheConfig(struct rx_connection *aconn)
@@ -304,8 +306,13 @@ PrintCacheEntries32(struct rx_connection *aconn, int aint32)
 	}
 	printf("    %12d bytes  DV %12d  refcnt %5d\n", centry.Length,
 	       centry.DataVersion, centry.refCount);
-	printf("    callback %08x\texpires %u\n", centry.callback,
-	       centry.cbExpires);
+        if (print_ctime) {
+            time_t t = centry.cbExpires;
+            printf("    callback %08x\texpires %s\n", centry.callback,
+                    ctime(&t));
+        } else
+            printf("    callback %08x\texpires %u\n", centry.callback,
+                   centry.cbExpires);
 	printf("    %d opens\t%d writers\n", centry.opens, centry.writers);
 
 	/* now display states */
@@ -406,8 +413,13 @@ PrintCacheEntries64(struct rx_connection *aconn, int aint32)
 	printf("    %12d bytes  DV %12d  refcnt %5d\n", centry.Length,
 	       centry.DataVersion, centry.refCount);
 #endif
-	printf("    callback %08x\texpires %u\n", centry.callback,
-	       centry.cbExpires);
+        if (print_ctime) {
+            time_t t = centry.cbExpires;
+            printf("    callback %08x\texpires %s\n", centry.callback,
+                    ctime(&t));
+        } else
+            printf("    callback %08x\texpires %u\n", centry.callback,
+                   centry.cbExpires);
 	printf("    %d opens\t%d writers\n", centry.opens, centry.writers);
 
 	/* now display states */
@@ -500,6 +512,10 @@ CommandProc(struct cmd_syndesc *as, void *arock)
 	PrintCacheConfig(conn);
 	return 0;
     }
+
+    if (as->parms[7].items)
+        print_ctime = 1;
+
     if (as->parms[2].items)
         /* -long */
 	int32p = 1;
@@ -564,6 +580,8 @@ main(int argc, char **argv)
 		"print only host interfaces");
     cmd_AddParm(ts, "-cache", CMD_FLAG, CMD_OPTIONAL,
 		"print only cache configuration");
+    cmd_AddParm(ts, "-ctime", CMD_FLAG, CMD_OPTIONAL, 
+                "print human readable expiration time");
 
     cmd_Dispatch(argc, argv);
     exit(0);
