@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.23 2007/11/10 00:37:50 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.24 2007/11/12 18:19:59 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -3326,6 +3326,16 @@ CheckHost_r(register struct host *host, int held, char *dummy)
     register struct client *client;
     struct rx_connection *cb_conn = NULL;
     int code;
+
+#ifdef AFS_DEMAND_ATTACH_FS
+    /* kill the checkhost lwp ASAP during shutdown */
+    FS_STATE_RDLOCK;
+    if (fs_state.mode == FS_MODE_SHUTDOWN) {
+	FS_STATE_UNLOCK;
+	return H_ENUMERATE_BAIL(held);
+    }
+    FS_STATE_UNLOCK;
+#endif
 
     /* Host is held by h_Enumerate_r */
     for (client = host->FirstClient; client; client = client->next) {
