@@ -1,4 +1,4 @@
-# Openafs Spec $Revision: 1.2.2.10 $
+# Openafs Spec $Revision: 1.2.2.11 $
 
 %define afsvers @VERSION@
 %define pkgvers @VERSION@
@@ -808,6 +808,7 @@ CFLAGS="$RPM_OPT_FLAGS"; export CFLAGS
        --libdir=%{_libdir} \
        --bindir=%{_bindir} \
        --sbindir=%{_sbindir} \
+       --disable-strip-binaries \
 %if %{build_modules}
        --with-linux-kernel-headers=%{ksrc} \
 %endif
