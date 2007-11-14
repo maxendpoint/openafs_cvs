@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.11 2007/11/13 22:15:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.12 2007/11/14 04:05:48 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1736,8 +1736,8 @@ namei_ConvertROtoRWvolume(char *pname, afs_int32 volumeId)
     if (unlink(oldpath) < 0) {
         Log("1 namei_ConvertROtoRWvolume: Couldn't unlink RO header, error = %d\n", error);
     }
-    FSYNC_askfs(volumeId, pname, FSYNC_DONE, 0);
-    FSYNC_askfs(h.id, pname, FSYNC_ON, 0);
+    FSYNC_VolOp(volumeId, pname, FSYNC_VOL_DONE, 0, NULL);
+    FSYNC_VolOp(h.id, pname, FSYNC_VOL_ON, 0, NULL);
     return 0;
 }
 
