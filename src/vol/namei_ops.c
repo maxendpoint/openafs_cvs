@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.12 2007/11/14 04:05:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.13 2007/11/14 04:20:48 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1582,7 +1582,7 @@ namei_ConvertROtoRWvolume(char *pname, afs_int32 volumeId)
         return EIO;
     }
     close(fd);
-    FSYNC_askfs(volumeId, pname, FSYNC_RESTOREVOLUME, 0);
+    FSYNC_VolOp(volumeId, pname, FSYNC_VOL_BREAKCBKS, 0, NULL);
 
     for (partP = DiskPartitionList; partP && strcmp(partP->name, pname);
          partP = partP->next);
