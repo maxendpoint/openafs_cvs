@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.44 2007/10/30 15:24:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.45 2007/11/21 19:38:48 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6105,7 +6105,9 @@ common_GiveUpCallBacks(struct rx_call *acall, struct AFSCBFids *FidArray,
 		 (tcon->peer ? tcon->peer->host : 0)));
 	errorCode = GetClient(tcon, &client);
 	if (!errorCode) {
+	    H_LOCK;
 	    DeleteAllCallBacks_r(client->host, 1);
+	    H_UNLOCK;
 	    PutClient(&client);
 	}
     } else {
