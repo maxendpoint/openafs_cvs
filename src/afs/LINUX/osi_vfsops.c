@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.29.2.27 2007/11/07 04:12:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.29.2.28 2007/11/23 13:45:04 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -295,7 +295,11 @@ static void
 #if defined(HAVE_KMEM_CACHE_T)
 init_once(void * foo, kmem_cache_t * cachep, unsigned long flags)
 #else
+#if defined(KMEM_CACHE_INIT)
+init_once(struct kmem_cache * cachep, void * foo)
+#else
 init_once(void * foo, struct kmem_cache * cachep, unsigned long flags)
+#endif
 #endif
 {
     struct vcache *vcp = (struct vcache *) foo;
