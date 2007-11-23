@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.14 2007/11/13 22:15:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.15 2007/11/23 13:29:34 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -41,7 +41,7 @@ RCSID
 #include "voldefs.h"
 #include "partition.h"
 #include <afs/errors.h>
-#include <afs/fssync.h>
+#include "fssync.h"
 
 /*@+fcnmacros +macrofcndecl@*/
 #ifdef O_LARGEFILE
