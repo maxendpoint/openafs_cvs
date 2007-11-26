@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.8 2007/11/13 22:15:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.9 2007/11/26 22:12:04 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -203,14 +203,14 @@ ViceCreateRoot(Volume *vp)
     struct acl_accessList *ACL;
     ViceFid did;
     Inode inodeNumber, nearInode;
-    char buf[SIZEOF_LARGEDISKVNODE];
-    struct VnodeDiskObject *vnode = (struct VnodeDiskObject *)buf;
+    struct VnodeDiskObject *vnode;
     struct VnodeClassInfo *vcp = &VnodeClassInfo[vLarge];
     IHandle_t *h;
     FdHandle_t *fdP;
     int code;
     afs_fsize_t length;
 
+    vnode = (struct VnodeDiskObject *)malloc(SIZEOF_LARGEDISKVNODE);
     memset(vnode, 0, SIZEOF_LARGEDISKVNODE);
 
     V_pref(vp, nearInode);
@@ -275,6 +275,7 @@ ViceCreateRoot(Volume *vp)
     VNDISK_GET_LEN(length, vnode);
     V_diskused(vp) = nBlocks(length);
 
+    free(vnode);
     return 1;
 }
 
