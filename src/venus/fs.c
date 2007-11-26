@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.12 2007/10/31 04:09:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.13 2007/11/26 21:08:45 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -279,6 +279,7 @@ PRights(afs_int32 arights, int dfs)
 	if (arights & DFS_USR7)
 	    printf("H");
     }
+    return 0;
 }
 
 /* this function returns TRUE (1) if the file is in AFS, otherwise false (0) */

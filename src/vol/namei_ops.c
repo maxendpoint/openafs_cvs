@@ -13,11 +13,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.14 2007/11/14 04:36:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.28.2.15 2007/11/26 21:08:46 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>

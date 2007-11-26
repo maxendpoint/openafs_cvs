@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.11.14.2 2007/10/30 15:16:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.11.14.3 2007/11/26 21:08:44 shadow Exp $");
 
 #include <errno.h>
 #include <limits.h>
@@ -305,7 +305,7 @@ afs_get_pag_from_groups(afs_uint32 g0, afs_uint32 g1)
     return NOPAG;
 }
 
-
+void
 afs_get_groups_from_pag(afs_uint32 pag, afs_uint32 * g0p, afs_uint32 * g1p)
 {
     unsigned short g0, g1;

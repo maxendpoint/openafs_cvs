@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.13.2.3 2007/10/31 04:09:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/rebuild.c,v 1.13.2.4 2007/11/26 21:08:42 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -217,6 +217,7 @@ PrintEntry(index, entry)
 }
 
 /* ntohEntry - convert back to host-order */
+void
 ntohEntry(struct kaentry *entryp)
 {
     entryp->flags = ntohl(entryp->flags);
@@ -396,6 +397,7 @@ readDB(offset, buffer, size)
 	afs_com_err(whoami, errno, "reading db got %d bytes", code);
 	exit(3);
     }
+    return 0;
 }
 
 #include "AFS_component_version_number.c"

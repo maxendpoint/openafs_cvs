@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.9.14.3 2007/10/30 15:16:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/sys/pagsh.c,v 1.9.14.4 2007/11/26 21:08:44 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -163,6 +163,7 @@ ktc_newpag(void)
     strcat(*denv, fname5);
     *++denv = 0;
     environ = newenv;
+    return 0;
 }
 
 #endif

@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss_fs.c,v 1.8.14.1 2007/10/30 15:16:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss_fs.c,v 1.8.14.2 2007/11/26 21:08:45 shadow Exp $");
 
 #include "uss_fs.h"		/*Interface to this module */
 #include <sys/types.h>
@@ -489,7 +489,7 @@ uss_fs_MkMountPoint(a_volname, a_cellname, a_rw, a_mountpoint)
 #endif /* USS_FS_DB */
 	return (-1);
     }
-
+    return 0;
 }				/*uss_fs_MkMountPoint */
 
 

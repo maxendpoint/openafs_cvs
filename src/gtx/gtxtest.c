@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/gtx/gtxtest.c,v 1.7.4.1 2007/10/30 15:16:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/gtx/gtxtest.c,v 1.7.4.2 2007/11/26 21:08:42 shadow Exp $");
 
 #include <string.h>
 
@@ -246,4 +246,5 @@ main()
     keymap_Delete(tmap);
 
     gtx_InputServer(win);
+    return 0;
 }

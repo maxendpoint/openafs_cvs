@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.32.2.6 2007/10/31 04:21:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.32.2.7 2007/11/26 21:08:40 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -1068,6 +1068,7 @@ main(int argc, char **argv, char **envp)
     rx_SetMinProcs(tservice, 2);
     rx_SetMaxProcs(tservice, 4);
     rx_StartServer(1);		/* donate this process */
+    return 0;
 }
 
 void

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kdb.c,v 1.8.8.1 2007/10/31 04:09:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kdb.c,v 1.8.8.2 2007/11/26 21:08:42 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/types.h>
@@ -129,5 +129,6 @@ int
 main(void)
 {
     printf("kdb not supported\n");
+    return 1;
 }
 #endif

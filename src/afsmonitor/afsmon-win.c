@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afsmonitor/afsmon-win.c,v 1.10.14.1 2007/10/30 15:16:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afsmonitor/afsmon-win.c,v 1.10.14.2 2007/11/26 21:08:40 shadow Exp $");
 
 #include <stdio.h>
 #include <signal.h>
@@ -565,6 +565,7 @@ afsmonExit_gtx()
     }
 
     afsmon_Exit(0);
+    return 0; /* not reached */
 }
 
 

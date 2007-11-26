@@ -30,7 +30,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/log/unlog.c,v 1.7.4.2 2007/10/31 04:09:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/log/unlog.c,v 1.7.4.3 2007/11/26 21:08:43 shadow Exp $");
 
 #include <stdio.h>
 #include <potpourri.h>
@@ -259,6 +259,7 @@ unlog_NormalizeCellNames(char **list, int size)
 	*list = newCellName;
     }
     afsconf_Close(conf);
+    return 0;
 }
 
 /*
@@ -283,4 +284,5 @@ unlog_VerifyUnlog(char **cellList, int cellListSize, struct tokenInfo *tokenList
 	    fprintf(stderr, "unlog: Warning - no tokens held for cell %s\n",
 		    cellList[index]);
     }
+    return 0;
 }

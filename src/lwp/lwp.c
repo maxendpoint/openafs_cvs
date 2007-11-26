@@ -17,7 +17,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.34.2.2 2007/10/30 15:16:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/lwp/lwp.c,v 1.34.2.3 2007/11/26 21:08:43 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -961,6 +961,8 @@ Dispatcher(void)
     lwp_cpptr = runnable[i].head;
 
     returnto(&lwp_cpptr->context);
+    
+    return 0; /* not reachable */
 }
 
 /* Complain of a stack overflow to stderr without using stdio. */

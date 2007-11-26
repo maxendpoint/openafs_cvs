@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/scout/scout.c,v 1.10.2.2 2007/10/31 04:09:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/scout/scout.c,v 1.10.2.3 2007/11/26 21:08:43 shadow Exp $");
 
 #undef	IN
 #ifdef	AFS_AIX32_ENV
@@ -2378,4 +2378,5 @@ main(argc, argv)
     } else
 	scout_CleanExit(0);
 
+    return 0; /* not reachable */
 }				/*main */

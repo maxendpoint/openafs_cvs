@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.18.2.5 2007/10/31 04:09:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/commands.c,v 1.18.2.6 2007/11/26 21:08:41 shadow Exp $");
 
 #include <afs/stds.h>
 #if defined(AFS_LINUX24_ENV)
@@ -765,7 +765,8 @@ concatParams(itemPtr)
 /* printIfStatus
  *	print out an interface status node as received from butc
  */
-
+ 
+void
 printIfStatus(statusPtr)
      struct tciStatusS *statusPtr;
 {

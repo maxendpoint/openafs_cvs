@@ -9,9 +9,10 @@
 
 #include <afsconfig.h>
 #include <afs/param.h>
+#include <stdio.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/test/idtest.c,v 1.5 2003/07/15 23:17:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/test/idtest.c,v 1.5.14.1 2007/11/26 21:08:45 shadow Exp $");
 
 main(argc, argv)
 {

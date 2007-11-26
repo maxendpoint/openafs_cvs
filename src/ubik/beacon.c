@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.21.8.1 2007/10/30 15:16:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.21.8.2 2007/11/26 21:08:45 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -77,6 +77,7 @@ static verifyInterfaceAddress();
  */
 
 /* procedure called from debug rpc call to get this module's state for debugging */
+void
 ubeacon_Debug(aparm)
      register struct ubik_debug *aparm;
 {

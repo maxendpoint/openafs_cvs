@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.7.14.2 2007/10/31 04:09:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/read_tape.c,v 1.7.14.3 2007/11/26 21:08:41 shadow Exp $");
 
 #include <afs/cmd.h>
 #include <lock.h>
@@ -82,6 +82,7 @@ readblock(buffer)
     return 0;
 }
 
+void
 printLabel(tapeLabelPtr)
      struct tapeLabel *tapeLabelPtr;
 {
@@ -130,6 +131,7 @@ printLabel(tapeLabelPtr)
     }
 }
 
+void
 printHeader(headerPtr, isvolheader)
      struct volumeHeader *headerPtr;
      afs_int32 *isvolheader;

@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/gtx/frame.c,v 1.7.14.1 2007/10/30 15:16:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/gtx/frame.c,v 1.7.14.2 2007/11/26 21:08:42 shadow Exp $");
 
 #ifdef AFS_HPUX_ENV
 #include <sys/types.h>
@@ -318,6 +318,7 @@ gtxframe_DisplayString(aframe, amsgLine)
     if (aframe->messageLine)
 	free(aframe->messageLine);
     aframe->messageLine = gtx_CopyString(amsgLine);
+    return 0;
 }
 
 /* Called by input processor to try to clear the dude */

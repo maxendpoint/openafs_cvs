@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.14.4.2 2007/10/30 15:16:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.14.4.3 2007/11/26 21:08:41 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -547,6 +547,7 @@ callOutRoutine(taskId, tapePath, flag, name, dbDumpId, tapecount)
  *     Regardless of error, the closecallout routine will be called
  *     (unless a tape is not mounted in the first place).
  */
+void
 unmountTape(taskId, tapeInfoPtr)
      afs_int32 taskId;
      struct butm_tapeInfo *tapeInfoPtr;
@@ -1923,6 +1924,7 @@ Restorer(newNode)
 
 /* this is just scaffolding, creates new tape label with name <tapeName> */
 
+void
 GetNewLabel(tapeInfoPtr, pName, AFSName, tapeLabel)
      struct butm_tapeInfo *tapeInfoPtr;
      char *pName, *AFSName;
@@ -2284,6 +2286,7 @@ Labeller(labelIfPtr)
  *	print out the tape label.
  */
 
+void
 PrintTapeLabel(labelptr)
      struct butm_tapeLabel *labelptr;
 {

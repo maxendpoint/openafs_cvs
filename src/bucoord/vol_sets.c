@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.11.6.4 2007/10/31 04:09:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/vol_sets.c,v 1.11.6.5 2007/11/26 21:08:41 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -41,6 +41,7 @@ extern char *whoami;
 extern struct bc_volumeSet *bc_FindVolumeSet(struct bc_config *cf, char *name);
 extern void FreeVolumeSet(struct bc_volumeSet *avset);
 
+static ListVolSet();
 
 /* ------------------------------------
  * command level routines

@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kkids.c,v 1.7 2005/11/05 06:48:11 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kkids.c,v 1.7.4.1 2007/11/26 21:08:42 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -422,6 +422,7 @@ init_child(char *myname)
 	argv[1] = NULL;
 	argv[0] = dirpath;
 	execv(dirpath, argv);
+	return 0;
     } else {
 	using_child = pid;	/* save it for later */
 	childin = fdopen(pipe1[1], "w");

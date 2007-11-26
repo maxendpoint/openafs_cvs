@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.12.2.2 2007/10/30 15:16:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/fsprobe.c,v 1.12.2.3 2007/11/26 21:08:45 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/afsint.h>
@@ -253,6 +253,7 @@ main(int argc, char **argv)
 	}
     }
 #endif
+    return 0;
 }
 
 

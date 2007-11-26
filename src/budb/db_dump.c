@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/db_dump.c,v 1.7.14.1 2007/10/30 15:16:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/db_dump.c,v 1.7.14.2 2007/11/26 21:08:41 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -93,6 +93,7 @@ canWrite(fid)
  *	no return value
  */
 
+void
 haveWritten(nbytes)
      afs_int32 nbytes;
 {
@@ -114,6 +115,7 @@ haveWritten(nbytes)
  *	done flag.
  */
 
+void
 doneWriting(error)
      afs_int32 error;
 {

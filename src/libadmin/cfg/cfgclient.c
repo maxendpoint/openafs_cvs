@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgclient.c,v 1.6.14.1 2007/10/30 15:16:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgclient.c,v 1.6.14.2 2007/11/26 21:08:42 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -96,7 +96,7 @@ cfg_ClientQueryStatus(const char *hostName,	/* name of host */
     afs_status_t clientSt = 0;
     char *clientCellName = NULL;
     short cmInstalled = 0;
-    unsigned cmVersion;
+    unsigned cmVersion = 0;
 
     /* validate parameters */
 

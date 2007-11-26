@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.22.2.7 2007/10/30 15:16:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.22.2.8 2007/11/26 21:08:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -539,4 +539,5 @@ main(int argc, char **argv)
 
     osi_audit(VS_FinishEvent, (-1), AUD_END);
     Abort("StartServer returned?");
+    return 0; /* not reached */
 }

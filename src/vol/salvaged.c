@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvaged.c,v 1.1.4.2 2007/11/01 15:00:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvaged.c,v 1.1.4.3 2007/11/26 21:08:46 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -407,6 +407,7 @@ main(int argc, char **argv)
 
     err = cmd_Dispatch(argc, argv);
     Exit(err);
+    return 0; /* not reached */
 }
 
 static void

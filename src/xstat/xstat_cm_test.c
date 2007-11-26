@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.11.2.2 2007/10/31 04:09:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_cm_test.c,v 1.11.2.3 2007/11/26 21:08:47 shadow Exp $");
 
 #include "xstat_cm.h"		/*Interface for xstat_cm module */
 #include <cmd.h>		/*Command line interpreter */
@@ -152,6 +152,7 @@ PrintCallInfo()
 
 /* Print detailed functional call statistics */
 
+void
 print_cmCallStats()
 {
     static char rn[] = "print_cmCallStats";	/*Routine name */

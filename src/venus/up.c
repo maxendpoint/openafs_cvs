@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/up.c,v 1.17.2.2 2007/10/30 15:16:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/up.c,v 1.17.2.3 2007/11/26 21:08:45 shadow Exp $");
 
 /* missing type from C language */
 
@@ -21,6 +21,7 @@ RCSID
 #undef	_NONSTD_TYPES
 #endif
 #include <stdio.h>
+#include <unistd.h>
 #include <afs/afs_args.h>
 #include <sys/param.h>
 #ifdef	AFS_SUN5_ENV
