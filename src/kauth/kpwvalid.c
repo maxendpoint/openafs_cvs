@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kpwvalid.c,v 1.6.2.1 2007/10/30 15:23:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kpwvalid.c,v 1.6.2.2 2007/11/26 21:21:52 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -43,4 +43,5 @@ main(int argc, char *argv[])
 		fflush(stdout);
 	    }
 	}
+    return rc;
 }

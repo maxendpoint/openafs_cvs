@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/up.c,v 1.13.2.2 2007/10/30 15:24:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/up.c,v 1.13.2.3 2007/11/26 21:21:56 shadow Exp $");
 
 /* missing type from C language */
 #define Boolean short
@@ -24,6 +24,7 @@ RCSID
 #undef	_NONSTD_TYPES
 #endif
 #include <stdio.h>
+#include <unistd.h>
 #include <afs/afs_args.h>
 #include <sys/param.h>
 #ifdef	AFS_SUN5_ENV
@@ -119,7 +120,7 @@ main(argc, argv)
     exit(0);
 }
 
-
+void
 ScanArgs(argc, argv)
      int argc;
      char *argv[];

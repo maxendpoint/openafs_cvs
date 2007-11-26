@@ -51,10 +51,11 @@ static int newVLDB = 1;
 #include <afs/afsutil.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.26.2.7 2007/06/23 13:46:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/Attic/fssync.c,v 1.26.2.8 2007/11/26 21:21:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
+#include <unistd.h>
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
 #include <time.h>

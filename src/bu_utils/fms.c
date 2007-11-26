@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bu_utils/fms.c,v 1.7.2.1 2007/10/31 04:13:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bu_utils/fms.c,v 1.7.2.2 2007/11/26 21:21:49 shadow Exp $");
 
 #undef	IN
 #include <stdio.h>
@@ -69,6 +69,7 @@ main(argc, argv)
     cmd_AddParm(cptr, "-tape", CMD_SINGLE, CMD_REQUIRED, "tape special file");
 
     cmd_Dispatch(argc, argv);
+    return 0;
 }
 
 static int

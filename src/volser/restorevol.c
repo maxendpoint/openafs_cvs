@@ -43,7 +43,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.13.2.2 2007/10/31 04:13:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/restorevol.c,v 1.13.2.3 2007/11/26 21:21:57 shadow Exp $");
 
 #include <afs/afsint.h>
 #include <afs/nfs.h>
@@ -118,7 +118,7 @@ readchar()
 #define BUFSIZE 16384
 char buf[BUFSIZE];
 
-char
+void
 readdata(buffer, size)
      char *buffer;
      afs_sfsize_t size;

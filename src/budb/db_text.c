@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/db_text.c,v 1.10.2.3 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/db_text.c,v 1.10.2.4 2007/11/26 21:21:50 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -484,7 +484,7 @@ SaveText(call, lockHandle, textType, offset, flags, charListPtr)
 }
 
 /* debug support */
-
+void
 saveTextToFile(ut, tbPtr)
      struct ubik_trans *ut;
      struct textBlock *tbPtr;

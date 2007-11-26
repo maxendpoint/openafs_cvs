@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.8.2.2 2007/10/31 04:13:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.8.2.3 2007/11/26 21:21:56 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -1995,4 +1995,5 @@ main(argc, argv)
     if (doUnlog) {
 	code = uss_fs_UnlogToken(uss_Cell);
     }
+    return 0;
 }				/*Main routine */

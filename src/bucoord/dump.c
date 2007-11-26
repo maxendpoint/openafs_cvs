@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.12.2.3 2007/04/10 18:43:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.12.2.4 2007/11/26 21:21:50 shadow Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -178,6 +178,7 @@ bc_Dumper(aindex)
  *	free the list of volumes used for dumps
  */
 
+void
 freeDumpTaskVolumeList(vdptr)
      struct bc_volumeDump *vdptr;
 {

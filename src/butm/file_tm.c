@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.11.2.3 2007/10/30 15:23:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butm/file_tm.c,v 1.11.2.4 2007/11/26 21:21:51 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -627,6 +627,7 @@ ShutdownAccess(usd_handle_t fid)
  *	dataSize - bytes used on the tape
  */
 
+void
 incSize(info, dataSize)
      struct butm_tapeInfo *info;
      afs_uint32 dataSize;
@@ -648,6 +649,7 @@ incSize(info, dataSize)
  *	dataSize - bytes used on the tape
  */
 
+void
 incPosition(info, fid, dataSize)
      struct butm_tapeInfo *info;
      usd_handle_t fid;

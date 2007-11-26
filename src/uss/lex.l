@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/lex.l,v 1.1.2.1 2007/10/30 15:24:09 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/lex.l,v 1.1.2.2 2007/11/26 21:21:56 shadow Exp $");
 
 
 #include <string.h>
@@ -70,6 +70,7 @@ EOL	[\n]
  * and replaces the second with a null.
  */
 
+void
 Replace(in, out)
     char *in, *out;
 

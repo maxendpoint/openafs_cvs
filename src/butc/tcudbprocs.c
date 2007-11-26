@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.14.2.3 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.14.2.4 2007/11/26 21:21:51 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -52,6 +52,10 @@ RCSID
 
 extern int dump_namecheck;
 extern int autoQuery;
+
+static void initTapeBuffering();
+static writeDbDump();
+static restoreDbEntries();
 
 /* CreateDBDump
  *      create a dump entry for a saved database 
@@ -906,7 +910,7 @@ readDbTape(tapeInfoPtr, rstTapeInfoPtr, query)
 }
 
 static afs_int32 nbytes = 0;	/* # bytes left in buffer */
-static
+static void
 initTapeBuffering()
 {
     nbytes = 0;

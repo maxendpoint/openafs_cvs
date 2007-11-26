@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11.2.1 2007/10/30 15:24:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11.2.2 2007/11/26 21:21:55 shadow Exp $");
 
 #ifdef RXDEBUG
 #include <string.h>
@@ -182,6 +182,7 @@ main(argc, argv)
 	printf(" %3u %7u %7u      %x.%x\n", ip.qlen, ip.servicetime,
 	       ip.waittime, ip.cid, ip.call);
     }
+    return 0;
 }
 
 #endif /* DUMPTRACE */

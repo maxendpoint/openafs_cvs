@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.14.2.7 2007/10/31 04:13:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.14.2.8 2007/11/26 21:21:50 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -135,6 +135,7 @@ MyBeforeProc(register struct cmd_syndesc *as, void *arock)
  *	initialize all the supported commands and their arguments
  */
 
+void
 initializeArgHandler()
 {
     struct cmd_syndesc *cptr;
@@ -591,7 +592,7 @@ main(argc, argv)
     return (code);
 }
 
-
+void
 consistencyCheckDb()
 {
     /* do consistency checks on structure sizes */

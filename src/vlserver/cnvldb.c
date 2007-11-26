@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.9.2.2 2007/10/31 04:13:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.9.2.3 2007/11/26 21:21:57 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -357,6 +357,7 @@ struct extentaddr *base[VL_MAX_ADDREXTBLKS];
  * verifying their address is not pass the EOF and the flags are good.
  * If it's not good, then don't read the block in.
  */
+void
 read_mhentries(mh_addr, oldfd)
      int oldfd;
      afs_uint32 mh_addr;
@@ -463,6 +464,7 @@ read_mhentries(mh_addr, oldfd)
  * 
  * Before this can be called, the routine read_mhentries must be called.
  */
+void
 convert_mhentries(oldfd, newfd, header, fromver, tover)
      int oldfd, newfd;
      struct vlheader_2 *header;

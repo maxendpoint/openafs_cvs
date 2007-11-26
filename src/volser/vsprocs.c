@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.33.2.12 2007/10/30 15:24:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.33.2.13 2007/11/26 21:21:57 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -647,7 +647,7 @@ UV_CreateVolume2(afs_int32 aserver, afs_int32 apart, char *aname,
 
     code = AFSVolSetInfo(aconn, tid, &tstatus);
     if (code)
-	EPRINT(code, "Could not change quota (error %d), continuing...\n");
+	EPRINT(code, "Could not change quota, continuing...\n");
 
     code = AFSVolSetFlags(aconn, tid, 0);	/* bring it online (mark it InService */
     EGOTO2(cfail, vcode, "Could not bring the volume %s %u online \n", aname,

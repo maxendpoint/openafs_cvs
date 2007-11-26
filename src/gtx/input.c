@@ -12,7 +12,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/gtx/input.c,v 1.7 2003/07/15 23:15:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/gtx/input.c,v 1.7.2.1 2007/11/26 21:21:52 shadow Exp $");
 
 #ifdef AFS_HPUX_ENV
 #include <sys/types.h>
@@ -61,6 +61,7 @@ gtx_InputServer(awin)
 	tframe->flags &= ~GTXFRAME_RECURSIVEEND;
 	WOP_DISPLAY(awin);	/* eventually calls gtxframe_Display */
     }
+    return 0;
 }
 
 struct gwin *

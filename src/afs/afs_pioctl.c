@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.28 2007/08/22 02:15:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.81.2.29 2007/11/26 21:21:44 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -2773,7 +2773,8 @@ DECL_PIOCTL(PGetVnodeXStatus2)
 DECL_PIOCTL(PSetSysName)
 {
     char *cp, *cp2 = NULL, inname[MAXSYSNAME], outname[MAXSYSNAME];
-    int setsysname, foundname = 0;
+    afs_int32 setsysname;
+    int foundname = 0;
     register struct afs_exporter *exporter;
     register struct unixuser *au;
     register afs_int32 pag, error;
@@ -2790,7 +2791,7 @@ DECL_PIOCTL(PSetSysName)
 #endif
     }
     memset(inname, 0, MAXSYSNAME);
-    memcpy((char *)&setsysname, ain, sizeof(afs_int32));
+    memcpy(&setsysname, ain, sizeof(afs_int32));
     ain += sizeof(afs_int32);
     if (setsysname) {
 

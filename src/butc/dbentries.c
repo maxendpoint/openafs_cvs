@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.8.2.2 2007/10/30 15:23:50 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.8.2.3 2007/11/26 21:21:51 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -310,6 +310,7 @@ waitDbWatcher()
     if (message) {
 	printf("Updating database - done\n");
     }
+    return 0;
 }
 
 #define MAXVOLUMESTOADD 100

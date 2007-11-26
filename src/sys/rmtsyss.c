@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/rmtsyss.c,v 1.10.2.1 2007/10/30 15:24:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/sys/rmtsyss.c,v 1.10.2.2 2007/11/26 21:21:55 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -83,6 +83,7 @@ rmtsysd()
      * at some point... */
     rx_SetMaxProcs(service, 2);
     rx_StartServer(1);		/* Donate this process to the server process pool */
+    return 0; /* not reached */
 }
 
 

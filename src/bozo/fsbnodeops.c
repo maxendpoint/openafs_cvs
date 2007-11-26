@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.13.2.2 2007/10/31 04:21:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/fsbnodeops.c,v 1.13.2.3 2007/11/26 21:21:49 shadow Exp $");
 
 #include <sys/types.h>
 #include <lwp.h>
@@ -41,7 +41,7 @@ static int fs_procexit(), fs_getstring(), fs_getparm(), fs_restartp();
 static int fs_hascore();
 struct bnode *fs_create();
 
-static SetNeedsClock();
+static void SetNeedsClock();
 static NudgeProcs();
 
 static int emergency = 0;
@@ -510,7 +510,7 @@ fs_procexit(struct fsbnode *abnode, struct bnode_proc *aproc)
 }
 
 /* make sure we're periodically checking the state if we need to */
-static int
+static void
 SetNeedsClock(register struct fsbnode *ab)
 {
     if (ab->b.goal == 1 && ab->fileRunning && ab->volRunning

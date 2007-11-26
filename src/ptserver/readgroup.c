@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/readgroup.c,v 1.10.2.2 2007/10/30 15:24:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/readgroup.c,v 1.10.2.3 2007/11/26 21:21:54 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -206,6 +206,7 @@ main(int argc, char **argv)
 	    }
 	}
     }
+    return 0;
 }
 
 void

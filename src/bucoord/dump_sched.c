@@ -12,11 +12,13 @@
  */
 
 #include <sys/types.h>
+#include <stdio.h>
+#include <string.h>
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.7.2.6 2007/10/31 04:13:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dump_sched.c,v 1.7.2.7 2007/11/26 21:21:50 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -43,6 +45,7 @@ extern struct bc_config *bc_globalConfig;
 extern struct udbHandleS udbHandle;
 extern char *whoami;
 
+static ListDumpSchedule();
 
 /* ------------------------------------
  * command level routines

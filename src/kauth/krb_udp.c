@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.23.2.2 2007/10/30 15:23:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/krb_udp.c,v 1.23.2.3 2007/11/26 21:21:52 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -817,7 +817,7 @@ process_udp_request(ksoc, pkt)
     return;
 }
 
-static
+static void
 SocketListener()
 {
     fd_set rfds;

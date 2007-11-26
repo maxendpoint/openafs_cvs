@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.7 2007/10/30 15:24:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.8 2007/11/26 21:21:57 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -409,4 +409,6 @@ main(argc, argv)
     rx_SetRxStatUserOk(vldb_rxstat_userok);
 
     rx_StartServer(1);		/* Why waste this idle process?? */
+
+    return 0; /* not reachable */
 }

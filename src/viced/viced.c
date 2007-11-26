@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.20 2007/10/30 15:24:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.21 2007/11/26 21:21:57 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2029,4 +2029,5 @@ main(int argc, char *argv[])
 #else /* AFS_PTHREAD_ENV */
     assert(LWP_WaitProcess(&parentPid) == LWP_SUCCESS);
 #endif /* AFS_PTHREAD_ENV */
+    return 0;
 }
