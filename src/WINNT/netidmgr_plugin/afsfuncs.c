@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005,2006 Secure Endpoints Inc.
+ * Copyright (c) 2005,2006,2007 Secure Endpoints Inc.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsfuncs.c,v 1.1.2.12 2007/08/29 05:32:34 jaltman Exp $ */
+/* $Id: afsfuncs.c,v 1.1.2.13 2007/11/27 17:31:39 jaltman Exp $ */
 
 /* Disable the 'macro redefinition' warning which is getting
    triggerred by a redefinition of the ENCRYPT and DECRYPT macros. */
@@ -900,6 +900,7 @@ afs_klog(khm_handle identity,
 
         if (r) {
             _reportf(L"Code %d while getting credentials", r);
+            k5creds = NULL;
             goto end_krb5;
         }
 
