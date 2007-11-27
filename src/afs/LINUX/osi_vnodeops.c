@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.20 2007/11/06 18:32:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.21 2007/11/27 19:28:26 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -970,6 +970,7 @@ afs_linux_create(struct inode *dip, struct dentry *dp, int mode)
 
 	afs_getattr(vcp, &vattr, credp);
 	afs_fill_inode(ip, &vattr);
+	insert_inode_hash(ip);
 	dp->d_op = &afs_dentry_operations;
 	dp->d_time = hgetlo(VTOAFS(dip)->m.DataVersion);
 	d_instantiate(dp, ip);
@@ -1018,6 +1019,8 @@ afs_linux_lookup(struct inode *dip, struct dentry *dp)
 	ip = AFSTOV(vcp);
 	afs_getattr(vcp, &vattr, credp);
 	afs_fill_inode(ip, &vattr);
+	if (hlist_unhashed(&ip->i_hash))
+	    insert_inode_hash(ip);
     }
     dp->d_op = &afs_dentry_operations;
     dp->d_time = hgetlo(VTOAFS(dip)->m.DataVersion);
@@ -1880,5 +1883,4 @@ afs_fill_inode(struct inode *ip, struct vattr *vattr)
 #endif
     }
 
-    /* insert_inode_hash(ip);	-- this would make iget() work (if we used it) */
 }
