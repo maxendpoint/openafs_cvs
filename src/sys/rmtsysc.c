@@ -16,7 +16,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.11.14.4 2007/11/27 22:25:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/sys/rmtsysc.c,v 1.11.14.5 2007/11/28 05:04:51 shadow Exp $");
 
 #include <errno.h>
 #include <limits.h>
@@ -45,6 +45,7 @@ static int hostAddrLookup = 0;
 char *afs_server = 0, server_name[128];
 static afs_int32 SetClientCreds();
 int afs_get_pag_from_groups(afs_uint32 g0, afs_uint32 g1);
+void afs_get_groups_from_pag(afs_uint32 pag, afs_uint32 * g0p, afs_uint32 * g1p);
 
 /* Picks up the name of the remote afs client host where the rmtsys 
  * daemon resides. Since the clients may be diskless and/or readonly
