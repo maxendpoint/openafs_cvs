@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.11.6.3 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.11.6.4 2007/11/30 19:17:01 shadow Exp $");
 
 
 
@@ -207,7 +207,11 @@ osi_AllocSmallSpace(size_t size)
     if (!freeSmallList) {
 	afs_stats_cmperf.SmallBlocksAlloced++;
 	afs_stats_cmperf.SmallBlocksActive++;
-	return afs_osi_Alloc(AFS_SMALLOCSIZ);
+	tp = afs_osi_Alloc(AFS_SMALLOCSIZ);
+#ifdef KERNEL_HAVE_PIN
+        pin((char *)tp, AFS_SMALLOCSIZ);
+#endif
+        return (char *)tp;
     }
     afs_stats_cmperf.SmallBlocksActive++;
     MObtainWriteLock(&osi_fsplock, 327);

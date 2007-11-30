@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/partition.c,v 1.33.2.3 2007/10/30 15:16:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/partition.c,v 1.33.2.4 2007/11/30 19:17:02 shadow Exp $");
 
 #include <ctype.h>
 #include <string.h>
@@ -456,7 +456,7 @@ VAttachPartitions(void)
 	/* but allow zfs too if we're in the NAMEI environment */
 	if (
 #ifdef AFS_NAMEI_ENV
-	    ((!(strcmp(mnt.mnt_fstype, "ufs") &&
+	    (((strcmp(mnt.mnt_fstype, "ufs") &&
 		strcmp(mnt.mnt_fstype, "zfs"))))
 #else
 	    (strcmp(mnt.mnt_fstype, "ufs") != 0)
