@@ -23,7 +23,7 @@
 #include <string.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.16.4.4 2007/11/14 04:05:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.16.4.5 2007/12/04 21:03:33 shadow Exp $");
 
 #ifndef AFS_NAMEI_ENV
 #if defined(AFS_LINUX20_ENV) || defined(AFS_SUN4_ENV)
@@ -1642,6 +1642,7 @@ getDevName(char *pbuffer, char *wpath)
         return NULL;
 }
 
+#ifdef FSSYNC_BUILD_CLIENT
 int
 inode_ConvertROtoRWvolume(char *pname, afs_int32 volumeId)
 {
@@ -1787,4 +1788,5 @@ inode_ConvertROtoRWvolume(char *pname, afs_int32 volumeId)
     FSYNC_VolOp(h.id, pname, FSYNC_VOL_ON, 0, NULL);
     return 0;
 }
+#endif /* FSSYNC_BUILD_CLIENT */
 #endif /* AFS_NAMEI_ENV */
