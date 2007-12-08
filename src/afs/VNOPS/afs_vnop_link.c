@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.19 2004/12/24 06:08:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.19.8.1 2007/12/08 17:59:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -127,7 +127,9 @@ afs_link(avc, OSI_VC_ARG(adp), aname, acred)
 	ObtainWriteLock(&tdc->lock, 635);
     if (afs_LocalHero(adp, tdc, &OutDirStatus, 1)) {
 	/* we can do it locally */
+	ObtainWriteLock(&afs_xdcache, 290);
 	code = afs_dir_Create(tdc, aname, &avc->fid.Fid);
+	ReleaseWriteLock(&afs_xdcache);
 	if (code) {
 	    ZapDCE(tdc);	/* surprise error -- invalid value */
 	    DZap(tdc);

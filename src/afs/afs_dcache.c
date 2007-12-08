@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.6 2007/08/21 21:28:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.7 2007/12/08 17:59:06 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -3073,6 +3073,7 @@ afs_WriteDCache(register struct dcache *adc, int atime)
     if (cacheDiskType == AFS_FCACHE_TYPE_MEM)
 	return 0;
     AFS_STATCNT(afs_WriteDCache);
+    osi_Assert(WriteLocked(&afs_xdcache));
     if (atime)
 	adc->f.modTime = osi_Time();
     /*
