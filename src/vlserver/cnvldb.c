@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.9.14.3 2007/11/26 21:08:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/cnvldb.c,v 1.9.14.4 2007/12/09 23:35:37 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -44,6 +44,10 @@ static int convert_vlentry();
 static int rewrite_header();
 
 static char tspace[1024];	/* chdir can't handle anything bigger, anyway */
+
+void read_mhentries(afs_uint32 mh_addr, int oldfd);
+void convert_mhentries(int oldfd, int newfd, struct vlheader_2 *header, int fromver, int tover);
+
 /* return a static pointer to a buffer */
 static char *
 Parent(apath)
