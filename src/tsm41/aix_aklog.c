@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tsm41/aix_aklog.c,v 1.1.2.2 2007/07/13 19:55:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/tsm41/aix_aklog.c,v 1.1.2.3 2007/12/09 06:07:32 shadow Exp $");
 
 #if defined(AFS_AIX51_ENV)
 #include <sys/types.h>
@@ -533,11 +533,14 @@ static int auth_to_cell(krb5_context context, char *cell, char *realm)
     strcpy(aclient.instance, "");
     strncpy(aclient.cell, realm_of_user, MAXKTCREALMLEN - 1);
     
+#ifndef AFS_AIX51_ENV
     /* on AIX 4.1.4 with AFS 3.4a+ if a write is not done before 
      * this routine, it will not add the token. It is not clear what 
-     * is going on here! So we will do the following operation
+     * is going on here! So we will do the following operation.
+     * On AIX 5 this kills our parent. So we won't.
      */
     write(2,"",0); /* dummy write */
+#endif
     status = ktc_SetToken(&aserver, &atoken, &aclient, afssetpag);
 
     return(status);
