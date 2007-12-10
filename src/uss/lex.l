@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 #include <afs/param.h>
 
-RCSID("$Header: /cvs/openafs/src/uss/lex.l,v 1.1.14.2 2007/11/26 21:08:45 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/uss/lex.l,v 1.1.14.3 2007/12/10 18:22:34 shadow Exp $");
 
 
 #include <string.h>
@@ -24,6 +24,7 @@ int line=1;
 #else
 #define dprint(x)
 #endif
+void Replace(char *in, char *out);
 %}
 
 /* definitions */
