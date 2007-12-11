@@ -25,7 +25,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.11.14.3 2007/11/26 21:08:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vldb_check.c,v 1.11.14.4 2007/12/11 20:43:50 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -242,7 +242,7 @@ readheader(headerp)
     if (headerp->vital_header.headersize != sizeof(*headerp))
 	printf("Header reports its size as %d (should be %d)\n",
 	       headerp->vital_header.headersize, sizeof(*headerp));
-    return 0;
+    return;
 }
 
 readMH(addr, mhblockP)
@@ -267,7 +267,7 @@ readMH(addr, mhblockP)
 	for (j = 0; j < VL_MAXIPADDRS_PERMH; j++)
 	    e->ex_addrs[j] = ntohl(e->ex_addrs[j]);
     }
-    return 0;
+    return;
 }
 
 readentry(addr, vlentryp, type)
@@ -348,7 +348,7 @@ readentry(addr, vlentryp, type)
 	    }
 	}
     }
-    return 0;
+    return;
 }
 
 void
@@ -565,7 +565,7 @@ FollowNameHash(header)
 	    ("%d entries in name hash, longest is %d, shortest is %d, average length is %f\n",
 	     count, longest, shortest, ((float)count / (float)HASHSIZE));
     }
-    return 0;
+    return;
 }
 
 /*
@@ -639,7 +639,7 @@ FollowIdHash(header)
 		 ((float)count / (float)HASHSIZE));
 	}
     }
-    return 0;
+    return;
 }
 
 /*
@@ -684,7 +684,7 @@ FollowFreeChain(header)
     }
     if (verbose)
 	printf("%d entries on free chain\n", count);
-    return 0;
+    return;
 }
 
 /*
@@ -895,7 +895,7 @@ CheckIpAddrs(header)
 	printf("%d simple entries, %d multihomed entries, Total = %d\n",
 	       regentries, mhentries, mhentries + regentries);
     }
-    return 0;
+    return;
 }
 
 int
