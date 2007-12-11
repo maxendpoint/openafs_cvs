@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.43.4.4 2007/11/26 21:08:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.43.4.5 2007/12/11 21:30:04 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -1129,7 +1129,7 @@ afsi_SetServerIPRank(struct srvAddr *sa, afs_int32 addr,
 	    sa->sa_iprank = afs_min(sa->sa_iprank, MED);
 	}
     }
-    return 0;
+    return;
 }
 #else /* AFS_USERSPACE_IP_ADDR */
 #if (! defined(AFS_SUN5_ENV)) && !defined(AFS_DARWIN60_ENV) && defined(USEIFADDR)
