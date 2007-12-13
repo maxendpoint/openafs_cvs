@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.5 2006/11/10 04:36:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.6 2007/12/13 17:06:38 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -872,6 +872,7 @@ restart:
     if (!freeVCList) {
 	/* none free, making one is better than a panic */
 	afs_stats_cmperf.vcacheXAllocs++;	/* count in case we have a leak */
+	afs_maxvcount++; /* update so we don't panic anyway */
 	tvc = (struct vcache *)afs_osi_Alloc(sizeof(struct vcache));
 #if defined(AFS_DARWIN_ENV) && !defined(UKERNEL)
 	tvc->v = NULL; /* important to clean this, or use memset 0 */
