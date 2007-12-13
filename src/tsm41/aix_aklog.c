@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tsm41/aix_aklog.c,v 1.1.2.4 2007/12/13 15:55:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/tsm41/aix_aklog.c,v 1.1.2.5 2007/12/13 23:06:08 shadow Exp $");
 
 #if defined(AFS_AIX51_ENV)
 #include <sys/types.h>
@@ -32,6 +32,7 @@ RCSID
 #include <afs/dirpath.h>
 #include <rx/rxkad.h>
 #include <afs/auth.h>
+#include <afs/ptserver.h>
 #include "aix_auth_prototypes.h"
 
 struct afsconf_cell ak_cellconfig; /* General information about the cell */
