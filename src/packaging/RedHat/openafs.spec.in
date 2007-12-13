@@ -1,4 +1,4 @@
-# Openafs Spec $Revision: 1.2.2.13 $
+# Openafs Spec $Revision: 1.2.2.14 $
 
 %define afsvers @VERSION@
 %define pkgvers @VERSION@
@@ -230,6 +230,9 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-root
 Packager: Derek Atkins <warlord@MIT.EDU>
 Group: Networking/Filesystems
 BuildRequires: %{?kdepend:%{kdepend}, } pam-devel, ncurses-devel, flex, bison
+%if %{krb5support}
+BuildRequires: krb5-devel
+%endif
 ExclusiveArch: %{ix86} x86_64 ia64
 
 #    http://dl.openafs.org/dl/openafs/candidate/%{afsvers}/...
