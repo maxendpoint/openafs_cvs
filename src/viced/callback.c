@@ -83,18 +83,24 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.25 2007/12/05 20:39:49 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.55.2.18.2.1 2007/12/13 20:51:53 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
 #include <time.h>		/* ANSI standard location for time stuff */
-#include <string.h>
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
 #include <io.h>
 #else
 #include <sys/time.h>
 #include <sys/file.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #endif
 #include <afs/assert.h>
 
@@ -487,7 +493,7 @@ CDelPtr(register struct FileEntry *fe, register afs_uint32 * cbp,
 	CcdelB++;
     *cbp = cb->cnext;
     FreeCB(cb);
-    if ((--fe->ncbs == 0) && deletefe)
+    if (deletefe && (--fe->ncbs == 0))
 	FDel(fe);
     return 0;
 }
@@ -639,8 +645,6 @@ AddCallBack1_r(struct host *host, AFSFid * fid, afs_uint32 * thead, int type,
     afs_uint32 *Thead = thead;
     struct CallBack *newcb = 0;
     int safety;
-
-    cbstuff.AddCallBacks++;
 
     host->Console |= 2;
 
@@ -965,9 +969,9 @@ DeleteCallBack(struct host *host, AFSFid * fid)
     register afs_uint32 *pcb;
     char hoststr[16];
 
-    H_LOCK;
     cbstuff.DeleteCallBacks++;
 
+    H_LOCK;
     h_Lock_r(host);
     fe = FindFE(fid);
     if (!fe) {
@@ -1026,7 +1030,6 @@ DeleteFileCallBacks(AFSFid * fid)
 	TDel(cb);
 	HDel(cb);
 	FreeCB(cb);
-	fe->ncbs--;
     }
     FDel(fe);
     H_UNLOCK;
@@ -1434,7 +1437,6 @@ BreakLaterCallBacks(void)
 			 fe->volid));
 		fid.Volume = fe->volid;
 		*feip = fe->fnext;
-		fe->status &= ~FE_LATER;
 		/* Works since volid is deeper than the largest pointer */
 		tmpfe = (struct object *)fe;
 		tmpfe->next = (struct object *)myfe;
@@ -1795,14 +1797,11 @@ PrintCallBackStats(void)
 int
 DumpCallBackState(void)
 {
-    int fd, oflag;
+    int fd;
     afs_uint32 magic = MAGIC, now = FT_ApproxTime(), freelisthead;
 
-    oflag = O_WRONLY | O_CREAT | O_TRUNC;
-#ifdef AFS_NT40_ENV
-    oflag |= O_BINARY;
-#endif
-    fd = open(AFSDIR_SERVER_CBKDUMP_FILEPATH, oflag, 0666);
+    fd = open(AFSDIR_SERVER_CBKDUMP_FILEPATH, O_WRONLY | O_CREAT | O_TRUNC,
+	      0666);
     if (fd < 0) {
 	ViceLog(0,
 		("Couldn't create callback dump file %s\n",
@@ -1836,15 +1835,11 @@ DumpCallBackState(void)
 time_t
 ReadDump(char *file)
 {
-    int fd, oflag;
+    int fd;
     afs_uint32 magic, freelisthead;
-    afs_uint32 now;
+    time_t now;
 
-    oflag = O_RDONLY;
-#ifdef AFS_NT40_ENV
-    oflag |= O_BINARY;
-#endif
-    fd = open(file, oflag);
+    fd = open(file, O_RDONLY);
     if (fd < 0) {
 	fprintf(stderr, "Couldn't read dump file %s\n", file);
 	exit(1);
@@ -1998,7 +1993,6 @@ main(int argc, char **argv)
 	    printf("%d:%12x%12x%12x%12x\n", i, p[0], p[1], p[2], p[3]);
 	}
     }
-    return 0;
 }
 
 int
@@ -2010,7 +2004,6 @@ PrintCB(register struct CallBack *cb, afs_uint32 now)
     printf("vol=%u vn=%u cbs=%d hi=%d st=%d fest=%d, exp in %d secs at %s",
 	   fe->volid, fe->vnode, fe->ncbs, cb->hhead, cb->status, fe->status,
 	   expires - now, ctime(&expires));
-    return 0;
 }
 
 #endif
