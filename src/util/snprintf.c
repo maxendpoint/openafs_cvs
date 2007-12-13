@@ -4,7 +4,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.24.4.1 2007/10/30 15:16:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.24.4.2 2007/12/13 22:41:57 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
@@ -520,6 +520,16 @@ vsnprintf(char *p, unsigned int avail, char *fmt, va_list ap)
 #endif
 }
 #endif /* AFS_OSF20_ENV || AFS_AIX32_ENV */
+
+#ifndef HAVE_VSYSLOG
+void
+vsyslog(int priority, const char *format, va_list args)
+{
+  char buf[1024];
+  vsnprintf(buf, sizeof(buf), format, args);
+  syslog(priority, "%s", buf);
+}
+#endif
 
 #ifndef AFS_NT40_ENV
 #if defined(AFS_OSF20_ENV) && !defined(AFS_DUX50_ENV) || defined(AFS_AIX32_ENV) || (defined(AFS_SUN55_ENV) && !defined(AFS_SUN56_ENV)) || !defined(HAVE_SNPRINTF)
