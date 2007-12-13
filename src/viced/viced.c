@@ -20,12 +20,11 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.22 2007/11/29 19:28:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.19.2.1 2007/12/13 21:00:43 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <string.h>
 #include <sys/types.h>
 #include <afs/procmgmt.h>	/* signal(), kill(), wait(), etc. */
 #include <sys/stat.h>
@@ -39,6 +38,14 @@ RCSID
 #include <netinet/in.h>
 #include <netdb.h>
 #include <unistd.h>		/* sysconf() */
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#endif
 
 #ifndef ITIMER_REAL
 #include <sys/time.h>
@@ -2032,5 +2039,4 @@ main(int argc, char *argv[])
 #else /* AFS_PTHREAD_ENV */
     assert(LWP_WaitProcess(&parentPid) == LWP_SUCCESS);
 #endif /* AFS_PTHREAD_ENV */
-    return 0;
 }
