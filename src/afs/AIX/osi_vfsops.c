@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/AIX/osi_vfsops.c,v 1.12 2004/08/19 05:42:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/AIX/osi_vfsops.c,v 1.12.8.1 2007/12/13 19:18:31 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -33,8 +33,6 @@ extern struct afs_exporter *afs_nfsexporter;
 
 struct vfs *afs_globalVFS = 0;
 struct vcache *afs_globalVp = 0;
-
-extern int afs_cold_shutdown;
 
 static int afs_root_nolock(struct vfs *afsp, struct vnode **avpp);
 

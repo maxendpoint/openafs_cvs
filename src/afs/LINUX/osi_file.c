@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.28.2.5 2006/11/09 23:30:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.28.2.6 2007/12/13 19:18:33 shadow Exp $");
 
 #ifdef AFS_LINUX24_ENV
 #include "h/module.h" /* early to avoid printf->printk mapping */
@@ -349,8 +349,6 @@ afs_osi_MapStrategy(int (*aproc) (struct buf * bp), register struct buf *bp)
 void
 shutdown_osifile(void)
 {
-    extern int afs_cold_shutdown;
-
     AFS_STATCNT(shutdown_osifile);
     if (afs_cold_shutdown) {
 	afs_osicred_initialized = 0;
