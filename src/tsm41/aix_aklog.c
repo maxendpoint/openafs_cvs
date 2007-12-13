@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tsm41/aix_aklog.c,v 1.1.2.3 2007/12/09 06:07:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/tsm41/aix_aklog.c,v 1.1.2.4 2007/12/13 15:55:49 shadow Exp $");
 
 #if defined(AFS_AIX51_ENV)
 #include <sys/types.h>
@@ -525,6 +525,10 @@ static int auth_to_cell(krb5_context context, char *cell, char *realm)
      * not work if you change %d to something else.
      */
     
+    /* Don't do first-time registration. Handle only the simple case */
+    if ((status == 0) && (viceId != ANONYMOUSID))
+	sprintf (username, "AFS ID %d", (int) viceId);
+
     /* Reset the "aclient" structure before we call ktc_SetToken.
      * This structure was first set by the ktc_GetToken call when
      * we were comparing whether identical tokens already existed.
