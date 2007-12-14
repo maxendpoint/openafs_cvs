@@ -4,7 +4,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.24.4.2 2007/12/13 22:41:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/snprintf.c,v 1.24.4.3 2007/12/14 13:19:43 jaltman Exp $");
 
 #include <sys/types.h>
 #include <stdarg.h>
@@ -14,6 +14,9 @@ RCSID
 #ifndef AFS_NT40_ENV
 #include <netinet/in.h>
 #include <netdb.h>
+#ifndef HAVE_VSYSLOG
+#include <syslog.h>
+#endif
 #else
 #include <winsock2.h>
 #endif
@@ -521,6 +524,7 @@ vsnprintf(char *p, unsigned int avail, char *fmt, va_list ap)
 }
 #endif /* AFS_OSF20_ENV || AFS_AIX32_ENV */
 
+#ifndef AFS_NT40_ENV
 #ifndef HAVE_VSYSLOG
 void
 vsyslog(int priority, const char *format, va_list args)
@@ -531,7 +535,6 @@ vsyslog(int priority, const char *format, va_list args)
 }
 #endif
 
-#ifndef AFS_NT40_ENV
 #if defined(AFS_OSF20_ENV) && !defined(AFS_DUX50_ENV) || defined(AFS_AIX32_ENV) || (defined(AFS_SUN55_ENV) && !defined(AFS_SUN56_ENV)) || !defined(HAVE_SNPRINTF)
 
 #ifdef AFS_AIX51_ENV
