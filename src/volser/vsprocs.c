@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.9 2007/12/17 16:01:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.10 2007/12/18 15:16:31 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -3855,39 +3855,39 @@ UV_DumpVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
     (void)signal(SIGINT, dump_sig_handler);
 
     if (!fromdate) {
-	VPRINT("Full Dump ...\n");
+	VEPRINT("Full Dump ...\n");
     } else {
-	VPRINT1("Incremental Dump (as of %.24s)...\n",
+	VEPRINT1("Incremental Dump (as of %.24s)...\n",
 		ctime(&tmv));
     }
 
     /* get connections to the servers */
     fromconn = UV_Bind(afromserver, AFSCONF_VOLUMEPORT);
 
-    VPRINT1("Starting transaction on volume %u...", afromvol);
+    VEPRINT1("Starting transaction on volume %u...", afromvol);
     code = AFSVolTransCreate(fromconn, afromvol, afrompart, ITBusy, &fromtid);
     EGOTO1(error_exit, code,
 	   "Could not start transaction on the volume %u to be dumped\n",
 	   afromvol);
-    VDONE;
+    VEDONE;
 
     fromcall = rx_NewCall(fromconn);
 
-    VPRINT1("Starting volume dump on volume %u...", afromvol);
+    VEPRINT1("Starting volume dump on volume %u...", afromvol);
     if (flags & VOLDUMPV2_OMITDIRS) 
 	code = StartAFSVolDumpV2(fromcall, fromtid, fromdate, flags);
     else
       retryold:
 	code = StartAFSVolDump(fromcall, fromtid, fromdate);
     EGOTO(error_exit, code, "Could not start the dump process \n");
-    VDONE;
+    VEDONE;
 
-    VPRINT1("Dumping volume %u...", afromvol);
+    VEPRINT1("Dumping volume %u...", afromvol);
     code = DumpFunction(fromcall, rock);
     if (code == RXGEN_OPCODE) 
 	goto error_exit;
     EGOTO(error_exit, code, "Error while dumping volume \n");
-    VDONE;
+    VEDONE;
 
   error_exit:
     if (fromcall) {
@@ -3898,7 +3898,7 @@ UV_DumpVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
 	    error = code;
     }
     if (fromtid) {
-	VPRINT1("Ending transaction on volume %u...", afromvol);
+	VEPRINT1("Ending transaction on volume %u...", afromvol);
 	code = AFSVolEndTrans(fromconn, fromtid, &rcode);
 	if (code || rcode) {
 	    fprintf(STDERR, "Could not end transaction on the volume %lu\n",
@@ -3906,7 +3906,7 @@ UV_DumpVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
 	    if (!error)
 		error = (code ? code : rcode);
 	}
-	VDONE;
+	VEDONE;
     }
     if (fromconn)
 	rx_DestroyConnection(fromconn);
