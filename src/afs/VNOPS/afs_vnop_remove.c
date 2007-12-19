@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.52.2.3 2006/07/31 21:27:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.52.2.4 2007/12/19 20:57:55 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -418,7 +418,11 @@ afs_remove(OSI_VC_ARG(adp), aname, acred)
 	code = afsremove(adp, tdc, tvc, aname, acred, &treq);
     }
     afs_PutFakeStat(&fakestate);
+#ifndef AFS_DARWIN80_ENV
+    /* we can't track by thread, it's not exported in the KPI; only do
+       this on !macos */
     osi_Assert(!WriteLocked(&adp->lock) || (adp->lock.pid_writer != MyPidxx));
+#endif
     return code;
 }
 
