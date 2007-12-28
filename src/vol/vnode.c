@@ -20,7 +20,7 @@
 #define MAXINT     (~(1<<((sizeof(int)*8)-1)))
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.27.2.2 2007/12/28 21:50:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.27.2.3 2007/12/28 22:15:02 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -72,6 +72,8 @@ struct VnodeClassInfo VnodeClassInfo[nVNODECLASSES];
 private int moveHash(register Vnode * vnp, bit32 newHash);
 private void StickOnLruChain_r(register Vnode * vnp,
 			       register struct VnodeClassInfo *vcp);
+
+extern int LogLevel;
 
 #define BAD_IGET	-1000
 
