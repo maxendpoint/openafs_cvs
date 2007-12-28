@@ -20,7 +20,7 @@
 #define MAXINT     (~(1<<((sizeof(int)*8)-1)))
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.27.2.1 2007/10/30 15:16:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vnode.c,v 1.27.2.2 2007/12/28 21:50:40 shadow Exp $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -699,6 +699,9 @@ VGetVnode_r(Error * ec, Volume * vp, VnodeId vnodeNumber, int locktype)
 #endif
 		mlkReason = 4;
 	    } else {
+		/* Probably legit; Don't knock the volume offline */
+		if (LogLevel >= 5) 
+		    Log("VGetVnode: Couldn't read vnode %u, volume %u (%s); errno %d\n", vnodeNumber, V_id(vp), V_name(vp), errno);
 		mlkReason = 5;
 		*ec = VIO;
 	    }
