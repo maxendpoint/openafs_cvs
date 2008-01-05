@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsfuncs.c,v 1.1.2.16 2008/01/05 17:29:56 jaltman Exp $ */
+/* $Id: afsfuncs.c,v 1.1.2.17 2008/01/05 18:57:12 jaltman Exp $ */
 
 /* Disable the 'macro redefinition' warning which is getting
    triggerred by a redefinition of the ENCRYPT and DECRYPT macros. */
@@ -715,8 +715,7 @@ copy_realm_of_ticket(krb5_context context, char * dest, size_t destlen, krb5_cre
         if (len > destlen - 1)
             len = destlen - 1;
 
-        strncpy(dest, krb5_princ_realm(context, ticket->server)->data, len);
-        dest[len] = 0;
+        StringCbCopyA(dest, len, krb5_princ_realm(context, ticket->server)->data);
 
         pkrb5_free_ticket(context, ticket);
     }
