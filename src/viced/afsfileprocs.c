@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.20 2007/11/21 19:34:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.21 2008/01/07 20:23:50 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -342,7 +342,8 @@ CallPreamble(register struct rx_call *acall, int activecall,
 	    hpr_End(uclient);
 	code = hpr_Initialize(&uclient);
 
-	assert(pthread_setspecific(viced_uclient_key, (void *)uclient) == 0);
+	if (!code)
+	    assert(pthread_setspecific(viced_uclient_key, (void *)uclient) == 0);
 	H_LOCK;
 #else
 	code = pr_Initialize(2, AFSDIR_SERVER_ETC_DIRPATH, 0);
