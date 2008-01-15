@@ -68,8 +68,7 @@ returnto:
 
 #endif /* __arm32__ or __arm__ */
 
-	
-
+#if defined(RIOS)
 /*                 I don't know if we have to save the TOC (R2) or not...
  *		   Note that stack-frame is supposed to be aligned on 
  *		   a double-word boundary.
