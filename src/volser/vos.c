@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.10 2008/01/21 14:33:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.11 2008/01/22 05:15:30 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -5831,7 +5831,7 @@ main(argc, argv)
     cmd_AddParm(ts, "-partition", CMD_SINGLE, 0,
 		"partition name for new site");
     cmd_AddParm(ts, "-id", CMD_SINGLE, 0, "volume name or ID");
-    cmd_AddParm(ts, "-valid", CMD_SINGLE, CMD_FLAG | CMD_HIDDEN, "publish as an up-to-date site in VLDB");
+    cmd_AddParm(ts, "-valid", CMD_FLAG, CMD_OPTIONAL | CMD_HIDE, "publish as an up-to-date site in VLDB");
     COMMONPARMS;
 
     ts = cmd_CreateSyntax("remsite", RemoveSite, NULL,
