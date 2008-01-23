@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.11 2007/10/30 15:16:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.12 2008/01/23 04:18:15 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -1344,6 +1344,23 @@ rx_NewServiceHost(afs_uint32 host, u_short port, u_short serviceId,
     rxi_FreeService(tservice);
     (osi_Msg "rx_NewService: cannot support > %d services\n",
      RX_MAX_SERVICES);
+    return 0;
+}
+
+/* Set configuration options for all of a service's security objects */
+
+afs_int32 
+rx_SetSecurityConfiguration(struct rx_service *service, 
+			    rx_securityConfigVariables type,
+			    void *value)
+{
+    int i;
+    for (i = 0; i<service->nSecurityObjects; i++) {
+	if (service->securityObjects[i]) {
+	    RXS_SetConfiguration(service->securityObjects[i], NULL, type, 
+				 value, NULL);
+	}
+    }
     return 0;
 }
 
