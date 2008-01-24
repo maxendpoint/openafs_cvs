@@ -4,8 +4,9 @@
 #
 # chkconfig: 2345 50 50
 # description: OpenAFS is a distributed filesystem.
+# Should-Start: dkms
 #
-# $Revision: 1.2.2.5 $
+# $Revision: 1.2.2.6 $
 
 [ -f /etc/init.d/functions ] && . /etc/init.d/functions
 [ -f /etc/sysconfig/openafs ] && . /etc/sysconfig/openafs
