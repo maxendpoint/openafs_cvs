@@ -17,13 +17,10 @@
 #include "afs/param.h"
 #ifdef LINUX_KEYRING_SUPPORT
 #include <linux/seq_file.h>
-#if KEY_TYPE_H_EXISTS
-#include <linux/key-type.h>
-#endif
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.28.4.9 2008/01/10 17:00:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.28.4.10 2008/01/28 19:30:10 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
