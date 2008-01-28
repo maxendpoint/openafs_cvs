@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.34.4.6 2007/12/04 20:31:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_cell.c,v 1.34.4.7 2008/01/28 01:39:18 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -158,13 +158,12 @@ afs_GetCellHostsAFSDB(char *acellName)
 	ObtainReadLock(&afsdb_req_lock);
     };
 
-    afs_osi_FreeStr(afsdb_req.cellname);
     ReleaseReadLock(&afsdb_req_lock);
     ReleaseWriteLock(&afsdb_client_lock);
 
-    if (afsdb_req.cellname) 
+    if (afsdb_req.cellname) {
 	return 0;
-    else
+    } else
 	return ENOENT;
 }
 #endif
