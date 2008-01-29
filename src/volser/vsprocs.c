@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.11 2008/01/21 14:33:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.12 2008/01/29 20:41:27 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -5572,7 +5572,7 @@ CheckVolume(volintInfo * volumeinfo, afs_int32 aserver, afs_int32 apart,
 				    (unsigned long)volumeinfo->volid);
 			}
 
-			Lp_SetRWValue(entry, entry.serverNumber[idx],
+			Lp_SetRWValue(&entry, entry.serverNumber[idx],
 				      entry.serverPartition[idx], 0L, 0L);
 			entry.nServers--;
 			modified++;
