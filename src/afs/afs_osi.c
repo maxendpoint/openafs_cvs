@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.4 2006/12/28 21:49:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.5 2008/01/30 21:05:47 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -205,6 +205,19 @@ afs_osi_Invisible(void)
     AFS_STATCNT(osi_Invisible);
 }
 
+void
+afs_osi_Visible(void)
+{
+#if defined(AFS_SUN5_ENV)
+    curproc->p_flag &= ~SSYS;
+#elif defined(AFS_DARWIN80_ENV)
+#elif defined(AFS_DARWIN_ENV)
+    /* maybe call init_process instead? */
+    current_proc()->p_flag &= ~P_SYSTEM;
+#elif defined(AFS_XBSD_ENV)
+    curproc->p_flag &= ~P_SYSTEM;
+#endif
+}
 
 #if !defined(AFS_LINUX20_ENV) && !defined(AFS_FBSD_ENV)
 /* set the real time */

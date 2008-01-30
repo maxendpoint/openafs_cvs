@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.56.2.5 2008/01/30 17:26:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.56.2.6 2008/01/30 21:05:48 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -1089,7 +1089,11 @@ afs_rxevent_daemon(void)
 #ifdef RXK_LISTENER_ENV
 	    afs_termState = AFSOP_STOP_RXK_LISTENER;
 #else
+#ifdef AFS_SUN510_ENV
+	    afs_termState = AFSOP_STOP_NETIF;
+#else
 	    afs_termState = AFSOP_STOP_COMPLETE;
+#endif
 #endif
 	    osi_rxWakeup(&afs_termState);
 	    return;
@@ -1267,7 +1271,11 @@ rxk_Listener(void)
     AFS_GLOCK();
 #endif /* RX_ENABLE_LOCKS */
     if (afs_termState == AFSOP_STOP_RXK_LISTENER) {
+#ifdef AFS_SUN510_ENV
+	afs_termState = AFSOP_STOP_NETIF;
+#else
 	afs_termState = AFSOP_STOP_COMPLETE;
+#endif
 	osi_rxWakeup(&afs_termState);
     }
     rxk_ListenerPid = 0;

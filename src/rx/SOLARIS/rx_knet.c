@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.20.6.1 2007/10/05 02:24:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/SOLARIS/rx_knet.c,v 1.20.6.2 2008/01/30 21:05:48 shadow Exp $");
 
 #ifdef AFS_SUN5_ENV
 #include "rx/rx_kcommon.h"
@@ -592,6 +592,14 @@ osi_NetIfPoller()
     uint_t mtu;
     uint64_t flags;
 
+    if (afs_termState == AFSOP_STOP_NETIF) {
+	afs_warn("NetIfPoller... ");
+	rw_destroy(&afsifinfo_lock);
+	ddi_taskq_destroy(afs_taskq);
+	afs_termState = AFSOP_STOP_COMPLETE;
+	osi_rxWakeup(&afs_termState);
+	return;
+    }
     /* Get our permissions */
     cr = CRED();
 
