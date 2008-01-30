@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.44.4.3 2006/07/31 21:27:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.44.4.4 2008/01/30 17:26:01 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -65,8 +65,6 @@ afs_osi_SetTime(osi_timeval_t * tvp)
 #endif
 }
 
-struct task_struct *rxk_ListenerTask;
-
 void
 osi_linux_mask(void)
 {
@@ -75,13 +73,6 @@ osi_linux_mask(void)
     RECALC_SIGPENDING(current);
     SIG_UNLOCK(current);
 }
-
-void
-osi_linux_rxkreg(void)
-{
-    rxk_ListenerTask = current;
-}
-
 
 #if defined(AFS_LINUX24_ENV)
 /* LOOKUP_POSITIVE is becoming the default */
