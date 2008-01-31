@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.30.6.6 2007/11/26 21:08:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.30.6.7 2008/01/31 20:18:36 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -1000,6 +1000,12 @@ shutdown_nfsclnt(void)
 
 void
 afs_osi_Invisible(void)
+{
+    return;
+}
+
+void
+afs_osi_Visible(void)
 {
     return;
 }
