@@ -53,7 +53,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.1.4.5 2007/11/01 15:00:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.1.4.6 2008/02/01 15:27:30 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -1255,6 +1255,7 @@ GetHandler(struct pollfd *fds, int maxfds, int events, int *nfds)
 	    fdi++;
 	}
     *nfds = fdi;
+    ReleaseReadLock(&FSYNC_handler_lock);
 }
 #else
 static void
