@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005,2006 Secure Endpoints Inc.
+ * Copyright (c) 2005-2008 Secure Endpoints Inc.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afscred.h,v 1.1.2.5 2007/08/28 16:54:46 jaltman Exp $ */
+/* $Id: afscred.h,v 1.1.2.6 2008/02/01 21:17:15 jaltman Exp $ */
 
 #ifndef __KHIMAIRA_AFSCRED_H
 #define __KHIMAIRA_AFSCRED_H
@@ -41,8 +41,8 @@
 
 #include<langres.h>
 
-#include <afs/cm_config.h>
 #include <afs/stds.h>
+#include <afs/cm_config.h>
 #include <afs/auth.h>
 #include <afs/ptserver.h>
 #include <afs/ptuser.h>
