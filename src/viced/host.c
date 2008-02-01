@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.26 2008/01/07 20:23:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.27 2008/02/01 21:33:40 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1086,7 +1086,10 @@ h_Enumerate(int (*proc) (), char *param)
 	if (!(held[count] = h_Held_r(host)))
 	    h_Hold_r(host);
     }
-    assert(count == hostCount);
+    if (count != hostCount) {
+	ViceLog(0, ("h_Enumerate found %d of %d hosts\n", count, hostCount));
+    }
+    assert(count <= hostCount);
     H_UNLOCK;
     for (i = 0; i < count; i++) {
 	held[i] = (*proc) (list[i], held[i], param);
