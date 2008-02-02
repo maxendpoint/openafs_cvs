@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.19.2.1 2006/11/20 23:49:18 rra Exp $");
+    ("$Header: /cvs/openafs/src/util/dirpath.c,v 1.19.2.2 2008/02/02 02:48:14 jaltman Exp $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -135,7 +135,7 @@ initDirPathArray(void)
     FilepathNormalize(ntServerInstallDirShort);
 
     /* get the afs client configuration directory (/usr/vice/etc equivalent) */
-    if (afssw_GetClientInstallDir(&buf)) {
+    if (afssw_GetClientCellServDBDir(&buf)) {
         /* failed */
         status = GetWindowsDirectory(ntClientConfigDirLong, AFSDIR_PATH_MAX);
         if (status == 0 || status > AFSDIR_PATH_MAX) {
