@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.15.14.1 2007/10/30 15:16:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.15.14.2 2008/02/04 17:53:43 shadow Exp $");
 
 #include <sys/types.h>
 #include <lock.h>
@@ -824,6 +824,9 @@ IsAMemberOf(struct ubik_trans *at, afs_int32 aid, afs_int32 gid)
 	return 1;
     if (gid == AUTHUSERID && aid != ANONYMOUSID)
 	return 1;
+    /* check -localauth case */
+    if (gid == SYSADMINID && aid == SYSADMINID)
+        return 1;
     if ((gid == 0) || (aid == 0))
 	return 0;
 #if defined(SUPERGROUPS)
