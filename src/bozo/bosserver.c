@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.32.2.8 2008/01/23 04:18:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.32.2.9 2008/02/04 03:51:41 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -832,7 +832,7 @@ main(int argc, char **argv, char **envp)
 	    rxMaxMTU = atoi(argv[++i]);
 	    if ((rxMaxMTU < RX_MIN_PACKET_SIZE) || 
 		(rxMaxMTU > RX_MAX_PACKET_DATA_SIZE)) {
-		printf("rxMaxMTU %d% invalid; must be between %d-%d\n",
+		printf("rxMaxMTU %d invalid; must be between %d-%d\n",
 			rxMaxMTU, RX_MIN_PACKET_SIZE, 
 			RX_MAX_PACKET_DATA_SIZE);
 		exit(1);

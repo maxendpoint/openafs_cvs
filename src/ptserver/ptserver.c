@@ -112,7 +112,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.25.2.6 2008/01/23 04:18:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.25.2.7 2008/02/04 03:51:41 jaltman Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -365,7 +365,7 @@ main(int argc, char **argv)
 	    rxMaxMTU = atoi(argv[++a]);
 	    if ((rxMaxMTU < RX_MIN_PACKET_SIZE) ||
 		 (rxMaxMTU > RX_MAX_PACKET_DATA_SIZE)) {
-		printf("rxMaxMTU %d% invalid; must be between %d-%d\n",
+		printf("rxMaxMTU %d invalid; must be between %d-%d\n",
 			rxMaxMTU, RX_MIN_PACKET_SIZE,
 			RX_MAX_PACKET_DATA_SIZE);
 		PT_EXIT(1);
