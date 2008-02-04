@@ -8,7 +8,7 @@ pts_listentries - Displays all users or groups in the Protection Database
 <div class="synopsis">
 
 B<pts listentries> [B<-users>] [B<-groups>] S<<< [B<-cell> <I<cell name>>] >>>
-    [B<-noauth>] [B<-localauth] [B<-force>] [B<-help>]
+    [B<-noauth>] [B<-localauth>] [B<-force>] [B<-help>]
 
 B<pts liste> [B<-u>] [B<-g>] S<<< [B<-c> <I<cell name>>] >>> [B<-n>] [B<-l>] 
              [B<-f>] [B<-h>]

@@ -15,7 +15,7 @@ B<pts createu> S<<< B<-na> <I<user name>>+ >>> S<<< [B<-i> <I<user id>>+] >>>
     S<<< [B<-c> <I<cell name>>] >>> [B<-no>] [B<-l>] [B<-f>] [B<-h>]
 
 B<pts cu> S<<< B<-na> <I<user name>>+ >>> S<<< [B<-i> <I<user id>>+] >>>
-    S<<< [B<-c> <I<cell name>>] >>> [B<-no>] [N<-l>] [B<-f>] [B<-h>]
+    S<<< [B<-c> <I<cell name>>] >>> [B<-no>] [B<-l>] [B<-f>] [B<-h>]
 
 =for html
 </div>
