@@ -36,7 +36,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.10.4.2 2006/07/03 19:38:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_hout.c,v 1.10.4.3 2008/02/05 17:18:42 jaltman Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -268,9 +268,9 @@ psprocdef(definition * defp)
 		(1 << DEF_INPARAM) | (1 << DEF_INOUTPARAM));
 	psproc1(defp, 1, "int", "End",
 		(1 << DEF_OUTPARAM) | (1 << DEF_INOUTPARAM));
-    } else {
-	psproc1(defp, 0, "int", "", 0xFFFFFFFF);
-    }
+    } 
+    if (!(!multi_flag && split_flag))
+        psproc1(defp, 0, "int", "", 0xFFFFFFFF);
 
     if (uflag && !kflag)
 	psproc1(defp, 2, "int", "ubik_", 0xFFFFFFFF);
