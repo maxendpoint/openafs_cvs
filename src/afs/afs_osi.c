@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.5 2008/01/30 21:05:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.6 2008/02/06 01:32:13 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -177,9 +177,6 @@ afs_osi_UnmaskUserLoop()
 void
 afs_osi_RxkRegister(void)
 {
-#ifdef AFS_LINUX22_ENV
-    osi_linux_rxkreg();
-#endif
 }
 
 /* procedure for making our processes as invisible as we can */
