@@ -7,15 +7,12 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include "stdafx.h"
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
 extern "C" {
 #include <afs/param.h>
 #include <afs/stds.h>
 }
 
+#include "stdafx.h"
 #include "submounts_dlg.h"
 #include "add_submount_dlg.h"
 #include "msgs.h"
@@ -53,7 +50,7 @@ static CSubmountInfo *ReadSubmtInfo(const CString& strShareName)
                     0, 
                     "AFS", 
                     REG_OPTION_NON_VOLATILE,
-                    KEY_READ,
+                    (IsWow64()?KEY_WOW64_64KEY:0)|KEY_READ,
                     NULL, 
                     &hkSubmounts,
                     NULL );
@@ -174,7 +171,7 @@ BOOL CSubmountsDlg::FillSubmtList()
                     0, 
                     "AFS", 
                     REG_OPTION_NON_VOLATILE,
-                    KEY_READ|KEY_WRITE|KEY_QUERY_VALUE,
+                    (IsWow64()?KEY_WOW64_64KEY:0)|KEY_READ|KEY_WRITE|KEY_QUERY_VALUE,
                     NULL, 
                     &hkSubmounts,
                     NULL );
@@ -256,7 +253,7 @@ static BOOL AddSubmt(CSubmountInfo *pInfo)
                     0, 
                     "AFS", 
                     REG_OPTION_NON_VOLATILE,
-                    KEY_WRITE,
+                    (IsWow64()?KEY_WOW64_64KEY:0)|KEY_WRITE,
                     NULL, 
                     &hkSubmounts,
                     NULL );
@@ -278,7 +275,7 @@ static BOOL DeleteSubmt(CSubmountInfo *pInfo)
                     0, 
                     "AFS", 
                     REG_OPTION_NON_VOLATILE,
-                    KEY_WRITE,
+                    (IsWow64()?KEY_WOW64_64KEY:0)|KEY_WRITE,
                     NULL, 
                     &hkSubmounts,
                     NULL );

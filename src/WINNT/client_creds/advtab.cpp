@@ -7,9 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
 extern "C" {
 #include <afs/param.h>
 #include <afs/stds.h>
@@ -298,7 +295,8 @@ void Advanced_OnStartup (HWND hDlg)
    g.fStartup = IsDlgButtonChecked (hDlg, IDC_STARTUP);
 
    HKEY hk;
-   if (RegCreateKey (HKEY_LOCAL_MACHINE, TEXT(AFSREG_CLT_SVC_PARAM_SUBKEY), &hk) == 0)
+   if (RegCreateKeyEx (HKEY_LOCAL_MACHINE, TEXT(AFSREG_CLT_SVC_PARAM_SUBKEY), 0, NULL, 0,
+                        (IsWow64()?KEY_WOW64_64KEY:0)|KEY_WRITE, NULL, &hk, NULL) == 0)
       {
       DWORD dwSize = sizeof(g.fStartup);
       DWORD dwType = REG_DWORD;
