@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.28.2.6 2007/07/26 17:05:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.28.2.7 2008/02/11 04:00:47 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -134,6 +134,19 @@ afs_strchr(char *s, int c)
 	if (*p == c)
 	    return p;
     return NULL;
+}
+#endif
+#ifndef afs_strrchr
+char *
+afs_strrchr(char *s, int c)
+{
+    char *p = NULL;
+    
+    do {
+	if (*s == c)
+	    p = (char*) s;
+    } while (*s++);
+    return p;
 }
 #endif
 
