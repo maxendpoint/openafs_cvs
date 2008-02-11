@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.10 2008/02/04 18:51:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.11 2008/02/11 03:37:23 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -487,6 +487,7 @@ VolDeleteVolume(struct rx_call *acid, afs_int32 atrans)
     strcpy(tt->lastProcName, "DeleteVolume");
     tt->rxCallPtr = acid;
     VPurgeVolume(&error, tt->volume);	/* don't check error code, it is not set! */
+    V_destroyMe(tt->volume) = DESTROY_ME; /* so endtrans does the right fssync opcode */
     tt->vflags |= VTDeleted;	/* so we know not to do anything else to it */
     tt->rxCallPtr = (struct rx_call *)0;
     if (TRELE(tt))

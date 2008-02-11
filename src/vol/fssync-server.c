@@ -53,7 +53,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.1.4.7 2008/02/04 18:51:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-server.c,v 1.1.4.8 2008/02/11 03:37:22 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -826,6 +826,7 @@ FSYNC_com_VolDone(FSSYNC_VolOp_command * vcom, SYNC_response * res)
 #ifdef AFS_DEMAND_ATTACH_FS
     vp = VLookupVolume_r(&error, vcom->vop->volume, NULL);
     if (vp) {
+	VChangeState_r(vp, VOL_STATE_UNATTACHED);
 	VDeregisterVolOp_r(vp);
     }
 #endif
