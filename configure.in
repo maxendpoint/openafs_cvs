@@ -1,0 +1,140 @@
+AC_INIT(src/config/stds.h)
+AM_INIT_AUTOMAKE(openafs,1.5.31)
+AC_CONFIG_HEADER(src/config/afsconfig.h)
+MACOS_VERSION=1.5.31
+
+AC_SUBST(MACOS_VERSION)
+
+AC_PROG_CC
+AC_CHECK_PROGS(CPP,[/lib/cpp /usr/bin/cpp /usr/ccs/lib/cpp cpp],,[$PATH:/])
+OPENAFS_CONFIGURE_COMMON
+
+if test -d 'doc/man-pages' ; then
+    MAN_MAKEFILE="doc/man-pages/Makefile doc/man-pages/install-man"
+else
+    MAN_MAKEFILE=
+fi
+
+AC_OUTPUT(             \
+Makefile               \
+${MAN_MAKEFILE} \
+src/afs/Makefile \
+src/afsd/Makefile \
+src/afsmonitor/Makefile \
+src/afsweb/Makefile \
+src/aklog/Makefile \
+src/audit/Makefile \
+src/auth/Makefile \
+src/auth/test/Makefile \
+src/bozo/Makefile \
+src/bozo/test/Makefile \
+src/bu_utils/Makefile \
+src/bubasics/Makefile \
+src/bucoord/Makefile \
+src/budb/Makefile \
+src/butc/Makefile \
+src/butm/Makefile \
+src/cmd/Makefile \
+src/cmd/test/Makefile \
+src/comerr/Makefile \
+src/comerr/test/Makefile \
+src/config/Makefile \
+src/config/Makefile.config \
+src/config/Makefile.version-NOCML \
+src/dauth/Makefile \
+src/des/Makefile \
+src/des/test/Makefile \
+src/des_stub/Makefile \
+src/dir/Makefile \
+src/dir/test/Makefile \
+src/export/Makefile \
+src/finale/Makefile \
+src/fsint/Makefile \
+src/fsprobe/Makefile \
+src/gtx/Makefile \
+src/JAVA/libjafs/Makefile \
+src/kauth/Makefile \
+src/kauth/test/Makefile \
+src/libacl/Makefile \
+src/libacl/test/Makefile \
+src/libadmin/Makefile \
+src/libadmin/adminutil/Makefile \
+src/libadmin/bos/Makefile \
+src/libadmin/cfg/Makefile \
+src/libadmin/cfg/test/Makefile \
+src/libadmin/client/Makefile \
+src/libadmin/kas/Makefile \
+src/libadmin/pts/Makefile \
+src/libadmin/samples/Makefile \
+src/libadmin/test/Makefile \
+src/libadmin/vos/Makefile \
+src/libafs/Makefile.common \
+src/libafs/MakefileProto.${MKAFS_OSTYPE} \
+${DARWIN_PLIST} \
+src/libafsauthent/Makefile \
+src/libafsrpc/Makefile \
+src/libuafs/Makefile.common \
+src/libuafs/MakefileProto.${MKAFS_OSTYPE} \
+src/log/Makefile \
+src/log/test/Makefile \
+src/login/Makefile \
+src/lwp/Makefile \
+src/lwp/test/Makefile \
+src/mpp/Makefile \
+src/null/Makefile \
+src/package/Makefile \
+src/packaging/MacOS/OpenAFS.Info.plist \
+src/packaging/MacOS/OpenAFS.info \
+src/packaging/MacOS/buildpkg.sh \
+src/packaging/RedHat/openafs.spec \
+src/pam/Makefile \
+src/pinstall/Makefile \
+src/pinstall/test/Makefile \
+src/platform/Makefile \
+src/platform/${MKAFS_OSTYPE}/Makefile \
+src/procmgmt/Makefile \
+src/procmgmt/test/Makefile \
+src/ptserver/Makefile \
+src/rx/Makefile \
+src/rx/bulk.example/Makefile \
+src/rx/bulktest/Makefile \
+src/rx/multi.example/Makefile \
+src/rx/simple.example/Makefile \
+src/rx/test/Makefile \
+src/rxdebug/Makefile \
+src/rxgen/Makefile \
+src/rxkad/Makefile \
+src/rxkad/test/Makefile \
+src/rxstat/Makefile \
+src/scout/Makefile \
+src/sgistuff/Makefile \
+src/shlibafsauthent/Makefile \
+src/shlibafsrpc/Makefile \
+src/sia/Makefile \
+src/sys/Makefile \
+src/tbutc/Makefile \
+src/tests/Makefile \
+src/tests/run-tests \
+src/tsalvaged/Makefile \
+src/tsm41/Makefile \
+src/tviced/Makefile \
+src/tvolser/Makefile \
+src/ubik/Makefile \
+src/update/Makefile \
+src/usd/Makefile \
+src/usd/test/Makefile \
+src/uss/Makefile \
+src/util/Makefile \
+src/util/test/Makefile \
+src/venus/Makefile \
+src/venus/test/Makefile \
+src/vfsck/Makefile \
+src/viced/Makefile \
+src/vlserver/Makefile \
+src/vol/Makefile \
+src/vol/test/Makefile \
+src/volser/Makefile \
+src/wsadmin.src/Makefile \
+src/xstat/Makefile \
+src/helper-splint.sh \
+)
