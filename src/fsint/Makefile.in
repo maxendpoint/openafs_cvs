@@ -1,0 +1,126 @@
+# Copyright 2000, International Business Machines Corporation and others.
+# All Rights Reserved.
+# 
+# This software has been released under the terms of the IBM Public
+# License.  For details, see the LICENSE file in the top-level source
+# directory or online at http://www.openafs.org/dl/license10.html
+
+srcdir=@srcdir@
+include @TOP_OBJDIR@/src/config/Makefile.config
+
+OBJS=afsaux.o afscbint.cs.o afscbint.ss.o afscbint.xdr.o afsint.cs.o afsint.ss.o afsint.xdr.o
+
+all: \
+	${TOP_LIBDIR}/libafsint.a depinstall
+
+depinstall: \
+	${TOP_INCDIR}/afs/afsint.h \
+	${TOP_INCDIR}/afs/afscbint.h \
+	Kcallback.ss.c Kcallback.h Kvice.cs.c Kvice.h Kvice.xdr.c afscbint.h afsint.h 
+
+libafsint.a: ${OBJS} AFS_component_version_number.o
+	-$(RM) -f $@
+	$(AR) crv $@ ${OBJS} AFS_component_version_number.o
+	$(RANLIB) $@
+
+afsaux.o: afsaux.c afsint.h
+
+Kcallback.cs.c: common.xg afscbint.xg Kvice.h Kcallback.h
+	${RXGEN} -x -k -A -C -o Kcallback.cs.c ${srcdir}/afscbint.xg
+
+Kcallback.ss.c: common.xg afscbint.xg Kvice.h Kcallback.h
+	${RXGEN} -x -k -A -S -o Kcallback.ss.c ${srcdir}/afscbint.xg
+
+Kcallback.xdr.c: common.xg afscbint.xg Kvice.h Kcallback.h
+	${RXGEN} -x -k -A -y -c -o Kcallback.xdr.c ${srcdir}/afscbint.xg
+
+Kvice.cs.c: common.xg afsint.xg Kvice.h
+	${RXGEN} -x -k -A -C -o Kvice.cs.c ${srcdir}/afsint.xg
+
+Kvice.ss.c: common.xg afsint.xg Kvice.h
+	${RXGEN} -x -k -A -S -o Kvice.ss.c ${srcdir}/afsint.xg
+
+Kvice.xdr.c: common.xg afsint.xg
+	${RXGEN} -x -k -A -c -o Kvice.xdr.c ${srcdir}/afsint.xg
+
+Kvice.h: common.xg afsint.xg
+	${RXGEN} -x -k -A -h -o Kvice.h ${srcdir}/afsint.xg
+
+Kcallback.h: common.xg afscbint.xg
+	${RXGEN} -x -k -A -h -o Kcallback.h ${srcdir}/afscbint.xg
+
+afscbint.cs.c: common.xg afscbint.xg afsint.h afscbint.h 
+	${RXGEN} -x -A -C -o afscbint.cs.c ${srcdir}/afscbint.xg
+
+afscbint.ss.c: common.xg afscbint.xg afsint.h afscbint.h
+	${RXGEN} -x -A -S -o afscbint.ss.c ${srcdir}/afscbint.xg
+
+afscbint.xdr.c: common.xg afscbint.xg afsint.h afscbint.h
+	${RXGEN} -x -y -A -c -o afscbint.xdr.c ${srcdir}/afscbint.xg
+
+afsint.cs.c: common.xg afsint.xg afsint.h
+	${RXGEN} -x -A -C -o afsint.cs.c ${srcdir}/afsint.xg
+
+afsint.ss.c: common.xg afsint.xg afsint.h
+	${RXGEN} -x -A -S -o afsint.ss.c ${srcdir}/afsint.xg
+
+afsint.xdr.c: common.xg afsint.xg
+	${RXGEN} -x -A -c -o afsint.xdr.c ${srcdir}/afsint.xg
+
+afsint.h: common.xg afsint.xg
+	${RXGEN} -x -A -h -o afsint.h ${srcdir}/afsint.xg
+
+afscbint.h: common.xg afscbint.xg
+	${RXGEN} -x -A -h -o afscbint.h ${srcdir}/afscbint.xg
+
+#
+# Installation targets
+#
+${TOP_LIBDIR}/libafsint.a: libafsint.a
+	${INSTALL} $? $@
+
+${TOP_INCDIR}/afs/afsint.h: afsint.h
+	${INSTALL} $? $@
+
+${TOP_INCDIR}/afs/afscbint.h: afscbint.h
+	${INSTALL} $? $@
+
+install: \
+	${DESTDIR}${libdir}/afs/libafsint.a \
+	${DESTDIR}${includedir}/afs/afsint.h \
+	${DESTDIR}${includedir}/afs/afscbint.h
+
+${DESTDIR}${libdir}/afs/libafsint.a: libafsint.a
+	${INSTALL} $? $@
+
+${DESTDIR}${includedir}/afs/afsint.h: afsint.h
+	${INSTALL} $? $@
+
+${DESTDIR}${includedir}/afs/afscbint.h: afscbint.h
+	${INSTALL} $? $@
+
+dest: \
+	${DEST}/lib/afs/libafsint.a \
+	${DEST}/include/afs/afsint.h \
+	${DEST}/include/afs/afscbint.h
+
+${DEST}/lib/afs/libafsint.a: libafsint.a
+	${INSTALL} $? $@
+
+${DEST}/include/afs/afscbint.h: afscbint.h
+	${INSTALL} $? $@
+
+${DEST}/include/afs/afsint.h: afsint.h
+	${INSTALL} $? $@
+
+#
+# Misc targets
+#
+
+clean:
+	$(RM) -f *.o *.cs.c *.ss.c *.er.c *.a *.xdr.c core \
+		afsint.h afscbint.h AFS_component_version_number.c   \
+	Kvice.h Kcallback.h
+
+include ../config/Makefile.version
+
