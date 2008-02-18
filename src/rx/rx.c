@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.119 2008/02/08 21:19:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.120 2008/02/18 17:27:48 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -7089,6 +7089,9 @@ rx_IncrementTimeAndCount(struct rx_peer *peer, afs_uint32 rxInterface,
 			 afs_hyper_t * bytesSent, afs_hyper_t * bytesRcvd,
 			 int isServer)
 {
+
+    if (!(rxi_monitor_peerStats || rxi_monitor_processStats))
+        return;
 
     MUTEX_ENTER(&rx_rpc_stats);
     MUTEX_ENTER(&peer->peer_lock);
