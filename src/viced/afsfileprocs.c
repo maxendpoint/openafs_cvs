@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.46 2008/01/07 20:25:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.81.2.47 2008/02/19 14:33:44 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1320,6 +1320,7 @@ DeleteTarget(Vnode * parentptr, Volume * volptr, Vnode ** targetptr,
 	if (IsEmpty(&childdir) != 0)
 	    return (EEXIST);
 	DZap(&childdir);
+	FidZap(&childdir);
 	(*targetptr)->delete = 1;
     } else if ((--(*targetptr)->disk.linkCount) == 0)
 	(*targetptr)->delete = 1;
