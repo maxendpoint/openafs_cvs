@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.127 2008/02/25 16:57:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.128 2008/02/25 20:38:09 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -742,7 +742,7 @@ h_gethostcps_r(register struct host *host, register afs_int32 now)
 void
 h_flushhostcps(register afs_uint32 hostaddr, register afs_uint16 hport)
 {
-    register struct host *host;
+    struct host *host;
     int held = 0;
 
     H_LOCK;
