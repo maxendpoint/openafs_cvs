@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.27 2008/02/01 21:33:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.28 2008/02/25 04:37:40 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1485,7 +1485,7 @@ h_GetHost_r(struct rx_connection *tcon)
 	cb_conn=NULL;
 	H_LOCK;
 	if ((code == RXGEN_OPCODE) || 
-	    (afs_uuid_equal(&interf.uuid, &nulluuid))) {
+	    ((code == 0) && (afs_uuid_equal(&interf.uuid, &nulluuid)))) {
 	    identP = (struct Identity *)malloc(sizeof(struct Identity));
 	    if (!identP) {
 		ViceLog(0, ("Failed malloc in h_GetHost_r\n"));
