@@ -83,7 +83,7 @@ AC_ARG_ENABLE(optimize-lwp,
 [  --disable-optimize-lwp		disable optimization for compilation of the LWP code (defaults to enabled)],, enable_optimize_lwp="yes"
 )
 AC_ARG_ENABLE(warnings,
-[  --enable-warnings                   enable compilation warnings when building with gcc (defaults to disabled)],, enable_warnings="yes"
+[  --enable-warnings			enable compilation warnings when building with gcc (defaults to disabled)],, enable_warnings="no"
 )
 
 enable_login="no"
