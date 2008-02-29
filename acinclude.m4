@@ -89,7 +89,7 @@ AC_ARG_ENABLE(optimize-pam,
 [  --disable-optimize-pam		disable optimization for compilation of the PAM code (defaults to enabled)],, enable_optimize_pam="yes"
 )
 AC_ARG_ENABLE(warnings,
-[  --enable-warnings			enable compilation warnings when building with gcc (defaults to disabled)],, enable_warnings="yes"
+[  --enable-warnings			enable compilation warnings when building with gcc (defaults to disabled)],, enable_warnings="no"
 )
 
 
