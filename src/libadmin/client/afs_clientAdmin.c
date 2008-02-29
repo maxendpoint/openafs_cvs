@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/client/afs_clientAdmin.c,v 1.11.4.2 2007/10/03 15:29:29 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/client/afs_clientAdmin.c,v 1.11.4.3 2008/02/29 01:27:57 jaltman Exp $");
 
 #include <afs/stds.h>
 #include "afs_clientAdmin.h"
@@ -24,6 +24,7 @@ RCSID
 #include <afs/afssyscalls.h>
 #include <winsock2.h>
 #include <afs/fs_utils.h>
+#define close(x) closesocket(x)
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
