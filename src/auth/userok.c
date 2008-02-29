@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/userok.c,v 1.14.4.2 2007/11/01 16:09:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/userok.c,v 1.14.4.3 2008/02/29 15:13:06 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -51,9 +51,11 @@ int
 afsconf_CheckAuth(register struct afsconf_dir *adir, 
 		  register struct rx_call *acall)
 {
+    int rc;
     LOCK_GLOBAL_MUTEX;
-    return ((afsconf_SuperUser(adir, acall, NULL) == 0) ? 10029 : 0);
+    rc = ((afsconf_SuperUser(adir, acall, NULL) == 0) ? 10029 : 0);
     UNLOCK_GLOBAL_MUTEX;
+    return rc;
 }
 #endif /* !defined(UKERNEL) */
 
