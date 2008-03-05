@@ -23,7 +23,7 @@
 #include <string.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.16.4.5 2007/12/04 21:03:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/listinodes.c,v 1.16.4.6 2008/03/05 21:53:30 shadow Exp $");
 
 #ifndef AFS_NAMEI_ENV
 #if defined(AFS_LINUX20_ENV) || defined(AFS_SUN4_ENV)
@@ -1652,7 +1652,7 @@ inode_ConvertROtoRWvolume(char *pname, afs_int32 volumeId)
     char *name;
     int fd, err, forcep, len, j, code;
     struct dirent *dp;
-    struct DiskPartition *partP;
+    struct DiskPartition64 *partP;
     struct ViceInodeInfo info;
     struct VolumeDiskHeader h;
     IHandle_t *ih, *ih2;

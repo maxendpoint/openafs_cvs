@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vutil.c,v 1.16 2004/08/19 00:22:38 kolya Exp $");
+    ("$Header: /cvs/openafs/src/vol/vutil.c,v 1.16.8.1 2008/03/05 21:53:31 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -123,7 +123,7 @@ VCreateVolume_r(Error * ec, char *partname, VolId volumeId, VolId parentId)
     int fd, i;
     char headerName[32], volumePath[64];
     Device device;
-    struct DiskPartition *partition;
+    struct DiskPartition64 *partition;
     struct VolumeDiskHeader diskHeader;
     IHandle_t *handle;
     FdHandle_t *fdP;

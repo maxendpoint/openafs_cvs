@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/purge.c,v 1.12.2.3 2007/10/30 15:16:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/purge.c,v 1.12.2.4 2008/03/05 21:53:30 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -63,7 +63,7 @@ static void PurgeHeader(Volume * vp);
 void
 VPurgeVolume(Error * ec, Volume * vp)
 {
-    struct DiskPartition *tpartp = vp->partition;
+    struct DiskPartition64 *tpartp = vp->partition;
     char purgePath[MAXPATHLEN];
 
     /* N.B.  it's important here to use the partition pointed to by the
