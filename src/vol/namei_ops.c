@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.43 2007/11/26 21:04:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.44 2008/03/05 21:51:22 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -1564,7 +1564,7 @@ namei_ConvertROtoRWvolume(char *pname, afs_int32 volumeId)
     DIR *dirp;
     Inode ino;
     struct dirent *dp;
-    struct DiskPartition *partP;
+    struct DiskPartition64 *partP;
     struct ViceInodeInfo info;
     struct VolumeDiskHeader h;
     char volname[20];
