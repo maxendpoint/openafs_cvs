@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.121 2008/01/04 17:39:05 rees Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.122 2008/03/06 16:41:14 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1410,6 +1410,9 @@ DECL_PIOCTL(PSetTokens)
 	afs_osi_Free(tu->stp, tu->stLen);
     }
     tu->stp = (char *)afs_osi_Alloc(stLen);
+    if (tu->stp == NULL) {
+	return ENOMEM;
+    }
     tu->stLen = stLen;
     memcpy(tu->stp, stp, stLen);
     tu->ct = clear;
