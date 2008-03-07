@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.12 2006/07/31 21:17:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.13 2008/03/07 17:30:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -209,7 +209,16 @@ afs_access(OSI_VC_DECL(avc), register afs_int32 amode,
     if ((code = afs_InitReq(&treq, acred)))
 	return code;
 
-    code = afs_EvalFakeStat(&avc, &fakestate, &treq);
+    if (afs_fakestat_enable && avc->mvstat == 1) {
+	code = afs_TryEvalFakeStat(&avc, &fakestate, &treq);
+        if (code == 0 && avc->mvstat == 1) {
+	    afs_PutFakeStat(&fakestate);
+	    return 0;
+        }
+    } else {
+	code = afs_EvalFakeStat(&avc, &fakestate, &treq);
+    }
+
     if (code) {
 	afs_PutFakeStat(&fakestate);
 	return code;
