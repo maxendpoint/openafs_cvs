@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.72.2.4 2008/02/11 04:00:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.72.2.5 2008/03/07 17:31:28 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1227,6 +1227,11 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 #ifdef	AFS_OSF_ENV
     ndp->ni_dvp = AFSTOV(adp);
 #endif /* AFS_OSF_ENV */
+
+    if (afs_fakestat_enable && adp->mvstat == 1) {
+       if (strcmp(aname, ".directory") == 0)
+           tryEvalOnly = 1;
+    }
 
 #if defined(AFS_DARWIN_ENV)
     /* Workaround for MacOSX Finder, which tries to look for
