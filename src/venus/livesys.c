@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/livesys.c,v 1.4.2.2 2007/10/30 15:24:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/livesys.c,v 1.4.2.3 2008/03/08 01:15:37 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -26,6 +26,7 @@ RCSID
 #include <afs/stds.h>
 #include <afs/vice.h>
 #include <afs/venus.h>
+#include <afs/com_err.h>
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
