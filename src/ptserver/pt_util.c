@@ -1,4 +1,4 @@
-/* $Id: pt_util.c,v 1.11.4.2 2007/10/31 04:09:32 shadow Exp $ */
+/* $Id: pt_util.c,v 1.11.4.3 2008/03/09 01:58:49 jaltman Exp $ */
 
 /*
  *
@@ -23,7 +23,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.11.4.2 2007/10/31 04:09:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.11.4.3 2008/03/09 01:58:49 jaltman Exp $");
 
 #include <afs/cmd.h>		/*Command line parsing */
 #include <errno.h>
@@ -33,6 +33,7 @@ RCSID
 #include <ubik.h>
 #include <rx/xdr.h>
 #include <rx/rx.h>
+#include <afs/com_err.h>
 #include "ptint.h"
 #include "ptserver.h"
 #include "pterror.h"
