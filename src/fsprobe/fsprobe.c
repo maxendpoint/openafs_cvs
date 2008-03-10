@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.9.2.1 2007/10/30 15:23:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/fsprobe/fsprobe.c,v 1.9.2.2 2008/03/10 22:35:34 shadow Exp $");
 
 
 #include <string.h>
@@ -231,8 +231,8 @@ fsprobe_Cleanup(a_releaseMem)
  * Side Effects:
  *	As advertised.
  *------------------------------------------------------------------------*/
-static void
-fsprobe_LWP()
+static void *
+fsprobe_LWP(void *unused)
 {				/*fsprobe_LWP */
 
     static char rn[] = "fsprobe_LWP";	/*Routine name */
@@ -359,6 +359,7 @@ fsprobe_LWP()
 	    fprintf(stderr, "[%s] IOMGR_Select returned code %d\n", rn, code);
     }				/*Service loop */
 
+    return NULL;
 }				/*fsprobe_LWP */
 
 /*list all the partitions on <aserver> */

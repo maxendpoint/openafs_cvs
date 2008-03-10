@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.16.2.4 2007/10/31 04:13:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/main.c,v 1.16.2.5 2008/03/10 22:35:34 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -45,7 +45,7 @@ RCSID
 #include <afs/budb.h>
 
 #include "bc.h"			/*Backup Coordinator structs and defs */
-
+#include "bucoord_prototypes.h"
 
 int localauth, interact;
 char tcell[64];
@@ -243,8 +243,6 @@ backupInit()
     static int initd = 0;	/* ever called? */
     PROCESS watcherPid;
     PROCESS pid;		/* LWP process ID */
-
-    extern statusWatcher();
 
     /* Initialization */
     initialize_CMD_error_table();

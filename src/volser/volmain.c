@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.18.2.13 2008/01/23 04:22:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.18.2.14 2008/03/10 22:35:37 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -143,8 +143,8 @@ TryUnlock()
 }
 
 /* background daemon for timing out transactions */
-static void
-BKGLoop()
+static void*
+BKGLoop(void *unused)
 {
     struct timeval tv;
     int loop = 0;
@@ -165,12 +165,14 @@ BKGLoop()
 	    ReOpenLog(AFSDIR_SERVER_VOLSERLOG_FILEPATH);
 	}
     }
+
+    return NULL;
 }
 
 /* Background daemon for sleeping so the volserver does not become I/O bound */
 afs_int32 TTsleep, TTrun;
-static void
-BKGSleep()
+static void *
+BKGSleep(void *unused)
 {
     struct volser_trans *tt;
 
@@ -198,6 +200,7 @@ BKGSleep()
 	        VTRANS_UNLOCK;
 	}
     }
+    return NULL;
 }
 
 #ifndef AFS_NT40_ENV

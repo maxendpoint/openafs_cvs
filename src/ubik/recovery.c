@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.13.2.3 2008/02/20 20:10:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.13.2.4 2008/03/10 22:35:36 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -412,8 +412,8 @@ urecovery_Initialize(register struct ubik_dbase *adbase)
  * requests.  However, the recovery module still has one more task:
  * propagating the dbase out to everyone who is up in the network.
  */
-int
-urecovery_Interact(void)
+void *
+urecovery_Interact(void *dummy)
 {
     afs_int32 code, tcode;
     struct ubik_server *bestServer = NULL;

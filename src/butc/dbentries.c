@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.8.2.4 2007/12/11 16:28:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/dbentries.c,v 1.8.2.5 2008/03/10 22:35:34 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -316,8 +316,8 @@ waitDbWatcher()
 #define MAXVOLUMESTOADD 100
 int addvolumes = 1;
 
-void
-dbWatcher()
+void *
+dbWatcher(void *unused)
 {
     dlqlinkP entryPtr;
     struct budb_dumpEntry *dumpPtr;
@@ -485,4 +485,5 @@ dbWatcher()
 	IOMGR_Sleep(2);
 #endif
     }
+    return NULL;
 }

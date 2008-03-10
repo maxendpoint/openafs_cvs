@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.12.2.5 2007/11/26 21:21:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.12.2.6 2008/03/10 22:35:34 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -42,7 +42,8 @@ RCSID
 #include <afs/tcdata.h>
 #include "error_macros.h"
 #include "butc_xbsa.h"
-
+#include "butc_prototypes.h"
+    
 static CopyDumpDesc();
 static CopyRestoreDesc();
 static CopyTapeSetDesc();
@@ -148,7 +149,6 @@ STC_LabelTape(struct rx_call *acid, struct tc_tapeLabel *label, afs_uint32 *task
     statusP statusPtr = NULL;
     afs_int32 code;
 
-    extern int Labeller();
     extern statusP createStatusNode();
     extern afs_int32 allocTaskId();
 
@@ -229,7 +229,6 @@ STC_PerformDump(struct rx_call *rxCallId, struct tc_dumpInterface *tcdiPtr, tc_d
     afs_int32 code = 0;
 
     extern statusP createStatusNode();
-    extern Dumper();
 
     if (callPermitted(rxCallId) == 0)
 	return (TC_NOTPERMITTED);
@@ -327,7 +326,6 @@ STC_PerformRestore(struct rx_call *acid, char *dumpSetName, tc_restoreArray *are
     PROCESS pid;
 #endif
 
-    extern int Restorer();
     extern statusP createStatusNode();
 
     if (callPermitted(acid) == 0)
@@ -426,7 +424,6 @@ STC_RestoreDb(struct rx_call *rxCall, afs_uint32 *taskId)
     statusP statusPtr = 0;
     afs_int32 code = 0;
 
-    extern afs_int32 restoreDbFromTape();
     extern statusP createStatusNode();
     extern afs_int32 allocTaskId();
 
@@ -497,7 +494,6 @@ STC_SaveDb(struct rx_call *rxCall, Date archiveTime, afs_uint32 *taskId)
     afs_int32 code = 0;
     struct saveDbIf *ptr;
 
-    extern afs_int32 saveDbToTape();
     extern statusP createStatusNode();
     extern afs_int32 allocTaskId();
 
@@ -580,7 +576,6 @@ STC_ScanDumps(struct rx_call *acid, afs_int32 addDbFlag, afs_uint32 *taskId)
     statusP statusPtr = 0;
     afs_int32 code = 0;
 
-    extern afs_int32 ScanDumps();
     extern afs_int32 allocTaskId();
     extern statusP createStatusNode();
 
@@ -672,7 +667,6 @@ STC_DeleteDump(struct rx_call *acid, afs_uint32 dumpID, afs_uint32 *taskId)
     PROCESS pid;
 #endif
 #endif
-    extern afs_int32 DeleteDump();
     extern statusP createStatusNode();
     extern afs_int32 allocTaskId();
 

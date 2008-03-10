@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.44.2.17 2008/01/30 21:18:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.44.2.18 2008/03/10 22:35:36 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -273,8 +273,8 @@ osi_AssertFailK(const char *expr, const char *file, int line)
 #ifndef UKERNEL
 /* This is the server process request loop. Kernel server
  * processes never become listener threads */
-void
-rx_ServerProc(void)
+void *
+rx_ServerProc(void *unused)
 {
     int threadID;
 

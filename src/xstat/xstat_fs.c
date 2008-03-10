@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_fs.c,v 1.9.2.3 2007/10/30 15:24:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_fs.c,v 1.9.2.4 2008/03/10 22:35:37 shadow Exp $");
 
 #include "xstat_fs.h"		/*Interface for this module */
 #include <lwp.h>		/*Lightweight process package */
@@ -238,8 +238,8 @@ xstat_fs_Cleanup(int a_releaseMem)
  *	Nothing interesting.
  *------------------------------------------------------------------------*/
 
-static void
-xstat_fs_LWP()
+static void *
+xstat_fs_LWP(void *unused)
 {
     static char rn[] = "xstat_fs_LWP";	/*Routine name */
     register afs_int32 code;	/*Results of calls */
@@ -388,6 +388,7 @@ xstat_fs_LWP()
 			code);
 	}			/*Continuous execution */
     }				/*Service loop */
+    return NULL;
 }
 
 /*------------------------------------------------------------------------
