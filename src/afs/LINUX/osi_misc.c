@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.46 2008/01/30 17:25:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.47 2008/03/10 18:50:51 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -99,10 +99,17 @@ osi_lookupname_internal(char *aname, int followlink, struct vfsmount **mnt,
 #endif
 
     if (!code) {
+#if defined(STRUCT_NAMEIDATA_HAS_PATH)
+	*dpp = dget(nd.path.dentry);
+        if (mnt)
+	    *mnt = mntget(nd.path.mnt);
+	path_put(&nd.path);
+#else
 	*dpp = dget(nd.dentry);
         if (mnt)
            *mnt = mntget(nd.mnt);
 	path_release(&nd);
+#endif
     }
     return code;
 }
