@@ -14,12 +14,12 @@
  *	Implementation of the gator curses window facility.
  *
  *------------------------------------------------------------------------*/
-#define	IGNORE_STDS_H
+
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/gtx/curseswindows.c,v 1.11 2007/10/30 15:10:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/gtx/curseswindows.c,v 1.12 2008/03/10 22:27:17 shadow Exp $");
 
 
 #if defined(AFS_HPUX110_ENV) && !defined(__HP_CURSES)
@@ -39,6 +39,8 @@ RCSID
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+
+#include <lwp.h>
 
 #include "gtxcurseswin.h"	/*Interface definition */
 #include "gtxobjects.h"

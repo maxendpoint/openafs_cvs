@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.120 2008/02/18 17:27:48 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.121 2008/03/10 22:27:18 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -718,7 +718,7 @@ rx_StartServer(int donateMe)
 	    (*registerProgram) (pid, name);
 #endif /* KERNEL */
 #endif /* AFS_NT40_ENV */
-	rx_ServerProc();	/* Never returns */
+	rx_ServerProc(NULL);	/* Never returns */
     }
 #ifdef RX_ENABLE_TSFPQ
     /* no use leaving packets around in this thread's local queue if

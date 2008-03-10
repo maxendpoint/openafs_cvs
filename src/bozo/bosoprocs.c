@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.22 2007/10/31 04:20:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosoprocs.c,v 1.23 2008/03/10 22:27:14 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -1655,9 +1655,10 @@ SBOZO_SetRestrictedMode(acall, arestmode)
 }
 #endif
 
-void
-bozo_ShutdownAndExit(int asignal)
+void *
+bozo_ShutdownAndExit(void *param)
 {
+    int asignal = (int) param;
     int code;
 
     bozo_Log

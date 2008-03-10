@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.18 2006/08/01 21:32:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/preempt.c,v 1.19 2008/03/10 22:27:17 shadow Exp $");
 
 
 #include "lwp.h"
@@ -34,7 +34,7 @@ PRE_InitPreempt(struct timeval *slice)
 }
 
 int
-PRE_EndPreempt()
+PRE_EndPreempt(void)
 {
     return LWP_SUCCESS;
 }

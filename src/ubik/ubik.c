@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.17 2007/10/30 15:10:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.18 2008/03/10 22:27:18 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -193,7 +193,6 @@ ubik_ServerInitCommon(afs_int32 myHost, short myPort,
 
     struct rx_service *tservice;
     extern int VOTE_ExecuteRequest(), DISK_ExecuteRequest();
-    extern void rx_ServerProc();
     extern int rx_stackSize;
 
     initialize_U_error_table();
