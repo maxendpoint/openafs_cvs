@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.12 2007/12/13 19:18:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.13 2008/03/10 19:05:28 shadow Exp $");
 
 #ifdef AFS_LINUX24_ENV
 #include "h/module.h" /* early to avoid printf->printk mapping */
@@ -57,14 +57,41 @@ osi_UFSOpen(afs_int32 ainode)
 		  sizeof(struct osi_file));
     }
     memset(afile, 0, sizeof(struct osi_file));
+#ifdef AFS_CACHE_VNODE_PATH
+    if (ainode < 0) {
+      switch (ainode) {
+      case AFS_CACHE_CELLS_INODE:
+	snprintf(fname, 1024, "%s/%s", afs_cachebasedir, "CellItems");
+	break;
+      case AFS_CACHE_ITEMS_INODE:
+	snprintf(fname, 1024, "%s/%s", afs_cachebasedir, "CacheItems");
+	break;
+      case AFS_CACHE_VOLUME_INODE:
+	snprintf(fname, 1024, "%s/%s", afs_cachebasedir, "VolumeItems");
+	break;
+      default:
+	osi_Panic("Invalid negative inode");
+      }
+    } else {
+      dummy = ainode / afs_numfilesperdir;
+      snprintf(fname, 1024, "%s/D%d/V%d", afs_cachebasedir, dummy, ainode);
+    }
+
+    code = osi_lookupname(fname, AFS_UIOSYS, 0, &dp);
+    if (code) {
+	osi_Panic("Failed cache file lookup: %s in UFSOpen\n", fname);
+    }
+    tip = dp->d_inode;
+#else
     tip = iget(afs_cacheSBp, (u_long) ainode);
     if (!tip)
 	osi_Panic("Can't get inode %d\n", ainode);
-    tip->i_flags |= MS_NOATIME;	/* Disable updating access times. */
 
     dp = d_alloc_anon(tip);
     if (!dp) 
            osi_Panic("Can't get dentry for inode %d\n", ainode);          
+#endif
+    tip->i_flags |= MS_NOATIME;	/* Disable updating access times. */
 
     filp = dentry_open(dp, mntget(afs_cacheMnt), O_RDWR);
     if (IS_ERR(filp))
