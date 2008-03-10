@@ -7,12 +7,11 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#define	IGNORE_STDS_H
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/gtx/input.c,v 1.7.14.1 2007/11/26 21:08:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/gtx/input.c,v 1.7.14.2 2008/03/10 22:32:33 shadow Exp $");
 
 #ifdef AFS_HPUX_ENV
 #include <sys/types.h>
@@ -29,9 +28,11 @@ RCSID
 
 
 /* process input */
-gtx_InputServer(awin)
-     register struct gwin *awin;
+void *
+gtx_InputServer(void *param)
 {
+    struct gwin *awin = (struct gwin *) param;
+    
     register int tc;
     register int code;
     register struct gtx_frame *tframe;

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.14.4.3 2007/11/26 21:08:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.14.4.4 2008/03/10 22:32:33 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -1743,9 +1743,10 @@ restoreVolume(taskId, restoreInfo, rparamsPtr)
  *	created as a LWP by the server stub, <newNode> is a pointer to all
  *	the parameters Restorer needs
  */
-Restorer(newNode)
-     struct dumpNode *newNode;
-{
+void *
+Restorer(void *param) {
+    struct dumpNode *newNode = (struct dumpNode *) param;
+
     afs_int32 code = 0, tcode;
     afs_uint32 taskId;
     char *newVolName;
@@ -2226,9 +2227,11 @@ updateTapeLabel(labelIfPtr, tapeInfoPtr, newLabelPtr)
  *	specified by <label>
  */
 
-Labeller(labelIfPtr)
-     struct labelTapeIf *labelIfPtr;
+void *
+Labeller(void *param)
 {
+    struct labelTapeIf *labelIfPtr = (struct labelTapeIf *)param;
+
     struct tc_tapeLabel *label = &labelIfPtr->label;
 
     struct butm_tapeLabel newTapeLabel;

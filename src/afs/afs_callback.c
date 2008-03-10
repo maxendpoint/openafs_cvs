@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.39.2.3 2007/11/23 14:32:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.39.2.4 2008/03/10 22:32:32 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1009,7 +1009,7 @@ afs_RXCallBackServer(void)
     /*
      * Donate this process to Rx.
      */
-    rx_ServerProc();
+    rx_ServerProc(NULL);
     return (0);
 
 }				/*afs_RXCallBackServer */

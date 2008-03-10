@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.15 2006/05/04 22:17:43 kenh Exp $");
+    ("$Header: /cvs/openafs/src/rx/UKERNEL/rx_knet.c,v 1.13.4.1 2008/03/10 22:32:34 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -64,8 +64,7 @@ void
 rxi_ListenerProc(osi_socket usockp, int *tnop, struct rx_call **newcallp)
 {
     struct rx_packet *tp;
-    struct sockaddr_storage saddr;
-    int slen;
+    afs_uint32 host;
     u_short port;
     int rc;
 
@@ -77,9 +76,9 @@ rxi_ListenerProc(osi_socket usockp, int *tnop, struct rx_call **newcallp)
     while (1) {
 	tp = rxi_AllocPacket(RX_PACKET_CLASS_RECEIVE);
 	usr_assert(tp != NULL);
-	rc = rxi_ReadPacket(usockp, tp, &saddr, &slen);
+	rc = rxi_ReadPacket(usockp, tp, &host, &port);
 	if (rc != 0) {
-	    tp = rxi_ReceivePacket(tp, usockp, &saddr, slen, tnop, newcallp);
+	    tp = rxi_ReceivePacket(tp, usockp, host, port, tnop, newcallp);
 	    if (newcallp && *newcallp) {
 		if (tp) {
 		    rxi_FreePacket(tp);
@@ -135,8 +134,8 @@ rxk_Listener(void)
 /* This is the server process request loop. The server process loop
  * becomes a listener thread when rxi_ServerProc returns, and stays
  * listener thread until rxi_ListenerProc returns. */
-void
-rx_ServerProc(void)
+void *
+rx_ServerProc(void *unused)
 {
     osi_socket sock;
     int threadID;
@@ -280,8 +279,8 @@ osi_StopListener(void)
 }
 
 int
-osi_NetSend(osi_socket sockp, struct sockaddr_storage *addr, int addrlen,
-	    struct iovec *iov, int nio, afs_int32 size, int stack)
+osi_NetSend(osi_socket sockp, struct sockaddr_in *addr, struct iovec *iov,
+	    int nio, afs_int32 size, int stack)
 {
     int rc;
     int i;
@@ -301,7 +300,7 @@ osi_NetSend(osi_socket sockp, struct sockaddr_storage *addr, int addrlen,
 
     memset(&msg, 0, sizeof(msg));
     msg.msg_name = (void *)addr;
-    msg.msg_namelen = addrlen;
+    msg.msg_namelen = sizeof(struct sockaddr_in);
     msg.msg_iov = &tmpiov[0];
     msg.msg_iovlen = nio;
 

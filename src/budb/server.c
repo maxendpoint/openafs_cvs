@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.16.2.7 2007/11/26 21:08:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.16.2.8 2008/03/10 22:32:32 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -584,7 +584,7 @@ main(argc, argv)
     currentTime = time(0);
     LogError(0, "Ready to process requests at %s\n", ctime(&currentTime));
 
-    rx_ServerProc();		/* donate this LWP */
+    rx_ServerProc(NULL);		/* donate this LWP */
 
   error_exit:
     osi_audit(BUDB_FinishEvent, code, AUD_END);

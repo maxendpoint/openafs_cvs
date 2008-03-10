@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.21.8.2 2007/11/26 21:08:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.21.8.3 2008/03/10 22:32:34 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -305,7 +305,8 @@ ubeacon_InitServerListCommon(ame, info, clones, aservers)
  * we're sync site or we want to be the sync site.  It runs in its very own light-weight
  * process.
  */
-ubeacon_Interact()
+void *
+ubeacon_Interact(void *dummy)
 {
     register afs_int32 code;
     struct timeval tt;

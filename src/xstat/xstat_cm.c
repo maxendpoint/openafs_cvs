@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.10.2.2 2007/10/30 15:16:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/xstat/xstat_cm.c,v 1.10.2.3 2008/03/10 22:32:37 shadow Exp $");
 
 #include "xstat_cm.h"		/*Interface for this module */
 #include <lwp.h>		/*Lightweight process package */
@@ -198,8 +198,8 @@ xstat_cm_Cleanup(int a_releaseMem)
  * Side Effects:
  *	As advertised.
  *------------------------------------------------------------------------*/
-static void
-xstat_cm_LWP()
+static void *
+xstat_cm_LWP(void *unused)
 {
     static char rn[] = "xstat_cm_LWP";	/*Routine name */
     register afs_int32 code;	/*Results of calls */
@@ -349,6 +349,7 @@ xstat_cm_LWP()
 			code);
 	}			/*Continuous execution */
     }				/*Service loop */
+    return NULL;
 }
 
 

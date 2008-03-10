@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.23.2.2 2007/07/17 03:12:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.23.2.3 2008/03/10 22:32:33 shadow Exp $");
 
 #include <stdio.h>
 #include <assert.h>
@@ -69,8 +69,7 @@ savecontext(char (*ep) (), struct lwp_context *savearea, char *newsp)
 }
 
 void
-returnto(savearea)
-     struct lwp_context *savearea;
+returnto(struct lwp_context *savearea)
 {
     PRE_Block = 0;
 
