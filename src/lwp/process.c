@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.26 2008/03/10 22:27:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.27 2008/03/11 17:44:29 shadow Exp $");
 
 #include <stdio.h>
 #include <assert.h>
@@ -172,7 +172,7 @@ static int ptr_mangle(int p)
 
 afs_int32
 savecontext(ep, savearea, sp)
-     char (*ep) ();
+     void (*ep) ();
      struct lwp_context *savearea;
      char *sp;
 {
