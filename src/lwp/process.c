@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.23.2.3 2008/03/10 22:32:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.23.2.4 2008/03/11 17:45:09 shadow Exp $");
 
 #include <stdio.h>
 #include <assert.h>
@@ -31,7 +31,7 @@ extern char PRE_Block;		/* used in lwp.c and process.s */
 #if defined(USE_UCONTEXT) && defined(HAVE_UCONTEXT_H)
 
 afs_int32
-savecontext(char (*ep) (), struct lwp_context *savearea, char *newsp)
+savecontext(void (*ep) (), struct lwp_context *savearea, char *newsp)
 {
 #if defined(AFS_LINUX20_ENV)
     /* getcontext does not export stack info */
