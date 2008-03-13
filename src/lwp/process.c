@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.21.2.7 2008/03/13 13:04:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/lwp/process.c,v 1.21.2.8 2008/03/13 13:42:31 shadow Exp $");
 
 #include <stdio.h>
 #include <assert.h>
@@ -31,7 +31,7 @@ extern char PRE_Block;		/* used in lwp.c and process.s */
 #if defined(USE_UCONTEXT) && defined(HAVE_UCONTEXT_H)
 
 afs_int32
-savecontext(void (*ep) (void *dummy), struct lwp_context *savearea, char *newsp)
+savecontext(void (*ep) (void), struct lwp_context *savearea, char *newsp)
 {
 #if defined(AFS_LINUX20_ENV)
     /* getcontext does not export stack info */
@@ -137,7 +137,7 @@ typedef int jmp_buf_type;
 #endif /*SGI*/
 
     static jmp_buf jmp_tmp;
-static char (*EP) ();
+static void *(*EP) (void);
 static int rc;
 static jmp_buf_type *jmpBuffer;
 
@@ -171,10 +171,7 @@ static int ptr_mangle(int p)
 
 
 afs_int32
-savecontext(ep, savearea, sp)
-     void (*ep) ();
-     struct lwp_context *savearea;
-     char *sp;
+savecontext(void (*ep)(void), struct lwp_context *savearea, char *sp)
 {
     int code;
 
