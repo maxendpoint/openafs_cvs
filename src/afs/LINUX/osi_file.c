@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.13 2008/03/10 19:05:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.19.2.14 2008/03/13 02:36:56 shadow Exp $");
 
 #ifdef AFS_LINUX24_ENV
 #include "h/module.h" /* early to avoid printf->printk mapping */
@@ -40,6 +40,11 @@ osi_UFSOpen(afs_int32 ainode)
     struct inode *tip = NULL;
     struct dentry *dp = NULL;
     struct file *filp = NULL;
+#if defined(AFS_CACHE_VNODE_PATH)
+    int code;
+    int dummy;
+    char fname[1024];
+#endif
     AFS_STATCNT(osi_UFSOpen);
     if (cacheDiskType != AFS_FCACHE_TYPE_UFS) {
 	osi_Panic("UFSOpen called for non-UFS cache\n");
