@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.59 2008/03/17 16:05:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.60 2008/03/17 17:16:16 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -3452,7 +3452,7 @@ VCheckDetach(register Volume * vp)
 	    V_inUse(vp) = 0;
 	    VUpdateVolume_r(&ec, vp, VOL_UPDATE_NOFORCEOFF);
 	    if (ec) {
-		Log("VCheckDetach: failed to clear inUse failed during detachment of volid %u\n"
+		Log("VCheckDetach: failed to clear inUse failed during detachment of volid %u\n",
 		    vp->hashid);
 	    }
 	}
