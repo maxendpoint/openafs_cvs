@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.18 2008/03/17 15:38:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.19 2008/03/17 17:57:18 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -3837,9 +3837,7 @@ rxi_ReceiveAckPacket(register struct rx_call *call, struct rx_packet *np,
 	    call->nNacks = nNacked;
 	}
     } else {
-	if (newAckCount) {
-	    call->nAcks++;
-	}
+	call->nAcks += newAckCount;
 	call->nNacks = 0;
     }
 
