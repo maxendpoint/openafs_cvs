@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.20.2.11 2007/11/01 16:57:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vnodeops.c,v 1.20.2.12 2008/03/17 15:28:55 shadow Exp $");
 
 /*
  * SOLARIS/osi_vnodeops.c
@@ -1404,6 +1404,25 @@ afs_dumpctl(vp, i
 }
 
 #ifdef	AFS_SUN54_ENV
+#ifdef	AFS_SUN511_ENV
+extern void
+afs_dispose(struct vnode *vp, struct page *p, int fl, int dn, struct cred *cr, struct caller_context_t *ct)
+{
+    fs_dispose(vp, p, fl, dn, cr,ct);
+}
+
+int
+afs_setsecattr(struct vnode *vp, vsecattr_t *vsecattr, int flag, struct cred *creds, struct caller_context_t *ct)
+{
+    return ENOSYS;
+}
+
+int
+afs_getsecattr(struct vnode *vp, vsecattr_t *vsecattr, int flag, struct cred *creds, struct caller_context_t *ct)
+{
+  return fs_fab_acl(vp, vsecattr, flag, creds,ct);
+}
+#else
 extern void
 afs_dispose(vp, p, fl, dn, cr)
      struct vnode *vp;
@@ -1433,6 +1452,7 @@ afs_getsecattr(vp, vsecattr, flag, creds)
 {
     return fs_fab_acl(vp, vsecattr, flag, creds);
 }
+#endif
 #endif
 
 #ifdef	AFS_GLOBAL_SUNLOCK
