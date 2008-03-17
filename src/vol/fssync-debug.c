@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-debug.c,v 1.1.4.3 2008/03/05 21:53:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-debug.c,v 1.1.4.4 2008/03/17 16:05:28 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -759,7 +759,11 @@ VolHdrQuery(struct cmd_syndesc * as, void * rock)
 	
 	printf("\tid               = %u\n", v.id);
 	printf("\tname             = '%s'\n", v.name);
-	printf("\tinUse            = %d\n", v.inUse);
+	if (v.inUse != 0) {
+	    printf("\tinUse            = %d (%s)\n", v.inUse, program_type_to_string(v.inUse));
+	} else {
+	    printf("\tinUse            = %d (no)\n", v.inUse);
+	}
 	printf("\tinService        = %d\n", v.inService);
 	printf("\tblessed          = %d\n", v.blessed);
 	printf("\tneedsSalvaged    = %d\n", v.needsSalvaged);

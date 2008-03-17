@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.12 2008/03/05 21:53:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.13 2008/03/17 16:05:31 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1863,7 +1863,11 @@ FillVolInfo(Volume * vp, VolumeDiskData * hdr, volint_info_handle_t * handle)
 	VOLINT_INFO_STORE(handle, inUse, 1);
     }
 #else
-    VOLINT_INFO_STORE(handle, inUse, hdr->inUse);
+    if (hdr->inUse == fileServer) {
+	VOLINT_INFO_STORE(handle, inUse, 1);
+    } else {
+	VOLINT_INFO_STORE(handle, inUse, 0);
+    }
 #endif
 
 
