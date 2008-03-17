@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.55 2008/03/17 16:05:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.56 2008/03/17 17:06:30 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -214,8 +214,6 @@ ViceCreateRoot(Volume *vp)
     afs_fsize_t length;
 
     vnode = (struct VnodeDiskObject *)malloc(SIZEOF_LARGEDISKVNODE);
-    if (!vnode)
-	return ENOMEM;
     memset(vnode, 0, SIZEOF_LARGEDISKVNODE);
 
     V_pref(vp, nearInode);
@@ -291,9 +289,6 @@ SAFSVolPartitionInfo(struct rx_call *acid, char *pname, struct diskPartition
     afs_int32 code;
     struct diskPartition64 *dp = (struct diskPartition64 *)
 	malloc(sizeof(struct diskPartition64));
-    
-    if (!dp)
-	return ENOMEM;
 
     code = VolPartitionInfo(acid, pname, dp);
     if (!code) {
@@ -1203,14 +1198,8 @@ SAFSVolForwardMultiple(struct rx_call *acid, afs_int32 fromTrans, afs_int32
     struct Volume *vp;
     int i, is_incremental;
 
-    if (results) {
+    if (results)
 	memset(results, 0, sizeof(manyResults));
-	i = results->manyResults_len = destinations->manyDests_len;
-	results->manyResults_val = codes =
-	    (afs_int32 *) malloc(i * sizeof(afs_int32));
-    }
-    if (!results || !results->manyResults_val)
-	return ENOMEM;
 
     if (!afsconf_SuperUser(tdir, acid, caller))
 	return VOLSERBAD_ACCESS;	/*not a super user */
@@ -1228,15 +1217,13 @@ SAFSVolForwardMultiple(struct rx_call *acid, afs_int32 fromTrans, afs_int32
     /* (fromDate == 0) ==> full dump */
     is_incremental = (fromDate ? 1 : 0);
 
+    i = results->manyResults_len = destinations->manyDests_len;
+    results->manyResults_val = codes =
+	(afs_int32 *) malloc(i * sizeof(afs_int32));
     tcons =
 	(struct rx_connection **)malloc(i * sizeof(struct rx_connection *));
-    if (!tcons)
-	return ENOMEM;
     tcalls = (struct rx_call **)malloc(i * sizeof(struct rx_call *));
-    if (!tcalls) {
-	free(tcons);
-	return ENOMEM;
-    }
+
     /* get auth info for this connection (uses afs from ticket file) */
     code = afsconf_ClientAuth(tdir, &securityObject, &securityIndex);
     if (code) {
@@ -1613,7 +1600,7 @@ VolGetName(struct rx_call *acid, afs_int32 atrans, char **aname)
     struct volser_trans *tt;
     register int len;
 
-    *aname = (char *)malloc(1);
+    *aname = NULL;
     tt = FindTrans(atrans);
     if (!tt)
 	return ENOENT;
@@ -1638,9 +1625,7 @@ VolGetName(struct rx_call *acid, afs_int32 atrans, char **aname)
 	TRELE(tt);
 	return E2BIG;
     }
-    *aname = (char *)realloc(*aname, len);
-    if (!*aname)
-	return ENOMEM;
+    *aname = (char *)malloc(len);
     strcpy(*aname, td->name);
     tt->rxCallPtr = (struct rx_call *)0;
     if (TRELE(tt))
@@ -1732,8 +1717,6 @@ XVolListPartitions(struct rx_call *acid, struct partEntries *pEntries)
 	    partList.partId[j++] = i;
     }
     pEntries->partEntries_val = (afs_int32 *) malloc(j * sizeof(int));
-    if (!pEntries->partEntries_val)
-	return ENOMEM;
     memcpy((char *)pEntries->partEntries_val, (char *)&partList,
 	   j * sizeof(int));
     pEntries->partEntries_len = j;
@@ -1880,11 +1863,7 @@ FillVolInfo(Volume * vp, VolumeDiskData * hdr, volint_info_handle_t * handle)
 	VOLINT_INFO_STORE(handle, inUse, 1);
     }
 #else
-    if (hdr->inUse == fileServer) {
-	VOLINT_INFO_STORE(handle, inUse, 1);
-    } else {
-	VOLINT_INFO_STORE(handle, inUse, 0);
-    }
+    VOLINT_INFO_STORE(handle, inUse, hdr->inUse);
 #endif
 
 
@@ -2111,8 +2090,6 @@ VolListOneVolume(struct rx_call *acid, afs_int32 partid, afs_int32
     volint_info_handle_t handle;
 
     volumeInfo->volEntries_val = (volintInfo *) malloc(sizeof(volintInfo));
-    if (!volumeInfo->volEntries_val) 
-	return ENOMEM;
     pntr = volumeInfo->volEntries_val;
     volumeInfo->volEntries_len = 1;
     if (GetPartName(partid, pname))
@@ -2216,8 +2193,6 @@ VolXListOneVolume(struct rx_call *a_rxCidP, afs_int32 a_partID,
      */
     a_volumeXInfoP->volXEntries_val =
 	(volintXInfo *) malloc(sizeof(volintXInfo));
-    if (!a_volumeXInfoP->volXEntries_val)
-	return ENOMEM;
     xInfoP = a_volumeXInfoP->volXEntries_val;
     a_volumeXInfoP->volXEntries_len = 1;
     code = ENODEV;
@@ -2323,8 +2298,6 @@ VolListVolumes(struct rx_call *acid, afs_int32 partid, afs_int32 flags,
 
     volumeInfo->volEntries_val =
 	(volintInfo *) malloc(allocSize * sizeof(volintInfo));
-    if (!volumeInfo->volEntries_val)
-	return ENOMEM;
     pntr = volumeInfo->volEntries_val;
     volumeInfo->volEntries_len = 0;
     if (GetPartName(partid, pname))
@@ -2454,8 +2427,6 @@ VolXListVolumes(struct rx_call *a_rxCidP, afs_int32 a_partID,
      */
     a_volumeXInfoP->volXEntries_val =
 	(volintXInfo *) malloc(allocSize * sizeof(volintXInfo));
-    if (!a_volumeXInfoP->volXEntries_val)
-	return ENOMEM;
     xInfoP = a_volumeXInfoP->volXEntries_val;
     a_volumeXInfoP->volXEntries_len = 0;
 
@@ -2587,8 +2558,6 @@ VolMonitor(struct rx_call *acid, transDebugEntries *transInfo)
 
     transInfo->transDebugEntries_val =
 	(transDebugInfo *) malloc(allocSize * sizeof(transDebugInfo));
-    if (!transInfo->transDebugEntries_val)
-	return ENOMEM;
     pntr = transInfo->transDebugEntries_val;
     transInfo->transDebugEntries_len = 0;
     allTrans = TransList();
