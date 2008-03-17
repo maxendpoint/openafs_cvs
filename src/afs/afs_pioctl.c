@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.122 2008/03/06 16:41:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.123 2008/03/17 15:28:09 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -885,8 +885,13 @@ afs_syscall_pioctl(path, com, cmarg, follow)
 #if defined(AFS_SUN510_ENV)
     if (vp && !IsAfsVnode(vp)) {
 	struct vnode *realvp;
-	
+	if
+#ifdef AFS_SUN511_ENV
+	(VOP_REALVP(vp, &realvp, NULL) == 0) 
+#else
 	if (VOP_REALVP(vp, &realvp) == 0) {
+#endif
+{
 	    struct vnode *oldvp = vp;
 	    
 	    VN_HOLD(realvp);
