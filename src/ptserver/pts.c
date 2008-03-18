@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.15.2.4 2008/02/04 17:53:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.15.2.5 2008/03/18 15:58:54 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -59,6 +59,7 @@ struct authstate {
 int
 pts_Interactive(struct cmd_syndesc *as, void *arock)
 {
+    source = stdin;
     finished = 0;
     return 0;
 }
@@ -1177,12 +1178,12 @@ main(int argc, char **argv)
     cmd_SetBeforeProc(GetGlobals, &state);
 
     finished = 1;
-    source = stdin;
+    source = NULL;
     if (code = cmd_Dispatch(argc, argv)) {
 	CleanUp(NULL, NULL);
 	exit(1);
     }
-    while (!finished) {
+    while (source && !finished) {
 	if (isatty(fileno(source)))
 	    fprintf(stderr, "pts> ");
 	if (!fgets(line, sizeof line, source)) {
