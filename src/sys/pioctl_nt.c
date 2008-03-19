@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.9 2008/03/18 16:48:39 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.10 2008/03/19 13:59:33 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -43,7 +43,6 @@ RCSID
 #include <pioctl_nt.h>
 #include <WINNT/afsreg.h>
 #include <lanahelper.h>
-#include <../WINNT/afsrdr/kif.h>
 
 #include <loadfuncs-krb5.h>
 #include <krb5.h>
