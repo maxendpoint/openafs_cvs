@@ -6,36 +6,12 @@
  * License.  For details, see the LICENSE file in the top-level source
  * directory or online at http://www.openafs.org/dl/license10.html
  */
-/* AFSIFS portions copyright (c) 2005
- * the regents of the university of michigan
- * all rights reserved
- * 
- * permission is granted to use, copy, create derivative works and
- * redistribute this software and such derivative works for any purpose,
- * so long as the name of the university of michigan is not used in
- * any advertising or publicity pertaining to the use or distribution
- * of this software without specific, written prior authorization.  if
- * the above copyright notice or any other identification of the
- * university of michigan is included in any copy of any portion of
- * this software, then the disclaimer below must also be included.
- * 
- * this software is provided as is, without representation from the
- * university of michigan as to its fitness for any purpose, and without
- * warranty by the university of michigan of any kind, either express
- * or implied, including without limitation the implied warranties of
- * merchantability and fitness for a particular purpose.  the regents
- * of the university of michigan shall not be liable for any damages,
- * including special, indirect, incidental, or consequential damages, 
- * with respect to any claim arising out or in connection with the use
- * of the software, even if it has been or is hereafter advised of the
- * possibility of such damages.
- */
 
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.42 2007/10/18 22:06:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.45 2008/03/21 04:15:47 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -67,7 +43,6 @@ RCSID
 #include <pioctl_nt.h>
 #include <WINNT/afsreg.h>
 #include <lanahelper.h>
-#include <../WINNT/afsrdr/kif.h>
 
 #include <loadfuncs-krb5.h>
 #include <krb5.h>
@@ -162,6 +137,30 @@ IoctlDebug(void)
     }
 
     return debug;
+}
+
+static BOOL
+DisableServiceManagerCheck(void)
+{
+    static int init = 0;
+    static BOOL smcheck = 0;
+
+    if ( !init ) {
+        HKEY hk;
+
+        if (RegOpenKey (HKEY_LOCAL_MACHINE, 
+                         TEXT("Software\\OpenAFS\\Client"), &hk) == 0)
+        {
+            DWORD dwSize = sizeof(BOOL);
+            DWORD dwType = REG_DWORD;
+            RegQueryValueEx (hk, TEXT("DisableIoctlSMCheck"), NULL, &dwType, (PBYTE)&smcheck, &dwSize);
+            RegCloseKey (hk);
+        }
+
+        init = 1;
+    }
+
+    return smcheck;
 }
 
 static DWORD 
@@ -397,12 +396,10 @@ GetLSAPrincipalName(char * szUser, DWORD *dwSize)
 static long
 GetIoctlHandle(char *fileNamep, HANDLE * handlep)
 {
-#ifndef AFSIFS
     char *drivep;
     char netbiosName[MAX_NB_NAME_LENGTH];
     DWORD CurrentState = 0;
     char  HostName[64] = "";
-#endif
     char tbuffer[256]="";
     HANDLE fh;
     HKEY hk;
@@ -415,10 +412,10 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
     DWORD gle;
     DWORD dwSize = sizeof(szUser);
 
-#ifndef AFSIFS
     memset(HostName, '\0', sizeof(HostName));
     gethostname(HostName, sizeof(HostName));
-    if (GetServiceStatus(HostName, TEXT("TransarcAFSDaemon"), &CurrentState) == NOERROR &&
+    if (!DisableServiceManagerCheck() &&
+        GetServiceStatus(HostName, TEXT("TransarcAFSDaemon"), &CurrentState) == NOERROR &&
 	CurrentState != SERVICE_RUNNING)
 	return -1;
 
@@ -476,9 +473,6 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
         lana_GetNetbiosName(netbiosName,LANA_NETBIOS_NAME_FULL);
         sprintf(tbuffer,"\\\\%s\\all%s",netbiosName,SMB_IOCTL_FILENAME);
     }
-#else   
-    sprintf(tbuffer,"\\\\.\\afscom\\ioctl");
-#endif 
 
     fflush(stdout);
     /* now open the file */
@@ -488,12 +482,6 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
 
 	fflush(stdout);
 
-#ifdef AFSIFS
-    if (fh == INVALID_HANDLE_VALUE) {
-        return -1;
-    }
-#endif
-	
     if (fh == INVALID_HANDLE_VALUE) {
         int  gonext = 0;
 
@@ -715,9 +703,6 @@ Transceive(HANDLE handle, fs_ioctlRequest_t * reqp)
     long rcount;
     long ioCount;
     DWORD gle;
-#ifdef AFSIFS
-    char *data;
-#endif
 
     rcount = (long)(reqp->mp - reqp->data);
     if (rcount <= 0) {
@@ -726,7 +711,6 @@ Transceive(HANDLE handle, fs_ioctlRequest_t * reqp)
 	return EINVAL;		/* not supposed to happen */
     }
 
-#ifndef AFSIFS
     if (!WriteFile(handle, reqp->data, rcount, &ioCount, NULL)) {
 	/* failed to write */
 	gle = GetLastError();
@@ -744,17 +728,6 @@ Transceive(HANDLE handle, fs_ioctlRequest_t * reqp)
             fprintf(stderr, "pioctl Transceive ReadFile failed: 0x%X\r\n",gle);
         return gle;
     }
-#else
-    /* ioctl completes as one operation, so copy input to a new buffer, and use as output buffer */
-    data = malloc(rcount);
-    memcpy(data, reqp->data, rcount);
-    if (!DeviceIoControl(handle, IOCTL_AFSRDR_IOCTL, data, rcount, reqp->data, sizeof(reqp->data), &ioCount, NULL))
-    {
-        free(data);
-        return GetLastError();
-    }
-    free(data);
-#endif
 
     reqp->nbytes = ioCount;	/* set # of bytes available */
     reqp->mp = reqp->data;	/* restart marshalling */
@@ -828,34 +801,8 @@ fs_GetFullPath(char *pathp, char *outPathp, long outSize)
     int pathHasDrive;
     int doSwitch;
     char newPath[3];
-#ifdef AFSIFS
-    HANDLE rootDir;
-    wchar_t *wpath;
-    unsigned long length;
-#endif
     char * p;
 
-#ifdef AFSIFS
-    if (!pathp)
-        return CM_ERROR_NOSUCHPATH;
-
-    rootDir = CreateFile(pathp, 0, 0, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
-    if (rootDir == INVALID_HANDLE_VALUE)
-        return CM_ERROR_NOSUCHPATH;
-
-    wpath = (wchar_t *)tpath;
-    length = 0;
-    if (!DeviceIoControl(rootDir, IOCTL_AFSRDR_GET_PATH, NULL, 0, wpath, 1000, &length, NULL))
-    {
-        CloseHandle(rootDir);
-        return CM_ERROR_NOSUCHPATH;
-    }
-    CloseHandle(rootDir);
-
-    code = WideCharToMultiByte(CP_UTF8, 0/*WC_NO_BEST_FIT_CHARS*/, wpath, length/sizeof(wchar_t), outPathp, outSize/sizeof(wchar_t), NULL, NULL);
-
-    return 0;
-#else
     if (pathp[0] != 0 && pathp[1] == ':') {
 	/* there's a drive letter there */
 	firstp = pathp + 2;
@@ -957,7 +904,6 @@ fs_GetFullPath(char *pathp, char *outPathp, long outSize)
 	    *p = '\\';
     }
     return 0;
-#endif
 }
 
 long
