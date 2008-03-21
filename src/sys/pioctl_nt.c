@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.10 2008/03/19 13:59:33 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.11 2008/03/21 04:17:14 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -137,6 +137,30 @@ IoctlDebug(void)
     }
 
     return debug;
+}
+
+static BOOL
+DisableServiceManagerCheck(void)
+{
+    static int init = 0;
+    static BOOL smcheck = 0;
+
+    if ( !init ) {
+        HKEY hk;
+
+        if (RegOpenKey (HKEY_LOCAL_MACHINE, 
+                         TEXT("Software\\OpenAFS\\Client"), &hk) == 0)
+        {
+            DWORD dwSize = sizeof(BOOL);
+            DWORD dwType = REG_DWORD;
+            RegQueryValueEx (hk, TEXT("DisableIoctlSMCheck"), NULL, &dwType, (PBYTE)&smcheck, &dwSize);
+            RegCloseKey (hk);
+        }
+
+        init = 1;
+    }
+
+    return smcheck;
 }
 
 static DWORD 
@@ -390,7 +414,8 @@ GetIoctlHandle(char *fileNamep, HANDLE * handlep)
 
     memset(HostName, '\0', sizeof(HostName));
     gethostname(HostName, sizeof(HostName));
-    if (GetServiceStatus(HostName, TEXT("TransarcAFSDaemon"), &CurrentState) == NOERROR &&
+    if (!DisableServiceManagerCheck() &&
+        GetServiceStatus(HostName, TEXT("TransarcAFSDaemon"), &CurrentState) == NOERROR &&
 	CurrentState != SERVICE_RUNNING)
 	return -1;
 
