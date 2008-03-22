@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.14 2008/03/17 16:53:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.15 2008/03/22 04:19:13 jaltman Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -3850,6 +3850,7 @@ DECL_PIOCTL(PNewUuid)
     afs_uuid_create(&afs_cb_interface.uuid);
     ReleaseWriteLock(&afs_xinterface);
     ForceAllNewConnections();
+    return 0;
 }
 
 DECL_PIOCTL(PCallBackAddr)
