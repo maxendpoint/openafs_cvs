@@ -107,7 +107,7 @@ ${COMPDIRS} ${INSTDIRS} ${DESTDIRS}:
 		esac ; \
 		export ARCH_DEFS ; \
 		export BITS ; \
-		$(MAKE) SUBDIR=$tt $@_libafs ; \
+		$(MAKE) SUBDIR=$$tt $@_libafs ; \
 	done
 
 solaris_compdirs_libafs: 
