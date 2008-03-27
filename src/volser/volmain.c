@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.22.2.10 2008/03/10 22:32:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.22.2.11 2008/03/27 16:20:39 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -84,7 +84,7 @@ extern void RXSTATS_ExecuteRequest();
 struct afsconf_dir *tdir;
 static afs_int32 runningCalls = 0;
 int DoLogging = 0;
-#define MAXLWP 16
+#define MAXLWP 128
 int lwps = 9;
 int udpBufSize = 0;		/* UDP buffer size for receive */
 
