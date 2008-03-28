@@ -111,7 +111,12 @@ ${COMPDIRS} ${INSTDIRS} ${DESTDIRS}:
 	done
 
 solaris_compdirs_libafs: 
-	cd $${SUBDIR} && $(MAKE) depsrcs && $(MAKE) libafs
+	if true; then \
+	cd $${SUBDIR}; \
+	$(MAKE) depsrcs; \
+	$(MAKE) libafs || exit $$?; \
+	cd ..; \
+	fi
 solaris_instdirs_libafs: install_libafs
 solaris_destdirs_libafs: dest_libafs
 

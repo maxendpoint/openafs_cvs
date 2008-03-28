@@ -208,7 +208,12 @@ ${COMPDIRS} ${INSTDIRS} ${DESTDIRS}:
 	fi
 
 hpux_compdirs_libafs: 
-	cd $${SUBDIR} && $(MAKE) depsrcs && $(MAKE) libafs
+	if true; then \
+	cd $${SUBDIR}; \
+	$(MAKE) depsrcs; \
+	$(MAKE) libafs || exit $$?; \
+	cd ..; \
+	fi
 
 hpux_instdirs_libafs: install_libafs
 hpux_destdirs_libafs: dest_libafs

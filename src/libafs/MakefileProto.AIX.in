@@ -120,9 +120,17 @@ ${COMPDIRS} ${INSTDIRS} ${DESTDIRS}:
 	done
 
 aix_compdirs_afs.ext.32: 
-	cd $${SUBDIR} && $(MAKE) afs.ext.32
+	if true; then \
+	cd $${SUBDIR}; \
+	$(MAKE) afs.ext.32 || exit $$?; \
+	cd ..; \
+	fi
 aix_compdirs_afs.ext.64: 
-	cd $${SUBDIR} && $(MAKE) afs.ext.64
+	if true; then \
+	cd $${SUBDIR}; \
+	$(MAKE) afs.ext.64 || exit $$?; \
+	cd ..; \
+	fi
 aix_instdirs_afs.ext.32: install_afs.ext.32
 aix_instdirs_afs.ext.64: install_afs.ext.64
 aix_destdirs_afs.ext.32: dest_afs.ext.32

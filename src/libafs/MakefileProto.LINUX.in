@@ -233,18 +233,17 @@ ${COMPDIRS} ${INSTDIRS} ${DESTDIRS}:
 <all>
 	done
 
-#$(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" $@_$${TARG} CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} || exit $$?; \
 
-linux_compdirs_libafs: depsrcs libafs
+linux_compdirs_libafs:
 	cd ${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" depsrcs CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" libafs CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} 
 
-linux_compdirs_libafs.mp: depsrcs libafs.mp
+linux_compdirs_libafs.mp: 
 	cd ${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" depsrcs CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" libafs.mp CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} 
 
-linux_compdirs_libafs.ep: depsrcs libafs.ep
+linux_compdirs_libafs.ep: 
 	cd ${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" depsrcs CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" libafs.ep CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} 
 
-linux_compdirs_libafs.bm: depsrcs libafs.bm
+linux_compdirs_libafs.bm: 
 	cd ${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" depsrcs CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} && $(MAKE) -f Makefile.afs SMP_DEF="$${SMP_DEF}" libafs.bm CLIENT=${LINUX_VERSION}${LINUX_MODULE_NAME} KDIR=$${KDIR} 
 
 linux_instdirs_libafs: install_libafs
