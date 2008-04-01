@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.9 2008/03/21 16:59:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/daemon_com.c,v 1.10 2008/04/01 20:05:19 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -62,11 +62,6 @@ RCSID
 #endif
 
 /*@printflike@*/ extern void Log(const char *format, ...);
-
-#ifdef osi_Assert
-#undef osi_Assert
-#endif
-#define osi_Assert(e) (void)(e)
 
 int (*V_BreakVolumeCallbacks) ();
 

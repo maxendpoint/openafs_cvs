@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvsync-client.c,v 1.4 2008/02/04 18:50:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvsync-client.c,v 1.5 2008/04/01 20:05:19 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -52,12 +52,6 @@ RCSID
 #include <rx/rx_queue.h>
 
 /*@printflike@*/ extern void Log(const char *format, ...);
-
-#ifdef osi_Assert
-#undef osi_Assert
-#endif
-#define osi_Assert(e) (void)(e)
-
 
 #ifdef AFS_DEMAND_ATTACH_FS
 /*
