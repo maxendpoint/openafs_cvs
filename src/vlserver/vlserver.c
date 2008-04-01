@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.22.2.7 2008/03/10 22:32:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.22.2.8 2008/04/01 16:51:31 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -85,7 +85,7 @@ CheckSignal(void *unused)
 
     if (errorcode =
 	Init_VLdbase(&trans, LOCKREAD, VLGETSTATS - VL_LOWEST_OPCODE))
-	return errorcode;
+	return (void *)errorcode;
     VLog(0, ("Dump name hash table out\n"));
     for (i = 0; i < HASHSIZE; i++) {
 	HashNDump(trans, i);
