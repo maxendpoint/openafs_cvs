@@ -1,5 +1,5 @@
 /* 
- * $Id: linked_list.h,v 1.1 2004/11/19 20:01:29 kenh Exp $
+ * $Id: linked_list.h,v 1.2 2008/04/01 17:44:28 shadow Exp $
  *
  * This is the header file for a general list linked package.
  * 
@@ -9,10 +9,6 @@
 
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
-
-#if !defined(lint) && !defined(SABER)
-static char *rcsid_linked_list_h = "$Id: linked_list.h,v 1.1 2004/11/19 20:01:29 kenh Exp $";
-#endif /* lint || SABER */
 
 #define LL_SUCCESS 0
 #define LL_FAILURE -1
