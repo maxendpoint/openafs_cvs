@@ -27,7 +27,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1.4.8 2008/04/01 20:05:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1.4.9 2008/04/01 20:29:12 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -270,6 +270,7 @@ SALVSYNC_salvInit(void)
     pthread_attr_t tattr;
 
     /* initialize the queues */
+    Lock_Init(&SALVSYNC_handler_lock);
     assert(pthread_cond_init(&salvageQueue.cv, NULL) == 0);
     for (i = 0; i <= VOLMAXPARTS; i++) {
 	queue_Init(&salvageQueue.part[i]);
