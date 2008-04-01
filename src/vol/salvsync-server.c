@@ -27,7 +27,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1.4.7 2008/04/01 14:12:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/salvsync-server.c,v 1.1.4.8 2008/04/01 20:05:36 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -73,11 +73,6 @@ RCSID
 
 
 /*@printflike@*/ extern void Log(const char *format, ...);
-
-#ifdef osi_Assert
-#undef osi_Assert
-#endif
-#define osi_Assert(e) (void)(e)
 
 #define MAXHANDLERS	4	/* Up to 4 clients; must be at least 2, so that
 				 * move = dump+restore can run on single server */

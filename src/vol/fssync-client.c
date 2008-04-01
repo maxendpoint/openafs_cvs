@@ -44,7 +44,7 @@ static int newVLDB = 1;
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/fssync-client.c,v 1.1.4.3 2008/02/04 18:51:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/fssync-client.c,v 1.1.4.4 2008/04/01 20:05:36 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -84,11 +84,6 @@ RCSID
 #ifdef FSSYNC_BUILD_CLIENT
 
 /*@printflike@*/ extern void Log(const char *format, ...);
-
-#ifdef osi_Assert
-#undef osi_Assert
-#endif
-#define osi_Assert(e) (void)(e)
 
 extern int LogLevel;
 
