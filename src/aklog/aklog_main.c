@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.27 2008/04/01 18:07:04 shadow Exp $
+ * $Id: aklog_main.c,v 1.28 2008/04/01 18:15:29 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -36,7 +36,7 @@
 
 #include <afsconfig.h>
 RCSID
-    ("$Header: /cvs/openafs/src/aklog/aklog_main.c,v 1.27 2008/04/01 18:07:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/aklog/aklog_main.c,v 1.28 2008/04/01 18:15:29 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -1821,7 +1821,7 @@ static krb5_error_code get_credv5(krb5_context context,
 
     if (dflag) {
 	printf("Getting tickets: %s%s%s@%s\n", name, (inst && inst[0])
-	       ? "/" : "", inst, realm);
+	       ? "/" : "", inst ? inst : "", realm);
     }
     
     memset((char *)&increds, 0, sizeof(increds));
