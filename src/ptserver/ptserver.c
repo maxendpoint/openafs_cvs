@@ -112,7 +112,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.32 2008/02/04 03:50:09 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.33 2008/04/02 19:42:16 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -522,6 +522,10 @@ main(int argc, char **argv)
 	}
 	if (ccode == 1) {
 	    host = SHostAddrs[0];
+	    /* the following call is idempotent so if/when it gets called
+	     * again by the ubik init stuff, it doesn't really matter
+	     * -- klm
+	     */
 	    rx_InitHost(host, htons(AFSCONF_PROTPORT));
 	}
     }

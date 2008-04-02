@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.17 2008/02/04 17:53:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/utils.c,v 1.18 2008/04/02 19:42:17 shadow Exp $");
 
 #include <sys/types.h>
 #include <lock.h>
@@ -901,7 +901,9 @@ IsAMemberOfSG(struct ubik_trans *at, afs_int32 aid, afs_int32 gid, afs_int32 dep
 	if (gid == AUTHUSERID && aid != ANONYMOUSID)
 	    return 1;
 	if (gid < 0) {
+#ifndef AFS_PTHREAD_ENV
 	    IOMGR_Poll();
+#endif
 	    if (IsAMemberOfSG(at, aid, gid, depth - 1))
 		return 1;
 	}
@@ -924,7 +926,9 @@ IsAMemberOfSG(struct ubik_trans *at, afs_int32 aid, afs_int32 gid, afs_int32 dep
 		if (gid == AUTHUSERID && aid != ANONYMOUSID)
 		    return 1;
 		if (gid < 0) {
+#ifndef AFS_PTHREAD_ENV
 		    IOMGR_Poll();
+#endif
 		    if (IsAMemberOfSG(at, aid, gid, depth - 1))
 			return 1;
 		}
