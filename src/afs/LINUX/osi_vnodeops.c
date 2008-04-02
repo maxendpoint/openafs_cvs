@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.22 2008/03/26 04:17:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.23 2008/04/02 13:10:00 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -588,8 +588,10 @@ afs_linux_flush(struct file *fp)
 
     AFS_GLOCK();
 
-    if (fp->f_flags | O_RDONLY)     /* readers dont flush */
+    if (fp->f_flags | O_RDONLY) {     /* readers dont flush */
+	AFS_GUNLOCK();
 	return 0;
+    }
 
     credp = crref();
     vcp = VTOAFS(FILE_INODE(fp));
