@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.15.2.5 2008/03/18 15:58:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pts.c,v 1.15.2.6 2008/04/02 19:51:56 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -108,7 +108,11 @@ pts_Sleep(struct cmd_syndesc *as, void *arock)
 	return 1;
     }
     delay = atoi(as->parms[0].items->data);
+#ifdef AFS_PTHREAD_ENV
+    sleep(delay);
+#else
     IOMGR_Sleep(delay);
+#endif
     return 0;
 }
 

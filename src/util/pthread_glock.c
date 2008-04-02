@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/pthread_glock.c,v 1.6 2005/09/21 15:13:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/pthread_glock.c,v 1.6.4.1 2008/04/02 19:51:57 shadow Exp $");
 
 #if defined(AFS_NT40_ENV) && defined(AFS_PTHREAD_ENV)
 #define AFS_GRMUTEX_DECLSPEC __declspec(dllexport)
@@ -44,6 +44,11 @@ pthread_recursive_mutex_lock(pthread_recursive_mutex_t * mut)
 {
     int rc = 0;
 
+/*
+ *    FSLog("Entered pthread_recursive_mutex_lock, thread id is %d\n",
+ *		pthread_self());
+ */
+
     (glock_init || pthread_once(&glock_init_once, glock_init_func));
 
     if (mut->locked) {
@@ -66,6 +71,12 @@ int
 pthread_recursive_mutex_unlock(pthread_recursive_mutex_t * mut)
 {
     int rc = 0;
+
+/*
+ *    FSLog("Entered pthread_recursive_mutex_unlock, thread id is %d\n",
+ *		pthread_self());
+ *
+ */
 
     (glock_init || pthread_once(&glock_init_once, glock_init_func));
 
