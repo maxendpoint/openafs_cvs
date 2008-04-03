@@ -221,7 +221,7 @@ testpt.o: ${PTSERVER}/testpt.c
 	${CCRULE}
 
 pt_util: pt_util.o ptutils.o ubik.o utils.o map.o libprot.a $(LIBS)
-	$(CC) ${CFLAGS} -o pt_util pt_util.o ptutils.o ubik.o utils.o map.o libprot.a ${TOP_LIBDIR}/libcmd.a $(LIBS) ${XLIBS}
+	$(CC) ${CFLAGS} -o pt_util pt_util.o ptutils.o ubik.o utils.o map.o libprot.a ${TOP_LIBDIR}/libcmd.a $(LIBS) ${MT_LIBS} ${XLIBS}
 
 pt_util.o: ${PTSERVER}/pt_util.c
 	${CCRULE}
