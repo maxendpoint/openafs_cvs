@@ -198,24 +198,19 @@ pts.o: ${PTSERVER}/pts.c
 	${CCRULE}
 
 readgroup: readgroup.o libprot.a $(LIBS)
-	$(CC) ${CFLAGS} -o readgroup readgroup.o libprot.a ${LIBS} ${XLIBS}
+	$(CC) ${CFLAGS} -o readgroup readgroup.o libprot.a ${LIBS} ${MT_LIBS} ${XLIBS}
 
 readgroup.o: ${PTSERVER}/readgroup.c
 	${CCRULE}
 
 readpwd: readpwd.o libprot.a $(LIBS)
-	$(CC) ${CFLAGS} -o readpwd readpwd.o libprot.a ${LIBS} ${XLIBS}
+	$(CC) ${CFLAGS} -o readpwd readpwd.o libprot.a ${LIBS} ${MT_LIBS} ${XLIBS}
 
 readpwd.o: ${PTSERVER}/readpwd.c
 	${CCRULE}
 
 testpt: testpt.o libprot.a ${TOP_LIBDIR}/libcmd.a $(LIBS)
-	case "$(SYS_NAME)" in \
-	*_darwin_12 ) \
-		$(CC) ${CFLAGS} -o testpt testpt.o ${TOP_LIBDIR}/libcmd.a libprot.a $(LIBS) ;; \
-	* ) \
-		$(CC) ${CFLAGS} -o testpt testpt.o -lm ${TOP_LIBDIR}/libcmd.a libprot.a $(LIBS) ${XLIBS} ;; \
-	esac
+	$(CC) ${CFLAGS} -o testpt testpt.o -lm ${TOP_LIBDIR}/libcmd.a libprot.a $(LIBS) ${MT_LIBS} ${XLIBS}
 
 testpt.o: ${PTSERVER}/testpt.c
 	${CCRULE}
