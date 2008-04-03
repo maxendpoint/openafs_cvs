@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.68 2008/03/05 21:51:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.69 2008/04/03 16:41:12 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -280,7 +280,11 @@ SendFile(usd_handle_t ufd, register struct rx_call *call, long blksize)
 	FD_ZERO(&in);
 	FD_SET((int)(ufd->handle), &in);
 	/* don't timeout if read blocks */
+#if defined(AFS_PTHREAD_ENV)
+	select(((int)(ufd->handle)) + 1, &in, 0, 0, 0);
+#else
 	IOMGR_Select(((int)(ufd->handle)) + 1, &in, 0, 0, 0);
+#endif
 #endif
 	error = USD_READ(ufd, buffer, blksize, &nbytes);
 	if (error) {
@@ -390,7 +394,11 @@ ReceiveFile(usd_handle_t ufd, struct rx_call *call, long blksize)
 	    FD_ZERO(&out);
 	    FD_SET((int)(ufd->handle), &out);
 	    /* don't timeout if write blocks */
+#if defined(AFS_PTHREAD_ENV)
+	    select(((int)(ufd->handle)) + 1, &out, 0, 0, 0);
+#else
 	    IOMGR_Select(((int)(ufd->handle)) + 1, 0, &out, 0, 0);
+#endif
 #endif
 	    error =
 		USD_WRITE(ufd, &buffer[bytesread - bytesleft], bytesleft, &w);
