@@ -52,9 +52,7 @@ LIBS=${RXOBJS} ${UTILOBJS}\
 	${TOP_LIBDIR}/libafsauthent.a \
 	${TOP_LIBDIR}/libafsrpc.a \
 	${TOP_LIBDIR}/libcmd.a \
-	${TOP_LIBDIR}/libafsutil.a \
-	${MT_LIBS}
-
+	${TOP_LIBDIR}/libafsutil.a 
 
 all: ptserver pts pt_util db_verify ${TOP_LIBDIR}/libprot.a \
 	depinstall readgroup readpwd testpt
