@@ -774,7 +774,8 @@ extern void VolumeHeaderToDisk(VolumeDiskHeader_t * dh, VolumeHeader_t * h);
 extern void VTakeOffline_r(register Volume * vp);
 extern void VTakeOffline(register Volume * vp);
 extern Volume * VLookupVolume_r(Error * ec, VolId volumeId, Volume * hint);
-
+extern void VGetVolumePath(Error * ec, VolId volumeId, char **partitionp,
+			   char **namep);
 #ifdef AFS_DEMAND_ATTACH_FS
 extern Volume *VPreAttachVolumeByName(Error * ec, char *partition, char *name);
 extern Volume *VPreAttachVolumeByName_r(Error * ec, char *partition, char *name);
@@ -783,8 +784,6 @@ extern Volume *VPreAttachVolumeById_r(Error * ec, char * partition,
 extern Volume *VPreAttachVolumeByVp_r(Error * ec, struct DiskPartition64 * partp, 
 				      Volume * vp, VolId volume_id);
 extern Volume *VGetVolumeByVp_r(Error * ec, Volume * vp);
-extern void VGetVolumePath(Error * ec, VolId volumeId, char **partitionp,
-			   char **namep);
 extern int VShutdownByPartition_r(struct DiskPartition64 * dp);
 extern int VShutdownVolume_r(Volume * vp);
 extern int VConnectSALV(void);
