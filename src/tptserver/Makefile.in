@@ -58,7 +58,7 @@ LIBS=${RXOBJS} ${UTILOBJS}\
 	${TOP_LIBDIR}/libcmd.a \
 	${TOP_LIBDIR}/libafsutil.a 
 
-PTOBJS=ptuser.o pterror.o ptint.cs.o ptint.xdr.o AFS_component_version_number.o
+PTOBJS=ptuser.o pterror.o ptint.cs.o ptint.xdr.o
 
 all: ptserver pts pt_util db_verify \
 	depinstall readgroup readpwd testpt
