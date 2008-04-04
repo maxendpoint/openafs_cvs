@@ -783,6 +783,8 @@ extern Volume *VPreAttachVolumeById_r(Error * ec, char * partition,
 extern Volume *VPreAttachVolumeByVp_r(Error * ec, struct DiskPartition64 * partp, 
 				      Volume * vp, VolId volume_id);
 extern Volume *VGetVolumeByVp_r(Error * ec, Volume * vp);
+extern void VGetVolumePath(Error * ec, VolId volumeId, char **partitionp,
+			   char **namep);
 extern int VShutdownByPartition_r(struct DiskPartition64 * dp);
 extern int VShutdownVolume_r(Volume * vp);
 extern int VConnectSALV(void);

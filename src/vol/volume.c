@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.19 2008/04/04 18:17:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.43.2.20 2008/04/04 18:21:04 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -2537,7 +2537,7 @@ Volume *
 VAttachVolume_r(Error * ec, VolumeId volumeId, int mode)
 {
     char *part, *name;
-    GetVolumePath(ec, volumeId, &part, &name);
+    VGetVolumePath(ec, volumeId, &part, &name);
     if (*ec) {
 	register Volume *vp;
 	Error error;
