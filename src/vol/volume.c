@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.62 2008/03/27 16:16:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.63 2008/04/04 18:17:19 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -188,8 +188,6 @@ static void DeleteVolumeFromHashTable(register Volume * vp);
 static int VHold(Volume * vp);
 static int VHold_r(Volume * vp);
 static void VGetBitmap_r(Error * ec, Volume * vp, VnodeClass class);
-static void GetVolumePath(Error * ec, VolId volumeId, char **partitionp,
-			  char **namep);
 static void VReleaseVolumeHandles_r(Volume * vp);
 static void VCloseVolumeHandles_r(Volume * vp);
 static void LoadVolumeHeader(Error * ec, Volume * vp);
@@ -4708,10 +4706,9 @@ VGetBitmap_r(Error * ec, Volume * vp, VnodeClass class)
  *       on a vice partition, it is possible for callers to get the wrong one,
  *       depending on the order of the disk partition linked list.
  *
- * @internal volume package internal use only.
  */
-static void
-GetVolumePath(Error * ec, VolId volumeId, char **partitionp, char **namep)
+void
+VGetVolumePath(Error * ec, VolId volumeId, char **partitionp, char **namep)
 {
     static char partition[VMAXPATHLEN], name[VMAXPATHLEN];
     char path[VMAXPATHLEN];
