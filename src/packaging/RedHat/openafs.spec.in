@@ -1,11 +1,11 @@
-# Openafs Spec $Revision: 1.18 $
+# Openafs Spec $Revision: 1.20 $
 
 %define afsvers @VERSION@
-%define pkgvers @VERSION@
+%define pkgvers @LINUX_PKGVER@
 # for beta/rc releases make pkgrel 0.X.<tag>
 # for real releases make pkgrel 1 (or more for extra releases)
 #%define pkgrel 0.1.rc1
-%define pkgrel 1
+%define pkgrel @LINUX_PKGREL@
 
 %if %{?osvers:0}%{!?osvers:1}
 %define osvers 1
@@ -29,7 +29,7 @@
 %endif
 
 %if %{fedorakmod}
-%define kmodtool bash %{_sourcedir}/kmodtool
+%define kmodtool bash %{_sourcedir}/openafs-kmodtool
 
 %define kmod_name openafs
 %define kverrel %(%{kmodtool} verrel %{?kernvers} 2>/dev/null)
@@ -248,7 +248,7 @@ Source30: openafs-kernel-version.sh
 Source996: openafs-kvers-is.sh
 Source997: openafs-buildfedora.pl
 Source998: openafs-buildall.sh
-Source999: kmodtool
+Source999: openafs-kmodtool
 
 Patch0:  openafs-1.4.0-kmodule26.patch
 
