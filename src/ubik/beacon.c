@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.25 2008/04/02 19:42:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/beacon.c,v 1.26 2008/04/09 16:39:41 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -465,6 +465,7 @@ ubeacon_Interact(void *dummy)
 	}
 
     }				/* while loop */
+    return NULL;
 }
 
 /* 

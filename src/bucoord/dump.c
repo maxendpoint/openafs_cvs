@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.17 2008/03/10 22:27:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/dump.c,v 1.18 2008/04/09 16:39:36 shadow Exp $");
 
 #include <sys/types.h>
 #include <afs/cmd.h>
@@ -225,7 +225,7 @@ bc_DmpRstStart(void *param)
 	free(tdump->portOffset);
     tdump->flags &= ~BC_DI_INUSE;
 
-    return code;
+    return (void *)code;
 }
 
 /* bc_StartDmpRst

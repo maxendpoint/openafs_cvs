@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.65 2008/03/10 22:27:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.66 2008/04/09 16:39:40 shadow Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -291,6 +291,8 @@ rx_ServerProc(void *unused)
 #ifdef RX_ENABLE_LOCKS
     AFS_GLOCK();
 #endif /* RX_ENABLE_LOCKS */
+
+    return NULL;
 }
 #endif /* !UKERNEL */
 
