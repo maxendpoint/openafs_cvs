@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.13 2008/03/07 17:30:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.14 2008/04/09 13:38:47 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -224,11 +224,13 @@ afs_access(OSI_VC_DECL(avc), register afs_int32 amode,
 	return code;
     }
 
-    code = afs_VerifyVCache(avc, &treq);
-    if (code) {
-	afs_PutFakeStat(&fakestate);
-	code = afs_CheckCode(code, &treq, 16);
-	return code;
+    if (vType(avc) != VDIR || !afs_InReadDir(avc)) {
+	code = afs_VerifyVCache(avc, &treq);
+	if (code) {
+	    afs_PutFakeStat(&fakestate);
+	    code = afs_CheckCode(code, &treq, 16);
+	    return code;
+	}
     }
 
     /* if we're looking for write access and we have a read-only file system, report it */
