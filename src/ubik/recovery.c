@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.14.4.5 2008/04/02 19:51:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.14.4.6 2008/04/09 16:40:01 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -832,6 +832,7 @@ urecovery_Interact(void *dummy)
 		urecovery_state |= UBIK_RECSENTDB;
 	}
     }
+    return NULL;
 }
 
 /*

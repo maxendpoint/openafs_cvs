@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.15.6.5 2008/03/10 22:32:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.15.6.6 2008/04/09 16:39:59 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -744,7 +744,7 @@ saveDbToTape(void *param)
 
     free(saveDbIfPtr);
     LeaveDeviceQueue(deviceLatch);
-    return (code);
+    return (void *)(code);
 }
 
 struct rstTapeInfo {
