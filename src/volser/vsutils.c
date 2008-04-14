@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsutils.c,v 1.22 2008/04/10 17:50:50 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsutils.c,v 1.23 2008/04/14 20:25:41 shadow Exp $");
 
 #include <afs/stds.h>
 #include <string.h>
@@ -46,7 +46,7 @@ RCSID
 #include "volint.h"
 #include "lockdata.h"
 
-#include <vsutils_prototypes.h>
+#include "vsutils_prototypes.h"
 
 struct ubik_client *cstruct;
 static rxkad_level vsu_rxkad_level = rxkad_clear;

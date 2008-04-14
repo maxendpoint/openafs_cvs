@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.11 2008/04/10 17:50:50 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/lockprocs.c,v 1.12 2008/04/14 20:25:41 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -37,8 +37,8 @@ RCSID
 #include "volser.h"
 #include "lockdata.h"
 
-#include <vsutils_prototypes.h>
-#include <lockprocs_prototypes.h>
+#include "vsutils_prototypes.h"
+#include "lockprocs_prototypes.h"
 
 /* Finds an index in VLDB entry that matches the volume type, server, and partition.
  * If type is zero, will match first index of ANY type (RW, BK, or RO).
