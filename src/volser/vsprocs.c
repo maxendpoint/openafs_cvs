@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.16 2008/04/10 17:52:26 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vsprocs.c,v 1.38.2.17 2008/04/14 20:25:52 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -56,8 +56,8 @@ RCSID
 #include <setjmp.h>
 
 #include "volser_prototypes.h"
-#include <vsutils_prototypes.h>
-#include <lockprocs_prototypes.h>
+#include "vsutils_prototypes.h"
+#include "lockprocs_prototypes.h"
 
 struct ubik_client *cstruct;
 int verbose = 0, noresolve = 0;

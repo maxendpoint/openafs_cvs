@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.15 2008/04/10 17:52:26 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.16 2008/04/14 20:25:52 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -57,9 +57,9 @@ RCSID
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
 #endif
-#include <volser_prototypes.h>
-#include <vsutils_prototypes.h>
-#include <lockprocs_prototypes.h>
+#include "volser_prototypes.h"
+#include "vsutils_prototypes.h"
+#include "lockprocs_prototypes.h"
 
 #ifdef HAVE_POSIX_REGEX
 #include <regex.h>
