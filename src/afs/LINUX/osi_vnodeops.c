@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.24 2008/04/02 18:21:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.25 2008/04/15 12:29:37 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -821,8 +821,14 @@ afs_linux_dentry_revalidate(struct dentry *dp)
 	if (vcp == afs_globalVp)
 	    goto good_dentry;
 
-	if (*dp->d_name.name != '/' && vcp->mvstat == 2)	/* root vnode */
-	    check_bad_parent(dp);	/* check and correct mvid */
+	if (vcp->mvstat == 1) {         /* mount point */
+	    if (vcp->mvid && (vcp->states & CMValid)) {
+		/* a mount point, not yet replaced by its directory */
+		goto bad_dentry;
+	    }
+	} else
+	    if (*dp->d_name.name != '/' && vcp->mvstat == 2) /* root vnode */
+		check_bad_parent(dp);	/* check and correct mvid */
 
 #ifdef notdef
 	/* If the last looker changes, we should make sure the current
