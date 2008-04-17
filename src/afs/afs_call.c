@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.74.2.28 2008/04/17 17:25:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.74.2.29 2008/04/17 17:27:09 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1875,11 +1875,6 @@ afs_shutdown(void)
     shutdown_daemons();
 #endif
 
-    /* Close file only after daemons which can write to it are stopped. */
-    if (afs_cacheInodep) {	/* memcache won't set this */
-	osi_UFSClose(afs_cacheInodep);	/* Since we always leave it open */
-	afs_cacheInodep = 0;
-    }
 #ifdef notdef
     shutdown_CB();
     shutdown_AFS();
@@ -1888,7 +1883,6 @@ afs_shutdown(void)
     shutdown_rx();
     afs_shutdown_BKG();
 #endif
-    return;
     shutdown_bufferpackage();
     shutdown_cache();
     shutdown_osi();
@@ -1908,6 +1902,13 @@ afs_shutdown(void)
     memset(&afs_stats_cmfullperf, 0, sizeof(struct afs_stats_CMFullPerf));
 */
     afs_warn(" ALL allocated tables\n");
+
+    /* Close file only after daemons which can write to it are stopped. */
+    if (afs_cacheInodep) {	/* memcache won't set this */
+	osi_UFSClose(afs_cacheInodep);	/* Since we always leave it open */
+	afs_cacheInodep = 0;
+    }
+
     afs_shuttingdown = 0;
 
     return;			/* Just kill daemons for now */
