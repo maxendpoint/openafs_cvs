@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.74.2.29 2008/04/17 17:27:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.74.2.30 2008/04/18 14:06:50 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1415,7 +1415,11 @@ copyin_iparam(caddr_t cmarg, struct iparam *dst)
     if (current->thread.flags & THREAD_IA32)
 
 #elif defined(AFS_PPC64_LINUX26_ENV)
+#if defined(STRUCT_TASK_STRUCT_HAS_THREAD_INFO)
     if (current->thread_info->flags & _TIF_32BIT) 
+#else
+    if (task_thread_info(current)->flags & _TIF_32BIT) 
+#endif      
 #elif defined(AFS_PPC64_LINUX20_ENV)
     if (current->thread.flags & PPC_FLAG_32BIT) 
 
