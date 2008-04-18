@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.14.2.6 2008/04/09 16:40:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.14.2.7 2008/04/18 13:57:31 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -1021,7 +1021,7 @@ restoreDbEntries(tapeInfoPtr, rstTapeInfoPtr)
 void *
 restoreDbFromTape(void *param)
 {
-    afs_uint32 taskId = (void *)param;
+    afs_uint32 taskId = (afs_uint32) param;
     afs_int32 code = 0;
     afs_int32 i;
     struct butm_tapeInfo tapeInfo;
