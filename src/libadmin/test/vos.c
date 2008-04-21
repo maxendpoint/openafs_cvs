@@ -15,10 +15,13 @@
 #include <afs/param.h>
 #ifndef AFS_NT40_ENV
 #include <netdb.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <afs/afsutil.h>
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/test/vos.c,v 1.9.4.1 2007/10/31 04:09:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/test/vos.c,v 1.9.4.2 2008/04/21 19:40:01 shadow Exp $");
 
 #include "vos.h"
 
