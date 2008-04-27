@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.35 2007/11/29 18:32:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.36 2008/04/27 03:53:59 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -120,6 +120,7 @@ afs_MemRead(register struct vcache *avc, struct uio *auio,
     if (filePos >= avc->m.Length) {
 	if (len > AFS_ZEROS)
 	    len = sizeof(afs_zeros);	/* and in 0 buffer */
+	len = 0;
 #ifdef AFS_DARWIN80_ENV
 	trimlen = len;
 	tuiop = afsio_darwin_partialcopy(auio, trimlen);
