@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.20 2008/04/02 19:42:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.21 2008/04/28 21:48:00 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -615,6 +615,8 @@ SDISK_SendFile(rxcall, file, length, avers)
 #endif
     if (!code) 
 	code = rename(pbuffer, tbuffer);
+    if (!code) 
+	code = (*ubik_dbase->open) (ubik_dbase, 0);
     if (!code)
 #endif
     code = (*ubik_dbase->setlabel) (dbase, file, avers);

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.20 2008/04/09 16:39:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.21 2008/04/28 21:48:00 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -662,6 +662,8 @@ urecovery_Interact(void *dummy)
 #endif
 		if (!code) 
 		    code = rename(pbuffer, tbuffer);
+		if (!code) 
+		    code = (*ubik_dbase->open) (ubik_dbase, 0);
 		if (!code)
 #endif
 		/* after data is good, sync disk with correct label */
