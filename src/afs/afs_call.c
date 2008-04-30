@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.105 2008/01/30 21:03:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_call.c,v 1.106 2008/04/30 19:07:43 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -72,6 +72,7 @@ char afs_cachebasedir[1024];
 
 afs_int32 afs_rx_deadtime = AFS_RXDEADTIME;
 afs_int32 afs_rx_harddead = AFS_HARDDEADTIME;
+afs_int32 afs_rx_idledead = AFS_IDLEDEADTIME;
 
 static int afscall_set_rxpck_received = 0;
 
