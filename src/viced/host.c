@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.129 2008/02/26 04:13:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.130 2008/05/01 19:00:00 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1157,7 +1157,8 @@ h_AddHostToUuidHashTable_r(struct afsUUID *uuid, struct host *host)
 
     /* don't add the same entry multiple times */
     for (chain = hostUuidHashTable[index]; chain; chain = chain->next) {
-	if (host->interface && afs_uuid_equal(&host->interface->uuid, uuid))
+	if (chain->hostPtr->interface && 
+	    afs_uuid_equal(&chain->hostPtr->interface->uuid, uuid))
 	    return;
     }
 
