@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.27 2008/03/11 17:40:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.28 2008/05/06 15:07:04 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1192,7 +1192,7 @@ ParseArgs(int argc, char *argv[])
 	if (!Sawcbs)
 	    numberofcbs = 64000;
 	if (!Sawlwps)
-	    lwps = 12;
+	    lwps = 128;
 	if (!Sawbufs)
 	    buffs = 120;
 	if (!SawVC)
