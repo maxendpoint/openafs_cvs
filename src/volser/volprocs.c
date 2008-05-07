@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.34.2.13 2008/03/17 17:14:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.34.2.14 2008/05/07 17:52:46 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1658,8 +1658,7 @@ VolListPartitions(struct rx_call *acid, struct pIDs *partIds)
     namehead[7] = '\0';
     for (i = 0; i < 26; i++) {
 	namehead[6] = i + 'a';
-	if (VGetPartition(namehead, 0))
-	    partIds->partIds[i] = VGetPartition(namehead, 0) ? i : -1;
+	partIds->partIds[i] = VGetPartition(namehead, 0) ? i : -1;
     }
 
     return 0;
