@@ -53,14 +53,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/test/generator.c,v 1.10 2007/10/31 04:05:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/test/generator.c,v 1.11 2008/05/08 21:24:55 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <float.h>
-#include <malloc.h>
 #include <assert.h>
 #include "generator.h"
 

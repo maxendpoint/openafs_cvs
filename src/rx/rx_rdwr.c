@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.32 2008/03/17 15:38:15 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.33 2008/05/08 21:24:52 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -700,7 +700,7 @@ rxi_WriteProc(register struct rx_call *call, register char *buf,
 	    }
 	    /* Wait for transmit window to open up */
 	    while (!call->error
-		   && call->tnext + 1 > call->tfirst + call->twind) {
+		   && call->tnext + 1 > call->tfirst + (2 * call->twind)) {
 		clock_NewTime();
 		call->startWait = clock_Sec();
 
@@ -1138,7 +1138,7 @@ rxi_WritevProc(struct rx_call *call, struct iovec *iov, int nio, int nbytes)
     }
 
     /* Wait for the length of the transmit queue to fall below call->twind */
-    while (!call->error && call->tnext + 1 > call->tfirst + call->twind) {
+    while (!call->error && call->tnext + 1 > call->tfirst + (2 * call->twind)) {
 	clock_NewTime();
 	call->startWait = clock_Sec();
 #ifdef	RX_ENABLE_LOCKS
