@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.130 2008/05/01 19:00:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.131 2008/05/08 21:17:49 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1566,6 +1566,7 @@ h_GetHost_r(struct rx_connection *tcon)
                  */
                 removeAddress_r(host, haddr, hport);
                 host->hostFlags &= ~HWHO_INPROGRESS;
+                host->hostFlags |= ALTADDR;
                 h_Unlock_r(host);
 		if (!held)
                     h_Release_r(host);
@@ -1601,6 +1602,7 @@ h_GetHost_r(struct rx_connection *tcon)
 		    removeAddress_r(host, host->host, host->port);
 		}
 		host->hostFlags &= ~HWHO_INPROGRESS;
+                host->hostFlags |= ALTADDR;
 		h_Unlock_r(host);
 		if (!held)
 		    h_Release_r(host);
@@ -1670,6 +1672,7 @@ h_GetHost_r(struct rx_connection *tcon)
 			 afs_inet_ntoa_r(haddr, hoststr), ntohs(hport), code));
                 removeAddress_r(host, haddr, hport);
                 host->hostFlags &= ~HWHO_INPROGRESS;
+                host->hostFlags |= ALTADDR;
                 h_Unlock_r(host);
                 if (!held)
                     h_Release_r(host);
