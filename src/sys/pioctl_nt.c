@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.45 2008/03/21 04:15:47 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.46 2008/05/09 14:49:55 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -48,6 +48,9 @@ RCSID
 #include <krb5.h>
 
 static char AFSConfigKeyName[] = AFSREG_CLT_SVC_PARAM_SUBKEY;
+
+static const char utf8_prefix[] = UTF8_PREFIX;
+static const int  utf8_prefix_size = sizeof(utf8_prefix) -  sizeof(char);
 
 #define FS_IOCTLREQUEST_MAXSIZE	8192
 /* big structure for representing and storing an IOCTL request */
@@ -763,7 +766,7 @@ UnmarshallLong(fs_ioctlRequest_t * reqp, long *valp)
 
 /* includes marshalling NULL pointer as a null (0 length) string */
 static long
-MarshallString(fs_ioctlRequest_t * reqp, char *stringp)
+MarshallString(fs_ioctlRequest_t * reqp, char *stringp, int is_utf8)
 {
     int count;
 
@@ -772,11 +775,21 @@ MarshallString(fs_ioctlRequest_t * reqp, char *stringp)
     else
 	count = 1;
 
+    if (is_utf8) {
+        count += utf8_prefix_size;
+    }
+
     /* watch for buffer overflow */
     if ((reqp->mp - reqp->data) + count > sizeof(reqp->data)) {
         if ( IoctlDebug() )
             fprintf(stderr, "pioctl MarshallString buffer overflow\r\n");
 	return -1;
+    }
+
+    if (is_utf8) {
+        memcpy(reqp->mp, utf8_prefix, utf8_prefix_size);
+        reqp->mp += utf8_prefix_size;
+        count -= utf8_prefix_size;
     }
 
     if (stringp)
@@ -906,8 +919,8 @@ fs_GetFullPath(char *pathp, char *outPathp, long outSize)
     return 0;
 }
 
-long
-pioctl(char *pathp, long opcode, struct ViceIoctl *blobp, int follow)
+static long
+pioctl_int(char *pathp, long opcode, struct ViceIoctl *blobp, int follow, int is_utf8)
 {
     fs_ioctlRequest_t preq;
     long code;
@@ -945,7 +958,7 @@ pioctl(char *pathp, long opcode, struct ViceIoctl *blobp, int follow)
 	strcpy(fullPath, "");
     }
 
-    MarshallString(&preq, fullPath);
+    MarshallString(&preq, fullPath, is_utf8);
     if (blobp->in_size) {
         if (blobp->in_size > sizeof(preq.data) - (preq.mp - preq.data)*sizeof(char)) {
             errno = E2BIG;
@@ -989,3 +1002,16 @@ pioctl(char *pathp, long opcode, struct ViceIoctl *blobp, int follow)
     CloseHandle(reqHandle);
     return 0;
 }
+
+long
+pioctl_utf8(char * pathp, long opcode, struct ViceIoctl * blobp, int follow)
+{
+    return pioctl_int(pathp, opcode, blobp, follow, TRUE);
+}
+
+long
+pioctl(char * pathp, long opcode, struct ViceIoctl * blobp, int follow)
+{
+    return pioctl_int(pathp, opcode, blobp, follow, FALSE);
+}
+

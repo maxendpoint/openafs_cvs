@@ -12,16 +12,6 @@ As of the OpenAFS 1.3 release series, Windows platforms released
 prior to Windows 2000 are no longer supported.	As of the OpenAFS 1.5
 series, the Windows 9x components are being removed from the source tree.
 
-NOTE 2:
-In this release, in addition to the production quality CIFS-AFS 
-gateway based client service there also exists an experimental
-implementation of an Installable File System (IFS).  To build the IFS 
-version, follow the directions below, but note that only the NSIS 
-installer script has been updated to support it.  Also, the IFS kernel 
-module must be built separately, using the IFS/DDK build environment.
-The IFS implementation does not contain a Network Provider interface
-to register an AFS service name.
-
 ***********   Windows 2000/XP/2003 Build Process ****************
 
 Building OpenAFS for Windows requires configuring a Windows
@@ -68,9 +58,11 @@ versions are supported:
     Microsoft Visual Studio .NET 2003
       available via a MSDN subscription
 
-    Microsoft Visual Studio .NET 2005 (required for AMD64 builds)
+    Microsoft Visual Studio .NET 2005
       available via a MSDN subscription
       (recommended - required for 64-bit builds)
+
+    Microsoft Visual Studio 2008 is not supported
 
 The following Microsoft SDK is required:
 
@@ -87,6 +79,10 @@ The following Microsoft DDK is required:
 The Microsoft HTML Help Workshop is required:
 
     http://www.microsoft.com/downloads/details.aspx?familyid=00535334-c8a6-452f-9aa0-d597d16580cc&displaylang=en
+
+The Microsoft Internationalized Domain Names (IDN) Mitigation APIs 1.1 is required:
+
+    http://www.microsoft.com/downloads/details.aspx?FamilyId=AD6158D7-DDBA-416A-9109-07607425A815&displaylang=en
 
 The NSIS installer requires about 14 MB of storage. The following 
 version is supported:
@@ -184,6 +180,7 @@ The header files that are required from a Microsoft SDK/DDK are:
    npapi.h    (Windows 2000,XP,2003 builds)
    netcfgx.h  (NSIS Loopback Adapter installer - Windows 2000,XP,2003 builds)
    netcfgn.h  (NSIS Loopback Adapter installer - Windows 2000,XP,2003 builds)
+   normalization.h (AFS Cache Manager)
 
 These files come from the following Microsoft DDKs/SDKs:
 
@@ -193,11 +190,9 @@ These files come from the following Microsoft DDKs/SDKs:
    netcfgn.h, netcfgx.h:
         Windows XP/2003 DDK - inc/wxp/
 
-If you are interested in experimenting with the IFS you must purchase from
-Microsoft a copy of the Windows 2003 SP1 IFS Kit.
 
-  http://www.microsoft.com/whdc/devtools/ifskit/default.mspx
-
+   normalization.h:
+        Microsoft IDN Mitigation APIs 1.1 - include/
 
 STEP D. Configure NTBUILD.BAT.
 
@@ -284,15 +279,6 @@ STEP F. Begin the build
 
     (c) Execute the NTBUILD.BAT file with the parameter "free"
 
-    For a release build (IFS version):
-
-    (a) Execute the VCVARS32.BAT or VSVARS32.BAT file which part of the
-        Visual Studio environment you installed.
-
-    (b) Execute the SETENV.BAT file with the parameters "/2000 /RETAIL"
-
-    (c) Execute the NTBUILD.BAT file with the parameter "free ifs"
-
     For a debug build (SMB version):
 
     (a) Execute the VCVARS32.BAT or VSVARS32.BAT file which part of the
@@ -301,15 +287,6 @@ STEP F. Begin the build
     (b) Execute the SETENV.BAT file with the parameters "/2000 /DEBUG"
 
     (c) Execute the NTBUILD.BAT file with the parameter "checked"
-
-    For a debug build (IFS version):
-
-    (a) Execute the VCVARS32.BAT or VSVARS32.BAT file which part of the
-        Visual Studio environment you installed.
-
-    (b) Execute the SETENV.BAT file with the parameters "/2000 /DEBUG"
-
-    (c) Execute the NTBUILD.BAT file with the parameter "checked ifs"
 
 (4) Clean the work area:
 
@@ -323,9 +300,6 @@ While the build is running you will see many compile warnings. This
 behavior is normal; the build process is successful as long as the build
 process doesn't terminate with an error ("nmake.exe return code 0x2")
 and it displays 'Build Finished Successfully'.
-
-(6) [IFS only] Open a DDK/IFS Build Environment command window, change 
-    to the src\WINNT\afsrdr directory, and execute the "build" command.
 
 
 STEP G. Install NSIS 2.30 (optional).
