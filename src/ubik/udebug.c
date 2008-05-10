@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.18.4.3 2008/04/28 15:20:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.18.4.4 2008/05/10 15:21:19 jaltman Exp $");
 
 #include <sys/types.h>
 #include <stdlib.h>
@@ -192,7 +192,7 @@ CommandProc(struct cmd_syndesc *as, void *arock)
     } else {
 	diff = udebug.now - udebug.lastYesTime;
 	printf("Last yes vote for %s was %d secs ago (%ssync site); \n",
-	       afs_inet_ntoa(htonl(udebug.lastYesHost)), (int)diff,
+	       afs_inet_ntoa(udebug.lastYesHost), (int)diff,
 	       ((udebug.lastYesState) ? "" : "not "));
 
 	diff = udebug.now - udebug.lastYesClaim;
