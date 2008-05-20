@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.14 2007/12/13 19:18:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.15 2008/05/20 19:48:34 shadow Exp $");
 
 
 
@@ -233,18 +233,18 @@ shutdown_osinet(void)
 
 	while ((tp = freePacketList)) {
 	    freePacketList = tp->next;
+	    afs_osi_Free(tp, AFS_LRALLOCSIZ);
 #ifdef  KERNEL_HAVE_PIN
 	    unpin(tp, AFS_LRALLOCSIZ);
 #endif
-	    afs_osi_Free(tp, AFS_LRALLOCSIZ);
 	}
 
 	while ((tp = freeSmallList)) {
 	    freeSmallList = tp->next;
+	    afs_osi_Free(tp, AFS_SMALLOCSIZ);
 #ifdef  KERNEL_HAVE_PIN
 	    unpin(tp, AFS_SMALLOCSIZ);
 #endif
-	    afs_osi_Free(tp, AFS_SMALLOCSIZ);
 	}
 	LOCK_INIT(&osi_fsplock, "osi_fsplock");
 	LOCK_INIT(&osi_flplock, "osi_flplock");
