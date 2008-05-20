@@ -39,7 +39,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.48 2007/12/13 19:49:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.65.2.49 2008/05/20 19:54:04 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -3072,11 +3072,11 @@ shutdown_vcache(void)
     }
     afs_cbrSpace = 0;
 
-#ifdef  KERNEL_HAVE_PIN
-    unpin(Initial_freeVCList, afs_cacheStats * sizeof(struct vcache));
-#endif
 #if !defined(AFS_OSF_ENV) && !defined(AFS_LINUX22_ENV)
     afs_osi_Free(Initial_freeVCList, afs_cacheStats * sizeof(struct vcache));
+#endif
+#ifdef  KERNEL_HAVE_PIN
+    unpin(Initial_freeVCList, afs_cacheStats * sizeof(struct vcache));
 #endif
 
 #if !defined(AFS_OSF_ENV) && !defined(AFS_LINUX22_ENV)
