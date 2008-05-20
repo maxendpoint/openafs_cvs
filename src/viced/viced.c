@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.23 2008/05/09 18:50:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.22.2.1 2008/05/20 19:33:24 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
