@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.25 2008/04/15 12:29:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.26 2008/05/20 20:39:20 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1033,7 +1033,16 @@ afs_linux_lookup(struct inode *dip, struct dentry *dp)
 	ip = AFSTOV(vcp);
 	afs_getattr(vcp, &vattr, credp);
 	afs_fill_inode(ip, &vattr);
-	if (hlist_unhashed(&ip->i_hash))
+	if (
+#ifdef HAVE_KERNEL_HLIST_UNHASHED
+	    hlist_unhashed(&ip->i_hash)
+#else
+#ifdef AFS_LINUX26_ENV
+	    ip->i_hash.pprev == NULL
+#else
+	    ip->i_hash.prev == NULL
+#endif
+	    )
 	    insert_inode_hash(ip);
     }
     dp->d_op = &afs_dentry_operations;
