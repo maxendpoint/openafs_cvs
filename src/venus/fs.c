@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.42 2007/11/26 21:04:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.43 2008/05/20 21:58:28 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -3656,6 +3656,11 @@ defect 3069
 
     ts = cmd_CreateSyntax("uuid", UuidCmd, NULL, "manage the UUID for the cache manager");
     cmd_AddParm(ts, "-generate", CMD_FLAG, CMD_REQUIRED, "generate a new UUID");
+
+    ts = cmd_CreateSyntax("precache", PreCacheCmd, 0,
+			  "set precache size");
+    cmd_AddParm(ts, "-blocks", CMD_SINGLE, CMD_OPTIONAL,
+		"size in 1K byte blocks (0 => disable)");
 
     code = cmd_Dispatch(argc, argv);
     if (rxInitDone)

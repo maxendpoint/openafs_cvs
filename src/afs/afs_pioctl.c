@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.124 2008/03/17 16:51:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.125 2008/05/20 21:58:25 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -2062,6 +2062,18 @@ DECL_PIOCTL(PViceAccess)
 	return 0;
     else
 	return EACCES;
+}
+
+DECL_PIOCTL(PPrecache)
+{
+    afs_int32 newValue;
+
+    /*AFS_STATCNT(PPrecache);*/
+    if (!afs_osi_suser(*acred))
+	return EACCES;
+    memcpy((char *)&newValue, ain, sizeof(afs_int32));
+    afs_preCache = newValue*1024;
+    return 0;
 }
 
 DECL_PIOCTL(PSetCacheSize)

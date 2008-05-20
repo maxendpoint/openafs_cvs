@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.36 2008/04/27 03:53:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.37 2008/05/20 21:58:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -388,12 +388,16 @@ afs_MemRead(register struct vcache *avc, struct uio *auio,
      */
     if (tdc) {
 	ReleaseReadLock(&tdc->lock);
-#if !defined(AFS_VM_RDWR_ENV)
 	/* try to queue prefetch, if needed */
-	if (!noLock) {
+	if (!noLock &&
+#ifndef AFS_VM_RDWR_ENV
+	    afs_preCache
+#else
+	    1
+#endif
+	    ) {
 	    afs_PrefetchChunk(avc, tdc, acred, &treq);
 	}
-#endif
 	afs_PutDCache(tdc);
     }
     if (!noLock)

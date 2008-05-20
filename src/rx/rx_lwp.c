@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.24 2008/03/10 22:27:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.25 2008/05/20 21:58:28 shadow Exp $");
 
 # include <sys/types.h>		/* fd_set on older platforms */
 # include <errno.h>
@@ -420,6 +420,10 @@ rxi_Listen(osi_socket sock)
 int
 rxi_Recvmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 {
+#if defined(HAVE_LINUX_ERRQUEUE_H) && defined(ADAPT_PMTU)
+    while((rxi_HandleSocketError(socket)) > 0)
+	;
+#endif
     return recvmsg(socket, msg_p, flags);
 }
 
@@ -443,6 +447,10 @@ rxi_Sendmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 	    }
 	    FD_SET(socket, sfds);
 	}
+#if defined(HAVE_LINUX_ERRQUEUE_H) && defined(ADAPT_PMTU)
+	while((rxi_HandleSocketError(socket)) > 0)
+	  ;
+#endif
 #ifdef AFS_NT40_ENV
 	if (WSAGetLastError())
 #elif defined(AFS_LINUX22_ENV)

@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.76 2008/03/11 18:23:23 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.77 2008/05/20 21:58:28 shadow Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -2630,6 +2630,8 @@ rxi_AdjustIfMTU(int mtu)
     int adjMTU;
     int frags;
 
+    if (rxi_nRecvFrags == 1 && rxi_nSendFrags == 1)
+        return mtu;
     adjMTU = RX_HEADER_SIZE + RX_JUMBOBUFFERSIZE + RX_JUMBOHEADERSIZE;
     if (mtu <= adjMTU) {
 	return mtu;

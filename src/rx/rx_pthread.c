@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.31 2008/03/10 22:27:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_pthread.c,v 1.32 2008/05/20 21:58:28 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -412,6 +412,10 @@ int
 rxi_Recvmsg(osi_socket socket, struct msghdr *msg_p, int flags)
 {
     int ret;
+#if defined(HAVE_LINUX_ERRQUEUE_H) && defined(ADAPT_PMTU)
+    while((rxi_HandleSocketError(socket)) > 0)
+      ;
+#endif
     ret = recvmsg(socket, msg_p, flags);
     return ret;
 }
