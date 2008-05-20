@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.46 2008/05/20 21:58:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.47 2008/05/20 22:16:46 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -52,6 +52,7 @@ afs_int32 afs_CheckServerDaemonStarted = 0;
 afs_int32 afs_probe_interval = DEFAULT_PROBE_INTERVAL;
 afs_int32 afs_probe_all_interval = 600;
 afs_int32 afs_nat_probe_interval = 60;
+afs_int32 afs_preCache = 0;
 
 #define PROBE_WAIT() (1000 * (afs_probe_interval - ((afs_random() & 0x7fffffff) \
 		      % (afs_probe_interval/2))))
