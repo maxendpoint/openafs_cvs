@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.14 2008/05/20 21:59:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.30.2.15 2008/05/20 22:21:49 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -1992,6 +1992,39 @@ CheckVolumesCmd(struct cmd_syndesc *as, void *arock)
     }
 
     printf("All volumeID/name mappings checked.\n");
+    return 0;
+}
+
+static int
+PreCacheCmd(struct cmd_syndesc *as, char *arock)
+{
+    afs_int32 code;
+    struct ViceIoctl blob;
+    afs_int32 temp;
+    
+    if (!as->parms[0].items && !as->parms[1].items) {
+	fprintf(stderr, "%s: syntax error in precache cmd.\n", pn);
+	return 1;
+    }
+    if (as->parms[0].items) {
+	code = util_GetInt32(as->parms[0].items->data, &temp);
+	if (code) {
+	    fprintf(stderr, "%s: bad integer specified for precache size.\n",
+		    pn);
+	    return 1;
+	}
+    } else
+	temp = 0;
+    blob.in = (char *)&temp;
+    blob.in_size = sizeof(afs_int32);
+    blob.out_size = 0;
+    code = pioctl(0, VIOCPRECACHE, &blob, 1);
+    if (code) {
+	Die(errno, NULL);
+	return 1;
+    }
+    
+    printf("New precache size set.\n");
     return 0;
 }
 
