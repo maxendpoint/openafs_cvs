@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.151 2008/05/20 20:39:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.152 2008/05/20 21:02:49 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1036,8 +1036,7 @@ afs_linux_lookup(struct inode *dip, struct dentry *dp)
 	if (
 #ifdef HAVE_KERNEL_HLIST_UNHASHED
 	    hlist_unhashed(&ip->i_hash)
-#else
-#ifdef AFS_LINUX26_ENV
+#elif defined(AFS_LINUX26_ENV)
 	    ip->i_hash.pprev == NULL
 #else
 	    ip->i_hash.prev == NULL
