@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.43.2.2 2007/11/08 14:40:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.43.2.3 2008/05/20 21:58:57 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -478,17 +478,22 @@ BPrefetch(register struct brequest *ab)
 {
     register struct dcache *tdc;
     register struct vcache *tvc;
-    afs_size_t offset, len;
+    afs_size_t offset, len, abyte, totallen = 0;
     struct vrequest treq;
 
     AFS_STATCNT(BPrefetch);
     if ((len = afs_InitReq(&treq, ab->cred)))
 	return;
+    abyte = ab->size_parm[0];
     tvc = ab->vc;
-    tdc = afs_GetDCache(tvc, ab->size_parm[0], &treq, &offset, &len, 1);
-    if (tdc) {
-	afs_PutDCache(tdc);
-    }
+    do {
+	tdc = afs_GetDCache(tvc, abyte, &treq, &offset, &len, 1);
+	if (tdc) {
+	    afs_PutDCache(tdc);
+	}
+	abyte+=len; 
+	totallen += len;
+    } while ((totallen < afs_preCache) && tdc && (len > 0));
     /* now, dude may be waiting for us to clear DFFetchReq bit; do so.  Can't
      * use tdc from GetDCache since afs_GetDCache may fail, but someone may
      * be waiting for our wakeup anyway.
