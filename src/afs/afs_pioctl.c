@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.125 2008/05/20 21:58:25 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.126 2008/05/21 04:22:13 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -93,6 +93,7 @@ DECL_PIOCTL(PCallBackAddr);
 DECL_PIOCTL(PDiscon);
 DECL_PIOCTL(PNFSNukeCreds);
 DECL_PIOCTL(PNewUuid);
+DECL_PIOCTL(PPrecache); 
 
 /*
  * A macro that says whether we're going to need HandleClientContext().
@@ -201,6 +202,9 @@ static int (*(CpioctlSw[])) () = {
         PBogus,                 /* 7 */
         PBogus,                 /* 8 */
         PNewUuid,               /* 9 */
+    PBogus,                     /* 0 */
+    PBogus,                     /* 0 */
+    PPrecache,                  /* 12 */
 };
 
 static int (*(OpioctlSw[])) () = {
