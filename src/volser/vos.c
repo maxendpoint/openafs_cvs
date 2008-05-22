@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.16 2008/04/14 20:25:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.55.2.17 2008/05/22 03:51:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -1455,11 +1455,8 @@ XVolumeStats(a_xInfoP, a_entryP, a_srvID, a_partID, a_volType)
 }				/*XVolumeStats */
 
 static void
-VolumeStats(pntr, entry, server, part, voltype)
-     volintInfo *pntr;
-     struct nvldbentry *entry;
-     int voltype;
-     afs_int32 server, part;
+VolumeStats_int(volintInfo *pntr, struct nvldbentry *entry, afs_int32 server, 
+	     afs_int32 part, int voltype)
 {
     int totalOK, totalNotOK, totalBusy;
 
@@ -1641,7 +1638,7 @@ ExamineVolume(register struct cmd_syndesc *as, void *arock)
 		EnumerateEntry(&entry);
 	    } else
 #endif /* FULL_LISTVOL_SWITCH */
-		VolumeStats(pntr, &entry, aserver, apart, voltype);
+		VolumeStats_int(pntr, &entry, aserver, apart, voltype);
 
 	    if ((voltype == BACKVOL) && !(entry.flags & BACK_EXISTS)) {
 		/* The VLDB says there is no backup volume yet we found one on disk */
