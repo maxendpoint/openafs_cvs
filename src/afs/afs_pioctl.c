@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.17 2008/05/21 04:22:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.110.2.18 2008/05/23 14:25:15 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -29,6 +29,11 @@ struct VenusFid afs_rootFid;
 afs_int32 afs_waitForever = 0;
 short afs_waitForeverCount = 0;
 afs_int32 afs_showflags = GAGUSER | GAGCONSOLE;	/* show all messages */
+
+#ifdef AFS_DISCON_ENV
+afs_int32 afs_is_disconnected;
+afs_int32 afs_is_logging;
+#endif
 
 #define DECL_PIOCTL(x) static int x(struct vcache *avc, int afun, struct vrequest *areq, \
 	char *ain, char *aout, afs_int32 ainSize, afs_int32 *aoutSize, \
@@ -90,6 +95,7 @@ DECL_PIOCTL(PRxStatPeer);
 DECL_PIOCTL(PPrefetchFromTape);
 DECL_PIOCTL(PResidencyCmd);
 DECL_PIOCTL(PCallBackAddr);
+DECL_PIOCTL(PDiscon);
 DECL_PIOCTL(PNFSNukeCreds);
 DECL_PIOCTL(PNewUuid);
 DECL_PIOCTL(PPrecache); 
@@ -196,7 +202,7 @@ static int (*(CpioctlSw[])) () = {
 	PListAliases,		/* 2 -- list cell aliases */
 	PCallBackAddr,		/* 3 -- request addr for callback rxcon */
     PBogus,			/* 4 */
-    PBogus,			/* 5 */
+    PDiscon,			/* 5 */
     PBogus,			/* 6 */
     PBogus,			/* 7 */
     PBogus,			/* 8 */
@@ -3965,6 +3971,52 @@ DECL_PIOCTL(PCallBackAddr)
     }				/* Outer loop over addrs */
 #endif /* UKERNEL */
     return 0;
+}
+
+DECL_PIOCTL(PDiscon)
+{
+#ifdef AFS_DISCON_ENV
+    static afs_int32 mode = 4; /* Start up in 'full' */
+
+    if (ainSize == sizeof(afs_int32)) {
+
+	if (!afs_osi_suser(*acred))
+	    return EPERM;
+
+	memcpy(&mode, ain, sizeof(afs_int32));
+
+	/*
+	 * All of these numbers are hard coded in fs.c. If they
+	 * change here, they should change there and vice versa
+	 */
+	switch (mode) {
+	case 0: /* Disconnect, breaking all callbacks */
+	    if (!AFS_IS_DISCONNECTED) {
+		ObtainWriteLock(&afs_discon_lock, 999);
+		afs_DisconGiveUpCallbacks();
+		afs_RemoveAllConns();
+		afs_is_disconnected = 1;
+		ReleaseWriteLock(&afs_discon_lock);
+	    }
+	    break;
+	case 4: /* Fully connected */
+	    ObtainWriteLock(&afs_discon_lock, 998);
+	    afs_is_disconnected = 0;
+	    ReleaseWriteLock(&afs_discon_lock);
+	    break;
+	default:
+	    return EINVAL;
+	}
+    } else {
+	return EINVAL;
+    }
+
+    memcpy(aout, &mode, sizeof(afs_int32));
+    *aoutSize = sizeof(afs_int32);
+    return 0;
+#else
+    return EINVAL;
+#endif
 }
 
 DECL_PIOCTL(PNFSNukeCreds)

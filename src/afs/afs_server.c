@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.43.4.6 2008/04/30 19:08:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.43.4.7 2008/05/23 14:25:16 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -546,6 +546,13 @@ afs_CheckServers(int adown, struct cell *acellp)
     afs_int32 *conntimer, *deltas, *results;
 
     AFS_STATCNT(afs_CheckServers);
+
+    /* 
+     * No sense in doing the server checks if we are running in disconnected
+     * mode
+     */
+    if (AFS_IS_DISCONNECTED)
+        return;
 
     conns = (struct conn **)0;
     rxconns = (struct rx_connection **) 0;
@@ -1845,6 +1852,46 @@ void afs_ActivateServer(struct srvAddr *sap) {
     }
 }
 
+#ifdef AFS_DISCON_ENV
+
+void afs_RemoveAllConns()
+{
+    int i;
+    struct server *ts, *nts;
+    struct srvAddr *sa;
+    struct conn *tc, *ntc;
+
+    ObtainReadLock(&afs_xserver);
+    ObtainWriteLock(&afs_xconn, 1001);
+    
+    /*printf("Destroying connections ... ");*/
+    for (i = 0; i < NSERVERS; i++) {
+        for (ts = afs_servers[i]; ts; ts = nts) {
+            nts = ts->next;
+            for (sa = ts->addr; sa; sa = sa->next_sa) {
+                if (sa->conns) {
+                    tc = sa->conns;
+                    while (tc) {
+                        ntc = tc->next;
+                        AFS_GUNLOCK();
+                        rx_DestroyConnection(tc->id);
+                        AFS_GLOCK();
+                        afs_osi_Free(tc, sizeof(struct conn));
+                        tc = ntc;
+                    }
+                    sa->conns = NULL;
+                }
+            }
+        }
+    }
+    /*printf("done\n");*/
+
+    ReleaseWriteLock(&afs_xconn);
+    ReleaseReadLock(&afs_xserver);
+    
+}
+
+#endif /* AFS_DISCON_ENV */
 
 void shutdown_server()
 {

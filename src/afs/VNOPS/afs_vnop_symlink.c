@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.24.4.4 2007/12/08 17:59:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.24.4.5 2008/05/23 14:25:16 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -76,6 +76,9 @@ int afs_symlink
 	goto done2;
 
     afs_InitFakeStat(&fakestate);
+
+    AFS_DISCON_LOCK();
+    
     code = afs_EvalFakeStat(&adp, &fakestate, &treq);
     if (code)
 	goto done;
@@ -108,6 +111,11 @@ int afs_symlink
 	goto done;
     }
 
+    if (AFS_IS_DISCONNECTED && !AFS_IS_LOGGING) {
+        code = ENETDOWN;
+        goto done;
+    }
+    
     InStatus.Mask = AFS_SETMODTIME | AFS_SETMODE;
     InStatus.ClientModTime = osi_Time();
     alen = strlen(atargetName);	/* we want it to include the null */
@@ -235,6 +243,7 @@ int afs_symlink
     afs_PutFakeStat(&fakestate);
     if (volp)
 	afs_PutVolume(volp, READ_LOCK);
+    AFS_DISCON_UNLOCK();
     code = afs_CheckCode(code, &treq, 31);
   done2:
     return code;
@@ -310,7 +319,10 @@ afs_UFSHandleLink(register struct vcache *avc, struct vrequest *areq)
 		   ICL_TYPE_POINTER, tdc, ICL_TYPE_OFFSET,
 		   ICL_HANDLE_OFFSET(avc->m.Length));
 	if (!tdc) {
-	    return EIO;
+	    if (AFS_IS_DISCONNECTED)
+	        return ENETDOWN;
+	    else
+	        return EIO;
 	}
 	/* otherwise we have the data loaded, go for it */
 	if (len > 1024) {
@@ -360,6 +372,9 @@ afs_readlink(OSI_VC_ARG(avc), auio, acred)
     if ((code = afs_InitReq(&treq, acred)))
 	return code;
     afs_InitFakeStat(&fakestat);
+
+    AFS_DISCON_LOCK();
+    
     code = afs_EvalFakeStat(&avc, &fakestat, &treq);
     if (code)
 	goto done;
@@ -384,6 +399,7 @@ afs_readlink(OSI_VC_ARG(avc), auio, acred)
     ReleaseWriteLock(&avc->lock);
   done:
     afs_PutFakeStat(&fakestat);
+    AFS_DISCON_UNLOCK();
     code = afs_CheckCode(code, &treq, 32);
     return code;
 }

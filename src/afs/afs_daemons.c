@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.43.2.4 2008/05/20 22:17:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.43.2.5 2008/05/23 14:25:15 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -195,8 +195,10 @@ afs_Daemon(void)
 	    afs_FlushReclaimedVcaches();
 	    ReleaseWriteLock(&afs_xvcache);
 	    afs_FlushActiveVcaches(1);	/* keep flocks held & flush nfs writes */
+#if 0
 #ifdef AFS_DISCON_ENV
 	    afs_StoreDirtyVcaches();
+#endif
 #endif
 	    afs_CheckRXEpoch();
 	    last1MinCheck = now;
