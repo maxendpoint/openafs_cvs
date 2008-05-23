@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.34 2007/01/25 11:19:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.35 2008/05/23 14:24:57 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -577,6 +577,9 @@ afs_GetVolumeByName(register char *aname, afs_int32 acell, int agood,
     }
 
     ReleaseWriteLock(&afs_xvolume);
+
+    if (AFS_IS_DISCONNECTED)
+        return NULL;
 
     tv = afs_NewVolumeByName(aname, acell, agood, areq, locktype);
     return (tv);

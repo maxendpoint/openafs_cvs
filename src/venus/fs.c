@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.44 2008/05/20 22:21:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/fs.c,v 1.45 2008/05/23 14:24:53 shadow Exp $");
 
 #include <afs/afs_args.h>
 #include <rx/xdr.h>
@@ -3308,9 +3308,9 @@ GetCryptCmd(struct cmd_syndesc *as, void *arock)
 
 #ifdef AFS_DISCON_ENV
 static char *modenames[] = {
-    "discon",
-    "fetchonly",
-    "partial",
+    "readonly",
+    "fetchonly", /* Not currently supported */
+    "partial",   /* Not currently supported */
     "nat",
     "full",
     NULL
@@ -3681,7 +3681,7 @@ defect 3069
 #ifdef AFS_DISCON_ENV
     ts = cmd_CreateSyntax("discon", DisconCmd, NULL,
 			  "disconnection mode");
-    cmd_AddParm(ts, "-mode", CMD_SINGLE, CMD_OPTIONAL, "nat | full");
+    cmd_AddParm(ts, "-mode", CMD_SINGLE, CMD_OPTIONAL, "readonly | nat | full");
 #endif
 
     ts = cmd_CreateSyntax("nukenfscreds", NukeNFSCredsCmd, NULL, "nuke credentials for NFS client");

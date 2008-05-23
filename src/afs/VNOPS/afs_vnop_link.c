@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.20 2007/12/08 17:57:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.21 2008/05/23 14:24:57 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -62,6 +62,9 @@ afs_link(avc, OSI_VC_ARG(adp), aname, acred)
 
     afs_InitFakeStat(&vfakestate);
     afs_InitFakeStat(&dfakestate);
+    
+    AFS_DISCON_LOCK();
+
     code = afs_EvalFakeStat(&avc, &vfakestate, &treq);
     if (code)
 	goto done;
@@ -88,6 +91,11 @@ afs_link(avc, OSI_VC_ARG(adp), aname, acred)
     if (adp->states & CRO) {
 	code = EROFS;
 	goto done;
+    }
+    
+    if (AFS_IS_DISCONNECTED && !AFS_IS_LOGGING) {
+        code = ENETDOWN;
+        goto done;
     }
 
     tdc = afs_GetDCache(adp, (afs_size_t) 0, &treq, &offset, &len, 1);	/* test for error below */
@@ -161,6 +169,7 @@ afs_link(avc, OSI_VC_ARG(adp), aname, acred)
     code = afs_CheckCode(code, &treq, 24);
     afs_PutFakeStat(&vfakestate);
     afs_PutFakeStat(&dfakestate);
+    AFS_DISCON_UNLOCK();
   done2:
     return code;
 }

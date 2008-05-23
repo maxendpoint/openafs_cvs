@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.16 2008/04/30 19:07:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.17 2008/05/23 14:24:56 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -158,6 +158,12 @@ afs_ConnBySA(struct srvAddr *sap, unsigned short aport, afs_int32 acell,
 	ReleaseSharedLock(&afs_xconn);
 	return NULL;
     }
+    
+    if (AFS_IS_DISCONNECTED) {
+        afs_warnuser("afs_ConnBySA: disconnected\n");
+        ReleaseSharedLock(&afs_xconn);
+        return NULL;
+    }
 
     if (!tc) {
 	/* No such connection structure exists.  Create one and splice it in.
@@ -269,6 +275,12 @@ afs_ConnByHost(struct server *aserver, unsigned short aport, afs_int32 acell,
     struct srvAddr *sa = 0;
 
     AFS_STATCNT(afs_ConnByHost);
+
+    if (AFS_IS_DISCONNECTED) {
+        afs_warnuser("afs_ConnByHost: disconnected\n");
+        return NULL;
+    }
+
 /* 
   1.  look for an existing connection
   2.  create a connection at an address believed to be up

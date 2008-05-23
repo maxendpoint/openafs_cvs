@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.51 2007/12/04 20:39:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.52 2008/05/23 14:24:57 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -382,6 +382,9 @@ afs_UFSWrite(register struct vcache *avc, struct uio *auio, int aio,
     if (avc->vc_error)
 	return avc->vc_error;
 
+    if (AFS_IS_DISCONNECTED && !AFS_IS_LOGGING)
+	return ENETDOWN;
+    
     startDate = osi_Time();
     if ((code = afs_InitReq(&treq, acred)))
 	return code;
