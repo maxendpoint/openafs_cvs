@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.14.6 2008/04/30 19:08:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.14.6.2.1 2008/05/23 14:25:34 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -318,6 +318,20 @@ afs_Analyze(register struct conn *aconn, afs_int32 acode,
     struct afs_stats_RPCErrors *aerrP;
     afs_int32 markeddown;
 
+ 
+    if (AFS_IS_DISCONNECTED) {
+	/* SXW - This may get very tired after a while. We should try and
+	 *       intercept all RPCs before they get here ... */
+	/*printf("afs_Analyze: disconnected\n");*/
+	afs_FinalizeReq(areq);
+	if (aconn) {
+	    /* SXW - I suspect that this will _never_ happen - we shouldn't
+	     *       get a connection because we're disconnected !!!*/
+	    afs_PutConn(aconn, locktype);
+	}
+	return 0;
+    }
+  
     AFS_STATCNT(afs_Analyze);
     afs_Trace4(afs_iclSetp, CM_TRACE_ANALYZE, ICL_TYPE_INT32, op,
 	       ICL_TYPE_POINTER, aconn, ICL_TYPE_INT32, acode, ICL_TYPE_LONG,
