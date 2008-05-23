@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.46 2008/05/22 18:29:19 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.58.2.47 2008/05/23 14:56:54 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -2914,6 +2914,7 @@ rxi_ReceivePacket(register struct rx_packet *np, osi_socket socket,
 	}
 #endif /* AFS_GLOBAL_RXLOCK_KERNEL */
 	rxi_ClearTransmitQueue(call, 0);
+	rxevent_Cancel(call->keepAliveEvent, call, RX_CALL_REFCOUNT_ALIVE);
 	break;
     default:
 	/* Should not reach here, unless the peer is broken: send an abort
