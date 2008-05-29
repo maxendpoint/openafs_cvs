@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.62.2.12 2008/05/20 21:59:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_packet.c,v 1.62.2.13 2008/05/29 03:38:06 jaltman Exp $");
 
 #ifdef KERNEL
 #if defined(UKERNEL)
@@ -544,6 +544,7 @@ rxi_MorePackets(int apackets)
 
     getme = apackets * sizeof(struct rx_packet);
     p = rx_mallocedP = (struct rx_packet *)osi_Alloc(getme);
+    osi_Assert(p);
 
     PIN(p, getme);		/* XXXXX */
     memset((char *)p, 0, getme);
@@ -579,6 +580,7 @@ rxi_MorePackets(int apackets)
 
     getme = apackets * sizeof(struct rx_packet);
     p = rx_mallocedP = (struct rx_packet *)osi_Alloc(getme);
+    osi_Assert(p);
 
     PIN(p, getme);		/* XXXXX */
     memset((char *)p, 0, getme);
