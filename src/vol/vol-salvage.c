@@ -87,7 +87,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.64 2008/03/17 16:05:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.65 2008/05/29 04:02:40 jaltman Exp $");
 
 #ifndef AFS_NT40_ENV
 #include <sys/param.h>
@@ -3372,7 +3372,7 @@ TimeStamp(time_t clock, int precision)
     static char timestamp[20];
     lt = localtime(&clock);
     if (precision)
-	(void)strftime(timestamp, 20, "%m/%d/%Y %T", lt);
+	(void)strftime(timestamp, 20, "%m/%d/%Y %H:%M:%S", lt);
     else
 	(void)strftime(timestamp, 20, "%m/%d/%Y %H:%M", lt);
     return timestamp;

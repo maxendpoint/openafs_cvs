@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.25 2008/04/02 19:42:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.26 2008/05/29 04:02:36 jaltman Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -661,7 +661,7 @@ TimeStamp(time_t t)
     static char timestamp[20];
 
     lt = localtime(&t);
-    strftime(timestamp, 20, "%m/%d/%Y %T", lt);
+    strftime(timestamp, 20, "%m/%d/%Y %H:%M:%S", lt);
     return timestamp;
 }
 
