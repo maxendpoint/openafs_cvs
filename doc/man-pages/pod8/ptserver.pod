@@ -48,6 +48,14 @@ request. The CPS lists all groups to which a user or machine belongs.
 
 =back
 
+When using Kerberos 5, cross-realm authentication is possible. If the
+special pts group system:authuser@FOREIGN.REALM exists and its group quota
+is greater than zero, B<aklog> will automatically create an entry for the
+foreign user in the local PTS database and add the foreign user to the
+system:authuser@FOREIGN.REALM PTS group.  Each time a foreign user is
+created in the local PTS database, the group quota for the
+system:authuser@FOREIGN.REALM PTS group is decremented by one.
+
 This command does not use the syntax conventions of the AFS command
 suites. Provide the command name and all option names in full.
 
@@ -55,7 +63,7 @@ suites. Provide the command name and all option names in full.
 
 =over 4
 
-=item B<-database> <I<db path>>
+=item B<-database> <I<db path>>, B<-db> <I<db path>>
 
 Specifies the pathname of an alternate directory in which the Protection
 Database files reside. Provide the complete pathname, ending in the base
@@ -73,6 +81,24 @@ positive integer from the range C<3> to C<16>. The default value is C<3>.
 Rebuilds the Protection Database at the beginning of Protection Server
 initialization. Use this argument only in consultation with AFS
 Development or Product Support.
+
+=item B<-groupdepth> <I<# of nested groups>>, B<-depth> <I<# of nested groups>>
+
+Specifies the group depth for nested groups when B<ptserver> is compiled
+with the SUPERGROUPS option enabled.  The default depth for nested groups
+is 5.  This option may be shortened to B<-depth>.
+
+=item B<-default_access> <I<user access>> <I<group access>>
+
+Specifies the default user and group privacy flags to apply to each
+entry. Provide a string of five characters, one for each of the
+permissions. See L<pts_examine(1)> or L<pts_setfields(1)> for more
+information on the flags.
+
+=item B<-restricted>
+
+Run the PT Server in restricted mode. While in restricted mode, only
+members of the system:administrators PTS group may make any PTS changes.
 
 =item B<-enable_peer_stats>
 
