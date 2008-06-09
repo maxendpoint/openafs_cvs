@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.24.4.4.2.1 2008/05/23 14:25:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_symlink.c,v 1.24.4.4.2.2 2008/06/09 03:30:45 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -119,7 +119,7 @@ int afs_symlink
     InStatus.Mask = AFS_SETMODTIME | AFS_SETMODE;
     InStatus.ClientModTime = osi_Time();
     alen = strlen(atargetName);	/* we want it to include the null */
-    if (*atargetName == '#' || *atargetName == '%') {
+    if ( (*atargetName == '#' || *atargetName == '%') && alen > 1 && atargetName[alen-1] == '.') {
 	InStatus.UnixModeBits = 0644;	/* mt pt: null from "." at end */
 	if (alen == 1)
 	    alen++;		/* Empty string */
