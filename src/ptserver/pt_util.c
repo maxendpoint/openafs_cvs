@@ -1,4 +1,4 @@
-/* $Id: pt_util.c,v 1.9.2.6 2008/03/27 18:40:22 shadow Exp $ */
+/* $Id: pt_util.c,v 1.9.2.7 2008/06/12 18:37:44 shadow Exp $ */
 
 /*
  *
@@ -23,7 +23,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.9.2.6 2008/03/27 18:40:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.9.2.7 2008/06/12 18:37:44 shadow Exp $");
 
 #include <afs/cmd.h>		/*Command line parsing */
 #include <errno.h>
@@ -321,8 +321,16 @@ CommandProc(register struct cmd_syndesc *a_as, void *arock)
     } else {
 	for (i = 0; i < HASHSIZE; i++) {
 	    upos = nflag ? ntohl(prh.nameHash[i]) : ntohl(prh.idHash[i]);
-	    while (upos)
-		upos = display_entry(upos);
+	    while (upos) {
+		long newpos;
+		newpos = display_entry(upos);
+		if (newpos == upos) {
+		    fprintf(stderr, "pt_util: hash error in %s chain %d\n", 
+			    nflag ? "name":"id", i);
+		    exit(1);
+		} else
+		    upos = newpos;
+	    }
 	}
 	if (flags & DO_GRP)
 	    display_groups();
