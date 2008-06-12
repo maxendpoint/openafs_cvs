@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/purge.c,v 1.16 2008/03/05 21:51:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/purge.c,v 1.17 2008/06/12 19:12:09 shadow Exp $");
 
 #include <stdio.h>
 #ifdef AFS_NT40_ENV
@@ -65,6 +65,10 @@ VPurgeVolume(Error * ec, Volume * vp)
 {
     struct DiskPartition64 *tpartp = vp->partition;
     char purgePath[MAXPATHLEN];
+
+    /* so VCheckDetach doesn't try to update the volume header and
+     * dump spurious errors into the logs */
+    V_inUse(vp) = 0;
 
     /* N.B.  it's important here to use the partition pointed to by the
      * volume header. This routine can, under some circumstances, be called
