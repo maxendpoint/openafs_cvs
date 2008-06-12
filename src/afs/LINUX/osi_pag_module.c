@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.1.2.7 2007/08/21 21:28:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_pag_module.c,v 1.1.2.7.2.1 2008/06/12 20:08:46 shadow Exp $");
 
 #if !defined(AFS_NONFSTRANS) || defined(AFS_AIX_IAUTH_ENV)
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -75,6 +75,9 @@ int
 init_module(void)
 #endif
 {
+#if !defined(EXPORTED_PROC_ROOT_FS) && defined(AFS_LINUX24_ENV)
+    char path[64];
+#endif
     int err;
 
     osi_Init();
@@ -83,7 +86,12 @@ init_module(void)
     if (err)
 	return err;
 #ifdef AFS_LINUX24_ENV
+#if defined(EXPORTED_PROC_ROOT_FS)
     openafs_procfs = proc_mkdir(PROC_FSDIRNAME, proc_root_fs);
+#else
+    sprintf(path, "fs/%s", PROC_FSDIRNAME);
+    openafs_procfs = proc_mkdir(path, NULL);
+#endif
     osi_ioctl_init();
 #endif
 
@@ -102,13 +110,21 @@ void
 cleanup_module(void)
 #endif
 {
+#if !defined(EXPORTED_PROC_ROOT_FS) && defined(AFS_LINUX24_ENV)
+    char path[64];
+#endif
     osi_syscall_clean();
 
     osi_linux_free_afs_memory();
 
 #ifdef AFS_LINUX24_ENV
     osi_ioctl_clean();
+#if defined(EXPORTED_PROC_ROOT_FS)
     remove_proc_entry(PROC_FSDIRNAME, proc_root_fs);
+#else
+    sprintf(path, "fs/%s", PROC_FSDIRNAME);
+    remove_proc_entry(path, NULL);
+#endif
 #endif
     return;
 }
