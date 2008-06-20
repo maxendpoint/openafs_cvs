@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.28 2008/05/06 15:07:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.58.2.29 2008/06/20 15:49:14 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1875,6 +1875,7 @@ main(int argc, char *argv[])
     rx_SetMinProcs(tservice, 3);
     rx_SetMaxProcs(tservice, lwps);
     rx_SetCheckReach(tservice, 1);
+    rx_SetServerIdleDeadErr(tservice, VNOSERVICE);
 
     tservice =
 	rx_NewService(0, RX_STATS_SERVICE_ID, "rpcstats", sc, 4,
