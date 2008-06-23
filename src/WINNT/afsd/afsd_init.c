@@ -81,7 +81,6 @@ unsigned short cm_callbackport = CM_DEFAULT_CALLBACKPORT;
 char cm_NetbiosName[MAX_NB_NAME_LENGTH] = "";
 
 char cm_CachePath[MAX_PATH];
-DWORD cm_CachePathLen;
 DWORD cm_ValidateCache = 1;
 
 BOOL reportSessionStartups = FALSE;
@@ -997,15 +996,6 @@ int afsd_InitCM(char **reasonP)
     }
 #endif /* AFS_FREELANCE_CLIENT */
 
-    dummyLen = sizeof(smb_UseUnicode);
-    code = RegQueryValueEx(parmKey, "NegotiateUnicode", NULL, NULL,
-                           (BYTE *) &smb_UseUnicode, &dummyLen);
-    if (code != ERROR_SUCCESS) {
-        smb_UseUnicode = 1; /* default on */
-    }
-    afsi_log("SMB Server Unicode Support is %s",
-              smb_UseUnicode ? "enabled" : "disabled");
-
     dummyLen = sizeof(smb_hideDotFiles);
     code = RegQueryValueEx(parmKey, "HideDotFiles", NULL, NULL,
                            (BYTE *) &smb_hideDotFiles, &dummyLen);
@@ -1253,8 +1243,6 @@ int afsd_InitCM(char **reasonP)
     smb_InitIoctl();
         
     cm_InitCallback();
-
-    cm_InitNormalization();
 
     code = cm_InitMappedMemory(virtualCache, cm_CachePath, stats, volumes, cells, cm_chunkSize, cacheBlocks, blockSize);
     afsi_log("cm_InitMappedMemory code %x", code);
@@ -1791,9 +1779,7 @@ LONG __stdcall afsd_ExceptionFilter(EXCEPTION_POINTERS *ep)
   
 void afsd_SetUnhandledExceptionFilter()
 {
-#ifndef NOTRACE
     SetUnhandledExceptionFilter(afsd_ExceptionFilter);
-#endif
 }
   
 #ifdef _DEBUG
