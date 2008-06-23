@@ -1341,6 +1341,8 @@ putFreeNode(Tree *B, Nptr node)
     if (isdata(node)) {
         if ( getdatakey(node).name )
             free(getdatakey(node).name);
+	if ( getdatavalue(node).longname )
+	    free(getdatavalue(node).longname);
     } else {    /* data node */
         for ( i=1; i<=getfanout(B); i++ ) {
             if (getkey(node, i).name)
@@ -1853,20 +1855,9 @@ int cm_BPlusDirFoo(struct cm_scache *scp, struct cm_dirEntry *dep,
     keyT   key = {dep->name};
     dataT  data;
     char   shortName[13];
-    long   normalized_len;
-    char  *normalized_name=NULL;
+
     cm_SetFid(&data.fid, scp->fid.cell, scp->fid.volume, ntohl(dep->fid.vnode), ntohl(dep->fid.unique));
     data.longname = NULL;
-
-    normalized_len = cm_NormalizeUtf8String(dep->name, -1, NULL, 0);
-    if (normalized_len)
-        normalized_name = malloc(normalized_len);
-    if (normalized_name) {
-        cm_NormalizeUtf8String(dep->name, -1, normalized_name, normalized_len);
-        key.name = normalized_name;
-    } else {
-        key.name = dep->name;
-    }
 
     /* the Write lock is held in cm_BPlusDirBuildTree() */
     insert(scp->dirBplus, key, data);
@@ -1881,9 +1872,6 @@ int cm_BPlusDirFoo(struct cm_scache *scp, struct cm_dirEntry *dep,
         data.longname = strdup(dep->name);
         insert(scp->dirBplus, key, data);
     }
-
-    if (normalized_name)
-        free(normalized_name);
 
 #ifdef BTREE_DEBUG
     findAllBtreeValues(scp->dirBplus);
