@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/display.c,v 1.9.14.1 2007/10/30 15:16:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/display.c,v 1.9.14.1.2.1 2008/06/23 02:49:26 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -46,9 +46,9 @@ pr_TimeToString(time_t clock)
     }
     tm = localtime(&clock);
     if (tm->tm_year != this_year)
-	strftime(buffer, 32, "%m/%d/%Y %T", tm);
+	strftime(buffer, 32, "%m/%d/%Y %H:%M:%S", tm);
     else
-	strftime(buffer, 32, "%m/%d %T", tm);
+	strftime(buffer, 32, "%m/%d %H:%M:%S", tm);
     return buffer;
 }
 #endif
