@@ -7,9 +7,6 @@
  * directory or online at http://www.openafs.org/dl/license10.html
  */
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
 extern "C" {
 #include <afs/param.h>
 #include <afs/stds.h>
@@ -25,6 +22,7 @@ extern "C" {
 #define __CM_CONFIG_INTERFACES_ONLY__
 #include "../afsd/cm_config.h"
 
+#include "../afsd/cm_nls.h"
 #define __CM_IOCTL_INTERFACES_ONLY__
 #include "../afsd/cm_ioctl.h"
 
