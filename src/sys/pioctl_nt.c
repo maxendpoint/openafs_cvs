@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.46 2008/05/09 14:49:55 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.47 2008/06/26 16:46:39 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -29,6 +29,7 @@ RCSID
 #include <osi.h>
 
 #include <cm.h>
+#include <cm_nls.h>
 #include <cm_server.h>
 #include <cm_cell.h>
 #include <cm_user.h>

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.62 2007/11/02 18:01:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.63 2008/06/26 16:46:39 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -62,6 +62,7 @@ RCSID
 #ifdef AFS_NT40_ENV
 #ifdef AFS_AFSDB_ENV
 /* cm_dns.h depends on cellconfig.h */
+#include <cm_nls.h>
 #include <cm_dns.h>
 #endif /* AFS_AFSDB_ENV */
 #endif
