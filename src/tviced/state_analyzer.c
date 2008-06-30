@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/tviced/state_analyzer.c,v 1.3 2007/10/30 15:10:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/tviced/state_analyzer.c,v 1.4 2008/06/30 17:28:35 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1827,6 +1827,12 @@ get_fe(afs_uint32 idx)
 static int
 get_fe_hdr(void)
 {
+    if (!fe_cursor.cursor) {
+        if(get_fe(fe_cursor.idx)) {
+	    return 1;
+        }
+    }
+    
     memcpy(&fe_cursor.hdr, fe_cursor.cursor, sizeof(struct callback_state_entry_header));
     fe_cursor.hdr_valid = 1;
     return 0;
