@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.23.4.5 2007/11/01 16:02:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.23.4.6 2008/06/30 23:37:34 rra Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -94,8 +94,8 @@ char xflag = 0;			/* if set, add stats code to stubs */
 char yflag = 0;			/* if set, only emit function name arrays to xdr file */
 int debug = 0;
 static char *cmdname;
-#ifdef	__PROG_CPP__
-static char CPP[] = __PROG_CPP__;
+#ifdef PATH_CPP
+static char CPP[] = PATH_CPP;
 #else
 static char CPP[] = "/lib/cpp";
 #endif
