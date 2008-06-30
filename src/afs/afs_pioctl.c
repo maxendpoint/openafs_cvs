@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.127 2008/05/23 14:24:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.128 2008/06/30 22:53:22 rra Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -3971,29 +3971,6 @@ DECL_PIOCTL(PCallBackAddr)
     }				/* Outer loop over addrs */
 #endif /* UKERNEL */
     return 0;
-}
-
-DECL_PIOCTL(PDiscon)
-{
-#ifdef AFS_DISCON_ENV
-    static afs_int32 mode;
-
-    if (ainSize == sizeof(afs_int32)) {
-	memcpy(&mode, ain, sizeof(afs_int32));
-
-	/* 3 is magic, should be a #define. */
-	afs_SetCheckServerNATmode(mode == 3);
-    } else if (ainSize != 0) {
-	return EINVAL;
-    }
-
-    /* Return new mode */
-    memcpy(aout, &mode, sizeof(afs_int32));
-    *aoutSize = sizeof(struct VenusFid);
-    return 0;
-#else
-    return EINVAL;
-#endif
 }
 
 DECL_PIOCTL(PDiscon)
