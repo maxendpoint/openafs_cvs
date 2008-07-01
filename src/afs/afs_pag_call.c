@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pag_call.c,v 1.1 2006/07/31 21:20:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pag_call.c,v 1.2 2008/07/01 03:33:40 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -50,6 +50,7 @@ char *afs_sysname = 0;
 char *afs_sysnamelist[MAXNUMSYSNAMES];
 int afs_sysnamecount = 0;
 int afs_sysnamegen = 0;
+afs_int32 afs_showflags = GAGUSER | GAGCONSOLE; /* show all messages */
 
 
 void afs_Daemon(void)
