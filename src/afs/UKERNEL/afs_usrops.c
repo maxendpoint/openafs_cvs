@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.27.2.7 2008/01/31 20:18:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.27.2.8 2008/07/01 20:57:23 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -1641,7 +1641,7 @@ uafs_Init(char *rn, char *mountDirParam, char *confDirParam,
     /*
      * Set the primary cell name.
      */
-    call_syscall(AFSOP_SET_THISCELL, (long)afs_LclCellName, 0, 0, 0, 0);
+    call_syscall(AFSCALL_CALL, AFSOP_SET_THISCELL, (long)afs_LclCellName, 0, 0, 0);
 
     if ((logfd = fopen(fullpn_AFSLogFile, "r+")) == 0) {
 	if (afsd_verbose)
