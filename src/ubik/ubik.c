@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.15.14.5 2008/04/28 21:48:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/ubik.c,v 1.15.14.6 2008/07/01 03:06:20 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -299,7 +299,7 @@ ubik_ServerInitCommon(afs_int32 myHost, short myPort,
     assert(pthread_create(&rxServerThread, &rxServer_tattr, (void *)rx_ServerProc, NULL) == 0);
 #else
     LWP_CreateProcess(rx_ServerProc, rx_stackSize, RX_PROCESS_PRIORITY,
-              (void *)0, "rx_ServerProc", &junk);
+              NULL, "rx_ServerProc", &junk);
 #endif
 
     /* do basic initialization */
