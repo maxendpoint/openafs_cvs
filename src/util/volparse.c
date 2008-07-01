@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/util/volparse.c,v 1.13 2008/06/12 19:12:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/util/volparse.c,v 1.14 2008/07/01 18:33:26 shadow Exp $");
 
 #include <string.h>
 #ifdef HAVE_STDLIB_H
@@ -119,7 +119,7 @@ volutil_PartitionName2_r(afs_int32 part, char *tbuffer, size_t buflen)
     if (strlcat(tbuffer, tempString, buflen) >= buflen) {
 	return -1;
     }
-    return tbuffer;
+    return 0;
 }
 
 #define BAD_VID "BAD VOLUME ID"
