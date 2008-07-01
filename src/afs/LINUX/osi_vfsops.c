@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.21 2007/11/23 13:40:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.22 2008/07/01 03:35:23 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -39,7 +39,7 @@ struct vfsmount *afs_cacheMnt;
 int afs_was_mounted = 0;	/* Used to force reload if mount/unmount/mount */
 
 extern struct super_operations afs_sops;
-#if defined(AFS_LINUX26_ENV)
+#if defined(AFS_LINUX26_ENV) && !defined(AFS_NONFSTRANS)
 extern struct export_operations afs_export_ops;
 #endif
 extern afs_rwlock_t afs_xvcache;
@@ -146,7 +146,7 @@ afs_read_super(struct super_block *sb, void *data, int silent)
     sb->s_blocksize_bits = 10;
     sb->s_magic = AFS_VFSMAGIC;
     sb->s_op = &afs_sops;	/* Super block (vfs) ops */
-#if defined(AFS_LINUX26_ENV)
+#if defined(AFS_LINUX26_ENV) && !defined(AFS_NONFSTRANS)
     sb->s_export_op = &afs_export_ops;
 #endif
 #if defined(MAX_NON_LFS)

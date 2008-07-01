@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.44.4.5 2008/03/10 18:52:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_misc.c,v 1.44.4.6 2008/07/01 03:35:23 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -168,7 +168,7 @@ int osi_abspath(char *aname, char *buf, int buflen,
 		int followlink, char **pathp)
 {
     struct dentry *dp = NULL;
-    struct vfsmnt *mnt = NULL;
+    struct vfsmount *mnt = NULL;
     char *tname, *path;
     int code;
 
@@ -178,7 +178,12 @@ int osi_abspath(char *aname, char *buf, int buflen,
 	return -PTR_ERR(tname);
     code = osi_lookupname_internal(tname, followlink, &mnt, &dp);   
     if (!code) {
+#if defined(D_PATH_TAKES_STRUCT_PATH)
+	struct path p = { mnt, dp };
+	path = d_path(&p, buf, buflen);
+#else
 	path = d_path(dp, mnt, buf, buflen);
+#endif
 
 	if (IS_ERR(path)) {
 	    code = -PTR_ERR(path);

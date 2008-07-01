@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_proc.c,v 1.1.2.4 2008/06/09 03:39:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_proc.c,v 1.1.2.5 2008/07/01 03:35:23 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -349,14 +349,14 @@ osi_proc_clean(void)
     char path[64];
 #endif
 
+    remove_proc_entry(PROC_CELLSERVDB_NAME, openafs_procfs);
+#ifdef HAVE_KERNEL_LINUX_SEQ_FILE_H
+    remove_proc_entry("unixusers", openafs_procfs);
+#endif
 #if defined(EXPORTED_PROC_ROOT_FS)
     remove_proc_entry(PROC_FSDIRNAME, proc_root_fs);
 #else
     sprintf(path, "fs/%s", PROC_FSDIRNAME);
     remove_proc_entry(path, NULL);
-#endif
-    remove_proc_entry(PROC_CELLSERVDB_NAME, openafs_procfs);
-#ifdef HAVE_KERNEL_LINUX_SEQ_FILE_H
-    remove_proc_entry("unixusers", openafs_procfs);
 #endif
 }
