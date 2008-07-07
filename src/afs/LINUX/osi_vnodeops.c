@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.27 2008/05/20 21:03:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.28 2008/07/07 16:53:59 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1307,13 +1307,7 @@ afs_linux_rename(struct inode *oldip, struct dentry *olddp,
 #if defined(AFS_LINUX26_ENV)
     /* Prevent any new references during rename operation. */
     lock_kernel();
-#endif
-    /* Remove old and new entries from name hash. New one will change below.
-     * While it's optimal to catch failures and re-insert newdp into hash,
-     * it's also error prone and in that case we're already dealing with error
-     * cases. Let another lookup put things right, if need be.
-     */
-#if defined(AFS_LINUX26_ENV)
+
     if (!d_unhashed(newdp)) {
 	d_drop(newdp);
 	rehash = newdp;
@@ -1333,6 +1327,9 @@ afs_linux_rename(struct inode *oldip, struct dentry *olddp,
     AFS_GLOCK();
     code = afs_rename(VTOAFS(oldip), oldname, VTOAFS(newip), newname, credp);
     AFS_GUNLOCK();
+
+    if (!code)
+	olddp->d_time = 0;      /* force to revalidate */
 
     if (rehash)
 	d_rehash(rehash);
