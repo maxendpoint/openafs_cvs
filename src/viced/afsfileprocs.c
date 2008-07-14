@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.24 2008/03/06 16:55:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.25 2008/07/14 13:42:30 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -559,6 +559,14 @@ CheckVnode(AFSFid * fid, Volume ** volptr, Vnode ** vptr, int lock)
 	     * must check local_errorCode because demand attach fs
 	     * can have local_errorCode == VSALVAGING, errorCode == VBUSY */
 	    else if (local_errorCode == VBUSY && lock == READ_LOCK) {
+#ifdef AFS_DEMAND_ATTACH_FS
+		/* DAFS case is complicated by the fact that local_errorCode can
+		 * be VBUSY in cases where the volume is truly offline */
+		if (!*volptr) {
+		    /* volume is in VOL_STATE_UNATTACHED */
+		    return (errorCode);
+		}
+#endif /* AFS_DEMAND_ATTACH_FS */
 		errorCode = 0;
 		break;
 	    } else if (errorCode)
