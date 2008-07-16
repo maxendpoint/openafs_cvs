@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.34.2.14 2008/05/07 17:52:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.34.2.15 2008/07/16 04:16:25 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -821,6 +821,11 @@ VolReClone(struct rx_call *acid, afs_int32 atrans, afs_int32 cloneId)
 	LogError(error);
 	goto fail;
     }
+    /* VUpdateVolume succeeded. Mark it in service so there's no window 
+     * between FSYNC_VOL_ON and VolSetFlags where it's offline with no  
+     * specialStatus; this is a reclone and this volume started online  
+     */
+    V_inService(clonevp) = 1;
     VDetachVolume(&error, clonevp);	/* allow file server to get it's hands on it */
     clonevp = NULL;
     VUpdateVolume(&error, originalvp);
