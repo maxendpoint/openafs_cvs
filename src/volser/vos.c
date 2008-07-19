@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.72 2008/05/22 03:51:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vos.c,v 1.73 2008/07/19 06:41:07 rra Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -472,16 +472,12 @@ DumpFunction(struct rx_call *call, char *filename)
     return (error);
 }
 
-#if SIZEOF_TIME_T!=4
 static char *
 vos_ctime(afs_int32 *timep)
 {
     time_t foo = *timep;
     return ctime(&foo);
 }
-#else
-#define vos_ctime ctime
-#endif
 
 static void
 DisplayFormat(pntr, server, part, totalOK, totalNotOK, totalBusy, fast,
