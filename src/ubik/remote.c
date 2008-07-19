@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.21 2008/04/28 21:48:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.22 2008/07/19 06:11:07 rra Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -628,7 +628,7 @@ SDISK_SendFile(rxcall, file, length, avers)
 #endif
     memcpy(&ubik_dbase->version, avers, sizeof(struct ubik_version));
     udisk_Invalidate(dbase, file);	/* new dbase, flush disk buffers */
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
     assert(pthread_cond_broadcast(&dbase->version_cond) == 0);
 #else
     LWP_NoYieldSignal(&dbase->version);

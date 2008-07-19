@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/phys.c,v 1.13 2008/04/28 21:48:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/phys.c,v 1.14 2008/07/19 06:11:07 rra Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -24,7 +24,7 @@ RCSID
 #endif
 #include <sys/stat.h>
 
-/* #if defined (AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV) */
+/* #ifdef AFS_PTHREAD_ENV */
 #if 0   /* temporary hack - klm */
 /* nothing */
 #else

@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/procs.c,v 1.16 2008/04/02 19:42:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/procs.c,v 1.17 2008/07/19 06:11:05 rra Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -110,7 +110,7 @@ AwaitInitialization()
 	    start = time(0);
 	else if (time(0) - start > 5)
 	    return UNOQUORUM;
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
 	sleep(1);
 #else
 	IOMGR_Sleep(1);
@@ -204,7 +204,7 @@ InitRPC(ut, lock, this_op)
 		Log("Waiting for quorum election\n");
 	    if (wait < 15.0)
 		wait *= 1.1;
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
 	    sleep((int)wait);
 #else
 	    IOMGR_Sleep((int)wait);
@@ -1477,7 +1477,7 @@ CreateDump(call, dump)
 	    }
 
 	    /* dump id is in use - wait a while */
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
 	    sleep(1);
 #else
 	    IOMGR_Sleep(1);

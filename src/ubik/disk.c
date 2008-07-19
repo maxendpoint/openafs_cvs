@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.17 2008/04/02 19:42:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/disk.c,v 1.18 2008/07/19 06:11:07 rra Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -798,7 +798,7 @@ udisk_commit(struct ubik_trans *atrans)
 	}
 
 	dbase->version.counter++;	/* bump commit count */
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
 	assert(pthread_cond_broadcast(&dbase->version_cond) == 0);
 #else
 	LWP_NoYieldSignal(&dbase->version);
@@ -918,7 +918,7 @@ udisk_end(struct ubik_trans *atrans)
     free(atrans);
 
     /* Wakeup any writers waiting in BeginTrans() */
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
 	assert(pthread_cond_broadcast(&dbase->flags_cond) == 0);
 #else
     LWP_NoYieldSignal(&dbase->flags);

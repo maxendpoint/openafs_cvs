@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/utst_client.c,v 1.9 2008/04/02 19:42:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/utst_client.c,v 1.10 2008/07/19 06:11:07 rra Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -149,7 +149,7 @@ main(argc, argv)
 
 		tv.tv_sec = 1;
 		tv.tv_usec = 0;
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
 		select(0, 0, 0, 0, &tv);
 #else
 		IOMGR_Select(0, 0, 0, 0, &tv);
@@ -176,7 +176,7 @@ main(argc, argv)
 
 		tv.tv_sec = 1;
 		tv.tv_usec = 0;
-#if defined(AFS_PTHREAD_ENV) && defined(UBIK_PTHREAD_ENV)
+#ifdef AFS_PTHREAD_ENV
 		select(0, 0, 0, 0, &tv);
 #else
 		IOMGR_Select(0, 0, 0, 0, &tv);
