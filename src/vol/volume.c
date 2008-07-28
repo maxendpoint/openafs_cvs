@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.65 2008/06/12 19:12:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.66 2008/07/28 12:58:30 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -3814,9 +3814,11 @@ VVolOpLeaveOnline_r(Volume * vp, FSSYNC_VolOp_info * vopinfo)
 int
 VVolOpSetVBusy_r(Volume * vp, FSSYNC_VolOp_info * vopinfo)
 {
-    return (vopinfo->com.command == FSYNC_VOL_NEEDVOLUME &&
+    return ((vopinfo->com.command == FSYNC_VOL_OFF &&
+	    vopinfo->com.reason == FSYNC_SALVAGE) ||
+	    (vopinfo->com.command == FSYNC_VOL_NEEDVOLUME &&
 	    (vopinfo->com.reason == V_CLONE ||
-	     vopinfo->com.reason == V_DUMP));
+	     vopinfo->com.reason == V_DUMP)));
 }
 
 
