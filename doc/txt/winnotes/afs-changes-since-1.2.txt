@@ -1,4 +1,6 @@
 Since 1.5.50
+ * Fix Large File Support (broken in 1.5.50)
+
  * Fix "fs setacl" (broken in 1.5.50)
 
  * Fix pioctl path evaluation of drive letter
