@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <wchar.h>
 #include <strsafe.h>
+#include <stdio.h>
 #include <errno.h>
 
 #include "cm_nls.h"
@@ -60,6 +61,33 @@ BOOL
 
 #define AFS_NORM_FORM NormalizationC
 
+static LCID nls_lcid = LOCALE_INVARIANT;
+
+static BOOL
+is_windows_2000 (void)
+{
+   static BOOL fChecked = FALSE;
+   static BOOL fIsWin2K = FALSE;
+
+   if (!fChecked)
+   {
+       OSVERSIONINFO Version;
+
+       memset (&Version, 0x00, sizeof(Version));
+       Version.dwOSVersionInfoSize = sizeof(Version);
+
+       if (GetVersionEx (&Version))
+       {
+           if (Version.dwPlatformId == VER_PLATFORM_WIN32_NT &&
+                Version.dwMajorVersion >= 5)
+               fIsWin2K = TRUE;
+       }
+       fChecked = TRUE;
+   }
+
+   return fIsWin2K;
+}
+
 long cm_InitNormalization(void)
 {
     HMODULE h_Nls;
@@ -81,6 +109,9 @@ long cm_InitNormalization(void)
         (BOOL
          (WINAPI *)( NORM_FORM, LPCWSTR, int ))
         GetProcAddress(h_Nls, "IsNormalizedString");
+
+    if (is_windows_2000())
+        nls_lcid = MAKELCID(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), SORT_DEFAULT);
 
     return (pNormalizeString && pIsNormalizedString);
 }
@@ -919,7 +950,7 @@ int cm_strnicmp_utf8(const char * str1, const char * str2, int n)
         wstr2[0] = L'\0';
     }
 
-    rv = CompareStringW(LOCALE_INVARIANT, NORM_IGNORECASE, wstr1, len1, wstr2, len2);
+    rv = CompareStringW(nls_lcid, NORM_IGNORECASE, wstr1, len1, wstr2, len2);
     if (rv > 0)
         return (rv - 2);
     else {
@@ -952,7 +983,7 @@ int cm_strnicmp_utf16(const cm_unichar_t * str1, const cm_unichar_t * str2, int 
     if (FAILED(StringCchLengthW(str2, len, &cch2)))
         cch2 = len;
 
-    rv = CompareStringW(LOCALE_INVARIANT, NORM_IGNORECASE, str1, cch1, str2, cch2);
+    rv = CompareStringW(nls_lcid, NORM_IGNORECASE, str1, cch1, str2, cch2);
     if (rv > 0)
         return (rv - 2);
     else {
@@ -977,7 +1008,7 @@ int cm_stricmp_utf16(const cm_unichar_t * str1, const cm_unichar_t * str2)
         return 1;
     }
 
-    rv = CompareStringW(LOCALE_INVARIANT, NORM_IGNORECASE, str1, -1, str2, -1);
+    rv = CompareStringW(nls_lcid, NORM_IGNORECASE, str1, -1, str2, -1);
     if (rv > 0)
         return (rv - 2);
     else {
@@ -994,7 +1025,7 @@ cm_unichar_t *cm_strlwr_utf16(cm_unichar_t * str)
     int len;
 
     len = wcslen(str) + 1;
-    rv = LCMapStringW(LOCALE_INVARIANT, LCMAP_LOWERCASE, str, len, str, len);
+    rv = LCMapStringW(nls_lcid, LCMAP_LOWERCASE, str, len, str, len);
 #ifdef DEBUG
     if (rv == 0) {
         DebugBreak();
@@ -1010,7 +1041,7 @@ cm_unichar_t *cm_strupr_utf16(cm_unichar_t * str)
     int len;
 
     len = wcslen(str) + 1;
-    rv = LCMapStringW(LOCALE_INVARIANT, LCMAP_UPPERCASE, str, len, str, len);
+    rv = LCMapStringW(nls_lcid, LCMAP_UPPERCASE, str, len, str, len);
 #ifdef DEBUG
     if (rv == 0) {
         DebugBreak();
@@ -1055,7 +1086,7 @@ int cm_stricmp_utf8(const char * str1, const char * str2)
         wstr2[0] = L'\0';
     }
 
-    rv = CompareStringW(LOCALE_INVARIANT, NORM_IGNORECASE, wstr1, len1, wstr2, len2);
+    rv = CompareStringW(nls_lcid, NORM_IGNORECASE, wstr1, len1, wstr2, len2);
     if (rv > 0)
         return (rv - 2);
     else {
@@ -1073,7 +1104,7 @@ wchar_t * strupr_utf16(wchar_t * wstr, size_t cbstr)
     int len;
 
     len = cbstr / sizeof(wchar_t);
-    len = LCMapStringW(LOCALE_INVARIANT, LCMAP_UPPERCASE, wstr, len, wstrd, NLSMAXCCH);
+    len = LCMapStringW(nls_lcid, LCMAP_UPPERCASE, wstr, len, wstrd, NLSMAXCCH);
     StringCbCopyW(wstr, cbstr, wstrd);
 
     return wstr;
@@ -1090,7 +1121,7 @@ char * strupr_utf8(char * str, size_t cbstr)
     if (len == 0)
         return str;
 
-    len = LCMapStringW(LOCALE_INVARIANT, LCMAP_UPPERCASE, wstr, len, wstrd, NLSMAXCCH);
+    len = LCMapStringW(nls_lcid, LCMAP_UPPERCASE, wstr, len, wstrd, NLSMAXCCH);
 
     len = WideCharToMultiByte(CP_UTF8, 0, wstrd, -1, str, cbstr, NULL, FALSE);
 
