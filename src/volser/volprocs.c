@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.16 2008/07/16 04:15:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.42.2.17 2008/08/16 20:07:45 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -446,7 +446,7 @@ VolCreateVolume(struct rx_call *acid, afs_int32 apart, char *aname,
 	return EIO;
     }
     V_uniquifier(vp) = 1;
-    V_creationDate(vp) = V_copyDate(vp);
+    V_updateDate(vp) = V_creationDate(vp) = V_copyDate(vp);
     V_inService(vp) = V_blessed(vp) = 1;
     V_type(vp) = atype;
     AssignVolumeName(&V_disk(vp), aname, 0);
