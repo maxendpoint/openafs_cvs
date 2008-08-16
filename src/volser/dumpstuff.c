@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.25.2.10 2008/01/21 14:11:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.25.2.11 2008/08/16 19:15:49 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -76,7 +76,7 @@ struct iod {
     struct rx_call *call;	/* call to which to write, might be an array */
     int device;			/* dump device ID for volume */
     int parentId;		/* dump parent ID for volume */
-    struct DiskPartition *dumpPartition;	/* Dump partition. */
+    struct DiskPartition64 *dumpPartition;	/* Dump partition. */
     struct rx_call **calls;	/* array of pointers to calls */
     int ncalls;			/* how many calls/codes in array */
     int *codes;			/* one return code for each call */
