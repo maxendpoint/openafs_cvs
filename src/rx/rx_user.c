@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.24.4.4 2008/05/29 13:33:29 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.24.4.5 2008/08/22 04:31:48 shadow Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -729,10 +729,10 @@ rxi_InitPeerParams(struct rx_peer *pp)
     pp->natMTU = MIN((int)pp->ifMTU, OLD_MAX_PACKET_SIZE);
     pp->maxDgramPackets =
 	MIN(rxi_nDgramPackets,
-	    rxi_AdjustDgramPackets(RX_MAX_FRAGS, pp->ifMTU));
+	    rxi_AdjustDgramPackets(rxi_nSendFrags, pp->ifMTU));
     pp->ifDgramPackets =
 	MIN(rxi_nDgramPackets,
-	    rxi_AdjustDgramPackets(RX_MAX_FRAGS, pp->ifMTU));
+	    rxi_AdjustDgramPackets(rxi_nSendFrags, pp->ifMTU));
     pp->maxDgramPackets = 1;
     /* Initialize slow start parameters */
     pp->MTU = MIN(pp->natMTU, pp->maxMTU);
