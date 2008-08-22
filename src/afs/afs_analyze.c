@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.2.4 2008/06/29 03:39:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.2.5 2008/08/22 18:53:16 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -598,7 +598,7 @@ afs_Analyze(register struct conn *aconn, afs_int32 acode,
 	return shouldRetry;	/* should retry */
     }
 
-    if (!aconn) {
+    if (!aconn || !aconn->srvr) {
 	if (!areq->volumeError) {
 	    if (aerrP)
 		(aerrP->err_Network)++;
