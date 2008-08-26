@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.10.2.4 2008/05/20 19:54:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.10.2.5 2008/08/26 14:02:10 shadow Exp $");
 
 
 
@@ -19,7 +19,7 @@ RCSID
 #include "afsincludes.h"	/* Afs-based standard headers */
 #include "afs/afs_stats.h"	/* afs statistics */
 
-#ifndef AFS_FBSD_ENV
+
 
 #ifdef AFS_AIX41_ENV
 #include "sys/lockl.h"
@@ -170,4 +170,4 @@ shutdown_osinet(void)
 		 afs_stats_cmperf.SmallBlocksActive);
     }
 }
-#endif
+
