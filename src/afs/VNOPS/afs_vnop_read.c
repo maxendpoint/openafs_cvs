@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.38 2008/05/23 14:24:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.39 2008/08/26 14:00:56 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -902,6 +902,12 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 	    VOP_LOCK(tfile->vnode, LK_EXCLUSIVE, current_proc());
 	    code = VOP_READ(tfile->vnode, &tuio, 0, afs_osi_credp);
 	    VOP_UNLOCK(tfile->vnode, 0, current_proc());
+	    AFS_GLOCK();
+#elif defined(AFS_FBSD80_ENV)
+	    AFS_GUNLOCK();
+	    VOP_LOCK(tfile->vnode, LK_EXCLUSIVE);
+	    code = VOP_READ(tfile->vnode, &tuio, 0, afs_osi_credp);
+	    VOP_UNLOCK(tfile->vnode, 0);
 	    AFS_GLOCK();
 #elif defined(AFS_FBSD50_ENV)
 	    AFS_GUNLOCK();
