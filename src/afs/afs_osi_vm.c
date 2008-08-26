@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_vm.c,v 1.1.2.2 2006/07/31 21:27:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_vm.c,v 1.1.2.3 2008/08/26 14:01:31 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -49,6 +49,7 @@ osi_Active(register struct vcache *avc)
 void
 osi_FlushPages(register struct vcache *avc, struct AFS_UCRED *credp)
 {
+    int vfslocked;
     afs_hyper_t origDV;
     ObtainReadLock(&avc->lock);
     /* If we've already purged this version, or if we're the ones
@@ -79,9 +80,19 @@ osi_FlushPages(register struct vcache *avc, struct AFS_UCRED *credp)
 	       ICL_TYPE_INT32, origDV.low, ICL_TYPE_INT32, avc->m.Length);
 
     ReleaseWriteLock(&avc->lock);
+#ifdef AFS_FBSD70_ENV
+    vfslocked = VFS_LOCK_GIANT(AFSTOV(avc)->v_mount);
+#endif
+#ifndef AFS_FBSD70_ENV
     AFS_GUNLOCK();
+#endif
     osi_VM_FlushPages(avc, credp);
+#ifndef AFS_FBSD70_ENV
     AFS_GLOCK();
+#endif
+#ifdef AFS_FBSD70_ENV
+    VFS_UNLOCK_GIANT(vfslocked);
+#endif
     ObtainWriteLock(&avc->lock, 88);
 
     /* do this last, and to original version, since stores may occur

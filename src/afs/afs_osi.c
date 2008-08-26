@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.6 2008/02/06 01:32:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.7 2008/08/26 14:01:31 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -91,6 +91,11 @@ osi_Init(void)
     usimple_lock_init(&afs_global_lock);
     afs_global_owner = (thread_t) 0;
 #elif defined(AFS_FBSD50_ENV)
+#if defined(AFS_FBSD80_ENV) && defined(WITNESS)
+    /* "lock_initalized" (sic) can panic, checks a flag bit
+     * is unset _before_ init */
+    memset(&afs_global_mtx, 0, sizeof(struct mtx));
+#endif
     mtx_init(&afs_global_mtx, "AFS global lock", NULL, MTX_DEF);
 #elif defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
 #if !defined(AFS_DARWIN80_ENV)

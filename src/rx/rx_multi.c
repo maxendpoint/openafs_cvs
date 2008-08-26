@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_multi.c,v 1.9.8.1 2008/02/08 21:21:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_multi.c,v 1.9.8.2 2008/08/26 14:01:39 shadow Exp $");
 
 #ifdef	KERNEL
 #include "afs/sysincludes.h"
@@ -48,6 +48,7 @@ multi_Init(struct rx_connection **conns, register int nConns)
     mh->nextReady = mh->firstNotReady = mh->ready = ready;
     mh->nReady = 0;
     mh->nConns = nConns;
+
 #ifdef RX_ENABLE_LOCKS
     MUTEX_INIT(&mh->lock, "rx_multi_lock", MUTEX_DEFAULT, 0);
     CV_INIT(&mh->cv, "rx_multi_cv", CV_DEFAULT, 0);

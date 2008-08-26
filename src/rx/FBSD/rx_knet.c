@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.16 2006/05/09 18:41:48 rees Exp $");
+    ("$Header: /cvs/openafs/src/rx/FBSD/rx_knet.c,v 1.15.6.1 2008/08/26 14:01:39 shadow Exp $");
 
 #ifdef AFS_FBSD40_ENV
 #include <sys/malloc.h>
@@ -19,7 +19,7 @@ RCSID
 
 #ifdef RXK_LISTENER_ENV
 int
-osi_NetReceive(osi_socket asocket, struct sockaddr_storage *saddr, int *slen,
+osi_NetReceive(osi_socket asocket, struct sockaddr_in *addr,
 	       struct iovec *dvec, int nvecs, int *alength)
 {
     struct uio u;
@@ -68,16 +68,16 @@ osi_NetReceive(osi_socket asocket, struct sockaddr_storage *saddr, int *slen,
     *alength -= u.uio_resid;
     if (sa) {
 	if (sa->sa_family == AF_INET) {
-	    if (saddr) {
-		memcpy(saddr, sa, sa->sa_len);
-		*slen = sa->sa_len;
-	    }
+	    if (addr)
+		*addr = *(struct sockaddr_in *)sa;
 	} else
 	    printf("Unknown socket family %d in NetReceive\n", sa->sa_family);
 	FREE(sa, M_SONAME);
     }
     return code;
 }
+
+#define so_is_disconn(so) ((so)->so_state & SS_ISDISCONNECTED)
 
 extern int rxk_ListenerPid;
 void
@@ -90,20 +90,48 @@ osi_StopListener(void)
      * soclose() is currently protected by Giant,
      * but pfind and psignal are MPSAFE.
      */
-    AFS_GUNLOCK();
+    int haveGlock = ISAFS_GLOCK();
+    if (haveGlock)
+	AFS_GUNLOCK();
+    soshutdown(rx_socket, 2);
+#ifndef AFS_FBSD70_ENV
     soclose(rx_socket);
+#endif
     p = pfind(rxk_ListenerPid);
+    afs_warn("osi_StopListener: rxk_ListenerPid %lx\n", p);
     if (p)
 	psignal(p, SIGUSR1);
 #ifdef AFS_FBSD50_ENV
     PROC_UNLOCK(p);
 #endif
-    AFS_GLOCK();
+#ifdef AFS_FBSD70_ENV
+    {
+      /* Avoid destroying socket until osi_NetReceive has
+       * had a chance to clean up */
+      int tries;
+      struct mtx s_mtx;
+
+      MUTEX_INIT(&s_mtx, "rx_shutdown_mutex", MUTEX_DEFAULT, 0);
+      MUTEX_ENTER(&s_mtx);
+      tries = 3;
+      while ((tries > 0) && (!so_is_disconn(rx_socket))) {
+	msleep(&osi_StopListener, &s_mtx, PSOCK | PCATCH,
+	       "rx_shutdown_timedwait", 1 * hz);
+	--tries;
+      }
+      if (so_is_disconn(rx_socket))
+	soclose(rx_socket);
+      MUTEX_EXIT(&s_mtx);
+      MUTEX_DESTROY(&s_mtx);
+    }
+#endif
+    if (haveGlock)
+	AFS_GLOCK();
 }
 
 int
-osi_NetSend(osi_socket asocket, struct sockaddr_storage *saddr, int salen,
-	    struct iovec *dvec, int nvecs, afs_int32 alength, int istack)
+osi_NetSend(osi_socket asocket, struct sockaddr_in *addr, struct iovec *dvec,
+	    int nvecs, afs_int32 alength, int istack)
 {
     register afs_int32 code;
     int i;
@@ -130,8 +158,7 @@ osi_NetSend(osi_socket asocket, struct sockaddr_storage *saddr, int salen,
     u.uio_procp = NULL;
 #endif
 
-    saddr->ss_len = saddr->ss_family == AF_INET6 ?
-		sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in);
+    addr->sin_len = sizeof(struct sockaddr_in);
 
     if (haveGlock)
 	AFS_GUNLOCK();
@@ -140,11 +167,11 @@ osi_NetSend(osi_socket asocket, struct sockaddr_storage *saddr, int salen,
 #endif
 #ifdef AFS_FBSD50_ENV
     code =
-	sosend(asocket, (struct sockaddr *)saddr, &u, NULL, NULL, 0,
+	sosend(asocket, (struct sockaddr *)addr, &u, NULL, NULL, 0,
 	       curthread);
 #else
     code =
-	sosend(asocket, (struct sockaddr *)saddr, &u, NULL, NULL, 0, curproc);
+	sosend(asocket, (struct sockaddr *)addr, &u, NULL, NULL, 0, curproc);
 #endif
 #if KNET_DEBUG
     if (code) {
