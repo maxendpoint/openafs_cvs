@@ -20,7 +20,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.35.2.12 2008/09/04 18:17:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.35.2.13 2008/09/04 18:19:31 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -1670,7 +1670,7 @@ GetBitmap(Error * ec, Volume * vp, VnodeClass class)
 }
 
 void 
-VGetVolumePath(Error * ec, VolId volumeId, char **partitionp, char **namep);
+VGetVolumePath(Error * ec, VolId volumeId, char **partitionp, char **namep)
 {
     static char partition[VMAXPATHLEN], name[VMAXPATHLEN];
     char path[VMAXPATHLEN];
