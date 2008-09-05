@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.27 2008/09/04 19:41:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.28 2008/09/05 16:57:55 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1554,7 +1554,7 @@ Update_TargetVnodeStatus(Vnode * targetptr, afs_uint32 Caller,
 #define	CREATE_SGUID_ADMIN_ONLY 1
 #ifdef CREATE_SGUID_ADMIN_ONLY
 	if (VanillaUser(client))
-	    modebits = modebits & 1777;
+	    modebits = modebits & 0777;
 #endif
 	if (VanillaUser(client)) {
 	    targetptr->disk.modeBits = modebits;
