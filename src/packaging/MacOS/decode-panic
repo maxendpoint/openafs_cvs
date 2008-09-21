@@ -113,7 +113,7 @@ sub read_panic {
         chomp $line;
     
         #skip lines until "Backtrace" is seen
-        $line =~ /^\s*(Backtrace,|Backtrace:)/;
+        $line =~ /^\s*(Backtrace,|Backtrace:|Backtrace \()/;
         $backtrace = $1;
         last if $backtrace;
     }
@@ -257,7 +257,7 @@ decode-panic - decode a Mac OS panic log to show source line numbers
 
 =head1 VERSION
 
-This documentation refers to decode-panic version $Revision: 1.1.2.2 $
+This documentation refers to decode-panic version $Revision: 1.1.2.3 $
 
 =head1 SYNOPSIS
  
