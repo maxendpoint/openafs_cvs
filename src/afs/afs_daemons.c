@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.48 2008/05/23 14:24:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.49 2008/09/22 19:35:09 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -26,7 +26,9 @@ RCSID
 #include <sys/adspace.h>	/* for vm_att(), vm_det() */
 #endif
 
-
+#if defined(AFS_CACHE_BYPASS)
+#include "afs/afs_bypasscache.h"
+#endif// defined(AFS_CACHE_BYPASS)
 /* background request queue size */
 afs_lock_t afs_xbrs;		/* lock for brs */
 static int brsInit = 0;
@@ -516,6 +518,27 @@ BPrefetch(register struct brequest *ab)
     }
 }
 
+#if defined(AFS_CACHE_BYPASS)
+#if 1 /* XXX Matt debugging */
+static
+#endif
+void
+BPrefetchNoCache(register struct brequest *ab)
+{
+    struct vrequest treq;
+    afs_size_t len;
+	
+    if ((len = afs_InitReq(&treq, ab->cred)))
+	return;
+
+#ifndef UKERNEL
+    /* OS-specific prefetch routine */
+    afs_PrefetchNoCache(ab->vc, ab->cred, (struct nocache_read_request *) ab->ptr_parm[0]);
+#else
+#warning Cache-bypass code path not implemented in UKERNEL
+#endif
+}
+#endif
 
 static void
 BStore(register struct brequest *ab)
@@ -979,6 +1002,10 @@ afs_BackgroundDaemon(void)
 		       tb->opcode);
 	    if (tb->opcode == BOP_FETCH)
 		BPrefetch(tb);
+#if defined(AFS_CACHE_BYPASS)		
+		else if (tb->opcode == BOP_FETCH_NOCACHE)
+		BPrefetchNoCache(tb);
+#endif		
 	    else if (tb->opcode == BOP_STORE)
 		BStore(tb);
 	    else if (tb->opcode == BOP_PATH)

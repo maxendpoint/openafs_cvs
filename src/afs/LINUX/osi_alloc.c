@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.26 2007/04/18 18:01:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.27 2008/09/22 19:35:09 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -366,6 +366,7 @@ osi_linux_free(void *addr)
 	afs_atomlist_put(al_mem_pool, lmp);	/* return osi_linux_mem struct to pool */
 	afs_linux_cur_allocs--;
     } else {
+	BUG();
 	printf("osi_linux_free: failed to remove chunk from hashtable\n");
     }
 
