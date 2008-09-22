@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.15 2008/05/23 14:24:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.16 2008/09/22 13:36:23 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -246,10 +246,10 @@ afs_access(OSI_VC_DECL(avc), register afs_int32 amode,
     }
     
     /* If we're looking for write access, and we're disconnected without logging, forget it */
-    if ((amode & VWRITE) && (AFS_IS_DISCONNECTED && !AFS_IS_LOGGING)) {
+    if ((amode & VWRITE) && (AFS_IS_DISCONNECTED && !AFS_IS_DISCON_RW)) {
         afs_PutFakeStat(&fakestate);
 	AFS_DISCON_UNLOCK();
-	/*printf("Network is down in afs_vnop_access\n");*/
+	printf("Network is down in afs_vnop_access\n");
         return ENETDOWN;
     }
     

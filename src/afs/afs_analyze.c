@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.29 2008/08/22 18:52:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.30 2008/09/22 13:36:16 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -320,7 +320,9 @@ afs_Analyze(register struct conn *aconn, afs_int32 acode,
     afs_int32 markeddown;
 
  
-    if (AFS_IS_DISCONNECTED) {
+ 
+    if (AFS_IS_DISCONNECTED && !AFS_IN_SYNC) {
+	/* On reconnection, act as connected. XXX: for now.... */
         /* SXW - This may get very tired after a while. We should try and
 	 *       intercept all RPCs before they get here ... */
 	/*printf("afs_Analyze: disconnected\n");*/

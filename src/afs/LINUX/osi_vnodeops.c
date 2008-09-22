@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.153 2008/07/07 16:53:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.154 2008/09/22 13:36:21 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -593,6 +593,8 @@ afs_linux_flush(struct file *fp)
 	return 0;
     }
 
+    AFS_DISCON_LOCK();
+
     credp = crref();
     vcp = VTOAFS(FILE_INODE(fp));
 
@@ -603,13 +605,32 @@ afs_linux_flush(struct file *fp)
     ObtainSharedLock(&vcp->lock, 535);
     if ((vcp->execsOrWriters > 0) && (file_count(fp) == 1)) {
 	UpgradeSToWLock(&vcp->lock, 536);
-	code = afs_StoreAllSegments(vcp, &treq, AFS_SYNC | AFS_LASTSTORE);
+	if (!AFS_IS_DISCONNECTED) {
+		code = afs_StoreAllSegments(vcp,
+				&treq,
+				AFS_SYNC | AFS_LASTSTORE);
+	} else {
+#if defined(AFS_DISCON_ENV)
+		if (!vcp->ddirty_flags ||
+		    (vcp->ddirty_flags == VDisconShadowed)) {
+
+		    ObtainWriteLock(&afs_DDirtyVCListLock, 710);
+		    AFS_DISCON_ADD_DIRTY(vcp);
+		    ReleaseWriteLock(&afs_DDirtyVCListLock);
+		}
+
+		/* Set disconnected write flag. */
+		vcp->ddirty_flags |= VDisconWriteOsiFlush;
+#endif
+	}
+
 	ConvertWToSLock(&vcp->lock);
     }
     code = afs_CheckCode(code, &treq, 54);
     ReleaseSharedLock(&vcp->lock);
 
 out:
+    AFS_DISCON_UNLOCK();
     AFS_GUNLOCK();
 
     crfree(credp);

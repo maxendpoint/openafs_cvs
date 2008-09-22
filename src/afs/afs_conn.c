@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.17 2008/05/23 14:24:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.18 2008/09/22 13:36:16 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -159,7 +159,7 @@ afs_ConnBySA(struct srvAddr *sap, unsigned short aport, afs_int32 acell,
 	return NULL;
     }
     
-    if (AFS_IS_DISCONNECTED) {
+    if (AFS_IS_DISCONNECTED && !AFS_IN_SYNC) {
         afs_warnuser("afs_ConnBySA: disconnected\n");
         ReleaseSharedLock(&afs_xconn);
         return NULL;
@@ -276,7 +276,7 @@ afs_ConnByHost(struct server *aserver, unsigned short aport, afs_int32 acell,
 
     AFS_STATCNT(afs_ConnByHost);
 
-    if (AFS_IS_DISCONNECTED) {
+    if (AFS_IS_DISCONNECTED && !AFS_IN_SYNC) {
         afs_warnuser("afs_ConnByHost: disconnected\n");
         return NULL;
     }

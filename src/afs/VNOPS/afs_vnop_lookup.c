@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.78 2008/08/26 14:00:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.79 2008/09/22 13:36:23 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -1744,7 +1744,7 @@ afs_lookup(OSI_VC_DECL(adp), char *aname, struct vcache **avcp, struct AFS_UCRED
 	    }
 	    code = ENOENT;
 	} else {
-	    /*printf("Network down in afs_lookup\n");*/
+	    printf("Network down in afs_lookup\n");
 	    code = ENETDOWN;
 	}
     }
