@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_open.c,v 1.11.6.2 2008/05/23 14:25:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_open.c,v 1.11.6.3 2008/09/22 19:29:55 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -74,7 +74,7 @@ afs_open(struct vcache **avcp, afs_int32 aflags, struct AFS_UCRED *acred)
 #ifdef AFS_DISCON_ENV
     if (AFS_IS_DISCONNECTED && (afs_DCacheMissingChunks(tvc) != 0)) {
        ReleaseReadLock(&tvc->lock);
-       /*printf("Network is down in afs_open: missing chunks\n");*/
+       printf("Network is down in afs_open: missing chunks\n");
        code = ENETDOWN;
        goto done;
     }
@@ -96,6 +96,7 @@ afs_open(struct vcache **avcp, afs_int32 aflags, struct AFS_UCRED *acred)
 		(tvc, ((tvc->states & CForeign) ? PRSFS_READ : PRSFS_LOOKUP),
 		 &treq, CHECK_MODE_BITS)) {
 		code = EACCES;
+		printf("afs_Open: no access for dir\n");
 		goto done;
 	    }
 	}

@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37.4.7 2008/06/12 17:24:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37.4.8 2008/09/22 19:29:54 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -47,6 +47,7 @@ static struct vnode *volumeVnode;
 #endif
 #if defined(AFS_DISCON_ENV)
 afs_rwlock_t afs_discon_lock;
+extern afs_rwlock_t afs_DDirtyVCListLock;
 #endif
 
 /*
@@ -115,6 +116,7 @@ afs_CacheInit(afs_int32 astatSize, afs_int32 afiles, afs_int32 ablocks,
     RWLOCK_INIT(&afs_xaxs, "afs_xaxs");
 #ifdef AFS_DISCON_ENV
     RWLOCK_INIT(&afs_discon_lock, "afs_discon_lock");
+    RWLOCK_INIT(&afs_DDirtyVCListLock, "afs_DDirtyVCListLock");
 #endif
     osi_dnlc_init();
 

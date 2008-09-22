@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.34.2.5 2008/08/26 14:01:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.34.2.6 2008/09/22 19:29:55 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -636,7 +636,7 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 	    tdc = afs_GetDCache(avc, filePos, &treq, &offset, &len, 2);
 #ifdef AFS_DISCON_ENV
 	    if (!tdc) {
-		/*printf("Network down in afs_read");*/
+		printf("Network down in afs_read");
 	        error = ENETDOWN;
 	        break;
 	    }

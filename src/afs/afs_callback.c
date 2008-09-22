@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.39.2.4 2008/03/10 22:32:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_callback.c,v 1.39.2.5 2008/09/22 19:29:53 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -65,6 +65,10 @@ static struct ltable {
 #ifdef AFS_AFSDB_ENV
     { "afsdb_client_lock", (char *)&afsdb_client_lock},
     { "afsdb_req_lock", (char *)&afsdb_req_lock},
+#endif
+#ifdef AFS_DISCON_ENV
+    { "afs_discon_lock", (char *)&afs_discon_lock},
+    { "afs_DDirtyVCListLock", (char *)&afs_DDirtyVCListLock},
 #endif
 };
 unsigned long lastCallBack_vnode;
