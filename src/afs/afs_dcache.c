@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.10 2008/09/22 19:29:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.11 2008/09/22 19:35:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1847,7 +1847,6 @@ afs_GetDCache(register struct vcache *avc, afs_size_t abyte,
 #endif /* AFS_NOSTATS */
 
     AFS_STATCNT(afs_GetDCache);
-
     if (dcacheDisabled)
 	return NULL;
 
@@ -2017,8 +2016,12 @@ afs_GetDCache(register struct vcache *avc, afs_size_t abyte,
 			|| afs_freeDCList != NULLIDX)
 			break;
 		    /* If we can't get space for 5 mins we give up and panic */
-		    if (++downDCount > 300)
+		    if (++downDCount > 300) {
+#if defined(AFS_CACHE_BYPASS)
+			afs_warn("GetDCache calling osi_Panic: No space in five minutes.\n downDCount: %d\n aoffset: %d alen: %d\n", downDCount, aoffset, alen);
+#endif
 			osi_Panic("getdcache");
+                    }
 		    MReleaseWriteLock(&afs_xdcache);
 		    /*
 		     * Locks held:

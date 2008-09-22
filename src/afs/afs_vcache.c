@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.11 2008/09/22 19:29:54 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.12 2008/09/22 19:35:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1039,6 +1039,12 @@ restart:
     tvc->vmh = tvc->segid = NULL;
     tvc->credp = NULL;
 #endif
+
+#if defined(AFS_CACHE_BYPASS)
+    tvc->cachingStates = 0;
+    tvc->cachingTransitions = 0;
+#endif
+
 #ifdef AFS_BOZONLOCK_ENV
 #if	defined(AFS_SUN5_ENV)
     rw_init(&tvc->rwlock, "vcache rwlock", RW_DEFAULT, NULL);
