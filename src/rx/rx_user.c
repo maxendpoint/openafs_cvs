@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.35 2008/08/22 04:31:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.36 2008/09/24 21:38:19 shadow Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -219,11 +219,13 @@ rxi_GetUDPSocket(u_short port)
 }
 
 void
-osi_Panic(msg, a1, a2, a3) 
-     char *msg; 
+osi_Panic(char *msg, ...)
 {
+    va_list ap;
+    va_start(ap, msg);
     (osi_Msg "Fatal Rx error: ");
-    (osi_Msg msg, a1, a2, a3);
+    (osi_VMsg msg, ap);
+    va_end(ap);
     fflush(stderr);
     fflush(stdout);
     afs_abort();
