@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.24 2008/08/25 01:15:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/viced.c,v 1.75.2.25 2008/09/24 21:36:49 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -256,7 +256,8 @@ CheckDescriptors(void *unused)
     for (i = 0; i < tsize; i++) {
 	if (afs_fstat(i, &status) != -1) {
 	    printf("%d: dev %x, inode %u, length %u, type/mode %x\n", i,
-		   status.st_dev, status.st_ino, status.st_size,
+		   status.st_dev, status.st_ino, 
+		   (unsigned int) status.st_size,
 		   status.st_mode);
 	}
     }
@@ -2095,8 +2096,7 @@ main(int argc, char *argv[])
     }
     if (rxkadDisableDotCheck) {
         rx_SetSecurityConfiguration(tservice, RXS_CONFIG_FLAGS,
-                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK,
-                                    NULL);
+                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK);
     }
     rx_SetMinProcs(tservice, 3);
     rx_SetMaxProcs(tservice, lwps);

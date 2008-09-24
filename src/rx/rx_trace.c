@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11.14.2 2007/11/26 21:08:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11.14.3 2008/09/24 21:36:53 shadow Exp $");
 
 #ifdef RXDEBUG
 #include <string.h>
@@ -47,7 +47,7 @@ struct rx_trace {
 };
 
 void
-rxi_flushtrace()
+rxi_flushtrace(void)
 {
     if (rxi_logfd >= 0)
 	write(rxi_logfd, rxi_tracebuf, rxi_tracepos);
@@ -55,9 +55,7 @@ rxi_flushtrace()
 }
 
 void
-rxi_calltrace(event, call)
-     unsigned int event;
-     struct rx_call *call;
+rxi_calltrace(unsigned int event, struct rx_call *call)
 {
     struct clock now;
     struct rx_trace rxtinfo;
@@ -130,8 +128,7 @@ rxi_calltrace(event, call)
 #endif
 
 int
-main(argc, argv)
-     char **argv;
+main(int argc, char **argv)
 {
     struct rx_trace ip;
     int err = 0;

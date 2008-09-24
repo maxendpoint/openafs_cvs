@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.32.2.10 2008/03/10 22:32:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.32.2.11 2008/09/24 21:36:54 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -1068,8 +1068,7 @@ main(int argc, char **argv, char **envp)
     rx_SetStackSize(tservice, BOZO_LWP_STACKSIZE);	/* so gethostbyname works (in cell stuff) */
     if (rxkadDisableDotCheck) {
         rx_SetSecurityConfiguration(tservice, RXS_CONFIG_FLAGS,
-                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK, 
-                                    NULL);
+                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK);
     }
 
     tservice =

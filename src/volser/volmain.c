@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.22.2.12 2008/08/25 01:14:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.22.2.13 2008/09/24 21:36:52 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -535,8 +535,7 @@ main(int argc, char **argv)
 
     if (rxkadDisableDotCheck) {
         rx_SetSecurityConfiguration(service, RXS_CONFIG_FLAGS,
-                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK,
-                                    NULL);
+                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK);
     }
 
     service =
