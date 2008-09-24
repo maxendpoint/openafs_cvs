@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.33 2008/05/08 21:24:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.34 2008/09/24 21:36:32 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -553,7 +553,6 @@ int
 rxi_ReadvProc(struct rx_call *call, struct iovec *iov, int *nio, int maxio,
 	      int nbytes)
 {
-    struct rx_packet *rp;
     int requestCount;
     int nextio;
 

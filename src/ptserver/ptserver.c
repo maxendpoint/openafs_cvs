@@ -112,7 +112,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.34 2008/08/25 01:14:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.35 2008/09/24 21:36:32 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -574,8 +574,7 @@ main(int argc, char **argv)
     rx_SetMaxProcs(tservice, lwps);
     if (rxkadDisableDotCheck) {
         rx_SetSecurityConfiguration(tservice, RXS_CONFIG_FLAGS,
-                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK,
-                                    NULL);
+                                    (void *)RXS_CONFIG_FLAGS_DISABLE_DOTCHECK);
     }
 
     tservice =
