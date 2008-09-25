@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.24.4.5 2008/08/22 04:31:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.24.4.6 2008/09/25 12:07:49 jaltman Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -300,7 +300,7 @@ rxi_getaddr(void)
 ** maxSize - max number of interfaces to return.
 */
 int
-rx_getAllAddr(afs_int32 * buffer, int maxSize)
+rx_getAllAddr(afs_uint32 * buffer, int maxSize)
 {
     int count = 0, offset = 0;
 
