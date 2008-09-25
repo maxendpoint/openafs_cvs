@@ -17,7 +17,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/samples/rxdebug_rx_stats.c,v 1.8 2007/10/30 15:10:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/samples/rxdebug_rx_stats.c,v 1.9 2008/09/25 20:15:42 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -68,7 +68,7 @@ main(int argc, char *argv[])
     rxdebugHandle_p handle;
     char *srvrName;
     long srvrPort;
-    struct rx_stats stats;
+    struct rx_statistics stats;
     afs_uint32 supportedStats;
     char tstr[32];
     int i;
