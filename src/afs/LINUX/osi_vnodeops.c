@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.155 2008/09/22 19:35:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.156 2008/09/25 11:42:02 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -56,7 +56,7 @@ RCSID
 #endif
 
 extern struct vcache *afs_globalVp;
-#if defined(AFS_CACHE_BYPASS)
+#if defined(AFS_LINUX26_ENV)
 /* Some uses of BKL are perhaps not needed for bypass or memcache--
  * why don't we try it out? */
 extern struct afs_cacheOps afs_UfsCacheOps;
