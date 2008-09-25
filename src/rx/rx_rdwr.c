@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.36 2008/09/25 18:59:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.37 2008/09/25 20:17:22 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -728,7 +728,7 @@ rxi_WriteProc(register struct rx_call *call, register char *buf,
 			      RX_CALL_FAST_RECOVER_WAIT))) {
 		    rxi_Start(0, call, 0, 0);
 		}
-	    } else else if (cp) {
+	    } else if (cp) {
 		cp->flags &= ~RX_PKTFLAG_CP;
 		rxi_FreePacket(cp);
 		cp = call->currentPacket = (struct rx_packet *)0;
