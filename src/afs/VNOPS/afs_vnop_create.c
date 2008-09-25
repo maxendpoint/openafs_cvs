@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.28 2008/09/22 13:36:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.29 2008/09/25 09:02:23 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -362,11 +362,12 @@ afs_create(OSI_VC_DECL(adp), char *aname, struct vattr *attrs,
 	}
 
     } else {
-
+#if defined(AFS_DISCON_ENV)
 	/* Generate a fake FID for disconnected mode. */
 	newFid.Cell = adp->fid.Cell;
 	newFid.Fid.Volume = adp->fid.Fid.Volume;
 	afs_GenFakeFid(&newFid, VREG);
+#endif
     }				/* if (!AFS_IS_DISCON_RW) */
 
     /* otherwise, we should see if we can make the change to the dir locally */
