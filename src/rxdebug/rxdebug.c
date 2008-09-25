@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.9 2007/10/31 04:05:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.10 2008/09/25 19:54:08 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -276,7 +276,7 @@ MainCommand(struct cmd_syndesc *as, void *arock)
 	    fprintf(stderr,
 		    "WARNING: Server doesn't support retrieval of Rx statistics\n");
 	} else {
-	    struct rx_stats rxstats;
+	    struct rx_statistics rxstats;
 
 	    /* should gracefully handle the case where rx_stats grows */
 	    code =
