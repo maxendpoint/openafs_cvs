@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.33 2008/09/25 17:21:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.34 2008/09/25 17:26:35 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -4499,7 +4499,7 @@ rxi_CallError(register struct rx_call *call, afs_int32 error)
     if (call->error)
 	error = call->error;
 
-#ifdef RX_GLOBAL_RXLOCK_KERNEL
+#ifdef AFS_GLOBAL_RXLOCK_KERNEL
     if (!((call->flags & RX_CALL_TQ_BUSY) || (call->tqWaiters > 0))) {
 	rxi_ResetCall(call, 0);
     }
@@ -5510,7 +5510,7 @@ rxi_CheckCall(register struct rx_call *call)
     afs_uint32 now;
     afs_uint32 deadTime;
 
-#ifdef RX_GLOBAL_RXLOCK_KERNEL
+#ifdef AFS_GLOBAL_RXLOCK_KERNEL
     if (call->flags & RX_CALL_TQ_BUSY) {
 	/* Call is active and will be reset by rxi_Start if it's
 	 * in an error state.
