@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.35 2008/09/25 18:59:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.36 2008/09/25 19:41:00 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -2184,7 +2184,7 @@ rxi_NewCall(register struct rx_connection *conn, register int channel)
     } else {
 
 	call = (struct rx_call *)rxi_Alloc(sizeof(struct rx_call));
-
+        rx_MutexIncrement(rx_stats.nFreeCallStructs, rx_stats_mutex);
 	MUTEX_EXIT(&rx_freeCallQueue_lock);
 	MUTEX_INIT(&call->lock, "call lock", MUTEX_DEFAULT, NULL);
 	MUTEX_ENTER(&call->lock);
@@ -2192,7 +2192,6 @@ rxi_NewCall(register struct rx_connection *conn, register int channel)
 	CV_INIT(&call->cv_rq, "call rq", CV_DEFAULT, 0);
 	CV_INIT(&call->cv_tq, "call tq", CV_DEFAULT, 0);
 
-        rx_MutexIncrement(rx_stats.nFreeCallStructs, rx_stats_mutex);
 	/* Initialize once-only items */
 	queue_Init(&call->tq);
 	queue_Init(&call->rq);
@@ -6550,6 +6549,8 @@ rx_GetServerDebug(osi_socket socket, afs_uint32 remoteAddr,
 		  afs_uint32 * supportedValues)
 {
     struct rx_debugIn in;
+    afs_int32 *lp = (afs_int32 *) stat;
+    int i;
     afs_int32 rc = 0;
 
     *supportedValues = 0;
@@ -6590,12 +6591,16 @@ rx_GetServerDebug(osi_socket socket, afs_uint32 remoteAddr,
 	if (stat->version >= RX_DEBUGI_VERSION_W_WAITED) {
 	    *supportedValues |= RX_SERVER_DEBUG_WAITED_CNT;
 	}
-
+	if (stat->version >= RX_DEBUGI_VERSION_W_PACKETS) {
+	    *supportedValues |= RX_SERVER_DEBUG_PACKETS_CNT;
+	}
 	stat->nFreePackets = ntohl(stat->nFreePackets);
 	stat->packetReclaims = ntohl(stat->packetReclaims);
 	stat->callsExecuted = ntohl(stat->callsExecuted);
 	stat->nWaiting = ntohl(stat->nWaiting);
 	stat->idleThreads = ntohl(stat->idleThreads);
+        stat->nWaited = ntohl(stat->nWaited);
+        stat->nPackets = ntohl(stat->nPackets);
     }
 
     return rc;
