@@ -1343,7 +1343,7 @@ main()
 }], ac_cv_sizeof_time_t=`cat conftestval`, ac_cv_sizeof_time_t=0)
 ])
 AC_MSG_RESULT($ac_cv_sizeof_time_t)
-AC_DEFINE_UNQUOTED(SIZEOF_TIME_T, $ac_cv_sizeof_time_t)
+AC_DEFINE_UNQUOTED(SIZEOF_TIME_T, $ac_cv_sizeof_time_t, [define if time_t is defined])
 
 AC_CHECK_FUNCS(timegm)
 AC_CHECK_FUNCS(daemon)
