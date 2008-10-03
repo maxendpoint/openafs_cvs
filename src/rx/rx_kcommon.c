@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.56.2.9 2008/08/22 04:31:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.56.2.10 2008/10/03 14:55:12 jaltman Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -126,13 +126,14 @@ rxi_GetUDPSocket(u_short port)
 
 #if !defined(AFS_LINUX26_ENV)
 void
-osi_Panic(msg, a1, a2, a3)
-     char *msg;
+osi_Panic(char *msg, ...)
 {
+    va_list ap;
     if (!msg)
 	msg = "Unknown AFS panic";
 
-    printf(msg, a1, a2, a3);
+    va_start(ap, msg);
+    vprintf(msg, ap);
 #ifdef AFS_LINUX20_ENV
     * ((char *) 0) = 0; 
 #else
