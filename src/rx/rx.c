@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.38 2008/10/03 14:55:12 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.39 2008/10/03 14:56:10 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -6277,6 +6277,7 @@ rx_DebugOnOff(int on)
 void
 rxi_DebugPrint(char *format, ...)
 {
+    va_list ap;
 #ifdef AFS_NT40_ENV
     char msg[512];
     char tformat[256];
@@ -6297,7 +6298,6 @@ rxi_DebugPrint(char *format, ...)
     va_end(ap);
 #else
     struct clock now;
-    va_list ap;
     
     va_start(ap, format);
 
