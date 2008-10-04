@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.39 2008/10/03 14:56:10 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.40 2008/10/04 05:05:20 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -6282,6 +6282,8 @@ rxi_DebugPrint(char *format, ...)
     char msg[512];
     char tformat[256];
     size_t len;
+
+    va_start(ap, format);
 
     len = _snprintf(tformat, sizeof(tformat), "tid[%d] %s", GetCurrentThreadId(), format);
 
