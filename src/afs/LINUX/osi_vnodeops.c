@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.67 2008/07/07 16:54:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.81.2.68 2008/10/07 03:41:15 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -744,7 +744,7 @@ afs_linux_revalidate(struct dentry *dp)
     credp = crref();
     code = afs_getattr(vcp, &vattr, credp);
     if (!code)
-        vattr2inode(AFSTOV(vcp), &vattr);
+        afs_fill_inode(AFSTOV(vcp), &vattr);
 
     AFS_GUNLOCK();
 #ifdef AFS_LINUX24_ENV
