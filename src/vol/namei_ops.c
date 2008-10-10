@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.17 2008/08/16 19:15:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/namei_ops.c,v 1.21.2.18 2008/10/10 14:43:02 shadow Exp $");
 
 #ifdef AFS_NAMEI_ENV
 #include <stdio.h>
@@ -993,8 +993,10 @@ GetFreeTag(IHandle_t * ih, int vno)
 	if ((row & coldata) == 0)
 	    break;
     }
-    if (col >= NAMEI_MAXVOLS)
+    if (col >= NAMEI_MAXVOLS) {
+	errno = ENOSPC;
 	goto badGetFreeTag;
+    }
 
     coldata = 1 << (col * 3);
     row |= coldata;
