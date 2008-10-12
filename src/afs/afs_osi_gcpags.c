@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_gcpags.c,v 1.5 2007/04/03 18:52:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_gcpags.c,v 1.6 2008/10/12 18:24:53 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -234,17 +234,18 @@ afs_osi_TraverseProcTable()
 {
 #if !defined(LINUX_KEYRING_SUPPORT)
     struct task_struct *p;
-#ifdef EXPORTED_TASKLIST_LOCK
-    if (&tasklist_lock)
-       read_lock(&tasklist_lock);
-#endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
-#ifdef EXPORTED_TASKLIST_LOCK
-    else
-#endif
-	rcu_read_lock();
-#endif
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18) && defined(EXPORTED_TASKLIST_LOCK)
+    if (&tasklist_lock)
+	read_lock(&tasklist_lock);
+#endif /* EXPORTED_TASKLIST_LOCK */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16) 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18) && defined(EXPORTED_TASKLIST_LOCK)
+    else
+#endif /* EXPORTED_TASKLIST_LOCK && LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18) */
+	rcu_read_lock();
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16) */
+    
 #ifdef DEFINED_FOR_EACH_PROCESS
     for_each_process(p) if (p->pid) {
 #ifdef STRUCT_TASK_STRUCT_HAS_EXIT_STATE
@@ -268,17 +269,16 @@ afs_osi_TraverseProcTable()
 	afs_GCPAGs_perproc_func(p);
     }
 #endif
-#ifdef EXPORTED_TASKLIST_LOCK
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18) && defined(EXPORTED_TASKLIST_LOCK)
     if (&tasklist_lock)
-       read_unlock(&tasklist_lock);
-#endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16)
-#ifdef EXPORTED_TASKLIST_LOCK
+	read_unlock(&tasklist_lock);
+#endif /* EXPORTED_TASKLIST_LOCK */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16) 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18) && defined(EXPORTED_TASKLIST_LOCK)
     else
-#endif
+#endif /* EXPORTED_TASKLIST_LOCK && LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18) */
 	rcu_read_unlock();
-#endif
-#endif
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16) */
 }
 #endif
 
