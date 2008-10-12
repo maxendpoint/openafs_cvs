@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.13 2008/10/10 23:24:28 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.14 2008/10/12 18:07:01 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2021,12 +2021,7 @@ afs_GetVCache(register struct VenusFid *afid, struct vrequest *areq,
 
 	    if (AFS_IS_DISCONNECTED) {
 		if (AFS_IS_DISCON_RW) {
-		    /* Seek the vnode manually. */
-		    ObtainSharedLock(&afs_xvcache, 738);
-		    avc = afs_FindVCache(afid, NULL, 1);
-		    ReleaseSharedLock(&afs_xvcache);
-
-		    if (vType(avc) == VDIR)
+		    if (vType(tvc) == VDIR)
 		    	OutStatus.FileType = Directory;
 
 		    code = tvc?0:ENOENT;
