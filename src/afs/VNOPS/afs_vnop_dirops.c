@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.24 2008/09/22 13:36:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.25 2008/10/12 18:10:05 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -435,8 +435,7 @@ afs_rmdir(OSI_VC_DECL(adp), char *aname, struct AFS_UCRED *acred)
 	    	ObtainSharedLock(&tdc->lock, 732);
 	}
 
-	if (!tvc->ddirty_flags ||
-		(tvc->ddirty_flags == VDisconShadowed)) {
+	if (!tvc->ddirty_flags) {
 	    /* Put it in the list only if it's fresh or has only been shadowed. */
 	    ObtainWriteLock(&afs_DDirtyVCListLock, 728);
 	    AFS_DISCON_ADD_DIRTY(tvc);
