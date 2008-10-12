@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_gcpags.c,v 1.1.2.7 2008/10/12 18:25:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_gcpags.c,v 1.1.2.8 2008/10/12 18:44:36 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -279,6 +279,7 @@ afs_osi_TraverseProcTable()
 #endif /* EXPORTED_TASKLIST_LOCK && LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18) */
 	rcu_read_unlock();
 #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,16) */
+#endif
 }
 #endif
 
