@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.14.4.8 2008/07/19 06:15:02 rra Exp $");
+    ("$Header: /cvs/openafs/src/ubik/recovery.c,v 1.14.4.9 2008/10/18 15:24:45 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -605,6 +605,7 @@ urecovery_Interact(void *dummy)
 	    }
 #endif
 
+	    pass = 0;
 	    while (length > 0) {
 		tlen = (length > sizeof(tbuffer) ? sizeof(tbuffer) : length);
 #ifndef AFS_PTHREAD_ENV
