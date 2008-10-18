@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.15 2008/10/12 17:53:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/voltrans.c,v 1.16 2008/10/18 19:25:56 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <afs/afsutil.h>
@@ -88,7 +88,7 @@ NewTrans(afs_int32 avol, afs_int32 apart)
 	    return (struct volser_trans *)0;	/* volume busy */
 	}
     }
-    newtt = tt;
+    tt = newtt;
     memset(tt, 0, sizeof(struct volser_trans));
     tt->volid = avol;
     tt->partition = apart;
