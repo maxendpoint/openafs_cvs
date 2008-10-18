@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.22 2008/07/19 06:11:07 rra Exp $");
+    ("$Header: /cvs/openafs/src/ubik/remote.c,v 1.23 2008/10/18 15:24:35 jaltman Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -560,7 +560,6 @@ SDISK_SendFile(rxcall, file, length, avers)
 	close(fd);
 	goto failed;
     }
-#else
     pass = 0;
 #endif
     memcpy(&ubik_dbase->version, &tversion, sizeof(struct ubik_version));
