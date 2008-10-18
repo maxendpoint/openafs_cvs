@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.13 2008/08/25 01:15:21 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.18.2.14 2008/10/18 15:10:57 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -194,7 +194,7 @@ main(argc, argv)
 		fprintf(stderr, "missing argument for -rxmaxmtu\n"); 
 		return -1; 
 	    }
-	    rxMaxMTU = atoi(argv[++i]);
+	    rxMaxMTU = atoi(argv[++index]);
 	    if ((rxMaxMTU < RX_MIN_PACKET_SIZE) || 
 		(rxMaxMTU > RX_MAX_PACKET_DATA_SIZE)) {
 		printf("rxMaxMTU %d invalid; must be between %d-%d\n",
