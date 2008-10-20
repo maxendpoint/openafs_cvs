@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.13.2.3 2008/06/29 03:26:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_conn.c,v 1.13.2.4 2008/10/20 12:01:59 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -84,7 +84,8 @@ afs_Conn(register struct VenusFid *afid, register struct vrequest *areq,
     /* First is always lowest rank, if it's up */
     if ((tv->status[0] == not_busy) && tv->serverHost[0]
 	&& !(tv->serverHost[0]->addr->sa_flags & SRVR_ISDOWN) &&
-	!(((areq->idleError > 0) || (areq->tokenError > 0))
+	!((areq->initd == 1) &&
+	  ((areq->idleError > 0) || (areq->tokenError > 0))
 	  && (areq->skipserver[0] == 1)))
 	lowp = tv->serverHost[0]->addr;
 
