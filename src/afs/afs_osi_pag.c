@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.21.2.12 2008/10/20 16:41:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.21.2.13 2008/10/20 19:29:46 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -434,6 +434,8 @@ afs_InitReq(register struct vrequest *av, struct AFS_UCRED *acred)
     AFS_STATCNT(afs_InitReq);
     if (afs_shuttingdown)
 	return EIO;
+    av->idleError = 0;
+    av->tokenError = 0;
     while (i < MAXHOSTS) {
 	av->skipserver[i] = 0;
 	i++;
