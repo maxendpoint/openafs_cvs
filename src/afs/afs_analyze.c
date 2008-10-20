@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.2.6 2008/10/10 16:25:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.2.7 2008/10/20 12:03:30 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -494,7 +494,7 @@ afs_BlackListOnce(struct vrequest *areq, struct VenusFid *afid,
 	}
     }
     for (i = 0; i < MAXHOSTS; i++) {
-	if (areq->skipserver[i] == 0) {
+	if (tvp->serverHost[i] && areq->skipserver[i] == 0) {
 	    serversleft = 1;
 	    break;
 	}
