@@ -554,6 +554,9 @@ struct SimpleLocks {
 #define CUnlinkedDel	0x00040000
 #define CVFlushed	0x00080000
 #define CCore1		0x00100000	/* osf1 core file; not same as CCore above */
+#ifdef AFS_LINUX22_ENV
+#define CPageWrite      0x00200000      /* to detect vm deadlock - linux */
+#else
 #define CWritingUFS	0x00200000	/* to detect vm deadlock - used by sgi */
 #define CCreating	0x00400000	/* avoid needless store after open truncate */
 #define CPageHog	0x00800000	/* AIX - dumping large cores is a page hog. */
