@@ -558,6 +558,7 @@ struct SimpleLocks {
 #define CPageWrite      0x00200000      /* to detect vm deadlock - linux */
 #else
 #define CWritingUFS	0x00200000	/* to detect vm deadlock - used by sgi */
+#endif
 #define CCreating	0x00400000	/* avoid needless store after open truncate */
 #define CPageHog	0x00800000	/* AIX - dumping large cores is a page hog. */
 #define CDCLock		0x02000000	/* Vnode lock held over call to GetDownD */
