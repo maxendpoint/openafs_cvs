@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.29.4.12 2008/01/04 18:38:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_pag.c,v 1.29.4.13 2008/10/20 16:40:48 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -430,12 +430,17 @@ int
 afs_InitReq(register struct vrequest *av, struct AFS_UCRED *acred)
 {
     int code;
+    int i = 0;
 
     AFS_STATCNT(afs_InitReq);
     memset(av, 0, sizeof(*av));
     if (afs_shuttingdown)
 	return EIO;
 
+    while (i < MAXHOSTS) {
+      av->skipserver[i] = 0;
+      i++;
+    }
 #ifdef AFS_LINUX26_ENV
 #if !defined(AFS_NONFSTRANS)
     if (osi_linux_nfs_initreq(av, acred, &code))
