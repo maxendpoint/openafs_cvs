@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.35 2008/10/20 12:09:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.36 2008/10/21 13:46:02 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1901,10 +1901,15 @@ afs_linux_writepage_sync(struct inode *ip, struct page *pp,
 	maybe_unlock_kernel();
 	crfree(credp);
 	kunmap(pp);
+#ifdef AFS_LINUX26_ENV
 #if defined(WRITEPAGE_ACTIVATE)
 	return WRITEPAGE_ACTIVATE;
 #else
 	return AOP_WRITEPAGE_ACTIVATE;
+#endif
+#else
+	/* should mark it dirty? */
+	return(0); 
 #endif
     }
     ReleaseReadLock(&vcp->lock);
