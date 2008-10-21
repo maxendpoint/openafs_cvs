@@ -76,6 +76,9 @@ AC_CACHE_VAL(ac_cv_fd_set_size_obeys,
 save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS -DORIG_FD_SETSIZE=$ac_cv_default_fdsetsize -DORIG_fd_set_size=$ac_cv_default_fd_set_size"
 AC_TRY_RUN([
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
 #if (ORIG_FD_SETSIZE < 2048) 
 #define FD_SETSIZE 2048
 #define __FD_SETSIZE 2048
@@ -83,9 +86,6 @@ AC_TRY_RUN([
 #define FD_SETSIZE 1024
 #define __FD_SETSIZE 1024
 #endif
-#include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
 #endif
