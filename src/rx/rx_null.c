@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_null.c,v 1.9 2006/06/20 20:07:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_null.c,v 1.10 2008/10/24 20:38:56 jaltman Exp $");
 
 #ifdef KERNEL
 #ifndef	UKERNEL
@@ -23,8 +23,10 @@ RCSID
 #else /* !UKERNEL */
 #include "afs/sysincludes.h"
 #endif /* !UKERNEL */
+#include "rx/rx_internal.h"
 #include "rx/rx.h"
 #else /* KERNEL */
+#include "rx_internal.h"
 #include "rx.h"
 #endif /* KERNEL */
 

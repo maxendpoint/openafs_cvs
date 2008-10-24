@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.26 2008/09/24 21:36:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_lwp.c,v 1.27 2008/10/24 20:38:56 jaltman Exp $");
 
 # include <sys/types.h>		/* fd_set on older platforms */
 # include <errno.h>
@@ -44,6 +44,7 @@ RCSID
 # include <sys/ioctl.h>
 # include <sys/time.h>
 #endif
+# include "rx_internal.h"
 # include "rx.h"
 # include "rx_globals.h"
 # include <lwp.h>

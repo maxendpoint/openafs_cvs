@@ -28,10 +28,11 @@
  */
 #include <afsconfig.h>
 #include <afs/param.h>
+#include "rx_internal.h"
 #include "rx.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.9 2008/09/24 21:36:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.10 2008/10/24 20:38:56 jaltman Exp $");
 
 #ifndef	NeXT
 

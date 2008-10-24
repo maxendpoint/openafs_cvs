@@ -19,7 +19,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_rx.c,v 1.15 2006/08/04 17:42:38 rra Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_rx.c,v 1.16 2008/10/24 20:38:56 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -53,6 +53,7 @@ RCSID
 #include "rpc/types.h"
 #include "rpc/xdr.h"
 #endif /* !UKERNEL */
+#include "rx/rx_internal.h"
 #include "rx/rx.h"
 
 #else /* KERNEL */
@@ -61,6 +62,7 @@ RCSID
 #ifndef AFS_NT40_ENV
 #include <netinet/in.h>
 #endif
+#include "rx_internal.h"
 #include "rx.h"
 #include "xdr.h"
 #endif /* KERNEL */

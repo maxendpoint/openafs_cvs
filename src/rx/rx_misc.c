@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.17 2008/01/31 07:26:31 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.18 2008/10/24 20:38:56 jaltman Exp $");
 
 #ifdef	KERNEL
 #include <afs/sysincludes.h>
@@ -27,6 +27,7 @@ RCSID
 #include <afs/errors.h>
 #include "xdr.h"
 #ifdef AFS_PTHREAD_ENV
+#include "rx_internal.h"
 #include "rx.h"
 #endif /* AFS_PTHREAD_ENV */
 #include <stdlib.h>

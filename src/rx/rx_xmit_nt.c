@@ -18,12 +18,13 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_xmit_nt.c,v 1.12 2006/08/01 21:32:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_xmit_nt.c,v 1.13 2008/10/24 20:38:56 jaltman Exp $");
 
 #if defined(AFS_NT40_ENV) 
 
 #include <winsock2.h>
 
+#include "rx_internal.h"
 #include "rx.h"
 #include "rx_packet.h"
 #include "rx_globals.h"

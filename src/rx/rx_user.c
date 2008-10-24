@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.37 2008/09/25 12:04:46 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.38 2008/10/24 20:38:56 jaltman Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -48,6 +48,7 @@ RCSID
 #ifndef AFS_NT40_ENV
 # include <sys/time.h>
 #endif
+# include "rx_internal.h"
 # include "rx.h"
 # include "rx_globals.h"
 

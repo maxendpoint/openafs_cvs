@@ -19,7 +19,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.21 2008/09/24 21:36:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_event.c,v 1.22 2008/10/24 20:38:56 jaltman Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -34,6 +34,7 @@ RCSID
 #include "rx/rx_kernel.h"
 #include "rx_kmutex.h"
 #ifdef RX_ENABLE_LOCKS
+#include "rx/rx_internal.h"
 #include "rx/rx.h"
 #endif /* RX_ENABLE_LOCKS */
 #include "rx/rx_globals.h"
@@ -61,6 +62,7 @@ extern void *osi_Alloc();
 #include "rx_lwp.h"
 #endif
 #ifdef RX_ENABLE_LOCKS
+#include "rx_internal.h"
 #include "rx.h"
 #endif /* RX_ENABLE_LOCKS */
 #include "rx_globals.h"

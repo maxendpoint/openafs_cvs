@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.14 2008/09/24 21:36:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.15 2008/10/24 20:38:56 jaltman Exp $");
 
 #ifdef RXDEBUG
 #include <string.h>
@@ -22,6 +22,7 @@ RCSID
 #include <sys/file.h>
 #include <unistd.h>
 #endif
+#include "rx_internal.h"
 #include "rx.h"
 #include "rx_globals.h"
 #include "rx_trace.h"
