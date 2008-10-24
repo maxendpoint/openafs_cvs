@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.25 2008/10/10 23:24:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.26 2008/10/24 20:35:51 jaltman Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -144,7 +144,7 @@ DInit(int abuffers)
 #endif
 	tb->hashIndex = 0;
 	tb->dirty = 0;
-	RWLOCK_INIT(&tb->lock, "buffer lock");
+	AFS_RWLOCK_INIT(&tb->lock, "buffer lock");
     }
     return;
 }

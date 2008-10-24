@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.36 2008/10/10 23:24:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.37 2008/10/24 20:35:51 jaltman Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -538,7 +538,7 @@ afs_SetupVolume(afs_int32 volid, char *aname, void *ve, struct cell *tcell,
 	tv = afs_GetVolSlot();
 	memset((char *)tv, 0, sizeof(struct volume));
 	tv->cell = tcell->cellNum;
-	RWLOCK_INIT(&tv->lock, "volume lock");
+	AFS_RWLOCK_INIT(&tv->lock, "volume lock");
 	tv->next = afs_volumes[i];	/* thread into list */
 	afs_volumes[i] = tv;
 	tv->volume = volid;

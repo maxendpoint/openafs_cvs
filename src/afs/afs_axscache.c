@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_axscache.c,v 1.7 2003/07/15 23:14:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_axscache.c,v 1.8 2008/10/24 20:35:51 jaltman Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -173,7 +173,7 @@ shutdown_xscache(void)
 {
     struct xfreelist *xp, *nxp;
 
-    RWLOCK_INIT(&afs_xaxs, "afs_xaxs");
+    AFS_RWLOCK_INIT(&afs_xaxs, "afs_xaxs");
     xp = xfreemallocs;
     while (xp) {
 	nxp = xp->next;

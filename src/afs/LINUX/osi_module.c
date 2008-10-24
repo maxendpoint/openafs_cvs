@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.82 2008/09/22 19:35:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_module.c,v 1.83 2008/10/24 20:36:02 jaltman Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include "afs/sysincludes.h"
@@ -66,7 +66,7 @@ init_module(void)
 #endif
 {
     int err;
-    RWLOCK_INIT(&afs_xosi, "afs_xosi");
+    AFS_RWLOCK_INIT(&afs_xosi, "afs_xosi");
 
 #if !defined(AFS_LINUX24_ENV)
     /* obtain PAGE_OFFSET value */

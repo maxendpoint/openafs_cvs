@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pag_call.c,v 1.2 2008/07/01 03:33:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pag_call.c,v 1.3 2008/10/24 20:35:51 jaltman Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -103,10 +103,10 @@ void afspag_Init(afs_int32 nfs_server_addr)
     rx_Init(htons(7001));
 
     AFS_STATCNT(afs_ResourceInit);
-    RWLOCK_INIT(&afs_xuser, "afs_xuser");
-    RWLOCK_INIT(&afs_xpagcell, "afs_xpagcell");
-    RWLOCK_INIT(&afs_xpagsys, "afs_xpagsys");
-    RWLOCK_INIT(&afs_icl_lock, "afs_icl_lock");
+    AFS_RWLOCK_INIT(&afs_xuser, "afs_xuser");
+    AFS_RWLOCK_INIT(&afs_xpagcell, "afs_xpagcell");
+    AFS_RWLOCK_INIT(&afs_xpagsys, "afs_xpagsys");
+    AFS_RWLOCK_INIT(&afs_icl_lock, "afs_icl_lock");
 #ifndef AFS_FBSD_ENV
     LOCK_INIT(&osi_fsplock, "osi_fsplock");
     LOCK_INIT(&osi_flplock, "osi_flplock");
