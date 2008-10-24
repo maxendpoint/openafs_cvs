@@ -185,7 +185,7 @@ rx_trace.o: ${RX}/rx_trace.c
 rx_multi.o: ${RX}/rx_multi.c
 	${CCRULE} ${RX}/rx_multi.c
 
-${RXOBJS}: ${RX}/rx.h ${RX}/rx_user.h ${RX}/rx_globals.h ${RX}/rx_clock.h ${RX}/rx_queue.h ${RX}/rx_event.h
+${RXOBJS}: ${RX}/rx.h ${RX}/rx_user.h ${RX}/rx_globals.h ${RX}/rx_clock.h ${RX}/rx_queue.h ${RX}/rx_event.h ${RX}/rx_internal.h
 
 rxkad_client.o: ${RXKAD}/rxkad_client.c
 	${CCRULE} ${RXKAD}/rxkad_client.c
@@ -275,7 +275,7 @@ xdr_afsuuid.o: ${RX}/xdr_afsuuid.c
 #
 #   $ what /opt/langtools/bin/pxdb32
 #   /opt/langtools/bin/pxdb32:
-#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.43 $
+#           HP92453-02 A.10.0A HP-UX SYMBOLIC DEBUGGER (PXDB) $Revision: 1.44 $
 #
 # The problem occurs when -g and -O are both used when compiling des.c.
 # The simplest way to work around the problem is to leave out either -g or -O.
