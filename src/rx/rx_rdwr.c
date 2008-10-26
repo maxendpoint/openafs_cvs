@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.39 2008/10/24 20:38:56 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.40 2008/10/26 21:16:57 jaltman Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -389,7 +389,7 @@ rx_ReadProc32(struct rx_call *call, afs_int32 * value)
 	call->curpos = tcurpos + sizeof(afs_int32);
 	call->curlen = (u_short)(tcurlen - sizeof(afs_int32));
 	call->nLeft = (u_short)(tnLeft - sizeof(afs_int32));
-        if (!call->nLeft) {
+        if (!call->nLeft && call->currentPacket != NULL) {
             /* out of packet.  Get another one. */
             NETPRI;
             MUTEX_ENTER(&call->lock);
