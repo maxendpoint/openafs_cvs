@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.18 2008/10/18 13:12:38 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.34.4.19 2008/10/26 21:52:43 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -446,7 +446,8 @@ DriveIsMappedToAFS(char *drivestr, char *NetbiosName)
         //
         if (dwResultEnum == NO_ERROR) {
             for (i = 0; i < cEntries; i++) {
-                if (toupper(lpnrLocal[i].lpLocalName[0]) == toupper(drivestr[0])) {
+                if (lpnrLocal[i].lpLocalName &&
+                    toupper(lpnrLocal[i].lpLocalName[0]) == toupper(drivestr[0])) {
                     //
                     // Skip the two backslashes at the start of the UNC device name
                     //
