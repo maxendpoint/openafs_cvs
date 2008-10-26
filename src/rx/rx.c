@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.146 2008/10/24 20:38:56 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.147 2008/10/26 00:04:12 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -6560,8 +6560,6 @@ rx_GetServerDebug(osi_socket socket, afs_uint32 remoteAddr,
 		  afs_uint32 * supportedValues)
 {
     struct rx_debugIn in;
-    afs_int32 *lp = (afs_int32 *) stat;
-    int i;
     afs_int32 rc = 0;
 
     *supportedValues = 0;
@@ -6623,6 +6621,7 @@ rx_GetServerStats(osi_socket socket, afs_uint32 remoteAddr,
 		  afs_uint32 * supportedValues)
 {
     struct rx_debugIn in;
+    int i;
     afs_int32 *lp = (afs_int32 *) stat;
     afs_int32 rc = 0;
 
