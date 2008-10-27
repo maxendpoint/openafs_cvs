@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.11 2007/11/26 21:04:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss.c,v 1.12 2008/10/27 23:41:10 shadow Exp $");
 
 #ifdef	AFS_AIX32_ENV
 #include <signal.h>
@@ -1319,7 +1319,7 @@ HandleBulk(register struct cmd_syndesc *a_as, void *a_rock)
     int code;
 
     int line_no = 0;
-    int error;
+    int error = 0;
     char tbuf[USS_BULK_BUF_CHARS];
 
     /*

@@ -36,7 +36,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.24 2007/11/01 15:59:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_parse.c,v 1.25 2008/10/27 23:41:09 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -933,7 +933,7 @@ static void
 handle_split_proc(definition * defp, int multi_flag)
 {
     char *startname = SplitStart, *endname = SplitEnd;
-    int numofparams;
+    int numofparams = 0;
 
     if (!startname)
 	startname = "Start";

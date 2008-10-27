@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/clone.c,v 1.27 2008/03/05 21:51:22 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/clone.c,v 1.28 2008/10/27 23:41:10 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -168,10 +168,12 @@ DoCloneIndex(Volume * rwvp, Volume * clvp, VnodeClass class, int reclone)
     char buf[SIZEOF_LARGEDISKVNODE], dbuf[SIZEOF_LARGEDISKVNODE];
     struct VnodeDiskObject *rwvnode = (struct VnodeDiskObject *)buf;
     struct VnodeDiskObject *clvnode = (struct VnodeDiskObject *)dbuf;
-    Inode rwinode, clinode;
+    Inode rwinode = 0;
+    Inode clinode;
     struct clone_head decHead;
     struct clone_rock decRock;
-    afs_int32 offset, dircloned, inodeinced;
+    afs_int32 offset = 0;
+    afs_int32 dircloned, inodeinced;
 
     struct VnodeClassInfo *vcp = &VnodeClassInfo[class];
     int ReadWriteOriginal = VolumeWriteable(rwvp);

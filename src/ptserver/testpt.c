@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/testpt.c,v 1.18 2007/10/31 04:05:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/testpt.c,v 1.19 2008/10/27 23:41:09 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -272,8 +272,8 @@ CreateGroup(int g)
     char name[16];
     afs_int32 id = 0;
     afs_int32 flags = PRGRP;
-    afs_int32 owner;
-    char *ownerName;
+    afs_int32 owner = 0;
+    char *ownerName = NULL;
     int ownerType;		/* type of ownership */
     static char *lastGroupPrefix;	/* prefix used for type==2 */
 

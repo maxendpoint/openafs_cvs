@@ -18,7 +18,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/vol-dump.c,v 1.4 2008/03/05 21:51:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/vol-dump.c,v 1.5 2008/10/27 23:41:10 shadow Exp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -543,7 +543,8 @@ static int
 DumpFile(int dumpfd, int vnode, FdHandle_t * handleP,  struct VnodeDiskObject *v)
 {
     int code = 0, failed_seek = 0, failed_write = 0;
-    afs_int32 pad = 0, offset;
+    afs_int32 pad = 0;
+    afs_int32 offset = 0;
     afs_sfsize_t n, nbytes, howMany, howBig;
     byte *p;
 #ifndef AFS_NT40_ENV

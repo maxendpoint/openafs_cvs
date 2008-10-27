@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.19 2008/04/09 16:39:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/lwps.c,v 1.20 2008/10/27 23:41:09 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -1245,7 +1245,7 @@ restoreVolumeData(call, rparamsPtr)
 {
     afs_int32 curChunk;
     afs_uint32 totalWritten = 0;
-    afs_int32 code;
+    afs_int32 code = 0;
     afs_int32 headBytes, tailBytes, w;
     afs_int32 taskId;
     afs_int32 nbytes;		/* # bytes data in last tape block read */

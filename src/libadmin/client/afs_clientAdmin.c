@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/client/afs_clientAdmin.c,v 1.14 2008/02/29 01:26:45 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/client/afs_clientAdmin.c,v 1.15 2008/10/27 23:41:09 shadow Exp $");
 
 #include <afs/stds.h>
 #include "afs_clientAdmin.h"
@@ -1835,7 +1835,7 @@ afsclient_AFSServerGetBegin(const void *cellHandle, void **iterationIdP,
 	(afs_admin_iterator_p) malloc(sizeof(afs_admin_iterator_t));
     server_get_p serv = (server_get_p) calloc(1, sizeof(server_get_t));
     server_get_p serv_cache = NULL;
-    const char *cellName;
+    const char *cellName = NULL;
     void *database_iter;
     util_databaseServerEntry_t database_entry;
     void *fileserver_iter;

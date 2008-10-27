@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.10 2007/10/30 15:10:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/db_hash.c,v 1.11 2008/10/27 23:41:06 shadow Exp $");
 
 #ifdef AFS_NT40_ENV
 #include <winsock2.h>
@@ -266,7 +266,7 @@ ht_GetTableBlock(ut, mht, hash, old, blockP, boP)
     int n;
     int i;
     int length;
-    dbadr ta;
+    dbadr ta = NULL;
 
     if ((mht == 0)
 	|| ((ht = mht->ht) == 0)

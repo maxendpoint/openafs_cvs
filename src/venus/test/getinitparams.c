@@ -11,7 +11,7 @@
 #include <afsconfig.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/test/getinitparams.c,v 1.6 2007/10/31 04:06:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/test/getinitparams.c,v 1.7 2008/10/27 23:41:10 shadow Exp $");
 
 #include <afs/param.h>
 #include <stdio.h>
@@ -41,7 +41,7 @@ GetInitParamsCmd(struct cmd_syndesc *as, void *arock)
     int code;
     int len;
     char *file = 0;
-    int fd;
+    int fd = 0;
 
     if (as->parms[0].items) {
 	file = as->parms[0].items->data;
