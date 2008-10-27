@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.19.8.4 2007/11/26 21:47:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/ihandle.c,v 1.19.8.5 2008/10/27 23:53:47 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -507,7 +507,7 @@ stream_fdopen(FD_t fd)
 StreamHandle_t *
 stream_open(const char *filename, const char *mode)
 {
-    FD_t fd;
+    FD_t fd = INVALID_FD;
 
     if (strcmp(mode, "r") == 0) {
 	fd = OS_OPEN(filename, O_RDONLY, 0);

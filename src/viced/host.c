@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.34 2008/05/08 21:18:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/host.c,v 1.93.2.35 2008/10/27 23:53:47 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -1122,7 +1122,8 @@ void
 h_Enumerate_r(int (*proc) (), struct host *enumstart, char *param)
 {
     register struct host *host, *next;
-    register int held, nheld;
+    int held = 0;
+    int nheld = 0;
 
     if (hostCount == 0) {
 	return;
@@ -2118,9 +2119,9 @@ struct client *
 h_FindClient_r(struct rx_connection *tcon)
 {
     register struct client *client;
-    register struct host *host;
+    struct host *host = NULL;
     struct client *oldClient;
-    afs_int32 viceid;
+    afs_int32 viceid = 0;
     afs_int32 expTime;
     afs_int32 code;
     int authClass;
@@ -3754,7 +3755,7 @@ initInterfaceAddr_r(struct host *host, struct interfaceAddr *interf)
 int
 h_DeleteHostFromAddrHashTable_r(afs_uint32 addr, afs_uint16 port, struct host *host)
 {
-    int flag;
+    int flag = 0;
     register struct h_AddrHashChain **hp, *th;
 
     for (hp = &hostAddrHashTable[h_HashIndex(addr)]; (th = *hp);) {
