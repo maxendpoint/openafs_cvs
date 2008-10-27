@@ -92,7 +92,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.41.2.18 2008/08/16 19:15:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.41.2.19 2008/10/27 23:54:12 shadow Exp $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -1711,7 +1711,7 @@ CompareVolumes(const void *_p1, const void *_p2)
 void
 GetVolumeSummary(VolumeId singleVolumeNumber)
 {
-    DIR *dirp;
+    DIR *dirp = NULL;
     afs_int32 nvols = 0;
     struct VolumeSummary *vsp, vs;
     struct VolumeDiskHeader diskHeader;
@@ -1929,7 +1929,7 @@ DoSalvageVolumeGroup(register struct InodeSummary *isp, int nVols)
     int check;
     Inode ino;
     int dec_VGLinkH = 0;
-    int VGLinkH_p1;
+    int VGLinkH_p1 =0;
     FdHandle_t *fdP = NULL;
 
     VGLinkH_cnt = 0;

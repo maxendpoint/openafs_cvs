@@ -1,4 +1,4 @@
-/* $Id: pt_util.c,v 1.9.2.8 2008/07/01 05:59:20 rra Exp $ */
+/* $Id: pt_util.c,v 1.9.2.9 2008/10/27 23:54:10 shadow Exp $ */
 
 /*
  *
@@ -23,7 +23,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.9.2.8 2008/07/01 05:59:20 rra Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/pt_util.c,v 1.9.2.9 2008/10/27 23:54:10 shadow Exp $");
 
 #include <afs/cmd.h>		/*Command line parsing */
 #include <afs/afsutil.h>
@@ -133,8 +133,9 @@ int
 CommandProc(register struct cmd_syndesc *a_as, void *arock)
 {
     register int i;
-    register long code;
-    long cc, upos, gpos;
+    long code = 0;
+    long cc, upos;
+    long gpos = 0;
     struct prentry uentry, gentry;
     struct ubik_hdr *uh;
     char *dfile = 0;
