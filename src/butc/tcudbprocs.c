@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.15.6.7 2008/04/18 13:57:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcudbprocs.c,v 1.15.6.8 2008/10/27 23:41:45 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -392,7 +392,7 @@ writeDbDump(tapeInfoPtr, taskId, expires, dumpid)
     char *writeBufPtr;
     afs_int32 transferSize;
 
-    char *readBufPtr;
+    char *readBufPtr = NULL;
     afs_int32 maxReadSize;
 
     charListT charList;

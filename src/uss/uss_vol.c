@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.10.14.3 2007/10/30 15:16:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss_vol.c,v 1.10.14.4 2008/10/27 23:41:46 shadow Exp $");
 
 #include "uss_vol.h"		/*Interface to this module */
 #include "uss_common.h"		/*Common definitions */
@@ -935,7 +935,7 @@ uss_vol_DeleteVol(a_volName, a_volID, a_servName, a_servID, a_partName,
 {				/*uss_vol_DeleteVol */
 
     static char rn[] = "uss_vol_DeleteVol";	/*Routine name */
-    register afs_int32 code;	/*Return code */
+    register afs_int32 code = 0;	/*Return code */
 
     /*
      * Make sure we've initialized our VLDB connection(s) before

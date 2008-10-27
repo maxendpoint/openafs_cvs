@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.72.2.9 2008/09/22 19:29:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.72.2.10 2008/10/27 23:41:43 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -664,7 +664,7 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
     afs_int32 retry;		/* handle low-level SGI MP race conditions */
     long volStates;		/* flags from vol structure */
     struct volume *volp = 0;	/* volume ptr */
-    struct VenusFid dotdot;
+    struct VenusFid dotdot = {0, 0, 0};
     int flagIndex = 0;		/* First file with bulk fetch flag set */
     int inlinebulk = 0;		/* Did we use InlineBulk RPC or not? */
     XSTATS_DECLS;

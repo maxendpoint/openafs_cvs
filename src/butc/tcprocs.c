@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.14.6.5 2008/03/10 22:32:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/butc/tcprocs.c,v 1.14.6.6 2008/10/27 23:41:45 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -572,7 +572,7 @@ STC_ScanDumps(struct rx_call *acid, afs_int32 addDbFlag, afs_uint32 *taskId)
     PROCESS pid;
 #endif
     struct scanTapeIf *ptr;
-    statusP statusPtr;
+    statusP statusPtr = NULL;
     afs_int32 code = 0;
 
     extern afs_int32 allocTaskId();

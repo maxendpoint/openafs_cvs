@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.29.2.12 2008/10/10 14:42:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/dumpstuff.c,v 1.29.2.13 2008/10/27 23:41:47 shadow Exp $");
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -519,7 +519,8 @@ static int
 DumpFile(struct iod *iodp, int vnode, FdHandle_t * handleP)
 {
     int code = 0, error = 0;
-    afs_int32 pad = 0, offset;
+    afs_int32 pad = 0;
+    afs_int32 offset = 0;
     afs_sfsize_t n, nbytes, howMany, howBig;
     afs_foff_t lcode = 0;
     byte *p;

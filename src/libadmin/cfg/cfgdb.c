@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgdb.c,v 1.6 2004/04/02 06:54:05 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/cfg/cfgdb.c,v 1.6.14.1 2008/10/27 23:41:45 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -233,7 +233,7 @@ cfg_CellServDbEnumerate(const char *fsDbHost,	/* fileserver or database host */
 	void *bosHandle;
 	char dbhostName[MAXHOSTSPERCELL][BOS_MAX_NAME_LEN];
 	char dbhostCell[BOS_MAX_NAME_LEN];
-	int dbhostCount;
+	int dbhostCount = 0;
 
 	if (!afsclient_NullCellOpen(&cellHandle, &tst2)) {
 	    tst = tst2;
@@ -488,7 +488,7 @@ CellServDbUpdate(int updateOp, void *hostHandle, const char *sysControlHost,
 		free(ctrlBlockp);
 	    } else {
 		/* fill name blocks, handing each to a worker thread */
-		void *nameBlockIter;
+		void *nameBlockIter = NULL;
 		short workersStarted = 0;
 
 		if (!NameBlockGetBegin

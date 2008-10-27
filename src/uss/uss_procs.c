@@ -19,7 +19,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/uss/uss_procs.c,v 1.9.14.1 2007/10/30 15:16:48 shadow Exp $");
+    ("$Header: /cvs/openafs/src/uss/uss_procs.c,v 1.9.14.2 2008/10/27 23:41:46 shadow Exp $");
 
 #include "uss_procs.h"		/*Module interface */
 #include "uss_common.h"		/*Common defs & operations */
@@ -694,7 +694,7 @@ uss_procs_PickADir(path, cp)
 
     char cd[300];		/*Current  directory for search */
 
-    int i, count, MinIndex, mina = 10000;
+    int i, count, MinIndex = 0, mina = 10000;
     struct dirent *dp;
     DIR *dirp;
     char dirname[300];

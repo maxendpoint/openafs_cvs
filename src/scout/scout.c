@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/scout/scout.c,v 1.10.2.3 2007/11/26 21:08:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/scout/scout.c,v 1.10.2.4 2008/10/27 23:41:46 shadow Exp $");
 
 #undef	IN
 #ifdef	AFS_AIX32_ENV
@@ -470,7 +470,7 @@ mini_justify(a_srcbuff, a_dstbuff, a_dstwidth, a_justification, a_rightTrunc,
     int num_src_chars;		/*# of chars in source */
     int true_num_src_chars;	/*# src chars before truncation */
     int trunc_needed;		/*Is truncation needed? */
-    char diskChar;		/*Disk name prefix */
+    char diskChar = 0;		/*Disk name prefix */
 
     if (scout_debug) {
 	fprintf(scout_debugfd, "[%s] Called with '%s', dest width=%d\n", rn,

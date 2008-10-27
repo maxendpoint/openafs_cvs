@@ -85,7 +85,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.15 2008/02/18 19:20:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/callback.c,v 1.77.2.16 2008/10/27 23:41:47 shadow Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>		/* for malloc() */
@@ -532,7 +532,7 @@ AddCallBack1_r(struct host *host, AFSFid * fid, afs_uint32 * thead, int type,
     struct FileEntry *fe;
     struct CallBack *cb = 0, *lastcb = 0;
     struct FileEntry *newfe = 0;
-    afs_uint32 time_out;
+    afs_uint32 time_out = 0;
     afs_uint32 *Thead = thead;
     struct CallBack *newcb = 0;
     int safety;

@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/libadmin/cfg/cfghost.c,v 1.6 2004/04/02 06:54:05 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/libadmin/cfg/cfghost.c,v 1.6.14.1 2008/10/27 23:41:45 shadow Exp $");
 
 #include <afs/stds.h>
 
@@ -502,7 +502,7 @@ cfg_HostSetAfsPrincipal(void *hostHandle,	/* host config handle */
     if (tst == 0) {
 	kas_identity_t afsIdentity;
 	kas_encryptionKey_t afsKey;
-	int afsKvno;
+	int afsKvno = 0;
 
 	strcpy(afsIdentity.principal, "afs");
 	afsIdentity.instance[0] = '\0';

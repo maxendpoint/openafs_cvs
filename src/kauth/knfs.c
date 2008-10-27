@@ -15,7 +15,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.8.14.2 2007/10/31 04:09:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/knfs.c,v 1.8.14.3 2008/10/27 23:41:45 shadow Exp $");
 
 #include <stdio.h>
 #include <afs/stds.h>
@@ -103,7 +103,7 @@ GetTokens(ahost, auid)
     struct ViceIoctl iob;
     afs_int32 pheader[6];
     char tbuffer[1024];
-    register afs_int32 code;
+    afs_int32 code = 0;
     int index, newIndex;
     char *stp;			/* secret token ptr */
     struct ClearToken ct;
