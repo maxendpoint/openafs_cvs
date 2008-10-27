@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.36 2008/07/01 20:55:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.37 2008/10/27 23:53:25 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -2201,7 +2201,7 @@ int
 uafs_LookupName(char *path, struct usr_vnode *parentVp,
 		struct usr_vnode **vpp, int follow, int no_eval_mtpt)
 {
-    int code;
+    int code = 0;
     int linkCount;
     struct usr_vnode *vp;
     struct usr_vnode *nextVp;

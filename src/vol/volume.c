@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.67 2008/09/25 07:50:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.68 2008/10/27 23:53:26 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -3172,7 +3172,8 @@ VDetachVolume_r(Error * ec, Volume * vp)
 {
     VolumeId volume;
     struct DiskPartition64 *tpartp;
-    int notifyServer, useDone = FSYNC_VOL_ON;
+    int notifyServer = 0;
+    int  useDone = FSYNC_VOL_ON;
 
     *ec = 0;			/* always "succeeds" */
     if (programType == volumeUtility) {

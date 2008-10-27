@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kpwvalid.c,v 1.8 2007/11/26 21:04:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kpwvalid.c,v 1.9 2008/10/27 23:53:25 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -27,7 +27,7 @@ main(int argc, char *argv[])
 {
     char oldpassword[512];
     char password[512];
-    int rc;
+    int rc = 1;
 
     if (fgets(oldpassword, 512, stdin))
 	while (fgets(password, 512, stdin)) {
