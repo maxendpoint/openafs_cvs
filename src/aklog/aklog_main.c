@@ -1,5 +1,5 @@
 /* 
- * $Id: aklog_main.c,v 1.29 2008/10/25 23:59:55 shadow Exp $
+ * $Id: aklog_main.c,v 1.30 2008/10/29 19:43:42 shadow Exp $
  *
  * Copyright 1990,1991 by the Massachusetts Institute of Technology
  * For distribution and copying rights, see the file "mit-copyright.h"
@@ -36,7 +36,7 @@
 
 #include <afsconfig.h>
 RCSID
-    ("$Header: /cvs/openafs/src/aklog/aklog_main.c,v 1.29 2008/10/25 23:59:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/aklog/aklog_main.c,v 1.30 2008/10/29 19:43:42 shadow Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -453,7 +453,27 @@ static int auth_to_cell(krb5_context context, char *cell, char *realm)
 	retry = 1;
 	
 	while(retry) {
-	    
+
+	    /* This code tries principals in the following, much debated,
+	     * order:
+	     * 
+	     * If the realm is specified on the command line we do
+	     *    - afs/cell@COMMAND-LINE-REALM
+	     *    - afs@COMMAND-LINE-REALM
+	     * 
+	     * Otherwise, we do
+	     *    - afs/cell@REALM-FROM-USERS-PRINCIPAL
+	     *    - afs/cell@krb5_get_host_realm(db-server)
+	     *   Then, if krb5_get_host_realm(db-server) is non-empty
+	     *      - afs@ krb5_get_host_realm(db-server)
+	     *   Otherwise
+	     *      - afs/cell@ upper-case-domain-of-db-server
+	     *      - afs@ upper-case-domain-of-db-server
+	     * 
+	     * In all cases, the 'afs@' variant is only tried where the
+	     * cell and the realm match case-insensitively.
+	     */
+		
 	    /* Cell on command line - use that one */
 	    if (realm && realm[0]) {
 		realm_of_cell = realm;
