@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsfuncs.h,v 1.4 2007/05/05 21:13:21 jaltman Exp $ */
+/* $Id: afsfuncs.h,v 1.5 2008/11/07 16:35:20 jaltman Exp $ */
 
 #ifndef __KHIMAIRA_AFSFUNCS_H
 #define __KHIMAIRA_AFSFUNCS_H
@@ -50,8 +50,8 @@ afs_klog(khm_handle identity,
          char *realm,
          int LifeTime,
          afs_tk_method method,
-         time_t * tok_expiration /* OUT: expiration time of new
-                                    token */
+         time_t * tok_expiration,/* OUT: expiration time of new token */
+         char *linkedCell        /* OUT: name of linkedCell (if any) */
          );
 
 int
