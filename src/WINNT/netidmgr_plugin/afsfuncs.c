@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afsfuncs.c,v 1.1.2.19 2008/11/03 19:56:08 jaltman Exp $ */
+/* $Id: afsfuncs.c,v 1.1.2.20 2008/11/07 16:36:03 jaltman Exp $ */
 
 /* Disable the 'macro redefinition' warning which is getting
    triggerred by a redefinition of the ENCRYPT and DECRYPT macros. */
@@ -728,7 +728,8 @@ afs_klog(khm_handle identity,
          char *realm,
          int LifeTime,
          afs_tk_method method,
-         time_t * tok_expiration) {
+         time_t * tok_expiration,
+         char *linkedCell) {
 
     long	rc;
     CREDENTIALS	creds;
@@ -784,6 +785,10 @@ afs_klog(khm_handle identity,
         _resolve();
         return(rc);
     }
+
+    if (linkedCell && ak_cellconfig.linkedCell)
+        StringCbCopyA(linkedCell, MAXCELLCHARS, 
+                      ak_cellconfig.linkedCell);
 
     StringCbCopyA(realm_of_cell, sizeof(realm_of_cell), 
                   afs_realm_of_cell(&ak_cellconfig, FALSE));
