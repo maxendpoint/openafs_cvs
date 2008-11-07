@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-/* $Id: afspext.h,v 1.2 2006/10/16 13:54:32 jaltman Exp $ */
+/* $Id: afspext.h,v 1.3 2008/11/07 18:19:38 jaltman Exp $ */
 
 #ifndef __AFSPLUGIN_EXT_H
 #define __AFSPLUGIN_EXT_H
@@ -40,8 +40,8 @@
 
   @{*/
 
-#define MAXCELLCHARS   64
-#define MAXHOSTCHARS   64
+#define MAXCELLCHARS   256
+#define MAXHOSTCHARS   256
 #define MAXHOSTSPERCELL 8
 
 #define TRANSARCAFSDAEMON "TransarcAFSDaemon"
