@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.34.2.6 2008/09/22 19:29:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_read.c,v 1.34.2.7 2008/11/08 16:34:42 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -806,8 +806,11 @@ afs_UFSRead(register struct vcache *avc, struct uio *auio,
 		usedihint++;
 	    } else
 #endif /* IHINT */
-
+#if defined(LINUX_USE_FH)
+		tfile = (struct osi_file *)osi_UFSOpen_fh(&tdc->f.fh, tdc->f.fh_type);
+#else
 		tfile = (struct osi_file *)osi_UFSOpen(tdc->f.inode);
+#endif
 #ifdef AFS_DARWIN80_ENV
 	    trimlen = len;
             tuiop = afsio_darwin_partialcopy(auio, trimlen);
