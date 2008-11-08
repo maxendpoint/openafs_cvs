@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.54 2008/09/22 13:36:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.55 2008/11/08 16:34:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -543,7 +543,11 @@ afs_UFSWrite(register struct vcache *avc, struct uio *auio, int aio,
 	    tdc->f.states |= DWriting;
 	    tdc->dflags |= DFEntryMod;
 	}
+#if defined(LINUX_USE_FH)
+	tfile = (struct osi_file *)osi_UFSOpen_fh(&tdc->f.fh, tdc->f.fh_type);
+#else
 	tfile = (struct osi_file *)osi_UFSOpen(tdc->f.inode);
+#endif
 	len = totalLength;	/* write this amount by default */
 	offset = filePos - AFS_CHUNKTOBASE(tdc->f.chunk);
 	max = AFS_CHUNKTOSIZE(tdc->f.chunk);	/* max size of this chunk */

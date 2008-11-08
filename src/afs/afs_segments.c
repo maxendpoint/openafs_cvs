@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.26 2008/09/22 13:36:17 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.27 2008/11/08 16:34:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -432,7 +432,11 @@ afs_StoreAllSegments(register struct vcache *avc, struct vrequest *areq,
 				    shouldwake = &nomore;
 				}
 			    }
+#if defined(LINUX_USE_FH)
+			    tfile = afs_CFileOpen(&tdc->f.fh, tdc->f.fh_type);
+#else
 			    tfile = afs_CFileOpen(tdc->f.inode);
+#endif
 #ifndef AFS_NOSTATS
 			    xferP =
 				&(afs_stats_cmfullperf.rpc.
@@ -1045,7 +1049,11 @@ afs_TruncateAllSegments(register struct vcache *avc, afs_size_t alen,
 	ObtainSharedLock(&tdc->lock, 672);
 	if (newSize < tdc->f.chunkBytes) {
 	    UpgradeSToWLock(&tdc->lock, 673);
+#if defined(LINUX_USE_FH)
+	    tfile = afs_CFileOpen(&tdc->f.fh, tdc->f.fh_type);
+#else
 	    tfile = afs_CFileOpen(tdc->f.inode);
+#endif
 	    afs_CFileTruncate(tfile, newSize);
 	    afs_CFileClose(tfile);
 	    afs_AdjustSize(tdc, newSize);
