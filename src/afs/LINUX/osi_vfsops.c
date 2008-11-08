@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.22 2008/07/01 03:35:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vfsops.c,v 1.42.4.23 2008/11/08 16:14:01 shadow Exp $");
 
 #define __NO_VERSION__		/* don't define kernel_version in module.h */
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -148,6 +148,9 @@ afs_read_super(struct super_block *sb, void *data, int silent)
     sb->s_op = &afs_sops;	/* Super block (vfs) ops */
 #if defined(AFS_LINUX26_ENV) && !defined(AFS_NONFSTRANS)
     sb->s_export_op = &afs_export_ops;
+#endif
+#if defined(HAVE_BDI_INIT)
+    bdi_init(&afs_backing_dev_info);
 #endif
 #if defined(MAX_NON_LFS)
 #ifdef AFS_64BIT_CLIENT
@@ -400,6 +403,9 @@ afs_put_super(struct super_block *sbp)
 #endif
 
     osi_linux_verify_alloced_memory();
+#if defined(HAVE_BDI_INIT)
+    bdi_destroy(&afs_backing_dev_info);
+#endif
     AFS_GUNLOCK();
 
     sbp->s_dev = 0;
