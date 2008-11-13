@@ -1499,25 +1499,11 @@ cm_DirPrefetchBuffers(cm_dirOp_t * op)
        that was locally modified. */
 
     if (op->scp->flags & CM_SCACHEFLAG_LOCAL) {
-        switch (op->lockType) {
-        case CM_DIRLOCK_READ:
-            lock_ReleaseRead(&op->scp->rw);
-            break;
-        case CM_DIRLOCK_WRITE:
-            lock_ReleaseWrite(&op->scp->rw);
-            break;
-        }
+        lock_ReleaseWrite(&op->scp->rw);
         code = cm_FlushFile(op->scp, op->userp, &op->req);
         if (code != 0)
             return code;
-        switch (op->lockType) {
-        case CM_DIRLOCK_READ:
-            lock_ObtainRead(&op->scp->rw);
-            break;
-        case CM_DIRLOCK_WRITE:
-            lock_ObtainWrite(&op->scp->rw);
-            break;
-        }
+        lock_ObtainWrite(&op->scp->rw);
     }
 
     offset = ConvertLongToLargeInteger(0);
