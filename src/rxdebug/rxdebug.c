@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.11 2008/09/25 19:54:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxdebug/rxdebug.c,v 1.12 2008/11/20 22:56:13 shadow Exp $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -409,6 +409,16 @@ MainCommand(struct cmd_syndesc *as, void *arock)
 		    printf(" DESTROYED");
 		if (tconn.flags & RX_CONN_USING_PACKET_CKSUM)
 		    printf(" pktCksum");
+                if (tconn.flags & RX_CONN_KNOW_WINDOW)
+                    printf(" knowWindow");
+                if (tconn.flags & RX_CONN_RESET)
+                    printf(" reset");
+                if (tconn.flags & RX_CONN_BUSY)
+                    printf(" busy");
+                if (tconn.flags & RX_CONN_ATTACHWAIT)
+                    printf(" attachWait");
+                if (tconn.flags & RX_CLONED_CONNECTION)
+                    printf(" clone");
 		printf(", ");
 	    }
 	    printf("security index %d, ", tconn.securityIndex);

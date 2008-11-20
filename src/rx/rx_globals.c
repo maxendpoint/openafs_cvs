@@ -26,7 +26,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.13 2008/10/08 21:14:56 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_globals.c,v 1.14 2008/11/20 22:56:12 shadow Exp $");
 
 /* Enable data initialization when the header file is included */
 #define GLOBALSINIT(stuff) = stuff
@@ -64,6 +64,11 @@ void rx_SetUdpBufSize(int x)
 {
     if (x > rx_GetMinUdpBufSize())
         rx_UdpBufSize = x;
+}
+
+void rx_SetMaxClonesPerConn(int x)
+{
+    rx_max_clones_per_connection = x;
 }
 
 #endif /* AFS_NT40_ENV */
