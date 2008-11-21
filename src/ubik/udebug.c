@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.22 2008/05/10 15:19:35 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/ubik/udebug.c,v 1.23 2008/11/21 07:09:43 shadow Exp $");
 
 #include <sys/types.h>
 #include <stdlib.h>
@@ -40,7 +40,7 @@ RCSID
 #include "ubik.h"
 #include "ubik_int.h"
 
-/* needed by Irix. Include a header to get it, or leave it alone. */
+/*! needed by Irix. Include a header to get it, or leave it alone. */
 extern struct hostent *hostutil_GetHostByName();
 
 static short
