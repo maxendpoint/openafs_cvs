@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/ubikcmd.c,v 1.7.14.1 2007/10/30 15:16:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ubik/ubikcmd.c,v 1.7.14.2 2008/11/21 07:09:55 shadow Exp $");
 
 #include <sys/types.h>
 #ifdef AFS_NT40_ENV
@@ -31,10 +31,10 @@ RCSID
 #define UBIK_INTERNALS
 #include "ubik.h"
 
-/* This file contain useful subroutines for parsing command line args for ubik
- *   applications.
+/*! \file
+ * This file contain useful subroutines for parsing command line args for ubik
+ * applications.
  */
-
 ubik_ParseServerList(argc, argv, ahost, aothers)
      int argc;
      char **argv;

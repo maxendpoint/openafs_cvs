@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ubik/utst_server.c,v 1.8.14.3 2008/07/19 06:15:02 rra Exp $");
+    ("$Header: /cvs/openafs/src/ubik/utst_server.c,v 1.8.14.4 2008/11/21 07:09:55 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -33,9 +33,10 @@ RCSID
 #include "utst_int.h"
 
 
-/* useful globals */
+/*! \name useful globals */
 struct ubik_dbase *dbase;
 afs_int32 sleepTime;
+/*\}*/
 
 SAMPLE_Inc(rxconn)
      struct rx_connection *rxconn;
