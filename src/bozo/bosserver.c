@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.44 2008/10/18 15:08:55 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bozo/bosserver.c,v 1.45 2008/11/29 18:55:25 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -1041,7 +1041,6 @@ main(int argc, char **argv, char **envp)
 
     if (rxBind) {
 	afs_int32 ccode;
-#ifndef AFS_NT40_ENV
         if (AFSDIR_SERVER_NETRESTRICT_FILEPATH || 
             AFSDIR_SERVER_NETINFO_FILEPATH) {
             char reason[1024];
@@ -1050,7 +1049,6 @@ main(int argc, char **argv, char **envp)
                                            AFSDIR_SERVER_NETINFO_FILEPATH,
                                            AFSDIR_SERVER_NETRESTRICT_FILEPATH);
         } else 
-#endif	
 	{
             ccode = rx_getAllAddr(SHostAddrs, ADDRSPERSITE);
         }
