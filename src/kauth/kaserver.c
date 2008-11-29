@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.19.2.6 2008/03/10 22:32:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.19.2.7 2008/11/29 18:55:44 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -390,7 +390,6 @@ main(argc, argv)
 
     if (rxBind) {
 	afs_int32 ccode;
-#ifndef AFS_NT40_ENV
         if (AFSDIR_SERVER_NETRESTRICT_FILEPATH || 
             AFSDIR_SERVER_NETINFO_FILEPATH) {
             char reason[1024];
@@ -399,7 +398,6 @@ main(argc, argv)
                                            AFSDIR_SERVER_NETINFO_FILEPATH,
                                            AFSDIR_SERVER_NETRESTRICT_FILEPATH);
         } else 
-#endif	
 	{
             ccode = rx_getAllAddr(SHostAddrs, ADDRSPERSITE);
         }

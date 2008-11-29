@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.23.4.6 2008/09/24 21:36:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_getaddr.c,v 1.23.4.7 2008/11/29 18:55:44 jaltman Exp $");
 
 #ifndef AFS_DJGPP_ENV
 #ifndef KERNEL
@@ -222,8 +222,8 @@ rx_getAllAddr_internal(afs_uint32 buffer[], int maxSize, int loopbacks)
 }
 
 int
-rxi_getAllAddrMaskMtu(afs_uint32 addrBuffer[], afs_uint32 maskBuffer[],
-		      afs_uint32 mtuBuffer[], int maxSize)
+rx_getAllAddrMaskMtu(afs_uint32 addrBuffer[], afs_uint32 maskBuffer[],
+		     afs_uint32 mtuBuffer[], int maxSize)
 {
     int s;
 
@@ -419,8 +419,8 @@ rx_getAllAddr(afs_uint32 buffer[], int maxSize)
  * by afsi_SetServerIPRank().
  */
 int
-rxi_getAllAddrMaskMtu(afs_uint32 addrBuffer[], afs_uint32 maskBuffer[],
-		      afs_uint32 mtuBuffer[], int maxSize)
+rx_getAllAddrMaskMtu(afs_uint32 addrBuffer[], afs_uint32 maskBuffer[],
+                     afs_uint32 mtuBuffer[], int maxSize)
 {
     int s;
     int i, len, count = 0;
