@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.15 2008/06/26 16:48:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/auth/cellconfig.c,v 1.47.2.16 2008/11/29 18:08:53 shadow Exp $");
 
 #include <afs/stds.h>
 #include <afs/pthread_glock.h>
@@ -1328,7 +1328,7 @@ afsconf_GetLatestKey(struct afsconf_dir * adir, afs_int32 * avno,
 
 /* get a particular key */
 int
-afsconf_GetKey(void *rock, afs_int32 avno, struct ktc_encryptionKey *akey)
+afsconf_GetKey(void *rock, int avno, struct ktc_encryptionKey *akey)
 {
     struct afsconf_dir *adir = (struct afsconf_dir *) rock;
     register int i, maxa;

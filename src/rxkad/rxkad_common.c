@@ -23,7 +23,7 @@
 #define INCLUDE_RXKAD_PRIVATE_DECLS
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.29.2.2 2007/10/30 15:16:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rxkad/rxkad_common.c,v 1.29.2.3 2008/11/29 18:08:49 shadow Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -108,14 +108,14 @@ struct rxkad_stats rxkad_stats = { { 0 } };
 	assert((head) && ((head)->prev == NULL)); \
     } while(0)
 
-void rxkad_global_stats_init() {
+void rxkad_global_stats_init(void) {
     assert(pthread_mutex_init(&rxkad_global_stats_lock, (const pthread_mutexattr_t *)0) == 0);
     assert(pthread_key_create(&rxkad_stats_key, NULL) == 0);
     memset(&rxkad_global_stats, 0, sizeof(rxkad_global_stats));
 }
 
 rxkad_stats_t * 
-rxkad_thr_stats_init() {
+rxkad_thr_stats_init(void) {
     rxkad_stats_t * rxkad_stats;
     rxkad_stats = (rxkad_stats_t *)malloc(sizeof(rxkad_stats_t));
     assert(rxkad_stats != NULL && pthread_setspecific(rxkad_stats_key,rxkad_stats) == 0);
