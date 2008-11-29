@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.52 2008/02/11 03:58:51 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vnodeops.c,v 1.53 2008/11/29 18:20:06 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -538,9 +538,9 @@ afs_vop_close(ap)
     struct vcache *avc = VTOAFS(vp);
     AFS_GLOCK();
     if (vop_cred)
-	code = afs_close(avc, ap->a_fflag, vop_cred, vop_proc);
+	code = afs_close(avc, ap->a_fflag, vop_cred);
     else
-	code = afs_close(avc, ap->a_fflag, &afs_osi_cred, vop_proc);
+	code = afs_close(avc, ap->a_fflag, &afs_osi_cred);
     osi_FlushPages(avc, vop_cred);	/* hold bozon lock, but not basic vnode lock */
     /* This is legit; it just forces the fstrace event to happen */
     code = afs_CheckCode(code, NULL, 60);
@@ -1097,8 +1097,7 @@ afs_vop_ioctl(ap)
     if (((ap->a_command >> 8) & 0xff) == 'V') {
 	/* This is a VICEIOCTL call */
 	AFS_GLOCK();
-	error = HandleIoctl(tvc, (struct file *)0 /*Not used */ ,
-			    ap->a_command, ap->a_data);
+	error = HandleIoctl(tvc, ap->a_command, ap->a_data);
 	AFS_GUNLOCK();
 	return (error);
     } else {

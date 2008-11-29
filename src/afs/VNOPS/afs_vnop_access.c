@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.16 2008/09/22 13:36:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.17 2008/11/29 18:20:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -77,7 +77,6 @@ afs_GetAccessBits(register struct vcache *avc, register afs_int32 arights,
 	 * _is_ cached, obviously), make sure this user has valid tokens
 	 * before bothering with the RPC.  */
 	struct unixuser *tu;
-	extern struct unixuser *afs_FindUser();
 	tu = afs_FindUser(areq->uid, avc->fid.Cell, READ_LOCK);
 	if (!tu) {
 	    return (arights & avc->anyAccess);

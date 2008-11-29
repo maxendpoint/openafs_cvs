@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.27 2008/09/22 19:35:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_alloc.c,v 1.28 2008/11/29 18:20:06 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -223,7 +223,7 @@ local_free(void *p, size_t n)
  *    1 - success
  */
 static int
-linux_alloc_init()
+linux_alloc_init(void)
 {
     /* initiate our pool of osi_linux_mem structs */
     al_mem_pool =
@@ -270,7 +270,7 @@ hash_bucket_stat(size_t index, unsigned key, void *data)
 
 /* get_hash_stats() : get hash table statistics */
 static void
-get_hash_stats()
+get_hash_stats(void)
 {
     int i;
 
