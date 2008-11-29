@@ -11,11 +11,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/gi.c,v 1.8 2003/07/15 23:17:38 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/gi.c,v 1.9 2008/11/29 18:15:41 shadow Exp $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int statflag;
 

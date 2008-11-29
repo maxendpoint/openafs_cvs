@@ -16,11 +16,12 @@
 
 #include <sys/types.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <afsconfig.h>
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/common.c,v 1.6 2003/07/15 23:17:37 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/common.c,v 1.7 2008/11/29 18:15:41 shadow Exp $");
 
 #include <afs/afsutil.h>
 
