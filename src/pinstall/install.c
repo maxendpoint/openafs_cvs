@@ -50,7 +50,7 @@ Generic install command.  Options are:
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.23.14.1 2008/07/28 12:16:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/pinstall/Attic/install.c,v 1.23.14.2 2008/11/29 18:24:39 shadow Exp $");
 
 #include <stdio.h>
 #include <pwd.h>
@@ -487,8 +487,10 @@ main(int argc, char *argv[])
 #endif /* AFS_HPUX_ENV */
     char pnametmp[1024];
     int pnamelen;
+#if     !defined(AFS_AIX_ENV) && !defined(AFS_HPUX_ENV) && !defined(AFS_SUN5_ENV) && !defined(AFS_DECOSF_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_OBSD_ENV) && !defined(AFS_NBSD_ENV)
     afs_int32 newcode;
     static char diskBuffer[BUFSIZE];	/* must be static to avoid compiler bugs for large stuff */
+#endif
     char myHostName[100];
     struct timeval tvp[2];
     int isDir;
