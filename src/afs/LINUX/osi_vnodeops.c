@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.38 2008/11/08 16:49:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.126.2.39 2008/11/29 18:20:26 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -187,7 +187,6 @@ extern int BlobScan(struct dcache * afile, afs_int32 ablob);
 static int
 afs_linux_readdir(struct file *fp, void *dirbuf, filldir_t filldir)
 {
-    extern struct DirEntry *afs_dir_GetBlob();
     struct vcache *avc = VTOAFS(FILE_INODE(fp));
     struct vrequest treq;
     register struct dcache *tdc;
@@ -1240,7 +1239,6 @@ afs_linux_unlink(struct inode *dip, struct dentry *dp)
 				&& !(tvc->states & CUnlinked)) {
 	struct dentry *__dp;
 	char *__name;
-	extern char *afs_newname();
 
 	__dp = NULL;
 	__name = NULL;

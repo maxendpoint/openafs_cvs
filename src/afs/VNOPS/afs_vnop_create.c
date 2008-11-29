@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.23.4.6 2008/09/25 09:02:56 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.23.4.7 2008/11/29 18:20:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -339,7 +339,11 @@ afs_create(OSI_VC_DECL(adp), char *aname, struct vattr *attrs,
 	    code = afs_lookup(adp, aname, avcp, NULL, 0, NULL, acred);
 #endif /* AFS_SGI64_ENV */
 #else /* SUN5 || SGI */
+#if defined(UKERNEL)
+	    code = afs_lookup(adp, aname, avcp, acred, 0);
+#else /* UKERNEL */
 	    code = afs_lookup(adp, aname, avcp, acred);
+#endif /* UKERNEL */
 #endif /* SUN5 || SGI */
 #endif /* !(AFS_OSF_ENV || AFS_DARWIN_ENV) */
 	goto done;

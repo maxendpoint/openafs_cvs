@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_syscall.c,v 1.7.4.2 2007/03/27 03:23:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_syscall.c,v 1.7.4.3 2008/11/29 18:20:26 shadow Exp $");
 
 #ifdef AFS_LINUX24_ENV
 #include <linux/module.h> /* early to avoid printf->printk mapping */
@@ -105,11 +105,11 @@ uint32_t syscall_jump_code[] = {
 };
 #endif
 
-extern long afs_xsetgroups();
+extern long afs_xsetgroups(int gidsetsize, gid_t * grouplist);
 asmlinkage long (*sys_setgroupsp) (int gidsetsize, gid_t * grouplist);
 
 #ifdef AFS_LINUX24_ENV
-extern int afs_xsetgroups32();
+extern int afs_xsetgroups32(int gidsetsize, gid_t * grouplist);
 asmlinkage int (*sys_setgroups32p) (int gidsetsize,
 				    __kernel_gid32_t * grouplist);
 #endif

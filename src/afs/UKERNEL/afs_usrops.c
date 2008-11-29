@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.30.6.9 2008/10/27 23:53:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/afs_usrops.c,v 1.30.6.10 2008/11/29 18:20:27 shadow Exp $");
 
 
 #ifdef	UKERNEL
@@ -254,21 +254,21 @@ usr_ioctl(void)
  * We do not support the inode related system calls
  */
 int
-afs_syscall_icreate(void)
+afs_syscall_icreate(long a, long b, long c, long d, long e, long f)
 {
     usr_assert(0);
     return 0;
 }
 
 int
-afs_syscall_iincdec(void)
+afs_syscall_iincdec(int dev, int inode, int inode_p1, int amount)
 {
     usr_assert(0);
     return 0;
 }
 
 int
-afs_syscall_iopen(void)
+afs_syscall_iopen(int dev, int inode, int usrmod)
 {
     usr_assert(0);
     return 0;

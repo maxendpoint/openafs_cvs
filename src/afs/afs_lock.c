@@ -26,7 +26,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_lock.c,v 1.9 2003/07/15 23:14:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_lock.c,v 1.9.14.1 2008/11/29 18:20:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -35,9 +35,8 @@ RCSID
 /* probably needed if lock_trace is enabled - should ifdef */
 int afs_trclock = 0;
 
-void Lock_Obtain();
-void Lock_ReleaseR();
-void Lock_ReleaseW();
+void Lock_ReleaseR(struct afs_lock *lock);
+void Lock_ReleaseW(struct afs_lock *lock);
 
 void
 Lock_Init(register struct afs_lock *lock)

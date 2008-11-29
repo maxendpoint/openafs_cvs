@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.13 2008/11/08 16:34:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.14 2008/11/29 18:20:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -106,7 +106,16 @@ afs_int32 afs_dcentries;	/*!< In-memory dcache entries */
 
 int dcacheDisabled = 0;
 
-static int afs_UFSCacheFetchProc(), afs_UFSCacheStoreProc();
+static int afs_UFSCacheFetchProc(struct rx_call *, struct osi_file *,
+		                 afs_size_t, struct dcache *,
+				 struct vcache *, afs_size_t *,
+				 afs_size_t *, afs_int32);
+
+static int afs_UFSCacheStoreProc(struct rx_call *, struct osi_file *,
+				 afs_int32, struct vcache *,
+				 int *, afs_size_t *,
+				 afs_size_t *);
+
 struct afs_cacheOps afs_UfsCacheOps = {
 #if defined(LINUX_USE_FH)
     osi_UFSOpen_fh,

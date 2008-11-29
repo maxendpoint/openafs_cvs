@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.50.2.5 2008/11/08 16:34:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.50.2.6 2008/11/29 18:20:27 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -850,33 +850,21 @@ afs_closex(register struct file *afd)
 
 /* handle any closing cleanup stuff */
 int
-#ifdef	AFS_SGI_ENV
-afs_close(OSI_VC_ARG(avc), aflags, lastclose,
-#if !defined(AFS_SGI65_ENV)
-	  offset,
-#endif
-	  acred
-#if defined(AFS_SGI64_ENV) && !defined(AFS_SGI65_ENV)
-	  , flp
-#endif
-    )
-     lastclose_t lastclose;
-#if !defined(AFS_SGI65_ENV)
-     off_t offset;
-#if defined(AFS_SGI64_ENV)
-     struct flid *flp;
-#endif
-#endif
+#if defined(AFS_SGI65_ENV)
+afs_close(OSI_VC_DECL(avc), afs_int32 aflags, lastclost_t lastclose,
+	  struct AFS_UCRED *acred)
+#elif defined(AFS_SGI64_ENV)
+afs_close(OSI_VC_DECL(avc), afs_int32 aflags, lastclose_t lastclose,
+	  off_t offset, struct AFS_UCRED *acred, struct flid *flp)
+#elif defined(AFS_SGI_ENV)
+afs_close(OSI_VC_DECL(avc), afs_int32 aflags, lastclose_t lastclose
+	  off_t offset, struct AFS_UCRED *acred)
 #elif defined(AFS_SUN5_ENV)
-afs_close(OSI_VC_ARG(avc), aflags, count, offset, acred)
-     offset_t offset;
-     int count;
+afs_close(OSI_VC_DECL(avc), afs_int32 aflags, int count, offset_t offset, 
+	 struct AFS_UCRED *acred)
 #else
-afs_close(OSI_VC_ARG(avc), aflags, acred)
+afs_close(OSI_VC_DECL(avc), afs_int32 aflags, struct AFS_UCRED *acred)
 #endif
-     OSI_VC_DECL(avc);
-     afs_int32 aflags;
-     struct AFS_UCRED *acred;
 {
     register afs_int32 code;
     register struct brequest *tb;

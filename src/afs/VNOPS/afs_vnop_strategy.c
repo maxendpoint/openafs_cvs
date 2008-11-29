@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.22 2005/10/13 15:12:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_strategy.c,v 1.22.4.1 2008/11/29 18:20:27 shadow Exp $");
 
 #if !defined(AFS_HPUX_ENV) && !defined(AFS_SGI_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN80_ENV)
 
@@ -29,14 +29,11 @@ RCSID
 
 
 
-int
 #if	defined(AFS_SUN5_ENV) || defined(AFS_OSF_ENV) || defined(AFS_DARWIN_ENV) || defined(AFS_XBSD_ENV)
-afs_ustrategy(abp, credp)
-     struct AFS_UCRED *credp;
+int afs_ustrategy(register struct buf *abp, struct AFS_UCRED *credp)
 #else
-afs_ustrategy(abp)
+int afs_ustrategy(register struct buf *abp)
 #endif
-     register struct buf *abp;
 {
     register afs_int32 code;
     struct uio tuio;

@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.7 2008/08/26 14:01:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi.c,v 1.58.2.8 2008/11/29 18:20:24 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -171,7 +171,7 @@ afs_osi_MaskUserLoop()
 }
 
 void 
-afs_osi_UnmaskUserLoop()
+afs_osi_UnmaskUserLoop(void)
 {
 #ifdef AFS_DARWIN_ENV
     afs_osi_fullSigRestore();
