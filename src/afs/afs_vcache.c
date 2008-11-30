@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.127 2008/10/24 20:35:51 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.128 2008/11/30 20:06:35 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1624,7 +1624,7 @@ int afs_WriteVCacheDiscon(register struct vcache *avc,
 	if (!avc->ddirty_flags ||
 		(avc->ddirty_flags == VDisconShadowed)) {
 		/* Not in dirty list. */
-		AFS_DISCON_ADD_DIRTY(avc);
+		AFS_DISCON_ADD_DIRTY(avc, 1);
 	}
 
 	avc->ddirty_flags |= flags;

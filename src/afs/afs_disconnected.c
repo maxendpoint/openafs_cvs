@@ -7,7 +7,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
  
-RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.3 2008/09/22 13:36:16 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.4 2008/11/30 20:06:35 shadow Exp $");
  
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -1283,11 +1283,10 @@ skip_file:
 	    	    /* We can discard the shadow dir now. */
 	    	    afs_DeleteShadowDir(tmp);
 
-		if (tmp->ddirty_flags & VDisconRemove)
-		    /* Drop the refcount on the deleted vnodes,
-		     * because we don't need them anymore.
-		     */
-		    afs_PutVCache(tmp);
+		/* Drop the refcount on this vnode because it's not in the
+		 * list anymore.
+		 */
+		 afs_PutVCache(tmp);
 
 	    	/* Only if sync was successfull,
 		 * clear flags and dirty references.

@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.57 2008/11/29 18:20:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.58 2008/11/30 20:06:39 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -184,11 +184,7 @@ afsremove(register struct vcache *adp, register struct dcache *tdc,
 #ifdef AFS_BOZONLOCK_ENV
 	afs_BozonUnlock(&tvc->pvnLock, tvc);
 #endif
-	/* Don't decrease refcount for this vcache if disconnected, we will
-	 * need it during replay.
-	 */
-	if (!AFS_IS_DISCON_RW)
-	    afs_PutVCache(tvc);
+	afs_PutVCache(tvc);
     }
     return (0);
 }
@@ -374,7 +370,7 @@ afs_remove(OSI_VC_DECL(adp), char *aname, struct AFS_UCRED *acred)
 		(tvc->ddirty_flags == VDisconShadowed)) {
 	    /* Add to list only if fresh. */
 	    ObtainWriteLock(&afs_DDirtyVCListLock, 725);
-	    AFS_DISCON_ADD_DIRTY(tvc);
+	    AFS_DISCON_ADD_DIRTY(tvc, 1);
 	    ReleaseWriteLock(&afs_DDirtyVCListLock);
 	}
 

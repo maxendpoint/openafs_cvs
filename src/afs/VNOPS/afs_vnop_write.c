@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.56 2008/11/29 18:20:07 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.57 2008/11/30 20:06:40 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -91,9 +91,10 @@ afs_StoreOnLastReference(register struct vcache *avc,
 
 	if (!avc->ddirty_flags ||
 		(avc->ddirty_flags == VDisconShadowed)) {
+
   	    /* Add to disconnected dirty list. */
-	    AFS_DISCON_ADD_DIRTY(avc);
-  	}
+	    AFS_DISCON_ADD_DIRTY(avc, 1);
+	}
 
 	/* Set disconnected write flag. */
 	avc->ddirty_flags |= VDisconWriteClose;
@@ -1090,7 +1091,7 @@ afs_fsync(OSI_VC_DECL(avc), struct AFS_UCRED *acred)
 	    	(avc->ddirty_flags == VDisconShadowed)) {
 
 		/* Add to disconnected dirty list. */
-		AFS_DISCON_ADD_DIRTY(avc);
+		AFS_DISCON_ADD_DIRTY(avc, 1);
 	    }
 
 	    UpgradeSToWLock(&avc->lock, 711);

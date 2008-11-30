@@ -22,7 +22,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.164 2008/11/29 18:20:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vnodeops.c,v 1.165 2008/11/30 20:06:38 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -667,7 +667,7 @@ afs_linux_flush(struct file *fp)
 		    (vcp->ddirty_flags == VDisconShadowed)) {
 
 		    ObtainWriteLock(&afs_DDirtyVCListLock, 710);
-		    AFS_DISCON_ADD_DIRTY(vcp);
+		    AFS_DISCON_ADD_DIRTY(vcp, 1);
 		    ReleaseWriteLock(&afs_DDirtyVCListLock);
 		}
 
