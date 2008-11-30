@@ -14,7 +14,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/whatfid.c,v 1.8 2007/10/31 04:06:04 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/whatfid.c,v 1.9 2008/11/30 20:24:14 shadow Exp $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -26,6 +26,7 @@ RCSID
 #include <netdb.h>
 #include <netinet/in.h>
 #include <afs/stds.h>
+#include <afs/com_err.h>
 #include <afs/vice.h>
 #include <afs/venus.h>
 #include "afs/prs_fs.h"
