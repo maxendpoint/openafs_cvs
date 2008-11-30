@@ -7,7 +7,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
  
-RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.4 2008/11/30 20:06:51 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.5 2008/11/30 20:11:17 shadow Exp $");
  
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -322,8 +322,10 @@ int chk_del_children_hook(void *hdata,
     /* Count unfinished dirty children. VDisconShadowed can still be set,
      * because we need it to remove the shadow dir.
      */
-    if (tvc && tvc->ddirty_flags) {
-	v->count++;
+    if (tvc) {
+	if (tvc->ddirty_flags)
+	    v->count++;
+
 	afs_PutVCache(tvc);
     }
 
