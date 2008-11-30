@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.28.4.3 2008/09/22 19:29:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.28.4.4 2008/11/30 20:06:53 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -230,8 +230,8 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 			(tvc->ddirty_flags == VDisconShadowed)) {
 	    	    /* Add in dirty list.*/
 	 	    ObtainWriteLock(&afs_DDirtyVCListLock, 751);
-	    	    AFS_DISCON_ADD_DIRTY(tvc);
-	    	    ReleaseWriteLock(&afs_DDirtyVCListLock);
+		    AFS_DISCON_ADD_DIRTY(tvc, 1);
+		    ReleaseWriteLock(&afs_DDirtyVCListLock);
 		}
 
 	    	ObtainWriteLock(&tvc->lock, 750);

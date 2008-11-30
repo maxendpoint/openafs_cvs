@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.23.4.7 2008/11/29 18:20:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.23.4.8 2008/11/30 20:06:53 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -465,8 +465,8 @@ afs_create(OSI_VC_DECL(adp), char *aname, struct vattr *attrs,
 		if (!tvc->ddirty_flags ||
 			(tvc->ddirty_flags == VDisconShadowed)) {
 	    	    /* Put it in the list only if it's fresh. */
-	    	    ObtainWriteLock(&afs_DDirtyVCListLock, 729);
-	    	    AFS_DISCON_ADD_DIRTY(tvc);
+		    ObtainWriteLock(&afs_DDirtyVCListLock, 729);
+	    	    AFS_DISCON_ADD_DIRTY(tvc, 0);
 	    	    ReleaseWriteLock(&afs_DDirtyVCListLock);
 		}
 

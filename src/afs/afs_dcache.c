@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.14 2008/11/29 18:20:24 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.64.4.15 2008/11/30 20:06:51 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -3832,7 +3832,7 @@ done:
     if (!ret_code) {
     	if (!avc->ddirty_flags) {
 	    ObtainWriteLock(&afs_DDirtyVCListLock, 763);
-	    AFS_DISCON_ADD_DIRTY(avc);
+	    AFS_DISCON_ADD_DIRTY(avc, 1);
 	    ReleaseWriteLock(&afs_DDirtyVCListLock);
 	}
 	avc->shVnode = shadow_fid.Fid.Vnode;
