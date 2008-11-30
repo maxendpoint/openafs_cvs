@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.79 2008/11/30 20:06:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.80 2008/11/30 20:17:13 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -3356,6 +3356,7 @@ afs_InitCacheFile(char *afile, ino_t ainode)
         tdc->f.fh_type = osi_get_fh(filevp, &tdc->f.fh, &max_len);
 #else
         tdc->f.inode = VTOI(filevp->d_inode)->i_number;
+	dput(filevp);
 #endif
 #else
 	tdc->f.inode = afs_vnodeToInumber(filevp);
@@ -3370,7 +3371,7 @@ afs_InitCacheFile(char *afile, ino_t ainode)
 #if defined(LINUX_USE_FH)
     tfile = osi_UFSOpen_fh(&tdc->f.fh, tdc->f.fh_type);
 #else
-    tfile = osi_UFSOpen(ainode);
+    tfile = osi_UFSOpen(tdc->f.inode);
 #endif
     code = afs_osi_Stat(tfile, &tstat);
     if (code)
