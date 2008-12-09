@@ -87,7 +87,7 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.51.2.20 2008/11/08 15:58:18 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/vol-salvage.c,v 1.51.2.21 2008/12/09 17:05:11 shadow Exp $");
 
 #ifndef AFS_NT40_ENV
 #include <sys/param.h>
@@ -3551,7 +3551,7 @@ void
 RemoveTheForce(char *path)
 {
     char target[1024];
-    struct afs_stat force; // so we can use afs_stat to find it
+    struct afs_stat force; /* so we can use afs_stat to find it */
     strcpy(target,path);
     strcat(target,"/FORCESALVAGE");
     if (!Testing && ForceSalvage) {
