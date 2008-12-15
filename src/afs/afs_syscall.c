@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_syscall.c,v 1.1.2.6 2008/04/21 18:59:34 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_syscall.c,v 1.1.2.7 2008/12/15 19:12:19 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -630,8 +630,8 @@ Afs_syscall()
 			       p->p_cred->pc_ucred);
 #else
 	code =
-	    afs_syscall_pioctl(uap->parm1, uap->parm2, uap->parm3,
-			       uap->parm4);
+	    afs_syscall_pioctl((char *)uap->parm1, (unsigned int)uap->parm2, (caddr_t)uap->parm3,
+			       (int) uap->parm4);
 #endif
 	AFS_GUNLOCK();
     } else if (uap->syscall == AFSCALL_ICREATE) {
