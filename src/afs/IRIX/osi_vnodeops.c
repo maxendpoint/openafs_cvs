@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.16 2004/11/05 04:21:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/IRIX/osi_vnodeops.c,v 1.16.8.1 2008/12/16 21:49:08 shadow Exp $");
 
 #ifdef	AFS_SGI62_ENV
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -679,7 +679,11 @@ afsrwvp(register struct vcache *avc, register struct uio *uio, enum uio_rw rw,
 #ifdef AFS_SGI61_ENV
 	if (((ioflag & IO_SYNC) || (ioflag & IO_DSYNC)) && (rw == UIO_WRITE)
 	    && !AFS_NFSXLATORREQ(cr)) {
-	    error = afs_fsync(avc, 0, cr);
+	    error = afs_fsync(avc, 0, cr
+#ifdef AFS_SGI65_ENV
+	                      , 0, 0
+#endif
+	                      );
 	}
 #else /* AFS_SGI61_ENV */
 	if ((ioflag & IO_SYNC) && (rw == UIO_WRITE) && !AFS_NFSXLATORREQ(cr)) {
