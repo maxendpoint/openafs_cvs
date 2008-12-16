@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.57 2008/11/30 20:06:40 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_write.c,v 1.58 2008/12/16 21:05:20 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -852,7 +852,7 @@ afs_closex(register struct file *afd)
 /* handle any closing cleanup stuff */
 int
 #if defined(AFS_SGI65_ENV)
-afs_close(OSI_VC_DECL(avc), afs_int32 aflags, lastclost_t lastclose,
+afs_close(OSI_VC_DECL(avc), afs_int32 aflags, lastclose_t lastclose,
 	  struct AFS_UCRED *acred)
 #elif defined(AFS_SGI64_ENV)
 afs_close(OSI_VC_DECL(avc), afs_int32 aflags, lastclose_t lastclose,
