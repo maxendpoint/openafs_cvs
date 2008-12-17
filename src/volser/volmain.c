@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.37 2008/11/29 18:55:30 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/volser/volmain.c,v 1.38 2008/12/17 18:14:46 shadow Exp $");
 
 #include <sys/types.h>
 #include <string.h>
@@ -310,35 +310,10 @@ main(int argc, char **argv)
 		lwps = MAXLWP;
 	    }
 	} else if (strcmp(argv[code], "-auditlog") == 0) {
-	    int tempfd, flags;
-	    FILE *auditout;
-	    char oldName[MAXPATHLEN];
 	    char *fileName = argv[++code];
 
-#ifndef AFS_NT40_ENV
-	    struct stat statbuf;
-	    
-	    if ((lstat(fileName, &statbuf) == 0) 
-		&& (S_ISFIFO(statbuf.st_mode))) {
-		flags = O_WRONLY | O_NONBLOCK;
-	    } else 
-#endif
-	    {
-		strcpy(oldName, fileName);
-		strcat(oldName, ".old");
-		renamefile(fileName, oldName);
-		flags = O_WRONLY | O_TRUNC | O_CREAT;
-	    }
-	    tempfd = open(fileName, flags, 0666);
-	    if (tempfd > -1) {
-		auditout = fdopen(tempfd, "a");
-		if (auditout) {
-		    osi_audit_file(auditout);
-		    osi_audit(VS_StartEvent, 0, AUD_END);
-		} else
-		    printf("Warning: auditlog %s not writable, ignored.\n", fileName);
-	    } else
-		printf("Warning: auditlog %s not writable, ignored.\n", fileName);
+            osi_audit_file(fileName);
+            osi_audit(VS_StartEvent, 0, AUD_END);
 	} else if (strcmp(argv[code], "-nojumbo") == 0) {
 	    rxJumbograms = 0;
 	} else if (strcmp(argv[code], "-jumbo") == 0) {
