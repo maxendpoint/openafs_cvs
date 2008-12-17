@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.25 2007/01/05 23:05:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.26 2008/12/17 18:11:43 shadow Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
@@ -233,24 +233,21 @@ printbuf(FILE *out, int rec, char *audEvent, char *afsName, afs_int32 hostId,
 	    break;
 	case AUD_FIDS:		/* array of Fids */
 	    vaFids = va_arg(vaList, struct AFSCBFids *);
-	    vaFid = NULL;
 
 	    if (vaFids) {
                 int i;
-                if (vaFid)
+                
+                vaFid = vaFids->AFSCBFids_val;
+                
+                if (vaFid) {
                     fprintf(out, "FIDS %u FID %u:%u:%u ", vaFids->AFSCBFids_len, vaFid->Volume,
                              vaFid->Vnode, vaFid->Unique);
-                else
+                    for ( i = 1; i < vaFids->AFSCBFids_len; i++, vaFid++ ) 
+                        fprintf(out, "FID %u:%u:%u ", vaFid->Volume,
+                                vaFid->Vnode, vaFid->Unique);
+                } else
                     fprintf(out, "FIDS 0 FID 0:0:0 ");
 
-                for ( i = 1; i < vaFids->AFSCBFids_len; i++ ) {
-                    vaFid = vaFids->AFSCBFids_val;
-                    if (vaFid)
-                        fprintf(out, "FID %u:%u:%u ", vaFid->Volume,
-                                 vaFid->Vnode, vaFid->Unique);
-                    else
-                        fprintf(out, "FID 0:0:0 ");
-                }
             }
 	    break;
 	default:
