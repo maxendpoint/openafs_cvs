@@ -37,7 +37,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.23.4.6 2008/06/30 23:37:34 rra Exp $");
+    ("$Header: /cvs/openafs/src/rxgen/rpc_main.c,v 1.23.4.7 2008/12/21 06:05:33 jaltman Exp $");
 
 #include <limits.h>
 #include <stdio.h>
@@ -94,11 +94,15 @@ char xflag = 0;			/* if set, add stats code to stubs */
 char yflag = 0;			/* if set, only emit function name arrays to xdr file */
 int debug = 0;
 static char *cmdname;
+#ifdef AFS_NT40_ENV
+static char *CPP = NULL;
+#else /* AFS_NT40_ENV */
 #ifdef PATH_CPP
 static char CPP[] = PATH_CPP;
 #else
 static char CPP[] = "/lib/cpp";
 #endif
+#endif /* AFS_NT40_ENV */
 static char CPPFLAGS[] = "-C";
 
 #ifdef	AFS_ALPHA_ENV
@@ -144,16 +148,14 @@ int
 main(int argc, char *argv[])
 {
     struct commandline cmd;
-#ifdef AFS_NT40_ENV
-    char *ep;
 
-    /* initialize CPP with the correct pre-processor on NT */
-    ep = getenv("RXGEN_CPPCMD");
-    if (ep)
-	strcpy(CPP, ep);
-    else
-	strcpy(CPP, "cl /EP /C /nologo");
-#endif
+#ifdef AFS_NT40_ENV
+    /* initialize CPP with the correct pre-processor for Windows */
+    CPP = getenv("RXGEN_CPPCMD");
+    if (!CPP)
+	CPP = "cl /EP /C /nologo";
+#endif /* AFS_NT40_ENV */
+    
 #ifdef	AFS_AIX32_ENV
     /*
      * The following signal action for AIX is necessary so that in case of a 
