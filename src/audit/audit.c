@@ -11,14 +11,18 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.20.2.7 2008/12/17 18:14:59 shadow Exp $");
+    ("$Header: /cvs/openafs/src/audit/audit.c,v 1.20.2.8 2008/12/21 05:47:25 jaltman Exp $");
 
 #include <fcntl.h>
 #include <stdarg.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifndef AFS_NT40_ENV
 #include <unistd.h>
+#else
+#include <io.h>
+#endif
 #ifdef AFS_AIX32_ENV
 #include <sys/audit.h>
 #else
