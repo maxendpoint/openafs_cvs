@@ -112,7 +112,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.37 2008/12/17 18:14:45 shadow Exp $");
+    ("$Header: /cvs/openafs/src/ptserver/ptserver.c,v 1.38 2008/12/22 19:23:00 shadow Exp $");
 
 #include <afs/stds.h>
 #ifdef	AFS_AIX32_ENV
@@ -512,7 +512,7 @@ main(int argc, char **argv)
     }
 
     code =
-	ubik_ServerInitByInfo(myHost, htons(AFSCONF_PROTPORT), &info, &clones,
+	ubik_ServerInitByInfo(myHost, htons(AFSCONF_PROTPORT), &info, clones,
 			      pr_dbaseName, &dbase);
     if (code) {
 	afs_com_err(whoami, code, "Ubik init failed");

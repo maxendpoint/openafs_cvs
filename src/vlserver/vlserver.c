@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.36 2008/12/17 18:14:46 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vlserver/vlserver.c,v 1.37 2008/12/22 19:23:00 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -341,7 +341,7 @@ main(argc, argv)
     ubik_CheckRXSecurityProc = afsconf_CheckAuth;
     ubik_CheckRXSecurityRock = (char *)tdir;
     code =
-	ubik_ServerInitByInfo(myHost, htons(AFSCONF_VLDBPORT), &info, &clones,
+	ubik_ServerInitByInfo(myHost, htons(AFSCONF_VLDBPORT), &info, clones,
 			      vl_dbaseName, &VL_dbase);
     if (code) {
 	printf("vlserver: Ubik init failed with code %d\n", code);
