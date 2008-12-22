@@ -1,4 +1,4 @@
-/*
+(/*
  * Copyright 2000, International Business Machines Corporation and others.
  * All Rights Reserved.
  *
@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.132 2008/11/29 18:20:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.133 2008/12/22 15:03:00 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1126,12 +1126,12 @@ afs_HandlePioctl(struct vnode *avp, afs_int32 acom,
 }
 
 /*!
- * VIOCETFID (22) - Get file ID quickly
+ * VIOCGETFID (22) - Get file ID quickly
  *
  * \ingroup pioctl
  *
  * \param[in] ain	not in use
- * \param[out] aout	not in use
+ * \param[out] aout	fid of requested file
  *
  * \retval EINVAL	Error if some of the initial arguments aren't set
  *
