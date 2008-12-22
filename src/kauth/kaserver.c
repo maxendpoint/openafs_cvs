@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.19.2.8 2008/12/17 18:15:02 shadow Exp $");
+    ("$Header: /cvs/openafs/src/kauth/kaserver.c,v 1.19.2.9 2008/12/22 19:23:19 shadow Exp $");
 
 #include <afs/stds.h>
 #include <sys/types.h>
@@ -389,7 +389,7 @@ main(argc, argv)
     else
 	code =
 	    ubik_ServerInitByInfo(myHost, htons(AFSCONF_KAUTHPORT), &cellinfo,
-				  &clones, dbpath, &KA_dbase);
+				  clones, dbpath, &KA_dbase);
 
     if (code) {
 	afs_com_err(whoami, code, "Ubik init failed");

@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/budb/server.c,v 1.16.2.12 2008/12/17 18:15:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/budb/server.c,v 1.16.2.13 2008/12/22 19:23:17 shadow Exp $");
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -538,7 +538,7 @@ main(argc, argv)
     code = ubik_ServerInitByInfo (globalConfPtr->myHost,
 				  htons(AFSCONF_BUDBPORT), 
 				  &cellinfo,
-				  &clones,              
+				  clones,              
 				  dbNamePtr,           /* name prefix */
 				  &BU_dbase);
 
