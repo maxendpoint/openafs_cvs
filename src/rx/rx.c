@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.40 2008/10/04 05:05:20 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.41 2008/12/22 17:14:47 shadow Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -5499,7 +5499,7 @@ rxi_Send(register struct rx_call *call, register struct rx_packet *p,
      * idle connections) */
     conn->lastSendTime = call->lastSendTime = clock_Sec();
     /* Don't count keepalives here, so idleness can be tracked. */
-    if (p->header.type != RX_PACKET_TYPE_ACK)
+    if ((p->header.type != RX_PACKET_TYPE_ACK) || (((struct rx_ackPacket *)rx_DataOf(p))->reason != RX_ACK_PING))
 	call->lastSendData = call->lastSendTime;
 }
 
