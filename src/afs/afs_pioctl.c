@@ -1,4 +1,4 @@
-(/*
+/*
  * Copyright 2000, International Business Machines Corporation and others.
  * All Rights Reserved.
  *
@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.133 2008/12/22 15:03:00 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.134 2008/12/22 17:30:58 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
