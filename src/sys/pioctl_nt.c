@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.54 2008/11/26 07:15:01 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/sys/pioctl_nt.c,v 1.55 2008/12/26 21:17:49 jaltman Exp $");
 
 #include <afs/stds.h>
 #include <windows.h>
@@ -397,6 +397,45 @@ GetLSAPrincipalName(char * szUser, DWORD *dwSize)
     return success;
 }
 
+//
+// Recursively evaluate drivestr to find the final
+// dos drive letter to which the source is mapped.
+//
+static BOOL
+DriveSubstitution(char *drivestr, char *subststr)
+{
+    char device[MAX_PATH];
+
+    if ( QueryDosDevice(drivestr, device, MAX_PATH) )
+    {
+        if ( device[0] == '\\' &&
+             device[1] == '?' &&
+             device[2] == '?' &&
+             device[3] == '\\' &&
+             isalpha(device[4]) &&
+             device[5] == ':')
+        {
+            device[0] = device[4];
+            device[1] = ':';
+            device[2] = '\0';
+            if ( DriveSubstitution(device, subststr) )
+            {
+                return TRUE;
+            } else {
+                subststr[0] = device[0];
+                subststr[1] = ':';
+                subststr[2] = '\0';
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+// 
+// drivestr - is "<drive-letter>:"
+//
 static BOOL
 DriveIsMappedToAFS(char *drivestr, char *NetbiosName)
 {
@@ -407,6 +446,17 @@ DriveIsMappedToAFS(char *drivestr, char *NetbiosName)
     LPNETRESOURCE lpnrLocal;    // pointer to enumerated structures
     DWORD i;
     BOOL  bIsAFS = FALSE;
+    char  subststr[3];
+
+    //
+    // Handle drive letter substitution created with "SUBST <drive> <path>".
+    // If a substitution has occurred, use the target drive letter instead
+    // of the source.
+    //
+    if ( DriveSubstitution(drivestr, subststr) )
+    {
+        drivestr = subststr;
+    }
 
     //
     // Call the WNetOpenEnum function to begin the enumeration.
