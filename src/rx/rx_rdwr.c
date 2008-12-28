@@ -15,7 +15,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.29.2.10 2008/10/26 21:17:41 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_rdwr.c,v 1.29.2.11 2008/12/28 21:05:00 jaltman Exp $");
 
 #ifdef KERNEL
 #ifndef UKERNEL
@@ -698,6 +698,13 @@ rxi_WriteProc(register struct rx_call *call, register char *buf,
     do {
 	if (call->nFree == 0) {
 	    if (!call->error && cp) {
+                /* Clear the current packet now so that if
+                 * we are forced to wait and drop the lock 
+                 * the packet we are planning on using 
+                 * cannot be freed.
+                 */
+                cp->flags &= ~RX_PKTFLAG_CP;
+		call->currentPacket = (struct rx_packet *)0;
 #ifdef AFS_GLOBAL_RXLOCK_KERNEL
 		/* Wait until TQ_BUSY is reset before adding any
 		 * packets to the transmit queue
@@ -718,10 +725,9 @@ rxi_WriteProc(register struct rx_call *call, register char *buf,
 		 * conn->securityMaxTrailerSize */
 		hadd32(call->bytesSent, cp->length);
 		rxi_PrepareSendPacket(call, cp, 0);
-		cp->flags &= ~RX_PKTFLAG_CP;
 		cp->flags |= RX_PKTFLAG_TQ;
 		queue_Append(&call->tq, cp);
-		cp = call->currentPacket = (struct rx_packet *)0;
+		cp = (struct rx_packet *)0;
 		if (!
 		    (call->
 		     flags & (RX_CALL_FAST_RECOVER |
