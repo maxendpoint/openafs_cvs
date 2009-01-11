@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.69 2008/12/15 19:12:08 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_kcommon.c,v 1.70 2009/01/11 05:27:01 jaltman Exp $");
 
 #include "rx/rx_kcommon.h"
 
@@ -289,6 +289,7 @@ rx_ServerProc(void *unused)
 {
     int threadID;
 
+/* jaltman - rxi_dataQuota is protected by a mutex everywhere else */
     rxi_MorePackets(rx_maxReceiveWindow + 2);	/* alloc more packets */
     rxi_dataQuota += rx_initSendWindow;	/* Reserve some pkts for hard times */
     /* threadID is used for making decisions in GetCall.  Get it by bumping
