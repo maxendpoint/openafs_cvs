@@ -48,7 +48,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.22.6.2 2008/08/26 14:01:33 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.22.6.3 2009/01/12 14:33:26 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1044,8 +1044,7 @@ afs_vop_ioctl(ap)
     if (((ap->a_command >> 8) & 0xff) == 'V') {
 	/* This is a VICEIOCTL call */
 	AFS_GLOCK();
-	error = HandleIoctl(tvc, NULL /*Not used */ ,
-			    ap->a_command, ap->a_data);
+	error = HandleIoctl(tvc, ap->a_command, ap->a_data);
 	AFS_GUNLOCK();
 	return (error);
     } else {
