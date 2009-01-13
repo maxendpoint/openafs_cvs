@@ -24,7 +24,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.41.2.6 2009/01/09 14:57:36 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_attrs.c,v 1.41.2.7 2009/01/13 19:37:15 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -546,7 +546,7 @@ afs_setattr(OSI_VC_DECL(avc), register struct vattr *attrs,
 	avc->states |= CDirty;
 
 	code = afs_TruncateAllSegments(avc, tsize, &treq, acred);
-#ifdef AFS_LINUX_26_ENV
+#ifdef AFS_LINUX26_ENV
 	/* We must update the Linux kernel's idea of file size as soon as
 	 * possible, to avoid racing with delayed writepages delivered by
 	 * pdflush */
