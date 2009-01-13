@@ -11,9 +11,18 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11.14.3 2008/09/24 21:36:53 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_trace.c,v 1.11.14.4 2009/01/13 16:26:16 jaltman Exp $");
 
-#ifdef RXDEBUG
+#ifndef RXDEBUG
+char rxi_tracename[80] = "\0Tracing not compiled in";
+#ifdef DUMPTRACE
+int
+main(int argc, char **argv)
+{
+    return 0;
+}
+#endif
+#else
 #include <string.h>
 #ifdef AFS_NT40_ENV
 #include <fcntl.h>
@@ -183,5 +192,4 @@ main(int argc, char **argv)
 }
 
 #endif /* DUMPTRACE */
-
-#endif
+#endif /* RXDEBUG */
