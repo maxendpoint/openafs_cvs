@@ -17,7 +17,7 @@
 #endif
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.46 2009/01/13 16:26:16 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx.c,v 1.97.2.47 2009/01/13 16:33:30 jaltman Exp $");
 
 #ifdef KERNEL
 #include "afs/sysincludes.h"
@@ -6703,15 +6703,19 @@ MakeDebugCall(osi_socket socket, afs_uint32 remoteAddr, afs_uint16 remotePort,
     memcpy(outputData, tp, code);
     return code;
 }
+#endif /* RXDEBUG */
 
 afs_int32
 rx_GetServerDebug(osi_socket socket, afs_uint32 remoteAddr,
 		  afs_uint16 remotePort, struct rx_debugStats * stat,
 		  afs_uint32 * supportedValues)
 {
+#ifndef RXDEBUG
+     afs_int32 rc = -1;
+#else
+    afs_int32 rc = 0;
     struct rx_debugIn in;
     afs_int32 *lp = (afs_int32 *) stat;
-    afs_int32 rc = 0;
 
     *supportedValues = 0;
     in.type = htonl(RX_DEBUGI_GETSTATS);
@@ -6771,10 +6775,13 @@ rx_GetServerStats(osi_socket socket, afs_uint32 remoteAddr,
 		  afs_uint16 remotePort, struct rx_statistics * stat,
 		  afs_uint32 * supportedValues)
 {
+#ifndef RXDEBUG
+     afs_int32 rc = -1;
+#else
+    afs_int32 rc = 0;
     struct rx_debugIn in;
     afs_int32 *lp = (afs_int32 *) stat;
     int i;
-    afs_int32 rc = 0;
 
     /*
      * supportedValues is currently unused, but added to allow future
