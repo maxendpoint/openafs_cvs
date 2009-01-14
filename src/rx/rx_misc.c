@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.13.8.3 2008/01/31 07:31:59 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.13.8.4 2009/01/14 06:34:19 jaltman Exp $");
 
 #ifdef	KERNEL
 #include <afs/sysincludes.h>
@@ -106,9 +106,9 @@ ntoh_syserr_conv(int code)
  */
 
 #include <assert.h>
-pthread_mutex_t osi_malloc_mutex;
-#define LOCK_MALLOC_STATS assert(pthread_mutex_lock(&osi_malloc_mutex)==0)
-#define UNLOCK_MALLOC_STATS assert(pthread_mutex_unlock(&osi_malloc_mutex)==0)
+afs_kmutex_t osi_malloc_mutex;
+#define LOCK_MALLOC_STATS MUTEX_ENTER(&osi_malloc_mutex);
+#define UNLOCK_MALLOC_STATS MUTEX_EXIT(&osi_malloc_mutex);
 #else
 #define LOCK_MALLOC_STATS
 #define UNLOCK_MALLOC_STATS
