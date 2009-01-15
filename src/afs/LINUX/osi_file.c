@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.28.2.13 2009/01/12 14:19:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_file.c,v 1.28.2.14 2009/01/15 13:27:29 shadow Exp $");
 
 #ifdef AFS_LINUX24_ENV
 #include "h/module.h" /* early to avoid printf->printk mapping */
@@ -87,7 +87,11 @@ osi_UFSOpen(afs_int32 ainode)
 #endif
     tip->i_flags |= MS_NOATIME;	/* Disable updating access times. */
 
+#if defined(STRUCT_TASK_HAS_CRED)
+    filp = dentry_open(dp, mntget(afs_cacheMnt), O_RDWR, current_cred());
+#else
     filp = dentry_open(dp, mntget(afs_cacheMnt), O_RDWR);
+#endif
     if (IS_ERR(filp))
 #if defined(LINUX_USE_FH)
 	osi_Panic("Can't open file\n");
