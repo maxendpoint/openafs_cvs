@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.128 2008/11/30 20:06:35 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.129 2009/01/19 17:29:08 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2020,16 +2020,9 @@ afs_GetVCache(register struct VenusFid *afid, struct vrequest *areq,
 	} else {
 
 	    if (AFS_IS_DISCONNECTED) {
-		if (AFS_IS_DISCON_RW) {
-		    if (vType(tvc) == VDIR)
-		    	OutStatus.FileType = Directory;
-
-		    code = tvc?0:ENOENT;
-		} else {
-		    /* Nothing to do otherwise...*/
-		    code = ENETDOWN;
-		    printf("Network is down in afs_GetCache");
-		}
+		/* Nothing to do otherwise...*/
+		code = ENETDOWN;
+		printf("Network is down in afs_GetCache");
 	    } else
 	        code = afs_FetchStatus(tvc, afid, areq, &OutStatus);
 
@@ -3288,10 +3281,8 @@ void afs_DisconGiveUpCallbacks() {
     for (i = 0; i < VCSIZE; i++) {
         for (tvc = afs_vhashT[i]; tvc; tvc = tvc->hnext) {
             if ((tvc->states & CRO) == 0 && tvc->callback) {
-                /* XXX - should we check if the callback has expired here? */
                 afs_QueueVCB(tvc);
                 tvc->callback = NULL;
-                tvc->states &- ~(CStatd | CUnique);
                 nq++;
             }
         }
