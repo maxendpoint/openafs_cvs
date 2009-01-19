@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.61 2008/09/25 08:57:39 shadow Exp $");
+    ("$Header: /cvs/openafs/src/volser/volprocs.c,v 1.62 2009/01/19 03:19:01 shadow Exp $");
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -1068,6 +1068,7 @@ VolSetFlags(struct rx_call *acid, afs_int32 atid, afs_int32 aflags)
     }
     VUpdateVolume(&error, vp);
     tt->vflags = aflags;
+    tt->rxCallPtr = (struct rx_call *)0;
     if (TRELE(tt) && !error)
 	return VOLSERTRELE_ERROR;
 
