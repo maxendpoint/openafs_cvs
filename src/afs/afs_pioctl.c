@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.135 2009/01/19 18:09:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.136 2009/01/19 19:39:12 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -1806,17 +1806,7 @@ DECL_PIOCTL(PFlush)
     afs_BozonLock(&avc->pvnLock, avc);	/* Since afs_TryToSmush will do a pvn_vptrunc */
 #endif
     ObtainWriteLock(&avc->lock, 225);
-    ObtainWriteLock(&afs_xcbhash, 456);
-    afs_DequeueCallback(avc);
-    avc->states &= ~(CStatd | CDirty);	/* next reference will re-stat cache entry */
-    ReleaseWriteLock(&afs_xcbhash);
-    /* now find the disk cache entries */
-    afs_TryToSmush(avc, *acred, 1);
-    osi_dnlc_purgedp(avc);
-    if (avc->linkData && !(avc->states & CCore)) {
-	afs_osi_Free(avc->linkData, strlen(avc->linkData) + 1);
-	avc->linkData = NULL;
-    }
+    afs_ResetVCache(avc, *acred);
     ReleaseWriteLock(&avc->lock);
 #ifdef AFS_BOZONLOCK_ENV
     afs_BozonUnlock(&avc->pvnLock, avc);
