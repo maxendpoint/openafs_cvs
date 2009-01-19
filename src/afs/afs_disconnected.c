@@ -7,7 +7,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
  
-RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.6 2009/01/19 18:48:03 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.7 2009/01/19 19:42:42 shadow Exp $");
  
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -605,7 +605,7 @@ int afs_ProcessOpCreate(struct vcache *avc,
 
     tname = afs_osi_Alloc(AFSNAMEMAX);
     if (!tname) {
-	printf("afs_ProcessOpCreate: Couldn't find file name\n");
+	printf("afs_ProcessOpCreate: Couldn't alloc space for file name\n");
 	return ENOMEM;
     }
 
