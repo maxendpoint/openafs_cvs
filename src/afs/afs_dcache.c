@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.80 2008/11/30 20:17:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.81 2009/01/19 18:47:52 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -3740,6 +3740,9 @@ int afs_MakeShadowDir(struct vcache *avc)
 		afs_MaybeWakeupTruncateDaemon();
 
 		ReleaseWriteLock(&afs_xdcache);
+
+		/* Make sure and flush dir buffers back into the disk cache */
+		DFlushDCache(tdc);
 
 		/* Alloc a 4k block. */
 		data = (char *) afs_osi_Alloc(4096);
