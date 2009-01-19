@@ -7,7 +7,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
  
-RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.5 2008/11/30 20:11:17 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.6 2009/01/19 18:48:03 shadow Exp $");
  
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -271,10 +271,12 @@ int afs_GetVnodeName(struct vcache *avc,
 
     if (tdc) {
 	tnf.fid = &avc->fid;
-   	tnf.name_len = 0;
+   	tnf.name_len = -1;
     	tnf.name = aname;
     	afs_dir_EnumerateDir(tdc, &get_vnode_name_hook, &tnf);
 	afs_PutDCache(tdc);
+	if (tnf.name_len == -1)
+	    code = ENOENT;
     } else {
         code = ENOENT;
     }

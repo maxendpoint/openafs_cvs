@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.22.4.3 2008/11/08 16:34:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.22.4.4 2009/01/19 18:48:03 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -476,13 +476,52 @@ DZap(struct dcache *adc)
     MReleaseReadLock(&afs_bufferLock);
 }
 
+static void
+DFlushBuffer(struct buffer *ab) {
+    struct osi_file *tfile;
+    
+#if defined(LINUX_USE_FH)
+    tfile = afs_CFileOpen(&ab->fh, ab->fh_type);
+#else
+    tfile = afs_CFileOpen(ab->inode);
+#endif
+    afs_CFileWrite(tfile, ab->page * AFS_BUFFER_PAGESIZE,
+		   ab->data, AFS_BUFFER_PAGESIZE);
+    ab->dirty = 0;	/* Clear the dirty flag */
+    afs_CFileClose(tfile);
+}
+
+void
+DFlushDCache(struct dcache *adc) 
+{
+    int i;
+    struct buffer *tb;
+
+    ObtainReadLock(&afs_bufferLock);
+
+    for (i = 0; i <= PHPAGEMASK; i++)
+        for (tb = phTable[pHash(adc->index, i)]; tb; tb = tb->hashNext)
+	    if (tb->fid == adc->index) {
+		ObtainWriteLock(&tb->lock, 702);
+		tb->lockers++;
+		ReleaseReadLock(&afs_bufferLock);
+		if (tb->dirty) {
+		    DFlushBuffer(tb);
+		}
+		tb->lockers--;
+		ReleaseWriteLock(&tb->lock);
+		ObtainReadLock(&afs_bufferLock);
+	    }
+
+    ReleaseReadLock(&afs_bufferLock);
+}
+
 void
 DFlush(void)
 {
     /* Flush all the modified buffers. */
     register int i;
     register struct buffer *tb;
-    struct osi_file *tfile;
 
     AFS_STATCNT(DFlush);
     tb = Buffers;
@@ -504,15 +543,7 @@ DFlush(void)
 		 * we cannot lock afs_xdcache). In addition, we cannot obtain
 		 * a dcache lock while holding the tb->lock of the same file
 		 * since that can deadlock with DRead/DNew */
-#if defined(LINUX_USE_FH)
-		tfile = afs_CFileOpen(&tb->fh, tb->fh_type);
-#else
-		tfile = afs_CFileOpen(tb->inode);
-#endif
-		afs_CFileWrite(tfile, tb->page * AFS_BUFFER_PAGESIZE,
-			       tb->data, AFS_BUFFER_PAGESIZE);
-		tb->dirty = 0;	/* Clear the dirty flag */
-		afs_CFileClose(tfile);
+		DFlushBuffer(tb);
 	    }
 	    tb->lockers--;
 	    MReleaseWriteLock(&tb->lock);
