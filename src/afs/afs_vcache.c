@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.16 2009/01/19 17:29:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.114.2.17 2009/01/19 19:39:23 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -2774,6 +2774,30 @@ afs_PutVCache(register struct vcache *avc)
 #endif
 }				/*afs_PutVCache */
 
+
+/*!
+ * Reset a vcache entry, so local contents are ignored, and the
+ * server will be reconsulted next time the vcache is used
+ * 
+ * \param avc Pointer to the cache entry to reset
+ * \param acred 
+ *
+ * \note avc must be write locked on entry
+ */
+void 
+afs_ResetVCache(struct vcache *avc, struct AFS_UCRED *acred) {
+    ObtainWriteLock(&afs_xcbhash, 456);
+    afs_DequeueCallback(avc);
+    avc->states &= ~(CStatd | CDirty);	/* next reference will re-stat */
+    ReleaseWriteLock(&afs_xcbhash);
+    /* now find the disk cache entries */
+    afs_TryToSmush(avc, acred, 1);
+    osi_dnlc_purgedp(avc);
+    if (avc->linkData && !(avc->states & CCore)) {
+	afs_osi_Free(avc->linkData, strlen(avc->linkData) + 1);
+	avc->linkData = NULL;
+    }
+}
 
 /*!
  * Sleepa when searching for a vcache. Releases all the pending locks,
