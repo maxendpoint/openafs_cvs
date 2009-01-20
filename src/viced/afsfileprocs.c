@@ -29,7 +29,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.30 2009/01/19 18:09:20 shadow Exp $");
+    ("$Header: /cvs/openafs/src/viced/afsfileprocs.c,v 1.113.2.31 2009/01/20 03:32:38 jaltman Exp $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1938,21 +1938,11 @@ SRXAFS_DFSSymlink(struct rx_call *acall, struct AFSFid *DirFid, char *Name,
 }
 
 afs_int32
-SRXAFS_FsCmd(struct rx_call * acall, struct AFSFid * Fid,
-		    struct FsCmdInputs * Inputs,
-		    struct FsCmdOutputs * Outputs)
+SRXAFS_ResidencyCmd(struct rx_call * acall, struct AFSFid * Fid,
+		    struct ResidencyCmdInputs * Inputs,
+		    struct ResidencyCmdOutputs * Outputs)
 {
-    afs_int32 code = 0;
-    struct AFSCallBack callback;
-    struct AFSVolSync sync;
-
-    switch (Inputs->command) {
-    default:
-        code = EINVAL;
-    }
-    ViceLog(1,("FsCmd: cmd = %d, code=%d\n", 
-			Inputs->command, Outputs->code));
-    return code;
+    return EINVAL;
 }
 
 #ifdef AFS_NT40_ENV
