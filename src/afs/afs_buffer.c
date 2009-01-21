@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.28 2009/01/19 18:47:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_buffer.c,v 1.29 2009/01/21 21:14:48 shadow Exp $");
 
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -501,7 +501,7 @@ DFlushDCache(struct dcache *adc)
     for (i = 0; i <= PHPAGEMASK; i++)
         for (tb = phTable[pHash(adc->index, i)]; tb; tb = tb->hashNext)
 	    if (tb->fid == adc->index) {
-		ObtainWriteLock(&tb->lock, 702);
+		ObtainWriteLock(&tb->lock, 701);
 		tb->lockers++;
 		ReleaseReadLock(&afs_bufferLock);
 		if (tb->dirty) {
