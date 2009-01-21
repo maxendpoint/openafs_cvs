@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37.4.9 2008/11/08 16:34:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_init.c,v 1.37.4.10 2009/01/21 20:07:47 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -793,7 +793,7 @@ shutdown_AFS(void)
 	 */
 	{
 	    struct server *ts, *nts;
-	    struct conn *tc, *ntc;
+	    struct afs_conn *tc, *ntc;
 	    register struct afs_cbr *tcbrp, *tbrp;
 
 	    for (i = 0; i < NSERVERS; i++) {
@@ -810,7 +810,7 @@ shutdown_AFS(void)
 				AFS_GUNLOCK();
 				rx_DestroyConnection(tc->id);
 				AFS_GLOCK();
-				afs_osi_Free(tc, sizeof(struct conn));
+				afs_osi_Free(tc, sizeof(struct afs_conn));
 				tc = ntc;
 			    }
 			}

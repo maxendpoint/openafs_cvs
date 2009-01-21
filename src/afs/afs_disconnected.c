@@ -7,7 +7,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
  
-RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.7 2009/01/19 19:42:42 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.2.2.8 2009/01/21 20:07:47 shadow Exp $");
  
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -479,7 +479,7 @@ int afs_ProcessOpRename(struct vcache *avc, struct vrequest *areq)
     char *old_name, *new_name;
     struct AFSFetchStatus OutOldDirStatus, OutNewDirStatus;
     struct AFSVolSync tsync;
-    struct conn *tc;
+    struct afs_conn *tc;
     afs_uint32 code = 0;
     XSTATS_DECLS;
 
@@ -590,7 +590,7 @@ int afs_ProcessOpCreate(struct vcache *avc,
     struct AFSVolSync tsync;
     struct vcache *tdp = NULL, *tvc = NULL;
     struct dcache *tdc = NULL;
-    struct conn *tc;
+    struct afs_conn *tc;
     afs_int32 now, hash, new_hash, index;
     int code = 0;
     XSTATS_DECLS;
@@ -859,7 +859,7 @@ int afs_ProcessOpRemove(struct vcache *avc, struct vrequest *areq)
     struct AFSFetchStatus OutDirStatus;
     struct VenusFid pdir_fid;
     struct AFSVolSync tsync;
-    struct conn *tc;
+    struct afs_conn *tc;
     struct vcache *tdp = NULL;
     int code = 0;
     XSTATS_DECLS;
@@ -977,7 +977,7 @@ end:
  */
 int afs_SendChanges(struct vcache *avc, struct vrequest *areq)
 {
-    struct conn *tc;
+    struct afs_conn *tc;
     struct AFSStoreStatus sstat;
     struct AFSFetchStatus fstat;
     struct AFSVolSync tsync;
@@ -1073,7 +1073,7 @@ int afs_SendChanges(struct vcache *avc, struct vrequest *areq)
  */
 int afs_ResyncDisconFiles(struct vrequest *areq, struct AFS_UCRED *acred)
 {
-    struct conn *tc;
+    struct afs_conn *tc;
     struct vcache *tvc, *tmp;
     struct AFSFetchStatus fstat;
     struct AFSCallBack callback;

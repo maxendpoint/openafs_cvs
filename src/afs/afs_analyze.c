@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.14.12 2008/10/27 23:53:44 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_analyze.c,v 1.22.14.13 2009/01/21 20:07:47 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -93,7 +93,7 @@ static int
 VLDB_Same(struct VenusFid *afid, struct vrequest *areq)
 {
     struct vrequest treq;
-    struct conn *tconn;
+    struct afs_conn *tconn;
     int i, type = 0;
     union {
 	struct vldbentry tve;
@@ -307,7 +307,7 @@ afs_BlackListOnce(struct vrequest *areq, struct VenusFid *afid,
  *	if this is a temporary or permanent error.
  *------------------------------------------------------------------------*/
 int
-afs_Analyze(register struct conn *aconn, afs_int32 acode,
+afs_Analyze(register struct afs_conn *aconn, afs_int32 acode,
 	    struct VenusFid *afid, register struct vrequest *areq, int op,
 	    afs_int32 locktype, struct cell *cellp)
 {

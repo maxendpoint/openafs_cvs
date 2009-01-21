@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.72.2.10 2008/10/27 23:41:43 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_lookup.c,v 1.72.2.11 2009/01/21 20:07:49 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -648,7 +648,7 @@ afs_DoBulkStat(struct vcache *adp, long dirCookie, struct vrequest *areqp)
     AFSCBFids fidParm;		/* file ID parm for bulk stat */
     AFSBulkStats statParm;	/* stat info parm for bulk stat */
     int fidIndex = 0;		/* which file were stating */
-    struct conn *tcp = 0;	/* conn for call */
+    struct afs_conn *tcp = 0;	/* conn for call */
     AFSCBs cbParm;		/* callback parm for bulk stat */
     struct server *hostp = 0;	/* host we got callback from */
     long startTime;		/* time we started the call,
