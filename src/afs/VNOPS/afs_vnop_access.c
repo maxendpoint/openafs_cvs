@@ -23,7 +23,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.11.8.8 2008/11/29 18:20:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_access.c,v 1.11.8.9 2009/01/21 21:15:09 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -90,6 +90,11 @@ afs_GetAccessBits(register struct vcache *avc, register afs_int32 arights,
 	}
     }
 
+    if (AFS_IS_DISCONNECTED && !AFS_IN_SYNC) {
+	/* If we get this far, we have to ask the network. But we can't, so
+	 * they're out of luck... */
+	return 0;
+    } else
     {				/* Ok, user has valid tokens, go ask the server. */
 	struct AFSFetchStatus OutStatus;
 	afs_int32 code;

@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.22.8.6 2009/01/21 20:07:47 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.22.8.7 2009/01/21 21:15:04 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -216,11 +216,9 @@ afs_StoreAllSegments(register struct vcache *avc, struct vrequest *areq,
 	    osi_VM_StoreAllSegments(avc);
     }
     if (AFS_IS_DISCONNECTED && !AFS_IN_SYNC) {
-        if (!AFS_IS_LOGGING) {
-            /* This will probably make someone sad ... */
-	    /*printf("Net down in afs_StoreSegments\n");*/
-            return ENETDOWN;
-        }
+	/* This will probably make someone sad ... */
+	/*printf("Net down in afs_StoreSegments\n");*/
+	return ENETDOWN;
     }
     ConvertWToSLock(&avc->lock);
 

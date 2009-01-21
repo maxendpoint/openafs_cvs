@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.19.8.4 2009/01/21 20:07:49 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_link.c,v 1.19.8.5 2009/01/21 21:15:09 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -91,7 +91,7 @@ afs_link(struct vcache *avc, OSI_VC_DECL(adp), char *aname,
 	goto done;
     }
     
-    if (AFS_IS_DISCONNECTED && !AFS_IS_LOGGING) {
+    if (AFS_IS_DISCONNECTED) {
         code = ENETDOWN;
         goto done;
     }
