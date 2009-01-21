@@ -19,7 +19,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.38 2008/11/08 16:34:27 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_volume.c,v 1.39 2009/01/21 20:07:26 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -708,7 +708,7 @@ afs_NewVolumeByName(char *aname, afs_int32 acell, int agood,
     struct uvldbentry *utve;
     struct cell *tcell;
     char *tbuffer, *ve;
-    struct conn *tconn;
+    struct afs_conn *tconn;
     struct vrequest treq;
 
     if (strlen(aname) > VL_MAXNAMELEN)	/* Invalid volume name */
@@ -1009,7 +1009,7 @@ InstallUVolumeEntry(struct volume *av, struct uvldbentry *ve, int acell,
 		    struct cell *tcell, struct vrequest *areq)
 {
     register struct server *ts;
-    struct conn *tconn;
+    struct afs_conn *tconn;
     struct cell *cellp;
     register int i, j;
     afs_uint32 serverid;

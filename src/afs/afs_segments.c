@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.28 2009/01/19 19:42:32 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_segments.c,v 1.29 2009/01/21 20:07:26 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -40,7 +40,7 @@ afs_uint32 afs_stampValue = 0;
 int
 afs_StoreMini(register struct vcache *avc, struct vrequest *areq)
 {
-    register struct conn *tc;
+    register struct afs_conn *tc;
     struct AFSStoreStatus InStatus;
     struct AFSFetchStatus OutStatus;
     struct AFSVolSync tsync;
@@ -311,7 +311,7 @@ afs_StoreAllSegments(register struct vcache *avc, struct vrequest *areq,
 	    int nomore;
 	    unsigned int first = 0;
 	    int *shouldwake;
-	    struct conn *tc;
+	    struct afs_conn *tc;
 	    struct osi_file *tfile;
 	    struct rx_call *tcall;
 	    XSTATS_DECLS;

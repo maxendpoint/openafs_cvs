@@ -17,7 +17,7 @@
 
 #include "fcrypt.h"
 
-struct connStats {
+struct afs_connStats {
     afs_uint32 bytesReceived, bytesSent, packetsReceived, packetsSent;
 };
 
@@ -65,7 +65,7 @@ struct rxkad_cprivate {
 /* Per connection client-side info */
 struct rxkad_cconn {
     fc_InitializationVector preSeq;	/* used in computing checksum */
-    struct connStats stats;
+    struct afs_connStats stats;
     char cksumSeen;		/* rx: header.spare is a checksum */
 };
 
@@ -92,7 +92,7 @@ struct rxkad_sconn {
     char cksumSeen;		/* rx: header.spare is a checksum */
     afs_uint32 expirationTime;	/* when the ticket expires */
     afs_int32 challengeID;	/* unique challenge */
-    struct connStats stats;	/* per connection stats */
+    struct afs_connStats stats;	/* per connection stats */
     fc_KeySchedule keysched;	/* session key */
     fc_InitializationVector ivec;	/* initialization vector for cbc */
     fc_InitializationVector preSeq;	/* used in computing checksum */
