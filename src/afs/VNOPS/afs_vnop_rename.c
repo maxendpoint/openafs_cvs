@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.28.4.7 2009/01/21 21:15:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_rename.c,v 1.28.4.8 2009/01/21 21:18:03 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -204,6 +204,7 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 	ReleaseSharedLock(&afs_xvcache);
 
 	if (tvc) {
+	    /* XXX - We're locking this vcache whilst holding dcaches. Ooops */
 	    ObtainWriteLock(&tvc->lock, 750);
 	    if (!(tvc->ddirty_flags & (VDisconRename|VDisconCreate))) {
 		/* If the vnode was created locally, then we don't care
@@ -214,11 +215,7 @@ afsrename(struct vcache *aodp, char *aname1, struct vcache *andp,
 		
 		if (!aodp->shVnode) {
 	    	    /* Make shadow copy of parent dir only. */
-		    if (tdc1)
-	    	    	ReleaseWriteLock(&tdc1->lock);
-    	    	    afs_MakeShadowDir(aodp);
-	    	    if (tdc1)
-	    	    	ObtainWriteLock(&tdc1->lock, 753);
+    	    	    afs_MakeShadowDir(aodp, tdc1);
 	        }
 
 		afs_DisconAddDirty(tvc, 
