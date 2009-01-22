@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/venus/cacheout.c,v 1.9 2007/10/31 04:06:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/venus/cacheout.c,v 1.10 2009/01/22 15:28:54 jaltman Exp $");
 
 #include <stdio.h>
 #include <string.h>
@@ -173,7 +173,7 @@ ListServers()
     memset(&addrs, 0, sizeof(addrs));
     memset(&spare3, 0, sizeof(spare3));
     code =
-	ubik_Call(VL_GetAddrs, client, 0, Handle, spare2, &spare3,
+	ubik_VL_GetAddrs(client, 0, Handle, spare2, &spare3,
 		  &server_count, &addrs);
     if (code) {
 	printf("Fatal error: could not get list of file servers\n");
@@ -190,7 +190,7 @@ ListServers()
 		m_addrs.bulkaddrs_val = 0;
 		m_addrs.bulkaddrs_len = 0;
 		code =
-		    ubik_Call(VL_GetAddrsU, client, 0, &m_attrs, &m_uuid,
+		    ubik_VL_GetAddrsU(client, 0, &m_attrs, &m_uuid,
 			      &m_unique, &m_nentries, &m_addrs);
 		if (vcode)
 		    return code;
