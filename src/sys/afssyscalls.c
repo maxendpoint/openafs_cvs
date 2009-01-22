@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/sys/afssyscalls.c,v 1.13 2006/02/21 04:45:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/sys/afssyscalls.c,v 1.13.2.1 2009/01/22 21:38:57 shadow Exp $");
 
 #include <signal.h>
 #include <sys/errno.h>
@@ -338,6 +338,11 @@ int
 lpioctl(char *path, int cmd, char *cmarg, int follow)
 {
     int errcode, rval;
+#if defined(AFS_FBSD_ENV)
+    /* As kauth/user.c says, handle smoothly the case where no AFS system call
+     *  exists (yet).  Why don't more platforms have trouble here?  Matt */
+    sig_t old = (int (*)())signal(SIGSYS, SIG_IGN);
+#endif
 
 #if defined(AFS_LINUX20_ENV)
     rval = proc_afs_syscall(AFSCALL_PIOCTL, (long)path, cmd, (long)cmarg, 
