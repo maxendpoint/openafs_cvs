@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.11.6.7 2008/08/26 14:01:31 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osi_alloc.c,v 1.11.6.8 2009/01/22 21:29:06 shadow Exp $");
 
 
 
@@ -44,7 +44,7 @@ struct osimem {
     struct osimem *next;
 };
 
-
+#if !defined(AFS_OBSD44_ENV)
 void *
 afs_osi_Alloc(size_t x)
 {
@@ -124,7 +124,7 @@ afs_osi_FreeStr(char *x)
     afs_osi_Free(x, strlen(x) + 1);
 }
 
-
+#endif
 
 /* free space allocated by AllocLargeSpace.  Also called by mclput when freeing
  * a packet allocated by osi_NetReceive. */
