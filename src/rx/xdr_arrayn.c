@@ -30,7 +30,12 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_arrayn.c,v 1.10 2005/04/03 18:09:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_arrayn.c,v 1.11 2009/01/22 21:28:30 shadow Exp $");
+
+#if defined(AFS_OBSD44_ENV) && defined(KERNEL) && !defined(UKERNEL)
+/* XXX osi_alloc, please find and fix */
+#include "osi_machdep.h"
+#endif
 
 #if !defined(NeXT)
 
@@ -44,6 +49,7 @@ RCSID
  */
 
 #if defined(KERNEL) && !defined(UKERNEL)
+
 #include <sys/param.h>
 #ifdef AFS_LINUX20_ENV
 #include "h/string.h"
