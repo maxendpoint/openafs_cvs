@@ -48,7 +48,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.25 2009/01/12 14:33:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.26 2009/01/22 21:49:05 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -1558,7 +1558,7 @@ afs_vop_strategy(ap)
 {
     int error;
     AFS_GLOCK();
-    error = afs_ustrategy(ap->a_bp);
+    error = afs_ustrategy(ap->a_bp, osi_cred());
     AFS_GUNLOCK();
     return error;
 }
