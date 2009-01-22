@@ -22,7 +22,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.68 2008/10/27 23:53:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/vol/volume.c,v 1.69 2009/01/22 19:12:40 shadow Exp $");
 
 #include <rx/xdr.h>
 #include <afs/afsint.h>
@@ -2503,7 +2503,8 @@ attach2(Error * ec, VolId volumeId, char *path, register struct VolumeHeader * h
 	    V_offlineMessage(vp)[0] = '\0';
 	}
     } else {
-	V_inUse(vp) = programType;
+	if ((mode != V_PEEK) && (mode != V_SECRETLY))
+	    V_inUse(vp) = programType;
 	V_checkoutMode(vp) = mode;
     }
 
@@ -3193,6 +3194,9 @@ VDetachVolume_r(Error * ec, Volume * vp)
     DeleteVolumeFromVByPList_r(vp);
     VLRU_Delete_r(vp);
     VChangeState_r(vp, VOL_STATE_SHUTTING_DOWN);
+#else
+    if (programType != fileServer) 
+	V_inUse(vp) = 0;
 #endif /* AFS_DEMAND_ATTACH_FS */
     VPutVolume_r(vp);
     /* Will be detached sometime in the future--this is OK since volume is offline */
