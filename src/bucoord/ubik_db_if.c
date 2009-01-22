@@ -13,7 +13,7 @@
 #include <afs/stds.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.14 2009/01/22 19:31:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.15 2009/01/22 19:33:04 shadow Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -44,7 +44,7 @@ afs_int32 bcdb_AddVolumes(register struct budb_volumeEntry *, afs_int32 );
 afs_int32 bcdb_CreateDump(register struct budb_dumpEntry *) ;
 afs_int32 bcdb_deleteDump(afs_int32, afs_int32, afs_int32, budb_dumpsList *);
 /*note the pinter to the function comes from ubik/ubikclient ubik_Call function.*/
-afs_int32 bcdb_listDumps (int (), afs_int32,afs_int32,afs_int32, budb_dumpsList *,
+afs_int32 bcdb_listDumps (afs_int32, afs_int32,afs_int32,afs_int32, budb_dumpsList *,
  budb_dumpsList *);
 afs_int32 bcdb_DeleteVDP(char *, char *, afs_int32 );
 afs_int32 bcdb_FindClone(afs_int32, char *, afs_int32 *);
