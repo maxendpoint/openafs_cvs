@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.21.4.8 2009/01/21 21:18:03 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_dirops.c,v 1.21.4.9 2009/01/22 20:11:56 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -216,7 +216,7 @@ afs_mkdir(OSI_VC_DECL(adp), char *aname, struct vattr *attrs,
 	ObtainWriteLock(&afs_xdcache, 739);
 	code = afs_dir_MakeDir(new_dc,
 				(afs_int32 *) &newFid.Fid,
-				(afs_int32) &adp->fid.Fid);
+				(afs_int32 *) &adp->fid.Fid);
 	ReleaseWriteLock(&afs_xdcache);
 	if (code)
 	    printf("afs_mkdir: afs_dirMakeDir code = %u\n", code);
