@@ -13,7 +13,7 @@
 #include <afs/stds.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.13 2009/01/22 15:40:07 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/bucoord/ubik_db_if.c,v 1.14 2009/01/22 19:31:10 shadow Exp $");
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -109,9 +109,9 @@ afs_int32 bcdb_deleteDump(afs_int32 dumpID, afs_int32 fromTime, afs_int32 toTime
     return (code);
 }
 
-afs_int32 bcdb_listDumps (int (*sflags) (), afs_int32 groupId,afs_int32 fromTime, afs_int32 toTime,budb_dumpsList *dumps, budb_dumpsList *flags)
+afs_int32 bcdb_listDumps (afs_int32 sflags, afs_int32 groupId,afs_int32 fromTime, afs_int32 toTime,budb_dumpsList *dumps, budb_dumpsList *flags)
 {
-    afs_int32 code, sflag = 0;
+    afs_int32 code;
     budb_dumpsList dumpsList, *dumpsPtr;
     budb_dumpsList flagsList, *flagsPtr;
 
