@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.85 2009/01/21 21:17:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_dcache.c,v 1.86 2009/01/23 14:44:31 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -1393,6 +1393,12 @@ afs_DCacheMissingChunks(struct vcache *avc)
     totalLength--;
     totalChunks = (AFS_CHUNK(totalLength) + 1);
 
+    /* If we're a directory, we only ever have one chunk, regardless of
+     * the size of the dir.
+     */
+    if (avc->fid.Fid.Vnode & 1 || vType(avc) == VDIR)
+	totalChunks = 1;
+    
     /*
      printf("Should have %d chunks for %u bytes\n",
     		totalChunks, (totalLength + 1));
