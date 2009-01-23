@@ -15,7 +15,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_export.c,v 1.3 2008/07/01 03:33:41 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_export.c,v 1.4 2009/01/23 14:31:24 shadow Exp $");
 
 #include <linux/module.h> /* early to avoid printf->printk mapping */
 #include <linux/fs.h>
@@ -26,6 +26,8 @@ RCSID
 #include "afsincludes.h"
 #include "afs/afs_dynroot.h"
 #include "h/smp_lock.h"
+
+#if !defined(AFS_NONFSTRANS)
 
 /* #define OSI_EXPORT_DEBUG */
 
@@ -956,3 +958,5 @@ struct export_operations afs_export_ops = {
     .get_name   = afs_export_get_name,
     .get_parent = afs_export_get_parent,
 };
+
+#endif
