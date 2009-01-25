@@ -7,7 +7,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
  
-RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.9 2009/01/21 21:14:48 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.10 2009/01/25 14:48:14 shadow Exp $");
  
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -821,14 +821,6 @@ int afs_ProcessOpCreate(struct vcache *avc,
     /* Now we can set the new fid. */
     memcpy(&avc->fid, &newFid, sizeof(struct VenusFid));
 
-    if (tdp) {
-    	/* Unset parent dir CStat flag, so it will get refreshed on next
-	 * online stat.
-	 */
-	ObtainWriteLock(&tdp->lock, 745);
-	tdp->states &= ~CStatd;
-    	ReleaseWriteLock(&tdp->lock);
-    }
 end:
     if (tdp)
     	afs_PutVCache(tdp);
@@ -944,16 +936,6 @@ int afs_ProcessOpRemove(struct vcache *avc, struct vrequest *areq)
     if (code)
     	printf("afs_ProcessOpRemove: server returned code=%u\n", code);
 
-    /* Remove the statd flag from parent dir's vcache. */
-    ObtainSharedLock(&afs_xvcache, 761);
-    tdp = afs_FindVCache(&pdir_fid, 0, 1);
-    ReleaseSharedLock(&afs_xvcache);
-    if (tdp) {
-    	ObtainWriteLock(&tdp->lock, 746);
-	tdp->states &= ~CStatd;
-	ReleaseWriteLock(&tdp->lock);
-	afs_PutVCache(tdp);
-    }
 end:
     afs_osi_Free(tname, AFSNAMEMAX);
     return code;

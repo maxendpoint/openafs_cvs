@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.140 2009/01/21 21:27:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_pioctl.c,v 1.141 2009/01/25 14:48:15 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifdef AFS_OBSD_ENV
@@ -4701,6 +4701,7 @@ DECL_PIOCTL(PDiscon)
 		afs_is_discon_rw = 0;
 		printf("\nSync succeeded. You are back online.\n");
 	    }
+	    afs_ClearAllStatdFlag();
 
 	    ReleaseWriteLock(&afs_discon_lock);
 	    break;
