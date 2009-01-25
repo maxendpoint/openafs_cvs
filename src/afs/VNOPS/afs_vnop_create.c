@@ -17,7 +17,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.34 2009/01/21 21:14:52 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_create.c,v 1.35 2009/01/25 14:52:39 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -372,7 +372,7 @@ afs_create(OSI_VC_DECL(adp), char *aname, struct vattr *attrs,
 	/* Generate a fake FID for disconnected mode. */
 	newFid.Cell = adp->fid.Cell;
 	newFid.Fid.Volume = adp->fid.Fid.Volume;
-	afs_GenFakeFid(&newFid, VREG);
+	afs_GenFakeFid(&newFid, VREG, 1);
 #endif
     }				/* if (!AFS_IS_DISCON_RW) */
 
