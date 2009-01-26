@@ -16,7 +16,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.37 2009/01/21 20:07:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_util.c,v 1.38 2009/01/26 18:52:01 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -212,7 +212,7 @@ afs_CheckLocks(void)
 
 	for (i = 0; i < VCSIZE; i++) {
 	    for (tvc = afs_vhashT[i]; tvc; tvc = tvc->hnext) {
-                if (tvc->states & CVInit) continue;
+                if (tvc->f.states & CVInit) continue;
 #ifdef	AFS_OSF_ENV
 		if (VREFCOUNT(tvc) > 1)
 #else /* AFS_OSF_ENV */

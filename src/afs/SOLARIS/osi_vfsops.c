@@ -14,7 +14,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.25 2008/07/07 17:14:26 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/SOLARIS/osi_vfsops.c,v 1.26 2009/01/26 18:52:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -120,7 +120,7 @@ afs_root(struct vfs *afsp, struct vnode **avpp)
     AFS_STATCNT(afs_root);
 
 again:
-    if (afs_globalVp && (afs_globalVp->states & CStatd)) {
+    if (afs_globalVp && (afs_globalVp->f.states & CStatd)) {
 	tvp = afs_globalVp;
     } else {
 	if (MUTEX_HELD(&vp->v_lock)) {

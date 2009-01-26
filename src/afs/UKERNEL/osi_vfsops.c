@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vfsops.c,v 1.11 2004/08/19 02:19:17 kolya Exp $");
+    ("$Header: /cvs/openafs/src/afs/UKERNEL/osi_vfsops.c,v 1.12 2009/01/26 18:52:08 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -78,7 +78,7 @@ afs_root(OSI_VFS_ARG(afsp), avpp)
     OSI_VFS_CONVERT(afsp);
 
     AFS_STATCNT(afs_root);
-    if (afs_globalVp && (afs_globalVp->states & CStatd)) {
+    if (afs_globalVp && (afs_globalVp->f.states & CStatd)) {
 	tvp = afs_globalVp;
     } else {
 	if (afs_globalVp) {

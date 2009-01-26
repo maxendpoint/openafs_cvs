@@ -48,7 +48,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.26 2009/01/22 21:49:05 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vnodeops.c,v 1.27 2009/01/26 18:52:04 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -650,7 +650,7 @@ afs_vop_open(ap)
 #endif
     AFS_GUNLOCK();
 #ifdef AFS_FBSD60_ENV
-    vnode_create_vobject(ap->a_vp, vc->m.Length, ap->a_td);
+    vnode_create_vobject(ap->a_vp, vc->f.m.Length, ap->a_td);
 #endif
     osi_FlushPages(vc, ap->a_cred);
     return error;
@@ -1571,17 +1571,17 @@ afs_vop_print(ap)
 {
     register struct vnode *vp = ap->a_vp;
     register struct vcache *vc = VTOAFS(ap->a_vp);
-    int s = vc->states;
+    int s = vc->f.states;
 
 #ifdef AFS_FBSD50_ENV
     printf("tag %s, fid: %d.%x.%x.%x, opens %d, writers %d", vp->v_tag,
-	   (int)vc->fid.Cell, (u_int) vc->fid.Fid.Volume,
-	   (u_int) vc->fid.Fid.Vnode, (u_int) vc->fid.Fid.Unique, vc->opens,
+	   (int)vc->f.fid.Cell, (u_int) vc->f.fid.Fid.Volume,
+	   (u_int) vc->f.fid.Fid.Vnode, (u_int) vc->f.fid.Fid.Unique, vc->opens,
 	   vc->execsOrWriters);
 #else
     printf("tag %d, fid: %ld.%x.%x.%x, opens %d, writers %d", vp->v_tag,
-	   vc->fid.Cell, (u_int) vc->fid.Fid.Volume,
-	   (u_int) vc->fid.Fid.Vnode, (u_int) vc->fid.Fid.Unique, vc->opens,
+	   vc->f.fid.Cell, (u_int) vc->f.fid.Fid.Volume,
+	   (u_int) vc->f.fid.Fid.Vnode, (u_int) vc->f.fid.Fid.Unique, vc->opens,
 	   vc->execsOrWriters);
 #endif
     printf("\n  states%s%s%s%s%s", (s & CStatd) ? " statd" : "",

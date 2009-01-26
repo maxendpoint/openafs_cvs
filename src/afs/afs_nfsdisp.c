@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.23 2009/01/15 13:26:57 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_nfsdisp.c,v 1.24 2009/01/26 18:52:01 shadow Exp $");
 
 /* Ugly Ugly Ugly  but precludes conflicting XDR macros; We want kernel xdr */
 #define __XDR_INCLUDE__
@@ -333,12 +333,12 @@ afs_nfs2_smallfidder(struct nfsdiropres *dr)
 	    struct cell *tcell;
 
 	    /* Make up and copy out a SmallFid */
-	    tcell = afs_GetCell(vcp->fid.Cell, READ_LOCK);
-	    Sfid.Volume = vcp->fid.Fid.Volume;
+	    tcell = afs_GetCell(vcp->f.fid.Cell, READ_LOCK);
+	    Sfid.Volume = vcp->f.fid.Fid.Volume;
 	    Sfid.CellAndUnique =
-		((tcell->cellIndex << 24) | (vcp->fid.Fid.Unique & 0xffffff));
+		((tcell->cellIndex << 24) | (vcp->f.fid.Fid.Unique & 0xffffff));
 	    afs_PutCell(tcell, READ_LOCK);
-	    Sfid.Vnode = (u_short) (vcp->fid.Fid.Vnode & 0xffff);
+	    Sfid.Vnode = (u_short) (vcp->f.fid.Fid.Vnode & 0xffff);
 	    fhp->fh_len = SIZEOF_SMALLFID;
 	    memcpy(dr->dr_fhandle.fh_data, (char *)&Sfid, fhp->fh_len);
 
@@ -1115,12 +1115,12 @@ afs_nfs3_smallfidder(struct nfs_fh3 *fhp, int status)
 	    struct cell *tcell;
 
 	    /* Make up and copy out a SmallFid */
-	    tcell = afs_GetCell(vcp->fid.Cell, READ_LOCK);
-	    Sfid.Volume = vcp->fid.Fid.Volume;
+	    tcell = afs_GetCell(vcp->f.fid.Cell, READ_LOCK);
+	    Sfid.Volume = vcp->f.fid.Fid.Volume;
 	    Sfid.CellAndUnique =
-		((tcell->cellIndex << 24) | (vcp->fid.Fid.Unique & 0xffffff));
+		((tcell->cellIndex << 24) | (vcp->f.fid.Fid.Unique & 0xffffff));
 	    afs_PutCell(tcell, READ_LOCK);
-	    Sfid.Vnode = (u_short) (vcp->fid.Fid.Vnode & 0xffff);
+	    Sfid.Vnode = (u_short) (vcp->f.fid.Fid.Vnode & 0xffff);
 	    fhp->fh3_len = SIZEOF_SMALLFID;
 	    memcpy(fhp->fh3_data, (char *)&Sfid, fhp->fh3_len);
 

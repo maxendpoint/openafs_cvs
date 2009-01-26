@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.16 2008/10/10 23:24:16 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_osidnlc.c,v 1.17 2009/01/26 18:52:01 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -153,7 +153,7 @@ osi_dnlc_enter(struct vcache *adp, char *aname, struct vcache *avc,
     ObtainWriteLock(&afs_xdnlc, 222);
 
     /* Only cache entries from the latest version of the directory */
-    if (!(adp->states & CStatd) || !hsame(*avno, adp->m.DataVersion)) {
+    if (!(adp->f.states & CStatd) || !hsame(*avno, adp->f.m.DataVersion)) {
 	ReleaseWriteLock(&afs_xdnlc);
 	return 0;
     }
@@ -256,9 +256,9 @@ osi_dnlc_lookup(struct vcache *adp, char *aname, int locktype)
 	ReleaseReadLock(&afs_xvcache);
 	dnlcstats.misses++;
     } else {
-	if ((tvc->states & CVInit)
+	if ((tvc->f.states & CVInit)
 #ifdef  AFS_DARWIN80_ENV
-	    ||(tvc->states & CDeadVnode)
+	    ||(tvc->f.states & CDeadVnode)
 #endif
 	    )      
 	{
@@ -428,7 +428,7 @@ osi_dnlc_purgedp(struct vcache *adp)
     int writelocked;
 
 #ifdef AFS_DARWIN_ENV
-    if (!(adp->states & (CVInit | CVFlushed
+    if (!(adp->f.states & (CVInit | CVFlushed
 #ifdef AFS_DARWIN80_ENV
                         | CDeadVnode
 #endif
@@ -472,7 +472,7 @@ osi_dnlc_purgevp(struct vcache *avc)
     int writelocked;
 
 #ifdef AFS_DARWIN_ENV
-    if (!(avc->states & (CVInit | CVFlushed
+    if (!(avc->f.states & (CVInit | CVFlushed
 #ifdef AFS_DARWIN80_ENV
                         | CDeadVnode
 #endif

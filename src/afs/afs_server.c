@@ -33,7 +33,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.52 2009/01/21 21:27:42 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_server.c,v 1.53 2009/01/26 18:52:01 shadow Exp $");
 
 #include "afs/stds.h"
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -275,7 +275,7 @@ afs_HaveCallBacksFrom(struct server *aserver)
 	     * from the required host
 	     */
 	    if (aserver == tvc->callback && tvc->cbExpires >= now
-		&& ((tvc->states & CRO) == 0))
+		&& ((tvc->f.states & CRO) == 0))
 		return 1;
 	}
     }

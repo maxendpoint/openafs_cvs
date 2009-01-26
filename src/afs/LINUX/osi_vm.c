@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vm.c,v 1.18 2008/10/20 12:09:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/LINUX/osi_vm.c,v 1.19 2009/01/26 18:52:05 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -102,8 +102,8 @@ osi_VM_StoreAllSegments(struct vcache *avc)
 {
     struct inode *ip = AFSTOV(avc);
 
-    if (!avc->states & CPageWrite)
-	avc->states |= CPageWrite;
+    if (!avc->f.states & CPageWrite)
+	avc->f.states |= CPageWrite;
     else 
 	return; /* someone already writing */
 
@@ -120,7 +120,7 @@ osi_VM_StoreAllSegments(struct vcache *avc)
     AFS_GLOCK();
     ObtainWriteLock(&avc->lock, 121);
 #endif
-    avc->states &= ~CPageWrite;
+    avc->f.states &= ~CPageWrite;
 }
 
 /* Purge VM for a file when its callback is revoked.

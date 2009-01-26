@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.49 2008/09/22 19:35:09 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_daemons.c,v 1.50 2009/01/26 18:52:01 shadow Exp $");
 
 #ifdef AFS_AIX51_ENV
 #define __FULL_PROTO
@@ -874,13 +874,13 @@ afs_BioDaemon(afs_int32 nbiods)
 	    if (vcp->v.v_gnode->gn_mwrcnt) {
 		afs_offs_t newlength =
 		    (afs_offs_t) dbtob(bp->b_blkno) + bp->b_bcount;
-		if (vcp->m.Length < newlength) {
+		if (vcp->f.m.Length < newlength) {
 		    afs_Trace4(afs_iclSetp, CM_TRACE_SETLENGTH,
 			       ICL_TYPE_STRING, __FILE__, ICL_TYPE_LONG,
 			       __LINE__, ICL_TYPE_OFFSET,
-			       ICL_HANDLE_OFFSET(vcp->m.Length),
+			       ICL_HANDLE_OFFSET(vcp->f.m.Length),
 			       ICL_TYPE_OFFSET, ICL_HANDLE_OFFSET(newlength));
-		    vcp->m.Length = newlength;
+		    vcp->f.m.Length = newlength;
 		}
 	    }
 	    ReleaseWriteLock(&vcp->lock);

@@ -11,7 +11,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.23 2007/06/23 15:28:11 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_memcache.c,v 1.24 2009/01/26 18:52:01 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #ifndef AFS_LINUX22_ENV
@@ -389,7 +389,7 @@ afs_MemCacheStoreProc(register struct rx_call *acall,
     /* for now, only do 'continue from close' code if file fits in one
      * chunk.  Could clearly do better: if only one modified chunk
      * then can still do this.  can do this on *last* modified chunk */
-    tlen = avc->m.Length - 1;	/* byte position of last byte we'll store */
+    tlen = avc->f.m.Length - 1;	/* byte position of last byte we'll store */
     if (shouldWake) {
 	if (AFS_CHUNK(tlen) != 0)
 	    *shouldWake = 0;
@@ -494,7 +494,7 @@ afs_MemCacheFetchProc(register struct rx_call *acall,
 	 * We do not do this for AFS file servers because they sometimes
 	 * return large negative numbers as the transfer size.
 	 */
-	if (avc->states & CForeign) {
+	if (avc->f.states & CForeign) {
 	    moredata = length & 0x80000000;
 	    length &= ~0x80000000;
 	} else {

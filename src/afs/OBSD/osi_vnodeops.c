@@ -3,7 +3,7 @@
  * Original NetBSD version for Transarc afs by John Kohl <jtk@MIT.EDU>
  * OpenBSD version by Jim Rees <rees@umich.edu>
  *
- * $Id: osi_vnodeops.c,v 1.24 2009/01/22 21:28:30 shadow Exp $
+ * $Id: osi_vnodeops.c,v 1.25 2009/01/26 18:52:07 shadow Exp $
  */
 
 /*
@@ -99,7 +99,7 @@ NONINFRINGEMENT.
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.24 2009/01/22 21:28:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/OBSD/osi_vnodeops.c,v 1.25 2009/01/26 18:52:07 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afs/afsincludes.h"	/* Afs-based standard headers */
@@ -1028,9 +1028,9 @@ afs_nbsd_print(void *v)
     struct vnode *vp = ap->a_vp;
     struct vcache *vc = VTOAFS(ap->a_vp);
 
-    printf("tag %d, fid: %d.%x.%x.%x, ", vp->v_tag, vc->fid.Cell,
-	   (int)vc->fid.Fid.Volume, (int)vc->fid.Fid.Vnode,
-	   (int)vc->fid.Fid.Unique);
+    printf("tag %d, fid: %d.%x.%x.%x, ", vp->v_tag, vc->f.fid.Cell,
+	   (int)vc->f.fid.Fid.Volume, (int)vc->f.fid.Fid.Vnode,
+	   (int)vc->f.fid.Fid.Unique);
     lockmgr_printinfo(&vc->rwlock);
     printf("\n");
     return 0;

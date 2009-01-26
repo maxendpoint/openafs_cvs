@@ -5,7 +5,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.20 2008/10/07 21:30:23 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/DARWIN/osi_vfsops.c,v 1.21 2009/01/26 18:52:04 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -261,7 +261,7 @@ afs_root(struct mount *mp, struct vnode **vpp)
     AFS_GLOCK();
     AFS_STATCNT(afs_root);
     if (mdata == NULL && afs_globalVp
-	&& (afs_globalVp->states & CStatd)) {
+	&& (afs_globalVp->f.states & CStatd)) {
 	tvp = afs_globalVp;
 	error = 0;
 #ifdef AFS_DARWIN80_ENV

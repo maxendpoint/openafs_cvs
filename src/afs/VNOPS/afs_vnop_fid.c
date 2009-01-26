@@ -18,7 +18,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_fid.c,v 1.14 2005/04/03 18:09:14 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_fid.c,v 1.15 2009/01/26 18:52:09 shadow Exp $");
 
 #if !defined(AFS_DUX40_ENV) && !defined(AFS_LINUX20_ENV) && !defined(AFS_DARWIN_ENV) && !defined(AFS_OBSD_ENV)
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
@@ -97,15 +97,15 @@ afs_fid(OSI_VC_DECL(avc), struct fid **fidpp)
 	|| USE_SMALLFID(credp)
 #endif
 	) {
-	tcell = afs_GetCell(avc->fid.Cell, READ_LOCK);
-	Sfid.Volume = avc->fid.Fid.Volume;
-	Sfid.Vnode = avc->fid.Fid.Vnode;
+	tcell = afs_GetCell(avc->f.fid.Cell, READ_LOCK);
+	Sfid.Volume = avc->f.fid.Fid.Volume;
+	Sfid.Vnode = avc->f.fid.Fid.Vnode;
 	Sfid.CellAndUnique =
-	    ((tcell->cellIndex << 24) + (avc->fid.Fid.Unique & 0xffffff));
+	    ((tcell->cellIndex << 24) + (avc->f.fid.Fid.Unique & 0xffffff));
 	afs_PutCell(tcell, READ_LOCK);
-	if (avc->fid.Fid.Vnode > 0xffff)
+	if (avc->f.fid.Fid.Vnode > 0xffff)
 	    afs_fid_vnodeoverflow++;
-	if (avc->fid.Fid.Unique > 0xffffff)
+	if (avc->f.fid.Fid.Unique > 0xffffff)
 	    afs_fid_uniqueoverflow++;
     } else {
 #if defined(AFS_SUN57_64BIT_ENV) || (defined(AFS_SGI61_ENV) && (_MIPS_SZPTR == 64))

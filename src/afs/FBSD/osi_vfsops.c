@@ -2,7 +2,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.22 2008/08/26 14:00:55 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/FBSD/osi_vfsops.c,v 1.23 2009/01/26 18:52:04 shadow Exp $");
 
 #include <afs/sysincludes.h>	/* Standard vendor system headers */
 #include <afsincludes.h>	/* Afs-based standard headers */
@@ -190,7 +190,7 @@ afs_root(struct mount *mp, struct vnode **vpp)
     AFS_GLOCK();
     AFS_STATCNT(afs_root);
     crhold(cr);
-    if (afs_globalVp && (afs_globalVp->states & CStatd)) {
+    if (afs_globalVp && (afs_globalVp->f.states & CStatd)) {
 	tvp = afs_globalVp;
 	error = 0;
     } else {
