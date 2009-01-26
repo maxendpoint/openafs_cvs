@@ -7,7 +7,7 @@
 #include <afsconfig.h>
 #include "afs/param.h"
  
-RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.12 2009/01/26 18:52:01 shadow Exp $");
+RCSID("$Header: /cvs/openafs/src/afs/afs_disconnected.c,v 1.13 2009/01/26 19:26:29 shadow Exp $");
  
 #include "afs/sysincludes.h"
 #include "afsincludes.h"
@@ -342,7 +342,7 @@ int chk_del_children_hook(void *hdata,
     /* Count unfinished dirty children. */
     if (tvc) {
 	ObtainReadLock(&tvc->lock);
-	if (tvc->f.ddirty_flags || tvc->shVnode)
+	if (tvc->f.ddirty_flags || tvc->f.shadow.vnode)
 	    v->count++;
 	ReleaseReadLock(&tvc->lock);
 

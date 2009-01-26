@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.134 2009/01/26 18:52:01 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.135 2009/01/26 19:26:29 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -85,7 +85,6 @@ int afs_norefpanic = 0;
  * Both protected by xvcache */
 static int afs_nextVcacheSlot = 0;
 static struct afs_slotlist *afs_freeSlotList = NULL;
-afs_dcache_id_t afs_vcacheMetaInode;
 
 /* Forward declarations */
 static afs_int32 afs_QueueVCB(struct vcache *avc);
