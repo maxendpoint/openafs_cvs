@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.136 2009/01/26 19:33:06 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.137 2009/01/26 19:37:58 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -171,16 +171,6 @@ afs_FlushVCache(struct vcache *avc, int *slept)
     avc->f.states |= CVFlushed;
     /* pull the entry out of the lruq and put it on the free list */
     QRemove(&avc->vlruq);
-
-#ifdef AFS_DISCON_ENV
-    /* If the entry is on the Metadata dirty list, pull it out. */
-    ObtainWriteLock(&afs_xvcdirty, 761);
-    if (avc->metadirty.prev && avc->metadirty.next) {
-        QRemove(&avc->metadirty);
-	avc->f.states &= ~CMetaDirty;
-    }
-    ReleaseWriteLock(&afs_xvcdirty);
-#endif
 
     /* keep track of # of files that we bulk stat'd, but never used
      * before they got recycled.
