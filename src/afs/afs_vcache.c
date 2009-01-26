@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.135 2009/01/26 19:26:29 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.136 2009/01/26 19:33:06 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -63,6 +63,9 @@ char *makesname();
 #endif /* AFS_SGI64_ENV */
 
 /* Exported variables */
+#ifdef AFS_DISCON_ENV
+afs_rwlock_t afs_xvcdirty;	/*Lock: discon vcache dirty list mgmt */
+#endif
 afs_rwlock_t afs_xvcache;	/*Lock: alloc new stat cache entries */
 afs_rwlock_t afs_xvreclaim;	/*Lock: entries reclaimed, not on free list */
 afs_lock_t afs_xvcb;		/*Lock: fids on which there are callbacks */
