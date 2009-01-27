@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.42 2009/01/14 06:34:08 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.43 2009/01/27 06:04:32 jaltman Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -129,6 +129,10 @@ rxi_GetHostUDPSocket(u_int ahost, u_short port)
 	perror("socket");
 	goto error;
     }
+
+#ifdef AFS_NT40_ENV
+    rxi_xmit_init(socketFd);
+#endif /* AFS_NT40_ENV */
 
     taddr.sin_addr.s_addr = ahost;
     taddr.sin_family = AF_INET;
