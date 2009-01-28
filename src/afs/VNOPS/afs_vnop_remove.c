@@ -21,7 +21,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.62 2009/01/26 18:52:10 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/VNOPS/afs_vnop_remove.c,v 1.63 2009/01/28 15:52:42 shadow Exp $");
 
 #include "afs/sysincludes.h"	/* Standard vendor system headers */
 #include "afsincludes.h"	/* Afs-based standard headers */
@@ -446,6 +446,12 @@ afs_remove(OSI_VC_DECL(adp), char *aname, struct AFS_UCRED *acred)
 	    }
 	    tvc->uncred = acred;
 	    tvc->f.states |= CUnlinked;
+	    /* if rename succeeded, remove should not */
+	    ObtainWriteLock(&tvc->lock, 715);
+	    if (tvc->f.ddirty_flags & VDisconRemove) {
+		tvc->f.ddirty_flags &= ~VDisconRemove;
+	    }
+	    ReleaseWriteLock(&tvc->lock);
 	} else {
 	    osi_FreeSmallSpace(unlname);
 	}
