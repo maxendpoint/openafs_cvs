@@ -11,15 +11,17 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_multi.c,v 1.12 2008/10/24 20:38:56 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_multi.c,v 1.13 2009/01/28 20:35:50 shadow Exp $");
 
 #ifdef	KERNEL
 #include "afs/sysincludes.h"
 #include "rx/rx_internal.h"
 #include "rx/rx.h"
+#include "rx/rx_globals.h"
 #else /* KERNEL */
 # include "rx_internal.h"
 # include "rx.h"
+# include "rx_globals.h"
 #endif /* KERNEL */
 
 /*

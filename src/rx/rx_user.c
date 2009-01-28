@@ -13,7 +13,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.43 2009/01/27 06:04:32 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_user.c,v 1.44 2009/01/28 20:35:50 shadow Exp $");
 
 # include <sys/types.h>
 # include <errno.h>
@@ -200,9 +200,7 @@ rxi_GetHostUDPSocket(u_int ahost, u_short port)
 	    (osi_Msg "%s*WARNING* Unable to increase buffering on socket\n",
 	     name);
 	if (rx_stats_active) {
-            MUTEX_ENTER(&rx_stats_mutex);
-            rx_stats.socketGreedy = greedy;
-            MUTEX_EXIT(&rx_stats_mutex);
+	    rx_AtomicSwap(&rx_stats.socketGreedy, greedy, rx_stats_mutex);
         }
     }
 
