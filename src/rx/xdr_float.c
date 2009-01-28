@@ -30,7 +30,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_float.c,v 1.5 2003/07/15 23:16:12 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_float.c,v 1.6 2009/01/28 22:33:17 shadow Exp $");
 
 #ifndef	NeXT
 
@@ -54,7 +54,7 @@ RCSID
  */
 
 bool_t
-xdr_float(register XDR * xdrs, register float *fp)
+xdr_float(XDR * xdrs, float *fp)
 {
 #ifdef AFS_NT40_ENV
     return (FALSE);
@@ -75,7 +75,7 @@ xdr_float(register XDR * xdrs, register float *fp)
 }
 
 bool_t
-xdr_double(register XDR * xdrs, double *dp)
+xdr_double(XDR * xdrs, double *dp)
 {
 #ifdef AFS_NT40_ENV
     return (FALSE);

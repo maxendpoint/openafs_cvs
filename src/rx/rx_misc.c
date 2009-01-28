@@ -11,7 +11,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.19 2009/01/14 06:34:08 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/rx_misc.c,v 1.20 2009/01/28 22:33:17 shadow Exp $");
 
 #ifdef	KERNEL
 #include <afs/sysincludes.h>
@@ -53,9 +53,9 @@ RCSID
  * (network) system error code.
  */
 int
-hton_syserr_conv(register afs_int32 code)
+hton_syserr_conv(afs_int32 code)
 {
-    register afs_int32 err;
+    afs_int32 err;
 
     if (code == ENOSPC)
 	err = VDISKFULL;
@@ -76,7 +76,7 @@ hton_syserr_conv(register afs_int32 code)
 int
 ntoh_syserr_conv(int code)
 {
-    register afs_int32 err;
+    afs_int32 err;
 
     if (code == VDISKFULL)
 	err = ENOSPC;

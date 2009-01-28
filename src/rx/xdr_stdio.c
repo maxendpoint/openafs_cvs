@@ -30,7 +30,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_stdio.c,v 1.4 2003/07/15 23:16:13 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_stdio.c,v 1.5 2009/01/28 22:33:17 shadow Exp $");
 
 #ifndef	NeXT
 
@@ -77,7 +77,7 @@ static struct xdr_ops xdrstdio_ops = {
  */
 void
 xdrstdio_create(xdrs, file, op)
-     register XDR *xdrs;
+     XDR *xdrs;
      FILE *file;
      enum xdr_op op;
 {
@@ -95,7 +95,7 @@ xdrstdio_create(xdrs, file, op)
  */
 static void
 xdrstdio_destroy(xdrs)
-     register XDR *xdrs;
+     XDR *xdrs;
 {
     (void)fflush((FILE *) xdrs->x_private);
     /* xx should we close the file ?? */
@@ -104,7 +104,7 @@ xdrstdio_destroy(xdrs)
 static bool_t
 xdrstdio_getint32(xdrs, lp)
      XDR *xdrs;
-     register afs_int32 *lp;
+     afs_int32 *lp;
 {
 
     if (fread((caddr_t) lp, sizeof(afs_int32), 1, (FILE *) xdrs->x_private) !=

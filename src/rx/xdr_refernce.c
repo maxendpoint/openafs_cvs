@@ -32,7 +32,7 @@
 #include "rx.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.10 2008/10/24 20:38:56 jaltman Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_refernce.c,v 1.11 2009/01/28 22:33:17 shadow Exp $");
 
 #ifndef	NeXT
 
@@ -60,13 +60,13 @@ RCSID
  * proc is the routine to handle the referenced structure.
  */
 bool_t
-xdr_reference(register XDR *xdrs, 
+xdr_reference(XDR *xdrs, 
 	      caddr_t *pp, /* the pointer to work on */
 	      u_int size, /* size of the object pointed to */
 	      xdrproc_t proc)  /* xdr routine to handle the object */
 {
-    register caddr_t loc = *pp;
-    register bool_t stat;
+    caddr_t loc = *pp;
+    bool_t stat;
 
     if (loc == NULL)
 	switch (xdrs->x_op) {

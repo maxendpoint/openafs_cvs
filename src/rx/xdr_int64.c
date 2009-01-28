@@ -7,7 +7,7 @@
 #include <afs/param.h>
 
 RCSID
-    ("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.11 2005/04/03 18:09:30 shadow Exp $");
+    ("$Header: /cvs/openafs/src/rx/xdr_int64.c,v 1.12 2009/01/28 22:33:17 shadow Exp $");
 
 #if defined(KERNEL) && !defined(UKERNEL)
 #ifdef AFS_LINUX20_ENV
@@ -26,13 +26,13 @@ RCSID
  * XDR afs_int64 integers
  */
 bool_t
-xdr_int64(register XDR * xdrs, afs_int64 * ulp)
+xdr_int64(XDR * xdrs, afs_int64 * ulp)
 {
     return xdr_afs_int64(xdrs, ulp);
 }
 
 bool_t
-xdr_afs_int64(register XDR * xdrs, afs_int64 * ulp)
+xdr_afs_int64(XDR * xdrs, afs_int64 * ulp)
 {
     afs_int32 high;
     afs_uint32 low;
@@ -63,13 +63,13 @@ xdr_afs_int64(register XDR * xdrs, afs_int64 * ulp)
  * XDR afs_int64 integers
  */
 bool_t
-xdr_uint64(register XDR * xdrs, afs_uint64 * ulp)
+xdr_uint64(XDR * xdrs, afs_uint64 * ulp)
 {
     return xdr_afs_uint64(xdrs, ulp);
 }
 
 bool_t
-xdr_afs_uint64(register XDR * xdrs, afs_uint64 * ulp)
+xdr_afs_uint64(XDR * xdrs, afs_uint64 * ulp)
 {
     afs_uint32 high;
     afs_uint32 low;
@@ -101,13 +101,13 @@ xdr_afs_uint64(register XDR * xdrs, afs_uint64 * ulp)
  * XDR afs_int64 integers
  */
 bool_t
-xdr_int64(register XDR * xdrs, afs_int64 * ulp)
+xdr_int64(XDR * xdrs, afs_int64 * ulp)
 {
     return xdr_afs_int64(xdrs, ulp);
 }
 
 bool_t
-xdr_afs_int64(register XDR * xdrs, afs_int64 * ulp)
+xdr_afs_int64(XDR * xdrs, afs_int64 * ulp)
 {
     if (xdrs->x_op == XDR_DECODE) {
 	if (!XDR_GETINT32(xdrs, (afs_int32 *) & ulp->high))
@@ -128,13 +128,13 @@ xdr_afs_int64(register XDR * xdrs, afs_int64 * ulp)
  * XDR afs_uint64 integers
  */
 bool_t
-xdr_uint64(register XDR * xdrs, afs_uint64 * ulp)
+xdr_uint64(XDR * xdrs, afs_uint64 * ulp)
 {
     return xdr_afs_uint64(xdrs, ulp);
 }
 
 bool_t
-xdr_afs_uint64(register XDR * xdrs, afs_uint64 * ulp)
+xdr_afs_uint64(XDR * xdrs, afs_uint64 * ulp)
 {
     if (xdrs->x_op == XDR_DECODE) {
 	if (!XDR_GETINT32(xdrs, (afs_uint32 *) & ulp->high))
