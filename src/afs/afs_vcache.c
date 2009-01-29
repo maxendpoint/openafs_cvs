@@ -41,7 +41,7 @@
 #include "afs/param.h"
 
 RCSID
-    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.137 2009/01/26 19:37:58 shadow Exp $");
+    ("$Header: /cvs/openafs/src/afs/afs_vcache.c,v 1.138 2009/01/29 16:05:05 shadow Exp $");
 
 #include "afs/sysincludes.h"	/*Standard vendor system headers */
 #include "afsincludes.h"	/*AFS-based standard headers */
@@ -783,6 +783,7 @@ restart:
 # endif
     afs_vcount++;
 
+#ifdef AFS_DISCON_ENV
     /* If we create a new inode, we either give it a new slot number,
      * or if one's available, use a slot number from the slot free list
      */
@@ -796,6 +797,7 @@ restart:
     }  else {
        tvc->diskSlot = afs_nextVcacheSlot++;
     }
+#endif
 
 #else /* AFS_OSF_ENV || AFS_LINUX22_ENV */
     /* pull out a free cache entry */
