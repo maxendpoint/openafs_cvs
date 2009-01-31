@@ -5,6 +5,7 @@
  */
 
 #include<windows.h>
+#include<wincrypt.h>
 #include<stdlib.h>
 #include<stdio.h>
 
