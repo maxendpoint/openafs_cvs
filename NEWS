@@ -163,7 +163,7 @@ OpenAFS News -- history of user-visible changes.
 
 ** Windows 95/98/ME - Logon script features
    The Windows 95/98/ME client now offers a command-line option for starting up 
-   the AFS client without authenication. It is now possilbe to start the AFS 
+   the AFS client without authenication. It is now possible to start the AFS 
    client first and obtain tokens, and map drives all through Windows scripts.
    This helps using Windows 95/98/ME client in Kerberos 5 environment.
 
